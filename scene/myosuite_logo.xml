@@ -1,0 +1,26 @@
+<mujoco model="MyoSuite logo">
+<!-- =================================================
+    Copyright 2022 Vikash Kumar
+    Model   :: MyoSuite logo (MuJoCoV2.0)
+    Author  :: Vikash Kumar (vikashplus@gmail.com)
+    Details :: https://github.com/vikashplus
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -©vk©-->
+    <!-- load texture and msh files -©vk©-->
+    <asset>
+        <texture name="textobj" type="2d" file="myosuite_logo.png"/>
+        <mesh name="meshobj" file="myosuite_logo.msh" scale="1 1 1"/>
+        <material name="matobj" texture="textobj"/>
+    </asset>
+
+    <!-- Add files to the world -©vk©-->
+    <worldbody>
+        <light directional="true" diffuse=".4 .4 .4" specular="0.1 0.1 0.1" pos="-5 -5 10.0" dir="5 5 -10"/>
+
+        <geom type="plane" size = "5 5 1"/>
+
+        <body pos="0.0 0.0 .3" euler="90 0 0">
+            <geom type="mesh" mesh="meshobj" size="1 1 1" material="matobj" group="1" condim="1"/>
+        </body>
+    </worldbody>
+</mujoco>
