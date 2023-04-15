@@ -1,4 +1,4 @@
-# MyoSuite musculoskeletal models
+# MyoSim: MyoSuite's musculoskeletal model library
 
 `MyoSim` is the library of MuJoCo Musculoskeletal Models of [MyoSuite](https://github.com/facebookresearch/myoSuite).
 
