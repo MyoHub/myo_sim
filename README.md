@@ -3,12 +3,15 @@
 `MyoSim` is the library of MuJoCo Musculoskeletal Models of [MyoSuite](https://github.com/facebookresearch/myoSuite).
 
 The models present in the library are:
-- MyoFinger
-<img src="https://user-images.githubusercontent.com/23240128/232254503-07df4500-f93d-48ef-8229-49cad21a3986.png" height="100">
-- MyoElbow
-<img src="https://user-images.githubusercontent.com/23240128/232254507-916a5dc3-eaf3-484a-a50c-7f338f63c533.png" height="200">
-- MyoHand
-<img src="https://user-images.githubusercontent.com/23240128/232254510-7607c0f9-4855-4cbc-bee0-8cd1c3715f69.png" height="100">
+
+
+
+| Model name  | |
+|-----------|--------------------|
+| **MyoFinger** <br> 4 Degree of Freedom (DoF) <br> 5 simplified muscles |<img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="200">|
+| **MyoElbow**  <br> 2 Degree of Freedom (DoF) <br> 6 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="200">|
+| **MyoHand**  <br>  23 Degree of Freedom (DoF) <br> 39 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="200">|
+
 
 Description of the models can be found [here](https://myosuite.readthedocs.io/en/latest/suite.html#models).
 
