@@ -9,7 +9,7 @@
     <!-- load texture and msh files -©vk©-->
     <asset>
         <texture name="textobj" type="2d" file="myosuite_logo.png"/>
-        <mesh name="meshobj" file="myosuite_logo.msh" scale="1 1 1"/>
+        <mesh name="meshobj" file="myosuite_logo.obj" scale="1 1 1"/>
         <material name="matobj" texture="textobj"/>
     </asset>
 

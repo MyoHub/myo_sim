@@ -13,7 +13,7 @@
         <!-- Scene -©vk©-->
         <texture name="textscene" type="2d" file="../myo_sim/scene/myosuite_scene.png"/>
         <material name="matscene" texture="textscene"/>
-        <mesh name="meshscene" file="../myo_sim/scene/myosuite_scene_noFloor.msh" scale=".01 .01 .01"/>
+        <mesh name="meshscene" file="../myo_sim/scene/myosuite_scene_noFloor.obj" scale=".01 .01 .01"/>
 
         <!-- Floor -©vk©-->
         <texture name="texfloor" type="2d" height="1" width="1" file="../myo_sim/scene/floor0.png"/>
@@ -21,7 +21,7 @@
 
         <!-- Logo -©vk©-->
         <texture name="textlogo" type="2d" file="../myo_sim/scene/myosuite_logo.png"/>
-        <mesh name="logo" file="../myo_sim/scene/myosuite_logo.msh" scale="1 1 1"/>
+        <mesh name="logo" file="../myo_sim/scene/myosuite_logo.obj" scale="1 1 1"/>
         <material name="matlogo" texture="textlogo"/>
 
         <!-- <mesh name="human" file="../myo_sim/body/Geometry/human_lowpoly.stl" scale="1 1 1"/> -->

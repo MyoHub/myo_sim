@@ -3,7 +3,7 @@
 newmtl Myosuite_Logo_FullColor
 Ka 1 1 1
 Kd 0.80000001192093 0.80000001192093 0.80000001192093
-map_Kd Myosuite_Logo_FullColorSurface_Color.png
+map_Kd myosuite_logo.png
 Ks 1 1 1
 Ns 50
 illum 7
