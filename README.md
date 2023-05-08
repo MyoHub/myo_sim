@@ -12,6 +12,7 @@ The models present in the library are:
 | **MyoFinger** <br> - 4 Degree of Freedom (DoF) <br> - 5 simplified muscles |<img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="200">|
 | **MyoElbow**  <br> - 2 Degree of Freedom (DoF) <br> - 6 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="200">|
 | **MyoHand**  <br>  - 23 Degree of Freedom (DoF) <br> - 39 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="200">|
+| **MyoLeg**  <br>  - 10 joints <br> - 20 Degree of Freedom (DoF) <br> - 80 muscles | <img src="image/myoLeg" width="500">|
 
 
 Description of the models can be found [here](https://myosuite.readthedocs.io/en/latest/suite.html#models).
