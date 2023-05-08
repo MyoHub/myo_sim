@@ -1,4 +1,4 @@
-# <img  style="float: left;" src="https://user-images.githubusercontent.com/23240128/233209820-821715e0-07e6-4dbc-8133-d915a7ea06b7.png" width=40> MyoSim: MyoSuite's musculoskeletal model library 
+# <img  style="float: left;" src="https://user-images.githubusercontent.com/23240128/233209820-821715e0-07e6-4dbc-8133-d915a7ea06b7.png" width=40> MyoSim: MyoSuite's musculoskeletal model library
 
  `MyoSim` is the library of MuJoCo Musculoskeletal Models of [MyoSuite](https://github.com/facebookresearch/myoSuite).
 
