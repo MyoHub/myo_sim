@@ -8,9 +8,12 @@
 ====================================================== -->
 
     <include file="assets/myo_hand_assets.xml"/>
-    <include file="assets/myo_hand_body.xml"/>
     <include file="../scene/myosuite_scene.xml"/>
     <compiler meshdir=".." texturedir=".."/>
+
+    <worldbody>
+        <include file="assets/myo_hand_body.xml"/>
+    </worldbody>
 
 </mujoco>
 
