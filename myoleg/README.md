@@ -63,7 +63,9 @@ The contact geometries take the well defined [Yeadon measurement method](https:/
 4. Muscle forces are not identical between the converted MuJoCo and Osim models, due to the difference in muscle model definitions (stiff vs elastic tendons).
 	- Will investage to implement elastic tendon inside mujoco.
 
-## ChangeLog 
+## ChangeLog
 
 **myoleg_v0.51(mj120).mjb**
 - new keyposes added to mark convenient poses.
+**myoleg_v0.52(mj120).mjb**
+- Removing the extra body that made the torso twice as heavy. The body now is ~80 kgs.
