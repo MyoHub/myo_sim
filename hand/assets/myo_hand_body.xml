@@ -133,6 +133,9 @@
                           <site name="APL-P5" pos="0.055 -0.2308 0.0237"/>
                           <site name="ECU_torus_site_ECU_side" pos="-0.0163 -0.2417 0.0349"/>
                           <body name="lunate" pos="0.018 -0.242 0.025">
+
+                            <body name="wrist_point" pos="0 0 0.01"> <geom name="wrist_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".018" type="sphere"/></body>
+
                             <joint axis="0 0 1" name="deviation" pos="0 0 0" range="-0.174533 0.436332" damping="0.25"/>
                             <joint axis="1 0 0" name="flexion" pos="0 0 0" range="-0.785398 0.785398" damping="0.25"/>
                             <geom mesh="lunate" name="lunate" type="mesh"/>
@@ -228,6 +231,9 @@
                                   <geom mesh="1mc" name="1mc" type="mesh"/>
                                   <geom name="MPthumb_wrap" type="cylinder" size="0.0085 0.01" pos="0.0177 -0.0305 -0.0143" euler="0.32131512 0.11013028 -0.83479098" class="wrap"/>
                                   <inertial pos="0.0078 -0.0147 -0.006" mass="0.016" fullinertia="1.2e-06 7.1e-07 1.3e-06 4.7e-07 2.5e-07 -4.1e-07"/>
+
+                                  <body name="thknuckle_point" pos="0 0 0.00"> <geom name="thknuckle_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".017" type="sphere"/></body>
+
                                   <site name="EPL-P8" pos="0.0066 -0.0043 0.0079"/>
                                   <site name="EPL-P9" pos="0.0216 -0.0242 -0.0053"/>
                                   <site name="EPB-P6" pos="0.0144 -0.0034 -0.004"/>
@@ -252,6 +258,9 @@
                                     <geom mesh="thumbprox" name="thumbprox" type="mesh"/>
                                     <geom name="IPthumb_wrap" type="cylinder" size="0.00450000 0.005" pos="0.0121 -0.0302 -0.0096" euler="0.30473449 0.01291544 0.08796459" class="wrap"/>
                                     <inertial pos="0.0096 -0.0163 -0.0063" mass="0.0079" fullinertia="2.6e-07 7.1e-07 2.9e-07 1e-07 4e-08 -6e-08"/>
+
+                                    <body name="thmiddle_point" pos="0 0 0.00"> <geom name="thmiddle_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".012" type="sphere"/></body>
+
                                     <site name="EPL-P10" pos="0.0115 -0.0036 0.0016"/>
                                     <site name="EPL-P11" pos="0.0192 -0.0265 -0.0104"/>
                                     <site name="EPB-P8" pos="0.0093 -0.0062 -0.0056"/>
@@ -265,6 +274,9 @@
                                       <joint axis="-0.050102 -0.479623 0.876043" name="ip_flexion" pos="0 0 0" range="-1.309 0.436332"/>
                                       <geom mesh="thumbdist" name="thumbdist" type="mesh"/>
                                       <inertial pos="0.0056 -0.0104 -0.0044" mass="0.003" fullinertia="5e-08 3e-08 5e-08 1e-08 1e-08 -1e-08"/>
+
+                                      <body name="thdistal_point" pos="0 0 0.0"> <geom name="thdistal_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".0115" type="sphere"/></body>
+
                                       <site name="EPL-P12" pos="0.0054 -0.0071 -0.0046"/>
                                       <site name="FPL-P11" pos="0.0024 -0.0113 -0.0041"/>
                                       <geom class="skin" type="ellipsoid" size=".007 .0055 .002" pos=".015 -.018 -.007" euler="0.2 1.57 1.5" rgba="1 1 1 .8"/>
@@ -330,6 +342,9 @@
                                   <geom mesh="2proxph" name="2proxph" type="mesh"/>
                                   <geom name="Secondpm_wrap" type="cylinder" size="0.0042 0.005" pos="0.0075 -0.0407 0.0061" euler="0.74193947 -1.47393055 0.70965087" class="wrap"/>
                                   <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+
+                                  <body name="ffknuckle_point" pos="0 0 0.00"> <geom name="ffknuckle_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".013" type="sphere"/></body>
+
                                   <!-- <site name="FDS2-P6" pos="0.001 -0.001 -0.009"/>
                                   <site name="FDS2-P7" pos="0.0064 -0.0368 0.0023"/>
                                   <site name="FDP2-P6" pos="0.001 -0.0134 -0.0095"/>
@@ -366,6 +381,9 @@
                                     <geom mesh="2midph" name="2midph" type="mesh"/>
                                     <geom name="Secondmd_wrap" pos="0.0036 -0.0243 0.0003" quat="0.749819 -0.0209733 -0.656264 0.0815428" class="wrap" size="0.003 0.005" type="cylinder"/>
                                     <inertial pos="0 0 0" mass="0.003" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+
+                                    <body name="ffmiddle_point" pos="0 0 0.00"> <geom name="ffmiddle_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                     <!-- <site name="FDS2-P8" pos="0.0013 -0.019 -0.0034"/>
                                     <site name="FDP2-P8" pos="0.0007 -0.0089 -0.0077"/>
                                     <site name="FDP2-P9" pos="0.001 -0.017 -0.005"/>
@@ -395,6 +413,9 @@
                                       <geom class="skin" size="0.007 0.008" pos="0.001 -0.008 0.00" euler="1.5 0.14 -.35"/>
                                       <geom mesh="2distph" name="2distph" type="mesh"/>
                                       <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+
+                                      <body name="ffdistal_point" pos="0 0 0.0"> <geom name="ffdistal_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                       <site name="FDP2-P10" pos="0.0007 -0.0056 -0.004"/>
                                       <site name="EDC2-P9" pos="0 -0.0056 0.0034"/>
                                       <site name="EIP-P10" pos="0.001 -0.004 0.003"/>
@@ -446,6 +467,10 @@
                                   <geom mesh="3proxph" name="3proxph" type="mesh"/>
                                   <geom name="Thirdpm_wrap" pos="0.0017 -0.0439 0.005" quat="0.700673 0.00645453 -0.712452 0.0377825" class="wrap" size="0.004 0.005" type="cylinder"/>
                                   <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+
+                                  <body name="mfknuckle_point" pos="0 0 0.00"> <geom name="mfknuckle_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".013" type="sphere"/></body>
+
+
                                   <!-- <site name="FDS3-P6" pos="0.0009 -0.017 -0.0128"/>
                                   <site name="FDS3-P7" pos="0.001 -0.038 -0.002"/>
                                   <site name="FDP3-P6" pos="0.0006 -0.0146 -0.0088"/>
@@ -476,6 +501,9 @@
                                     <geom mesh="3midph" name="3midph" type="mesh"/>
                                     <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                     <geom name="Thirdmd_wrap" pos="0.0014 -0.0289 0.0012" quat="0.708186 -0.0221627 -0.701515 0.0765368" class="wrap" size="0.003 0.005" type="cylinder"/>
+
+                                    <body name="mfmiddle_point" pos="0 0 0.00"> <geom name="mfmiddle_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                     <!-- <site name="FDS3-P8" pos="-0.001 -0.013 -0.006"/>
                                     <site name="FDP3-P8" pos="-0.0001 -0.0103 -0.0072"/>
                                     <site name="FDP3-P9" pos="0.0021 -0.0227 -0.0034"/>
@@ -493,9 +521,12 @@
                                     <site name="Thirdmd_site_EDC3_side" pos="0.00142423 -0.028063 0.00714128"/>
                                     <body name="distph3" pos="0.001365 -0.029047 0.001954">
                                       <joint axis="1 0 0" name="md3_flexion" pos="0 0 0" range="0 1.5708"/>
+
+                                      <body name="mfdistal_point" pos="0 0 0.0"> <geom name="mfdistal_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                       <geom class="skin" size="0.007 0.008" pos="0.0013 -0.009 -.002" euler="1.6 .05 0"/>
                                       <geom mesh="3distph" name="3distph" type="mesh"/>
-                                    <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+                                      <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                       <site name="FDP3-P10" pos="0.0008 -0.004 -0.002"/>
                                       <site name="EDC3-P9" pos="0.0008 -0.0058 0.0041"/>
                                       <geom class="skin" type="ellipsoid" size=".0055 .008 .002" pos="0.002 -.019 0.003" euler="0.2 0 0.0" rgba="1 1 1 .8"/>
@@ -542,6 +573,9 @@
                                   <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                   <!-- <geom name="Fourthpm_wrap" pos="-0.0033 -0.0401 -0.0001" quat="0.35623 -0.660837 -0.527455 0.397727" class="wrap" size="0.004 0.005" type="cylinder"/> -->
                                   <geom name="Fourthpm_wrap" type="cylinder" size="0.00400000 0.005" pos="-0.0033 -0.0401 -0.0001" euler="-3.02291026 -1.12311937 -1.27251956" class="wrap"/>
+
+                                  <body name="rfknuckle_point" pos="0 0 0.00"> <geom name="rfknuckle_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".013" type="sphere"/></body>
+
                                   <!-- <site name="FDS4-P6" pos="0.0019 -0.02 -0.0049"/>
                                   <site name="FDS4-P7" pos="0.0011 -0.0331 -0.0063"/>
                                   <site name="FDP4-P6" pos="0.0018 -0.0199 -0.004"/>
@@ -573,6 +607,9 @@
                                     <geom mesh="4midph" name="4midph" type="mesh"/>
                                     <geom name="Fourthmd_wrap" type="cylinder" size="0.00300000 0.005" pos="-0.0021 -0.0247 -0.0001" euler="-3.02971705 -1.10287355 -2.87211382" class="wrap"/>
                                     <inertial pos="0 0 0" mass="0.003" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+
+                                    <body name="rfmiddle_point" pos="0 0 0.00"> <geom name="rfmiddle_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                     <!-- <site name="FDS4-P8" pos="-0.0009 -0.0147 -0.0021"/>
                                     <site name="FDP4-P8" pos="0.001 -0.009 -0.007"/>
                                     <site name="FDP4-P9" pos="-0.001 -0.018 -0.003"/>
@@ -594,6 +631,9 @@
                                       <geom class="skin" size="0.0068 0.008" pos="0.00 -0.01 -.002" euler="1.6 -.1 0"/>
                                       <geom mesh="4distph" name="4distph" type="mesh"/>
                                       <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+
+                                      <body name="rfdistal_point" pos="0 0 0.0"> <geom name="rfdistal_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                       <site name="FDP4-P10" pos="0.0002 -0.014 -0.0022"/>
                                       <site name="EDC4-P9" pos="-0.001 -0.008 0.003"/>
                                       <geom class="skin" type="ellipsoid" size=".005 .008 .002" pos="-.004 -.019 0.003" euler="0.2 -.5 0.0" rgba="1 1 1 .8"/>
@@ -643,6 +683,9 @@
                                   <site name="FDP5-P7" pos="-0.001 -0.026 -0.007"/>
                                   <site name="EDC5-P5" pos="-0.006 -0.018 0.004"/>
                                   <site name="EDC5-P6" pos="-0.008 -0.034 0.001"/> -->
+
+                                  <body name="lfknuckle_point" pos="0 0 0.00"> <geom name="lfknuckle_point" contype="0" conaffinity="0" rgba="1 0 0 .001" size=".013" type="sphere"/></body>
+
                                   <site name="EDM-P7" pos="-0.0054 -0.0324 0.0001"/>
                                   <!-- <site name="RI5-P3" pos="0.003 -0.018 0.001"/>
                                   <site name="LU_RB5-P3" pos="0.0047 -0.01 0.0042"/>
@@ -671,6 +714,9 @@
                                     <geom mesh="5midph" name="5midph" type="mesh"/>
                                     <geom name="Fifthmd_wrap" pos="-0.0025 -0.0205 -0.0025" quat="0.35929 -0.0253303 -0.929016 -0.0848458" class="wrap" size="0.003 0.005" type="cylinder"/>
                                     <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+
+                                    <body name="lfmiddle_point" pos="0 0 0.00"> <geom name="lfmiddle_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                     <site name="FDS5-P8" pos="0.0011 -0.0182 -0.0046"/>
                                     <site name="FDP5-P8" pos="-0.001 -0.009 -0.004"/>
                                     <site name="FDP5-P9" pos="-0.001 -0.016 -0.004"/>
@@ -686,6 +732,9 @@
                                       <geom class="skin" size="0.006 0.007" pos="-.0002 -0.009 -.002" euler="1.65 -.1 0"/>
                                       <geom mesh="5distph" name="5distph" type="mesh"/>
                                       <inertial pos="0 0 0" mass="0.001" fullinertia="0.0001 0.0001 0.0001 0 0 0"></inertial>
+
+                                      <body name="lfdistal_point" pos="0 0 0.0"> <geom name="lfdistal_point" contype="0" conaffinity="0" rgba="1 0 0 .01" size=".01" type="sphere"/></body>
+
                                       <site name="FDP5-P10" pos="-0.0003 -0.0139 -0.0048"/>
                                       <site name="EDC5-P9" pos="-0.002 -0.007 0"/>
                                       <site name="EDM-P9" pos="-0.0023 -0.0033 0.0006"/>
