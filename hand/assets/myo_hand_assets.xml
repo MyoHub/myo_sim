@@ -26,6 +26,9 @@
       <default class="skin">
         <geom type="capsule" group="1" contype="1" conaffinity="1" condim="3" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
       </default>
+      <default class="touch">
+        <site type="capsule" group="1" rgba="0.2 0.7 .2 .5"/>
+      </default>
       <default class="wrap">
         <geom rgba=".5 .5 .9 1" group="3" contype="0" conaffinity="0"/>
       </default>

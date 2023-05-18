@@ -19,13 +19,15 @@
     <worldbody>
         <body name="object" pos="-0.155 -0.25 1.18">
             <geom mesh="jamar" name="jamar1" type="mesh" pos='0 .01 0' euler='0 1.57 0' rgba='0 .2 1 .8'/>
-            <site type="capsule" size=".015 .07" name="object_tactile_surface" rgba=".2 .4 .78 1" euler='0 -0.015 0' pos="0 -.003 0"/>
+            <site class="touch" type="capsule" size=".015 .07" name="object_tactile_surface" euler='0 -0.015 0' pos="0 -.003 0"/>
             <site name="object" size="0.005"/>
         </body>
     </worldbody>
 
     <sensor>
         <touch name="device_force" site="object_tactile_surface"/>
+        <touch name="distal_thumb" site="distal_thumb"/>
+        <touch name="proximal_thumb" site="proximal_thumb"/>
     </sensor>
 
 </mujoco>

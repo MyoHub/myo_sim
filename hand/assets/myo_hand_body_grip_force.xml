@@ -261,6 +261,7 @@
                                   <body name="proximal_thumb" pos="0.0165 -0.0292 -0.0127">
                                     <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion" pos="0 0 0" range="-0.785398 0.698132"/>
                                     <geom class="skin" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
+                                    <site name="proximal_thumb" class="touch" size="0.0090" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
                                     <geom mesh="thumbprox" name="thumbprox" type="mesh"/>
                                     <geom name="IPthumb_wrap" type="cylinder" size="0.00450000 0.005" pos="0.0121 -0.0302 -0.0096" euler="0.30473449 0.01291544 0.08796459" class="wrap"/>
                                     <inertial pos="0.0096 -0.0163 -0.0063" mass="0.0079" fullinertia="2.6e-07 7.1e-07 2.9e-07 1e-07 4e-08 -6e-08"/>
@@ -274,6 +275,7 @@
                                     <site name="IPthumb_site_FPL_side" pos="0.00820158 -0.028993 -0.00586527"/>
                                     <body name="distal_thumb" pos="0.014 -0.0259 -0.0101">
                                       <geom class="skin" size="0.0065" fromto="0 0 0 0.010 -0.018 -0.007"/>
+                                      <site name="distal_thumb" class="touch" size="0.0070" fromto="0 0 0 0.010 -0.018 -0.007"/>
                                       <joint axis="-0.050102 -0.479623 0.876043" name="ip_flexion" pos="0 0 0" range="-1.309 0.436332"/>
                                       <geom mesh="thumbdist" name="thumbdist" type="mesh"/>
                                       <inertial pos="0.0056 -0.0104 -0.0044" mass="0.003" fullinertia="5e-08 3e-08 5e-08 1e-08 1e-08 -1e-08"/>
