@@ -30,29 +30,29 @@
         <body mocap="true" name="j13_mocap" pos="-0.10400589 -0.1905571   0.29570758"><site name="j13" size="0.015" rgba="0 0 1 0.5" pos="0 0 0"/></body>
         <body mocap="true" name="j14_mocap" pos="-0.11681051 -0.16517439  0.27384574"><site name="j14" size="0.015" rgba="0 0 1 0.5" pos="0 0 0"/></body>
         <body mocap="true" name="j15_mocap" pos="-0.12784025 -0.14240538  0.25571465"><site name="j15" size="0.015" rgba="0 0 1 0.5" pos="0 0 0"/></body>
-
-        <!-- ======= MOCAP connectS ======= -->
-        <equality>
-            <connect body1="j0_mocap" body2="wrist_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-
-            <connect body1="j1_mocap" body2="ffknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j4_mocap" body2="mfknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j7_mocap" body2="lfknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j10_mocap" body2="rfknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j13_mocap" body2="thknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-
-            <connect body1="j3_mocap" body2="ffdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j6_mocap" body2="mfdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j9_mocap" body2="lfdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j12_mocap" body2="rfdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j15_mocap" body2="thdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1"  />
-
-            <connect body1="j2_mocap" body2="ffmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1"/>
-            <connect body1="j5_mocap" body2="mfmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j8_mocap" body2="lfmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j11_mocap" body2="rfmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-            <connect body1="j14_mocap" body2="thmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
-        </equality>
     </worldbody>
+
+    <!-- ======= MOCAP connectS ======= -->
+    <equality>
+        <connect body1="j0_mocap" body2="wrist_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+
+        <connect body1="j1_mocap" body2="ffknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j4_mocap" body2="mfknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j7_mocap" body2="lfknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j10_mocap" body2="rfknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j13_mocap" body2="thknuckle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+
+        <connect body1="j3_mocap" body2="ffdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j6_mocap" body2="mfdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j9_mocap" body2="lfdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j12_mocap" body2="rfdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j15_mocap" body2="thdistal_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1"  />
+
+        <connect body1="j2_mocap" body2="ffmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1"/>
+        <connect body1="j5_mocap" body2="mfmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j8_mocap" body2="lfmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j11_mocap" body2="rfmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+        <connect body1="j14_mocap" body2="thmiddle_point" anchor="0 0 0" solimp="0.9 0.95 0.001" solref="0.02 1" />
+    </equality>
 
 </mujoco>
