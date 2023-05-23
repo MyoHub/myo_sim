@@ -25,9 +25,18 @@
     </worldbody>
 
     <sensor>
-        <touch name="device_force" site="object_tactile_surface"/>
-        <touch name="distal_thumb" site="distal_thumb"/>
-        <touch name="proximal_thumb" site="proximal_thumb"/>
+        <touch name="device_force"      site="object_tactile_surface"/>
+        <!-- <touch name="distal_thumb"      site="distal_thumb"/> -->
+        <!-- <touch name="proximal_thumb"    site="proximal_thumb"/> -->
+        <touch name="proximal_index"    site="proximal_index"/>
+        <touch name="mid_index"         site="mid_index"/>
+        <touch name="proximal_middle"   site="proximal_middle"/>
+        <touch name="mid_middle"        site="mid_middle"/>
+        <touch name="proximal_ring"   site="proximal_ring"/>
+        <touch name="mid_ring"        site="mid_ring"/>
+        <touch name="proximal_little"   site="proximal_little"/>
+        <touch name="mid_little"        site="mid_little"/>
+
     </sensor>
 
 </mujoco>

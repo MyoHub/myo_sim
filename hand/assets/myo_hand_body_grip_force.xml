@@ -261,7 +261,7 @@
                                   <body name="proximal_thumb" pos="0.0165 -0.0292 -0.0127">
                                     <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion" pos="0 0 0" range="-0.785398 0.698132"/>
                                     <geom class="skin" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
-                                    <site name="proximal_thumb" class="touch" size="0.0090" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
+                                    <!-- <site name="proximal_thumb" class="touch" size="0.0090" fromto="0 0 0 0.014 -0.0259 -0.0101"/> -->
                                     <geom mesh="thumbprox" name="thumbprox" type="mesh"/>
                                     <geom name="IPthumb_wrap" type="cylinder" size="0.00450000 0.005" pos="0.0121 -0.0302 -0.0096" euler="0.30473449 0.01291544 0.08796459" class="wrap"/>
                                     <inertial pos="0.0096 -0.0163 -0.0063" mass="0.0079" fullinertia="2.6e-07 7.1e-07 2.9e-07 1e-07 4e-08 -6e-08"/>
@@ -275,7 +275,7 @@
                                     <site name="IPthumb_site_FPL_side" pos="0.00820158 -0.028993 -0.00586527"/>
                                     <body name="distal_thumb" pos="0.014 -0.0259 -0.0101">
                                       <geom class="skin" size="0.0065" fromto="0 0 0 0.010 -0.018 -0.007"/>
-                                      <site name="distal_thumb" class="touch" size="0.0070" fromto="0 0 0 0.010 -0.018 -0.007"/>
+                                      <!-- <site name="distal_thumb" class="touch" size="0.0070" fromto="0 0 0 0.010 -0.018 -0.007"/> -->
                                       <joint axis="-0.050102 -0.479623 0.876043" name="ip_flexion" pos="0 0 0" range="-1.309 0.436332"/>
                                       <geom mesh="thumbdist" name="thumbdist" type="mesh"/>
                                       <inertial pos="0.0056 -0.0104 -0.0044" mass="0.003" fullinertia="5e-08 3e-08 5e-08 1e-08 1e-08 -1e-08"/>
@@ -341,6 +341,7 @@
                                   <joint axis="0.995013 0.09975 0" name="mcp2_flexion" pos="0 0 0" range="0 1.5708"/>
                                   <joint axis="-0.054999 0.085899 0.994785"  name="mcp2_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
                                   <geom class="skin" size="0.009 0.020" pos="0.004 -0.0210 0.00362" euler="1.45 0.15 -.35"/>
+                                  <site name="proximal_index" class="touch" size="0.011 0.015" pos="0.004 -0.0210 0.00362" euler="1.45 0.15 -.35"/>
                                   <geom mesh="2proxph" name="2proxph" type="mesh"/>
                                   <geom name="Secondpm_wrap" type="cylinder" size="0.0042 0.005" pos="0.0075 -0.0407 0.0061" euler="0.74193947 -1.47393055 0.70965087" class="wrap"/>
                                   <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -375,8 +376,9 @@
                                   <site name="Secondpm_site_LU_RB2_side" pos="0.075 -0.0507 0.01"/>
                                   <site name="Secondpm_site_UI_UB2_side" pos="0.0147187 -0.0418367 0.0110691"/>
                                   <body name="midph2" pos="0.00751 -0.041273 0.007326">
-                                    <geom class="skin" size="0.008 0.012" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
                                     <joint axis="0.97517 0.0998334 -0.197677" name="pm2_flexion" pos="0 0 0" range="0 1.5708"/>
+                                    <geom class="skin" size="0.008 0.012" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
+                                    <site name="mid_index" class="touch" size="0.0082 0.008" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
                                     <geom mesh="2midph" name="2midph" type="mesh"/>
                                     <geom name="Secondmd_wrap" pos="0.0036 -0.0243 0.0003" quat="0.749819 -0.0209733 -0.656264 0.0815428" class="wrap" size="0.003 0.005" type="cylinder"/>
                                     <inertial pos="0 0 0" mass="0.003" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -454,9 +456,10 @@
                                 <site name="3rdmcp_ellipsoid_site_EDC3_side" pos="0.0016 -0.0291 0.0081"/>
                                 <site name="3rdmcp_ellipsoid_site_LU_RB3_side" pos="0 0 0"/>
                                 <body name="proxph3" pos="0.00024 -0.02629 0.001778">
-                                  <geom class="skin" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
                                   <joint axis="0.980067 0 0.198669" name="mcp3_flexion" pos="0 0 0" range="0 1.5708"/>
                                   <joint axis="-0.198669 0 0.980067" name="mcp3_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
+                                  <geom class="skin" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
+                                  <site name="proximal_middle" class="touch" size="0.011 0.015" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
                                   <geom mesh="3proxph" name="3proxph" type="mesh"/>
                                   <geom name="Thirdpm_wrap" pos="0.0017 -0.0439 0.005" quat="0.700673 0.00645453 -0.712452 0.0377825" class="wrap" size="0.004 0.005" type="cylinder"/>
                                   <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -487,6 +490,7 @@
                                   <body name="midph3" pos="0.00165 -0.044211 0.00623">
                                     <joint axis="1 0 0" name="pm3_flexion" pos="0 0 0" range="0 1.5708"/>
                                     <geom class="skin" size="0.008 0.014" pos="0.0012 -0.014 0.00" euler="1.55 0.06 -.35"/>
+                                    <site name="mid_middle" class="touch" size="0.01 0.01" pos="0.0012 -0.014 0.00" euler="1.55 0.06 -.35"/>
                                     <geom mesh="3midph" name="3midph" type="mesh"/>
                                     <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                     <geom name="Thirdmd_wrap" pos="0.0014 -0.0289 0.0012" quat="0.708186 -0.0221627 -0.701515 0.0765368" class="wrap" size="0.003 0.005" type="cylinder"/>
@@ -509,7 +513,7 @@
                                       <joint axis="1 0 0" name="md3_flexion" pos="0 0 0" range="0 1.5708"/>
                                       <geom class="skin" size="0.007 0.008" pos="0.0013 -0.009 -.002" euler="1.6 .05 0"/>
                                       <geom mesh="3distph" name="3distph" type="mesh"/>
-                                    <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+                                      <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                       <site name="FDP3-P10" pos="0.0008 -0.004 -0.002"/>
                                       <site name="EDC3-P9" pos="0.0008 -0.0058 0.0041"/>
                                       <geom class="skin" type="ellipsoid" size=".0055 .008 .002" pos="0.002 -.019 0.003" euler="0.2 0 0.0" rgba="1 1 1 .8"/>
@@ -552,6 +556,7 @@
                                   <joint axis="0.900447 0 0.434966"  name="mcp4_flexion" pos="0 0 0" range="0 1.5708"/>
                                   <joint axis="-0.434966 0 0.900447" name="mcp4_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
                                   <geom class="skin" size="0.0085 0.018" pos="-.001 -0.0200 .0008" euler="1.57 -.08 0"/>
+                                  <site name="proximal_ring" class="touch" size="0.0087 0.015" pos="-.001 -0.0200 .0008" euler="1.57 -.08 0"/>
                                   <geom mesh="4proxph" name="4proxph" type="mesh"/>
                                   <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                   <!-- <geom name="Fourthpm_wrap" pos="-0.0033 -0.0401 -0.0001" quat="0.35623 -0.660837 -0.527455 0.397727" class="wrap" size="0.004 0.005" type="cylinder"/> -->
@@ -584,6 +589,7 @@
                                   <body name="midph4" pos="-0.003528 -0.040255 0.001345">
                                     <joint axis="0.921061 0 0.389418" name="pm4_flexion" pos="0 0 0" range="0 1.5708"/>
                                     <geom class="skin" size="0.0075 0.01" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
+                                    <site name="mid_ring" class="touch" size="0.0077 0.005" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
                                     <geom mesh="4midph" name="4midph" type="mesh"/>
                                     <geom name="Fourthmd_wrap" type="cylinder" size="0.00300000 0.005" pos="-0.0021 -0.0247 -0.0001" euler="-3.02971705 -1.10287355 -2.87211382" class="wrap"/>
                                     <inertial pos="0 0 0" mass="0.003" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -648,6 +654,7 @@
                                   <joint axis="0.825336 0 0.564642"  name="mcp5_flexion" pos="0 0 0" range="0 1.5708"/>
                                   <joint axis="-0.564642 0 0.825336" name="mcp5_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
                                   <geom class="skin" size="0.008 0.016" pos="-.003 -0.018 -.002" euler="1.68 -.1 0"/>
+                                  <site name="proximal_little" class="touch" size="0.01 0.012" pos="-.003 -0.018 -.002" euler="1.68 -.1 0"/>
                                   <geom mesh="5proxph" name="5proxph" type="mesh"/>
                                   <geom name="Fifthpm_wrap" pos="-0.0046 -0.0349 -0.0042" quat="0.4295 -0.0398509 -0.90052 -0.0548241" class="wrap" size="0.004 0.005" type="cylinder"/>
                                   <inertial pos="0 0 0" mass="0.005" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -680,8 +687,9 @@
                                   <site name="Fifthpm_site_UI_UB5_side" pos="-0.0107 -0.0359 -0.0032"/>
 
                                   <body name="midph5" pos="-0.005279 -0.035563 -0.002879">
-                                  <joint axis="0.825336 0 0.564642" name="pm5_flexion" pos="0 0 0" range="0 1.5708"/>
+                                    <joint axis="0.825336 0 0.564642" name="pm5_flexion" pos="0 0 0" range="0 1.5708"/>
                                     <geom class="skin" size="0.007 0.009" pos="-.001 -0.011 -.0025" euler="1.68 -.12 0"/>
+                                    <site name="mid_little" class="touch" size="0.0072 0.005" pos="-.001 -0.011 -.0025" euler="1.68 -.12 0"/>
                                     <geom mesh="5midph" name="5midph" type="mesh"/>
                                     <geom name="Fifthmd_wrap" pos="-0.0025 -0.0205 -0.0025" quat="0.35929 -0.0253303 -0.929016 -0.0848458" class="wrap" size="0.003 0.005" type="cylinder"/>
                                     <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
