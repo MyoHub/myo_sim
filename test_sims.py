@@ -10,22 +10,25 @@ except ImportError as e:
 
 model_paths = [
             # Basic models
-            "basic/muscle_load.xml",
+            "basic/myomuscle.xml",
 
             # finger models
             "finger/finger_v0.xml",
-            "finger/myo_finger_v0.xml",
-            "finger/motor_finger_v0.xml",
+            "finger/myofinger_v0.xml",
+            "finger/motorfinger_v0.xml",
 
             # elbow models
-            "elbow/myo_elbow_1dof6muscles_1dofexo.xml",
-            "elbow/myo_elbow_1dof6muscles.xml",
-            "elbow/myo_elbow_2dof6muscles.xml",
-            "elbow/elbow_1dof6muscles_1dofSoftexo_Ideal.xml",
-            "elbow/elbow_1dof6muscles_1dofSoftexo_sim2.xml",
+            "elbow/myoelbow_1dof6muscles_1dofexo.xml",
+            "elbow/myoelbow_1dof6muscles.xml",
+            "elbow/myoelbow_2dof6muscles.xml",
+            "elbow/myoelbow_1dof6muscles_1dofSoftexo_Ideal.xml",
+            "elbow/myoelbow_1dof6muscles_1dofSoftexo_sim2.xml",
 
             # hand models
-            "hand/myo_hand.xml",
+            "hand/myohand.xml",
+
+            # gait models
+            "leg/myoleg_v0.52(mj210).mjb",
         ]
 
 class TestSims(unittest.TestCase):
