@@ -536,7 +536,7 @@
         <muscle name="UI_UB4" force = "76.9" class="muscle" tendon="UI_UB4_tendon" lengthrange="0.0819919 0.0969029"/>
         <muscle name="RI5"    force = "59.9" class="muscle" tendon="RI5_tendon" lengthrange="0.0425128 0.0462661"/>
         <muscle name="LU_RB5" force = "47.9" class="muscle" tendon="LU_RB5_tendon" lengthrange="0.0970142 0.100417"/>
-        <muscle name="UI_UB5" force = "47.9" class="muscle" tendon="UI_UB5_tendon" lengthrange="0.0910226 0.0976845"/>
+        <muscle name="UI_UB5" force = "48" class="muscle" tendon="UI_UB5_tendon" lengthrange="0.0910226 0.0976845"/>
     <!-- <muscle name="ECRL" force = "308.12" range="1.03489 1.44688" lmin="0.804439" lmax="2.09892" fpmax="0.800013" tendon="ECRL_tendon" lengthrange="0.307826 0.341197" class="muscle"/>
     <muscle name="ECRB" force = "95.5639" range="0.768185 1.27943" lmin="0.523173" lmax="2.98779" fpmax="1.99383" tendon="ECRB_tendon" lengthrange="0.267239 0.297147" class="muscle"/>
     <muscle name="ECU" force = "89.2044" range="0.790379 1.19907" lmin="0.55057" lmax="2.9935" fpmax="1.95619" tendon="ECU_tendon" lengthrange="0.277662 0.303082" class="muscle"/>
