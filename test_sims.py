@@ -57,7 +57,7 @@ class TestSims(unittest.TestCase):
     def test_sims(self):
 
         for model_path in model_paths:
-            print("Tesing: {}".format(model_path))
+            print("Testing: {}".format(model_path))
             self.get_sim(model_path)
 
 
