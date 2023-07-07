@@ -70,3 +70,6 @@ The contact geometries take the well defined [Yeadon measurement method](https:/
 
 **myoleg_v0.52(mj120).mjb**
 - Removing the extra body that made the torso twice as heavy. The body now is ~80 kgs.
+
+**myoleg_v0.53(mj120).mjb**
+- Improved collisions. Adding a height field.
