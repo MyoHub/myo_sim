@@ -1,11 +1,6 @@
 import unittest
 import os
-
-try:
-    import mujoco_py
-    from mujoco_py import load_model_from_path, MjSim, MjViewer, load_model_from_xml, ignore_mujoco_warnings
-except ImportError as e:
-    raise ImportError("(HINT: you need to install mujoco_py, and also perform the setup instructions here: https://github.com/openai/mujoco-py/.)")
+import mujoco
 
 
 model_paths = [
@@ -28,8 +23,7 @@ model_paths = [
             "hand/myohand.xml",
 
             # gait models
-            "leg/myolegs_v0.52(mj210).mjb",
-            # "leg/myolegs_v0.52(mj234).mjb", # test with mj234 leg/myoleg_v0.52\(mj234\).mjb
+            "leg/myolegs_v0.55(mj236).mjb",
         ]
 
 class TestSims(unittest.TestCase):
@@ -38,20 +32,31 @@ class TestSims(unittest.TestCase):
         """
         Get sim using model_path or model_xmlstr.
         """
+
+        # load from path
         if model_path:
+
+            # resolve full path
             if model_path.startswith("/"):
                 fullpath = model_path
             else:
                 fullpath = os.path.join(os.path.dirname(__file__), model_path)
             if not os.path.exists(fullpath):
                 raise IOError("File %s does not exist" % fullpath)
-            model = load_model_from_path(fullpath)
+
+            # load model
+            if model_path.endswith(".mjb"):
+                model = mujoco.MjModel.from_binary_path(fullpath)
+            elif  model_path.endswith(".xml"):
+                model = mujoco.MjModel.from_xml_path(fullpath)
+
+        # load from xml string
         elif model_xmlstr:
-            model = load_model_from_xml(model_xmlstr)
+            model = mujoco.MjModel.from_xml_path(model_xmlstr)
         else:
             raise TypeError("Both model_path and model_xmlstr can't be None")
 
-        return MjSim(model)
+        return model
 
 
     def test_sims(self):
