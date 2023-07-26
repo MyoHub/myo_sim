@@ -29,10 +29,12 @@
         <!-- <mesh name="human" file="../myo_sim/body/Geometry/human_lowpoly.stl" scale="1 1 1"/> -->
     </asset>
 
-    <statistic extent="5"/>
+    <statistic extent="5" center="0 -1 1"/>
+
     <visual>
         <scale light=".05" framewidth=".005"/>
         <headlight ambient=".5 .5 .5" diffuse="0.50 0.50 0.50" specular="0.50 0.50 0.50"/>
+        <global elevation="-15"/>
     </visual>
 
     <!-- Add files to the world -©vk©-->
