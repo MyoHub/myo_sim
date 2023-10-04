@@ -73,3 +73,7 @@ The contact geometries take the well defined [Yeadon measurement method](https:/
 
 **myoleg_v0.53(mj120).mjb**
 - Improved collisions. Adding a height field.
+
+**myoleg_v0.56(mj237).mjb**
+- height field adjusted
+- moved to mujoco 2.3.7

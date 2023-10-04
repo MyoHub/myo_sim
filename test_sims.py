@@ -22,8 +22,9 @@ model_paths = [
             # hand models
             "hand/myohand.xml",
 
-            # gait models
-            "leg/myolegs_v0.55(mj236).mjb",
+            # leg models
+            "leg/myolegs_v0.56(mj237).mjb",
+            "leg/myolegs_chasetag_v0.10(mj237).mjb",
         ]
 
 class TestSims(unittest.TestCase):
