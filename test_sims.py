@@ -24,7 +24,7 @@ model_paths = [
 
             # leg models
             "leg/myolegs_v0.56(mj237).mjb",
-            "leg/myolegs_chasetag_v0.10(mj237).mjb",
+            "leg/myolegs_chasetag_v0.11(mj237).mjb",
         ]
 
 class TestSims(unittest.TestCase):
