@@ -12,7 +12,7 @@ Output of the myoconversion: OSL_TFA_L_Ankle_Modified_cvt3.xml
 This generated mujoco MSK model has almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
 
 Model tested in Mujoco, we need to remove collision attribute for it to work fine on Mujoco.
-
+![Screenshot from 2023-11-22 03-38-25.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-22%2003-38-25.png)
 ## Conversion process:
 
 The myoHand model was generated using our developed automatic conversion pipeline (released on June 2023).
