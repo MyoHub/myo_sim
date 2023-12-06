@@ -20,24 +20,24 @@
   </default>
   <asset>
     <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="0.6 0.8 1" width="256" height="1536"/>
-    <mesh name="pelvis_geom_1_sacrum" file="Geometry/sacrum.stl"/>
+    <mesh name="pelvis_geom_1_sacrum" file="../meshes/sacrum.stl"/>
     <mesh name="pelvis_geom_2_pelvis" file="Geometry/pelvis.stl"/>
-    <mesh name="pelvis_geom_3_l_pelvis" file="Geometry/l_pelvis.stl"/>
-    <mesh name="femur_r_geom_1_femur_r" file="Geometry/femur_r.stl"/>
-    <mesh name="tibia_r_geom_1_tibia_r" file="Geometry/tibia_r.stl"/>
-    <mesh name="tibia_r_geom_2_fibula" file="Geometry/fibula.stl"/>
-    <mesh name="talus_r_geom_1_talus" file="Geometry/talus.stl"/>
-    <mesh name="calcn_r_geom_1_foot" file="Geometry/foot.stl"/>
-    <mesh name="toes_r_geom_1_bofoot" file="Geometry/bofoot.stl"/>
-    <mesh name="femur_l_geom_1_femur_l" file="Geometry/femur_l.stl"/>
-    <mesh name="tibia_l_geom_1_tibia_l" file="Geometry/tibia_l.stl"/>
-    <mesh name="tibia_l_geom_2_l_fibula" file="Geometry/l_fibula.stl"/>
+    <mesh name="pelvis_geom_3_l_pelvis" file="../meshes/l_pelvis.stl"/>
+    <mesh name="femur_r_geom_1_femur_r" file="../meshes/r_femur.stl"/>
+    <mesh name="tibia_r_geom_1_tibia_r" file="../meshes/r_tibia.stl"/>
+    <mesh name="tibia_r_geom_2_fibula" file="../meshes/r_fibula.stl"/>
+    <mesh name="talus_r_geom_1_talus" file="../meshes/r_talus.stl"/>
+    <mesh name="calcn_r_geom_1_foot" file="../meshes/r_foot.stl"/>
+    <mesh name="toes_r_geom_1_bofoot" file="../meshes/r_bofoot.stl"/>
+    <mesh name="femur_l_geom_1_femur_l" file="../meshes/l_femur.stl"/>
+    <mesh name="tibia_l_geom_1_tibia_l" file="../meshes/l_tibia.stl"/>
+    <mesh name="tibia_l_geom_2_l_fibula" file="../meshes/l_fibula.stl"/>
     <mesh name="AnkleAssembly_geom_1_AnkleAssembly" file="Geometry/AnkleAssembly.stl"/>
     <mesh name="Foot_geom_1_Foot_Amp" file="Geometry/Foot_Amp.stl"/>
-    <mesh name="torso_geom_1_hat_spine" file="Geometry/hat_spine.stl"/>
-    <mesh name="torso_geom_2_hat_jaw" file="Geometry/hat_jaw.stl"/>
-    <mesh name="torso_geom_3_hat_skull" file="Geometry/hat_skull.stl"/>
-    <mesh name="torso_geom_4_hat_ribs" file="Geometry/hat_ribs.stl"/>
+    <mesh name="torso_geom_1_hat_spine" file="../meshes/hat_spine.stl"/>
+    <mesh name="torso_geom_2_hat_jaw" file="../meshes/hat_jaw.stl"/>
+    <mesh name="torso_geom_3_hat_skull" file="../meshes/hat_skull.stl"/>
+    <mesh name="torso_geom_4_hat_ribs" file="../meshes/hat_ribs_scap.stl"/>
   </asset>
   <worldbody>
     <light pos="0 0 0" dir="0 0 -1" directional="true"/>
