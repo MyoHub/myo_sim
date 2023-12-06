@@ -44,14 +44,14 @@
     <body name="ground" quat="0.707035 0.707179 0 0">
       <geom name="ground-plane" size="10 10 0.125" quat="0.707035 -0.707179 0 0" type="plane" rgba="1 0.7 0.4 1"/>
     </body>
-    <body name="pelvis" quat="0.707035 0.707179 0 0">
+    <body name="pelvis" quat="0.707035 0.707179 0 0" pos="0 0 0.945">
       <inertial pos="-0.0707 0 0" mass="11.777" diaginertia="0.1028 0.0871 0.0579"/>
-      <joint name="pelvis_tx" pos="0 0 0" axis="1 0 0" limited="false" type="slide" range="-5 5" damping="0"/>
-      <joint name="pelvis_ty" pos="0 0 0" axis="0 1 0" limited="false" type="slide" range="-1 2" damping="0" user="0.95"/>
-      <joint name="pelvis_tz" pos="0 0 0" axis="0 0 1" limited="false" type="slide" range="-3 3" damping="0"/>
-      <joint name="pelvis_tilt" pos="0 0 0" axis="0 0 1" limited="false" range="-1.571 1.571" damping="0"/>
-      <joint name="pelvis_list" pos="0 0 0" axis="1 0 0" limited="false" range="-1.571 1.571" damping="0"/>
-      <joint name="pelvis_rotation" pos="0 0 0" axis="0 1 0" limited="false" range="-1.571 1.571" damping="0"/>
+      <joint name="pelvis_tx" pos="0 0 0" axis="1 0 0" type="slide" range="-5 5" damping="0"/>
+      <joint name="pelvis_ty" pos="0 0 0" axis="0 1 0" type="slide" range="-1 2" damping="0" user="0.95"/>
+      <joint name="pelvis_tz" pos="0 0 0" axis="0 0 1" type="slide" range="-3 3" damping="0"/>
+      <joint name="pelvis_tilt" pos="0 0 0" axis="0 0 1" range="-1.571 1.571" damping="0"/>
+      <joint name="pelvis_list" pos="0 0 0" axis="1 0 0" range="-1.571 1.571" damping="0"/>
+      <joint name="pelvis_rotation" pos="0 0 0" axis="0 1 0" range="-1.571 1.571" damping="0"/>
       <geom name="pelvis_geom_1" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_1_sacrum"/>
       <geom name="pelvis_geom_2" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_2_pelvis"/>
       <geom name="pelvis_geom_3" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_3_l_pelvis"/>
@@ -109,9 +109,9 @@
       <site name="extobl_l_extobl_l-P1" pos="-0.03 -0.0636 -0.01"/>
       <body name="femur_r" pos="-0.0707 -0.0661 0.0835">
         <inertial pos="0 -0.17 0" quat="0.5 0.5 -0.5 0.5" mass="9.3014" diaginertia="0.1412 0.1339 0.0351"/>
-        <joint name="hip_flexion_r" pos="0 0 0" axis="0 0 1" limited="false" range="-2.094 2.094"/>
-        <joint name="hip_adduction_r" pos="0 0 0" axis="1 0 0" limited="false" range="-2.094 2.094"/>
-        <joint name="hip_rotation_r" pos="0 0 0" axis="0 1 0" limited="false" range="-2.094 2.094"/>
+        <joint name="hip_flexion_r" pos="0 0 0" axis="0 0 1" range="-2.094 2.094"/>
+        <joint name="hip_adduction_r" pos="0 0 0" axis="1 0 0" range="-2.094 2.094"/>
+        <joint name="hip_rotation_r" pos="0 0 0" axis="0 1 0" range="-2.094 2.094"/>
         <geom name="femur_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="femur_r_geom_1_femur_r"/>
         <site name="glut_med1_r_glut_med1_r-P2" pos="-0.0218 -0.0117 0.0555"/>
         <site name="glut_med2_r_glut_med2_r-P2" pos="-0.0258 -0.0058 0.0527"/>
@@ -139,11 +139,9 @@
         <site name="vas_int_r_vas_int_r-P1" pos="0.029 -0.1924 0.031"/>
         <site name="vas_int_r_vas_int_r-P2" pos="0.0335 -0.2084 0.0285"/>
         <site name="med_gas_r_med_gas_r-P1" pos="-0.019 -0.3929 -0.0235"/>
-        <body name="tibia_r">
+        <body name="tibia_r" pos="0 -0.3957 0">
           <inertial pos="0 -0.1867 0" quat="0.5 0.5 -0.5 0.5" mass="3.7075" diaginertia="0.0511 0.0504 0.0051"/>
-          <joint name="knee_r_translation1" pos="0 0 0" axis="1 0 0" type="slide" range="-0.005574 0.00411" user="-0.00363925"/>
-          <joint name="knee_r_translation2" pos="0 0 0" axis="0 1 0" type="slide" range="-0.4226 -0.3953" user="-0.395713"/>
-          <joint name="knee_angle_r" pos="0 0 0" axis="0 0 1" limited="false" range="-2.094 0.1745"/>
+          <joint name="knee_angle_r" pos="0 0 0" axis="0 0 1" range="-2.094 0.1745"/>
           <geom name="tibia_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="tibia_r_geom_1_tibia_r"/>
           <geom name="tibia_r_geom_2" type="mesh" rgba="1 1 1 1" mesh="tibia_r_geom_2_fibula"/>
           <site name="bifemlh_r_bifemlh_r-P2" pos="-0.0301 -0.036 0.02943"/>
@@ -163,11 +161,11 @@
           <site name="tib_ant_r_tib_ant_r-P2" pos="0.0329 -0.3951 -0.0177"/>
           <body name="talus_r" pos="0 -0.43 0">
             <inertial pos="0 0 0" mass="0.1" diaginertia="0.001 0.001 0.001"/>
-            <joint name="ankle_angle_r" pos="0 0 0" axis="-0.105003 -0.174005 0.979131" limited="false" range="-1.571 1.571"/>
+            <joint name="ankle_angle_r" pos="0 0 0" axis="-0.105003 -0.174005 0.979131" range="-0.45 0.6"/>
             <geom name="talus_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="talus_r_geom_1_talus"/>
             <body name="calcn_r" pos="-0.04877 -0.04195 0.00792">
               <inertial pos="0.1 0.03 0" quat="0 0.707107 0 0.707107" mass="1.25" diaginertia="0.0041 0.0039 0.0014"/>
-              <joint name="subtalar_angle_r" pos="0 0 0" axis="0.787215 0.604711 -0.120902" limited="false" range="-1.571 1.571"/>
+              <joint name="subtalar_angle_r" pos="0 0 0" axis="0.787215 0.604711 -0.120902" range="-0.8727 0.5236"/>
               <geom name="calcn_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="calcn_r_geom_1_foot"/>
               <site name="med_gas_r_med_gas_r-P3" pos="0 0.031 -0.0053"/>
               <site name="soleus_r_soleus_r-P2" pos="0 0.031 -0.0053"/>
@@ -176,50 +174,50 @@
               <site name="tib_ant_r_tib_ant_r-P3" pos="0.1166 0.0178 -0.0305"/>
               <body name="toes_r" pos="0.1788 -0.002 0.00108">
                 <inertial pos="0.0346 0.006 -0.0175" quat="0.707107 0 0 0.707107" mass="0.2166" diaginertia="0.001 0.001 0.001"/>
-                <joint name="mtp_angle_r" pos="0 0 0" axis="-0.581002 0 0.813902" limited="false" range="-1.571 1.571"/>
+                <joint name="mtp_angle_r" pos="0 0 0" axis="-0.581002 0 0.813902" range="-1.571 1.571"/>
                 <geom name="toes_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="toes_r_geom_1_bofoot"/>
               </body>
             </body>
           </body>
           <body name="grac_r_grac_r-P2">
-            <joint name="grac_r_grac_r-P2_x" pos="0 0 0" axis="1 0 0" type="slide" range="-0.02657 -0.01943"/>
-            <joint name="grac_r_grac_r-P2_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.05153 -0.0319"/>
-            <joint name="grac_r_grac_r-P2_z" pos="0 0 0" axis="0 0 1" type="slide" range="-0.03774 -0.0358"/>
+            <joint name="grac_r_grac_r-P2_x" pos="-0.026 0 0" axis="1 0 0" type="slide" range="-0.02657 -0.01943"/>
+            <joint name="grac_r_grac_r-P2_y" pos="0 -0.0334 0" axis="0 1 0" type="slide" range="-0.05153 -0.0319"/>
+            <joint name="grac_r_grac_r-P2_z" pos="0 0 -0.0376" axis="0 0 1" type="slide" range="-0.03774 -0.0358"/>
             <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
             <site name="grac_r_grac_r-P2" pos="0 0 0"/>
           </body>
           <body name="rect_fem_r_rect_fem_r-P3" pos="0 0 0.001399">
-            <joint name="rect_fem_r_rect_fem_r-P3_x" pos="0 0 0" axis="1 0 0" type="slide" range="0.01558 0.0733"/>
-            <joint name="rect_fem_r_rect_fem_r-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.06738 0.02531"/>
+            <joint name="rect_fem_r_rect_fem_r-P3_x" pos="0.0626 0 0" axis="1 0 0" type="slide" range="0.01558 0.0733"/>
+            <joint name="rect_fem_r_rect_fem_r-P3_y" pos="0 0.0203 0" axis="0 1 0" type="slide" range="-0.06738 0.02531"/>
             <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
             <site name="rect_fem_r_rect_fem_r-P3" pos="0 0 0"/>
           </body>
           <body name="vas_int_r_vas_int_r-P4" pos="0 0 0.001799">
-            <joint name="vas_int_r_vas_int_r-P4_x" pos="0 0 0" axis="1 0 0" type="slide" range="0.008273 0.06844"/>
-            <joint name="vas_int_r_vas_int_r-P4_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.06857 0.02752"/>
+            <joint name="vas_int_r_vas_int_r-P4_x" pos="0.0565 0 0" axis="1 0 0" type="slide" range="0.008273 0.06844"/>
+            <joint name="vas_int_r_vas_int_r-P4_y" pos="0 0.0248 0" axis="0 1 0" type="slide" range="-0.06857 0.02752"/>
             <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
             <site name="vas_int_r_vas_int_r-P4" pos="0 0 0"/>
           </body>
         </body>
         <body name="vas_int_r_vas_int_r-P3" pos="0.0335 0 0">
-          <joint name="vas_int_r_vas_int_r-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.403 -0.2084"/>
-          <joint name="vas_int_r_vas_int_r-P3_z" pos="0 0 0" axis="0 0 1" type="slide" range="0.0055 0.0285"/>
+          <joint name="vas_int_r_vas_int_r-P3_y" pos="0 -0.223 0" axis="0 1 0" type="slide" range="-0.403 -0.2084"/>
+          <joint name="vas_int_r_vas_int_r-P3_z" pos="0 0 0.0267" axis="0 0 1" type="slide" range="0.0055 0.0285"/>
           <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
           <site name="vas_int_r_vas_int_r-P3" pos="0 0 0"/>
         </body>
         <body name="med_gas_r_med_gas_r-P2">
-          <joint name="med_gas_r_med_gas_r-P2_x" pos="0 0 0" axis="1 0 0" type="slide" range="-0.03 -0.019"/>
-          <joint name="med_gas_r_med_gas_r-P2_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.4022 -0.3929"/>
-          <joint name="med_gas_r_med_gas_r-P2_z" pos="0 0 0" axis="0 0 1" type="slide" range="-0.0258 -0.0235"/>
+          <joint name="med_gas_r_med_gas_r-P2_x" pos="-0.0291 0 0" axis="1 0 0" type="slide" range="-0.03 -0.019"/>
+          <joint name="med_gas_r_med_gas_r-P2_y" pos="0 -0.402 0" axis="0 1 0" type="slide" range="-0.4022 -0.3929"/>
+          <joint name="med_gas_r_med_gas_r-P2_z" pos="0 0 -0.0256" axis="0 0 1" type="slide" range="-0.0258 -0.0235"/>
           <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
           <site name="med_gas_r_med_gas_r-P2" pos="0 0 0"/>
         </body>
       </body>
       <body name="femur_l" pos="-0.0707 -0.0661 -0.0835">
         <inertial pos="0 -0.17 0" quat="0.5 0.5 -0.5 0.5" mass="9.3014" diaginertia="0.1412 0.1339 0.0351"/>
-        <joint name="hip_flexion_l" pos="0 0 0" axis="0 0 1" limited="false" range="-2.094 2.094"/>
-        <joint name="hip_adduction_l" pos="0 0 0" axis="-1 0 0" limited="false" range="-2.094 2.094"/>
-        <joint name="hip_rotation_l" pos="0 0 0" axis="0 -1 0" limited="false" range="-2.094 2.094"/>
+        <joint name="hip_flexion_l" pos="0 0 0" axis="0 0 1" range="-2.094 2.094"/>
+        <joint name="hip_adduction_l" pos="0 0 0" axis="-1 0 0" range="-2.094 2.094"/>
+        <joint name="hip_rotation_l" pos="0 0 0" axis="0 -1 0" range="-2.094 2.094"/>
         <geom name="femur_l_geom_1" type="mesh" rgba="1 1 1 1" mesh="femur_l_geom_1_femur_l"/>
         <site name="glut_med1_l_glut_med1_l-P2" pos="-0.0218 -0.0117 -0.0555"/>
         <site name="glut_med2_l_glut_med2_l-P2" pos="-0.0258 -0.0058 -0.0527"/>
@@ -246,11 +244,9 @@
         <site name="vas_int_l_vas_int_l-P1" pos="0.029 -0.1924 -0.031"/>
         <site name="vas_int_l_vas_int_l-P2" pos="0.0335 -0.2084 -0.0285"/>
         <site name="med_gas_l_med_gas_l-P1" pos="-0.019 -0.3929 0.0235"/>
-        <body name="tibia_l">
+        <body name="tibia_l" pos="0 -0.3957 0">
           <inertial pos="0 -0.1867 0" quat="0.5 0.5 -0.5 0.5" mass="3.7075" diaginertia="0.0511 0.0504 0.0051"/>
-          <joint name="knee_l_translation1" pos="0 0 0" axis="1 0 0" type="slide" range="-0.005574 0.00411" user="-0.00363925"/>
-          <joint name="knee_l_translation2" pos="0 0 0" axis="0 1 0" type="slide" range="-0.4226 -0.3953" user="-0.395713"/>
-          <joint name="knee_angle_l" pos="0 0 0" axis="0 0 1" limited="false" range="-2.094 0.1745"/>
+          <joint name="knee_angle_l" pos="0 0 0" axis="0 0 1" range="-2.094 0.1745"/>
           <geom name="tibia_l_geom_1" type="mesh" rgba="1 1 1 1" mesh="tibia_l_geom_1_tibia_l"/>
           <geom name="tibia_l_geom_2" type="mesh" rgba="1 1 1 1" mesh="tibia_l_geom_2_l_fibula"/>
           <site name="bifemlh_l_bifemlh_l-P2" pos="-0.0301 -0.036 -0.02943"/>
@@ -260,41 +256,41 @@
           <site name="sar_l_sar_l-P3" pos="-0.0056 -0.0419 0.0399"/>
           <site name="sar_l_sar_l-P4" pos="0.006 -0.0589 0.0383"/>
           <site name="sar_l_sar_l-P5" pos="0.0243 -0.084 0.0252"/>
-          <body name="AnkleAssembly" pos="-0.04 -0.124 -0.05">
+          <body name="AnkleAssembly" pos="-0.04 -0.116 -0.05">
             <inertial pos="0.04136 -0.24932 0.04006" quat="0.341335 0.435693 -0.739061 0.383994" mass="1.71" diaginertia="0.00220091 0.00207699 0.0012951"/>
             <geom name="AnkleAssembly_geom_1" type="mesh" rgba="0.87 0.56 0.34 1" mesh="AnkleAssembly_geom_1_AnkleAssembly"/>
             <body name="Foot">
-              <inertial pos="0.06215 -0.35314 0.04496" quat="0.130389 0.68448 0.215635 0.684096" mass="0.76" diaginertia="0.00184373 0.001789 0.001"/>
-              <joint name="yR_FootToAnkleAssembly" pos="0 0 0" axis="-1 0 0" range="-0.8727 0.5236"/>
-              <joint name="zR_FootToAnkleAssembly" pos="0 0 0" axis="0.105003 0.174005 0.979131" range="-0.45 0.6"/>
+              <inertial pos="0.06215 -0.35314 0.04496" quat="0.130389 0.68448 0.215635 0.684096" mass="0.76" diaginertia="0.00184373 0.001789 0.001"/> <!--pos="0.06215 -0.35314 0.04496"-->
+              <joint name="zR_FootToAnkleAssembly" armature="0.0060" pos="0 0 0" axis="0 0 1" range="-0.104 0.19" type="hinge"/> <!--axis="-0.105003 -0.174005 0.979131" range="-0.45 0.6"-->
+              <joint name="yR_FootToAnkleAssembly" armature="0.0060" pos="0 0 0" axis="1 0 0" range="-0.09 0.09" type="hinge"/> <!-- axis="0.787215 -0.174005 -0.120902" range="-0.8727 0.5236" -->
               <geom name="Foot_geom_1" type="mesh" rgba="0.301961 0.301961 0.301961 1" mesh="Foot_geom_1_Foot_Amp"/>
             </body>
           </body>
           <body name="rect_fem_l_rect_fem_l-P3" pos="0 0 -0.001401">
-            <joint name="rect_fem_l_rect_fem_l-P3_x" pos="0 0 0" axis="1 0 0" type="slide" range="0.01558 0.0733"/>
-            <joint name="rect_fem_l_rect_fem_l-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.06738 0.02531"/>
+            <joint name="rect_fem_l_rect_fem_l-P3_x" pos="0.0626 0 0" axis="1 0 0" type="slide" range="0.01558 0.0733"/>
+            <joint name="rect_fem_l_rect_fem_l-P3_y" pos="0 0.0203 0" axis="0 1 0" type="slide" range="-0.06738 0.02531"/>
             <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
             <site name="rect_fem_l_rect_fem_l-P3" pos="0 0 0"/>
           </body>
           <body name="vas_int_l_vas_int_l-P4" pos="0 0 -0.001801">
-            <joint name="vas_int_l_vas_int_l-P4_x" pos="0 0 0" axis="1 0 0" type="slide" range="0.008273 0.06844"/>
-            <joint name="vas_int_l_vas_int_l-P4_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.06857 0.02752"/>
+            <joint name="vas_int_l_vas_int_l-P4_x" pos="0.0565 0 0" axis="1 0 0" type="slide" range="0.008273 0.06844"/>
+            <joint name="vas_int_l_vas_int_l-P4_y" pos="0 0.0248 0" axis="0 1 0" type="slide" range="-0.06857 0.02752"/>
             <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
             <site name="vas_int_l_vas_int_l-P4" pos="0 0 0"/>
           </body>
         </body>
         <body name="vas_int_l_vas_int_l-P3" pos="0.0335 0 0">
-          <joint name="vas_int_l_vas_int_l-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.403 -0.2084"/>
-          <joint name="vas_int_l_vas_int_l-P3_z" pos="0 0 0" axis="0 0 1" type="slide" range="-0.0285 -0.0055"/>
+          <joint name="vas_int_l_vas_int_l-P3_y" pos="0 -0.223 0" axis="0 1 0" type="slide" range="-0.403 -0.2084"/>
+          <joint name="vas_int_l_vas_int_l-P3_z" pos="0 0 -0.0267" axis="0 0 1" type="slide" range="-0.0285 -0.0055"/>
           <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
           <site name="vas_int_l_vas_int_l-P3" pos="0 0 0"/>
         </body>
       </body>
       <body name="torso" pos="-0.1007 0.0815 0">
         <inertial pos="-0.03 0.32 0" quat="0.707107 0.707107 0 0" mass="34.2366" diaginertia="1.4745 1.4314 0.7555"/>
-        <joint name="lumbar_extension" pos="0 0 0" axis="0 0 1" limited="false" range="-1.571 1.571"/>
-        <joint name="lumbar_bending" pos="0 0 0" axis="1 0 0" limited="false" range="-1.571 1.571"/>
-        <joint name="lumbar_rotation" pos="0 0 0" axis="0 1 0" limited="false" range="-1.571 1.571"/>
+        <joint name="lumbar_extension" pos="0 0 0" axis="0 0 1" range="-1.571 1.571"/>
+        <joint name="lumbar_bending" pos="0 0 0" axis="1 0 0" range="-1.571 1.571"/>
+        <joint name="lumbar_rotation" pos="0 0 0" axis="0 1 0" range="-1.571 1.571"/>
         <geom name="torso_geom_1" type="mesh" rgba="1 1 1 1" mesh="torso_geom_1_hat_spine"/>
         <geom name="torso_geom_2" type="mesh" rgba="1 1 1 1" mesh="torso_geom_2_hat_jaw"/>
         <geom name="torso_geom_3" type="mesh" rgba="1 1 1 1" mesh="torso_geom_3_hat_skull"/>
@@ -307,28 +303,28 @@
         <site name="extobl_l_extobl_l-P2" pos="0.065 0.11 -0.11"/>
       </body>
       <body name="iliacus_r_iliacus_r-P3" pos="0 0 0.0811">
-        <joint name="iliacus_r_iliacus_r-P3_x" pos="0 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0258"/>
-        <joint name="iliacus_r_iliacus_r-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.0805 -0.055"/>
+        <joint name="iliacus_r_iliacus_r-P3_x" pos="-0.0288 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0258"/>
+        <joint name="iliacus_r_iliacus_r-P3_y" pos="0 -0.0805 0" axis="0 1 0" type="slide" range="-0.0805 -0.055"/>
         <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
         <site name="iliacus_r_iliacus_r-P3" pos="0 0 0"/>
       </body>
       <body name="psoas_r_psoas_r-P3">
-        <joint name="psoas_r_psoas_r-P3_x" pos="0 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0238"/>
-        <joint name="psoas_r_psoas_r-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.0805 -0.057"/>
-        <joint name="psoas_r_psoas_r-P3_z" pos="0 0 0" axis="0 0 1" type="slide" range="0.0759 0.0816"/>
+        <joint name="psoas_r_psoas_r-P3_x" pos="-0.0288 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0238"/>
+        <joint name="psoas_r_psoas_r-P3_y" pos="0 -0.0805 0" axis="0 1 0" type="slide" range="-0.0805 -0.057"/>
+        <joint name="psoas_r_psoas_r-P3_z" pos="0 0 0.0816" axis="0 0 1" type="slide" range="0.0759 0.0816"/>
         <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
         <site name="psoas_r_psoas_r-P3" pos="0 0 0"/>
       </body>
       <body name="iliacus_l_iliacus_l-P3" pos="0 0 -0.0816">
-        <joint name="iliacus_l_iliacus_l-P3_x" pos="0 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0258"/>
-        <joint name="iliacus_l_iliacus_l-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.0805 -0.055"/>
+        <joint name="iliacus_l_iliacus_l-P3_x" pos="-0.0288 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0258"/>
+        <joint name="iliacus_l_iliacus_l-P3_y" pos="0 -0.0805 0" axis="0 1 0" type="slide" range="-0.0805 -0.055"/>
         <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
         <site name="iliacus_l_iliacus_l-P3" pos="0 0 0"/>
       </body>
       <body name="psoas_l_psoas_l-P3">
-        <joint name="psoas_l_psoas_l-P3_x" pos="0 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0238"/>
-        <joint name="psoas_l_psoas_l-P3_y" pos="0 0 0" axis="0 1 0" type="slide" range="-0.0805 -0.057"/>
-        <joint name="psoas_l_psoas_l-P3_z" pos="0 0 0" axis="0 0 1" type="slide" range="-0.0816 -0.0759"/>
+        <joint name="psoas_l_psoas_l-P3_x" pos="-0.0288 0 0" axis="1 0 0" type="slide" range="-0.0288 -0.0238"/>
+        <joint name="psoas_l_psoas_l-P3_y" pos="0 -0.0805 0" axis="0 1 0" type="slide" range="-0.0805 -0.057"/>
+        <joint name="psoas_l_psoas_l-P3_z" pos="0 0 -0.0816" axis="0 0 1" type="slide" range="-0.0816 -0.0759"/>
         <geom size="0.0005" contype="2" conaffinity="2" rgba="0 0 1 0"/>
         <site name="psoas_l_psoas_l-P3" pos="0 0 0"/>
       </body>
@@ -355,10 +351,6 @@
     <pair geom1="ground-plane" geom2="torso_geom_4"/>
   </contact>
   <equality>
-    <joint joint1="knee_r_translation1" joint2="knee_angle_r" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="knee_r_translation2" joint2="knee_angle_r" polycoef="-0.3957 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="knee_l_translation1" joint2="knee_angle_l" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint joint1="knee_l_translation2" joint2="knee_angle_l" polycoef="-0.3957 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2"/>
     <joint joint1="grac_r_grac_r-P2_x" joint2="knee_angle_r" polycoef="-0.02602 -0.003147 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
     <joint joint1="grac_r_grac_r-P2_y" joint2="knee_angle_r" polycoef="-0.03341 0.008653 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
     <joint joint1="grac_r_grac_r-P2_z" joint2="knee_angle_r" polycoef="-0.03759 -0.0008552 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
@@ -681,8 +673,10 @@
     <general name="intobl_l" class="muscle" tendon="intobl_l_tendon" lengthrange="0.0454006 0.306151" gainprm="0.0927951 1.91375 850.01 1 0 2 10 3.87544 1.4 0" biasprm="0.0927951 1.91375 850.01 1 0 2 10 3.87544 1.4 0"/>
     <general name="extobl_r" class="muscle" tendon="extobl_r_tendon" lengthrange="0.0444131 0.329629" gainprm="0.0678468 1.32711 705.069 1 0 2 10 3.01668 1.4 0" biasprm="0.0678468 1.32711 705.069 1 0 2 10 3.01668 1.4 0"/>
     <general name="extobl_l" class="muscle" tendon="extobl_l_tendon" lengthrange="0.0444131 0.329629" gainprm="0.01 1 957.798 1 0 2 10 3.37018 1.4 0" biasprm="0.01 1 957.798 1 0 2 10 3.37018 1.4 0"/>
+    <motor gear="200" joint="yR_FootToAnkleAssembly" name="yR_FootToAnkleAssembly"/>
+    <motor gear="200" joint="zR_FootToAnkleAssembly" name="zR_FootToAnkleAssembly"/>
   </actuator>
   <keyframe>
-    <key name="default-pose" qpos="0 0.95 0 0 0 0 0 0 0 -0.003639 -0.3957 0 0 0 0 -0.02602 -0.03341 -0.03759 0.06259 0.02032 0.05647 0.02476 -0.2234 0.02673 -0.02915 -0.4015 -0.02562 0 0 0 -0.003639 -0.3957 0 0 0 0.0626 0.0203 0.0565 0.0248 -0.223 -0.0267 0 0 0 -0.0288 -0.0805 -0.0288 -0.0805 0.0816 -0.0288 -0.0805 -0.0288 -0.0805 -0.0816"/>
+    <key name="default-pose" qpos="0 0 0 0 0 0 0 0 0 0 0 0 0 -0.02602 -0.03341 -0.03759 0.06259 0.02032 0.05647 0.02476 -0.2234 0.02673 -0.02915 -0.4015 -0.02562 0 0 0 0 0 0 0.0626 0.0203 0.0565 0.0248 -0.223 -0.0267 0 0 0 -0.0288 -0.0805 -0.0288 -0.0805 0.0816 -0.0288 -0.0805 -0.0288 -0.0805 -0.0816"/>
   </keyframe>
 </mujoco>

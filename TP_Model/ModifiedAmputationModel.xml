@@ -1,7 +1,7 @@
 <mujoco model="template">
   <!-- This model has been converted from an OpenSim model. Model conversion by MyoConverter https://github.com/MyoHub/myoconverter. This model is licensed under Apache 2.0. -->
   <compiler angle="radian" autolimits="true"/>
-  <option timestep="0.001" collision="predefined"/>
+  <!--option timestep="0.001" collision="predefined"/-->
   <size njmax="1000" nconmax="400" nkey="1" nuser_jnt="1"/>
   <visual>
     <scale framelength="0.5" framewidth="0.01"/>
