@@ -15,7 +15,7 @@ Model tested in Mujoco, we need to remove collision attribute for it to work fin
 ![Screenshot from 2023-11-22 03-38-25.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-22%2003-38-25.png)
 ## Conversion process:
 
-The myoHand model was generated using our developed automatic conversion pipeline (released on June 2023).
+The myoTP model was generated using our developed automatic conversion pipeline (released on June 2023).
 
 Three Conversion steps were taken to generate the myoLeg models from the reference Osim model:
 
@@ -27,11 +27,11 @@ After the conversion, a manual adjusting process is done to correct the abnormal
 
 ## Maunal adjustment:
 - Modification of yR_FootToAnkle position and range of motion.
-- Different muscles were removed to match the example model Gait2354.
+- Modification of joint position for yR_FootToAnkle and zR_FootToAnkle to match motor location.
+- Added manual initial position in all joints.
 
 ## Contact Geometries:
 Missing manual adjustments.
 
 ## Issues:
-- When using the myosuite modified environment WalkV0 is starting in Done State, even when attempting to load keyframe.
-- yR_FootToAnkle and zR_FootToAnkle movement de-attach from the main body.
+- Verify working model.
