@@ -340,8 +340,8 @@
             <geom name="AnkleAssembly_geom_1" type="mesh" rgba="0.87 0.56 0.34 1" mesh="AnkleAssembly_geom_1_AnkleAssembly"/>
             <body name="Foot">
               <inertial pos="0.06215 -0.35314 0.04496" quat="0.130389 0.68448 0.215635 0.684096" mass="0.76" diaginertia="0.00184373 0.001789 0.001"/>
-              <joint name="yR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" axis="1 -2.654e-06 -7.041e-12" range="-0.8727 0.5236"/>
-              <joint name="zR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" axis="0 -2.654e-06 1" range="-0.45 0.6"/>
+              <joint name="zR_FootToAnkleAssembly" armature="0.0060" pos="0.02 -0.288 0.06" axis="0 -2.654e-06 1" range="-0.45 0.6" type="hinge"/>
+              <joint name="yR_FootToAnkleAssembly" armature="0.0060" pos="0.02 -0.288 0.06" axis="1 -2.654e-06 -7.041e-12" range="-0.8727 0.5236" type="hinge"/>
               <geom name="Foot_geom_1" type="mesh" rgba="0.301961 0.301961 0.301961 1" mesh="Foot_geom_1_Foot_Amp"/>
             </body>
           </body>
@@ -862,6 +862,8 @@
     <general name="intobl_l" class="muscle" tendon="intobl_l_tendon" lengthrange="0.0454006 0.306151" gainprm="0.123147 1.87034 886.909 1 0 2 10 3.92027 1.4 0" biasprm="0.123147 1.87034 886.909 1 0 2 10 3.92027 1.4 0"/>
     <general name="extobl_r" class="muscle" tendon="extobl_r_tendon" lengthrange="0.0444131 0.329629" gainprm="0.0536369 1.34223 713.505 1 0 2 10 2.83967 1.4 0" biasprm="0.0536369 1.34223 713.505 1 0 2 10 2.83967 1.4 0"/>
     <general name="extobl_l" class="muscle" tendon="extobl_l_tendon" lengthrange="0.0444131 0.329629" gainprm="0.01 1 980.145 1 0 2 10 3.12315 1.4 0" biasprm="0.01 1 980.145 1 0 2 10 3.12315 1.4 0"/>
+    <motor gear="200" joint="yR_FootToAnkleAssembly" name="yR_FootToAnkleAssembly"/>
+    <motor gear="200" joint="zR_FootToAnkleAssembly" name="zR_FootToAnkleAssembly"/>
   </actuator>
   <keyframe>
     <key name="default-pose" qpos="0 0 0 0 0 0 0 0 0 -0.003639 0 0 0 0 0 0 -0.003639 0 0 0 0 0"/>
