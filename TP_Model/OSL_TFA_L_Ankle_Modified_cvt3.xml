@@ -4,9 +4,11 @@
   <!--option timestep="0.005" collision="predefined"/-->
   <size njmax="1000" nconmax="400" nkey="1" nuser_jnt="1"/>
   <visual>
-    <scale framelength="0.5" framewidth="0.01"/>
+    <scale framelength="0.5" framewidth="0.01" light="0.05"/>
+    <headlight ambient=".5 .5 .5" diffuse="0.50 0.50 0.50" specular="0.50 0.50 0.50"/>
+    <global elevation="-15"/>
   </visual>
-  <statistic meansize="0.295006" extent="2.54254" center="0.271269 0 0"/>
+  <statistic extent="5" center="0 -1 1"/>
   <default class="main">
     <joint limited="true" armature="1e-05" damping="0.05"/>
     <geom margin="0.001" rgba="0.8 0.6 0.4 1"/>
@@ -20,6 +22,21 @@
     </default>
   </default>
   <asset>
+
+    <!-- Scene by Myosuite -©vk©-->
+    <texture name="textscene" type="2d" file="../scene/myosuite_scene.png"/>
+    <material name="matscene" texture="textscene"/>
+    <mesh name="meshscene" file="../scene/myosuite_scene_noFloor.msh" scale=".01 .01 .01"/>
+
+    <!-- Floor -©vk©-->
+    <texture name="texfloor" type="2d" height="1" width="1" file="../scene/floor0.png"/>
+    <material name="matfloor" reflectance="0.01" texture="texfloor" texrepeat="1 1" texuniform="true"/>
+
+    <!-- Logo -©vk©-->
+    <texture name="textlogo" type="2d" file="../scene/myosuite_logo.png"/>
+    <mesh name="logo" file="../scene/myosuite_logo.msh" scale="1 1 1"/>
+    <material name="matlogo" texture="textlogo"/>
+    <!-- Scene by Myosuite -©vk©-->
     <texture type="skybox" builtin="gradient" rgb1="1 1 1" rgb2="0.6 0.8 1" width="256" height="1536"/>
     <mesh name="pelvis_geom_1_sacrum" file="../meshes/sacrum.stl"/>
     <mesh name="pelvis_geom_2_pelvis" file="Geometry/pelvis.stl"/>
@@ -41,10 +58,14 @@
     <mesh name="torso_geom_4_hat_ribs" file="../meshes/hat_ribs_scap.stl"/>
   </asset>
   <worldbody>
-    <light pos="0 0 0" dir="0 0 -1" directional="true"/>
-    <body name="ground" quat="0.707035 0.707179 0 0">
-      <geom name="ground-plane" size="10 10 0.125" quat="0.707035 -0.707179 0 0" type="plane" rgba="1 0.7 0.4 1"/>
-    </body>
+    <!--light pos="0 0 0" dir="0 0 -1" directional="true"/--> <!--Default light-->
+    <light directional="false" diffuse=".5 .5 .5" specular="0.25 0.25 0.25" pos="0 -3 3" dir="0 1 -1" mode="trackcom"/>
+    <camera name="side_view" pos="-3 0 2.25" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
+    <camera name="front_view" pos="0 -3 2.25" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
+    <geom name="floor" pos="0 0 -.4" size="7 7 .1" conaffinity="1" contype="1" type="plane" material="matfloor" condim="3"/>
+    <geom type="mesh" mesh="meshscene" material="matscene" pos="0 0 -.41326" euler="0 0 0"  conaffinity="0" contype="0"/>
+    <geom type="cylinder" pos="0 0 -.190" size="1.05 .205" contype="1" conaffinity="1" group="4"/>
+    <geom type="mesh" mesh="logo" material="matlogo" group="1" conaffinity="0" contype="0" euler="1.57 0 0" pos="0 6.95 2.1"/>
     <body name="pelvis" quat="0.707035 0.707179 0 0" pos="0 0 0.945">
       <inertial pos="-0.0707 0 0" mass="11.777" diaginertia="0.1028 0.0871 0.0579"/>
       <joint name="pelvis_tx" pos="0 0 0" axis="1 0 0" limited="false" type="slide" range="-5 5" damping="0"/>
@@ -133,8 +154,8 @@
       <body name="femur_r" pos="-0.0707 -0.0661 0.0835">
         <inertial pos="0 -0.17 0" quat="0.5 0.5 -0.5 0.5" mass="9.3014" diaginertia="0.1412 0.1339 0.0351"/>
         <joint name="hip_flexion_r" pos="0 0 0" axis="0 0 1" range="-2.094 2.094"/>
-        <joint name="hip_adduction_r" pos="0 0 0" axis="1 0 0" range="-2.094 2.094"/>
-        <joint name="hip_rotation_r" pos="0 0 0" axis="0 1 0" range="-2.094 2.094"/>
+        <joint name="hip_adduction_r" pos="0 0 0" axis="1 0 0" range="-1.59  0.251"/>
+        <joint name="hip_rotation_r" pos="0 0 0" axis="0 1 0" range="-0.3 0.3"/>
         <geom name="femur_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="femur_r_geom_1_femur_r"/>
         <site name="glut_med1_r_glut_med1_r-P2" pos="-0.0218 -0.0117 0.0555"/>
         <site name="glut_med2_r_glut_med2_r-P2" pos="-0.0258 -0.0058 0.0527"/>
@@ -225,11 +246,11 @@
           <site name="ext_hal_r_ext_hal_r-P2" pos="0.0326 -0.3985 -0.0085"/>
           <body name="talus_r" pos="0 -0.43 0">
             <inertial pos="0 0 0" mass="0.1" diaginertia="0.001 0.001 0.001"/>
-            <joint name="ankle_angle_r" pos="0 0 0" axis="-0.105003 -0.174005 0.979131" limited="false" range="-1.571 1.571"/>
+            <joint name="ankle_angle_r" pos="0 0 0" axis="-0.105003 -0.174005 0.979131" range="-0.487 0.817"/>
             <geom name="talus_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="talus_r_geom_1_talus"/>
             <body name="calcn_r" pos="-0.04877 -0.04195 0.00792">
               <inertial pos="0.1 0.03 0" quat="0 0.707107 0 0.707107" mass="1.25" diaginertia="0.0041 0.0039 0.0014"/>
-              <joint name="subtalar_angle_r" pos="0 0 0" axis="0.787215 0.604711 -0.120902" limited="false" range="-1.571 1.571"/>
+              <joint name="subtalar_angle_r" pos="0 0 0" axis="0.787215 0.604711 -0.120902" range="-0.233 0.833"/>
               <geom name="calcn_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="calcn_r_geom_1_foot"/>
               <site name="med_gas_r_med_gas_r-P3" pos="0 0.031 -0.0053"/>
               <site name="lat_gas_r_lat_gas_r-P3" pos="0 0.031 -0.0053"/>
@@ -257,7 +278,7 @@
               <site name="ext_hal_r_ext_hal_r-P5" pos="0.1734 0.0139 -0.028"/>
               <body name="toes_r" pos="0.1788 -0.002 0.00108">
                 <inertial pos="0.0346 0.006 -0.0175" quat="0.707107 0 0 0.707107" mass="0.2166" diaginertia="0.001 0.001 0.001"/>
-                <joint name="mtp_angle_r" pos="0 0 0" axis="-0.581002 0 0.813902" limited="false" range="-1.571 1.571"/>
+                <joint name="mtp_angle_r" pos="0 0 0" axis="-0.581002 0 0.813902" range="-0.8 0.28"/>
                 <geom name="toes_r_geom_1" type="mesh" rgba="1 1 1 1" mesh="toes_r_geom_1_bofoot"/>
                 <site name="flex_dig_r_flex_dig_r-P6" pos="-0.0019 -0.0078 0.0147"/>
                 <site name="flex_dig_r_flex_dig_r-P7" pos="0.0285 -0.0071 0.0215"/>
@@ -276,8 +297,8 @@
       <body name="femur_l" pos="-0.0707 -0.0661 -0.0835">
         <inertial pos="0 -0.17 0" quat="0.5 0.5 -0.5 0.5" mass="9.3014" diaginertia="0.1412 0.1339 0.0351"/>
         <joint name="hip_flexion_l" pos="0 0 0" axis="0 0 1" range="-2.094 2.094"/>
-        <joint name="hip_adduction_l" pos="0 0 0" axis="-1 0 0" range="-2.094 2.094"/>
-        <joint name="hip_rotation_l" pos="0 0 0" axis="0 -1 0" range="-2.094 2.094"/>
+        <joint name="hip_adduction_l" pos="0 0 0" axis="-1 0 0" range="-1.59  0.251"/>
+        <joint name="hip_rotation_l" pos="0 0 0" axis="0 -1 0" range="-0.3 0.3"/>
         <geom name="femur_l_geom_1" type="mesh" rgba="1 1 1 1" mesh="femur_l_geom_1_femur_l"/>
         <site name="glut_med1_l_glut_med1_l-P2" pos="-0.0218 -0.0117 -0.0555"/>
         <site name="glut_med2_l_glut_med2_l-P2" pos="-0.0258 -0.0058 -0.0527"/>
@@ -365,26 +386,7 @@
       </body>
     </body>
   </worldbody>
-  <contact>
-    <pair geom1="ground-plane" geom2="pelvis_geom_1"/>
-    <pair geom1="ground-plane" geom2="pelvis_geom_2"/>
-    <pair geom1="ground-plane" geom2="pelvis_geom_3"/>
-    <pair geom1="ground-plane" geom2="femur_r_geom_1"/>
-    <pair geom1="ground-plane" geom2="tibia_r_geom_1"/>
-    <pair geom1="ground-plane" geom2="tibia_r_geom_2"/>
-    <pair geom1="ground-plane" geom2="talus_r_geom_1"/>
-    <pair geom1="ground-plane" geom2="calcn_r_geom_1"/>
-    <pair geom1="ground-plane" geom2="toes_r_geom_1"/>
-    <pair geom1="ground-plane" geom2="femur_l_geom_1"/>
-    <pair geom1="ground-plane" geom2="tibia_l_geom_1"/>
-    <pair geom1="ground-plane" geom2="tibia_l_geom_2"/>
-    <pair geom1="ground-plane" geom2="AnkleAssembly_geom_1"/>
-    <pair geom1="ground-plane" geom2="Foot_geom_1"/>
-    <pair geom1="ground-plane" geom2="torso_geom_1"/>
-    <pair geom1="ground-plane" geom2="torso_geom_2"/>
-    <pair geom1="ground-plane" geom2="torso_geom_3"/>
-    <pair geom1="ground-plane" geom2="torso_geom_4"/>
-  </contact>
+
   <tendon>
     <spatial name="glut_med1_r_tendon">
       <site site="glut_med1_r_glut_med1_r-P1"/>
