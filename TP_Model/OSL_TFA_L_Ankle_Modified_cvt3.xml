@@ -21,12 +21,12 @@
       <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
     </default>
   </default>
-  <asset>
 
+  <asset>
     <!-- Scene by Myosuite -©vk©-->
     <texture name="textscene" type="2d" file="../scene/myosuite_scene.png"/>
     <material name="matscene" texture="textscene"/>
-    <mesh name="meshscene" file="../scene/myosuite_scene_noFloor.msh" scale=".01 .01 .01"/>
+    <mesh name="meshscene" file="../scene/myosuite_scene_noFloor_noPedestal.msh" scale=".01 .01 .01"/>
 
     <!-- Floor -©vk©-->
     <texture name="texfloor" type="2d" height="1" width="1" file="../scene/floor0.png"/>
@@ -57,15 +57,17 @@
     <mesh name="torso_geom_3_hat_skull" file="../meshes/hat_skull.stl"/>
     <mesh name="torso_geom_4_hat_ribs" file="../meshes/hat_ribs_scap.stl"/>
   </asset>
-  <worldbody>
-    <!--light pos="0 0 0" dir="0 0 -1" directional="true"/--> <!--Default light-->
-    <light directional="false" diffuse=".5 .5 .5" specular="0.25 0.25 0.25" pos="0 -3 3" dir="0 1 -1" mode="trackcom"/>
-    <camera name="side_view" pos="-3 0 2.25" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
-    <camera name="front_view" pos="0 -3 2.25" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
-    <geom name="floor" pos="0 0 -.4" size="7 7 .1" conaffinity="1" contype="1" type="plane" material="matfloor" condim="3"/>
-    <geom type="mesh" mesh="meshscene" material="matscene" pos="0 0 -.41326" euler="0 0 0"  conaffinity="0" contype="0"/>
-    <geom type="cylinder" pos="0 0 -.190" size="1.05 .205" contype="1" conaffinity="1" group="4"/>
-    <geom type="mesh" mesh="logo" material="matlogo" group="1" conaffinity="0" contype="0" euler="1.57 0 0" pos="0 6.95 2.1"/>
+  
+  <worldbody>    
+    <!-- indoor lights -©vk©-->
+      <light directional="false" diffuse=".5 .5 .5" specular="0.25 0.25 0.25" pos="0 -3 3" dir="0 1 -1" mode="trackcom"/>
+      <camera name="side_view" pos="-3 0 2.25" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
+      <camera name="front_view" pos="0 -3 2.25" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
+      <geom name="floor" pos="0 0 0" size="7 7 .1" conaffinity="1" contype="1" type="plane" material="matfloor" condim="3"/>
+      <geom type="mesh" pos="0 0 0" mesh="meshscene" material="matscene" conaffinity="0" contype="0"/>
+      <geom type="mesh" mesh="logo" material="matlogo" group="1" conaffinity="0" contype="0" euler="1.57 0 0" pos="0 6.95 2.1"/>
+      
+    
     <body name="pelvis" quat="0.707035 0.707179 0 0" pos="0 0 0.945">
       <inertial pos="-0.0707 0 0" mass="11.777" diaginertia="0.1028 0.0871 0.0579"/>
       <joint name="pelvis_tx" pos="0 0 0" axis="1 0 0" limited="false" type="slide" range="-5 5" damping="0"/>
