@@ -2,7 +2,6 @@ import unittest
 import os
 import mujoco
 
-
 model_paths = [
             # Basic models
             "basic/myomuscle.xml",
@@ -19,12 +18,21 @@ model_paths = [
             "elbow/myoelbow_1dof6muscles_1dofSoftexo_Ideal.xml",
             "elbow/myoelbow_1dof6muscles_1dofSoftexo_sim2.xml",
 
+            # arms
+            "arm/myoarm.xml",
+
             # hand models
             "hand/myohand.xml",
 
             # leg models
-            "leg/myolegs_v0.56(mj237).mjb",
-            "leg/myolegs_chasetag_v0.11(mj237).mjb",
+            "leg/myolegs.xml",
+
+            # torso
+            "torso/myotorsorigid.xml",
+
+            # scene
+            "scene/myosuite_scene_noPedestal.xml",
+            "scene/myosuite_scene.xml",
         ]
 
 class TestSims(unittest.TestCase):
