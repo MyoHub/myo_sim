@@ -35,18 +35,16 @@
 
   <visual>
     <map fogstart="10" fogend="40" force="10" />
-    <scale light=".05" framewidth=".005"/>
+    <scale light=".25" framewidth=".005"/>
     <headlight ambient=".5 .5 .5" diffuse="0.50 0.50 0.50" specular="0.50 0.50 0.50"/>
     <global elevation="-15"/>
   </visual>
 
   <worldbody>
-    <light directional="false" diffuse=".5 .5 .5" specular="0.25 0.25 0.25" pos="0 -3 3" dir="0 1 -1" mode="trackcom"/>
-    <camera name="side_view" pos="-3 0 2.25" xyaxes="0 -1 0 1 0 2" mode="trackcom"/>
-    <camera name="front_view" pos="0 -3 2.25" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
-    <camera name="view" pos="-1.5 -5 1.8" euler="+1.37 -0.1 0" mode="fixed"/>
-    <geom name="ground" type="plane" size="6 6 0.1" rgba="1 1 1 1" material="matfloor" />
+    <light directional="true" diffuse=".5 .5 .5" specular="0.25 0.25 0.25" pos="0 -3 3" dir="0 1 -1" mode="fixed" castshadow="false"/>
+    <camera name="topview" pos="0 -10.5 10" euler="+0.8 0 0" mode="fixed"/>
 
+    <geom name="ground" type="plane" size="6 6 0.1" rgba="1 1 1 1" material="matfloor" />
     <geom name="fence1" type="mesh" mesh="pyramid"  pos="-6.00 0 0.0" euler="0 0 3.14" material="fence"/>
     <geom name="fence2" type="mesh" mesh="pyramid"  pos="6.00 0 0.0" euler="0 0 0" material="fence"/>
     <geom name="fence3" type="mesh" mesh="pyramid"  pos="0 6.00 0.0" euler="0 0 1.57" material="fence"/>
