@@ -33,6 +33,8 @@ model_paths = [
             # scene
             "scene/myosuite_scene_noPedestal.xml",
             "scene/myosuite_scene.xml",
+            "scene/myosuite_quad.xml",
+            "scene/myosuite_logo.xml",
         ]
 
 class TestSims(unittest.TestCase):
