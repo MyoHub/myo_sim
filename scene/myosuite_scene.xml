@@ -33,6 +33,7 @@
         <scale light=".05" framewidth=".005"/>
         <headlight ambient=".5 .5 .5" diffuse="0.50 0.50 0.50" specular="0.50 0.50 0.50"/>
         <global elevation="-15"/>
+        <rgba actuator='.7 .4 .4 1' actuatorpositive='1 0 0 1' actuatornegative='.175 .1 .1 1'/>
     </visual>
 
 
