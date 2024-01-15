@@ -6,12 +6,8 @@ MyoAmputation TP Model was modified from the OpenLeg Project OpenSim Model:
 https://www.epic.gatech.edu/oslmodels/
 This is a modified reduced version to match similar number of DoF and muscles than example model Gait2354.
 
-Final model used "ModifiedAmputationModel.xml".
-Output of the myoconversion: OSL_TFA_L_Ankle_Modified_cvt3.xml
-
 This generated mujoco MSK model has almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
 
-Model tested in Mujoco, we need to remove collision attribute for it to work fine on Mujoco.
 ![Screenshot from 2023-11-22 03-38-25.png](..%2F..%2F..%2FPictures%2FScreenshots%2FScreenshot%20from%202023-11-22%2003-38-25.png)
 ## Conversion process:
 
@@ -25,13 +21,13 @@ Three Conversion steps were taken to generate the myoLeg models from the referen
 
 After the conversion, a manual adjusting process is done to correct the abnormal results.
 
-## Maunal adjustment:
+## Manual adjustment:
 - Modification of yR_FootToAnkle position and range of motion.
 - Modification of joint position for yR_FootToAnkle and zR_FootToAnkle to match motor location.
 - Added manual initial position in all joints.
 
 ## Contact Geometries:
-Missing manual adjustments.
 
 ## Issues:
 - Verify working model.
+- To be Done: A stl file with the tibia and TP prosthesis in the same stl, not as a separated bone.
