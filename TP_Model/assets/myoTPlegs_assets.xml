@@ -36,7 +36,8 @@
                 <site size="0.02" group="4" rgba="0.8 0.8 .2 1"/>
             </default>
             <default class="motor">
-                <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
+                <general gainprm="5 0 0 0 0 0 0 0 0 0" group="5"/>
+                <geom contype="1" conaffinity="0" margin="0.001"/>
             </default>`
         </default>
     </default>
@@ -46,8 +47,8 @@
         <pair geom1="r_femur2_col" geom2="l_femur2_col" condim="1"/>
         <pair geom1="r_tibia1_col" geom2="l_tibia1_col" condim="1"/>
         <pair geom1="r_tibia2_col" geom2="l_tibia2_col" condim="1"/>
-        <pair geom1="r_foot_col1" geom2="l_foot_col1" condim="1"/>
-        <pair geom1="r_foot_col4" geom2="l_foot_col4" condim="1"/>
+        <pair geom1="r_foot_col1" geom2="l_foot_amp" condim="1"/>
+        <pair geom1="r_foot_col4" geom2="l_foot_amp" condim="1"/>
 
         <pair geom1="r_femur1_col" geom2="l_tibia1_col" condim="1"/>
         <pair geom1="l_femur1_col" geom2="r_tibia1_col" condim="1"/>
