@@ -141,7 +141,7 @@
     <camera name="for_testing" pos="0 0 2" euler="0 0 0"></camera>
   </worldbody>
   <asset>
-    <mesh name="ground_ribs" file="../myo_sim/meshes/ground_ribs.stl" scale="1 1 1"></mesh>
+    <mesh name="ground_ribs" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"></mesh>
     <mesh name="ground_spine" file="../myo_sim/meshes/ground_spine.stl" scale="1 1 1"></mesh>
     <mesh name="ground_skull" file="../myo_sim/meshes/ground_skull.stl" scale="1 1 1"></mesh>
     <mesh name="ground_jaw" file="../myo_sim/meshes/ground_jaw.stl" scale="1 1 1"></mesh>
