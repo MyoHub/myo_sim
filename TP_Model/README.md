@@ -29,5 +29,6 @@ After the conversion, a manual adjusting process is done to correct the abnormal
 ## Contact Geometries:
 
 ## Issues:
-- Verify working model.
-- To be Done: A stl file with the tibia and TP prosthesis in the same stl, not as a separated bone.
+- To be Done: A stl file with the tibia and TT prosthesis in the same stl, not as a separated bone.
+- To be Done: A model with passive TT prosthesis.
+- Algorithm to help changing the xml file by selecting the number of electrical actuators.
