@@ -69,7 +69,6 @@
         <material name="mat_myolegs" texture="tex_myolegs" texuniform="true"/>
         <material name="MatSkin" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.9 .7 1 1"/>
 
-        <!-- Modifications required, we have added extra patella, and we need to change names in actual file -->
         <mesh file="../myo_sim/meshes/r_pelvis.stl" name="r_pelvis"/>
         <mesh file="../myo_sim/meshes/l_pelvis.stl" name="l_pelvis"/>
         <mesh file="../myo_sim/meshes/sacrum.stl" name="sacrum"/>
@@ -93,22 +92,7 @@
     </asset>
 
     <equality>
-        <joint joint1="knee_angle_r_translation2" joint2="knee_angle_r" name="knee_angle_r_translation2_constraint" polycoef="7.69254e-11 0.00587971 -0.00125622 -2.61846e-06 6.24355e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_r_translation1" joint2="knee_angle_r" name="knee_angle_r_translation1_constraint" polycoef="9.53733e-08 0.00312879 -0.00230804 0.000561561 5.68366e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_r_rotation2" joint2="knee_angle_r" name="knee_angle_r_rotation2_constraint" polycoef="-1.47325e-08 0.0791 -0.0328478 -0.0252183 0.0108321" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_r_rotation3" joint2="knee_angle_r" name="knee_angle_r_rotation3_constraint" polycoef="1.08939e-08 0.369499 -0.169478 0.0251643 3.50498e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_r_beta_translation2" joint2="knee_angle_r" name="knee_angle_r_beta_translation2_constraint" polycoef="-0.0108281 -0.0487847 0.00927644 0.0131673 -0.00349673" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_r_beta_translation1" joint2="knee_angle_r" name="knee_angle_r_beta_translation1_constraint" polycoef="0.0524192 -0.0150188 -0.0340522 0.0133393 -0.000879151" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_r_beta_rotation1" joint2="knee_angle_r" name="knee_angle_r_beta_rotation1_constraint" polycoef="0.010506 0.0247615 -1.31647 0.716337 -0.138302" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <!-- <joint joint1="subtalar_angle_r" name="subtalar_angle_r_constraint" polycoef="0 0 0 0 0"/> -->
-        <!-- <joint joint1="mtp_angle_r" name="mtp_angle_r_constraint" polycoef="0 0 0 0 0"/> -->
-        <joint joint1="knee_angle_l_translation2" joint2="knee_angle_l" name="knee_angle_l_translation2_constraint" polycoef="-7.69254e-11 -0.00587971 0.00125622 2.61846e-06 -6.24355e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_l_translation1" joint2="knee_angle_l" name="knee_angle_l_translation1_constraint" polycoef="9.53733e-08 0.00312879 -0.00230804 0.000561561 5.68366e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_l_rotation2" joint2="knee_angle_l" name="knee_angle_l_rotation2_constraint" polycoef="-1.47325e-08 0.0791 -0.0328478 -0.0252183 0.0108321" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_l_rotation3" joint2="knee_angle_l" name="knee_angle_l_rotation3_constraint" polycoef="-1.08939e-08 -0.369499 0.169478 -0.0251643 -3.50498e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_l_beta_translation2" joint2="knee_angle_l" name="knee_angle_l_beta_translation2_constraint" polycoef="-0.0108281 -0.0487847 0.00927644 0.0131673 -0.00349673" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_l_beta_translation1" joint2="knee_angle_l" name="knee_angle_l_beta_translation1_constraint" polycoef="0.0524192 -0.0150188 -0.0340522 0.0133393 -0.000879151" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="knee_angle_l_beta_rotation1" joint2="knee_angle_l" name="knee_angle_l_beta_rotation1_constraint" polycoef="0.010506 0.0247615 -1.31647 0.716337 -0.138302" solimp="0.9999 0.9999 0.001 0.5 2"/>
+
     </equality>
 
     <sensor>
@@ -403,6 +387,16 @@
             <geom geom="BF_at_gastroc_l_wrap" sidesite="BF_at_gastroc_l_site_bfsh_l_side"/>
             <site site="bfsh_l-P2"/>
         </spatial>
+        <spatial name="gaslat_l_tendon" springlength="0.37607">
+            <site site="gaslat_l-P1"/>
+            <geom geom="GasLat_at_shank_l_wrap" sidesite="GasLat_at_shank_l_site_gaslat_l_side"/>
+            <site site="gaslat_l-P2"/>
+        </spatial>
+        <spatial name="gasmed_l_tendon" springlength="0.398716">
+            <site site="gasmed_l-P1"/>
+            <geom geom="GasMed_at_shank_l_wrap" sidesite="GasMed_at_shank_l_site_gasmed_l_side"/>
+            <site site="gasmed_l-P2"/>
+        </spatial>
         <spatial name="glmax1_l_tendon" springlength="0.0488409">
             <site site="glmax1_l-P1"/>
             <site site="glmax1_l-P2"/>
@@ -448,12 +442,23 @@
             <site site="glmin3_l-P1"/>
             <site site="glmin3_l-P2"/>
         </spatial>
+        <spatial name="grac_l_tendon" springlength="0.172014">
+            <site site="grac_l-P1"/>
+            <geom geom="GR_at_condyles_l_wrap" sidesite="GR_at_condyles_l_site_grac_l_side"/>
+            <site site="grac_l-P2"/>
+            <site site="grac_l-P3"/>
+        </spatial>
         <spatial name="iliacus_l_tendon" springlength="0.0961207">
             <site site="iliacus_l-P1"/>
             <site site="iliacus_l-P2"/>
             <geom geom="IL_at_brim_l_wrap" sidesite="IL_at_brim_l_site_iliacus_l_side"/>
             <site site="iliacus_l-P3"/>
             <site site="iliacus_l-P4"/>
+        </spatial>
+        <spatial name="piri_l_tendon" springlength="0.114906">
+            <site site="piri_l-P1"/>
+            <site site="piri_l-P2"/>
+            <site site="piri_l-P3"/>
         </spatial>
         <spatial name="psoas_l_tendon" springlength="0.0995432">
             <site site="psoas_l-P1"/>
@@ -568,6 +573,8 @@
         <general biasprm="0.1628 1.1024 568.695 1 0 2.16935 10 1.06805 1.4 0" class="muscle" gainprm="0.1628 1.1024 568.695 1 0 2.16935 10 1.06805 1.4 0" lengthrange="0.0575158 0.156738" name="addmagProx_l" tendon="addmagProx_l_tendon"/>
         <general biasprm="0.1 1.8 1327.75 1 0.05 3.5 10 1.75486 1.4 0" class="muscle" gainprm="0.1 1.8 1327.75 1 0.05 3.5 10 1.75486 1.4 0" lengthrange="0.311093 0.518283" name="bflh_l" tendon="bflh_l_tendon"/>
         <general biasprm="0.406318 1.19782 556.777 1 0 3.14497 10 0.922935 1.4 0" class="muscle" gainprm="0.406318 1.19782 556.777 1 0 3.14497 10 0.922935 1.4 0" lengthrange="0.150634 0.237936" name="bfsh_l" tendon="bfsh_l_tendon"/>
+        <general biasprm="0.1 1.49069 1324.37 1 0.05 3.5 10 1.93411 1.4 0" class="muscle" gainprm="0.1 1.49069 1324.37 1 0.05 3.5 10 1.93411 1.4 0" lengthrange="0.366291 0.463723" name="gaslat_l" tendon="gaslat_l_tendon"/>
+        <general biasprm="0.1 1.45 2245.47 1 0.0869909 3.46941 10 1.38125 1.4 0" class="muscle" gainprm="0.1 1.45 2245.47 1 0.0869909 3.46941 10 1.38125 1.4 0" lengthrange="0.371968 0.472667" name="gasmed_l" tendon="gasmed_l_tendon"/>
         <general biasprm="0.680894 1.34594 1272.23 1 0 2.05861 10 1.422 1.4 0" class="muscle" gainprm="0.680894 1.34594 1272.23 1 0 2.05861 10 1.422 1.4 0" lengthrange="0.148932 0.246694" name="glmax1_l" tendon="glmax1_l_tendon"/>
         <general biasprm="0.684001 1.42041 1308.55 1 0.000794702 3.38516 10 0.806346 1.4 0" class="muscle" gainprm="0.684001 1.42041 1308.55 1 0.000794702 3.38516 10 0.806346 1.4 0" lengthrange="0.175275 0.290891" name="glmax2_l" tendon="glmax2_l_tendon"/>
         <general biasprm="1.36664 1.8 929.762 1 0.322928 3.5 10 1.93452 1.4 0" class="muscle" gainprm="1.36664 1.8 929.762 1 0.322928 3.5 10 1.93452 1.4 0" lengthrange="0.297946 0.474778" name="glmax3_l" tendon="glmax3_l_tendon"/>
@@ -577,7 +584,9 @@
         <general biasprm="0.1 1.44635 357.562 1 0.0602573 3.02127 10 1.3101 1.4 0" class="muscle" gainprm="0.1 1.44635 357.562 1 0.0602573 3.02127 10 1.3101 1.4 0" lengthrange="0.0229136 0.11449" name="glmin1_l" tendon="glmin1_l_tendon"/>
         <general biasprm="0.1 1.60052 391.417 1 0.1 3.5 10 1.19315 1.4 0" class="muscle" gainprm="0.1 1.60052 391.417 1 0.1 3.5 10 1.19315 1.4 0" lengthrange="0.0298796 0.115728" name="glmin2_l" tendon="glmin2_l_tendon"/>
         <general biasprm="0.1 1.8 389.612 1 0.0939983 3.5 10 1.15519 1.4 0" class="muscle" gainprm="0.1 1.8 389.612 1 0.0939983 3.5 10 1.15519 1.4 0" lengthrange="0.0345943 0.11994" name="glmin3_l" tendon="glmin3_l_tendon"/>
+        <general biasprm="0.652458 1.62414 280.263 1 0 3.5 10 1.68108 1.4 0" class="muscle" gainprm="0.652458 1.62414 280.263 1 0 3.5 10 1.68108 1.4 0" lengthrange="0.320644 0.541993" name="grac_l" tendon="grac_l_tendon"/>
         <general biasprm="0.24456 1.23695 974.831 1 0 1.8511 10 1.69465 1.4 0" class="muscle" gainprm="0.24456 1.23695 974.831 1 0 1.8511 10 1.69465 1.4 0" lengthrange="0.122191 0.22798" name="iliacus_l" tendon="iliacus_l_tendon"/>
+        <general biasprm="0.1 1.8 822.575 1 0.0713008 3.5 10 0.992879 1.4 0" class="muscle" gainprm="0.1 1.8 822.575 1 0.0713008 3.5 10 0.992879 1.4 0" lengthrange="0.0953594 0.167006" name="piri_l" tendon="piri_l_tendon"/>
         <general biasprm="0.497633 1.12953 1366.97 1 0.0118191 1.73378 10 1.03401 1.4 0" class="muscle" gainprm="0.497633 1.12953 1366.97 1 0.0118191 1.73378 10 1.03401 1.4 0" lengthrange="0.157716 0.231585" name="psoas_l" tendon="psoas_l_tendon"/>
         <general biasprm="0.1 1.8 2205.94 1 0.1 3.5 10 1.95607 1.4 0" class="muscle" gainprm="0.1 1.8 2205.94 1 0.1 3.5 10 1.95607 1.4 0" lengthrange="0.423402 0.713662" name="recfem_l" tendon="recfem_l_tendon"/>
         <general biasprm="0.602155 1.16939 248.635 1 0.00170046 1.82656 10 1.79532 1.4 0" class="muscle" gainprm="0.602155 1.16939 248.635 1 0.00170046 1.82656 10 1.79532 1.4 0" lengthrange="0.366668 0.595265" name="sart_l" tendon="sart_l_tendon"/>
