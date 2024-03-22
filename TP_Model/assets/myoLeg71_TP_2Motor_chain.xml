@@ -428,6 +428,8 @@
                     <site name="ankle_assembly_l" class="myo_leg_marker"/>
                     <geom mesh="l_Ankle_Assembly" name="l_ankle_assembly" class="motor" type="mesh" rgba="0.87 0.56 0.34 1"/>
                     <site name="LAJC" pos="0 0 0"/>
+                    <site name="gaslat_l-P2" pos="0.0044 0.031 0.0053"/>
+                    <site name="gasmed_l-P2" pos="0.0044 0.031 0.0053"/>
                     <body name="foot_amp">
                         <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                         <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" range="-0.698132 0.523599" armature="0.0060" type="hinge"/>
@@ -437,8 +439,6 @@
                         <site name="LTOE" pos="0.205 0.0297 0.03"/>
                         <site name="LMT5" pos="0.145 0.0249 -0.059"/>
                         <!-- <geom name="l_foot_col2" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
-                        <site name="gaslat_l-P2" pos="0.0044 0.031 0.0053"/>
-                        <site name="gasmed_l-P2" pos="0.0044 0.031 0.0053"/>
                         <site name="l_prosth_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
                     </body>
                 </body>
