@@ -334,8 +334,6 @@
             <site name="addmagMid_l-P2" pos="0.0024 -0.1624 -0.0292"/>
             <site name="addmagProx_l-P2" pos="-0.0153 -0.0789 -0.032"/>
             <site name="bfsh_l-P1" pos="0.005 -0.2111 -0.0234"/>
-            <site name="gaslat_l-P1" pos="-0.003 -0.3814 -0.0277"/>
-            <site name="gasmed_l-P1" pos="0.008 -0.3788 0.0208"/>
             <site name="glmax1_l-P3" pos="-0.0444 -0.0326 -0.0302"/>
             <site name="glmax1_l-P4" pos="-0.0277 -0.0566 -0.047"/>
             <site name="glmax2_l-P3" pos="-0.045 -0.0584 -0.0252"/>
@@ -362,6 +360,21 @@
             <site name="vaslat_l-P2" pos="0.0269 -0.2591 -0.0409"/>
             <site name="vasmed_l-P1" pos="0.014 -0.2099 -0.0188"/>
             <site name="vasmed_l-P2" pos="0.0356 -0.2769 -0.0009"/>
+            <site name="bflh_l-P2" pos="-0.0337 -0.035 -0.0253"/>
+            <site name="bfsh_l-P2" pos="-0.0301 -0.0419 -0.0318"/>
+            <site name="grac_l-P2" pos="-0.0184 -0.0476 0.0296"/>
+            <site name="semimem_l-P2" pos="-0.029 -0.0417 0.0196"/>
+            <site name="semiten_l-P2" pos="-0.0312 -0.0508 0.0229"/>
+            <geom name="GR_at_condyles_l_wrap" pos="-0.003 -0.02 0" quat="0.980067 0 0.198669 0" class="wrap" size="0.036 0.05"/>
+            <geom name="SM_at_condyles_l_wrap" pos="-0.001 -0.02 0" quat="0.99875 0 0.0499792 0" class="wrap" size="0.0352 0.05"/>
+            <geom name="ST_at_condyles_l_wrap" pos="-0.002 -0.0205 0" quat="0.995004 0 0.0998334 0" class="wrap" size="0.0425 0.05"/>
+            <geom name="BF_at_gastroc_l_wrap" pos="-0.058 -0.06 0" class="wrap" size="0.03 0.075"/>
+            <site name="GasLat_at_shank_l_site_gaslat_l_side" pos="-0.0512647 -0.0235815 0.0514609"/>
+            <site name="GasMed_at_shank_l_site_gasmed_l_side" pos="-0.0226964 -0.1301 -0.0498879"/>
+            <site name="SM_at_condyles_l_site_semimem_l_side" pos="-0.0387876 -0.035171 0.0182577"/>
+            <site name="GR_at_condyles_l_site_grac_l_side" pos="-0.0513804 -0.042587 -0.0198669"/>
+            <site name="ST_at_condyles_l_site_semiten_l_side" pos="-0.0428471 -0.0468901 0.0181631"/>
+            <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
             <site name="LHJC" pos="0 0 0"/>
             <site name="LTH1" pos="0.018 -0.15 -0.064"/>
             <site name="LTH2" pos="0.08 -0.23 -0.0047"/>
@@ -378,66 +391,39 @@
             <site name="AMmid_at_femshaft_l_site_addmagMid_l_side" pos="-0.0100694 -0.108641 -0.0230602"/>
             <site name="AMdist_at_femshaft_l_site_addmagDist_l_side" pos="0.0146959 -0.298529 -0.0158276"/>
             <site name="AMisch_at_condyles_l_site_addmagIsch_l_side" pos="-0.0360341 -0.49032 0.0446456"/>
-            <body name="l_Knee_Assembly" pos="-4.6e-07 -0.404425 0.00126526">
-                <site name="knee_assembly_l" class="myo_leg_marker"/>
-                <inertial pos="-0.005 -0.175 -0.0025" quat="0.712137 -0.701754 0.0200501 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
+            <body name="l_Knee_Assembly" pos="-0.04 -0.417425 -0.05126526">
                 <geom mesh="Drive_Output" name="l_Drive_Output" class="motor" type="mesh" rgba="0.87 0.56 0.34 1" mass="0.18"/>
-                <geom mesh="Drive_Output" name="l_Knee_Assembly" class="motor" type="mesh" rgba="0.87 0.56 0.34 1" mass="2.71"/>
-                <geom name="l_pylon_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="0.085"/> <!-- 14cms -->
-                <geom mesh="pylon" name="l_pylon" type="mesh"/>
-                <joint axis="3.98373e-10 0.0707131 -0.997497" name="KneeAssembly_Flex" pos="0 0 0" range="0 2.0944" armature="0.0060" type="hinge"/>
-                <geom name="GasLat_at_shank_l_wrap" pos="-0.0074 -0.074 0.0033" quat="-0.0298211 -0.737282 -0.655511 -0.160722" class="wrap" size="0.055 0.05"/>
-                <geom name="GasMed_at_shank_l_wrap" pos="-0.0074 -0.074 0.0033" quat="0.073733 -0.735403 -0.67187 -0.048347" class="wrap" size="0.055 0.05"/>
-                <geom name="GR_at_condyles_l_wrap" pos="-0.003 -0.02 0" quat="0.980067 0 0.198669 0" class="wrap" size="0.036 0.05"/>
-                <geom name="SM_at_condyles_l_wrap" pos="-0.001 -0.02 0" quat="0.99875 0 0.0499792 0" class="wrap" size="0.0352 0.05"/>
-                <geom name="ST_at_condyles_l_wrap" pos="-0.002 -0.0205 0" quat="0.995004 0 0.0998334 0" class="wrap" size="0.0425 0.05"/>
-                <geom name="BF_at_gastroc_l_wrap" pos="-0.058 -0.06 0" class="wrap" size="0.03 0.075"/>
-                <site name="bflh_l-P2" pos="-0.0337 -0.035 -0.0253"/>
-                <site name="bflh_l-P3" pos="-0.0287 -0.0455 -0.0303"/>
-                <site name="bfsh_l-P2" pos="-0.0301 -0.0419 -0.0318"/>
-                <site name="grac_l-P2" pos="-0.0184 -0.0476 0.0296"/>
-                <site name="grac_l-P3" pos="0.0018 -0.0696 0.0157"/>
-                <site name="recfem_l-P5" pos="0.0326 -0.0631 0.0005"/>
-                <site name="sart_l-P3" pos="-0.0251 -0.0401 0.0365"/>
-                <site name="sart_l-P4" pos="-0.0159 -0.0599 0.0264"/>
-                <site name="sart_l-P5" pos="0.0136 -0.081 0.0026"/>
-                <site name="semimem_l-P2" pos="-0.029 -0.0417 0.0196"/>
-                <site name="semiten_l-P2" pos="-0.0312 -0.0508 0.0229"/>
-                <site name="semiten_l-P3" pos="0.0019 -0.0773 0.0117"/>
-                <site name="tfl_l-P4" pos="0.0108 -0.041 -0.0346"/>
-                <site name="vasint_l-P5" pos="0.0326 -0.0632 -0.0004"/>
-                <site name="vaslat_l-P5" pos="0.0325 -0.0634 -0.0051"/>
-                <site name="vasmed_l-P5" pos="0.0319 -0.0636 0.0068"/>
-                <site name="LKJC" pos="0.0017 -0.0024 0.0085"/>
-                <site name="LTB1" pos="-0.0017 -0.1565 -0.0492"/>
-                <site name="LTB2" pos="0.037 -0.2301 0.0039"/>
-                <site name="LTB3" pos="0.0114 -0.2952 -0.0554"/>
-                <site name="LLMAL" pos="-0.005 -0.3888 -0.053"/>
-                <site name="LMMAL" pos="0.006 -0.3888 0.038"/>
-                <site name="GasLat_at_shank_l_site_gaslat_l_side" pos="-0.0512647 -0.0235815 0.0514609"/>
-                <site name="GasMed_at_shank_l_site_gasmed_l_side" pos="-0.0226964 -0.1301 -0.0498879"/>
-                <site name="SM_at_condyles_l_site_semimem_l_side" pos="-0.0387876 -0.035171 0.0182577"/>
-                <site name="GR_at_condyles_l_site_grac_l_side" pos="-0.0513804 -0.042587 -0.0198669"/>
-                <site name="ST_at_condyles_l_site_semiten_l_side" pos="-0.0428471 -0.0468901 0.0181631"/>
-                <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
-                <body name="l_Ankle_Assembly" pos="-0.04 -0.073 -0.05">
-                    <site name="ankle_assembly_l" class="myo_leg_marker"/>
-                    <geom mesh="l_Ankle_Assembly" name="l_ankle_assembly" class="motor" type="mesh" rgba="0.87 0.56 0.34 1"/>
-                    <site name="LAJC" pos="0 0 0"/>
-                    <site name="gaslat_l-P2" pos="0.0044 0.031 0.0053"/>
-                    <site name="gasmed_l-P2" pos="0.0044 0.031 0.0053"/>
-                    <body name="foot_amp">
-                        <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
-                        <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" range="-0.698132 0.523599" armature="0.0060" type="hinge"/>
-                        <!--joint axis="-0.78718 -0.604747 -0.120949" name="yR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" range="-0.349066 0.349066" armature="0.0060" type="hinge"/-->
-                        <geom mesh="l_foot_amp" name="l_foot_amp" class="motor" type="mesh" rgba="0.301961 0.301961 0.301961 1"/>
-                        <site name="LCAL" pos="-0.025 0.02 0.005"/>
-                        <site name="LTOE" pos="0.205 0.0297 0.03"/>
-                        <site name="LMT5" pos="0.145 0.0249 -0.059"/>
-                        <!-- <geom name="l_foot_col2" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
-                        <site name="l_prosth_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                <body name="pylon_assembly" pos="0 0 0">
+                    <site name="knee_assembly_l" class="myo_leg_marker"/>
+                    <geom mesh="l_Knee_Assembly" name="l_Knee_Assembly" class="motor" type="mesh" rgba="0.87 0.56 0.34 1" mass="2.71"/>
+                    <inertial pos="-0.005 -0.175 -0.0025" quat="0.712137 -0.701754 0.0200501 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
+                    <geom name="l_pylon_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="0.085"/> <!-- 14cms -->
+                    <geom mesh="pylon" name="l_pylon" type="mesh" pos="0.0412 -0.20 0.032"/>
+                    <joint axis="3.98373e-10 0.0707131 -0.997497" name="KneeAssembly_Flex" pos="0.0399 0 0" range="0 2.0944" armature="0.0060" type="hinge"/>
+                    <site name="LKJC" pos="0.0017 -0.0024 0.0085"/>
+                    <site name="LTB1" pos="-0.0017 -0.1565 -0.0492"/>
+                    <site name="LTB2" pos="0.037 -0.2301 0.0039"/>
+                    <site name="LTB3" pos="0.0114 -0.2952 -0.0554"/>
+                    <site name="LLMAL" pos="-0.005 -0.3888 -0.053"/>
+                    <site name="LMMAL" pos="0.006 -0.3888 0.038"/>
+                    <body name="l_Ankle_Assembly" pos="0 -0.063 0">
+                        <site name="ankle_assembly_l" class="myo_leg_marker"/>
+                        <geom mesh="l_Ankle_Assembly" name="l_ankle_assembly" class="motor" type="mesh" rgba="0.87 0.56 0.34 1"/>
+                        <site name="LAJC" pos="0 0 0"/>
+                        <body name="foot_amp">
+                            <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
+                            <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" range="-0.698132 0.523599" armature="0.0060" type="hinge"/>
+                            <!--joint axis="-0.78718 -0.604747 -0.120949" name="yR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" range="-0.349066 0.349066" armature="0.0060" type="hinge"/-->
+                            <geom mesh="l_foot_amp" name="l_foot_amp" class="motor" type="mesh" rgba="0.301961 0.301961 0.301961 1"/>
+                            <site name="LCAL" pos="-0.025 0.02 0.005"/>
+                            <site name="LTOE" pos="0.205 0.0297 0.03"/>
+                            <site name="LMT5" pos="0.145 0.0249 -0.059"/>
+                            <!-- <geom name="l_foot_col2" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
+                            <site name="l_prosth_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                        </body>
                     </body>
                 </body>
+
             </body>
             <body name="patella_l" pos="-0.00809 -0.40796 0">
                 <geom mesh="l_patella" name="l_patella" type="mesh"/>

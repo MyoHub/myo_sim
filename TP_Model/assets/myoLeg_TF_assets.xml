@@ -384,22 +384,11 @@
         <spatial name="bflh_l_tendon" springlength="0.325227">
             <site site="bflh_l-P1"/>
             <site site="bflh_l-P2"/>
-            <site site="bflh_l-P3"/>
         </spatial>
         <spatial name="bfsh_l_tendon" springlength="0.105817">
             <site site="bfsh_l-P1"/>
             <geom geom="BF_at_gastroc_l_wrap" sidesite="BF_at_gastroc_l_site_bfsh_l_side"/>
             <site site="bfsh_l-P2"/>
-        </spatial>
-        <spatial name="gaslat_l_tendon" springlength="0.37607">
-            <site site="gaslat_l-P1"/>
-            <geom geom="GasLat_at_shank_l_wrap" sidesite="GasLat_at_shank_l_site_gaslat_l_side"/>
-            <site site="gaslat_l-P2"/>
-        </spatial>
-        <spatial name="gasmed_l_tendon" springlength="0.398716">
-            <site site="gasmed_l-P1"/>
-            <geom geom="GasMed_at_shank_l_wrap" sidesite="GasMed_at_shank_l_site_gasmed_l_side"/>
-            <site site="gasmed_l-P2"/>
         </spatial>
         <spatial name="glmax1_l_tendon" springlength="0.0488409">
             <site site="glmax1_l-P1"/>
@@ -450,7 +439,6 @@
             <site site="grac_l-P1"/>
             <geom geom="GR_at_condyles_l_wrap" sidesite="GR_at_condyles_l_site_grac_l_side"/>
             <site site="grac_l-P2"/>
-            <site site="grac_l-P3"/>
         </spatial>
         <spatial name="iliacus_l_tendon" springlength="0.0961207">
             <site site="iliacus_l-P1"/>
@@ -477,14 +465,10 @@
             <site site="recfem_l-P2"/>
             <site site="recfem_l-P3"/>
             <site site="recfem_l-P4"/>
-            <site site="recfem_l-P5"/>
         </spatial>
         <spatial name="sart_l_tendon" springlength="0.124">
             <site site="sart_l-P1"/>
             <site site="sart_l-P2"/>
-            <site site="sart_l-P3"/>
-            <site site="sart_l-P4"/>
-            <site site="sart_l-P5"/>
         </spatial>
         <spatial name="semimem_l_tendon" springlength="0.347586">
             <site site="semimem_l-P1"/>
@@ -495,13 +479,11 @@
             <site site="semiten_l-P1"/>
             <geom geom="ST_at_condyles_l_wrap" sidesite="ST_at_condyles_l_site_semiten_l_side"/>
             <site site="semiten_l-P2"/>
-            <site site="semiten_l-P3"/>
         </spatial>
         <spatial name="tfl_l_tendon" springlength="0.449497">
             <site site="tfl_l-P1"/>
             <site site="tfl_l-P2"/>
             <site site="tfl_l-P3"/>
-            <site site="tfl_l-P4"/>
         </spatial>
         <spatial name="vasint_l_tendon" springlength="0.202211">
             <site site="vasint_l-P1"/>
@@ -509,7 +491,6 @@
             <geom geom="KnExt_at_fem_l_wrap" sidesite="KnExt_at_fem_l_site_vasint_l_side"/>
             <site site="vasint_l-P3"/>
             <site site="vasint_l-P4"/>
-            <site site="vasint_l-P5"/>
         </spatial>
         <spatial name="vaslat_l_tendon" springlength="0.220601">
             <site site="vaslat_l-P1"/>
@@ -517,7 +498,6 @@
             <geom geom="KnExt_at_fem_l_wrap" sidesite="KnExt_at_fem_l_site_vaslat_l_side"/>
             <site site="vaslat_l-P3"/>
             <site site="vaslat_l-P4"/>
-            <site site="vaslat_l-P5"/>
         </spatial>
         <spatial name="vasmed_l_tendon" springlength="0.199904">
             <site site="vasmed_l-P1"/>
@@ -525,7 +505,6 @@
             <geom geom="KnExt_at_fem_l_wrap" sidesite="KnExt_at_fem_l_site_vasmed_l_side"/>
             <site site="vasmed_l-P3"/>
             <site site="vasmed_l-P4"/>
-            <site site="vasmed_l-P5"/>
         </spatial>
     </tendon>
     <actuator>
@@ -577,8 +556,6 @@
         <general biasprm="0.1628 1.1024 568.695 1 0 2.16935 10 1.06805 1.4 0" class="muscle" gainprm="0.1628 1.1024 568.695 1 0 2.16935 10 1.06805 1.4 0" lengthrange="0.0575158 0.156738" name="addmagProx_l" tendon="addmagProx_l_tendon"/>
         <general biasprm="0.1 1.8 1327.75 1 0.05 3.5 10 1.75486 1.4 0" class="muscle" gainprm="0.1 1.8 1327.75 1 0.05 3.5 10 1.75486 1.4 0" lengthrange="0.311093 0.518283" name="bflh_l" tendon="bflh_l_tendon"/>
         <general biasprm="0.406318 1.19782 556.777 1 0 3.14497 10 0.922935 1.4 0" class="muscle" gainprm="0.406318 1.19782 556.777 1 0 3.14497 10 0.922935 1.4 0" lengthrange="0.150634 0.237936" name="bfsh_l" tendon="bfsh_l_tendon"/>
-        <general biasprm="0.1 1.49069 1324.37 1 0.05 3.5 10 1.93411 1.4 0" class="muscle" gainprm="0.1 1.49069 1324.37 1 0.05 3.5 10 1.93411 1.4 0" lengthrange="0.366291 0.463723" name="gaslat_l" tendon="gaslat_l_tendon"/>
-        <general biasprm="0.1 1.45 2245.47 1 0.0869909 3.46941 10 1.38125 1.4 0" class="muscle" gainprm="0.1 1.45 2245.47 1 0.0869909 3.46941 10 1.38125 1.4 0" lengthrange="0.371968 0.472667" name="gasmed_l" tendon="gasmed_l_tendon"/>
         <general biasprm="0.680894 1.34594 1272.23 1 0 2.05861 10 1.422 1.4 0" class="muscle" gainprm="0.680894 1.34594 1272.23 1 0 2.05861 10 1.422 1.4 0" lengthrange="0.148932 0.246694" name="glmax1_l" tendon="glmax1_l_tendon"/>
         <general biasprm="0.684001 1.42041 1308.55 1 0.000794702 3.38516 10 0.806346 1.4 0" class="muscle" gainprm="0.684001 1.42041 1308.55 1 0.000794702 3.38516 10 0.806346 1.4 0" lengthrange="0.175275 0.290891" name="glmax2_l" tendon="glmax2_l_tendon"/>
         <general biasprm="1.36664 1.8 929.762 1 0.322928 3.5 10 1.93452 1.4 0" class="muscle" gainprm="1.36664 1.8 929.762 1 0.322928 3.5 10 1.93452 1.4 0" lengthrange="0.297946 0.474778" name="glmax3_l" tendon="glmax3_l_tendon"/>
