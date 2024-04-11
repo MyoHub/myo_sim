@@ -45,21 +45,21 @@
     <contact>
         <pair geom1="r_femur1_col" geom2="l_femur1_col" condim="1"/>
         <pair geom1="r_femur2_col" geom2="l_femur2_col" condim="1"/>
-        <pair geom1="r_tibia1_col" geom2="l_tibia1_col" condim="1"/>
-        <pair geom1="r_tibia2_col" geom2="l_tibia2_col" condim="1"/>
+        <pair geom1="r_tibia1_col" geom2="l_pylon_col" condim="1"/>
+        <pair geom1="r_tibia2_col" geom2="l_pylon_col" condim="1"/>
         <pair geom1="r_foot_col1" geom2="l_foot_amp" condim="1"/>
         <pair geom1="r_foot_col4" geom2="l_foot_amp" condim="1"/>
 
-        <pair geom1="r_femur1_col" geom2="l_tibia1_col" condim="1"/>
+        <pair geom1="r_femur1_col" geom2="l_pylon_col" condim="1"/>
         <pair geom1="l_femur1_col" geom2="r_tibia1_col" condim="1"/>
 
-        <pair geom1="r_femur2_col" geom2="l_tibia1_col" condim="1"/>
+        <pair geom1="r_femur2_col" geom2="l_pylon_col" condim="1"/>
         <pair geom1="l_femur2_col" geom2="r_tibia1_col" condim="1"/>
 
-        <pair geom1="r_femur1_col" geom2="l_tibia2_col" condim="1"/>
+        <pair geom1="r_femur1_col" geom2="l_pylon_col" condim="1"/>
         <pair geom1="l_femur1_col" geom2="r_tibia2_col" condim="1"/>
 
-        <pair geom1="r_femur2_col" geom2="l_tibia2_col" condim="1"/>
+        <pair geom1="r_femur2_col" geom2="l_pylon_col" condim="1"/>
         <pair geom1="l_femur2_col" geom2="r_tibia2_col" condim="1"/>
     </contact>
 
@@ -82,6 +82,9 @@
         <mesh file="../myo_sim/meshes/l_femur.stl" name="l_femur"/>
         <mesh file="../myo_sim/meshes/l_tibia.stl" name="l_tibia"/>
         <mesh file="../myo_sim/meshes/l_fibula.stl" name="l_fibula"/>
+        <mesh file="../myo_sim/meshes/driveoutputkf.stl" name="Drive_Output"/>
+        <mesh file="../myo_sim/meshes/pylon.stl" name="pylon"/>
+        <mesh file="../myo_sim/meshes/kneeassembly.stl" name="l_Knee_Assembly"/>
         <mesh file="../myo_sim/meshes/AnkleAssembly.stl" name="l_Ankle_Assembly"/>
         <mesh file="../myo_sim/meshes/Foot_Amp.stl" name="l_foot_amp"/>
         <mesh file="../myo_sim/meshes/l_patella.stl" name="l_patella"/>
