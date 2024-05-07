@@ -80,10 +80,10 @@
         <mesh file="../myo_sim/meshes/r_bofoot.stl" name="r_bofoot"/>
         <mesh file="../myo_sim/meshes/r_patella.stl" name="r_patella"/>
         <mesh file="../myo_sim/meshes/l_femur.stl" name="l_femur"/>
-        <mesh file="../myo_sim/meshes/l_tibia.stl" name="l_tibia"/>
         <mesh file="../myo_sim/meshes/l_fibula.stl" name="l_fibula"/>
-        <mesh file="../myo_sim/meshes/AnkleAssembly.stl" name="l_Ankle_Assembly"/>
+        <mesh file="../myo_sim/meshes/AnkleAssembly_Tibia.stl" name="Ankle_Assembly"/>
         <mesh file="../myo_sim/meshes/Foot_Amp.stl" name="l_foot_amp"/>
+        <mesh file="../myo_sim/meshes/l_foot.stl" name="l_foot"/>
         <mesh file="../myo_sim/meshes/l_patella.stl" name="l_patella"/>
         <mesh file="../myo_sim/meshes/hat_spine.stl" name="hat_spine"/>
         <mesh file="../myo_sim/meshes/hat_jaw.stl" name="hat_jaw"/>

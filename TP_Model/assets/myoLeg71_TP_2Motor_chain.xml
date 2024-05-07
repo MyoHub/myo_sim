@@ -388,7 +388,7 @@
                 <joint axis="-0.124293 0.989762 0.0701648" name="knee_angle_l_rotation" pos="0 0 0" range="-0.262788 -1.08939e-08"/>
                 <geom name="l_tibia1_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="3.8"/> <!-- 14cms -->
                 <geom name="l_tibia2_col" size=".048" class="coll" fromto="-0.01 -0.14 -.0025 -0.01 -0.35 -.005" mass="3.8"/>
-                <geom mesh="l_tibia" name="l_tibia" type="mesh"/>
+                <geom mesh="Ankle_Assembly" name="Ankle_Assembly" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
                 <geom mesh="l_fibula" name="l_fibula" type="mesh"/>
                 <geom name="GasLat_at_shank_l_wrap" pos="-0.0074 -0.074 0.0033" quat="-0.0298211 -0.737282 -0.655511 -0.160722" class="wrap" size="0.055 0.05"/>
                 <geom name="GasMed_at_shank_l_wrap" pos="-0.0074 -0.074 0.0033" quat="0.073733 -0.735403 -0.67187 -0.048347" class="wrap" size="0.055 0.05"/>
@@ -412,6 +412,8 @@
                 <site name="vasint_l-P5" pos="0.0326 -0.0632 -0.0004"/>
                 <site name="vaslat_l-P5" pos="0.0325 -0.0634 -0.0051"/>
                 <site name="vasmed_l-P5" pos="0.0319 -0.0636 0.0068"/>
+                <site name="gaslat_l-P2" pos="-0.031 -0.2163 -0.02"/>
+                <site name="gasmed_l-P2" pos="-0.031 -0.2163 -0.02"/>
                 <site name="LKJC" pos="0.0017 -0.0024 0.0085"/>
                 <site name="LTB1" pos="-0.0017 -0.1565 -0.0492"/>
                 <site name="LTB2" pos="0.037 -0.2301 0.0039"/>
@@ -424,22 +426,20 @@
                 <site name="GR_at_condyles_l_site_grac_l_side" pos="-0.0513804 -0.042587 -0.0198669"/>
                 <site name="ST_at_condyles_l_site_semiten_l_side" pos="-0.0428471 -0.0468901 0.0181631"/>
                 <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
-                <body name="l_Ankle_Assembly" pos="-0.04 -0.073 -0.05">
+                <body name="l_Ankle_Assembly" pos="-0.01 -0.43 -0.02" >
                     <site name="ankle_assembly_l" class="myo_leg_marker"/>
-                    <geom mesh="l_Ankle_Assembly" name="l_ankle_assembly" class="motor" type="mesh" rgba="0.87 0.56 0.34 1"/>
+                    <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0 0.1 0" range="-0.442 0.298" armature="0.0060" type="hinge"/>
+                    <geom mesh="l_talus" name="l_talus" type="mesh"/>
                     <site name="LAJC" pos="0 0 0"/>
-                    <site name="gaslat_l-P2" pos="0.0044 0.031 0.0053"/>
-                    <site name="gasmed_l-P2" pos="0.0044 0.031 0.0053"/>
                     <body name="foot_amp">
                         <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
-                        <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" range="-0.698132 0.523599" armature="0.0060" type="hinge"/>
-                        <joint axis="-0.78718 -0.604747 -0.120949" name="yR_FootToAnkleAssembly" pos="0.02 -0.288 0.06" range="-0.349066 0.349066" armature="0.0060" type="hinge"/>
-                        <geom mesh="l_foot_amp" name="l_foot_amp" class="motor" type="mesh" rgba="0.301961 0.301961 0.301961 1"/>
+                        <geom mesh="l_foot_amp" name="l_foot_amp" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
+                        <joint axis="-0.78718 -0.604747 -0.120949" name="yR_FootToAnkleAssembly" pos="0 0 0" range="-0.349066 0.349066" armature="0.0060" type="hinge"/>
                         <site name="LCAL" pos="-0.025 0.02 0.005"/>
                         <site name="LTOE" pos="0.205 0.0297 0.03"/>
                         <site name="LMT5" pos="0.145 0.0249 -0.059"/>
-                        <!-- <geom name="l_foot_col2" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
-                        <site name="l_prosth_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                        <geom name="l_foot_col4" type="box" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
+                        <site name="l_prosth_touch" type="box" pos="0.062 -0.013 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
                     </body>
                 </body>
             </body>
