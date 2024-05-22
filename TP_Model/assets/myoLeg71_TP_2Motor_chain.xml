@@ -382,7 +382,7 @@
             <site name="AMmid_at_femshaft_l_site_addmagMid_l_side" pos="-0.0100694 -0.108641 -0.0230602"/>
             <site name="AMdist_at_femshaft_l_site_addmagDist_l_side" pos="0.0146959 -0.298529 -0.0158276"/>
             <site name="AMisch_at_condyles_l_site_addmagIsch_l_side" pos="-0.0360341 -0.49032 0.0446456"/>
-            <body name="tibia_l" pos="-4.6e-07 -0.404425 0.00126526">
+            <body name="tibia_l" pos="-4.6e-07 -0.414025 0.00126526">
                 <site name="knee_l" class="myo_leg_marker"/>
                 <joint axis="3.98373e-10 0.0707131 -0.997497" name="knee_angle_l" pos="0 0 0" range="0 2.0944"/>
                 <joint axis="-0.124293 0.989762 0.0701648" name="knee_angle_l_rotation" pos="0 0 0" range="-0.262788 -1.08939e-08"/>

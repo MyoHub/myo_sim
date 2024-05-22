@@ -81,7 +81,7 @@
         <mesh file="../myo_sim/meshes/r_patella.stl" name="r_patella"/>
         <mesh file="../myo_sim/meshes/l_femur.stl" name="l_femur"/>
         <mesh file="../myo_sim/meshes/l_fibula.stl" name="l_fibula"/>
-        <mesh file="../myo_sim/meshes/AnkleAssembly_tibia_1.stl" name="Ankle_Assembly"/>
+        <mesh file="../myo_sim/meshes/AnkleAssembly_Tibia.stl" name="Ankle_Assembly"/>
         <mesh file="../myo_sim/meshes/Prot_Passive_min.stl" name="TF_Passive"/>
         <mesh file="../myo_sim/meshes/Foot_Amp.stl" name="l_foot_amp"/>
         <mesh file="../myo_sim/meshes/l_foot.stl" name="l_foot"/>
