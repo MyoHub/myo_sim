@@ -425,15 +425,17 @@
                 <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
                 <body name="l_Ankle_Assembly" pos="-0.01 -0.43 -0.02" >
                     <site name="ankle_assembly_l" class="myo_leg_marker"/>
-                    <geom mesh="l_foot_amp" name="l_foot_amp" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
+                    <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                     <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0 0.1 0" range="-0.442 0.298" armature="0.0060" type="hinge"/>
                     <site name="LAJC" pos="0 0 0"/>
-                    <site name="LCAL" pos="-0.025 0.02 0.005"/>
-                    <site name="LTOE" pos="0.205 0.0297 0.03"/>
-                    <site name="LMT5" pos="0.145 0.0249 -0.059"/>
-                    <geom name="l_foot_col4" type="box" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
-
-                    <site name="l_prosth_touch" type="box" pos="0.062 -0.013 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                    <body name="foot_amp">
+                        <geom mesh="l_foot_amp" name="l_foot_amp" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
+                        <site name="LCAL" pos="-0.025 0.02 0.005"/>
+                        <site name="LTOE" pos="0.205 0.0297 0.03"/>
+                        <site name="LMT5" pos="0.145 0.0249 -0.059"/>
+                        <geom name="l_foot_col4" type="box" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
+                        <site name="l_prosth_touch" type="box" pos="0.062 -0.013 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                    </body>
                 </body>
             </body>
             <body name="patella_l" pos="-0.00809 -0.40796 0">

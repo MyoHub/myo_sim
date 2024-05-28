@@ -428,11 +428,10 @@
                 <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
                 <body name="l_Ankle_Assembly" pos="-0.01 -0.43 -0.02" >
                     <site name="ankle_assembly_l" class="myo_leg_marker"/>
+                    <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                     <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0 0.1 0" range="-0.442 0.298" armature="0.0060" type="hinge"/>
-                    <geom mesh="l_talus" name="l_talus" type="mesh"/>
                     <site name="LAJC" pos="0 0 0"/>
                     <body name="foot_amp">
-                        <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                         <geom mesh="l_foot_amp" name="l_foot_amp" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
                         <joint axis="-0.78718 -0.604747 -0.120949" name="yR_FootToAnkleAssembly" pos="0 0 0" range="-0.349066 0.349066" armature="0.0060" type="hinge"/>
                         <site name="LCAL" pos="-0.025 0.02 0.005"/>
