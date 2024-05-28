@@ -415,8 +415,9 @@
                 <site name="ST_at_condyles_l_site_semiten_l_side" pos="-0.0428471 -0.0468901 0.0181631"/>
                 <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
                 <site name="l_prosth_touch" type="box" pos="0.062 -0.453 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
-		<body name="l_foot" pos="0 0 0">
+		        <body name="l_foot" pos="0 -0.453 0">
                     <site name="l_foot" class="myo_leg_marker"/>
+                    <geom mesh="l_foot_amp" name="l_foot_amp" type="mesh" class="myo_leg_marker" rgba="0 0 0 0"/> <!--Added for kinematics-->
                 </body>
             </body>
             <body name="patella_l" pos="-0.00809 -0.40796 0">
