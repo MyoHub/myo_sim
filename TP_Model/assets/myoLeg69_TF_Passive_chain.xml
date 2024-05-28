@@ -381,8 +381,8 @@
                 <inertial pos="-0.005 -0.175 -0.0025" quat="0.712137 -0.701754 0.0200501 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
                 <joint axis="3.98373e-10 0.0707131 -0.997497" name="knee_angle_l" pos="0 0 0" range="0 2.0944"/>
                 <joint axis="-0.124293 0.989762 0.0701648" name="knee_angle_l_rotation" pos="0 0 0" range="-0.262788 -1.08939e-08"/>
-                <geom name="l_tibia1_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="3.8"/> <!-- 14cms -->
-                <geom name="l_tibia2_col" size=".048" class="coll" fromto="-0.01 -0.14 -.0025 -0.01 -0.35 -.005" mass="3.8"/>
+                <geom name="l_tibia1_col" size=".056" class="coll_art" fromto="0 0 0 -0.01 -0.14 -.0025" mass="3.8"/> <!-- 14cms -->
+                <geom name="l_tibia2_col" size=".048" class="coll_art" fromto="-0.01 -0.14 -.0025 -0.01 -0.35 -.005" mass="3.8"/>
                 <geom mesh="TF_Passive" name="TF_Assembly" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
                 <geom name="GR_at_condyles_l_wrap" pos="-0.003 -0.02 0" quat="0.980067 0 0.198669 0" class="wrap" size="0.036 0.05"/>
                 <geom name="SM_at_condyles_l_wrap" pos="-0.001 -0.02 0" quat="0.99875 0 0.0499792 0" class="wrap" size="0.0352 0.05"/>
@@ -415,6 +415,9 @@
                 <site name="ST_at_condyles_l_site_semiten_l_side" pos="-0.0428471 -0.0468901 0.0181631"/>
                 <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
                 <site name="l_prosth_touch" type="box" pos="0.062 -0.453 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+		<body name="l_foot" pos="0 0 0">
+                    <site name="l_foot" class="myo_leg_marker"/>
+                </body>
             </body>
             <body name="patella_l" pos="-0.00809 -0.40796 0">
                 <geom mesh="l_patella" name="l_patella" type="mesh"/>
