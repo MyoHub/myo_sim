@@ -418,7 +418,7 @@
                             <site name="LCAL" pos="-0.025 0.02 0.005"/>
                             <site name="LTOE" pos="0.205 0.0297 0.03"/>
                             <site name="LMT5" pos="0.145 0.0249 -0.059"/>
-                            <geom name="l_foot_col4" type="box" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
+                            <geom name="l_foot_col4" type="box" size=".085 .035 0.04" class="coll_art" pos="0.08 .02 0" euler="0 0 -.2"/>
                             <site name="l_prosth_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
                         </body>
                     </body>

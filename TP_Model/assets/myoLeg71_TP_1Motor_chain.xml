@@ -378,7 +378,7 @@
             <site name="AMmid_at_femshaft_l_site_addmagMid_l_side" pos="-0.0100694 -0.108641 -0.0230602"/>
             <site name="AMdist_at_femshaft_l_site_addmagDist_l_side" pos="0.0146959 -0.298529 -0.0158276"/>
             <site name="AMisch_at_condyles_l_site_addmagIsch_l_side" pos="-0.0360341 -0.49032 0.0446456"/>
-            <body name="tibia_l" pos="-4.6e-07 -0.444025 0.00126526">
+            <body name="tibia_l" pos="-4.6e-07 -0.414025 0.00126526">
                 <site name="knee_l" class="myo_leg_marker"/>
                 <inertial pos="-0.005 -0.175 -0.0025" quat="0.712137 -0.701754 0.0200501 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
                 <joint axis="3.98373e-10 0.0707131 -0.997497" name="knee_angle_l" pos="0 0 0" range="0 2.0944"/>
@@ -433,7 +433,7 @@
                         <site name="LCAL" pos="-0.025 0.02 0.005"/>
                         <site name="LTOE" pos="0.205 0.0297 0.03"/>
                         <site name="LMT5" pos="0.145 0.0249 -0.059"/>
-                        <geom name="l_foot_col4" type="box" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
+                        <geom name="l_foot_col4" type="box" size=".085 .035 0.04" class="coll_art" pos="0.08 .02 0" euler="0 0 -.2"/>
                         <site name="l_prosth_touch" type="box" pos="0.062 -0.013 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
                     </body>
                 </body>
