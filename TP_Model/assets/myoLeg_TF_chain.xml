@@ -9,7 +9,7 @@
 
     <body name="pelvis" pos="0 0 0" quat="0.707107 0.707107 0 0" childclass="myotplegs">>
         <site name="pelvis" class="myo_leg_marker"/>
-        <inertial pos="-0.07 -0.03 0" mass="10.96" diaginertia="0.0622075 0.0532711 0.0299242" />
+        <inertial pos="-0.07 -0.03 0" mass="10.96" diaginertia="0.0622075 0.0532711 0.0299242"/>
         <geom name="r_pelvis_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>
         <geom name="l_pelvis_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 -.07" euler="-.2 0 0" mass="2"/>
         <geom mesh="r_pelvis" name="r_pelvis" type="mesh"/>
@@ -21,6 +21,10 @@
         <geom name="Gmax1_at_pelvis_l_wrap" pos="-0.077 -0.099 -0.061" quat="0.931256 0.288071 -0.213142 -0.0659324" class="wrap" size="0.04 0.075"/>
         <geom name="Gmax2_at_pelvis_l_wrap" pos="-0.08 -0.083 -0.068" quat="0.912872 0.359331 -0.180301 -0.0709714" class="wrap" size="0.04 0.05"/>
         <geom name="Gmax3_at_pelvis_l_wrap" pos="-0.083 -0.088 -0.068" quat="0.99875 0.0499792 0 0" class="wrap" size="0.04 0.05"/>
+        <!-- <geom name="PS_at_brim_r_wrap" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="wrap" size="0.05 0.1"/>
+        <geom name="PS_at_brim_l_wrap" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="wrap" size="0.05 0.05"/>
+        <geom name="IL_at_brim_r_wrap" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="wrap" size="0.0549 0.1"/>
+        <geom name="IL_at_brim_l_wrap" pos="-0.071 -0.065 -0.0756" quat="0.874257 0.193832 0.0376181 0.443495" class="wrap" size="0.0549 0.05"/> -->
         <geom name="PS_at_brim_r_wrap" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="wrap" size="0.05" type="sphere"/>
         <geom name="PS_at_brim_l_wrap" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="wrap" size="0.05" type="sphere"/>
         <geom name="IL_at_brim_r_wrap" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="wrap" size="0.0549" type="sphere"/>
@@ -173,8 +177,11 @@
             <body name="tibia_r" pos="-4.6e-07 -0.404425 -0.00126526">
                 <site name="knee_r" class="myo_leg_marker"/>
                 <inertial pos="-0.005 -0.175 0.0025" quat="0.70204 -0.711847 0.0203385 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
+                <joint axis="0.992246 0.123982 -0.00878916" name="knee_angle_r_translation2" pos="0 0 0" range="7.69254e-11 0.006792" type="slide"/>
+                <joint axis="-0.124293 0.989762 -0.0701648" name="knee_angle_r_translation1" pos="0 0 0" range="9.53733e-08 0.00159883" type="slide"/>
                 <joint axis="-3.98373e-10 -0.0707131 -0.997497" name="knee_angle_r" pos="0 0 0" range="0 2.0944"/>
-                <joint axis="-0.124293 0.989762 -0.0701648" name="knee_angle_r_rotation" pos="0 0 0" range="1.08939e-08 0.262788"/>
+                <joint axis="0.992246 0.123982 -0.00878916" name="knee_angle_r_rotation2" pos="0 0 0" range="-0.00167821 0.0335354"/>
+                <joint axis="-0.124293 0.989762 -0.0701648" name="knee_angle_r_rotation3" pos="0 0 0" range="1.08939e-08 0.262788"/>
                 <geom name="r_tibia1_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 .0025" mass="3.8"/> <!-- 14cms -->
                 <geom name="r_tibia2_col" size=".048" class="coll" fromto="-0.01 -0.14 .0025 -0.01 -0.35 .005" mass="3.8"/>
                 <geom mesh="r_tibia" name="r_tibia" type="mesh"/>
@@ -297,6 +304,9 @@
                 </body>
             </body>
             <body name="patella_r" pos="-0.00809 -0.40796 0">
+                <joint axis="0 1 0" name="knee_angle_r_beta_translation2" pos="0 0 0" range="-0.0408267 -0.0108281" type="slide"/>
+                <joint axis="1 0 0" name="knee_angle_r_beta_translation1" pos="0 0 0" range="-0.0227731 0.0524192" type="slide"/>
+                <joint axis="0 0 1" name="knee_angle_r_beta_rotation1" pos="0 0 0" range="-1.79241 0.010506"/>
                 <geom mesh="r_patella" name="r_patella" type="mesh"/>
                 <site name="recfem_r-P2" pos="0.01 0.049 0.0007"/>
                 <site name="recfem_r-P3" pos="0.0121 0.0437 -0.001"/>
@@ -397,7 +407,7 @@
                     <site name="knee_assembly_l" class="myo_leg_marker"/>
                     <inertial pos="-0.005 -0.175 -0.0025" quat="0.712137 -0.701754 0.0200501 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
                     <geom mesh="l_Knee_Assembly" name="l_Knee_Assembly" class="motor" type="mesh" rgba="0.87 0.56 0.34 1" mass="2.71"/>
-                    <geom name="l_pylon_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="0.085"/> <!-- 14cms -->
+                    <geom name="l_pylon_col" size=".056" class="coll_art" fromto="0 0 0 -0.01 -0.14 -.0025" mass="0.085"/> <!-- 14cms -->
                     <geom mesh="pylon" name="l_pylon" type="mesh" pos="0 0 0"/>
                     <joint axis="3.98373e-10 0.0707131 -0.997497" name="KneeAssembly_Flex" pos="0.0039 -0.068 0" range="0 2.0944" armature="0.0060" type="hinge"/>
                     <site name="LKJC" pos="0.0017 -0.0024 0.0085"/>
@@ -426,6 +436,9 @@
 
             </body>
             <body name="patella_l" pos="-0.00809 -0.40796 0">
+                <joint axis="0 1 0" name="knee_angle_l_beta_translation2" pos="0 0 0" range="-0.0408267 -0.0108281" type="slide"/>
+                <joint axis="1 0 0" name="knee_angle_l_beta_translation1" pos="0 0 0" range="-0.0227731 0.0524192" type="slide"/>
+                <joint axis="0 0 1" name="knee_angle_l_beta_rotation1" pos="0 0 0" range="-1.79241 0.010506"/>
                 <geom mesh="l_patella" name="l_patella" type="mesh"/>
                 <site name="recfem_l-P2" pos="0.01 0.049 -0.0007"/>
                 <site name="recfem_l-P3" pos="0.0121 0.0437 0.001"/>

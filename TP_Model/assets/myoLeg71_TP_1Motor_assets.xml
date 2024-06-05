@@ -95,8 +95,22 @@
     </asset>
 
     <equality>
+        <joint joint1="knee_angle_r_translation2" joint2="knee_angle_r" name="knee_angle_r_translation2_constraint" polycoef="7.69254e-11 0.00587971 -0.00125622 -2.61846e-06 6.24355e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_r_translation1" joint2="knee_angle_r" name="knee_angle_r_translation1_constraint" polycoef="9.53733e-08 0.00312879 -0.00230804 0.000561561 5.68366e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_r_rotation2" joint2="knee_angle_r" name="knee_angle_r_rotation2_constraint" polycoef="-1.47325e-08 0.0791 -0.0328478 -0.0252183 0.0108321" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_r_rotation3" joint2="knee_angle_r" name="knee_angle_r_rotation3_constraint" polycoef="1.08939e-08 0.369499 -0.169478 0.0251643 3.50498e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_r_beta_translation2" joint2="knee_angle_r" name="knee_angle_r_beta_translation2_constraint" polycoef="-0.0108281 -0.0487847 0.00927644 0.0131673 -0.00349673" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_r_beta_translation1" joint2="knee_angle_r" name="knee_angle_r_beta_translation1_constraint" polycoef="0.0524192 -0.0150188 -0.0340522 0.0133393 -0.000879151" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_r_beta_rotation1" joint2="knee_angle_r" name="knee_angle_r_beta_rotation1_constraint" polycoef="0.010506 0.0247615 -1.31647 0.716337 -0.138302" solimp="0.9999 0.9999 0.001 0.5 2"/>
         <!-- <joint joint1="subtalar_angle_r" name="subtalar_angle_r_constraint" polycoef="0 0 0 0 0"/> -->
         <!-- <joint joint1="mtp_angle_r" name="mtp_angle_r_constraint" polycoef="0 0 0 0 0"/> -->
+        <joint joint1="knee_angle_l_translation2" joint2="knee_angle_l" name="knee_angle_l_translation2_constraint" polycoef="-7.69254e-11 -0.00587971 0.00125622 2.61846e-06 -6.24355e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_l_translation1" joint2="knee_angle_l" name="knee_angle_l_translation1_constraint" polycoef="9.53733e-08 0.00312879 -0.00230804 0.000561561 5.68366e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_l_rotation2" joint2="knee_angle_l" name="knee_angle_l_rotation2_constraint" polycoef="-1.47325e-08 0.0791 -0.0328478 -0.0252183 0.0108321" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_l_rotation3" joint2="knee_angle_l" name="knee_angle_l_rotation3_constraint" polycoef="-1.08939e-08 -0.369499 0.169478 -0.0251643 -3.50498e-07" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_l_beta_translation2" joint2="knee_angle_l" name="knee_angle_l_beta_translation2_constraint" polycoef="-0.0108281 -0.0487847 0.00927644 0.0131673 -0.00349673" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_l_beta_translation1" joint2="knee_angle_l" name="knee_angle_l_beta_translation1_constraint" polycoef="0.0524192 -0.0150188 -0.0340522 0.0133393 -0.000879151" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="knee_angle_l_beta_rotation1" joint2="knee_angle_l" name="knee_angle_l_beta_rotation1_constraint" polycoef="0.010506 0.0247615 -1.31647 0.716337 -0.138302" solimp="0.9999 0.9999 0.001 0.5 2"/>
     </equality>
 
     <sensor>
@@ -391,6 +405,14 @@
             <geom geom="BF_at_gastroc_l_wrap" sidesite="BF_at_gastroc_l_site_bfsh_l_side"/>
             <site site="bfsh_l-P2"/>
         </spatial>
+        <spatial name="edl_l_tendon" springlength="0.368875">
+            <site site="edl_l-P1"/>
+            <site site="edl_l-P2"/>
+        </spatial>
+        <spatial name="ehl_l_tendon" springlength="0.326795">
+            <site site="ehl_l-P1"/>
+            <site site="ehl_l-P2"/>
+        </spatial>
         <spatial name="gaslat_l_tendon" springlength="0.37607">
             <site site="gaslat_l-P1"/>
             <geom geom="GasLat_at_shank_l_wrap" sidesite="GasLat_at_shank_l_site_gaslat_l_side"/>
@@ -600,7 +622,6 @@
         <general biasprm="0.804197 1.8 1759.59 1 0.403463 3.5 10 1.60134 1.4 0" class="muscle" gainprm="0.804197 1.8 1759.59 1 0.403463 3.5 10 1.60134 1.4 0" lengthrange="0.282067 0.454352" name="vasint_l" tendon="vasint_l_tendon"/>
         <general biasprm="0.754438 1.8 5322.59 1 0.340667 3.5 10 1.80773 1.4 0" class="muscle" gainprm="0.754438 1.8 5322.59 1 0.340667 3.5 10 1.80773 1.4 0" lengthrange="0.295592 0.476057" name="vaslat_l" tendon="vaslat_l_tendon"/>
         <general biasprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" class="muscle" gainprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" lengthrange="0.311214 0.356041" name="vasmed_l" tendon="vasmed_l_tendon"/>
-        <!--motor gear="200" joint="yR_FootToAnkleAssembly" name="yR_FootToAnkleAssembly"/-->
         <motor gear="8" joint="zR_FootToAnkleAssembly" name="zR_FootToAnkleAssembly"/>
     </actuator>
 </mujocoinclude>
