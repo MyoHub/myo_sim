@@ -78,8 +78,10 @@
         <mesh file="../myo_sim/meshes/l_pelvis.stl" name="l_pelvis"/>
         <mesh file="../myo_sim/meshes/sacrum.stl" name="sacrum"/>
         <mesh file="../myo_sim/meshes/r_femur.stl" name="r_femur"/>
-        <mesh file="../myo_sim/meshes/r_tibia.stl" name="r_tibia"/>
-        <mesh file="../myo_sim/meshes/r_fibula.stl" name="r_fibula"/>
+        <!--mesh file="../myo_sim/meshes/r_tibia.stl" name="r_tibia"/>-->
+        <!--mesh file="../myo_sim/meshes/r_fibula.stl" name="r_fibula"/>-->
+        <mesh file="../myo_sim/meshes/r_fibula_cut_bin.stl" name="r_fibula"/>
+        <mesh file="../myo_sim/meshes/r_tibia_cut_bin.stl" name="r_tibia"/>
         <mesh file="../myo_sim/meshes/r_talus.stl" name="r_talus"/>
         <mesh file="../myo_sim/meshes/r_foot.stl" name="r_foot"/>
         <mesh file="../myo_sim/meshes/r_bofoot.stl" name="r_bofoot"/>
@@ -87,8 +89,11 @@
         <mesh file="../myo_sim/meshes/l_femur.stl" name="l_femur"/>
         <mesh file="../myo_sim/meshes/l_fibula.stl" name="l_fibula"/>
         <mesh file="../myo_sim/meshes/l_tibia.stl" name="l_tibia"/>
-        <mesh file="../myo_sim/meshes/AnkleAssembly_Tibia.stl" name="Ankle_Assembly"/>
-        <mesh file="../myo_sim/meshes/Foot_Amp.stl" name="r_foot_amp"/>
+        <!--mesh file="../myo_sim/meshes/AnkleAssembly_Tibia.stl" name="Ankle_Assembly"/>-->
+        <mesh file="../myo_sim/meshes/generic_socket.stl" name="prosthetic_socket_geom_1_generic_socket"/>
+        <mesh file="../myo_sim/meshes/osl_ankle_v2.stl" name="Ankle_Assembly"/>
+        <mesh file="../myo_sim/meshes/osl_custom_foot_v2.stl" name="r_foot_amp"/>
+        <!--mesh file="../myo_sim/meshes/Foot_Amp.stl" name="r_foot_amp"/-->
         <mesh file="../myo_sim/meshes/l_talus.stl" name="l_talus"/>
         <mesh file="../myo_sim/meshes/l_foot.stl" name="l_foot"/>
         <mesh file="../myo_sim/meshes/l_bofoot.stl" name="l_bofoot"/>
@@ -629,6 +634,6 @@
         <general biasprm="0.804197 1.8 1759.59 1 0.403463 3.5 10 1.60134 1.4 0" class="muscle" gainprm="0.804197 1.8 1759.59 1 0.403463 3.5 10 1.60134 1.4 0" lengthrange="0.282067 0.454352" name="vasint_l" tendon="vasint_l_tendon"/>
         <general biasprm="0.754438 1.8 5322.59 1 0.340667 3.5 10 1.80773 1.4 0" class="muscle" gainprm="0.754438 1.8 5322.59 1 0.340667 3.5 10 1.80773 1.4 0" lengthrange="0.295592 0.476057" name="vaslat_l" tendon="vaslat_l_tendon"/>
         <general biasprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" class="muscle" gainprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" lengthrange="0.311214 0.356041" name="vasmed_l" tendon="vasmed_l_tendon"/>
-        <motor gear="58.4" joint="zR_FootToAnkleAssembly" name="zR_FootToAnkleAssembly" ctrllimited="true" ctrlrange="-30 30.0"/>
+        <motor gear="58.4" joint="osl_ankle_angle_r" name="osl_ankle_angle_r" ctrllimited="true" ctrlrange="-30 30.0"/>
     </actuator>
 </mujocoinclude>

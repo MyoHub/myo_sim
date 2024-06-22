@@ -177,8 +177,8 @@
                 <joint axis="0.992246 0.123982 -0.00878916" name="knee_angle_r_rotation2" pos="0 0 0" range="-0.00167821 0.0335354"/>
                 <joint axis="-0.124293 0.989762 -0.0701648" name="knee_angle_r_rotation3" pos="0 0 0" range="1.08939e-08 0.262788"/>
                 <geom name="r_tibia1_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 .0025" mass="3.8"/> <!-- 14cms -->
-                <geom name="r_tibia2_col" size=".048" class="coll_art" fromto="-0.01 -0.14 .0025 -0.01 -0.35 .005" mass="3.8"/>
-                <geom mesh="Ankle_Assembly" name="Ankle_Assembly" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
+                <geom name="r_tibia2_col" size=".048" class="coll" fromto="-0.01 -0.14 .0025 -0.01 -0.35 .005" mass="3.8"/>
+                <geom mesh="r_tibia" name="r_tibia" type="mesh"/>
                 <geom mesh="r_fibula" name="r_fibula" type="mesh"/>
                 <geom name="GasLat_at_shank_r_wrap" pos="-0.0074 -0.074 -0.0033" quat="-0.0298211 0.737282 0.655511 -0.160722" class="wrap" size="0.055 0.05"/>
                 <geom name="GasMed_at_shank_r_wrap" pos="-0.0074 -0.074 -0.0033" quat="0.073733 0.735403 0.67187 -0.048347" class="wrap" size="0.055 0.05"/>
@@ -219,13 +219,18 @@
                 <site name="SM_at_condyles_r_site_semimem_r_side" pos="-0.0387876 -0.035171 -0.0182577"/>
                 <site name="ST_at_condyles_r_site_semiten_r_side" pos="-0.0428471 -0.0468901 -0.0181631"/>
                 <site name="BF_at_gastroc_r_site_bfsh_r_side" pos="-0.0687049 -0.0256284 0.0426731"/>
-                <body name="r_Ankle_Assembly" pos="-0.01 -0.43 -0.02" >
-                    <site name="ankle_assembly_r" class="myo_leg_marker"/>
-                    <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
-                    <joint axis="0.105014 0.174022 0.979126" name="zR_FootToAnkleAssembly" pos="0 0.1 0" range="-0.442 0.298" armature="0.0060" type="hinge"/>
-                    <body name="foot_amp">
-                        <geom mesh="r_foot_amp" name="r_foot_amp" type="mesh" class="motor" rgba="0.87 0.56 0.34 1"/>
-                        <site name="r_prosth_touch" type="box" pos="0.062 -0.013 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                <body name="prosthetic_socket" pos="0.0225 -0.287 0.017"> <!-- pos="-0.0045 -0.283 0.006" -->
+                <inertial pos="0 0.101169 0" quat="0.707107 0.707107 0 0" mass="0.849991" diaginertia="0.0039776 0.0039776 0.0027545"/>
+                <geom name="prosthetic_socket_geom_1" type="mesh" rgba="0 0 0 0.5" mesh="prosthetic_socket_geom_1_generic_socket" condim="3" contype="1"/>
+                    <body name="r_Ankle_Assembly" pos="-0.01 -0.102 -0.02" >
+                        <site name="ankle_assembly_r" class="myo_leg_marker"/>
+                        <geom name="Ankle_Assembly" type="mesh" rgba="0.071 0.169 0.62 1" mesh="Ankle_Assembly" condim="3" contype="1"/>
+                        <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
+                        <body name="foot_amp">
+                            <geom mesh="r_foot_amp" name="r_foot_amp" type="mesh" class="motor" rgba="0 0 0 1"/>
+                            <joint name="osl_ankle_angle_r" pos="0 0 0" axis="0 0 1" range="-0.5236 0.5236"/>
+                            <site name="r_prosth_touch" type="box" pos="0.062 -0.06 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                        </body>
                     </body>
                 </body>
             </body>
