@@ -221,13 +221,18 @@
                 <site name="BF_at_gastroc_r_site_bfsh_r_side" pos="-0.0687049 -0.0256284 0.0426731"/>
                 <body name="prosthetic_socket" pos="0.0225 -0.287 0.017"> <!-- pos="-0.0045 -0.283 0.006" -->
                 <inertial pos="0 0.101169 0" quat="0.707107 0.707107 0 0" mass="0.849991" diaginertia="0.0039776 0.0039776 0.0027545"/>
-                <geom name="prosthetic_socket_geom_1" type="mesh" rgba="0 0 0 0.5" mesh="prosthetic_socket_geom_1_generic_socket" condim="3" contype="1"/>
+                <joint axis="-0.124293 0.989762 0.0701648" name="socket_piston" pos="0 0 0" range="-0.035 0.035" type="slide" stiffness="20000" damping="10000"/>
+                <joint axis="0 0 1" name="socket_rotation_1" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
+                <joint axis="1 0 0" name="socket_rotation_2" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
+                <joint axis="0 1 0" name="socket_rotation_3" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
+                    <geom name="prosthetic_socket_geom_1" type="mesh" rgba="0 0 0 0.5" mesh="prosthetic_socket_geom_1_generic_socket" condim="3" contype="1"/>
                     <body name="r_Ankle_Assembly" pos="-0.01 -0.102 -0.02" >
                         <site name="ankle_assembly_r" class="myo_leg_marker"/>
                         <geom name="Ankle_Assembly" type="mesh" rgba="0.071 0.169 0.62 1" mesh="Ankle_Assembly" condim="3" contype="1"/>
                         <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                         <body name="foot_amp">
                             <geom mesh="r_foot_amp" name="r_foot_amp" type="mesh" class="motor" rgba="0 0 0 1"/>
+                            <geom name="osl_foot_capsule" class="coll_art" type="ellipsoid" size=".135 .02 0.04" pos="0.08 -.05 0.008" euler="0 0 0"/>
                             <joint name="osl_ankle_angle_r" pos="0 0 0" axis="0 0 1" range="-0.5236 0.5236"/>
                             <site name="r_prosth_touch" type="box" pos="0.062 -0.06 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
                         </body>
