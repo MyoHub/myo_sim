@@ -22,10 +22,6 @@
         <geom name="Gmax1_at_pelvis_l_wrap" pos="-0.077 -0.099 -0.061" quat="0.931256 0.288071 -0.213142 -0.0659324" class="wrap" size="0.04 0.075"/>
         <geom name="Gmax2_at_pelvis_l_wrap" pos="-0.08 -0.083 -0.068" quat="0.912872 0.359331 -0.180301 -0.0709714" class="wrap" size="0.04 0.05"/>
         <geom name="Gmax3_at_pelvis_l_wrap" pos="-0.083 -0.088 -0.068" quat="0.99875 0.0499792 0 0" class="wrap" size="0.04 0.05"/>
-        <!-- <geom name="PS_at_brim_r_wrap" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="wrap" size="0.05 0.1"/>
-        <geom name="PS_at_brim_l_wrap" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="wrap" size="0.05 0.05"/>
-        <geom name="IL_at_brim_r_wrap" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="wrap" size="0.0549 0.1"/>
-        <geom name="IL_at_brim_l_wrap" pos="-0.071 -0.065 -0.0756" quat="0.874257 0.193832 0.0376181 0.443495" class="wrap" size="0.0549 0.05"/> -->
         <geom name="PS_at_brim_r_wrap" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="wrap" size="0.05" type="sphere"/>
         <geom name="PS_at_brim_l_wrap" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="wrap" size="0.05" type="sphere"/>
         <geom name="IL_at_brim_r_wrap" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="wrap" size="0.0549" type="sphere"/>
@@ -108,13 +104,11 @@
         <site name="IL_at_brim_l_site_iliacus_l_side" pos="-0.00526034 -0.0756276 -0.0828915"/>
         <body name="femur_r" pos="-0.056276 -0.07849 0.07726">
             <site name="hip_r" class="myo_leg_marker"/>
-            <!-- <inertial pos="0 -0.195 -0.0005" quat="0.708013 -0.7062 0 0" mass="8.4" diaginertia="0.1694 0.1694 0.0245269" /> -->
             <inertial pos="0 -0.195 -0.0005" quat="0.708013 -0.7062 0 0" mass="6.25698" diaginertia="0.147227 0.147227 0.0600446" />
             <joint axis="0 0 1" name="hip_flexion_r" pos="0 0 0" range="-0.523599 2.0944"/>
             <joint axis="1 0 0" name="hip_adduction_r" pos="0 0 0" range="-0.872665 0.523599"/>
             <joint axis="0 1 0" name="hip_rotation_r" pos="0 0 0" range="-0.698132 0.698132"/>
             <geom name="r_femur1_col" size=".08" class="coll" fromto="0 0 .02 0 -0.2 .015" mass="4"/>
-            <!-- <geom name="r_femur2_col" size=".067" class="coll" fromto="0 -0.2 .015 0 -0.39 .005" mass="2"/> -->
             <geom mesh="mesh_femur_trans_r" name="r_femur" type="mesh"/>
             <geom name="Gastroc_at_condyles_r_wrap" pos="0.005 -0.41 0" class="wrap" size="0.025 0.05"/>
             <geom name="KnExt_at_fem_r_wrap" pos="0.00358828 -0.402732 0.00209111" quat="0.999192 -0.0311532 0.025365 -0.00079084" class="wrap" size="0.025 0.05"/>
@@ -183,9 +177,9 @@
             <joint axis="1 0 0" name="socket_rotation_2" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
             <joint axis="0 1 0" name="socket_rotation_3" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
             <geom name="prosthetic_socket_geom_1" type="mesh" rgba="0 0 0 0.5" mesh="prosthetic_socket_geom_1_generic_socket" condim="3" contype="1"/>
-                <body name="osl_femoral_pylon" pos="0 -0.02829 0"> <!-- pos="0 -0.02839 0" -->
-					<!-- Socket force -->
-					<site name="r_socket_load_force" type="box" pos="0 0.105 0.005" size="0.02 0.003 0.02" euler="0 0 0" group="3" rgba="0.8 0.2 .2 .4" />
+                <body name="osl_femoral_pylon" pos="0 -0.02829 0">
+
+                    <site name="r_socket_load_force" type="box" pos="0 0.105 0.005" size="0.02 0.003 0.02" euler="0 0 0" group="3" rgba="0.8 0.2 .2 .4" />
 					
                     <inertial pos="0 0 0" mass="0.0220583" diaginertia="0.001 0.001 0.001"/>
                     <geom name="osl_femoral_pylon_geom_1" type="cylinder" size="0.012 0.028394449243889931" quat="0.707035 0.707179 0 0" rgba="0 0 0 1.0" condim="3" contype="1"/>
@@ -194,13 +188,13 @@
                     <geom name="osl_proximal_adapter_geom_1" type="mesh" rgba="0 0 0 1" mesh="osl_proximal_adapter_geom_1_osl_proximal_adapter_v2" condim="3" contype="1"/>
                     <body name="osl_knee_assembly">
                         <inertial pos="0.00381 -0.05901 0.00918" quat="0.659658 0.705162 0.180917 -0.186728" mass="2.2455" diaginertia="0.00930494 0.00919978 0.00355928"/>
-                        <joint name="osl_knee_angle_r" pos="0 0 0" axis="0 0 -1" range="0 2.0944"/> <!-- axis="0 0 1" range="-2.094 0" -->
+                        <joint name="osl_knee_angle_r" pos="0 0 0" axis="0 0 -1" range="0 2.0944"/>
                         <geom name="osl_knee_assembly_geom_1" type="mesh" rgba="0.071 0.169 0.62 1" mesh="osl_knee_assembly_geom_1_osl_knee_v2" condim="3" contype="1"/>
-                        <body name="osl_tibial_pylon" pos="0 -0.2315 0.006"> <!-- pos="0 -0.242 0.006" 0.221 0.0105-->
+                        <body name="osl_tibial_pylon" pos="0 -0.2315 0.006">
 							<inertial pos="0 0 0" mass="0.0629248" diaginertia="0.001 0.001 0.001"/>
-							<!-- <geom name="osl_tibial_pylon_geom_1" type="cylinder" size="0.012 0.080999651775824771" quat="0.707035 0.707179 0 0" rgba="0 0 0 1.0"/> -->
+
 							<geom name="osl_tibial_pylon_geom_1" type="cylinder" size="0.012 0.070499651775824771" quat="0.707035 0.707179 0 0" rgba="0 0 0 1.0" condim="3" contype="1"/>
-							<body name="osl_ankle_assembly" pos="0 -0.1761 -0.006"> <!-- pos="0 -0.1866 -0.006" -->
+							<body name="osl_ankle_assembly" pos="0 -0.1761 -0.006">
 								<inertial pos="-0.00665 0.04539 0.00924" quat="0.612323 0.440299 -0.442253 0.485396" mass="1.739" diaginertia="0.00535042 0.00492977 0.0030318"/>
 								<geom name="osl_ankle_assembly_geom_1" type="mesh" rgba="0.071 0.169 0.62 1" mesh="osl_ankle_assembly_geom_1_osl_ankle_v2" condim="3" contype="1"/>
 								<site name="r_osl_load_force" type="box" pos="0 0.105 0.005" size="0.02 0.003 0.02" euler="0 0 0" group="3" rgba="0.8 0.2 .2 .4" />
@@ -210,7 +204,6 @@
 									<joint name="osl_ankle_angle_r" pos="0 0 0" axis="0 0 1" range="-0.5236 0.5236"/>
                                     <geom name="osl_foot_assembly_geom_1" type="mesh" rgba="0 0 0 1" mesh="osl_foot_assembly_geom_1_osl_custom_foot_v2"/>
 									
-									<!--<geom name="osl_foot_capsule" class="coll" type="ellipsoid" size=".135 .02 0.04" pos="0.08 -.05 0.008" euler="0 0 0"/>-->
 									<geom name="osl_foot_col1" size=".012" class="coll" fromto="0.19 -0.05 0.007    -0.03 -0.05 0.007" group="5"/>
 									<geom name="osl_foot_col2" size=".012" class="coll" fromto="0.182 -0.05 0.028    -0.03 -0.05 0.028" group="5"/>
 									<geom name="osl_foot_col3" size=".012" class="coll" fromto="0.182 -0.05 -0.015    -0.03 -0.05 -0.015" group="5"/>
