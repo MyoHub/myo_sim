@@ -2,7 +2,7 @@
 
 ## General:
 
-The MyoProsthesis model combineds both the 80-muscle model on Myosuite (https://github.com/MyoHub/myo_sim/tree/main/leg) and OpenSourceLeg (https://neurobionics.robotics.umich.edu/research/wearable-robotics/open-source-leg/), to simulate a trans-feromal amputation model.
+The MyoProsthesis model combineds both the 80-muscle [MyoLeg](https://github.com/MyoHub/myo_sim/tree/main/leg) model and [Open Source Leg](https://neurobionics.robotics.umich.edu/research/wearable-robotics/open-source-leg/), to simulate a trans-feromal amputation model.
 
 ## Modifications:
 
@@ -18,35 +18,8 @@ The MyoLeg model was modified as follows:
 8. Added a force sensor at the socket joint
 
 
-[1] Raveendranathan, V., Kooiman, V. G. M., and Carloni, R., 2023, “Musculoskeletal Model of Osseointegrated Transfemoral Amputees in OpenSim,” PLOS ONE, 18(9), p. e0288864.
-
-## Muscles removed from trans-feromal leg
-
-* Sartorius
-* Quadriceps [rectus femoris, vastus medialis, vastus intermedius, vastus lateralis] 
-* Gastrocnemius [gastrocnemius medialis, gastrocnemius lateralis]
-* Hamstrings [biceps femoris long head, biceps femoris short head, semimembranosus, semitendinosus]
-* Adductors [adductor magnus group]
-* Gracilis
-* Tensor Fasciae Latae
-* Tibialis Anterior
-* Soleus
-* Extensor Digitorum Longus
-* Extensor Hallucius Longus
-* Peroneus Brevis
-* Peroneus Longus
-* Peroneus Tertius
-* Tibialis Posterior
-* Flexor Digitorum Longus
-* Flexor Hallucius Longus,
-
-
-Corresponding to these muscles in the model:
-
-['sart', 'recfem', 'vasmed', 'vasint', 'vaslat', 'gasmed', 'gaslat', 'bflh', 'bfsh', 'semimem', 'semiten', 'addmagProx', 'addmagMid', 'addmagIsch', 'addmagDist', 'grac', 'tfl', 'tibant', 'soleus', 'edl', 'ehl', 'perbrev', 'perlong', 'tibpost', 'fdl', 'fhl']
-
 ## Included Muscles - 54 Muscles and 2 Electrical Actuators and Primary Function:
-| **Given Name**            | **Real Name**                  | **Primary Function**                              | **Joint Movement**   |
+| **Name in MyoLeg**        | **Real Name**                  | **Primary Function**                             | **Joint Movement**   |
 |---------------------------|--------------------------------|--------------------------------------------------|----------------------|
 | addbrev                   | Adductor brevis                | Thigh Adduction                                  | Hip                  |
 | addlong                   | Adductor longus                | Thigh Adduction, rotation                        | Hip                  |
@@ -115,6 +88,39 @@ Corresponding to these muscles in the model:
 | 18        | Knee Angle Left Beta Translation 1 |
 | 19        | Knee Angle Left Beta Rotation 1 |
 
+## Muscles removed from trans-feromal leg
+26 Muscles were removed according to the suggestions made in [1]. The removed muscles are listed in the table below:
+
+| **Name in MyoLeg**        | **Real Name**                  | **Primary Function**                             | **Joint Movement**   |
+|---------------------------|--------------------------------|--------------------------------------------------|----------------------|
+| sart                      | Sartorius Muscle               | Hip and Knee Movement                            | Hip, Knee            |
+| recfem                    | Rectus Femoris                 | Knee Extension                                   | Knee                 |
+| vasint                    | vastus intermedius             | Knee Extension                                   | Knee                 |
+| vaslat                    | vastus lateralis               | Knee Extension                                   | Knee                 |
+| vasmed                    | vastus medialis                | Knee Extension                                   | Knee                 |
+| gaslat                    | Gastrocnemious Lateral         | Plantar Flexion, knee Flexion                    | Ankle                |
+| gasmed                    | Gastrocnemious medial          | Plantar Flexion, knee Flexion                    | Ankle                |
+| bflh                      | Bicep Femoral Long Head        | Thigh extension, rotation and Knee flexion       | Hip, Knee            |
+| bfsh                      | Bicep Femoral Short Head       | Knee Rotation                                    | Knee                 |
+| semimem                   | Semimembranosus                | Hip and Knee Movement                            | Hip, Knee            |
+| semiten                   | Semitendinosus                 | Hip and Knee Movement                            | Hip, Knee            |
+| addmagDist                | Adductor magnus distal         | Pelvis stabilizer                                | Hip, Knee            |
+| addmagIsch                | Adductor magnus ischial        | Pelvis stabilizer                                | Hip, Knee            |
+| addmagMid                 | Adductor magnus mid            | Pelvis stabilizer                                | Hip, Knee            |
+| addmagProx                | Adductor magnus proximal       | Pelvis stabilizer                                | Hip, Knee            |
+| grac                      | Gracilis Muscle                | Thigh abduction, knee flexion                    | Hip, Knee            |
+| tfl                       | Tensor Fasciae Latae           | Knee Rotation                                    | Knee                 |
+| tibant                    | tibialis anterior              | Plantar Dorsiflexion                             | Ankle                |
+| soleus                    | Soleus Muscle                  | Plantar Flexion                                  | Ankle                |
+| edl                       | Extensor Digitorum Longus      | Digits movement                                  | Digits               |
+| ehl                       | Extensor Hallucis longus       | Digits movement                                  | Digits               |
+| perbrev                   | Peroneus Brevis                | Foot Eversion                                    | Ankle                |
+| perlong                   | Peroneus Long                  | Foot Eversion                                    | Ankle                |
+| tibpost                   | tibialis posterior             | Plantar Flexion and inversion                    | Ankle                |
+| fdl                       | Flexor Digitorum Longus        | Digits movement                                  | Digits               |
+| fhl                       | Flexor Hallucis Longus         | Digits movement                                  | Digits               |
+
+[1] Raveendranathan, V., Kooiman, V. G. M., and Carloni, R., 2023, “Musculoskeletal Model of Osseointegrated Transfemoral Amputees in OpenSim,” PLOS ONE, 18(9), p. e0288864.
+
 
 ## ChangeLog
-
