@@ -44,17 +44,17 @@ The MyoLeg model was modified as follows:
 | glmin1                    | Gluteus Minimus 1              | Hip Abduction and Stabilizer                     | Hip                  |
 | glmin2                    | Gluteus Minimus 2              | Hip Abduction and Stabilizer                     | Hip                  |
 | glmin3                    | Gluteus Minimus 3              | Hip Abduction and Stabilizer                     | Hip                  |
-| grac                      | Gracilis Muscle                | Thigh abduction, knee flexion                    | Hip, Knee            |
-| iliacus                   | Iliacus Muscle                 | Femur Rotation                                   | Hip                  |
+| grac                      | Gracilis                       | Thigh abduction, knee flexion                    | Hip, Knee            |
+| iliacus                   | Iliacus                        | Femur Rotation                                   | Hip                  |
 | perbrev                   | Peroneus Brevis                | Foot Eversion                                    | Ankle                |
 | perlong                   | Peroneus Long                  | Foot Eversion                                    | Ankle                |
 | piri                      | Piriformis                     | Thigh Rotation                                   | Hip                  |
 | psoas                     | Psoas Iliaco                   | Hip Rotation                                     | Hip                  |
 | recfem                    | Rectus Femoris                 | Knee Extension                                   | Knee                 |
-| sart                      | Sartorius Muscle               | Hip and Knee Movement                            | Hip, Knee            |
+| sart                      | Sartorius                      | Hip and Knee Movement                            | Hip, Knee            |
 | semimem                   | Semimembranosus                | Hip and Knee Movement                            | Hip, Knee            |
 | semiten                   | Semitendinosus                 | Hip and Knee Movement                            | Hip, Knee            |
-| soleus                    | Soleus Muscle                  | Plantar Flexion                                  | Ankle                |
+| soleus                    | Soleus                         | Plantar Flexion                                  | Ankle                |
 | tfl                       | Tensor Fasciae Latae           | Knee Rotation                                    | Knee                 |
 | tibant                    | tibialis anterior              | Plantar Dorsiflexion                             | Ankle                |
 | tibpost                   | tibialis posterior             | Plantar Flexion and inversion                    | Ankle                |
@@ -93,7 +93,7 @@ The MyoLeg model was modified as follows:
 
 | **Name in MyoLeg**        | **Real Name**                  | **Primary Function**                             | **Joint Movement**   |
 |---------------------------|--------------------------------|--------------------------------------------------|----------------------|
-| sart                      | Sartorius Muscle               | Hip and Knee Movement                            | Hip, Knee            |
+| sart                      | Sartorius                      | Hip and Knee Movement                            | Hip, Knee            |
 | recfem                    | Rectus Femoris                 | Knee Extension                                   | Knee                 |
 | vasint                    | vastus intermedius             | Knee Extension                                   | Knee                 |
 | vaslat                    | vastus lateralis               | Knee Extension                                   | Knee                 |
@@ -108,10 +108,10 @@ The MyoLeg model was modified as follows:
 | addmagIsch                | Adductor magnus ischial        | Pelvis stabilizer                                | Hip, Knee            |
 | addmagMid                 | Adductor magnus mid            | Pelvis stabilizer                                | Hip, Knee            |
 | addmagProx                | Adductor magnus proximal       | Pelvis stabilizer                                | Hip, Knee            |
-| grac                      | Gracilis Muscle                | Thigh abduction, knee flexion                    | Hip, Knee            |
+| grac                      | Gracilis                       | Thigh abduction, knee flexion                    | Hip, Knee            |
 | tfl                       | Tensor Fasciae Latae           | Knee Rotation                                    | Knee                 |
 | tibant                    | tibialis anterior              | Plantar Dorsiflexion                             | Ankle                |
-| soleus                    | Soleus Muscle                  | Plantar Flexion                                  | Ankle                |
+| soleus                    | Soleus                         | Plantar Flexion                                  | Ankle                |
 | edl                       | Extensor Digitorum Longus      | Digits movement                                  | Digits               |
 | ehl                       | Extensor Hallucis longus       | Digits movement                                  | Digits               |
 | perbrev                   | Peroneus Brevis                | Foot Eversion                                    | Ankle                |
