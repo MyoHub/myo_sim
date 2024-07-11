@@ -10,7 +10,7 @@
 ====================================================== -->
     <include file="../scene/myosuite_scene_noPedestal.xml"/>
     <include file="../torso/assets/myotorsorigid_assets.xml"/>
-    <include file="../osl_leg/assets/myolegs_osl_assets.xml"/>
+    <include file="../osl/assets/myolegs_osl_assets.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
     <asset>
@@ -24,7 +24,7 @@
 
         <body name="root" pos="0 0 1" euler="0 0 -1.57">
             <include file="../torso/assets/myotorsorigid_chain.xml"/>
-            <include file="../osl_leg/assets/myolegs_osl_chain.xml"/>
+            <include file="../osl/assets/myolegs_osl_chain.xml"/>
             <freejoint name="root"/>
         </body>
     </worldbody>
