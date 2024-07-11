@@ -8,14 +8,13 @@ The MyoProsthesis model combineds both the 80-muscle [MyoLeg](https://github.com
 
 The MyoLeg model was modified as follows:
 
-1. Copied muscle parameters of right leg to left leg for symmetrical muscle parameters
-2. Replaced the right leg with trans-feromal leg, with 50% of the femur remaining
-3. Muscles articulating the knee joint were removed, based on [1]. The list of muscles removed are detailed in the section below
-4. Added OSL v2 to the right leg
-5. Added a 4-DOF socket joint, with damping to model socket movement and dynamics
-6. Adjusted the lengths of the thigh and shank pylons of the OSL to match joint rotation centers of the knee and ankle joint
-7. Added a force sensor to represent the load cell between the pylon and ankle assembly of OSL leg
-8. Added a force sensor at the socket joint
+1. Replaced the right leg with trans-feromal leg, with 50% of the femur remaining
+2. Muscles articulating the knee joint were removed, based on [1]. The list of muscles removed are detailed in the section below
+3. Added OSL v2 to the right leg
+4. Added a 4-DOF socket joint, with damping to model socket movement and dynamics
+5. Adjusted the lengths of the thigh and shank pylons of the OSL to match joint rotation centers of the knee and ankle joint
+6. Added a force sensor to represent the load cell between the pylon and ankle assembly of OSL leg
+7. Added a force sensor at the socket joint
 
 
 ## Included Muscles - 54 Muscles and 2 Electrical Actuators and Primary Function:
