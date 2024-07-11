@@ -126,14 +126,11 @@
     </equality>
 
     <sensor>
-        <!-- <touch name="r_foot" site="r_foot_touch"/> -->
-        <!-- <touch name="r_toes" site="r_toes_touch"/> -->
         <touch name="r_osl_foot" site="r_osl_foot_touch"/>
         <touch name="l_foot" site="l_foot_touch"/>
         <touch name="l_toes" site="l_toes_touch"/>
-		
-		<force name="r_osl_load" site="r_osl_load_force"/>
-		<force name="r_socket_load" site="r_socket_load_force"/>
+        <force name="r_osl_load" site="r_osl_load_force"/>
+        <force name="r_socket_load" site="r_socket_load_force"/>
     </sensor>
 
     <tendon>

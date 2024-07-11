@@ -363,10 +363,8 @@
                     <joint axis="0.105014 0.174022 0.979126" name="ankle_angle_l" pos="0 0 0" range="-0.698132 0.523599"/>
                     <geom mesh="l_talus" name="l_talus" type="mesh"/>
                     <site name="LAJC" pos="0 0 0"/>
-					
-					<site name="l_heel_btm" type="sphere" pos="-0.04 -0.055 -0.01" size="0.01" group="3" rgba="0 1 0 0.4"/>
-					<site name="l_toe_btm" type="sphere" pos="0.19 -0.055 0.007" size="0.01" group="3" rgba="0 1 0 0.4"/>
-					
+                    <site name="l_heel_btm" type="sphere" pos="-0.04 -0.055 -0.01" size="0.01" group="3" rgba="0 1 0 0.4"/>
+                    <site name="l_toe_btm" type="sphere" pos="0.19 -0.055 0.007" size="0.01" group="3" rgba="0 1 0 0.4"/>
                     <body name="calcn_l" pos="-0.04877 -0.04195 -0.00792">
                         <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                         <joint axis="-0.78718 -0.604747 -0.120949" name="subtalar_angle_l" pos="0 0 0" range="-0.349066 0.349066"/>
@@ -398,7 +396,6 @@
                         <site name="LTOE" pos="0.205 0.0297 0.03"/>
                         <site name="LMT5" pos="0.145 0.0249 -0.059"/>
                         <geom name="l_foot_col1" size=".02" class="coll" fromto="0.175 0 0.03 0.010 0 0.01"/>
-                        <!-- <geom name="l_foot_col2" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
                         <geom name="l_foot_col3" size=".02" class="coll" fromto="0.140 0 -.03 0.010 0 -.01"/>
                         <geom name="l_foot_col4" type="ellipsoid" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
                         <site name="l_foot_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
