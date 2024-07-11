@@ -69,7 +69,6 @@
     </default>
 
     <asset>
-        <mesh file="../myo_sim/meshes/human_lowpoly_norighthand.stl" name="body_norighthand"/>
         <mesh file="../myo_sim/meshes/thorax.stl" name="ground_geom_1_thorax"/>
         <mesh file="../myo_sim/meshes/clavicle.stl" name="clavicle_geom_1_clavicle"/>
         <mesh file="../myo_sim/meshes/scapula.stl" name="scapula_geom_1_scapula"/>
