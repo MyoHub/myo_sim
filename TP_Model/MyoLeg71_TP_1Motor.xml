@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<mujoco model="MyoSuite's MyoTPLeg Model">
+<mujoco model="MyoTPLegs_v0.0.1">
 <!-- =================================================
 	Copyright 2024 Vikash Kumar, Vittorio Caggiano, Huawei Wang, Adan Dominguez
 	Model	:: Myo TP Legs (MuJoCoV2.0)

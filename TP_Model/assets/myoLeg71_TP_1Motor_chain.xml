@@ -7,7 +7,7 @@
 	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ====================================================== -->
 
-    <body name="pelvis" pos="0 0 0" quat="0.707107 0.707107 0 0" childclass="myotplegs">>
+    <body name="pelvis" pos="0 0 0" quat="0.707107 0.707107 0 0" childclass="myolegs">>
         <site name="pelvis" class="myo_leg_marker"/>
         <inertial pos="-0.07 -0.03 0" mass="10.96" diaginertia="0.0622075 0.0532711 0.0299242"/>
         <geom name="r_pelvis_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>
@@ -220,21 +220,30 @@
                 <site name="ST_at_condyles_r_site_semiten_r_side" pos="-0.0428471 -0.0468901 -0.0181631"/>
                 <site name="BF_at_gastroc_r_site_bfsh_r_side" pos="-0.0687049 -0.0256284 0.0426731"/>
                 <body name="prosthetic_socket" pos="0.0225 -0.287 0.017"> <!-- pos="-0.0045 -0.283 0.006" -->
-                <inertial pos="0 0.101169 0" quat="0.707107 0.707107 0 0" mass="0.849991" diaginertia="0.0039776 0.0039776 0.0027545"/>
-                <joint axis="-0.124293 0.989762 0.0701648" name="socket_piston" pos="0 0 0" range="-0.035 0.035" type="slide" stiffness="20000" damping="10000"/>
-                <joint axis="0 0 1" name="socket_rotation_1" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
-                <joint axis="1 0 0" name="socket_rotation_2" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
-                <joint axis="0 1 0" name="socket_rotation_3" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
+                    <inertial pos="0 0.101169 0" quat="0.707107 0.707107 0 0" mass="0.849991" diaginertia="0.0039776 0.0039776 0.0027545"/>
+                    <joint axis="-0.124293 0.989762 0.0701648" name="socket_piston" pos="0 0 0" range="-0.035 0.035" type="slide" stiffness="20000" damping="10000"/>
+                    <joint axis="0 0 1" name="socket_rotation_1" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
+                    <joint axis="1 0 0" name="socket_rotation_2" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
+                    <joint axis="0 1 0" name="socket_rotation_3" pos="0 0 0" range="-0.122173 0.122173" stiffness="350" damping="175"/>
                     <geom name="prosthetic_socket_geom_1" type="mesh" rgba="0 0 0 0.5" mesh="prosthetic_socket_geom_1_generic_socket" condim="3" contype="1"/>
+                    <site name="r_socket_load_force" type="box" pos="0 0.105 0.005" size="0.02 0.003 0.02" euler="0 0 0" group="3" rgba="0.8 0.2 .2 .4" />
                     <body name="r_Ankle_Assembly" pos="-0.01 -0.102 -0.02" >
                         <site name="ankle_assembly_r" class="myo_leg_marker"/>
+                        <site name="r_osl_load_force" type="box" pos="0 0.105 0.005" size="0.02 0.003 0.02" euler="0 0 0" group="3" rgba="0.8 0.2 .2 .4" />
                         <geom name="Ankle_Assembly" type="mesh" rgba="0.071 0.169 0.62 1" mesh="Ankle_Assembly" condim="3" contype="1"/>
                         <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                         <body name="foot_amp">
                             <geom mesh="r_foot_amp" name="r_foot_amp" type="mesh" class="motor" rgba="0 0 0 1"/>
-                            <geom name="osl_foot_capsule" class="coll_art" type="ellipsoid" size=".135 .02 0.04" pos="0.08 -.05 0.008" euler="0 0 0"/>
+                            <geom name="osl_foot_capsule" class="osl_class" type="ellipsoid" size=".135 .02 0.04" pos="0.08 -.05 0.008" euler="0 0 0"/>
                             <joint name="osl_ankle_angle_r" pos="0 0 0" axis="0 0 1" range="-0.5236 0.5236"/>
+
+                            <geom name="osl_foot_col1" size=".012" class="coll" fromto="0.19 -0.05 0.007    -0.03 -0.05 0.007" group="5"/>
+                            <geom name="osl_foot_col2" size=".012" class="coll" fromto="0.182 -0.05 0.028    -0.03 -0.05 0.028" group="5"/>
+                            <geom name="osl_foot_col3" size=".012" class="coll" fromto="0.182 -0.05 -0.015    -0.03 -0.05 -0.015" group="5"/>
+
                             <site name="r_prosth_touch" type="box" pos="0.062 -0.06 0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                            <site name="r_heel_btm" type="sphere" pos="-0.04 -0.055 0.007" size="0.01" group="3" rgba="0 1 0 0.4"/>
+                            <site name="r_toe_btm" type="sphere" pos="0.19 -0.055 0.007" size="0.01" group="3" rgba="0 1 0 0.4"/>
                         </body>
                     </body>
                 </body>
@@ -397,6 +406,8 @@
                     <joint axis="0.105014 0.174022 0.979126" name="ankle_angle_l" pos="0 0 0" range="-0.698132 0.523599"/>
                     <geom mesh="l_talus" name="l_talus" type="mesh"/>
                     <site name="LAJC" pos="0 0 0"/>
+                    <site name="l_heel_btm" type="sphere" pos="-0.04 -0.055 -0.01" size="0.01" group="3" rgba="0 1 0 0.4"/>
+                    <site name="l_toe_btm" type="sphere" pos="0.19 -0.055 0.007" size="0.01" group="3" rgba="0 1 0 0.4"/>
                     <body name="calcn_l" pos="-0.04877 -0.04195 -0.00792">
                         <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
                         <joint axis="-0.78718 -0.604747 -0.120949" name="subtalar_angle_l" pos="0 0 0" range="-0.349066 0.349066"/>
