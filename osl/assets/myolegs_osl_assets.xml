@@ -28,7 +28,7 @@
                 <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
             </default>
             <default class="coll">
-                <geom type="capsule" group="1" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
+                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
             </default>
             <default class="osl_class">
                 <geom contype="1" conaffinity="0" condim="3"/>
@@ -50,7 +50,7 @@
         <!-- Femur2 collisions -->
         <pair geom1="osl_femoral_pylon_geom_1" geom2="l_femur2_col" condim="1"/>
         <pair geom1="osl_proximal_adapter_geom_1" geom2="l_femur2_col" condim="1"/>
-        
+
         <!-- Tibia collisions -->
         <pair geom1="l_tibia1_col" geom2="osl_knee_assembly_geom_1" condim="1"/>
         <pair geom1="l_tibia1_col" geom2="osl_tibial_pylon_geom_1" condim="1"/>
@@ -63,7 +63,7 @@
         <!-- Foot collisions -->
         <pair geom1="l_foot_col1" geom2="osl_ankle_assembly_geom_1" condim="1"/>
         <pair geom1="l_foot_col1" geom2="osl_foot_assembly_geom_1" condim="1"/>
-        
+
         <pair geom1="l_foot_col4" geom2="osl_ankle_assembly_geom_1" condim="1"/>
         <pair geom1="l_foot_col4" geom2="osl_foot_assembly_geom_1" condim="1"/>
 
@@ -505,7 +505,7 @@
         <general biasprm="0.804197 1.8 1759.59 1 0.403463 3.5 10 1.60134 1.4 0" class="muscle" gainprm="0.804197 1.8 1759.59 1 0.403463 3.5 10 1.60134 1.4 0" lengthrange="0.282067 0.454352" name="vasint_l" tendon="vasint_l_tendon"/>
         <general biasprm="0.754438 1.8 5322.59 1 0.340667 3.5 10 1.80773 1.4 0" class="muscle" gainprm="0.754438 1.8 5322.59 1 0.340667 3.5 10 1.80773 1.4 0" lengthrange="0.295592 0.476057" name="vaslat_l" tendon="vaslat_l_tendon"/>
         <general biasprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" class="muscle" gainprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" lengthrange="0.311214 0.356041" name="vasmed_l" tendon="vasmed_l_tendon"/>
-		
+
         <motor name="osl_knee_torque_actuator" gear="49.4" ctrllimited="true" ctrlrange="-2.88 2.88" joint="osl_knee_angle_r"/>
         <motor name="osl_ankle_torque_actuator" gear="58.4" ctrllimited="true" ctrlrange="-2.88 2.88" joint="osl_ankle_angle_r"/>
     </actuator>
