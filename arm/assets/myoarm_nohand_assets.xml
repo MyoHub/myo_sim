@@ -1,4 +1,4 @@
-﻿<mujocoinclude model="MyoArm_NoHand_v0.01">
+<mujocoinclude model="MyoArm_NoHand_v0.01">
 <!-- =================================================
     Copyright 2023 Vikash Kumar, Vittorio Caggiano
     Model   :: MyoArm (MuJoCoV2.0)
@@ -54,7 +54,7 @@
             <site size="0.0025" group="2"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.002"/>
         </default>
-<!--         <default class="wrist">
+        <default class="wrist">
             <joint limited="true" damping=".05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
             <site size="0.0025" group="2"/>
@@ -64,7 +64,7 @@
             <joint limited="true" damping=".05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
             <site size="0.0025" group="2"/>
-        </default> -->
+        </default>
 
     </default>
 
@@ -75,10 +75,10 @@
         <mesh file="../myo_sim/meshes/humerus.stl" name="humerus_geom_1_humerus"/>
         <mesh file="../myo_sim/meshes/ulna.stl" name="ulna_geom_1_ulna"/>
         <mesh file="../myo_sim/meshes/radius.stl" name="radius_geom_1_radius"/>
-<!--         <mesh file="../myo_sim/meshes/lunate.stl" name="proximal_row_geom_1_lunate"/>
+        <mesh file="../myo_sim/meshes/lunate.stl" name="proximal_row_geom_1_lunate"/>
         <mesh file="../myo_sim/meshes/scaphoid.stl" name="proximal_row_geom_2_sdfastSCAPHOIDw"/>
         <mesh file="../myo_sim/meshes/pisiform.stl" name="proximal_row_geom_3_sdfastPISIFORMw"/>
-        <mesh file="../myo_sim/meshes/triquetrum.stl" name="proximal_row_geom_4_sdfastTRIQUETRALw"/> -->
+        <mesh file="../myo_sim/meshes/triquetrum.stl" name="proximal_row_geom_4_sdfastTRIQUETRALw"/>
 
         <mesh name="thorax" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"/>
         <mesh name="clavicle" file="../myo_sim/meshes/clavicle.stl" scale="1 1 1"/>
@@ -86,7 +86,7 @@
         <mesh name="humerus" file="../myo_sim/meshes/humerus.stl" scale="1 1 1"/>
         <mesh name="ulna" file="../myo_sim/meshes/ulna.stl" scale="1 1 1"/>
         <mesh name="radius" file="../myo_sim/meshes/radius.stl" scale="1 1 1"/>
-        <!-- <mesh name="lunate" file="../myo_sim/meshes/lunate.stl" scale="1 1 1"/>
+        <mesh name="lunate" file="../myo_sim/meshes/lunate.stl" scale="1 1 1"/>
         <mesh name="scaphoid" file="../myo_sim/meshes/scaphoid.stl" scale="1 1 1"/>
         <mesh name="pisiform" file="../myo_sim/meshes/pisiform.stl" scale="1 1 1"/>
         <mesh name="triquetrum" file="../myo_sim/meshes/triquetrum.stl" scale="1 1 1"/>
@@ -112,7 +112,7 @@
         <mesh name="5mc" file="../myo_sim/meshes/5mc.stl" scale="1 1 1"/>
         <mesh name="5proxph" file="../myo_sim/meshes/5proxph.stl" scale="1 1 1"/>
         <mesh name="5midph" file="../myo_sim/meshes/5midph.stl" scale="1 1 1"/>
-        <mesh name="5distph" file="../myo_sim/meshes/5distph.stl" scale="1 1 1"/> -->
+        <mesh name="5distph" file="../myo_sim/meshes/5distph.stl" scale="1 1 1"/>
 
         <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .19 .2" rgb2=".1 0.11 0.11" width="50" height="50"/>
         <texture name="texgeom" type="cube" builtin="flat" mark="cross" width="127" height="1278" rgb1="0.7 0.7 0.7" rgb2="0.9 0.9 0.9" markrgb="1 1 1" random="0.01"/>
@@ -129,10 +129,10 @@
         <pair geom1="radius_coll" geom2="thorax_coll2" condim="3"/>
         <pair geom1="radius_coll" geom2="thorax_coll3" condim="3"/>
        <exclude body1="ulna" body2="radius"/>
-<!--         <exclude body1="radius" body2="firstmc"/>
+        <exclude body1="radius" body2="firstmc"/>
         <exclude body1="proxph2" body2="proxph3"/>
         <exclude body1="proxph3" body2="proxph4"/>
-        <exclude body1="proxph4" body2="proxph5"/> -->
+        <exclude body1="proxph4" body2="proxph5"/>
     </contact>
 
     <equality>
@@ -360,7 +360,7 @@
 
 
 
-        <!-- <spatial name="ECRL_tendon" class="forearm_muscle">
+       <!--  <spatial name="ECRL_tendon" class="forearm_muscle">
             <site site="ECRL-P1"/>
             <geom geom="Elbow_PT_ECRL_wrap" sidesite="Elbow_PT_ECRL_site_ECRL_side"></geom>
             <site site="ECRL-P2"/>
@@ -508,7 +508,7 @@
         <!-- <geom geom="3rdmcp_ellipsoid_wrap" sidesite="3rdmcp_ellipsoid_site_FDP3_side"/> -->
         <!-- <site site="FDP3-P6"/> -->
         <!-- <site site="FDP3-P7"/> -->
-<!--         <site site="FDP3-P8"/>
+        <!-- <site site="FDP3-P8"/>
         <site site="FDP3-P9"/>
         <site site="FDP3-P10"/>
         </spatial>
@@ -555,8 +555,8 @@
         <site site="EDC4-P8"/>
         <geom geom="Fourthmd_wrap" sidesite="Fourthmd_site_EDC4_side"/>
         <site site="EDC4-P9"/>
-        </spatial> -->
-        <!-- <spatial name="EDC3_tendon" class="forearm_muscle">
+        </spatial>
+        <spatial name="EDC3_tendon" class="forearm_muscle">
         <site site="EDC3-P1"/>
         <site site="EDC3-P2"/>
         <site site="EDC3-P3"/>
@@ -667,7 +667,7 @@
         <site site="APL-P4"/>
         <site site="APL-P5"/> -->
         <!-- <geom geom="APL_torus_wrap" sidesite="APL_torus_site_APL_side"/> -->
-<!--         <site site="APL-P6"/>
+        <!-- <site site="APL-P6"/>
         <site site="APL-P7"/>
         <site site="APL-P8"/>
         </spatial>
@@ -709,7 +709,7 @@
         <site site="LU_RB3-P2"/>
         <site site="LU_RB3-P3"/> -->
         <!-- <geom geom="3rdmcp_ellipsoid_wrap" sidesite="3rdmcp_ellipsoid_site_LU_RB3_side"/> -->
-<!--         <site site="LU_RB3-P4"/>
+        <!-- <site site="LU_RB3-P4"/>
         <geom geom="Thirdpm_wrap" sidesite="Thirdpm_site_LU_RB3_side"/>
         <site site="LU_RB3-P5"/>
         </spatial>
@@ -792,7 +792,7 @@
         <general name="BICshort" tendon="BICshort_tendon" biasprm="0.486445 1.50858 270.82 1 0 1.8 10 1.80875 1.4 0" class="upperarm_muscle" gainprm="0.486445 1.50858 270.82 1 0 1.8 10 1.80875 1.4 0" lengthrange="0.268189 0.449579"/>
         <general name="BRA" tendon="BRA_tendon" biasprm="0.526201 1.21956 1168.76 1 0 1.8 10 0.920725 1.4 0" class="upperarm_muscle" gainprm="0.526201 1.21956 1168.76 1 0 1.8 10 0.920725 1.4 0" lengthrange="0.105976 0.14593"/>
         <general name="BRD" tendon="BRD_tendon" biasprm="0.130305 1.37938 272.486 1 0 1.8 10 0.93764 1.4 0" class="upperarm_muscle" gainprm="0.130305 1.37938 272.486 1 0 1.8 10 0.93764 1.4 0" lengthrange="0.200364 0.32774"/>
-        <!-- <muscle name="ECRL" force = "337.3" class="forearm_muscle" tendon="ECRL_tendon" lengthrange="0.313191 0.341072"/>
+<!--         <muscle name="ECRL" force = "337.3" class="forearm_muscle" tendon="ECRL_tendon" lengthrange="0.313191 0.341072"/>
         <muscle name="ECRB" force = "252.2" class="forearm_muscle" tendon="ECRB_tendon" lengthrange="0.26997 0.301495"/>
         <muscle name="ECU"  force = "192.9" class="forearm_muscle" tendon="ECU_tendon" lengthrange="0.279041 0.306754"/>
         <muscle name="FCR"  force = "407.9" class="forearm_muscle" tendon="FCR_tendon" lengthrange="0.295866 0.331494"/>
