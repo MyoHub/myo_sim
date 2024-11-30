@@ -406,7 +406,7 @@
                                         <site name="BRD_BRD-P3" pos="0.0419 -0.221 0.0224"/>
                                         <site class="marker" name="R.Forearm_marker" pos="0.03828 -0.1133 0.0174"/>
                                         <site class="marker" name="R.Radius_marker" pos="0.05749 -0.2272 0.02738"/>
-
+                                        <site name="forearm_tip" pos="0.015 -0.24 0.028" size=".01" group="3"/>
                                         <body name="lunate" pos="0.018 -0.242 0.025" childclass="wrist">
                                             <joint axis="0 0 1" name="deviation" pos="0 0 0" range="-0.174533 0.436332" damping="0.25"/>
                                             <joint axis="1 0 0" name="flexion" pos="0 0 0" range="-0.785398 0.785398" damping="0.25"/>
