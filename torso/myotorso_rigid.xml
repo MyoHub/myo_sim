@@ -9,12 +9,12 @@
 ====================================================== -->
 
     <include file="../scene/myosuite_scene.xml"/>
-    <include file="assets/myotorsorigid_assets.xml"/>
+    <include file="assets/myotorso_rigid_assets.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
     <worldbody>
         <body name="root" pos="0 0 1" euler="0 0 -1.57">
-            <include file="assets/myotorsorigid_chain.xml"/>
+            <include file="assets/myotorso_rigid_chain.xml"/>
             <!-- <freejoint/> -->
         </body>
     </worldbody>
