@@ -11,6 +11,8 @@
     <include file="../scene/myosuite_scene_noPedestal.xml"/>
     <include file="../torso/assets/myotorso_rigid_assets.xml"/>
     <include file="../leg/assets/myolegs_assets.xml"/>
+    <include file="../leg/assets/myolegs_tendon.xml"/>
+    <include file="../leg/assets/myolegs_muscle.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
     <asset>
