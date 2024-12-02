@@ -27,6 +27,7 @@ model_paths = [
             # leg models
             "leg/myolegs.xml",
             "leg/myolegs_abdomen.xml",
+            "osl/myolegs_osl.xml",
 
             # torso
             "torso/myotorso_rigid.xml",
