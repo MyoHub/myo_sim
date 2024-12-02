@@ -9,7 +9,7 @@
 ====================================================== -->
 
     <include file="../scene/myosuite_scene_noPedestal.xml"/>
-    <include file="../torso/assets/myotorsorigid_assets.xml"/>
+    <include file="../torso/assets/myotorso_rigid_assets.xml"/>
     <include file="../leg/assets/myolegs_assets.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
@@ -23,7 +23,7 @@
         <site name="pelvis_target" size="0.02" pos="0 0 .92" group="4"/>
 
         <body name="root" pos="0 0 1" euler="0 0 -1.57">
-            <include file="../torso/assets/myotorsorigid_chain.xml"/>
+            <include file="../torso/assets/myotorso_rigid_chain.xml"/>
             <include file="../leg/assets/myolegs_chain.xml"/>
             <freejoint name="root"/>
         </body>
