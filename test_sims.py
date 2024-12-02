@@ -26,9 +26,10 @@ model_paths = [
 
             # leg models
             "leg/myolegs.xml",
+            "leg/myolegs_abdomen.xml",
 
             # torso
-            "torso/myotorsorigid.xml",
+            "torso/myotorso_rigid.xml",
 
             # scene
             "scene/myosuite_scene_noPedestal.xml",
@@ -79,4 +80,3 @@ class TestSims(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-

@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<mujoco model="FullBodyModel_MuscleActuatedLowerLimb_TorqueActuatedUpperBody">
+<mujoco model="MyoTorso_(simple abdomen muscles)">
 <!-- =================================================
     Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
     Model   :: Myo Hand (MuJoCoV2.0)
@@ -9,13 +9,12 @@
 ====================================================== -->
 
     <include file="../scene/myosuite_scene.xml"/>
-    <include file="assets/myotorsorigid_assets.xml"/>
+    <include file="assets/myotorso_abdomen_assets.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
     <worldbody>
         <body name="root" pos="0 0 1" euler="0 0 -1.57">
-            <include file="assets/myotorsorigid_chain.xml"/>
-            <!-- <freejoint/> -->
+            <include file="assets/myotorso_abdomen_chain.xml"/>
         </body>
     </worldbody>
 
