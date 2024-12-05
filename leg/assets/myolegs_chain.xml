@@ -7,7 +7,7 @@
 	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ====================================================== -->
 
-    <body name="pelvis" pos="0 0 0" quat="0.707107 0.707107 0 0" childclass="myolegs">>
+    <body name="pelvis" pos="0 0 0" quat="0.707107 0.707107 0 0" childclass="myolegs">
         <site name="pelvis" class="myo_leg_marker"/>
         <inertial pos="-0.07 -0.03 0" mass="10.96" diaginertia="0.0622075 0.0532711 0.0299242" />
         <geom name="r_pelvis_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>

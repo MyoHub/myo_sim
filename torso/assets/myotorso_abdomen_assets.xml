@@ -14,7 +14,7 @@
             <site size="0.001 0.005 0.005" group="3"/>
             <tendon rgba="0.95 0.3 0.3 1" width="0.001"/>
             <default class="myotorso_coll">
-                <geom type="capsule" group="5" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001"/>
+                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001"/>
             </default>
             <default class="myotorso_wrap">
                 <geom type="capsule" group="3" contype="0" conaffinity="0" rgba="0.5 0.5 .7 .2"/>
@@ -33,11 +33,11 @@
         <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
         <mesh file="../myo_sim/meshes/torso_lowpoly.stl" name="torso"/>
 
-        <mesh file="meshes/sacrum.stl" name="pelvis_geom_1_sacrum"/>
-        <mesh file="meshes/hat_spine.stl" name="torso_geom_1_hat_spine"/>
-        <mesh file="meshes/hat_jaw.stl" name="torso_geom_2_hat_jaw"/>
-        <mesh file="meshes/hat_skull.stl" name="torso_geom_3_hat_skull"/>
-        <mesh file="meshes/hat_ribs_scap.stl" name="torso_geom_4_hat_ribs"/>
+        <mesh file="../myo_sim/meshes/sacrum.stl" name="pelvis_geom_1_sacrum"/>
+        <mesh file="../myo_sim/meshes/hat_spine.stl" name="torso_geom_1_hat_spine"/>
+        <mesh file="../myo_sim/meshes/hat_jaw.stl" name="torso_geom_2_hat_jaw"/>
+        <mesh file="../myo_sim/meshes/hat_skull.stl" name="torso_geom_3_hat_skull"/>
+        <mesh file="../myo_sim/meshes/hat_ribs_scap.stl" name="torso_geom_4_hat_ribs"/>
 
         <material name="MatSkin_myotorso" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.9 .7 1 1"/>
     </asset>
