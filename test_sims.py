@@ -31,6 +31,7 @@ model_paths = [
 
             # torso
             "torso/myotorso_rigid.xml",
+            "torso/myotorso_abdomen.xml",
 
             # scene
             "scene/myosuite_scene_noPedestal.xml",
