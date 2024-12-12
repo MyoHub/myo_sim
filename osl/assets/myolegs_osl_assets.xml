@@ -92,7 +92,6 @@
 
         <mesh file="../myo_sim/meshes/r_pelvis.stl" name="r_pelvis"/>
         <mesh file="../myo_sim/meshes/l_pelvis.stl" name="l_pelvis"/>
-        <mesh file="../myo_sim/meshes/sacrum.stl" name="sacrum"/>
         <mesh file="../myo_sim/meshes/r_femur.stl" name="r_femur"/>
         <mesh file="../myo_sim/meshes/r_tibia.stl" name="r_tibia"/>
         <mesh file="../myo_sim/meshes/r_fibula.stl" name="r_fibula"/>
