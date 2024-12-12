@@ -21,7 +21,7 @@
     <asset>
         <texture name="tex_myotorso" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
         <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
-        <mesh file="../myo_sim/meshes/torso_lowpoly.stl" name="torso"/>
+        <mesh file="../myo_sim/meshes/torso_lowpoly-v1.stl" name="torso"/>
         <material name="MatSkin_myotorso" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.9 .7 1 1"/>
     </asset>
 

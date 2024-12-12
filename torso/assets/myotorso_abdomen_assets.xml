@@ -31,7 +31,7 @@
     <asset>
         <texture name="tex_myotorso" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
         <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
-        <mesh file="../myo_sim/meshes/torso_lowpoly.stl" name="torso"/>
+        <mesh file="../myo_sim/meshes/torso_lowpoly-v1.stl" name="torso"/>
 
         <mesh file="../myo_sim/meshes/sacrum.stl" name="pelvis_geom_1_sacrum"/>
         <mesh file="../myo_sim/meshes/hat_spine.stl" name="torso_geom_1_hat_spine"/>
