@@ -33,7 +33,7 @@
         <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
         <mesh file="../myo_sim/meshes/torso_lowpoly-v1.stl" name="torso"/>
 
-        <mesh file="../myo_sim/meshes/sacrum.stl" name="pelvis_geom_1_sacrum"/>
+        <mesh file="../myo_sim/meshes/sacrum.stl" name="sacrum"/>
         <mesh file="../myo_sim/meshes/hat_spine.stl" name="torso_geom_1_hat_spine"/>
         <mesh file="../myo_sim/meshes/hat_jaw.stl" name="torso_geom_2_hat_jaw"/>
         <mesh file="../myo_sim/meshes/hat_skull.stl" name="torso_geom_3_hat_skull"/>
