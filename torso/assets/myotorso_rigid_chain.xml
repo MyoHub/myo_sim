@@ -17,6 +17,8 @@
             <inertial pos="0 0 0" mass="5.0"/>
         </body>
 
+        <site name="head" pos="-.0907 0 .5815"/>
+
         <geom type="capsule" class="myotorso_coll" size="0.080 0.077"  pos="-.065 0 .060" euler="1.57 0 0"/>
         <geom type="ellipsoid" class="myotorso_coll" size="0.095 0.140 0.140"  pos="-.085 0 .200" euler="1.57 0 0"/>
         <geom type="capsule" class="myotorso_coll" size="0.110 0.065"  pos="-.090 0 .330" euler="1.57 0 0"/>

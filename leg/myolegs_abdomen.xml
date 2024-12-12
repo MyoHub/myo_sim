@@ -19,7 +19,15 @@
     <compiler angle="radian" meshdir=".." texturedir=".."/>
     <size memory="10M"/>
 
+    <asset>
+        <hfield name="terrain" size="7 7 1 0.001" nrow="100" ncol="100"/>
+    </asset>
+
     <worldbody>
+
+        <geom name="terrain" type="hfield" hfield="terrain" pos="0 0 -0.005" material="matfloor" conaffinity="1" contype="1" rgba="1 1 1 0"/>
+        <site name="pelvis_target" size="0.02" pos="0 0 .92" group="4"/>
+
         <body name="root" pos="0 0 1" euler="0 0 -1.57">
             <freejoint name="root"/>
             <include file="../torso/assets/myotorso_abdomen_chain.xml"/>
