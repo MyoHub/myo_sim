@@ -13,7 +13,7 @@
   <default>
     <default class="myoElbow">
       <joint limited="true" damping="0.5" armature="0.01" stiffness="0"></joint>
-      <geom contype="0" conaffinity="0" condim="3" rgba="0.8 0.85 0.8 1" margin="0.001" solref=".02 1" solimp=".8 .8 .01" material="geom"></geom>
+      <geom contype="0" conaffinity="0" condim="3" rgba="0.8 0.85 0.8 1" solref=".02 1" solimp=".8 .8 .01" material="geom"></geom>
       <site size="0.001"></site>
       <tendon width="0.005" rgba=".95 .3 .3 1" limited="false"></tendon>
       <default class="muscle">
