@@ -8,7 +8,7 @@
 ====================================================== -->
 
     <include file="assets/myoarm_assets.xml"/>
-    <include file="../scene/myosuite_scene.xml"/>
+    
     <compiler meshdir=".." texturedir=".."/>
 
     <asset>
@@ -18,7 +18,7 @@
     </asset>
 
     <worldbody>
-
+		<geom type="box" pos="2 0 0" size="0.1 20 20" rgba="1 1 1 1" euler="0 0 -45"/>
         <geom name="body" type="mesh" mesh="human_body" euler="0 0 3.14" contype="0" conaffinity="0"/>
         <body name="full_body" pos="-.025 0.1 1.40">
             <include file="assets/myoarm_body.xml"/>
