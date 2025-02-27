@@ -15,6 +15,7 @@ The models present in the library are:
 | **MyoLeg**  <br>  - 20 Degree of Freedom (DoF) <br> - 80 muscles | <img src="https://user-images.githubusercontent.com/12837145/236839645-e34eab3f-0358-4ca8-8ae0-68a5c08585e4.png" width="200">|
 | **MyoArm**  <br>  - 27 Degree of Freedom (DoF) <br> - 63 muscles | <img src="https://github.com/MyoHub/myo_sim/assets/23240128/1f57c639-b7de-4bbb-a3c2-d2c29716e6c8" width="200">|
 | **MyoOSL**  <br>  - 19 Degree of Freedom (DoF) <br> - 54 muscles, 2 torque actuators | <img src="https://github.com/elladyr/myo_sim/assets/5383997/ec9dfc65-94ba-457f-8375-594c0e3a89b5" width="200">|
+| **MyoBack**  <br>  - 18 Degree of Freedom (DoF) <br> - 210 muscles | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="200">|
 
 Description of the models can be found [here](https://myosuite.readthedocs.io/en/latest/suite.html#models).
 

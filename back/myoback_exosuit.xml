@@ -1,0 +1,38 @@
+<mujoco model="MyoBack_v0.02">
+  <!-- This model has been converted from an OpenSim model. Model conversion by MyoConverter https://github.com/MyoHub/myoconverter. This model is licensed under Apache 2.0. -->
+
+  <include file="assets/myoback_assets_exosuit.xml"/>
+  <include file="../scene/myosuite_scene.xml"/>
+  <compiler meshdir=".." texturedir=".."/>
+
+  <worldbody>
+    <body name="full_body" pos="-.025 0.1 0">
+        <include file="assets/myoback_body_exosuit.xml"/>
+    </body>
+  </worldbody>
+  
+  <tendon>
+    <spatial name="Exo_LS_RL" stiffness="515.5998876" springlength="0 0.378820941018748" group="1" rgba="0.2 0.2 0.2 1"> 
+        <site site="Exo_RightShoulder"/>
+        <geom geom="Exo_cylinder" sidesite="Exo_sidesite"/>
+        <site site="Exo_LeftLeg"/>
+    </spatial>
+    <spatial name="Exo_RS_LL" stiffness="515.5998876" springlength="0 0.378820941018748" group="1" rgba="0.2 0.2 0.2 1"> 
+        <site site="Exo_LeftShoulder"/>
+        <geom geom="Exo_cylinder" sidesite="Exo_sidesite"/>
+        <site site="Exo_RightLeg"/>
+    </spatial>
+    <spatial name="Lower_Exo_Left" stiffness="0" group="1" rgba="0.4 0.4 0.4 1"> 
+        <site site="Lower_Exo_Left_Belt"/>
+        <site site="Lower_Exo_Left_Leg"/>
+    </spatial>
+        <spatial name="Lower_Exo_Right" stiffness="0" group="1" rgba="0.4 0.4 0.4 1"> 
+        <site site="Lower_Exo_Right_Belt"/>
+        <site site="Lower_Exo_Right_Leg"/>
+    </spatial>
+  </tendon>
+
+  <keyframe>
+    <key name="default-pose" qpos='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'/>
+  </keyframe>
+</mujoco>
