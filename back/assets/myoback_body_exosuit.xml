@@ -178,9 +178,9 @@
       <site name="MF_m4.laminar_l_MF_m4.laminar_l-P1" pos="-0.12536 0.0774879 -0.01934"/>
       <body name="LB_wrap" pos="-0.098 0.071 0">
         <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
-        <joint name="LB_wrapjnt_t1" pos="0 0 0" axis="1 0 0" limited="false" type="slide" range="-100000 100000"/>
-        <joint name="LB_wrapjnt_t2" pos="0 0 0" axis="0 1 0" limited="false" type="slide" range="-100000 100000"/>
-        <joint name="LB_wrapjnt_r3" pos="0 0 0" axis="0 0 1" limited="false" range="-1 1"/>
+        <joint name="LB_wrapjnt_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
+        <joint name="LB_wrapjnt_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
+        <joint name="LB_wrapjnt_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.1 .1"/>
         <geom name="Cylinder2_cylinder" size="0.07 0.13" pos="-0.118 0.0768 0" type="cylinder" group="2" rgba="0.19 0.83 0.78 0.2"/>
         <site name="Cylinder2_cylinder_IL_L1_r_1_sidesite" pos="-0.0340058 0.0777894 -0.00109894" size="0.0005"/>
         <site name="Cylinder2_cylinder_IL_L1_l_1_sidesite" pos="-0.0418844 0.112331 -0.0720796" size="0.0005"/>
@@ -231,9 +231,9 @@
         <site name="MF_m5.laminar_l_MF_m5.laminar_l-P2" pos="-0.0258996 0.01705 -0.00564"/>
         <body name="Abdomen" pos="0.098 -0.0211 0">
           <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
-          <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="false" type="slide" range="-100000 100000"/>
-          <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="false" type="slide" range="-100000 100000"/>
-          <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="false" range="-1.7 1.7"/>
+          <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
+          <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
+          <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>
           <geom name="Abdomen_ellipsoid" size="0.01" group="2" rgba="0.19 0.83 0.78 0.2"/>
           <site name="Abdomen_sidesite" pos="0.011 0 0" size="0.0005"/>
           <site name="EO1_r_EO1_r-P1" pos="0.0065502 0.0627431 0.0308937"/>
@@ -257,9 +257,9 @@
           <joint name="L4_L5_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0789703 0.0789703"/>
           <joint name="L4_L5_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.02968812 0.02968812"/>
           <geom name="lumbar4_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar4_geom_1_lumbar4"/>
-          <geom name="lower_exo_belt_geom" type="mesh" rgba="0.4 0.4 0.4 1" euler="1.57 3.14 -1.57" pos="0.015 0.03 0" mesh="lower_exo_belt_geom_1"/>
-          <site name="Lower_Exo_Left_Belt" pos="0.02 0 -0.14" size="0.005" rgba="0.4 0.4 0.4 1"/>
-          <site name="Lower_Exo_Right_Belt" pos="0.02 0 0.14" size="0.005" rgba="0.4 0.4 0.4 1"/>
+          <geom name="lower_exo_belt_geom" type="mesh" rgba="0.4 0.4 0.4 1" euler="1.57 3.14 -1.57" pos="0.025 0.06 0" mesh="lower_exo_belt_geom_1"/>
+          <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.16" size="0.005" rgba="0.4 0.4 0.4 1"/>
+          <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.16" size="0.005" rgba="0.4 0.4 0.4 1"/>
           <site name="Ps_L4_TP_r_Ps_L4_TP_r-P1" pos="-0.015649 0.0249464 0.0258768"/>
           <site name="Ps_L4_L5_IVD_r_Ps_L4_L5_IVD_r-P1" pos="0.00541963 0.00394754 0.0205966"/>
           <site name="Ps_L4_TP_l_Ps_L4_TP_l-P1" pos="-0.015649 0.0249464 -0.02588"/>
@@ -523,9 +523,8 @@
                   <geom name="Chest_l_ellipsoid_LTpT_T3_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
                   <geom name="Chest_l_ellipsoid_LTpT_T4_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
                   <geom name="Chest_l_ellipsoid_LTpT_T5_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                  <geom name="Cylinder_abdomen" size="0.13 0.13" pos="0.225 0.07 0" type="cylinder" group="2" rgba="0.19 0.83 0.78 0.2"/>
                   <site name="Abs_sidesite" pos="0.05 0.05 0" size="0.005" />
-                  <geom name="Exo_cylinder" size="0.15 0.13" pos="0.05 0 0" type="cylinder" group="3" rgba="0 0 1 0.1"/>
+                  <geom name="Exo_cylinder" size="0.05 0.13" pos="-0.05 -0.01 0" type="cylinder" group="3" rgba="0 0 1 0.1"/>
                   <site name="Exo_LeftShoulder" pos="-0.11 0.3 -0.07" size="0.0005" rgba="0 1 0 1"/>
                   <site name="Exo_RightShoulder" pos="-0.11 0.3 0.07" size="0.0005" rgba="0 1 0 1"/>
                   <site name="Chest_r_sidesite" pos="-0.02082 0.21 0.07816" size="0.0005"/>

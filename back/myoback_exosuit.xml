@@ -12,12 +12,12 @@
   </worldbody>
   
   <tendon>
-    <spatial name="Exo_LS_RL" stiffness="515.5998876" springlength="0 0.378820941018748" group="1" rgba="0.2 0.2 0.2 1"> 
+    <spatial name="Exo_LS_RL" stiffness="515.5998876" springlength="0 0.37" group="1" rgba="0.1 0.2 0.2 1"> 
         <site site="Exo_RightShoulder"/>
         <geom geom="Exo_cylinder" sidesite="Exo_sidesite"/>
         <site site="Exo_LeftLeg"/>
     </spatial>
-    <spatial name="Exo_RS_LL" stiffness="515.5998876" springlength="0 0.378820941018748" group="1" rgba="0.2 0.2 0.2 1"> 
+    <spatial name="Exo_RS_LL" stiffness="515.5998876" springlength="0 0.37" group="1" rgba="0.1 0.2 0.2 1"> 
         <site site="Exo_LeftShoulder"/>
         <geom geom="Exo_cylinder" sidesite="Exo_sidesite"/>
         <site site="Exo_RightLeg"/>

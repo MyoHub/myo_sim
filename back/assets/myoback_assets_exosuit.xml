@@ -42,7 +42,7 @@
     <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="0.87 0.87 0.87"/>
     <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="0.87 0.87 0.87"/>
     <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/ribcage_s.stl" scale="0.87 0.87 0.87"/>
-    <mesh name="lower_exo_belt_geom_1" file="../myo_sim/meshes/LowerExoBelt.stl" scale="0.0013 0.0013 0.0013"/>
+    <mesh name="lower_exo_belt_geom_1" file="../myo_sim/meshes/LowerExoBelt.stl" scale="0.0015 0.0015 0.0013"/>
     <mesh name="lower_exo_legs_geom_1" file="../myo_sim/meshes/LowerExoLegs.stl" scale="0.0013 0.0013 0.0013"/>
     <mesh name="upper_exo_geom_1" file="../myo_sim/meshes/UpperExo.stl" scale="0.001 0.001 0.001"/>
   </asset>
