@@ -1,4 +1,4 @@
-<mujocoinclude model="Myoback_v0.01">
+<mujocoinclude model="Myoback_v1.0">
   <compiler angle="radian" autolimits="true"/>
   <option timestep="0.005"/>
   <size njmax="1000" nconmax="400" nkey="1" nuser_jnt="1"/>

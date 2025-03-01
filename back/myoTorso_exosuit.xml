@@ -1,13 +1,13 @@
-<mujoco model="MyoBack_v0.02">
+<mujoco model="MyoTorso_v1.0">
   <!-- This model has been converted from an OpenSim model. Model conversion by MyoConverter https://github.com/MyoHub/myoconverter. This model is licensed under Apache 2.0. -->
 
-  <include file="assets/myoback_assets_exosuit.xml"/>
+  <include file="assets/myoTorso_assets_exosuit.xml"/>
   <include file="../scene/myosuite_scene.xml"/>
   <compiler meshdir=".." texturedir=".."/>
 
   <worldbody>
     <body name="full_body" pos="-.025 0.1 0">
-        <include file="assets/myoback_body_exosuit.xml"/>
+        <include file="assets/myoTorso_body_exosuit.xml"/>
     </body>
   </worldbody>
   
