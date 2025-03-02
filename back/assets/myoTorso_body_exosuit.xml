@@ -510,7 +510,7 @@
                   <geom name="upper_exo_geom" type="mesh" rgba="0.4 0.4 0.4 1" euler="1.57 3.14 1.57" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
                   <geom name="torso_geom_13" type="mesh" rgba="1 1 1 1" mesh="torso_geom_13_ribcage_s"/>
                   <geom name="Cylinder_cylinder" size="0.17 0.13" pos="-0.21 0.04 0" type="cylinder" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                  <geom name="Exo_cylinder" size="0.02 0.13" pos="-0.07 0.06 0" type="cylinder" group="3" rgba="0 0 1 0.1"/>
+                  <geom name="Exo_cylinder" size="0.015 0.13" pos="-0.07 0.06 0" type="cylinder" group="3" rgba="0 0 1 0.1"/>
                   <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
                   <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
                   <geom name="Chest_r_ellipsoid_LTpT_T1_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
