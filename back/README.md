@@ -1,8 +1,8 @@
-# MyoBack 0.1
+# MyoTorso 0.1
 
 ## General:
 
-The myoBack mujoco musculoskeletal (MSK) model is generated from: Constrained Lumbar Spine model - 210 [https://simtk.org/projects/lumbarspine] from Opensim.
+The myoTorso mujoco musculoskeletal (MSK) model is generated from: Constrained Lumbar Spine model - 210 [https://simtk.org/projects/lumbarspine] from Opensim.
 
 This generated mujoco MSK model has almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
 
@@ -10,7 +10,7 @@ The model have 210 actuators and 18 joints. The model can be controlled by 3 "vi
 
 ## Conversion process:
 
-The myoBack model was generated using our developed automatic conversion pipeline (released on June 2023).
+The myoTorso model was generated using our developed automatic conversion pipeline (released on June 2023).
 
 Three Conversion steps were taken to generate the myoLeg models from the reference Osim model:
 
