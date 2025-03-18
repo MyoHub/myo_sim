@@ -20,7 +20,7 @@
     </default>
   </default>
 
-    <asset>
+  <asset>
     <mesh name="pelvis_geom_1_pelvis_rv" file="../myo_sim/meshes/r_pelvis.stl"/>
     <mesh name="pelvis_geom_2_pelvis_lv" file="../myo_sim/meshes/l_pelvis.stl"/>
     <mesh name="sacrum_geom_1_sacrum" file="../myo_sim/meshes/sacrum.stl"/>
