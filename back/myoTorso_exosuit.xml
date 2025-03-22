@@ -1,0 +1,44 @@
+<mujoco model="MyoExoTorso_v1.0">
+  <!-- =================================================
+	Copyright 2024
+	Model	:: MyoTorso (MuJoCoV2.0)
+	Author	::  Rohan Walia, Morgane Billot, Kevin Garzon-Aguirre, Swathika Subramanian, Huiyi Wang,
+                 Mohamed Irfan Refai, Guillaume Durandau, Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+  ====================================================== -->
+
+  <include file="assets/myoTorso_assets_exosuit.xml"/>
+  <include file="../scene/myosuite_scene.xml"/>
+  <compiler meshdir=".." texturedir=".."/>
+
+  <worldbody>
+    <body name="full_body" pos="-.025 0.1 0">
+        <include file="assets/myoTorso_body_exosuit.xml"/>
+    </body>
+  </worldbody>
+  
+  <tendon>
+    <spatial name="Exo_LS_RL" stiffness="515.5998876" springlength="0 0.37" group="1" rgba="0.1 0.2 0.2 1"> 
+        <site site="Exo_RightShoulder"/>
+        <geom geom="Exo_cylinder" sidesite="Exo_sidesite"/>
+        <site site="Exo_LeftLeg"/>
+    </spatial>
+    <spatial name="Exo_RS_LL" stiffness="515.5998876" springlength="0 0.37" group="1" rgba="0.1 0.2 0.2 1"> 
+        <site site="Exo_LeftShoulder"/>
+        <geom geom="Exo_cylinder" sidesite="Exo_sidesite"/>
+        <site site="Exo_RightLeg"/>
+    </spatial>
+    <spatial name="Lower_Exo_Left" stiffness="0" group="1" rgba="0.4 0.4 0.4 1"> 
+        <site site="Lower_Exo_Left_Belt"/>
+        <site site="Lower_Exo_Left_Leg"/>
+    </spatial>
+        <spatial name="Lower_Exo_Right" stiffness="0" group="1" rgba="0.4 0.4 0.4 1"> 
+        <site site="Lower_Exo_Right_Belt"/>
+        <site site="Lower_Exo_Right_Leg"/>
+    </spatial>
+  </tendon>
+
+  <keyframe>
+    <key name="default-pose" qpos='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'/>
+  </keyframe>
+</mujoco>
