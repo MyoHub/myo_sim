@@ -106,6 +106,15 @@
         <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="0.87 0.87 0.87"/>
         <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="0.87 0.87 0.87"/>
         <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/ribcage_s.stl" scale="0.87 0.87 0.87"/>
+        <mesh name="cerv1" file="../myo_sim/meshes/cerv1.stl" scale="0.89 0.89 0.89"/>
+        <mesh name="cerv2" file="../myo_sim/meshes/cerv2.stl" scale="0.89 0.89 0.89"/>
+        <mesh name="cerv3" file="../myo_sim/meshes/cerv3.stl" scale="0.89 0.89 0.89"/>
+        <mesh name="cerv4" file="../myo_sim/meshes/cerv4.stl" scale="0.89 0.89 0.89"/>
+        <mesh name="cerv5" file="../myo_sim/meshes/cerv5.stl" scale="0.89 0.89 0.89"/>
+        <mesh name="cerv6" file="../myo_sim/meshes/cerv6.stl" scale="0.89 0.89 0.89"/>
+        <mesh name="cerv7" file="../myo_sim/meshes/rotatedcerv7.stl" scale="0.89 0.89 0.89"/>
+        <mesh name="jaw" file="../myo_sim/meshes/jaw.stl" scale="0.9 0.9 0.9"/>
+        <mesh name="skull" file="../myo_sim/meshes/skull.stl" scale="0.9 0.9 0.9"/>
     </asset>
 
     <equality>
@@ -1895,7 +1904,7 @@
         <general name="IO4_l" class="muscleback" tendon="IO4_l_tendon" lengthrange="0.068478 0.259959" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.180501 1.65711 184.643 1 0 2 10 4.04509 1.4 0" biasprm="0.180501 1.65711 184.643 1 0 2 10 4.04509 1.4 0"/>
         <general name="IO5_l" class="muscleback" tendon="IO5_l_tendon" lengthrange="0.0448393 0.200258" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.363877 1.55151 113.569 1 0 2 10 4.46984 1.4 0" biasprm="0.363877 1.55151 113.569 1 0 2 10 4.46984 1.4 0"/>
         <general name="IO6_l" class="muscleback" tendon="IO6_l_tendon" lengthrange="0.0608054 0.226538" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.612095 1.86427 92.7048 1 0 2 10 3.33474 1.4 0" biasprm="0.612095 1.86427 92.7048 1 0 2 10 3.33474 1.4 0"/>
-        
+
         <general biasprm="0.381903 1.46199 604.625 1 0.0669801 2.99607 10 1.34206 1.4 0" class="muscleleg" gainprm="0.381903 1.46199 604.625 1 0.0669801 2.99607 10 1.34206 1.4 0" lengthrange="0.0748245 0.186181" name="addbrev_r" tendon="addbrev_r_tendon"/>
         <general biasprm="0.361607 1.56839 881.938 1 0.126715 3.5 10 1.50984 1.4 0" class="muscleleg" gainprm="0.361607 1.56839 881.938 1 0.126715 3.5 10 1.50984 1.4 0" lengthrange="0.170925 0.301499" name="addlong_r" tendon="addlong_r_tendon"/>
         <general biasprm="0.647072 1.32551 576.186 1 0.000543367 2.1578 10 1.60782 1.4 0" class="muscleleg" gainprm="0.647072 1.32551 576.186 1 0.000543367 2.1578 10 1.60782 1.4 0" lengthrange="0.202042 0.322261" name="addmagDist_r" tendon="addmagDist_r_tendon"/>
@@ -1978,7 +1987,7 @@
         <general biasprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" class="muscleleg" gainprm="1.14989 1.61299 2422.17 1 0.412194 3.49301 10 1.4918 1.4 0" lengthrange="0.311214 0.356041" name="vasmed_l" tendon="vasmed_l_tendon"/>
 
     </actuator>
-    
+
     <asset>
         <hfield name="terrain" size="7 7 1 0.001" nrow="100" ncol="100"/>
     </asset>
