@@ -41,7 +41,7 @@
     <mesh name="torso_geom_10_thoracic3_s" file="../myo_sim/meshes/thoracic3_s.stl" scale="0.87 0.87 0.87"/>
     <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="0.87 0.87 0.87"/>
     <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="0.87 0.87 0.87"/>
-    <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/ribcage_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"/>
   </asset>
 
 
