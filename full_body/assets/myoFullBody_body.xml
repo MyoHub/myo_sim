@@ -548,7 +548,7 @@
                                         <joint name="L1_L2_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.31161 0.115719"/>
                                         <joint name="L1_L2_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0820244 0.0820244"/>
                                         <joint name="L1_L2_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.08269806 0.08269806"/>
-                                        <!--geom name="lumbar1_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar1_geom_1_lumbar1"/>-->
+                                        <geom name="lumbar1_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar1_geom_1_lumbar1"/>
                                         <site name="Ps_L1_VB_r_Ps_L1_VB_r-P1" pos="-0.0101595 0.02327 0.02"/>
                                         <site name="Ps_L1_TP_r_Ps_L1_TP_r-P1" pos="-0.02325 0.0146584 0.0226252"/>
                                         <site name="Ps_L1_L2_IVD_r_Ps_L1_L2_IVD_r-P1" pos="-0.00125362 0.00350798 0.0206834"/>
