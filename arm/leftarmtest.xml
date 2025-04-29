@@ -142,16 +142,16 @@
         <geom class="wrap_arm" name="Thorax_ellipsoid" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08"/>
         <geom class="wrap_arm" name="Thorax_ellipsoid_PECM2" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
         <geom class="wrap_arm" name="Thorax_ellipsoid_PECM3" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
-        <site name="PECM2_PECM2-P3" pos="0.03091 -0.03922 0.09705"/>
-        <site name="PECM2_PECM2-P4" pos="0.02769 -0.04498 0.02271"/>
-        <site name="Thorax_ellipsoid_PECM2_3_sidesite" pos="0.7614 0.6727 0.8709"/>
-        <site name="PECM3_PECM3-P3" pos="0.0525 -0.08417 0.08935"/>
-        <site name="PECM3_PECM3-P4" pos="0.05724 -0.11654 0.03787"/>
-        <site name="Thorax_ellipsoid_PECM3_3_sidesite" pos="0.7614 0.6727 0.8709"/>
-        <site name="LAT1_LAT1-P4" pos="-0.11859497376930025 -0.079928388492435526 0.068157061603091193"/>
-        <site name="LAT1_LAT1-P5" pos="-0.11828 -0.10118 0.03316"/>
-        <site name="LAT1_LAT1-P6" pos="-0.09578 -0.11724 0.00882"/>
-        <site name="LAT2_LAT2-P4" pos="-0.12371858734822989 -0.12417032086185528 0.077034033720721373"/>
+        <site name="PECM2_PECM2-P3" pos="-0.03091 -0.03922 0.09705" rgba="1 0 0 1"/>   <!-- Red -->
+        <site name="PECM2_PECM2-P4" pos="-0.02769 -0.04498 0.02271" rgba="0 1 0 1"/>   <!-- Green -->
+        <site name="Thorax_ellipsoid_PECM2_3_sidesite"  pos="-0.7614 0.6727 0.8709" rgba="0 0 1 1"/>   <!-- Blue -->
+        <site name="PECM3_PECM3-P3" pos="-0.0525 -0.08417 0.08935" rgba="1 0.4 0.7 1"/>   <!-- Pink -->
+        <site name="PECM3_PECM3-P4" pos="-0.05724 -0.11654 0.03787" rgba="1 0.5 0 1"/>   <!-- Orange -->
+        <site name="Thorax_ellipsoid_PECM3_3_sidesite" pos="-0.7614 0.6727 0.8709" rgba="0 1 1 1"/> <!-- Cyan -->
+        <site name="LAT1_LAT1-P4" pos="0.11859 -0.07993 0.06816" rgba="0.7 0.4 1 1"/>  <!-- Lavender -->
+        <site name="LAT1_LAT1-P5" pos="0.11828 -0.10118 0.03316" rgba="0.8 0.2 1 1"/>  <!-- Purple -->
+        <site name="LAT1_LAT1-P6" pos="0.09578 -0.11724 0.00882" rgba="0.9 0.3 1 1"/>  <!-- Magenta -->
+        <site name="LAT2_LAT2-P4" pos="0.12372 -0.12417 0.07703" rgba="1 0.6 0.2 1"/> <!-- Orange-ish -->
         <site name="LAT2_LAT2-P5" pos="-0.10992 -0.16908 0.02878"/>
         <site name="LAT2_LAT2-P6" pos="-0.07186 -0.18818 0.00815"/>
         <site name="LAT3_LAT3-P4" pos="-0.1204266823427011 -0.15954523000255943 0.092743411376397689"/>

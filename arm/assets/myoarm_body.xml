@@ -20,11 +20,11 @@
         <geom class="wrap_arm" name="Thorax_ellipsoid" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08"/>
         <geom class="wrap_arm" name="Thorax_ellipsoid_PECM2" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
         <geom class="wrap_arm" name="Thorax_ellipsoid_PECM3" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
-        <site name="PECM2_PECM2-P3" pos="0.03091 -0.03922 0.09705"/>
-        <site name="PECM2_PECM2-P4" pos="0.02769 -0.04498 0.02271"/>
-        <site name="Thorax_ellipsoid_PECM2_3_sidesite" pos="0.7614 0.6727 0.8709"/>
-        <site name="PECM3_PECM3-P3" pos="0.0525 -0.08417 0.08935"/>
-        <site name="PECM3_PECM3-P4" pos="0.05724 -0.11654 0.03787"/>
+        <site name="PECM2_PECM2-P3" pos="0.03091 -0.03922 0.09705" rgba="1 0 0 1"/> <!---Test, added RGB to check--> 
+        <site name="PECM2_PECM2-P4" pos="0.02769 -0.04498 0.02271" rgba="0 1 0 1"/> <!---Test, added RGB to check--> 
+        <site name="Thorax_ellipsoid_PECM2_3_sidesite" pos="0.7614 0.6727 0.8709" rgba="0 0 1 1"/> <!---Test, added RGB to check--> 
+        <site name="PECM3_PECM3-P3" pos="0.0525 -0.08417 0.08935" rgba="1 0.4 0.7 1"/> <!---Test, added RGB to check--> 
+        <site name="PECM3_PECM3-P4" pos="0.05724 -0.11654 0.03787" rgba="1 0.5 0 1"/>  <!---Test, added RGB to check--> 
         <site name="Thorax_ellipsoid_PECM3_3_sidesite" pos="0.7614 0.6727 0.8709"/>
         <site name="LAT1_LAT1-P4" pos="-0.11859497376930025 -0.079928388492435526 0.068157061603091193"/>
         <site name="LAT1_LAT1-P5" pos="-0.11828 -0.10118 0.03316"/>
