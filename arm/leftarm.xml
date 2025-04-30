@@ -1,0 +1,116 @@
+
+
+
+
+
+
+<mujoco>
+<!-- =================================================
+    Copyright 2020 Vikash Kumar, Vittorio Caggiano
+    Model   :: MyoLeg with abdomen (MuJoCoV2.0)
+    Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+    source  :: https://github.com/vikashplus
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+
+    <!-- <include file="assets/myoarm_assets.xml"/> -->
+    <!-- <include file="../scene/myosuite_scene.xml"/> -->
+    <!-- <compiler meshdir=".." texturedir=".."/> -->
+
+    <include file="assets/myoarm_assets.xml"/>
+    <!-- <include file="../scene/myosuite_scene.xml"/> -->
+    <compiler meshdir=".." texturedir=".."/>
+
+
+    <asset>
+
+        <mesh file="../myo_sim/flippedmeshesblender/scapulaL.stl" name="scapleft"/>
+        <mesh file="../myo_sim/flippedmeshesblender/clavicleL.stl" name="clavleft"/>
+        <mesh file="../myo_sim/flippedmeshesblender/humerusL.stl" name="humeleft"/>
+        <mesh file="../myo_sim/flippedmeshesblender/ulnaL.stl" name="ulnaleft"/>
+        <mesh file="../myo_sim/flippedmeshesblender/radiusL.stl" name="radiusleft"/>
+
+
+
+        <!-- <mesh name="thorax" file="/home/frank/Desktop/arms and body/myo_sim/flipped_meshes/flipped_thorax.stl" scale="1 -1 1"/>
+        <mesh name="clavicleLef" file="/home/frank/Desktop/arms and body/myo_sim/flipped_meshes/flipped_clavicle.stl" scale="1 -1 1"/>
+        <mesh name="scapulaLef" file="/home/frank/Desktop/arms and body/myo_sim/flipped_meshes/flipped_scapula.stl" scale="1 -1 1"/>
+        <mesh name="humerus" file="../myo_sim/flipped_meshes/flipped_humerus.stl" scale="1 -1 1"/>
+        <mesh name="ulna" file="../myo_sim/flipped_meshes/flipped_ulna.stl" scale="1 -1 1"/>
+        <mesh name="radius" file="../myo_sim/flipped_meshes/flipped_radius.stl" scale="1 -1 1"/>
+        <mesh name="lunate" file="../myo_sim/flipped_meshes/flipped_lunate.stl" scale="1 -1 1"/>
+        <mesh name="scaphoid" file="../myo_sim/flipped_meshes/flipped_scaphoid.stl" scale="1 -1 1"/>
+        <mesh name="pisiform" file="../myo_sim/flipped_meshes/flipped_pisiform.stl" scale="1 -1 1"/>
+        <mesh name="triquetrum" file="../myo_sim/flipped_meshes/flipped_triquetrum.stl" scale="1 -1 1"/>
+        <mesh name="capitate" file="../myo_sim/flipped_meshes/flipped_capitate.stl" scale="1 -1 1"/>
+        <mesh name="trapezium" file="../myo_sim/flipped_meshes/flipped_trapezium.stl" scale="1 -1 1"/>
+        <mesh name="1mc" file="../myo_sim/flipped_meshes/flipped_1mc.stl" scale="1 -1 1"/>
+        <mesh name="thumbprox" file="../myo_sim/flipped_meshes/flipped_thumbprox.stl" scale="1 -1 1"/>
+        <mesh name="thumbdist" file="../myo_sim/flipped_meshes/flipped_thumbdist.stl" scale="1 -1 1"/>
+        <mesh name="trapezoid" file="../myo_sim/flipped_meshes/flipped_trapezoid.stl" scale="1 -1 1"/>
+        <mesh name="hamate" file="../myo_sim/flipped_meshes/flipped_hamate.stl" scale="1 -1 1"/>
+        <mesh name="2mc" file="../myo_sim/flipped_meshes/flipped_2mc.stl" scale="1 -1 1"/>
+        <mesh name="2proxph" file="../myo_sim/flipped_meshes/flipped_2proxph.stl" scale="1 -1 1"/>
+        <mesh name="2midph" file="../myo_sim/flipped_meshes/flipped_2midph.stl" scale="1 -1 1"/>
+        <mesh name="2distph" file="../myo_sim/flipped_meshes/flipped_2distph.stl" scale="1 -1 1"/>
+        <mesh name="3mc" file="../myo_sim/flipped_meshes/flipped_3mc.stl" scale="1 -1 1"/>
+        <mesh name="3proxph" file="../myo_sim/flipped_meshes/flipped_3proxph.stl" scale="1 -1 1"/>
+        <mesh name="3midph" file="../myo_sim/flipped_meshes/flipped_3midph.stl" scale="1 -1 1"/>
+        <mesh name="3distph" file="../myo_sim/flipped_meshes/flipped_3distph.stl" scale="1 -1 1"/>
+        <mesh name="4mc" file="../myo_sim/flipped_meshes/flipped_4mc.stl" scale="1 -1 1"/>
+        <mesh name="4proxph" file="../myo_sim/flipped_meshes/flipped_4proxph.stl" scale="1 -1 1"/>
+        <mesh name="4midph" file="../myo_sim/flipped_meshes/flipped_4midph.stl" scale="1 -1 1"/>
+        <mesh name="4distph" file="../myo_sim/flipped_meshes/flipped_4distph.stl" scale="1 -1 1"/>
+        <mesh name="5mc" file="../myo_sim/flipped_meshes/flipped_5mc.stl" scale="1 -1 1"/>
+        <mesh name="5proxph" file="../myo_sim/flipped_meshes/flipped_5proxph.stl" scale="1 -1 1"/>
+        <mesh name="5midph" file="../myo_sim/flipped_meshes/flipped_5midph.stl" scale="1 -1 1"/>
+        <mesh name="5distph" file="../myo_sim/flipped_meshes/flipped_5distph.stl" scale="1 -1 1"/>  -->
+    </asset>
+
+
+<worldbody>
+
+    <geom name="floor" type="plane" size="50 50 0.1" rgba="0 0 1 1"/>
+
+        <!-- <geom name="body" type="mesh" mesh="human_body" euler="0 0 3.14" contype="0" conaffinity="0"/> -->
+        <body name="full_body" pos="-.025 0.1 1.40">
+
+        <body name="main_armL" pos="-0.105 .5 .45" euler="0 0 1.57" >
+            <body name="thoraxL" pos="0 0 0"  euler="1.57 -1.57 0">
+                <!-- <geom mesh="ground_geom_1_thorax" name="ground_geom_1" type="mesh"/> -->
+            </body>
+
+            <body name="clavicleL" pos="0.006325 -0.02547 0.00693"  euler="1.57 -1.57 0">
+                <geom mesh="clavleft" name="cl" type="mesh"/>
+                
+                <body name="clavphantL" pos="-0.01433 0.02007 0.1355">
+                    <body name="scapulaL" pos="0 0 -0.275">
+                        <geom mesh="scapleft" name="L" type="mesh" />
+                        <body name="scapphantL" pos="-0.00955 -0.034 0.009">
+                            <body name="humphantL" pos="0 0 0">
+                                <body name="humphant1L" pos="0 0 0">
+                                    <body name="humerusL" pos="0 0 0">
+                                        <geom mesh="humeleft" name="hu" type="mesh"/>
+                                        <body name="ulnaL" pos="0.0061 -0.2904 -0.0123" childclass="elbow_arm">
+                                            <geom mesh="ulnaleft" name="ul" type="mesh"/>
+                                            <body name="radiusL" pos="0.0004 -0.0115 0.02">
+ 
+                                                <geom mesh="radiusleft" name="rd" type="mesh"/>
+                                            </body>  
+                                        </body>
+                                    </body>
+                                </body>
+                            </body>
+                        </body>
+                    </body>
+                </body>
+            </body>
+        </body>
+
+
+            <include file="assets/myoarm_body.xml"/>
+        </body>
+
+    </worldbody>
+</mujoco>
+

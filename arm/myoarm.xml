@@ -14,12 +14,12 @@
     <asset>
         <!-- pick a body mesh below -->
         <!-- <mesh file="../myo_sim/meshes/human_lowpoly_norighthand.stl" name="human_body"/> -->
-        <mesh file="../myo_sim/meshes/human_lowpoly_nohand.stl" name="human_body"/>
+        <!-- <mesh file="../myo_sim/meshes/human_lowpoly_nohand.stl" name="human_body"/> -->
     </asset>
 
     <worldbody>
 
-        <geom name="body" type="mesh" mesh="human_body" euler="0 0 3.14" contype="0" conaffinity="0"/>
+        <!-- <geom name="body" type="mesh" mesh="human_body" euler="0 0 3.14" contype="0" conaffinity="0"/> -->
         <body name="full_body" pos="-.025 0.1 1.40">
             <include file="assets/myoarm_body.xml"/>
         </body>

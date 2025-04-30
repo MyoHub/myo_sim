@@ -15,7 +15,7 @@
     <worldbody>
         <body name="root" pos="0 0 1" euler="0 0 -1.57">
             <include file="assets/myotorso_rigid_chain.xml"/>
-            <!-- <freejoint/> -->
+            <freejoint/>
         </body>
     </worldbody>
 
