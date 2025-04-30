@@ -152,13 +152,14 @@
         <site name="LAT1_LAT1-P5" pos="0.11828 -0.10118 0.03316" rgba="0.8 0.2 1 1"/>  <!-- Purple -->
         <site name="LAT1_LAT1-P6" pos="0.09578 -0.11724 0.00882" rgba="0.9 0.3 1 1"/>  <!-- Magenta -->
         <site name="LAT2_LAT2-P4" pos="0.12372 -0.12417 0.07703" rgba="1 0.6 0.2 1"/> <!-- Orange-ish -->
-        <site name="LAT2_LAT2-P5" pos="-0.10992 -0.16908 0.02878"/>
-        <site name="LAT2_LAT2-P6" pos="-0.07186 -0.18818 0.00815"/>
-        <site name="LAT3_LAT3-P4" pos="-0.1204266823427011 -0.15954523000255943 0.092743411376397689"/>
-        <site name="LAT3_LAT3-P5" pos="-0.11157 -0.19387 0.05532"/>
-        <site name="LAT3_LAT3-P6" pos="-0.07117 -0.24858 0.00907"/>
-        <site class="marker_arm" name="C7_marker" pos="-0.05613 0.05528 -0.00151"/>
-        <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite" pos="0.0510248 -0.016092 -0.0573453" rgba="1 0 0 0"/>
+        <site name="LAT2_LAT2-P5_L" pos="0.10992 -0.16908 0.02878" rgba="0.7 0.4 1 1"/> <!-- Lavender -->
+        <site name="LAT2_LAT2-P6_L" pos="0.07186 -0.18818 0.00815" rgba="0.8 0.2 1 1"/> <!-- Purple -->
+        <site name="LAT3_LAT3-P4_L" pos="0.1204266823427011 -0.15954523000255943 0.092743411376397689" rgba="0.9 0.3 1 1"/> <!-- Magenta -->
+        <site name="LAT3_LAT3-P5_L" pos="0.11157 -0.19387 0.05532" rgba="1 0.6 0.2 1"/> <!-- Orange-ish -->
+        <site name="LAT3_LAT3-P6_L" pos="0.07117 -0.24858 0.00907" rgba="1 0 0 1"/> <!-- Red -->        
+        <site class="marker_arm" name="C7_marker_L" pos="0.05613 0.05528 -0.00151" rgba="0 1 1 1"/> <!-- Cyan -->
+        <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite_L" pos="-0.0510248 -0.016092 -0.0573453" rgba="1 0 0 1"/> <!-- Red -->
+
     </body>
 
     <body name="clavicle" pos="0.006325 -0.02547 0.00693" childclass="arm_arm" euler="1.57 -1.57 0">
@@ -166,10 +167,11 @@
         <joint axis="0.0153 0.989299 -0.1451" name="sternoclavicular_r2" pos="0 0 0" range="-0.75 -0.0" user="-2.32583e-06"/>
         <joint axis="-0.994473 0 -0.104997" name="sternoclavicular_r3" pos="0 0 0" range="0.0 0.318" user="9.85111e-07"/>
         <geom mesh="clavleft" name="clavicle_geom_1" type="mesh"/>
-        <site name="DELT1_DELT1-P4" pos="-0.014 0.01106 0.08021"/>
-        <site name="PECM1_PECM1-P3" pos="0.0264476 0.004005 0.057232"/>
-        <site name="PECM1_PECM1-P4" pos="0.00321 -0.00013 0.05113"/>
-        <site class="marker_arm" name="R.Clavicle_marker" pos="0.01835 -0.00464 -0.00046"/>
+        <site name="DELT1_DELT1-P4_L" pos="0.014 0.01106 0.08021" rgba="1 0.4 0.7 1"/> <!-- Pink -->
+        <site name="PECM1_PECM1-P3_L" pos="-0.0264476 0.004005 0.057232" rgba="0.6 0.8 0.2 1"/> <!-- Yellow-Green -->
+        <site name="PECM1_PECM1-P4_L" pos="-0.00321 -0.00013 0.05113" rgba="0.2 0.8 1 1"/> <!-- Sky Blue -->
+        <site class="marker_arm" name="L.Clavicle_marker" pos="-0.01835 -0.00464 -0.00046" rgba="1 1 0 1"/> <!-- Yellow -->
+ 
 
         <body name="clavphant" pos="-0.01433 0.02007 0.1355">
             <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
@@ -192,43 +194,43 @@
                 <geom class="wrap_arm" name="TMIN_ellipsoid" pos="-0.0418 -0.0519 -0.0359" quat="0.407504 -0.492108 -0.706779 -0.3037" size="0.03"/>
                 <geom class="wrap_arm" name="TRIlongglen_cylinder" pos="-0.0359 -0.0309 -0.0132" quat="0.351544 0.110456 -0.628265 0.685201"  size="0.003 0.015" type="cylinder"/>
                 <geom class="wrap_arm" name="Deltoid2_ellipsoid_DELT2" pos="-0.0122268 -0.0345692 0.0127541" quat="-0.423842 0.568442 0.433325 -0.556293" size="0.0297339"/>
-                <site name="Deltoid2_sidesite" pos="-0.006523 -0.02881 0.04238"/>
-                <site name="Delt3_sidesite" pos="-0.0973 -0.0428 -0.037"/>
-                <site name="INFSP_sidesite" pos="-0.0561 -0.0199 -0.0112"/>
-                <site name="TMIN_sidesite" pos="-0.0475 -0.03803 -0.008771"/>
-                <site name="TRIlongglen_sidesite" pos="-0.03881 -0.02953 -0.01083"/>
-                <site name="s_glenohum_s_glenohum-P2" pos="-0.016 -0.023 -0.017"/>
-                <site name="m_glenohum_m_glenohum-P2" pos="-0.014 -0.03 -0.019"/>
-                <site name="i_glenohum_i_glenohum-P2" pos="-0.02 -0.036 -0.02"/>
-                <site name="coracohum_coracohum-P2" pos="-0.006 -0.026 -0.025"/>
-                <site name="DELT1_DELT1-P3" pos="0.04347 -0.03202 0.00499"/>
-                <site name="DELT2_DELT2-P3" pos="5e-05 0.00294 0.02233"/>
-                <site name="DELT2_DELT2-P4" pos="-0.01078 -0.00034 0.0062"/>
-                <site name="Deltoid2_ellipsoid_DELT2_2_sidesite" pos="-0.0403233 -0.0328863 0.017157"/>
-                <site name="DELT3_DELT3-P1" pos="-0.05573 0.00122 -0.02512"/>
-                <site name="DELT3_DELT3-P2" pos="-0.07247 -0.03285 0.01233"/>
-                <site name="Delt3_torus_DELT3_1_sidesite" pos="0.3027 0.3572 0.363"/>
-                <site name="SUPSP_SUPSP-P2" pos="-0.0071293297535122493 0.0061517049319610526 0.011581990794449191"/>
-                <site name="SUPSP_SUPSP-P3" pos="-0.044 -0.01512 -0.05855"/>
-                <site name="INFSP_INFSP-P2" pos="-0.0477596 -0.0399154 -0.00963954"/>
-                <site name="INFSP_INFSP-P3" pos="-0.07382 -0.05476 -0.04781"/>
-                <site name="SUBSC_SUBSC-P2" pos="-0.01831 -0.05223 -0.02457"/>
-                <site name="SUBSC_SUBSC-P3" pos="-0.07246 -0.03943 -0.06475"/>
-                <site name="TMIN_TMIN-P2" pos="-0.09473 -0.07991 -0.04737"/>
-                <site name="TMIN_TMIN-P3" pos="-0.09643 -0.08121 -0.05298"/>
-                <site name="TMAJ_TMAJ-P3" pos="-0.09541 -0.109088 -0.0504081"/>
-                <site name="TMAJ_TMAJ-P4" pos="-0.106617 -0.11056 -0.0757051"/>
-                <site name="LAT1_LAT1-P3" pos="-0.0812616 -0.0723763 -0.0276194"/>
-                <site name="LAT2_LAT2-P3" pos="-0.0886248 -0.0793882 -0.0268122"/>
-                <site name="LAT3_LAT3-P3" pos="-0.0905824 -0.107059 -0.034711"/>
-                <site name="CORB_CORB-P1" pos="0.0125 -0.04127 -0.02652"/>
-                <site name="CORB_CORB-P2" pos="0.00483 -0.06958 -0.01563"/>
-                <site name="TRIlong_TRIlong-P1" pos="-0.04565 -0.04073 -0.01377"/>
-                <site name="BIClong_BIClong-P1" pos="-0.03123 -0.02353 -0.01305"/>
-                <site name="BIClong_BIClong-P2" pos="-0.02094 -0.01309 -0.00461"/>
-                <site name="BICshort_BICshort-P1" pos="0.01268 -0.03931 -0.02625"/>
-                <site name="BICshort_BICshort-P2" pos="0.00093 -0.06704 -0.01593"/>
-                <site class="marker_arm" name="R.Shoulder_marker" pos="0.0014 -0.00147 0.01369"/>
+                <site name="Deltoid2_sidesite_L" pos="0.006523 -0.02881 0.04238" rgba="1 0.5 0.5 1"/> <!-- Soft Red (Deltoid) -->
+                <site name="Delt3_sidesite_L" pos="0.0973 -0.0428 -0.037" rgba="1 0.7 0.3 1"/> <!-- Orange (Deltoid lower section) -->
+                <site name="INFSP_sidesite_L" pos="0.0561 -0.0199 -0.0112" rgba="0.5 0.8 1 1"/> <!-- Light Blue (Infraspinatus) -->
+                <site name="TMIN_sidesite_L" pos="0.0475 -0.03803 -0.008771" rgba="0.4 1 0.4 1"/> <!-- Green (Teres Minor) -->
+                <site name="TRIlongglen_sidesite_L" pos="0.03881 -0.02953 -0.01083" rgba="0.7 0.4 1 1"/> <!-- Violet (Triceps Long Head) -->
+                <site name="s_glenohum_s_glenohum-P2_L" pos="0.016 -0.023 -0.017" rgba="0.9 0.3 0.3 1"/> <!-- Light Red -->
+                <site name="m_glenohum_m_glenohum-P2_L" pos="0.014 -0.03 -0.019" rgba="0.9 0.5 0.3 1"/> <!-- Orange -->
+                <site name="i_glenohum_i_glenohum-P2_L" pos="0.02 -0.036 -0.02" rgba="0.9 0.7 0.3 1"/> <!-- Yellow -->
+                <site name="coracohum_coracohum-P2_L" pos="0.006 -0.026 -0.025" rgba="0.3 0.9 0.3 1"/> <!-- Green -->
+                <site name="DELT1_DELT1-P3_L" pos="-0.04347 -0.03202 0.00499" rgba="0.3 0.3 0.9 1"/> <!-- Blue -->
+                <site name="DELT2_DELT2-P3_L" pos="-5e-05 0.00294 0.02233" rgba="0.5 0.3 0.9 1"/> <!-- Purple -->
+                <site name="DELT2_DELT2-P4_L" pos="0.01078 -0.00034 0.0062" rgba="0.7 0.3 0.9 1"/> <!-- Violet -->
+                <site name="Deltoid2_ellipsoid_DELT2_2_sidesite_L" pos="0.0403233 -0.0328863 0.017157" rgba="1 0.5 0.5 1"/> <!-- Light Red (Deltoid 2) -->
+                <site name="DELT3_DELT3-P1_L" pos="0.05573 0.00122 -0.02512" rgba="1 0.6 0.3 1"/> <!-- Orange (Deltoid 3) -->
+                <site name="DELT3_DELT3-P2_L" pos="0.07247 -0.03285 0.01233" rgba="1 0.7 0.2 1"/> <!-- Yellow-Orange (Deltoid 3 lower) -->
+                <site name="Delt3_torus_DELT3_1_sidesite_L" pos="-0.3027 0.3572 0.363" rgba="1 0.8 0.4 1"/> <!-- Goldenrod (Decorative Torus) -->
+                <site name="SUPSP_SUPSP-P2_L" pos="0.0071293297535122493 0.0061517049319610526 0.011581990794449191" rgba="0.4 0.8 1 1"/> <!-- Sky Blue (Supraspinatus) -->
+                <site name="SUPSP_SUPSP-P3_L" pos="0.044 -0.01512 -0.05855" rgba="0.2 0.6 1 1"/> <!-- Deep Blue (Supraspinatus Posterior) -->
+                <site name="INFSP_INFSP-P2_L" pos="0.0477596 -0.0399154 -0.00963954" rgba="0.6 1 0.6 1"/> <!-- Light Green (Infraspinatus) -->
+                <site name="INFSP_INFSP-P3_L" pos="0.07382 -0.05476 -0.04781" rgba="0.4 1 0.4 1"/> <!-- Green (Infraspinatus Lower) -->
+                <site name="SUBSC_SUBSC-P2_L" pos="0.01831 -0.05223 -0.02457" rgba="0.7 0.7 1 1"/> <!-- Lavender (Subscapularis) -->
+                <site name="SUBSC_SUBSC-P3_L" pos="0.07246 -0.03943 -0.06475" rgba="0.5 0.5 1 1"/> <!-- Periwinkle (Subscapularis Lower) -->
+                <site name="TMIN_TMIN-P2_L" pos="0.09473 -0.07991 -0.04737" rgba="0.6 0.4 1 1"/> <!-- Purple (Teres Minor) -->
+                <site name="TMIN_TMIN-P3_L" pos="0.09643 -0.08121 -0.05298" rgba="0.6 0.4 1 1"/> <!-- Purple (Teres Minor) -->
+                <site name="TMAJ_TMAJ-P3_L" pos="0.09541 -0.109088 -0.0504081" rgba="0.8 0.2 1 1"/> <!-- Magenta (Teres Major) -->
+                <site name="TMAJ_TMAJ-P4_L" pos="0.106617 -0.11056 -0.0757051" rgba="0.8 0.2 1 1"/> <!-- Magenta (Teres Major) -->
+                <site name="LAT1_LAT1-P3_L" pos="0.0812616 -0.0723763 -0.0276194" rgba="1 0.4 0.4 1"/> <!-- Red (Latissimus Dorsi 1) -->
+                <site name="LAT2_LAT2-P3_L" pos="0.0886248 -0.0793882 -0.0268122" rgba="1 0.6 0.2 1"/> <!-- Orange (Latissimus Dorsi 2) -->
+                <site name="LAT3_LAT3-P3_L" pos="0.0905824 -0.107059 -0.034711" rgba="1 0 0 1"/> <!-- Bright Red (Latissimus Dorsi 3) -->
+                <site name="CORB_CORB-P1_L" pos="-0.0125 -0.04127 -0.02652" rgba="0.4 1 0.4 1"/> <!-- Green (Coracobrachialis) -->
+                <site name="CORB_CORB-P2_L" pos="-0.00483 -0.06958 -0.01563" rgba="0.4 1 0.4 1"/> <!-- Green (Coracobrachialis) -->
+                <site name="TRIlong_TRIlong-P1_L" pos="0.04565 -0.04073 -0.01377" rgba="0.7 0.4 1 1"/> <!-- Violet (Triceps Long Head) -->
+                <site name="BIClong_BIClong-P1_L" pos="0.03123 -0.02353 -0.01305" rgba="0.2 0.8 1 1"/> <!-- Sky Blue (Biceps Long Head) -->
+                <site name="BIClong_BIClong-P2_L" pos="0.02094 -0.01309 -0.00461" rgba="0.2 0.8 1 1"/> <!-- Sky Blue (Biceps Long Head) -->
+                <site name="BICshort_BICshort-P1_L" pos="-0.01268 -0.03931 -0.02625" rgba="0.2 1 0.6 1"/> <!-- Mint Green (Biceps Short Head) -->
+                <site name="BICshort_BICshort-P2_L" pos="-0.00093 -0.06704 -0.01593" rgba="0.2 1 0.6 1"/> <!-- Mint Green (Biceps Short Head) -->
+                <site class="marker_arm" name="L.Shoulder_marker" pos="-0.0014 -0.00147 0.01369" rgba="1 1 0 1"/> <!-- Yellow (Left Shoulder Marker) -->
                 <body name="scapphant" pos="-0.00955 -0.034 0.009">
                     <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
                     <joint axis="0.6377 0.1186 0.7611" name="unrothum_r1" pos="0 0 0" range="-0.552 -0.0" user="-1.71073e-06"/>
@@ -249,14 +251,13 @@
 
                                 <geom name="Elbow_PT_ECRL_wrap" type="sphere" size="0.027" pos="-0.005 -0.3 0.005" class="wrap_arm"></geom>
                                 <geom name="Elbow_PT_FCU_wrap" type="sphere" size="0.015" pos="-0.005 -0.29 -0.033" class="wrap_arm"></geom>
-                                <site name="Elbow_PT_ECRL_site_ECRL_side" pos="0.03 -0.2872 0.04"/>
-                                <site name="Elbow_PT_FCU_site_FCU_side" pos="0.03 -0.2872 -0.04"/>
-
-                                <site name="ECRL-P1" pos="-0.0073 -0.2609 0.0091"/>
-                                <site name="ECRB-P1" pos="0.0135 -0.2905 0.017"/>
-                                <site name="ECU-P1" pos="0.0008 -0.2895 0.0188"/>
-                                <site name="FCR-P1" pos="0.0076 -0.2781 -0.037"/>
-                                <site name="FCU-P1" pos="0.0022 -0.2774 -0.0388"/>
+                                <site name="Elbow_PT_ECRL_site_ECRL_side_L" pos="-0.03 -0.2872 0.04" rgba="0.2 0.8 1 1"/> <!-- Sky Blue (ECRL insertion) -->
+                                <site name="Elbow_PT_FCU_site_FCU_side_L" pos="-0.03 -0.2872 -0.04" rgba="0.2 1 0.6 1"/> <!-- Mint Green (FCU insertion) -->
+                                <site name="ECRL-P1_L" pos="0.0073 -0.2609 0.0091" rgba="0.4 0.6 1 1"/> <!-- Light Blue (ECRL origin) -->
+                                <site name="ECRB-P1_L" pos="-0.0135 -0.2905 0.017" rgba="0.3 0.6 1 1"/> <!-- Blue (ECRB origin) -->
+                                <site name="ECU-P1_L" pos="-0.0008 -0.2895 0.0188" rgba="0.2 0.4 1 1"/> <!-- Deep Blue (ECU origin) -->
+                                <site name="FCR-P1_L" pos="-0.0076 -0.2781 -0.037" rgba="0.4 1 0.4 1"/> <!-- Green (FCR origin) -->
+                                <site name="FCU-P1_L" pos="-0.0022 -0.2774 -0.0388" rgba="0.2 1 0.6 1"/> <!-- Mint Green (FCU origin) -->
                                 <site name="PL-P1" pos="0.0046 -0.2752 -0.0386"/>
                                 <site name="PT-P1" pos="0.0036 -0.2759 -0.0365"/>
                                 <site name="FDS5-P1" pos="0.0042 -0.276 -0.0386"/>
