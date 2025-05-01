@@ -12,11 +12,11 @@ from mujoco.viewer import launch
 
 
 #model = mujoco.MjModel.from_xml_path("arm/myoarm.xml")
-model = mujoco.MjModel.from_xml_path("arm/myoarm.xml")
+#model = mujoco.MjModel.from_xml_path("arm/myoarm.xml")
 #model = mujoco.MjModel.from_xml_path("arm/assets/myoarm_body.xml")
 
 
-#model = mujoco.MjModel.from_xml_path("arm/leftarmtest.xml") 
+model = mujoco.MjModel.from_xml_path("arm/leftarmtest.xml") 
 
 data = mujoco.MjData(model)
 

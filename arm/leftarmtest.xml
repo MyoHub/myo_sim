@@ -258,15 +258,16 @@
                                 <site name="ECU-P1_L" pos="-0.0008 -0.2895 0.0188" rgba="0.2 0.4 1 1"/> <!-- Deep Blue (ECU origin) -->
                                 <site name="FCR-P1_L" pos="-0.0076 -0.2781 -0.037" rgba="0.4 1 0.4 1"/> <!-- Green (FCR origin) -->
                                 <site name="FCU-P1_L" pos="-0.0022 -0.2774 -0.0388" rgba="0.2 1 0.6 1"/> <!-- Mint Green (FCU origin) -->
-                                <site name="PL-P1" pos="0.0046 -0.2752 -0.0386"/>
-                                <site name="PT-P1" pos="0.0036 -0.2759 -0.0365"/>
-                                <site name="FDS5-P1" pos="0.0042 -0.276 -0.0386"/>
-                                <site name="FDS4-P1" pos="0.0048 -0.2788 -0.0373"/>
-                                <site name="EDC5-P1" pos="-0.0004 -0.2883 0.0187"/>
-                                <site name="EDC4-P1" pos="-0.0016 -0.2894 0.0178"/>
-                                <site name="EDC3-P1" pos="0.0005 -0.2898 0.0195"/>
-                                <site name="EDC2-P1" pos="0.0006 -0.289 0.0187"/>
-                                <site name="EDM-P1" pos="0.0009 -0.2892 0.0185"/>
+                                <site name="PL-P1" pos="-0.0046 -0.2752 -0.0386" rgba="0.8 0.1 0.1 1"/>    <!-- red -->
+                                <site name="PT-P1" pos="-0.0036 -0.2759 -0.0365" rgba="0.8 0.4 0.1 1"/>    <!-- orange -->
+                                <site name="FDS5-P1" pos="-0.0042 -0.276 -0.0386" rgba="0.7 0.7 0.1 1"/>   <!-- yellow -->
+                                <site name="FDS4-P1" pos="-0.0048 -0.2788 -0.0373" rgba="0.3 0.8 0.2 1"/>  <!-- green -->
+                                <site name="EDC5-P1" pos="0.0004 -0.2883 0.0187" rgba="0.2 0.8 0.8 1"/>    <!-- cyan -->
+                                <site name="EDC4-P1" pos="0.0016 -0.2894 0.0178" rgba="0.2 0.4 0.9 1"/>    <!-- blue -->
+                                <site name="EDC3-P1" pos="-0.0005 -0.2898 0.0195" rgba="0.5 0.3 0.8 1"/>   <!-- indigo -->
+                                <site name="EDC2-P1" pos="-0.0006 -0.289 0.0187" rgba="0.9 0.3 0.8 1"/>    <!-- magenta -->
+                                <site name="EDM-P1" pos="-0.0009 -0.2892 0.0185" rgba="0.6 0.2 0.2 1"/>    <!-- brown-red -->
+
 
                                 <geom class="wrap_arm" name="DELT1hh_ellipsoid" pos="-0.0139 -0.0127 -0.0262" quat="0.83666 0.160028 0.454758 0.259973" size="0.03"/>
                                 <geom class="wrap_arm" name="delt2hum_cylinder" pos="0.0017 -0.0958 0.0011" quat="0.713926 0.699514 -0.0280022 0.014313" size="0.0109 0.12" type="cylinder"/>
@@ -312,114 +313,117 @@
 
                                 <geom class="wrap_arm" name="ElbowBICBRD_ellipsoid_wrap" pos="0.0019 -0.289 -0.014" quat="0.995524 -0.0630586 0.0695464 0.0108747" size="0.015 0.1" type="cylinder"/>
 
-                                <site name="DELT1hh_sidesite" pos="0.01226 -0.01367 -0.009599"/>
-                                <site name="delt3hum_sidesite" pos="-0.008209 -0.05929 -0.003236"/>
-                                <site name="infsp_new_sidesite" pos="-0.02012 0.02083 0.01693" rgba="1 0 0 0"/>
-                                <site name="TMINhum_sidesite" pos="-0.01993 -0.02619 -0.0003194"/>
-                                <site name="TMAJ_LAThum_sidesite" pos="-0.0005448 -0.04449 -0.0134"/>
-                                <site name="PEC12hum_sidesite" pos="0.007993 -0.05136 -0.009686"/>
-                                <site name="PEC1hh_sidesite" pos="0.002716 -0.01113 -0.01877"/>
-                                <site name="PEC3hum_sidesite" pos="0.002519 -0.05634 -0.009166"/>
-                                <site name="LAT_TMAJhh_sidesite" pos="-0.02747 0.004271 0.01117"/>
-                                <site name="Elbow_BIC_BRD_sidesite" pos="0.01774 -0.2888 -0.01624"/>
-                                <site name="TRIlonghh_sidesite" pos="-0.02362 -0.006026 -0.01507"/>
-                                <site name="ANC_sidesite" pos="0.00314 -0.3043 -0.002981"/>
-                                <site name="BIClong_sidesite" pos="0.01267 0.02324 0.004834"/>
-                                <site name="CORBhum_sidesite" pos="0.00844 -0.121 -0.01278"/>
-                                <site name="Elbow_PT_ECRL_sidesite" pos="0.01843 -0.2761 -0.006962"/>
-                                <site name="s_glenohum_s_glenohum-P1" pos="0.018 0.011 -0.009"/>
-                                <site name="LIGhh_s_ellipsoid_s_glenohum_1_sidesite" pos="0.00985 0.011 -0.01467"/>
-                                <site name="m_glenohum_m_glenohum-P1" pos="0.016 0.003 -0.012"/>
-                                <site name="LIGhh_mi_ellipsoid_m_glenohum_1_sidesite" pos="0.01146 0.003222 -0.01556"/>
-                                <site name="i_glenohum_i_glenohum-P1" pos="0.009 -0.003 -0.018"/>
-                                <site name="LIGhh_mi_ellipsoid_i_glenohum_1_sidesite" pos="0.009 -0.003 -0.018"/>
-                                <site name="coracohum_coracohum-P1" pos="0.02 0.011 -0.003"/>
-                                <site name="LIGhh_s_ellipsoid_coracohum_1_sidesite" pos="0.01817 0.01067 -0.006444"/>
-                                <site name="DELT1_DELT1-P1" pos="0.00896 -0.11883 0.00585"/>
-                                <site name="DELT1_DELT1-P2" pos="0.01623 -0.1033 -0.00412"/>
-                                <site name="DELT1hh_ellipsoid_DELT1_2_sidesite" pos="0.000809535 -0.0383736 -0.00627703"/>
-                                <site name="DELT2_DELT2-P1" pos="0.00461 -0.13611 0.0056"/>
-                                <site name="DELT2_DELT2-P2" pos="0.00623159 -0.0641952 -0.0301843"/>
-                                <site name="delt2hum_cylinder_DELT2_1_sidesite" pos="0.1107 0.0132 0.1101"/>
-                                <site name="DELT3_DELT3-P3" pos="0.00206 -0.07602 0.01045"/>
-                                <site name="delt3hum_ellipsoid_DELT3_2_sidesite" pos="0.0108133 -0.0711671 0.00262982"/>
-                                <site name="SUPSP_SUPSP-P1" pos="0.00256 0.01063 0.02593"/>
-                                <site name="SUPSP_ellipsoid_SUPSP_1_sidesite" pos="0.00229806 0.00847163 0.0284548"/>
-                                <site name="INFSP_INFSP-P1" pos="-0.00887 0.00484 0.02448"/>
-                                <site name="infsp_new_cylinder_INFSP_1_sidesite" pos="-0.0432342 -0.0560158 0.0141316" />-
-                                <site name="SUBSC_SUBSC-P1" pos="0.01403 0.0084 -0.01331"/>
-                                <site name="SUBSCAP_ellipsoid_SUBSC_1_sidesite" pos="0.0144482 0.0109872 -0.0101213"/>
-                                <site name="TMIN_TMIN-P1" pos="-0.00127 -0.01259 0.022"/>
-                                <site name="INFSP_and_TMIN_hum_head_ellipsoid_TMIN_1_sidesite" pos="-0.00813624 -0.010913 0.1" rgba="1 0 0 0"/>
-                                <site name="TMAJ_TMAJ-P1" pos="0.00998 -0.05419 -0.00568"/>
-                                <site name="TMAJ_TMAJ-P2" pos="-0.00625597 -0.049991 -0.0159345"/>
-                                <site name="LAT_TMAJ2hh_sphere_TMAJ_2_sidesite" pos="-0.0129153 -0.0208485 -0.0110803"/>
-                                <site name="TMAJ_LAThum_cylinder_TMAJ_1_sidesite" pos="0.0707 0.0257 0.0645"/>
-                                <site name="PECM1_PECM1-P1" pos="0.01169 -0.04191 0.0078"/>
-                                <site name="PECM1_PECM1-P2" pos="0.0210522 -0.01996 0.00793506"/>
-                                <site name="PEC1hh_ellipsoid_PECM1_2_sidesite" pos="0.00259407 -0.0252892 -0.00394296" rgba="1 0 0 0"/>
-                                <site name="PECM2_PECM2-P1" pos="0.01274 -0.04289 0.00785"/>
-                                <site name="PECM2_PECM2-P2" pos="0.0205641 -0.0398321 0.000623549"/><!--
+                                <!-- Mirrored from Right arm to Left arm (rgba="0 0.5 1 1") light cyan blue -->
+                                <site name="DELT1hh_sidesite" pos="0.01226 -0.01367 -0.009599" rgba="0 0.5 1 1"/>
+                                <site name="delt3hum_sidesite" pos="0.008209 -0.05929 -0.003236" rgba="0 0.5 1 1"/>
+                                <site name="infsp_new_sidesite" pos="0.02012 0.02683 0.01693" rgba="0 0.5 1 1"/>
+                                <site name="TMINhum_sidesite" pos="0.01993 -0.02619 -0.0003194" rgba="0 0.5 1 1"/>
+                                <site name="TMAJ_LAThum_sidesite" pos="0.0005448 -0.04449 -0.0134" rgba="0 0.5 1 1"/>
+                                <site name="PEC12hum_sidesite" pos="-0.007993 -0.05136 -0.009686" rgba="0 0.5 1 1"/>
+                                <site name="PEC1hh_sidesite" pos="-0.002716 -0.01113 -0.01877" rgba="0 0.5 1 1"/>
+                                <site name="PEC3hum_sidesite" pos="-0.002519 -0.05634 -0.009166" rgba="0 0.5 1 1"/>
+                                <site name="LAT_TMAJhh_sidesite" pos="0.02747 0.004271 0.01117" rgba="0 0.5 1 1"/>
+                                <site name="Elbow_BIC_BRD_sidesite" pos="-0.01774 -0.2888 -0.01624" rgba="0 0.5 1 1"/>
+                                <site name="TRIlonghh_sidesite" pos="0.02362 -0.006026 -0.01507" rgba="0 0.5 1 1"/>
+                                <site name="ANC_sidesite" pos="-0.00314 -0.3043 -0.002981" rgba="0 0.5 1 1"/>
+                                <site name="BIClong_sidesite" pos="-0.01267 0.02324 0.004834" rgba="0 0.5 1 1"/>
+                                <site name="CORBhum_sidesite" pos="-0.00844 -0.121 -0.01278" rgba="0 0.5 1 1"/>
+                                <site name="Elbow_PT_ECRL_sidesite" pos="-0.01843 -0.2761 -0.006962" rgba="0 0.5 1 1"/>
+                                <site name="s_glenohum_s_glenohum-P1" pos="-0.018 0.011 -0.009" rgba="0 0.5 1 1"/>
+                                <site name="LIGhh_s_ellipsoid_s_glenohum_1_sidesite" pos="-0.00985 0.011 -0.01467" rgba="0 0.5 1 1"/>
+                                <site name="m_glenohum_m_glenohum-P1" pos="-0.016 0.003 -0.012" rgba="0 0.5 1 1"/>
+                                <site name="LIGhh_mi_ellipsoid_m_glenohum_1_sidesite" pos="-0.01146 0.003222 -0.01556" rgba="0 0.5 1 1"/>
+                                <site name="i_glenohum_i_glenohum-P1" pos="-0.009 -0.003 -0.018" rgba="0 0.5 1 1"/>
+                                <site name="LIGhh_mi_ellipsoid_i_glenohum_1_sidesite" pos="-0.009 -0.003 -0.018" rgba="0 0.5 1 1"/>
+                                <site name="coracohum_coracohum-P1" pos="-0.02 0.011 -0.003" rgba="0 0.5 1 1"/>
+                                <site name="LIGhh_s_ellipsoid_coracohum_1_sidesite" pos="-0.01817 0.01067 -0.006444" rgba="0 0.5 1 1"/>
+                                <site name="DELT1_DELT1-P1" pos="-0.00896 -0.11883 0.00585" rgba="0 0.5 1 1"/>
+                                <site name="DELT1_DELT1-P2" pos="-0.01623 -0.1033 -0.00412" rgba="0 0.5 1 1"/>
+                                <site name="DELT1hh_ellipsoid_DELT1_2_sidesite" pos="-0.000809535 -0.0383736 -0.00627703" rgba="0 1 1 0.5"/>
+                                <site name="DELT2_DELT2-P1" pos="-0.00461 -0.13611 0.0056" rgba="0 1 1 0.5"/>
+                                <site name="DELT2_DELT2-P2" pos="-0.0062359 -0.0641952 0.0301843" rgba="0 1 1 0.5"/>
+                                <site name="delt2hum_cylinder_DELT2_1_sidesite" pos="-0.1107 -0.0132 -0.1101" rgba="0 1 1 0.5"/>
+                                <site name="DELT3_DELT3-P3" pos="-0.00206 -0.07602 -0.01045" rgba="0 1 1 0.5"/>
+                                <site name="delt3hum_ellipsoid_DELT3_2_sidesite" pos="-0.0108133 -0.0711671 -0.00262982" rgba="0 1 1 0.5"/>
+                                <site name="SUPSP_SUPSP-P1" pos="-0.00256 0.01063 -0.02593" rgba="0 1 1 0.5"/>
+                                <site name="SUPSP_ellipsoid_SUPSP_1_sidesite" pos="-0.00229806 0.00847163 -0.0284548" rgba="0 1 1 0.5"/>
+                                <site name="INFSP_INFSP-P1" pos="-0.00887 0.00484 -0.02448" rgba="0 1 1 0.5"/>
+                                <site name="infsp_new_cylinder_INFSP_1_sidesite" pos="-0.0432342 -0.0560158 -0.0141316" rgba="0 1 1 0.5"/>
+                                <site name="SUBSC_SUBSC-P1" pos="-0.014482 -0.0109872 0.01213" rgba="0 1 1 0.5"/>
+                                <site name="SUBSCAP_ellipsoid_SUBSC_1_sidesite" pos="-0.0144482 -0.0109872 0.01213" rgba="0 1 1 0.5"/>
+                                <site name="TMIN_TMIN-P1" pos="0.00127 -0.01259 -0.022" rgba="0 1 1 0.5"/>
+                                <site name="INFSP_and_TMIN_hum_head_ellipsoid_TMIN_1_sidesite" pos="0.00813624 -0.010913 -0.1" rgba="0 1 1 0.5"/>
+                                <site name="TMAJ_TMAJ-P1" pos="-0.00998 -0.05419 0.00568" rgba="0 1 1 0.5"/>
+                                <site name="TMAJ_TMAJ-P2" pos="0.00625597 -0.049991 0.0159345" rgba="0 1 1 0.5"/>
+                                <site name="LAT_TMAJ2hh_sphere_TMAJ_2_sidesite" pos="0.0129153 -0.0208485 0.0110803" rgba="0 1 1 0.5"/>
+                                <site name="TMAJ_LAThum_cylinder_TMAJ_1_sidesite" pos="-0.0707 -0.0257 -0.0645" rgba="0 1 1 0.5"/>
+                                <site name="PECM1_PECM1-P1" pos="-0.010616 -0.04191 -0.0070" rgba="0 1 1 0.5"/>
+                                <site name="PECM1_PECM1-P2" pos="-0.010616 -0.04191 -0.0070" rgba="0 1 1 0.5"/>
+                                <site name="PEC1hh_ellipsoid_PECM1_2_sidesite" pos="-0.0129407 -0.0252892 0.00394296" rgba="0 1 1 0.5"/>
+                                <site name="PECM2_PECM2-P1" pos="-0.012741 -0.04289 -0.00785" rgba="0 1 1 0.5"/>
+                                <site name="PECM2_PECM2-P2" pos="-0.020685 -0.0398321 -0.000623549" rgba="0 1 1 0.5"/>
+                                <!--<site name="PECM2_PECM2-P2" pos="-0.020685 -0.0398321 -0.000623549" rgba="0 1 1 0.5"/>--><!--
                                 <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite" pos="0.0510248 -0.016092 -0.0573453" rgba="1 0 0 5"/>-->
-                                <site name="PEC12hum_cylinder_PECM2_1_sidesite" pos="0.092 0.0392 0.0883" rgba="1 0 0 0"/>
-                                <site name="PECM3_PECM3-P1" pos="0.01269 -0.04375 0.0075"/>
-                                <site name="PECM3_PECM3-P2" pos="0.0159398 -0.0451044 -0.0042896"/>
-                                <site name="PEC23hh_sphere_PECM3_2_sidesite" pos="0.0033563 -0.0186528 0.00113941" rgba="1 0 0 0"/>
-                                <site name="LAT1_LAT1-P1" pos="0.0105 -0.03415 -0.00653"/>
-                                <site name="LAT1_LAT1-P2" pos="-0.00550867 -0.0262692 -0.0129871"/>
-                                <site name="LAT_TMAJ2hh_sphere_LAT1_2_sidesite" pos="-0.01849985 -0.0389514 -0.024259" />
-                                <site name="TMAJ_LAThum_cylinder_LAT1_1_sidesite" pos="-0.0107 -0.0257 0.0645" />
-                                <site name="LAT2_LAT2-P1" pos="0.00968 -0.04071 -0.00611"/>
-                                <site name="LAT2_LAT2-P2" pos="-0.00769792 -0.0421159 -0.0156065"/>
-                                <site name="LAT_TMAJ2hh_sphere_LAT2_2_sidesite" pos="-0.0157083 -0.017011 -0.0250469" rgba="1 0 0 0"/>
-                                <site name="TMAJ_LAThum_cylinder_LAT2_1_sidesite" pos="0.0707 0.0257 0.0645"/>
-                                <site name="LAT3_LAT3-P1" pos="0.01208 -0.03922 -0.00416"/>
+                                <site name="PEC12hum_cylinder_PECM2_1_sidesite" pos="-0.092 0.0392 0.0883" rgba="0.5 1 1 0"/>
+                                <site name="PECM3_PECM3-P1" pos="-0.01269 -0.04375 0.0075"/>
+                                <site name="PECM3_PECM3-P2" pos="-0.0159398 -0.045104 -0.0042896"/>
+                                <site name="PEC23hh_sphere_PECM3_2_sidesite" pos="-0.0033563 -0.0186528 0.00113941" rgba="0.5 1 1 0"/>
+                                <site name="LAT1_LAT1-P1" pos="-0.005 0.03415 0.00653"/>
+                                <site name="LAT1_LAT1-P2" pos="-0.0050087 -0.0262692 -0.0129871"/>
+                                <site name="LAT_TMAJ2hh_sphere_LAT1_2_sidesite" pos="-0.01849985 -0.0389514 -0.024259"/>
+                                <site name="TMAJ_LAThum_cylinder_LAT1_1_sidesite" pos="-0.0107 -0.0257 0.0645"/>
+                                <site name="LAT2_LAT2-P1" pos="-0.00969 -0.04071 -0.00611"/>
+                                <site name="LAT2_LAT2-P2" pos="-0.00797972 -0.0421159 -0.0156065"/>
+                                <site name="LAT_TMAJ2hh_sphere_LAT2_2_sidesite" pos="-0.0157083 -0.017011 -0.0250469" rgba="0.5 1 1 0"/>
+                                <site name="TMAJ_LAThum_cylinder_LAT2_1_sidesite" pos="-0.0707 -0.0257 0.0645"/>
+                                <site name="LAT3_LAT3-P1" pos="-0.01208 -0.03922 -0.00416"/>
                                 <site name="LAT3_LAT3-P2" pos="-0.0116777 -0.0435673 -0.0143472"/>
                                 <site name="LAT_TMAJ2hh_sphere_LAT3_2_sidesite" pos="-0.014069 -0.0219399 -0.00787017"/>
-                                <site name="TMAJ_LAThum_cylinder_LAT3_1_sidesite" pos="0.0707 0.0257 0.0645"/>
-                                <site name="CORB_CORB-P3" pos="0.00743 -0.15048 -0.00782"/>
+                                <site name="TMAJ_LAThum_cylinder_LAT3_1_sidesite" pos="-0.0797 -0.0257 0.0645"/>
+                                <site name="CORB_CORB-P3" pos="-0.00743 -0.1504 -0.00782"/>
                                 <site name="CORBhum_cylinder_CORB_2_sidesite" pos="-0.00868897 -0.144208 -0.00172395"/>
-                                <site name="TMAJ_LAT_PEC_CORBhh_sphere_CORB_1_sidesite" pos="0.001864 -0.01985 -0.03068" rgba="1 0 0 0"/>
-                                <site name="TRIlong_TRIlong-P2" pos="-0.02714 -0.11441 -0.00664"/>
+                                <site name="TMAJ_LAT_PEC_CORBhh_sphere_CORB_1_sidesite" pos="-0.001864 -0.01985 -0.03068" rgba="0.5 1 1 0"/>
                                 <site name="TRIlong_TRIlong-P3" pos="-0.03184 -0.22637 -0.01217"/>
-                                <site name="TRIlong_TRIlong-P4" pos="-0.01743 -0.26757 -0.01208"/>
-                                <site name="TRI_cylinder_TRIlong_4_sidesite" pos="-0.0156503 -0.293711 0.0175748" />
-                                <site name="TRIlonghh_ellipsoid_TRIlong_1_sidesite" pos="-0.0361 -0.00673 0.02277" />
-                                <site name="TRIlong_TRIlong-P1b" pos="-0.0365 -0.0044 -0.0213" />
-                                <site name="TRIlat_TRIlat-P1" pos="-0.00599 -0.12646 0.00428"/>
-                                <site name="TRIlat_TRIlat-P2" pos="-0.02344 -0.14528 0.00928"/>
-                                <site name="TRIlat_TRIlat-P3" pos="-0.03184 -0.22637 -0.01217"/>
-                                <site name="TRIlat_TRIlat-P4" pos="-0.01743 -0.26757 -0.01208"/>
-                                <site name="TRI_cylinder_TRIlat_4_sidesite" pos="-0.0166674 -0.285448 0.0308421"/>
-                                <site name="TRImed_TRImed-P1" pos="-0.00838 -0.13695 -0.00906"/>
+                                <site name="TRIlong_TRIlong-P4" pos="-0.017043 -0.26775 -0.01034"/>
+                                <site name="TRI_cylinder_TRIlong_4_sidesite" pos="-0.0156653 -0.293711 0.0175748"/>
+                                <site name="TRIlonghh_ellipsoid_TRIlong_1_sidesite" pos="-0.0365 -0.0044 -0.0213"/>
+                                <site name="TRIlong_TRIlong-P1b" pos="-0.0365 -0.0044 -0.0213"/>
+                                <site name="TRIlat_TRIlat-P1" pos="-0.0059 -0.12646 0.00428"/>
+                                <site name="TRIlat_TRIlat-P2" pos="-0.0135 -0.22365 -0.02137"/>
+                                <site name="TRIlat_TRIlat-P3" pos="-0.0203 -0.22675 -0.02137"/>
+                                <site name="TRIlat_TRIlat-P4" pos="-0.0315 -0.26757 -0.01034"/>
+                                <site name="TRI_cylinder_TRIlat_4_sidesite" pos="-0.0156653 -0.285448 0.0308421"/>
+                                <site name="TRImed_TRImed-P1" pos="-0.00828 -0.13695 -0.00906"/>
                                 <site name="TRImed_TRImed-P2" pos="-0.02601 -0.15139 -0.0108"/>
-                                <site name="TRImed_TRImed-P3" pos="-0.03184 -0.22637 -0.01217"/>
-                                <site name="TRImed_TRImed-P4" pos="-0.01743 -0.26757 -0.01208"/>
-                                <site name="TRI_cylinder_TRImed_4_sidesite" pos="-0.00964741 -0.30644 -0.0103312"/>
-                                <site name="ANC_ANC-P1" pos="-0.00744 -0.28359 0.00979"/>
-                                <site name="ANC_ellipsoid_ANC_1_sidesite" pos="0.00142561 -0.280967 0.0164332"/>
-                                <site name="BIClong_BIClong-P3" pos="0.01921  0.02083 0.00828"/>
-                                <site name="BIClong_BIClong-P4" pos="0.02378 -0.00511 0.01201"/>
-                                <site name="BIClong_BIClong-P5" pos="0.01345 -0.02827 0.00136"/>
-                                <site name="BIClong_BIClong-P6" pos="0.01068 -0.07736 -0.00165"/>
-                                <site name="BIClong_BIClong-P7" pos="0.01703 -0.12125 0.00024"/>
-                                <site name="BIClong_BIClong-P8" pos="0.0228 -0.1754 -0.0063"/>
-                                <site name="Elbow_BIC_BRD_ellipsoid_BIClong_7_sidesite" pos="0.00972896 -0.273869 -0.0199478"/>
-                                <site name="BIClong_ellipsoid_BIClong_2_sidesite" pos="0.02337 0.01102 0.001639"/>
-                                <site name="BICshort_BICshort-P3" pos="0.01117 -0.07576 -0.01101"/>
-                                <site name="BICshort_BICshort-P4" pos="0.01703 -0.12125 -0.01079"/>
-                                <site name="BICshort_BICshort-P5" pos="0.0228 -0.1754 -0.0063"/>
-                                <site name="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite" pos="0.0158403 -0.275971 -0.0182235"/>
-                                <site name="BRA_BRA-P1" pos="0.0068 -0.1739 -0.0036"/>
-                                <site name="BRD_BRD-P1" pos="-0.0098 -0.19963 0.00223"/>
+                                <!--Left arm code-->
+                                <site name="TRImed_TRImed-P3" pos="0.03184 -0.22637 -0.01217" rgba="0 1 1 0"/>
+                                <site name="TRImed_TRImed-P4" pos="0.01743 -0.26757 -0.01208" rgba="0 1 1 0"/>
+                                <site name="TRI_cylinder_TRImed_4_sidesite" pos="0.00964741 -0.30644 -0.0103312" rgba="0 1 1 0"/>
+                                <site name="ANC_ANC-P1" pos="0.00744 -0.28359 0.00979" rgba="0 1 1 0"/>
+                                <site name="ANC_ellipsoid_ANC_1_sidesite" pos="-0.00142561 -0.280967 0.0164332" rgba="0 1 1 0"/>
+                                <site name="BIClong_BIClong-P3" pos="-0.01921 0.02083 0.00828" rgba="0 1 1 0"/>
+                                <site name="BIClong_BIClong-P4" pos="-0.02378 -0.00511 0.01201" rgba="0 1 1 0"/>
+                                <site name="BIClong_BIClong-P5" pos="-0.01345 -0.02827 0.00136" rgba="0 1 1 0"/>
+                                <site name="BIClong_BIClong-P6" pos="-0.01068 -0.07736 -0.00165" rgba="0 1 1 0"/>
+                                <site name="BIClong_BIClong-P7" pos="-0.01703 -0.12125 0.00024" rgba="0 1 1 0"/>
+                                <site name="BIClong_BIClong-P8" pos="-0.0228 -0.1754 -0.0063" rgba="0 1 1 0"/>
+                                <site name="Elbow_BIC_BRD_ellipsoid_BIClong_7_sidesite" pos="-0.00972896 -0.273869 -0.0199478" rgba="0 1 1 0"/>
+                                <site name="BIClong_ellipsoid_BIClong_2_sidesite" pos="-0.02337 0.01102 0.001639" rgba="0 1 1 0"/>
+                                <site name="BICshort_BICshort-P3" pos="-0.01117 -0.07576 -0.01101" rgba="0 1 1 0"/>
+                                <site name="BICshort_BICshort-P4" pos="-0.01703 -0.12125 -0.01079" rgba="0 1 1 0"/>
+                                <site name="BICshort_BICshort-P5" pos="-0.0228 -0.1754 -0.0063" rgba="0 1 1 0"/>
+                                <site name="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite" pos="-0.0158403 -0.275971 -0.0182235" rgba="0 1 1 0"/>
+                                <site name="BRA_BRA-P1" pos="-0.00068 -0.1739 -0.0036" rgba="0 1 1 0"/>
+                                <site name="BRD_BRD-P1" pos="0.0098 -0.19963 0.00223" rgba="0 1 1 0"/>
 
-                                <site name="TRI_site_BRA_side" pos="0.0188814 -0.25991 0.0179386"></site>
+                                <site name="TRI_site_BRA_side" pos="-0.0188814 -0.25991 0.0179386" rgba="0 1 1 0"/>
 
-                                <site class="marker_arm" name="R.Bicep_marker" pos="0.01591 -0.181 -0.00553"/>
-                                <site class="marker_arm" name="R.Elbow.Lateral_marker" pos="0.00509 -0.2806 0.02884"/>
-                                <site class="marker_arm" name="R.Elbow.Medial_marker" pos="-0.00407 -0.2844 -0.05408"/>
+                                <site class="marker_arm" name="L.Bicep_marker" pos="-0.01591 -0.181 -0.00553" rgba="0 1 1 0"/>
+                                <site class="marker_arm" name="L.Elbow.Lateral_marker" pos="-0.00509 -0.2806 0.02884" rgba="0 1 1 0"/>
+                                <site class="marker_arm" name="L.Elbow.Medial_marker" pos="0.000407 -0.2844 -0.05408" rgba="0 1 1 0"/>
 
 
+                                <!--I finished the sites up to here -->
                                 <!-- switched ulna geom and radius geom because it didn't look the same -->
 
                                 <body name="ulna" pos="0.0061 -0.301 -0.0123" childclass="elbow_arm">

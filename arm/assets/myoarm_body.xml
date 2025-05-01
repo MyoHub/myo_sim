@@ -132,7 +132,7 @@
                                 <site name="FCR-P1" pos="0.0076 -0.2781 -0.037"/>
                                 <site name="FCU-P1" pos="0.0022 -0.2774 -0.0388"/>
                                 <site name="PL-P1" pos="0.0046 -0.2752 -0.0386"/>
-                                <site name="PT-P1" pos="0.0036 -0.2759 -0.0365"/>
+                                <site name="PT-P1" pos="0.0036 -0.2759 -0.0365"/> <!--Right arm -->
                                 <site name="FDS5-P1" pos="0.0042 -0.276 -0.0386"/>
                                 <site name="FDS4-P1" pos="0.0048 -0.2788 -0.0373"/>
                                 <site name="EDC5-P1" pos="-0.0004 -0.2883 0.0187"/>
@@ -185,7 +185,7 @@
 
                                 <geom class="wrap_arm" name="ElbowBICBRD_ellipsoid_wrap" pos="0.0019 -0.289 -0.014" quat="0.995524 -0.0630586 0.0695464 0.0108747" size="0.015 0.1" type="cylinder"/>
 
-                                <site name="DELT1hh_sidesite" pos="0.01226 -0.01367 -0.009599"/>
+                                <site name="DELT1hh_sidesite" pos="0.01226 -0.01367 -0.009599"/> <!--Right arm code-->
                                 <site name="delt3hum_sidesite" pos="-0.008209 -0.05929 -0.003236"/>
                                 <site name="infsp_new_sidesite" pos="-0.02012 0.02083 0.01693" rgba="1 0 0 0"/>
                                 <site name="TMINhum_sidesite" pos="-0.01993 -0.02619 -0.0003194"/>
@@ -210,6 +210,7 @@
                                 <site name="LIGhh_s_ellipsoid_coracohum_1_sidesite" pos="0.01817 0.01067 -0.006444"/>
                                 <site name="DELT1_DELT1-P1" pos="0.00896 -0.11883 0.00585"/>
                                 <site name="DELT1_DELT1-P2" pos="0.01623 -0.1033 -0.00412"/>
+                                <!--Right arm code-->
                                 <site name="DELT1hh_ellipsoid_DELT1_2_sidesite" pos="0.000809535 -0.0383736 -0.00627703"/>
                                 <site name="DELT2_DELT2-P1" pos="0.00461 -0.13611 0.0056"/>
                                 <site name="DELT2_DELT2-P2" pos="0.00623159 -0.0641952 -0.0301843"/>
@@ -234,6 +235,7 @@
                                 <site name="PECM2_PECM2-P1" pos="0.01274 -0.04289 0.00785"/>
                                 <site name="PECM2_PECM2-P2" pos="0.0205641 -0.0398321 0.000623549"/><!--
                                 <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite" pos="0.0510248 -0.016092 -0.0573453" rgba="1 0 0 5"/>-->
+                                <!--Right Arm Code-->
                                 <site name="PEC12hum_cylinder_PECM2_1_sidesite" pos="0.092 0.0392 0.0883" rgba="1 0 0 0"/>
                                 <site name="PECM3_PECM3-P1" pos="0.01269 -0.04375 0.0075"/>
                                 <site name="PECM3_PECM3-P2" pos="0.0159398 -0.0451044 -0.0042896"/>
@@ -266,6 +268,7 @@
                                 <site name="TRI_cylinder_TRIlat_4_sidesite" pos="-0.0166674 -0.285448 0.0308421"/>
                                 <site name="TRImed_TRImed-P1" pos="-0.00838 -0.13695 -0.00906"/>
                                 <site name="TRImed_TRImed-P2" pos="-0.02601 -0.15139 -0.0108"/>
+                                <!--Right aarm code-->
                                 <site name="TRImed_TRImed-P3" pos="-0.03184 -0.22637 -0.01217"/>
                                 <site name="TRImed_TRImed-P4" pos="-0.01743 -0.26757 -0.01208"/>
                                 <site name="TRI_cylinder_TRImed_4_sidesite" pos="-0.00964741 -0.30644 -0.0103312"/>
