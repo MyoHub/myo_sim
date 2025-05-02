@@ -30,6 +30,7 @@
         <site name="LAT1_LAT1-P5" pos="-0.11828 -0.10118 0.03316"/>
         <site name="LAT1_LAT1-P6" pos="-0.09578 -0.11724 0.00882"/>
         <site name="LAT2_LAT2-P4" pos="-0.12371858734822989 -0.12417032086185528 0.077034033720721373"/>
+        <!--This section is correct-->
         <site name="LAT2_LAT2-P5" pos="-0.10992 -0.16908 0.02878"/>
         <site name="LAT2_LAT2-P6" pos="-0.07186 -0.18818 0.00815"/>
         <site name="LAT3_LAT3-P4" pos="-0.1204266823427011 -0.15954523000255943 0.092743411376397689"/>
@@ -38,7 +39,7 @@
         <site class="marker_arm" name="C7_marker" pos="-0.05613 0.05528 -0.00151"/>
         <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite" pos="0.0510248 -0.016092 -0.0573453" rgba="1 0 0 0"/>
     </body>
-
+<!--Correct-->
     <body name="clavicle" pos="0.006325 -0.02547 0.00693" childclass="arm_arm" euler="1.57 -1.57 0">
         <inertial diaginertia="0.001 0.001 0.001" mass="0.156" pos="-0.011096 0.0063723 0.054168" quat="0.906292 0.0334036 0.164622 -0.387838"/>
         <joint axis="0.0153 0.989299 -0.1451" name="sternoclavicular_r2" pos="0 0 0" range="-0.75 -0.0" user="-2.32583e-06"/>
@@ -48,7 +49,7 @@
         <site name="PECM1_PECM1-P3" pos="0.0264476 0.004005 0.057232"/>
         <site name="PECM1_PECM1-P4" pos="0.00321 -0.00013 0.05113"/>
         <site class="marker_arm" name="R.Clavicle_marker" pos="0.01835 -0.00464 -0.00046"/>
-
+<!--Correct-->
         <body name="clavphant" pos="-0.01433 0.02007 0.1355">
             <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
             <joint axis="-0.994473 0 -0.104997" name="unrotscap_r3" pos="0 0 0" range="-0.318 -0.0" user="-9.85111e-07"/>
@@ -66,6 +67,7 @@
                 <geom class="wrap_arm" name="TMIN_ellipsoid" pos="-0.0418 -0.0519 -0.0359" quat="0.407504 -0.492108 -0.706779 -0.3037" size="0.03"/>
                 <geom class="wrap_arm" name="TRIlongglen_cylinder" pos="-0.0359 -0.0309 -0.0132" quat="0.351544 0.110456 -0.628265 0.685201"  size="0.003 0.015" type="cylinder"/>
                 <geom class="wrap_arm" name="Deltoid2_ellipsoid_DELT2" pos="-0.0122268 -0.0345692 0.0127541" quat="-0.423842 0.568442 0.433325 -0.556293" size="0.0297339"/>
+                
                 <site name="Deltoid2_sidesite" pos="-0.006523 -0.02881 0.04238"/>
                 <site name="Delt3_sidesite" pos="-0.0973 -0.0428 -0.037"/>
                 <site name="INFSP_sidesite" pos="-0.0561 -0.0199 -0.0112"/>
@@ -234,6 +236,7 @@
                                 <site name="PEC1hh_ellipsoid_PECM1_2_sidesite" pos="0.00259407 -0.0252892 -0.00394296" rgba="1 0 0 0"/>
                                 <site name="PECM2_PECM2-P1" pos="0.01274 -0.04289 0.00785"/>
                                 <site name="PECM2_PECM2-P2" pos="0.0205641 -0.0398321 0.000623549"/><!--
+                                
                                 <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite" pos="0.0510248 -0.016092 -0.0573453" rgba="1 0 0 5"/>-->
                                 <!--Right Arm Code-->
                                 <site name="PEC12hum_cylinder_PECM2_1_sidesite" pos="0.092 0.0392 0.0883" rgba="1 0 0 0"/>
