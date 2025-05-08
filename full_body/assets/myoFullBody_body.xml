@@ -264,7 +264,7 @@
                         <joint name="LB_wrapjnt_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
                         <joint name="LB_wrapjnt_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
                         <joint name="LB_wrapjnt_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.1 .1"/>
-                        <geom name="Cylinder2_cylinder" size="0.07 0.13" pos="-0.118 0.0768 0" type="cylinder" group="2" rgba="0.19 0.83 0.78 0.2"/>
+                        <geom name="Cylinder2_cylinder" size="0.07 0.13" pos="-0.118 0.0768 0" class="wrap"/>
                         <site name="Cylinder2_cylinder_IL_L1_r_1_sidesite" pos="-0.0340058 0.0777894 -0.00109894" size="0.0005"/>
                         <site name="Cylinder2_cylinder_IL_L1_l_1_sidesite" pos="-0.0418844 0.112331 -0.0720796" size="0.0005"/>
                         <site name="Cylinder2_cylinder_IL_R5_r_1_sidesite" pos="-0.0340043 0.0759544 -0.0125701" size="0.0005"/>
@@ -317,7 +317,7 @@
                             <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.01 .01"/>
                             <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.01 .01"/>
                             <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>                            
-                            <geom name="Abdomen_ellipsoid" size="0.01" group="2" rgba="0.19 0.83 0.78 0.2"/>
+                            <geom name="Abdomen_ellipsoid" size="0.01" rgba=".5 .5 .9 0.5" group="3"/>
                             <geom name="abdomen_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>
                             <site name="Abdomen_sidesite" pos="0.011 0 0" size="0.0005"/>
                             <site name="EO1_r_EO1_r-P1" pos="0.0065502 0.0627431 0.0308937"/>
@@ -598,20 +598,10 @@
                                             <geom name="torso_geom_10_col" type="ellipsoid" size=".11 .18 0.11" class="coll" pos=".0 .23 0.07" euler="0. 0 0" mass="2"/>
                                             <geom name="torso_geom_11_col" type="ellipsoid" size=".11 .18 0.11" class="coll" pos=".0 .23 -0.07" euler="0. 0 0" mass="2"/>
                                             <geom name="torso_geom_12_col" type="ellipsoid" size=".100 .13 0.11" class="coll" pos=".03 -.01 -0.07" euler="0 0 0" mass="2"/>
-                                            <geom name="Cylinder_cylinder" size="0.17 0.13" pos="-0.21 0.04 0" type="cylinder" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_r_ellipsoid_LTpT_T1_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_r_ellipsoid_LTpT_T2_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_r_ellipsoid_LTpT_T3_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_r_ellipsoid_LTpT_T4_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_r_ellipsoid_LTpT_T5_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_l_ellipsoid_LTpT_T1_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_l_ellipsoid_LTpT_T2_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_l_ellipsoid_LTpT_T3_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_l_ellipsoid_LTpT_T4_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Chest_l_ellipsoid_LTpT_T5_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" group="2" rgba="0.19 0.83 0.78 0.2"/>
-                                            <geom name="Cylinder_abdomen" size="0.12 0.13" pos="0.225 0.07 0" type="cylinder" group="2" rgba="0.19 0.83 0.78 0.2"/>
+                                            <geom name="Cylinder_cylinder" size="0.17 0.13" pos="-0.21 0.04 0" class="wrap"/>
+                                            <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
+                                            <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
+                                            <geom name="Cylinder_abdomen" size="0.12 0.13" pos="0.225 0.07 0" class="wrap"/>
                                             <site name="Abs_sidesite" pos="0.05 0.05 0" size="0.005" />
                                             <site name="Chest_r_sidesite" pos="-0.02082 0.21 0.07816" size="0.0005"/>
                                             <site name="Chest_l_sidesite" pos="-0.02082 0.21 -0.07816" size="0.0005"/>

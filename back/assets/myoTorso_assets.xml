@@ -15,6 +15,9 @@
     <default class="muscle">
       <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
     </default>
+    <default class="wrap">
+        <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
+    </default>
     <default class="motor">
       <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
     </default>
@@ -317,30 +320,30 @@
     </spatial>
     <spatial name="LTpT_T1_r_tendon">
       <site site="LTpT_T1_r_LTpT_t1_R-P1"/>
-      <geom geom="Chest_r_ellipsoid_LTpT_T1_r" sidesite="Chest_r_ellipsoid_LTpT_T1_r_1_sidesite"/>
+      <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T1_r_1_sidesite"/>
       <site site="LTpT_T1_r_LTpT_t1_R-P2"/>
     </spatial>
     <spatial name="LTpT_T2_r_tendon">
       <site site="LTpT_T2_r_LTpT_t2_R-P1"/>
-      <geom geom="Chest_r_ellipsoid_LTpT_T2_r" sidesite="Chest_r_ellipsoid_LTpT_T2_r_1_sidesite"/>
+      <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T2_r_1_sidesite"/>
       <site site="LTpT_T2_r_LTpT_t2_R-P2"/>
     </spatial>
     <spatial name="LTpT_T3_r_tendon">
       <site site="LTpT_T3_r_LTpT_t3_R-P1"/>
       <site site="LTpT_T3_r_LTpT_t3_R-P2"/>
-      <geom geom="Chest_r_ellipsoid_LTpT_T3_r" sidesite="Chest_r_ellipsoid_LTpT_T3_r_2_sidesite"/>
+      <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T3_r_2_sidesite"/>
       <site site="LTpT_T3_r_LTpT_t3_R-P2_0"/>
     </spatial>
     <spatial name="LTpT_T4_r_tendon">
       <site site="LTpT_T4_r_LTpT_t4_R-P1"/>
       <site site="LTpT_T4_r_LTpT_t4_R-P2"/>
-      <geom geom="Chest_r_ellipsoid_LTpT_T4_r" sidesite="Chest_r_ellipsoid_LTpT_T4_r_2_sidesite"/>
+      <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T4_r_2_sidesite"/>
       <site site="LTpT_T4_r_LTpT_t4_R-P2_0"/>
     </spatial>
     <spatial name="LTpT_T5_r_tendon">
       <site site="LTpT_T5_r_LTpT_t5_R-P1"/>
       <site site="LTpT_T5_r_LTpT_t5_R-P2"/>
-      <geom geom="Chest_r_ellipsoid_LTpT_T5_r" sidesite="Chest_r_ellipsoid_LTpT_T5_r_2_sidesite"/>
+      <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T5_r_2_sidesite"/>
       <site site="LTpT_T5_r_LTpT_t5_R-P2_0"/>
     </spatial>
     <spatial name="LTpT_T6_r_tendon">
@@ -471,30 +474,30 @@
     </spatial>
     <spatial name="LTpT_T1_l_tendon">
       <site site="LTpT_T1_l_LTpT_t1_R-P1"/>
-      <geom geom="Chest_l_ellipsoid_LTpT_T1_l" sidesite="Chest_l_ellipsoid_LTpT_T1_l_1_sidesite"/>
+      <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T1_l_1_sidesite"/>
       <site site="LTpT_T1_l_LTpT_t1_R-P2"/>
     </spatial>
     <spatial name="LTpT_T2_l_tendon">
       <site site="LTpT_T2_l_LTpT_t2_R-P1"/>
-      <geom geom="Chest_l_ellipsoid_LTpT_T2_l" sidesite="Chest_l_ellipsoid_LTpT_T2_l_1_sidesite"/>
+      <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T2_l_1_sidesite"/>
       <site site="LTpT_T2_l_LTpT_t2_R-P2"/>
     </spatial>
     <spatial name="LTpT_T3_l_tendon">
       <site site="LTpT_T3_l_LTpT_t3_R-P1"/>
       <site site="LTpT_T3_l_LTpT_t3_R-P2"/>
-      <geom geom="Chest_l_ellipsoid_LTpT_T3_l" sidesite="Chest_l_ellipsoid_LTpT_T3_l_2_sidesite"/>
+      <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T3_l_2_sidesite"/>
       <site site="LTpT_T3_l_LTpT_t3_R-P2_0"/>
     </spatial>
     <spatial name="LTpT_T4_l_tendon">
       <site site="LTpT_T4_l_LTpT_t4_R-P1"/>
       <site site="LTpT_T4_l_LTpT_t4_R-P2"/>
-      <geom geom="Chest_l_ellipsoid_LTpT_T4_l" sidesite="Chest_l_ellipsoid_LTpT_T4_l_2_sidesite"/>
+      <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T4_l_2_sidesite"/>
       <site site="LTpT_T4_l_LTpT_t4_R-P2_0"/>
     </spatial>
     <spatial name="LTpT_T5_l_tendon">
       <site site="LTpT_T5_l_LTpT_t5_R-P1"/>
       <site site="LTpT_T5_l_LTpT_t5_R-P2"/>
-      <geom geom="Chest_l_ellipsoid_LTpT_T5_l" sidesite="Chest_l_ellipsoid_LTpT_T5_l_2_sidesite"/>
+      <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T5_l_2_sidesite"/>
       <site site="LTpT_T5_l_LTpT_t5_R-P2_0"/>
     </spatial>
     <spatial name="LTpT_T6_l_tendon">
