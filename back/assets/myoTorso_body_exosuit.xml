@@ -3,7 +3,7 @@
     <camera name = "front_camera" pos="-0.143 -1.332 1.267" xyaxes="0.999 -0.034 -0.000 0.005 0.142 0.990"/>
     <body name="pelvis" pos="0 0 0.979" quat="0.707035 0.707179 0 0">
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.001 0.001 0.001"/>
-      <geom name="lower_exo_legs_geom" type="mesh" rgba="0.4 0.4 0.4 1" euler="1.57 3.14 -1.57" pos="-0.08 0.1 0" mesh="lower_exo_legs_geom_1"/>
+      <geom name="lower_exo_legs_geom" type="mesh" class="exomesh" euler="1.57 3.14 -1.57" pos="-0.08 0.1 0" mesh="lower_exo_legs_geom_1"/>
       <geom name="pelvis_geom_1" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_1_pelvis_rv"/>
       <geom name="pelvis_geom_2" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_2_pelvis_lv"/>
       <site name="Lower_Exo_Left_Leg" pos="-0.08 -0.15 -0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
@@ -255,6 +255,7 @@
           <joint name="L4_L5_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.18607 0.083953"/>
           <joint name="L4_L5_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0889703 0.089703"/>
           <joint name="L4_L5_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.3168812 0.3168812"/>
+          <geom name="lower_exo_belt_geom" type="mesh" class="exomesh" euler="1.57 3.14 -1.57" pos="0.015 0.03 0" mesh="lower_exo_belt_geom_1" mass="0.094"/>
           <geom name="lumbar4_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar4_geom_1_lumbar4"/>
           <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.16" size="0.005" rgba="0.4 0.4 0.4 1"/>
           <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.16" size="0.005" rgba="0.4 0.4 0.4 1"/>
@@ -506,7 +507,7 @@
                   <geom name="torso_geom_10" pos="-0.036 0.337 0" quat="0.995004 0 0 -0.0998334" type="mesh" rgba="1 1 1 1" mesh="torso_geom_10_thoracic3_s"/>
                   <geom name="torso_geom_11" pos="-0.032 0.358 0" quat="0.992198 0 0 -0.124675" type="mesh" rgba="1 1 1 1" mesh="torso_geom_11_thoracic2_s"/>
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh" rgba="1 1 1 1" mesh="torso_geom_12_thoracic1_s"/>
-                  <geom name="upper_exo_geom" type="mesh" rgba="0.4 0.4 0.4 1" euler="1.57 3.14 1.57" group = "2" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
+                  <geom name="upper_exo_geom" type="mesh" class="exomesh" euler="1.57 3.14 1.57" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh" rgba="1 1 1 1" mesh="torso_geom_13_ribcage_s"/>
                   <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="wrap"/>
                   <geom name="Exo_cylinder" size="0.015 0.13" pos="-0.07 0.06 0" class="wrap"/>
