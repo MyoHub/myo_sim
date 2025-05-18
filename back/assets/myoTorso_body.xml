@@ -224,11 +224,11 @@
         <site name="MF_m5t.3_l_MF_m5t.3_l-P2" pos="-0.0328228 0.015247 -0.00277"/>
         <site name="MF_m3.laminar_l_MF_m3.laminar_l-P1" pos="-0.0187003 0.0374421 -0.01617"/>
         <site name="MF_m5.laminar_l_MF_m5.laminar_l-P2" pos="-0.0258996 0.01705 -0.00564"/>
-        <body name="Abdomen" pos="0.098 0.071 0">
+        <body name="Abdomen" pos="0.098 0.0711 0">
           <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
           <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
           <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
-          <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>                         
+          <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>
           <site name="Abdomen_sidesite" pos="0.011 0 0" class="sidesite"/>
           <site name="EO1_r_EO1_r-P1" pos="0.0065502 0.0627431 0.0308937"/>
           <site name="EO2_r_EO2_r-P2" pos="0.00723321 0.0329565 0.0364551"/>

@@ -201,7 +201,7 @@
         <inertial pos="0.053744 0.02 0" quat="0.707107 0 0 0.707107" mass="1.824" diaginertia="0.01765 0.01219 0.00546"/>
         <joint name="flex_extension" pos="0 0 0" axis="0 0 1" range="-1.35 0.7538"/>
         <joint name="lat_bending" pos="0 0 0" axis="1 0 0" range="-0.4363 0.4363"/>
-        <joint name="axial_rotation" pos="0 0 0" axis="0 1 0" range="-0.4854 0.4854"/>
+        <joint name="axial_rotation" pos="0 0 0" axis="0 1 0" range="-0.7854 0.7854"/>
         <geom name="lumbar5_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar5_geom_1_lumbar5"/>
         <site name="Ps_L5_TP_r_Ps_L5_TP_r-P1" pos="-0.00562001 0.0291398 0.0252881"/>
         <site name="Ps_L5_VB_r_Ps_L5_VB_r-P1" pos="0.01 0.01241 0.019"/>
