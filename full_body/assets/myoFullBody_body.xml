@@ -317,7 +317,6 @@
                             <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.01 .01"/>
                             <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.01 .01"/>
                             <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>                            
-                            <geom name="Abdomen_ellipsoid" size="0.01" rgba=".5 .5 .9 0.5" group="3"/>
                             <geom name="abdomen_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>
                             <site name="Abdomen_sidesite" pos="0.011 0 0" size="0.0005"/>
                             <site name="EO1_r_EO1_r-P1" pos="0.0065502 0.0627431 0.0308937"/>

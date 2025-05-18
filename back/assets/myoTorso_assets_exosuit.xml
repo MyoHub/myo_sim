@@ -166,10 +166,12 @@
     </spatial>
     <spatial name="rect_abd_r_tendon">
       <site site="rect_abd_r_rect_abd_r-P1"/>
+      <geom geom="Cylinder_abdomen" sidesite="Abs_sidesite"/>
       <site site="rect_abd_r_rect_abd_r-P2"/>
     </spatial>
     <spatial name="rect_abd_l_tendon">
       <site site="rect_abd_l_rect_abd_l-P1"/>
+      <geom geom="Cylinder_abdomen" sidesite="Abs_sidesite"/>
       <site site="rect_abd_l_rect_abd_l-P2"/>
     </spatial>
     <spatial name="IL_L1_r_tendon">
