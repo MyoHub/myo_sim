@@ -30,6 +30,9 @@
             <default class="wrap">
                 <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
             </default>
+            <default class="sidesite">
+                <site group="3" size="0.0005"/>
+            </default>
             <default class="coll">
                 <geom type="capsule" group="1" contype="1" conaffinity="0" condim="3" friction = "1.1  0.005 0.0001" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
             </default>
@@ -743,47 +746,47 @@
         </spatial>
         <spatial name="IL_L1_r_tendon">
             <site site="IL_L1_r_IL_L1_r-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_L1_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_L1_r_1_sidesite"/>
             <site site="IL_L1_r_IL_L1_r-P2"/>
         </spatial>
         <spatial name="IL_L2_r_tendon">
             <site site="IL_L2_r_IL_L2_r-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L2_r_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L2_r_1_sidesite"/>
             <site site="IL_L2_r_IL_L2_r-P2"/>
         </spatial>
         <spatial name="IL_L3_r_tendon">
             <site site="IL_L3_r_IL_L3_r-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L3_r_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L3_r_1_sidesite"/>
             <site site="IL_L3_r_IL_L3_r-P2"/>
         </spatial>
         <spatial name="IL_L4_r_tendon">
             <site site="IL_L4_r_IL_L4_r-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L4_r_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L4_r_1_sidesite"/>
             <site site="IL_L4_r_IL_L4_r-P2"/>
         </spatial>
         <spatial name="IL_L1_l_tendon">
             <site site="IL_L1_l_IL_L1_l-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_L1_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_L1_l_1_sidesite"/>
             <site site="IL_L1_l_IL_L1_l-P2"/>
         </spatial>
         <spatial name="IL_L2_l_tendon">
             <site site="IL_L2_l_IL_L2_l-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L2_l_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L2_l_1_sidesite"/>
             <site site="IL_L2_l_IL_L2_l-P2"/>
         </spatial>
         <spatial name="IL_L3_l_tendon">
             <site site="IL_L3_l_IL_L3_l-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L3_l_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L3_l_1_sidesite"/>
             <site site="IL_L3_l_IL_L3_l-P2"/>
         </spatial>
         <spatial name="IL_L4_l_tendon">
             <site site="IL_L4_l_IL_L4_l-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L4_l_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L4_l_1_sidesite"/>
             <site site="IL_L4_l_IL_L4_l-P2"/>
         </spatial>
         <spatial name="IL_R5_r_tendon">
             <site site="IL_R5_r_IL_r5_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R5_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R5_r_1_sidesite"/>
             <site site="IL_R5_r_IL_r5_R-P2"/>
             <site site="IL_R5_r_IL_r5_R-P2_0"/>
             <site site="IL_R5_r_IL_r5_R-P3"/>
@@ -794,7 +797,7 @@
         </spatial>
         <spatial name="IL_R6_r_tendon">
             <site site="IL_R6_r_IL_r6_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R6_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R6_r_1_sidesite"/>
             <site site="IL_R6_r_IL_r6_R-P2"/>
             <site site="IL_R6_r_IL_r6_R-P2_0"/>
             <site site="IL_R6_r_IL_r6_R-P3"/>
@@ -839,7 +842,7 @@
         </spatial>
         <spatial name="IL_R5_l_tendon">
             <site site="IL_R5_l_IL_r5_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R5_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R5_l_1_sidesite"/>
             <site site="IL_R5_l_IL_r5_R-P2"/>
             <site site="IL_R5_l_IL_r5_R-P2_0"/>
             <site site="IL_R5_l_IL_r5_R-P3"/>
@@ -850,7 +853,7 @@
         </spatial>
         <spatial name="IL_R6_l_tendon">
             <site site="IL_R6_l_IL_r6_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R6_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R6_l_1_sidesite"/>
             <site site="IL_R6_l_IL_r6_R-P2"/>
             <site site="IL_R6_l_IL_r6_R-P2_0"/>
             <site site="IL_R6_l_IL_r6_R-P3"/>
@@ -1039,12 +1042,12 @@
         </spatial>
         <spatial name="LTpT_R12_r_tendon">
             <site site="LTpT_R12_r_LTpT_r12_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_1_sidesite"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_r_2_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_2_sidesite"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2_0"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2_1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_r_4_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_4_sidesite"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2_2"/>
         </spatial>
         <spatial name="LTpT_T1_l_tendon">
@@ -1193,12 +1196,12 @@
         </spatial>
         <spatial name="LTpT_R12_l_tendon">
             <site site="LTpT_R12_l_LTpT_r12_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_1_sidesite"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_l_2_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_2_sidesite"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2_0"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2_1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_l_4_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_4_sidesite"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2_2"/>
         </spatial>
         <spatial name="LTpL_L5_r_tendon">
@@ -1219,7 +1222,7 @@
         </spatial>
         <spatial name="LTpL_L1_r_tendon">
             <site site="LTpL_L1_r_pathpoint"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpL_L1_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpL_L1_r_1_sidesite"/>
             <site site="LTpL_L1_r_pathpoint_0"/>
         </spatial>
         <spatial name="LTpL_L5_l_tendon">
@@ -1240,7 +1243,7 @@
         </spatial>
         <spatial name="LTpL_L1_l_tendon">
             <site site="LTpL_L1_l_pathpoint"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpL_L1_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpL_L1_l_1_sidesite"/>
             <site site="LTpL_L1_l_pathpoint_0"/>
         </spatial>
         <spatial name="QL_post_I.1-L3_r_tendon">
