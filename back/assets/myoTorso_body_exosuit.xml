@@ -181,21 +181,21 @@
         <joint name="LB_wrapjnt_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
         <joint name="LB_wrapjnt_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
         <joint name="LB_wrapjnt_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.1 .1"/>
-        <geom name="Cylinder2_cylinder" size="0.07 0.13" pos="-0.118 0.0768 0" class="wrap"/>
-        <site name="Cylinder2_cylinder_IL_L1_r_1_sidesite" pos="-0.0340058 0.0777894 -0.00109894" size="0.0005"/>
-        <site name="Cylinder2_cylinder_IL_L1_l_1_sidesite" pos="-0.0418844 0.112331 -0.0720796" size="0.0005"/>
-        <site name="Cylinder2_cylinder_IL_R5_r_1_sidesite" pos="-0.0340043 0.0759544 -0.0125701" size="0.0005"/>
-        <site name="Cylinder2_cylinder_IL_R6_r_1_sidesite" pos="-0.0348449 0.0886841 -0.108783" size="0.0005"/>
-        <site name="Cylinder2_cylinder_IL_R5_l_1_sidesite" pos="-0.0351706 0.0907744 -0.0594597" size="0.0005"/>
-        <site name="Cylinder2_cylinder_IL_R6_l_1_sidesite" pos="-0.0408519 0.110029 -0.0306543" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpT_R12_r_4_sidesite" pos="-0.0411 0.1048 0.03882" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpT_R12_r_2_sidesite" pos="-0.03691 0.06919 0.03508" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpT_R12_r_1_sidesite" pos="-0.03859 0.0494129 0.0902269" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpT_R12_l_4_sidesite" pos="-0.0411 0.1048 -0.03882" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpT_R12_l_2_sidesite" pos="-0.03691 0.06919 -0.03508" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpT_R12_l_1_sidesite" pos="-0.0910785 -0.00276905 0.0534791" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpL_L1_r_1_sidesite" pos="-0.0370101 0.0990854 -0.0777896" size="0.0005"/>
-        <site name="Cylinder2_cylinder_LTpL_L1_l_1_sidesite" pos="-0.0370101 0.0990854 0.0777896" size="0.0005"/>
+        <geom name="back_cylinder_s" size="0.07 0.13" pos="-0.118 0.0768 0" class="wrap"/>
+        <site name="back_cylinder_s_IL_L1_r_1_sidesite" pos="-0.0340058 0.0777894 -0.00109894" size="0.0005"/>
+        <site name="back_cylinder_s_IL_L1_l_1_sidesite" pos="-0.0418844 0.112331 -0.0720796" size="0.0005"/>
+        <site name="back_cylinder_s_IL_R5_r_1_sidesite" pos="-0.0340043 0.0759544 -0.0125701" size="0.0005"/>
+        <site name="back_cylinder_s_IL_R6_r_1_sidesite" pos="-0.0348449 0.0886841 -0.108783" size="0.0005"/>
+        <site name="back_cylinder_s_IL_R5_l_1_sidesite" pos="-0.0351706 0.0907744 -0.0594597" size="0.0005"/>
+        <site name="back_cylinder_s_IL_R6_l_1_sidesite" pos="-0.0408519 0.110029 -0.0306543" size="0.0005"/>
+        <site name="back_cylinder_s_LTpT_R12_r_4_sidesite" pos="-0.0411 0.1048 0.03882" size="0.0005"/>
+        <site name="back_cylinder_s_LTpT_R12_r_2_sidesite" pos="-0.03691 0.06919 0.03508" size="0.0005"/>
+        <site name="back_cylinder_s_LTpT_R12_r_1_sidesite" pos="-0.03859 0.0494129 0.0902269" size="0.0005"/>
+        <site name="back_cylinder_s_LTpT_R12_l_4_sidesite" pos="-0.0411 0.1048 -0.03882" size="0.0005"/>
+        <site name="back_cylinder_s_LTpT_R12_l_2_sidesite" pos="-0.03691 0.06919 -0.03508" size="0.0005"/>
+        <site name="back_cylinder_s_LTpT_R12_l_1_sidesite" pos="-0.0910785 -0.00276905 0.0534791" size="0.0005"/>
+        <site name="back_cylinder_s_LTpL_L1_r_1_sidesite" pos="-0.0370101 0.0990854 -0.0777896" size="0.0005"/>
+        <site name="back_cylinder_s_LTpL_L1_l_1_sidesite" pos="-0.0370101 0.0990854 0.0777896" size="0.0005"/>
       </body>
       <body name="lumbar5" pos="-0.098 0.071 0">
         <inertial pos="0.053744 0.02 0" quat="0.707107 0 0 0.707107" mass="1.824" diaginertia="0.01765 0.01219 0.00546"/>
@@ -234,7 +234,6 @@
           <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
           <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
           <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>
-          <geom name="Abdomen_ellipsoid" size="0.01" rgba=".5 .5 .9 0.5" group="3"/>
           <site name="Abdomen_sidesite" pos="0.011 0 0" size="0.0005"/>
           <site name="EO1_r_EO1_r-P1" pos="0.0065502 0.0627431 0.0308937"/>
           <site name="EO2_r_EO2_r-P2" pos="0.00723321 0.0329565 0.0364551"/>
@@ -509,7 +508,7 @@
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh" rgba="1 1 1 1" mesh="torso_geom_12_thoracic1_s"/>
                   <geom name="upper_exo_geom" type="mesh" rgba="0.4 0.4 0.4 1" euler="1.57 3.14 1.57" group = "2" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh" rgba="1 1 1 1" mesh="torso_geom_13_ribcage_s"/>
-                  <geom name="Cylinder_cylinder" size="0.17 0.13" pos="-0.21 0.04 0" class="wrap"/>
+                  <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="wrap"/>
                   <geom name="Exo_cylinder" size="0.015 0.13" pos="-0.07 0.06 0" class="wrap"/>
                   <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
@@ -521,12 +520,12 @@
                   <site name="rect_abd_r_rect_abd_r-P2" pos="0.0880597 0.222575 -0.0344509"/>
                   <site name="rect_abd_l_rect_abd_l-P2" pos="0.08806 0.22257 0.03445"/>
                   <site name="Exo_sidesite" pos="-0.14 0.05 0" size="0.0005" rgba="1 0 0 1"/>
-                  <site name="Cylinder_cylinder_IL_L2_r_1_sidesite" pos="-0.0403295 -0.0732604 -0.120523" size="0.0005"/>
-                  <site name="Cylinder_cylinder_IL_L3_r_1_sidesite" pos="-0.108976 0.217229 0.0537206" size="0.0005"/>
-                  <site name="Cylinder_cylinder_IL_L4_r_1_sidesite" pos="-0.0465512 0.162068 -0.10054" size="0.0005"/>
-                  <site name="Cylinder_cylinder_IL_L2_l_1_sidesite" pos="-0.107766 -0.157199 -0.100314" size="0.0005"/>
-                  <site name="Cylinder_cylinder_IL_L3_l_1_sidesite" pos="-0.00732879 0.0167539 0.0354792" size="0.0005"/>
-                  <site name="Cylinder_cylinder_IL_L4_l_1_sidesite" pos="-0.00798834 0.0115872 -0.107672" size="0.0005"/>
+                  <site name="back_cylinder_l_IL_L2_r_1_sidesite" pos="-0.0403295 -0.0732604 -0.120523" size="0.0005"/>
+                  <site name="back_cylinder_l_IL_L3_r_1_sidesite" pos="-0.108976 0.217229 0.0537206" size="0.0005"/>
+                  <site name="back_cylinder_l_IL_L4_r_1_sidesite" pos="-0.0465512 0.162068 -0.10054" size="0.0005"/>
+                  <site name="back_cylinder_l_IL_L2_l_1_sidesite" pos="-0.107766 -0.157199 -0.100314" size="0.0005"/>
+                  <site name="back_cylinder_l_IL_L3_l_1_sidesite" pos="-0.00732879 0.0167539 0.0354792" size="0.0005"/>
+                  <site name="back_cylinder_l_IL_L4_l_1_sidesite" pos="-0.00798834 0.0115872 -0.107672" size="0.0005"/>
                   <site name="IL_R5_r_IL_r5_R-P2_0" pos="-0.07928 0.175415 0.0432678"/>
                   <site name="IL_R5_r_IL_r5_R-P3" pos="-0.0807876 0.202609 0.0433988"/>
                   <site name="IL_R5_r_IL_r5_R-P4" pos="-0.082702 0.23174 0.0437724"/>
