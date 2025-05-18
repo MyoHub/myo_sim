@@ -18,6 +18,9 @@
     <default class="wrap">
         <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
     </default>
+    <default class="sidesite">
+        <site group="3" size="0.0005"/>
+    </default>
     <default class="motor">
       <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
     </default>
