@@ -176,7 +176,7 @@
         <joint name="LB_wrapjnt_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
         <joint name="LB_wrapjnt_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
         <joint name="LB_wrapjnt_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.1 .1"/>
-        <geom name="back_cylinder_s" size="0.07 0.13" pos="-0.118 0.0768 0" class="wrap"/>
+        <geom name="back_cylinder_s" size="0.07 0.13" pos="-0.118 0.0768 0" class="myoBack_wrap"/>
         <site name="back_cylinder_s_IL_L1_r_1_sidesite" pos="-0.0340058 0.0777894 -0.00109894" class="sidesite"/>
         <site name="back_cylinder_s_IL_L1_l_1_sidesite" pos="-0.0418844 0.112331 -0.0720796" class="sidesite"/>
         <site name="back_cylinder_s_IL_R5_r_1_sidesite" pos="-0.0340043 0.0759544 -0.0125701" class="sidesite"/>
@@ -500,10 +500,10 @@
                   <geom name="torso_geom_11" pos="-0.032 0.358 0" quat="0.992198 0 0 -0.124675" type="mesh" rgba="1 1 1 1" mesh="torso_geom_11_thoracic2_s"/>
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh" rgba="1 1 1 1" mesh="torso_geom_12_thoracic1_s"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh" rgba="1 1 1 1" mesh="torso_geom_13_ribcage_s"/>
-                  <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="wrap"/>
+                  <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="myoBack_wrap"/>
                   <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
-                  <geom name="Cylinder_abdomen" size="0.12 0.13" pos="0.225 0.07 0" class="wrap"/>
+                  <geom name="Cylinder_abdomen" size="0.12 0.13" pos="0.225 0.07 0" class="myoBack_wrap"/>
                   <site name="Abs_sidesite" pos="0.05 0.05 0" class="sidesite" />
                   <site name="LeftShoulder" pos="-0.11 0.3 -0.07" size="0.0005" rgba="0 1 0 1"/>
                   <site name="RightShoulder" pos="-0.11 0.3 0.07" size="0.0005" rgba="0 1 0 1"/>

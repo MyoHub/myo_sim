@@ -8,7 +8,7 @@
   ====================================================== -->
 
   <include file="../scene/myosuite_scene.xml"/>
-  <include file="assets/myoTorso_assets_exosuit.xml"/>
+  <include file="assets/myoTorso_assets.xml"/>
   <compiler meshdir=".." texturedir=".."/>
 
   <worldbody>
@@ -36,7 +36,7 @@
     <body name="exo_torso" pos="-0.134 0.0975 1.06" quat="0.707035 0.707179 0 0">
       <freejoint/>
             <geom name="upper_exo_geom" type="mesh" class="exomesh" euler="1.57 3.14 1.57" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
-            <geom name="Exo_cylinder" size="0.015 0.13" pos="-0.06 0.04 0" class="wrap"/>
+            <geom name="Exo_cylinder" size="0.015 0.13" pos="-0.06 0.04 0" class="myoBack_wrap"/>
             <site name="Exo_LeftShoulder" pos="-0.11 0.28 -0.07" size="0.0005" rgba="0 1 0 1"/>
             <site name="Exo_RightShoulder" pos="-0.11 0.28 0.07" size="0.0005" rgba="0 1 0 1"/>
             <site name="Exo_sidesite" pos="-0.14 0.05 0" class="sidesite"/>

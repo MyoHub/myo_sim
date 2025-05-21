@@ -34,7 +34,7 @@
                 <site group="3" size="0.0005"/>
             </default>
             <default class="coll">
-                <geom type="capsule" group="1" contype="1" conaffinity="0" condim="3" friction = "1.1  0.005 0.0001" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
+                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" friction = "1.1  0.005 0.0001" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
             </default>
             <default class="myo_leg_touch">
                 <site type="box" group="3" rgba="0.8 0.2 .2 .4"/>
