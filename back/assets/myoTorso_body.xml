@@ -1,6 +1,6 @@
 <mujocoinclude model="MyoTorso_v1.0">
 
-    <camera name = "side " pos="0.957 -1.107 1.548" xyaxes="0.750 0.661 0.000 -0.141 0.160 0.977"/>
+    <camera name = "side " pos="-0.069 -1.704 1.259" xyaxes="0.998 0.060 -0.000 -0.005 0.081 0.997"/>
     <body name="pelvis" pos="0 0 0.979" quat="0.707035 0.707179 0 0">
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.001 0.001 0.001"/>
       <geom name="pelvis_geom_1" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_1_pelvis_rv"/>
@@ -505,6 +505,8 @@
                   <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Cylinder_abdomen" size="0.12 0.13" pos="0.225 0.07 0" class="wrap"/>
                   <site name="Abs_sidesite" pos="0.05 0.05 0" class="sidesite" />
+                  <site name="LeftShoulder" pos="-0.11 0.3 -0.07" size="0.0005" rgba="0 1 0 1"/>
+                  <site name="RightShoulder" pos="-0.11 0.3 0.07" size="0.0005" rgba="0 1 0 1"/>
                   <site name="Chest_r_sidesite" pos="-0.02082 0.21 0.07816" class="sidesite"/>
                   <site name="Chest_l_sidesite" pos="-0.02082 0.21 -0.07816" class="sidesite"/>
                   <site name="rect_abd_r_rect_abd_r-P2" pos="0.0880597 0.222575 -0.0344509"/>
