@@ -14,10 +14,10 @@
     <site size="0.001 0.005 0.005"/>
     <tendon limited="false" width="0.005" rgba="0.95 0.3 0.3 1"/>
     <default class="muscleback">
-      <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
+        <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
     </default>
     <default class="motor">
-      <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
+        <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
     </default>
         <default class="myolegs">
             <joint armature="0.01" damping="0.5" limited="true"/>
