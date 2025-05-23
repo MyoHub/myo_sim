@@ -27,15 +27,15 @@
 
     <body name="exo_lumbar4" pos="-0.1051 0.091 1.05" quat="0.707035 0.707179 0 0">
       <freejoint/>
-      <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.16" size="0.005" rgba="0.4 0.4 0.4 1"/>
-      <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.16" size="0.005" rgba="0.4 0.4 0.4 1"/>
-      <geom name="lower_exo_belt_geom" type="mesh" class="exomesh" euler="1.57 3.14 -1.57" pos="0.015 0.03 0" mesh="lower_exo_belt_geom_1" mass="0.094"/>
+      <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
+      <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
+      <geom name="lower_exo_belt_geom" type="mesh" class="exomesh" euler="1.57 3.14 -1.57" pos="0.03 0.03 0" mesh="lower_exo_belt_geom_1" mass="0.094"/>
     </body>
     
-    <body name="exo_torso" pos="-0.134 0.0975 1.06" quat="0.707035 0.707179 0 0">
+    <body name="exo_torso" pos="-0.130 0.0975 1.06" quat="0.707035 0.707179 0 0">
       <freejoint/>
       <geom name="upper_exo_geom" type="mesh" class="exomesh" euler="1.57 3.14 1.57" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
-      <geom name="Exo_cylinder" size="0.015 0.13" pos="-0.03 -0.02 0" class="myoBack_wrap"/>
+      <geom name="Exo_cylinder" size="0.105 0.13" pos="0.025 0.03 0" class="myoBack_wrap"/>
       <site name="Exo_LeftShoulder" pos="-0.11 0.28 -0.07" size="0.0005" rgba="0 1 0 1"/>
       <site name="Exo_RightShoulder" pos="-0.11 0.28 0.07" size="0.0005" rgba="0 1 0 1"/>
       <site name="Exo_sidesite" pos="-0.14 0.05 0" class="sidesite"/>
@@ -43,9 +43,7 @@
   </worldbody>
 
   <equality>
-    <weld body1="torso" body2="exo_torso"/>
-    <connect site1="Exo_RightShoulder" site2="RightShoulder"/>
-    <connect site1="Exo_LeftShoulder" site2="LeftShoulder"/>
+    <weld body1="torso" body2="exo_torso" anchor="-0.1 0.2 0"/>
     <weld body1="lumbar4" body2="exo_lumbar4"/>
   </equality>
 
