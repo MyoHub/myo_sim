@@ -78,7 +78,7 @@
     <joint name="Abs_t2_locked" joint1="Abs_t2" polycoef="0 0 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
   </equality>
 
-    <tendon>
+  <tendon>
     <spatial name="Ps_L1_VB_r_tendon">
       <site site="Ps_L1_VB_r_Ps_L1_VB_r-P1"/>
       <site site="Ps_L1_VB_r_Ps_L1_VB_r-P2"/>
@@ -1120,6 +1120,7 @@
       <site site="IO6_l_IO6_l-P2"/>
     </spatial>
   </tendon>
+  
   <actuator>
     <general name="Ps_L1_VB_r" class="myoBack_muscle" tendon="Ps_L1_VB_r_tendon" lengthrange="0.091234 0.282334" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0" biasprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0"/>
     <general name="Ps_L1_TP_r" class="myoBack_muscle" tendon="Ps_L1_TP_r_tendon" lengthrange="0.0926074 0.274687" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.860707 1.70615 32.6017 1 0 2 10 0.74068 1.4 0" biasprm="0.860707 1.70615 32.6017 1 0 2 10 0.74068 1.4 0"/>
