@@ -502,7 +502,7 @@
                   <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="myoBack_wrap"/>
                   <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
-                  <geom name="Cylinder_abdomen" size="0.10 0.13" pos="0.225 0.10 0" class="myoBack_wrap"/>
+                  <geom name="Cylinder_abdomen" size="0.10 0.13" pos="0.225 0.09 0" class="myoBack_wrap"/>
                   <site name="Abs_sidesite" pos="0.03 0.05 0" class="sidesite" />
                   <site name="LeftShoulder" pos="-0.11 0.3 -0.07" size="0.0005" rgba="0 1 0 1"/>
                   <site name="RightShoulder" pos="-0.11 0.3 0.07" size="0.0005" rgba="0 1 0 1"/>
