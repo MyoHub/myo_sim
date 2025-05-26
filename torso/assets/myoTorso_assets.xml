@@ -1,13 +1,12 @@
 <mujocoinclude model="MyoTorso_v1.0">
-  <compiler angle="radian" autolimits="true"/>
-  <option timestep="0.005"/>
-  <size njmax="1000" nconmax="400" nkey="1" nuser_jnt="1"/>
-  
-    <visual>
-        <headlight ambient=".5 .5 .5" diffuse="0.50 0.50 0.50" specular="0.50 0.50 0.50"/>
-    </visual>
+  <!-- =================================================
+  Copyright 2024
+  Model	:: MyoTorso (MuJoCoV2.0)
+  Author	::  Rohan Walia, Morgane Billot, Kevin Garzon-Aguirre, Swathika Subramanian, Huiyi Wang,
+                 Mohamed Irfan Refai, Guillaume Durandau, Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+  License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+  ====================================================== -->
 
-  <statistic meansize="0.15762" extent="2.51911" center="0 0 0.259556"/>
   <default class="main">
     <joint limited="true" armature="1e-05" damping="0.05"/>
     <site size="0.001 0.005 0.005"/>
@@ -51,9 +50,6 @@
     <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="0.87 0.87 0.87"/>
     <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="0.87 0.87 0.87"/>
     <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"/>
-    <mesh name="lower_exo_belt_geom_1" file="../myo_sim/meshes/lower_exo_belt.stl" scale="0.0015 0.0015 0.0013"/>
-    <mesh name="lower_exo_legs_geom_1" file="../myo_sim/meshes/lower_exo_legs.stl" scale="0.0013 0.0013 0.0013"/>
-    <mesh name="upper_exo_geom_1" file="../myo_sim/meshes/upper_exo.stl" scale="0.001 0.0011 0.001"/>
   </asset>
 
 
@@ -1120,7 +1116,7 @@
       <site site="IO6_l_IO6_l-P2"/>
     </spatial>
   </tendon>
-  
+
   <actuator>
     <general name="Ps_L1_VB_r" class="myoBack_muscle" tendon="Ps_L1_VB_r_tendon" lengthrange="0.091234 0.282334" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0" biasprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0"/>
     <general name="Ps_L1_TP_r" class="myoBack_muscle" tendon="Ps_L1_TP_r_tendon" lengthrange="0.0926074 0.274687" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.860707 1.70615 32.6017 1 0 2 10 0.74068 1.4 0" biasprm="0.860707 1.70615 32.6017 1 0 2 10 0.74068 1.4 0"/>
