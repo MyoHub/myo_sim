@@ -7,15 +7,46 @@
 	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
   ====================================================== -->
 
-  <include file="assets/myoTorso_assets_exosuit.xml"/>
   <include file="../scene/myosuite_scene.xml"/>
+  <include file="assets/myoTorso_assets.xml"/>
   <compiler meshdir=".." texturedir=".."/>
 
   <worldbody>
     <body name="full_body" pos="-.025 0.1 0">
-        <include file="assets/myoTorso_body_exosuit.xml"/>
+      <include file="assets/myoTorso_body.xml"/>
+    </body>
+
+    <body name="exo_pelvis" pos="-.025 0.1 0.979" quat="0.707035 0.707179 0 0">
+      <geom name="lower_exo_legs_geom" type="mesh" class="exomesh" euler="1.57 3.14 -1.57" pos="-0.08 0.1 0" mesh="lower_exo_legs_geom_1"/>
+      <site name="Lower_Exo_Left_Leg" pos="-0.08 -0.15 -0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
+      <site name="Lower_Exo_Right_Leg" pos="-0.08 -0.15 0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
+      <site name="Exo_LeftLeg" pos="-0.2 0 -0.04" size="0.0005" rgba="0 1 0 1"/>
+      <site name="Exo_RightLeg" pos="-0.2 0 0.04" size="0.0005" rgba="0 1 0 1"/>
+    </body>
+
+
+    <body name="exo_lumbar4" pos="-0.1051 0.091 1.05" quat="0.707035 0.707179 0 0">
+      <freejoint/>
+      <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
+      <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
+      <geom name="lower_exo_belt_geom" type="mesh" class="exomesh" euler="1.57 3.14 -1.57" pos="0.03 0.03 0" mesh="lower_exo_belt_geom_1" mass="0.094"/>
+    </body>
+    
+    <body name="exo_torso" pos="-0.130 0.0975 1.06" quat="0.707035 0.707179 0 0">
+      <freejoint/>
+      <geom name="upper_exo_geom" type="mesh" class="exomesh" euler="1.57 3.14 1.57" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
+      <geom name="Exo_cylinder" size="0.105 0.13" pos="0.025 0.03 0" class="myoBack_wrap"/>
+      <site name="Exo_LeftShoulder" pos="-0.11 0.28 -0.07" size="0.0005" rgba="0 1 0 1"/>
+      <site name="Exo_RightShoulder" pos="-0.11 0.28 0.07" size="0.0005" rgba="0 1 0 1"/>
+      <site name="Exo_sidesite" pos="-0.14 0.05 0" class="sidesite"/>
     </body>
   </worldbody>
+
+  <equality>
+    <weld body1="torso" body2="exo_torso" anchor="-0.1 0.2 0"/>
+    <weld body1="lumbar4" body2="exo_lumbar4"/>
+  </equality>
+
   
   <tendon>
     <spatial name="Exo_LS_RL" stiffness="515.5998876" springlength="0 0.37" group="1" rgba="0.1 0.2 0.2 1"> 
@@ -37,8 +68,5 @@
         <site site="Lower_Exo_Right_Leg"/>
     </spatial>
   </tendon>
-
-  <keyframe>
-    <key name="default-pose" qpos='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0'/>
-  </keyframe>
+  
 </mujoco>

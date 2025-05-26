@@ -14,10 +14,10 @@
     <site size="0.001 0.005 0.005"/>
     <tendon limited="false" width="0.005" rgba="0.95 0.3 0.3 1"/>
     <default class="muscleback">
-      <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
+        <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
     </default>
     <default class="motor">
-      <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
+        <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
     </default>
         <default class="myolegs">
             <joint armature="0.01" damping="0.5" limited="true"/>
@@ -30,8 +30,11 @@
             <default class="wrap">
                 <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
             </default>
+            <default class="sidesite">
+                <site group="3" size="0.0005"/>
+            </default>
             <default class="coll">
-                <geom type="capsule" group="1" contype="1" conaffinity="0" condim="3" friction = "1.1  0.005 0.0001" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
+                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" friction = "1.1  0.005 0.0001" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin"/>
             </default>
             <default class="myo_leg_touch">
                 <site type="box" group="3" rgba="0.8 0.2 .2 .4"/>
@@ -105,7 +108,7 @@
         <mesh name="torso_geom_10_thoracic3_s" file="../myo_sim/meshes/thoracic3_s.stl" scale="0.87 0.87 0.87"/>
         <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="0.87 0.87 0.87"/>
         <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/ribcage_s.stl" scale="0.87 0.87 0.87"/>
+        <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"/>
     </asset>
 
     <equality>
@@ -743,47 +746,47 @@
         </spatial>
         <spatial name="IL_L1_r_tendon">
             <site site="IL_L1_r_IL_L1_r-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_L1_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_L1_r_1_sidesite"/>
             <site site="IL_L1_r_IL_L1_r-P2"/>
         </spatial>
         <spatial name="IL_L2_r_tendon">
             <site site="IL_L2_r_IL_L2_r-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L2_r_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L2_r_1_sidesite"/>
             <site site="IL_L2_r_IL_L2_r-P2"/>
         </spatial>
         <spatial name="IL_L3_r_tendon">
             <site site="IL_L3_r_IL_L3_r-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L3_r_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L3_r_1_sidesite"/>
             <site site="IL_L3_r_IL_L3_r-P2"/>
         </spatial>
         <spatial name="IL_L4_r_tendon">
             <site site="IL_L4_r_IL_L4_r-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L4_r_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L4_r_1_sidesite"/>
             <site site="IL_L4_r_IL_L4_r-P2"/>
         </spatial>
         <spatial name="IL_L1_l_tendon">
             <site site="IL_L1_l_IL_L1_l-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_L1_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_L1_l_1_sidesite"/>
             <site site="IL_L1_l_IL_L1_l-P2"/>
         </spatial>
         <spatial name="IL_L2_l_tendon">
             <site site="IL_L2_l_IL_L2_l-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L2_l_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L2_l_1_sidesite"/>
             <site site="IL_L2_l_IL_L2_l-P2"/>
         </spatial>
         <spatial name="IL_L3_l_tendon">
             <site site="IL_L3_l_IL_L3_l-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L3_l_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L3_l_1_sidesite"/>
             <site site="IL_L3_l_IL_L3_l-P2"/>
         </spatial>
         <spatial name="IL_L4_l_tendon">
             <site site="IL_L4_l_IL_L4_l-P1"/>
-            <geom geom="Cylinder_cylinder" sidesite="Cylinder_cylinder_IL_L4_l_1_sidesite"/>
+            <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L4_l_1_sidesite"/>
             <site site="IL_L4_l_IL_L4_l-P2"/>
         </spatial>
         <spatial name="IL_R5_r_tendon">
             <site site="IL_R5_r_IL_r5_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R5_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R5_r_1_sidesite"/>
             <site site="IL_R5_r_IL_r5_R-P2"/>
             <site site="IL_R5_r_IL_r5_R-P2_0"/>
             <site site="IL_R5_r_IL_r5_R-P3"/>
@@ -794,7 +797,7 @@
         </spatial>
         <spatial name="IL_R6_r_tendon">
             <site site="IL_R6_r_IL_r6_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R6_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R6_r_1_sidesite"/>
             <site site="IL_R6_r_IL_r6_R-P2"/>
             <site site="IL_R6_r_IL_r6_R-P2_0"/>
             <site site="IL_R6_r_IL_r6_R-P3"/>
@@ -839,7 +842,7 @@
         </spatial>
         <spatial name="IL_R5_l_tendon">
             <site site="IL_R5_l_IL_r5_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R5_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R5_l_1_sidesite"/>
             <site site="IL_R5_l_IL_r5_R-P2"/>
             <site site="IL_R5_l_IL_r5_R-P2_0"/>
             <site site="IL_R5_l_IL_r5_R-P3"/>
@@ -850,7 +853,7 @@
         </spatial>
         <spatial name="IL_R6_l_tendon">
             <site site="IL_R6_l_IL_r6_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_IL_R6_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R6_l_1_sidesite"/>
             <site site="IL_R6_l_IL_r6_R-P2"/>
             <site site="IL_R6_l_IL_r6_R-P2_0"/>
             <site site="IL_R6_l_IL_r6_R-P3"/>
@@ -895,30 +898,30 @@
         </spatial>
         <spatial name="LTpT_T1_r_tendon">
             <site site="LTpT_T1_r_LTpT_t1_R-P1"/>
-            <geom geom="Chest_r_ellipsoid_LTpT_T1_r" sidesite="Chest_r_ellipsoid_LTpT_T1_r_1_sidesite"/>
+            <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T1_r_1_sidesite"/>
             <site site="LTpT_T1_r_LTpT_t1_R-P2"/>
         </spatial>
         <spatial name="LTpT_T2_r_tendon">
             <site site="LTpT_T2_r_LTpT_t2_R-P1"/>
-            <geom geom="Chest_r_ellipsoid_LTpT_T2_r" sidesite="Chest_r_ellipsoid_LTpT_T2_r_1_sidesite"/>
+            <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T2_r_1_sidesite"/>
             <site site="LTpT_T2_r_LTpT_t2_R-P2"/>
         </spatial>
         <spatial name="LTpT_T3_r_tendon">
             <site site="LTpT_T3_r_LTpT_t3_R-P1"/>
             <site site="LTpT_T3_r_LTpT_t3_R-P2"/>
-            <geom geom="Chest_r_ellipsoid_LTpT_T3_r" sidesite="Chest_r_ellipsoid_LTpT_T3_r_2_sidesite"/>
+            <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T3_r_2_sidesite"/>
             <site site="LTpT_T3_r_LTpT_t3_R-P2_0"/>
         </spatial>
         <spatial name="LTpT_T4_r_tendon">
             <site site="LTpT_T4_r_LTpT_t4_R-P1"/>
             <site site="LTpT_T4_r_LTpT_t4_R-P2"/>
-            <geom geom="Chest_r_ellipsoid_LTpT_T4_r" sidesite="Chest_r_ellipsoid_LTpT_T4_r_2_sidesite"/>
+            <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T4_r_2_sidesite"/>
             <site site="LTpT_T4_r_LTpT_t4_R-P2_0"/>
         </spatial>
         <spatial name="LTpT_T5_r_tendon">
             <site site="LTpT_T5_r_LTpT_t5_R-P1"/>
             <site site="LTpT_T5_r_LTpT_t5_R-P2"/>
-            <geom geom="Chest_r_ellipsoid_LTpT_T5_r" sidesite="Chest_r_ellipsoid_LTpT_T5_r_2_sidesite"/>
+            <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T5_r_2_sidesite"/>
             <site site="LTpT_T5_r_LTpT_t5_R-P2_0"/>
         </spatial>
         <spatial name="LTpT_T6_r_tendon">
@@ -1039,40 +1042,40 @@
         </spatial>
         <spatial name="LTpT_R12_r_tendon">
             <site site="LTpT_R12_r_LTpT_r12_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_1_sidesite"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_r_2_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_2_sidesite"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2_0"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2_1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_r_4_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_4_sidesite"/>
             <site site="LTpT_R12_r_LTpT_r12_R-P2_2"/>
         </spatial>
         <spatial name="LTpT_T1_l_tendon">
             <site site="LTpT_T1_l_LTpT_t1_R-P1"/>
-            <geom geom="Chest_l_ellipsoid_LTpT_T1_l" sidesite="Chest_l_ellipsoid_LTpT_T1_l_1_sidesite"/>
+            <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T1_l_1_sidesite"/>
             <site site="LTpT_T1_l_LTpT_t1_R-P2"/>
         </spatial>
         <spatial name="LTpT_T2_l_tendon">
             <site site="LTpT_T2_l_LTpT_t2_R-P1"/>
-            <geom geom="Chest_l_ellipsoid_LTpT_T2_l" sidesite="Chest_l_ellipsoid_LTpT_T2_l_1_sidesite"/>
+            <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T2_l_1_sidesite"/>
             <site site="LTpT_T2_l_LTpT_t2_R-P2"/>
         </spatial>
         <spatial name="LTpT_T3_l_tendon">
             <site site="LTpT_T3_l_LTpT_t3_R-P1"/>
             <site site="LTpT_T3_l_LTpT_t3_R-P2"/>
-            <geom geom="Chest_l_ellipsoid_LTpT_T3_l" sidesite="Chest_l_ellipsoid_LTpT_T3_l_2_sidesite"/>
+            <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T3_l_2_sidesite"/>
             <site site="LTpT_T3_l_LTpT_t3_R-P2_0"/>
         </spatial>
         <spatial name="LTpT_T4_l_tendon">
             <site site="LTpT_T4_l_LTpT_t4_R-P1"/>
             <site site="LTpT_T4_l_LTpT_t4_R-P2"/>
-            <geom geom="Chest_l_ellipsoid_LTpT_T4_l" sidesite="Chest_l_ellipsoid_LTpT_T4_l_2_sidesite"/>
+            <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T4_l_2_sidesite"/>
             <site site="LTpT_T4_l_LTpT_t4_R-P2_0"/>
         </spatial>
         <spatial name="LTpT_T5_l_tendon">
             <site site="LTpT_T5_l_LTpT_t5_R-P1"/>
             <site site="LTpT_T5_l_LTpT_t5_R-P2"/>
-            <geom geom="Chest_l_ellipsoid_LTpT_T5_l" sidesite="Chest_l_ellipsoid_LTpT_T5_l_2_sidesite"/>
+            <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T5_l_2_sidesite"/>
             <site site="LTpT_T5_l_LTpT_t5_R-P2_0"/>
         </spatial>
         <spatial name="LTpT_T6_l_tendon">
@@ -1193,12 +1196,12 @@
         </spatial>
         <spatial name="LTpT_R12_l_tendon">
             <site site="LTpT_R12_l_LTpT_r12_R-P1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_1_sidesite"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_l_2_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_2_sidesite"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2_0"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2_1"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpT_R12_l_4_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_4_sidesite"/>
             <site site="LTpT_R12_l_LTpT_r12_R-P2_2"/>
         </spatial>
         <spatial name="LTpL_L5_r_tendon">
@@ -1219,7 +1222,7 @@
         </spatial>
         <spatial name="LTpL_L1_r_tendon">
             <site site="LTpL_L1_r_pathpoint"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpL_L1_r_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpL_L1_r_1_sidesite"/>
             <site site="LTpL_L1_r_pathpoint_0"/>
         </spatial>
         <spatial name="LTpL_L5_l_tendon">
@@ -1240,7 +1243,7 @@
         </spatial>
         <spatial name="LTpL_L1_l_tendon">
             <site site="LTpL_L1_l_pathpoint"/>
-            <geom geom="Cylinder2_cylinder" sidesite="Cylinder2_cylinder_LTpL_L1_l_1_sidesite"/>
+            <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpL_L1_l_1_sidesite"/>
             <site site="LTpL_L1_l_pathpoint_0"/>
         </spatial>
         <spatial name="QL_post_I.1-L3_r_tendon">
