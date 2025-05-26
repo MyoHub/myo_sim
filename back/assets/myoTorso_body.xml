@@ -226,8 +226,8 @@
         <site name="MF_m5.laminar_l_MF_m5.laminar_l-P2" pos="-0.0258996 0.01705 -0.00564"/>
         <body name="Abdomen" pos="0.098 0.0711 0">
           <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
-          <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
-          <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
+          <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.05 .015"/>
+          <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.03 .03"/>
           <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>
           <site name="Abdomen_sidesite" pos="0.011 0 0" class="sidesite"/>
           <site name="EO1_r_EO1_r-P1" pos="0.0065502 0.0627431 0.0308937"/>
