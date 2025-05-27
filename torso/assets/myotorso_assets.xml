@@ -1,13 +1,12 @@
 <mujocoinclude model="MyoTorso_v1.0">
-  <compiler angle="radian" autolimits="true"/>
-  <option timestep="0.005"/>
-  <size njmax="1000" nconmax="400" nkey="1" nuser_jnt="1"/>
-  
-    <visual>
-        <headlight ambient=".5 .5 .5" diffuse="0.50 0.50 0.50" specular="0.50 0.50 0.50"/>
-    </visual>
+  <!-- =================================================
+  Copyright 2024
+  Model	:: MyoTorso (MuJoCoV3.0)
+  Author	::  Rohan Walia, Morgane Billot, Kevin Garzon-Aguirre, Swathika Subramanian, Huiyi Wang,
+                 Mohamed Irfan Refai, Guillaume Durandau, Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+  License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+  ====================================================== -->
 
-  <statistic meansize="0.15762" extent="2.51911" center="0 0 0.259556"/>
   <default class="main">
     <joint limited="true" armature="1e-05" damping="0.05"/>
     <site size="0.001 0.005 0.005"/>
@@ -33,27 +32,24 @@
     <mesh name="pelvis_geom_1_pelvis_rv" file="../myo_sim/meshes/r_pelvis.stl"/>
     <mesh name="pelvis_geom_2_pelvis_lv" file="../myo_sim/meshes/l_pelvis.stl"/>
     <mesh name="sacrum_geom_1_sacrum" file="../myo_sim/meshes/sacrum.stl"/>
-    <mesh name="lumbar5_geom_1_lumbar5" file="../myo_sim/meshes/lumbar5.stl" />
-    <mesh name="lumbar4_geom_1_lumbar4" file="../myo_sim/meshes/lumbar4.stl" />
-    <mesh name="lumbar3_geom_1_lumbar3" file="../myo_sim/meshes/lumbar3.stl" />
-    <mesh name="lumbar2_geom_1_lumbar2" file="../myo_sim/meshes/lumbar2.stl" />
-    <mesh name="lumbar1_geom_1_lumbar1" file="../myo_sim/meshes/lumbar1.stl" />
-    <mesh name="torso_geom_1_thoracic12_s" file="../myo_sim/meshes/thoracic12_s.stl" />
-    <mesh name="torso_geom_2_thoracic11_s" file="../myo_sim/meshes/thoracic11_s.stl" />
-    <mesh name="torso_geom_3_thoracic10_s" file="../myo_sim/meshes/thoracic10_s.stl" />
-    <mesh name="torso_geom_4_thoracic9_s" file="../myo_sim/meshes/thoracic9_s.stl" />
-    <mesh name="torso_geom_5_thoracic8_s" file="../myo_sim/meshes/thoracic8_s.stl" />
-    <mesh name="torso_geom_6_thoracic7_s" file="../myo_sim/meshes/thoracic7_s.stl" />
-    <mesh name="torso_geom_7_thoracic6_s" file="../myo_sim/meshes/thoracic6_s.stl" />
-    <mesh name="torso_geom_8_thoracic5_s" file="../myo_sim/meshes/thoracic5_s.stl" />
-    <mesh name="torso_geom_9_thoracic4_s" file="../myo_sim/meshes/thoracic4_s.stl" />
-    <mesh name="torso_geom_10_thoracic3_s" file="../myo_sim/meshes/thoracic3_s.stl" />
-    <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" />
-    <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" />
-    <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl" />
-    <mesh name="lower_exo_belt_geom_1" file="../myo_sim/meshes/lower_exo_belt.stl" scale="0.0015 0.0015 0.0013"/>
-    <mesh name="lower_exo_legs_geom_1" file="../myo_sim/meshes/lower_exo_legs.stl" scale="0.0013 0.0013 0.0013"/>
-    <mesh name="upper_exo_geom_1" file="../myo_sim/meshes/upper_exo.stl" scale="0.001 0.0011 0.001"/>
+    <mesh name="lumbar5_geom_1_lumbar5" file="../myo_sim/meshes/lumbar5.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="lumbar4_geom_1_lumbar4" file="../myo_sim/meshes/lumbar4.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="lumbar3_geom_1_lumbar3" file="../myo_sim/meshes/lumbar3.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="lumbar2_geom_1_lumbar2" file="../myo_sim/meshes/lumbar2.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="lumbar1_geom_1_lumbar1" file="../myo_sim/meshes/lumbar1.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_1_thoracic12_s" file="../myo_sim/meshes/thoracic12_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_2_thoracic11_s" file="../myo_sim/meshes/thoracic11_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_3_thoracic10_s" file="../myo_sim/meshes/thoracic10_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_4_thoracic9_s" file="../myo_sim/meshes/thoracic9_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_5_thoracic8_s" file="../myo_sim/meshes/thoracic8_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_6_thoracic7_s" file="../myo_sim/meshes/thoracic7_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_7_thoracic6_s" file="../myo_sim/meshes/thoracic6_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_8_thoracic5_s" file="../myo_sim/meshes/thoracic5_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_9_thoracic4_s" file="../myo_sim/meshes/thoracic4_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_10_thoracic3_s" file="../myo_sim/meshes/thoracic3_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="0.87 0.87 0.87"/>
+    <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"/>
   </asset>
 
 

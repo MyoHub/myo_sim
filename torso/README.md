@@ -1,4 +1,4 @@
-# MyoTorso 0.1
+# MyoTorso
 
 ## General:
 
@@ -6,7 +6,7 @@ The myoTorso mujoco musculoskeletal (MSK) model is generated from: Constrained L
 
 This generated mujoco MSK model has almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
 
-The model have 210 actuators and 18 joints. The model can be controlled by 3 "virtual joints": Flexion extension, lateral bending, and axial rotation, that maps onto the real joints. 
+The model have 210 actuators and 18 joints. The model can be controlled by 3 "virtual joints": Flexion extension, lateral bending, and axial rotation, that maps onto the real joints.
 
 ## Conversion process:
 
@@ -22,7 +22,7 @@ After the conversion, a manual adjusting process is done to correct the abnormal
 
 ## Maunal adjustment:
 - Adjustments post conversion to optimize for kinematic and dynamic behaviors are detailed in our paper published at ICORR 2025 (see last section for reference).
-- Wrapping surfaces are stable against flipping tendons at every RoM. 
+- Wrapping surfaces are stable against flipping tendons at every RoM.
 
 ## Contact Geometries:
 - Manually designed with references
@@ -43,6 +43,6 @@ If you use this repository in your research, please cite the following:
   publisher = {Cold Spring Harbor Laboratory},
   author = {Walia,  Rohan and Garzon,  Kevin and Billot,  Morgane and Subramanian,  Swathika and WANG,  HUIYI and Refai,  Mohamed Irfan and Durandau,  Guillaume},
   year = {2025},
-  month = mar 
+  month = mar
 }
 ```
