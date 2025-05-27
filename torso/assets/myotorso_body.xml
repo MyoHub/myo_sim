@@ -376,7 +376,7 @@
             <site name="MF_m3t.3_l_MF_m3t.3_l-P2" pos="-0.04336 -0.01023 -0.00266"/>
             <site name="MF_m1.laminar_l_MF_m1.laminar_l-P1" pos="-0.0387085 0.02527 -0.01691"/>
             <site name="MF_m3.laminar_l_MF_m3.laminar_l-P2" pos="-0.0359442 0.00069045 -0.00635"/>
-            <body name="lumbar2" pos="-0.0067 0.0351 0">
+            <body name="lumbar2" pos="-0.0047 0.0351 0">
               <inertial pos="0.0245272 0.018 0" quat="0.707107 0 0 0.707107" mass="1.689" diaginertia="0.01682 0.01091 0.00591"/>
               <joint name="L2_L3_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.282282 0.1048278"/>
               <joint name="L2_L3_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.159075 0.159075"/>
@@ -456,7 +456,7 @@
               <site name="MF_m2t.2_l_MF_m2t.2_l-P2" pos="-0.03956 -0.01839 -0.00364"/>
               <site name="MF_m2t.3_l_MF_m2t.3_l-P2" pos="-0.038808 -0.0187383 -0.00364"/>
               <site name="MF_m2.laminar_l_MF_m2.laminar_l-P2" pos="-0.032901 -0.00561 -0.00674"/>
-              <body name="lumbar1" pos="-0.0114 0.0288 0">
+              <body name="lumbar1" pos="-0.0044 0.0268 0" euler="0 0 0.2">
                 <inertial pos="0.039 0.017 0" quat="0.707107 0 0 0.707107" mass="1.677" diaginertia="0.01753 0.01113 0.0064"/>
                 <joint name="L1_L2_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.31161 0.115719"/>
                 <joint name="L1_L2_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0820244 0.0820244"/>
@@ -490,7 +490,7 @@
                 <site name="MF_m1t.2_l_MF_m1t.2_l-P2" pos="-0.04094 -0.016 -0.0031"/>
                 <site name="MF_m1t.3_l_MF_m1t.3_l-P2" pos="-0.04094 -0.016 -0.0031"/>
                 <site name="MF_m1.laminar_l_MF_m1.laminar_l-P2" pos="-0.0341019 -0.00560525 -0.00619"/>
-                <body name="torso" pos="0.0025 -0.089 0">
+                <body name="torso" pos="-0.015 -0.09 0" euler="0 0 -0.3">
                   <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
                   <geom name="torso_geom_1" pos="-0.019 0.121 0" quat="0.980067 0 0 0.198669" type="mesh" rgba="1 1 1 1" mesh="torso_geom_1_thoracic12_s"/>
                   <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh" rgba="1 1 1 1" mesh="torso_geom_2_thoracic11_s"/>
@@ -516,10 +516,10 @@
                   <site name="Chest_l_sidesite" pos="-0.02082 0.21 -0.07816" class="sidesite"/>
                   <site name="rect_abd_r_rect_abd_r-P2" pos="0.0880597 0.222575 -0.0344509"/>
                   <site name="rect_abd_l_rect_abd_l-P2" pos="0.08806 0.22257 0.03445"/>
-                  <site name="back_cylinder_l_IL_L2_r_1_sidesite" pos="-0.0403295 -0.0732604 -0.120523" class="sidesite"/>
+                  <site name="back_cylinder_l_IL_L2_r_1_sidesite" pos="-0.0673295 -0.0432604 -0.020523" class="sidesite"/>
                   <site name="back_cylinder_l_IL_L3_r_1_sidesite" pos="-0.108976 0.217229 0.0537206" class="sidesite"/>
                   <site name="back_cylinder_l_IL_L4_r_1_sidesite" pos="-0.0465512 0.162068 -0.10054" class="sidesite"/>
-                  <site name="back_cylinder_l_IL_L2_l_1_sidesite" pos="-0.107766 -0.157199 -0.100314" class="sidesite"/>
+                  <site name="back_cylinder_l_IL_L2_l_1_sidesite" pos="-0.067766 -0.047199 -0.020314" class="sidesite"/>
                   <site name="back_cylinder_l_IL_L3_l_1_sidesite" pos="-0.00732879 0.0167539 0.0354792" class="sidesite"/>
                   <site name="back_cylinder_l_IL_L4_l_1_sidesite" pos="-0.00798834 0.0115872 -0.107672" class="sidesite"/>
                   <site name="IL_R5_r_IL_r5_R-P2_0" pos="-0.07928 0.175415 0.0432678"/>
