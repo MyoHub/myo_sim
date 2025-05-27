@@ -13,7 +13,6 @@
 
     <asset>
         <!-- pick a body mesh below -->
-        <!-- <mesh file="../myo_sim/meshes/human_lowpoly_norighthand.stl" name="human_body"/> -->
         <mesh file="../myo_sim/meshes/human_lowpoly_nohand.stl" name="human_body"/>
     </asset>
 

@@ -31,8 +31,6 @@
     <asset>
         <texture name="tex_myoarmR" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
         <material name="mat_myoarmR" texture="tex_myoarmR" texuniform="true"/>
-        <!-- <mesh file="../myo_sim/meshes/armR_rowpoly-v1.stl" name="armR"/> -->
-
         <mesh file="../myo_sim/meshes/humerus_rv.stl" name="humerus_rv"/>
         <mesh file="../myo_sim/meshes/ulna_rv.stl" name="ulna_rv"/>
         <mesh file="../myo_sim/meshes/radius_rv.stl" name="radius_rv"/>
