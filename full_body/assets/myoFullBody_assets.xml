@@ -91,23 +91,23 @@
         <mesh name="pelvis_geom_1_pelvis_rv" file="../myo_sim/meshes/r_pelvis.stl"/>
         <mesh name="pelvis_geom_2_pelvis_lv" file="../myo_sim/meshes/l_pelvis.stl"/>
         <mesh name="sacrum_geom_1_sacrum" file="../myo_sim/meshes/sacrum.stl"/>
-        <mesh name="lumbar5_geom_1_lumbar5" file="../myo_sim/meshes/lumbar5.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="lumbar4_geom_1_lumbar4" file="../myo_sim/meshes/lumbar4.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="lumbar3_geom_1_lumbar3" file="../myo_sim/meshes/lumbar3.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="lumbar2_geom_1_lumbar2" file="../myo_sim/meshes/lumbar2.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="lumbar1_geom_1_lumbar1" file="../myo_sim/meshes/lumbar1.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_1_thoracic12_s" file="../myo_sim/meshes/thoracic12_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_2_thoracic11_s" file="../myo_sim/meshes/thoracic11_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_3_thoracic10_s" file="../myo_sim/meshes/thoracic10_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_4_thoracic9_s" file="../myo_sim/meshes/thoracic9_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_5_thoracic8_s" file="../myo_sim/meshes/thoracic8_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_6_thoracic7_s" file="../myo_sim/meshes/thoracic7_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_7_thoracic6_s" file="../myo_sim/meshes/thoracic6_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_8_thoracic5_s" file="../myo_sim/meshes/thoracic5_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_9_thoracic4_s" file="../myo_sim/meshes/thoracic4_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_10_thoracic3_s" file="../myo_sim/meshes/thoracic3_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="0.87 0.87 0.87"/>
-        <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="0.87 0.87 0.87"/>
+        <mesh name="lumbar5_geom_1_lumbar5" file="../myo_sim/meshes/lumbar5.stl" scale="1 1 1"/>
+        <mesh name="lumbar4_geom_1_lumbar4" file="../myo_sim/meshes/lumbar4.stl" scale="1 1 1"/>
+        <mesh name="lumbar3_geom_1_lumbar3" file="../myo_sim/meshes/lumbar3.stl" scale="1 1 1"/>
+        <mesh name="lumbar2_geom_1_lumbar2" file="../myo_sim/meshes/lumbar2.stl" scale="1 1 1"/>
+        <mesh name="lumbar1_geom_1_lumbar1" file="../myo_sim/meshes/lumbar1.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_1_thoracic12_s" file="../myo_sim/meshes/thoracic12_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_2_thoracic11_s" file="../myo_sim/meshes/thoracic11_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_3_thoracic10_s" file="../myo_sim/meshes/thoracic10_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_4_thoracic9_s" file="../myo_sim/meshes/thoracic9_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_5_thoracic8_s" file="../myo_sim/meshes/thoracic8_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_6_thoracic7_s" file="../myo_sim/meshes/thoracic7_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_7_thoracic6_s" file="../myo_sim/meshes/thoracic6_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_8_thoracic5_s" file="../myo_sim/meshes/thoracic5_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_9_thoracic4_s" file="../myo_sim/meshes/thoracic4_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_10_thoracic3_s" file="../myo_sim/meshes/thoracic3_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" scale="1 1 1"/>
+        <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" scale="1 1 1"/>
         <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl"/>
     </asset>
 
@@ -127,9 +127,6 @@
         <joint joint1="knee_angle_l_beta_translation1" joint2="knee_angle_l" name="knee_angle_l_beta_translation1_constraint" polycoef="0.0524192 -0.0150188 -0.0340522 0.0133393 -0.000879151" solimp="0.9999 0.9999 0.001 0.5 2"/>
         <joint joint1="knee_angle_l_beta_rotation1" joint2="knee_angle_l" name="knee_angle_l_beta_rotation1_constraint" polycoef="0.010506 0.0247615 -1.31647 0.716337 -0.138302" solimp="0.9999 0.9999 0.001 0.5 2"/>
 
-        <joint name="LB_wrapjnt_r3_con" joint1="LB_wrapjnt_r3" joint2="flex_extension" polycoef="0 0.6 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint name="LB_wrapjnt_t1_con" joint1="LB_wrapjnt_t1" joint2="flex_extension" polycoef="0 0.03306 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint name="LB_wrapjnt_t2_con" joint1="LB_wrapjnt_t2" joint2="flex_extension" polycoef="0 0.01102 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
         <joint name="Abs_r3_con" joint1="Abs_r3" joint2="flex_extension" polycoef="0 0.6429 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
         <joint name="L4_L5_FE_con" joint1="L4_L5_FE" joint2="flex_extension" polycoef="0 0.185 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
         <joint name="L4_L5_AR_con" joint1="L4_L5_AR" joint2="axial_rotation" polycoef="0 0.03778 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
