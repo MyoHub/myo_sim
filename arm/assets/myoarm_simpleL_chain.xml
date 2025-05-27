@@ -1,0 +1,41 @@
+<mujocoinclude model="MyoarmLSimple_v0.0.1">
+<!-- =================================================
+	Copyright 2020 Vikash Kumar, Vittorio Caggiano
+	Model	:: MyoArm (MuJoCoV3.2.4)
+	Author	:: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+	source	:: https://github.com/vikashplus
+====================================================== -->
+
+    <body name="humerus_l" pos="0.003155 0.3715 -0.17" childclass="myoarmL">
+        <joint axis="0 0 1" name="arm_flex_l" pos="0 0 0" range="-1.5708 1.5708"/>
+        <joint axis="-1 0 0" name="arm_add_l" pos="0 0 0" range="-2.0944 1.5708"/>
+        <joint axis="0 -1 0" name="arm_rot_l" pos="0 0 0" range="-1.5708 1.5708"/>
+        <geom mesh="humerus_lv" name="humerus_lv" type="mesh"/>
+        <geom type="capsule" class="myoarmL_coll" size="0.042 0.130" pos="0 -.13 0" euler="1.57 0 0"/>
+        <site name="LSJC" pos="0 0 0"/>
+        <site name="LUA1" pos="0 -0.05 -0.02"/>
+        <site name="LUA2" pos="0 -0.2 -0.02"/>
+        <site name="LUA3" pos="0.03 -0.13 -0.02"/>
+        <site name="LLEL" pos="0.015 -0.28 -0.04"/>
+        <site name="LMEL" pos="0.0023 -0.286 0.046"/>
+        <body name="ulna_l" pos="0.013144 -0.286273 0.009595">
+            <joint axis="-0.226047 -0.022269 0.973862" name="elbow_flex_l" pos="0 0 0" range="0 2.618"/>
+            <geom mesh="ulna_lv" name="ulna_lv" type="mesh"/>
+            <geom type="capsule" class="myoarmL_coll" size="0.030" fromto="-.01 0 -.01 -0.015 -0.235841 -.0361" euler="1.4 0.1 0.12"/>
+            <site name="LFAsuperior" pos="0.0046 -0.0801 -0.0453"/>
+            <site name="LEJC" pos="0 0 0"/>
+            <body name="radius_l" pos="-0.006727 -0.013007 -0.026083">
+                <joint axis="-0.056398 -0.998406 0.001952" name="pro_sup_l" pos="0 0 0" range="0 1.5708"/>
+                <geom mesh="radius_lv" name="radius_lv" type="mesh"/>
+                <site name="LFAradius" pos="0.0005 -0.225 -0.05"/>
+                <site name="LFAulna" pos="-0.022 -0.225 0.022"/>
+                <body name="hand_l" pos="-0.008797 -0.235841 -0.01361">
+                    <joint axis="0 0 1" name="wrist_flex_l" pos="0 0 0" range="-1.22173 1.22173"/>
+                    <joint axis="-1 0 0" name="wrist_dev_l" pos="0 0 0" range="-0.436332 0.610865"/>
+                    <geom type="ellipsoid" size=".015 .07 .03" pos="0 -.06 0" group="0" rgba="1 1 1 1" euler="0 0 0"/>
+                </body>
+            </body>
+        </body>
+    </body>
+
+</mujocoinclude>
