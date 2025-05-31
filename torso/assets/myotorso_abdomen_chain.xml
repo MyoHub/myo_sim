@@ -1,6 +1,6 @@
-<mujocoinclude model="MyoTorsoRigid_v0.0.1">
+<mujocoinclude model="MyoTorsoAbdomen">
 <!-- =================================================
-    Copyright 2020 Vikash Kumar, Vittorio Caggiano
+    Copyright 2025 Vikash Kumar, Vittorio Caggiano
     Model	:: Myo Torso (MuJoCoV3.2.4)
     Author	:: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
     source	:: https://github.com/MyoHub/myosuite

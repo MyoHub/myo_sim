@@ -1,5 +1,4 @@
-<?xml version="1.0" ?>
-<mujoco model="FullBodyModel_MuscleActuatedLowerLimb_TorqueActuatedUpperBody">
+<mujoco model="MyoTorsoRigid">
 <!-- =================================================
     Copyright 2020 Vikash Kumar, Vittorio Caggiano
     Model	:: Myo Torso (MuJoCoV3.2.4)
