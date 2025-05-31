@@ -259,11 +259,11 @@
                     <site name="MF_m5t.2_l_MF_m5t.2_l-P1" pos="-0.163116 0.0256618 -0.01171"/>
                     <site name="MF_m5t.3_l_MF_m5t.3_l-P1" pos="-0.152276 0.0425844 -0.0116"/>
                     <site name="MF_m4.laminar_l_MF_m4.laminar_l-P1" pos="-0.12536 0.0774879 -0.01934"/>
-                    <body name="LB_wrap" pos="-0.098 0.071 0">
-                        <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
-                        <joint name="LB_wrapjnt_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.1 .1"/>
-                        <joint name="LB_wrapjnt_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.1 .1"/>
-                        <joint name="LB_wrapjnt_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.1 .1"/>
+                    <body name="lumbar5" pos="-0.098 0.071 0">
+                        <inertial pos="0.053744 0.02 0" quat="0.707107 0 0 0.707107" mass="1.824" diaginertia="0.01765 0.01219 0.00546"/>
+                        <joint name="flex_extension" pos="0 0 0" axis="0 0 1" range="-1.3 0.71"/>
+                        <joint name="lat_bending" pos="0 0 0" axis="1 0 0" range="-0.43 0.43"/>
+                        <joint name="axial_rotation" pos="0 0 0" axis="0 1 0" range="-0.4 0.4"/>
                         <geom name="back_cylinder_s" size="0.07 0.13" pos="-0.118 0.0768 0" class="wrap"/>
                         <site name="back_cylinder_s_IL_L1_r_1_sidesite" pos="-0.0340058 0.0777894 -0.00109894" class="sidesite"/>
                         <site name="back_cylinder_s_IL_L1_l_1_sidesite" pos="-0.0418844 0.112331 -0.0720796" class="sidesite"/>
@@ -279,12 +279,6 @@
                         <site name="back_cylinder_s_LTpT_R12_l_1_sidesite" pos="-0.0910785 -0.00276905 0.0534791" class="sidesite"/>
                         <site name="back_cylinder_s_LTpL_L1_r_1_sidesite" pos="-0.0370101 0.0990854 -0.0777896" class="sidesite"/>
                         <site name="back_cylinder_s_LTpL_L1_l_1_sidesite" pos="-0.0370101 0.0990854 0.0777896" class="sidesite"/>
-                    </body>
-                    <body name="lumbar5" pos="-0.098 0.071 0">
-                        <inertial pos="0.053744 0.02 0" quat="0.707107 0 0 0.707107" mass="1.824" diaginertia="0.01765 0.01219 0.00546"/>
-                        <joint name="flex_extension" pos="0 0 0" axis="0 0 1" range="-1.3 0.71"/>
-                        <joint name="lat_bending" pos="0 0 0" axis="1 0 0" range="-0.43 0.43"/>
-                        <joint name="axial_rotation" pos="0 0 0" axis="0 1 0" range="-0.4 0.4"/>
                         <geom name="lumbar5_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar5_geom_1_lumbar5"/>
                         <site name="Ps_L5_TP_r_Ps_L5_TP_r-P1" pos="-0.00562001 0.0291398 0.0252881"/>
                         <site name="Ps_L5_VB_r_Ps_L5_VB_r-P1" pos="0.01 0.01241 0.019"/>
@@ -314,8 +308,8 @@
                         <site name="MF_m5.laminar_l_MF_m5.laminar_l-P2" pos="-0.0258996 0.01705 -0.00564"/>
                         <body name="Abdomen" pos="0.098 0.071 0">
                             <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
-                            <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.01 .01"/>
-                            <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.01 .01"/>
+                            <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.05 .015"/>
+                            <joint name="Abs_t2" pos="0 0 0" axis="0 1 0" limited="true" type="slide" range="-.03 .03"/>
                             <joint name="Abs_r3" pos="0 0 0" axis="0 0 1" limited="true" range="-.7 .7"/>                            
                             <geom name="abdomen_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>
                             <site name="Abdomen_sidesite" pos="0.011 0 0" class="sidesite"/>
@@ -340,7 +334,6 @@
                             <joint name="L4_L5_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.1189703 0.1189703"/>
                             <joint name="L4_L5_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.02968812 0.02968812"/>
                             <geom name="lumbar4_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar4_geom_1_lumbar4"/>
-                            <!--geom name="lumbar4_geom_1_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>-->
                             <site name="Ps_L4_TP_r_Ps_L4_TP_r-P1" pos="-0.015649 0.0249464 0.0258768"/>
                             <site name="Ps_L4_L5_IVD_r_Ps_L4_L5_IVD_r-P1" pos="0.00541963 0.00394754 0.0205966"/>
                             <site name="Ps_L4_TP_l_Ps_L4_TP_l-P1" pos="-0.015649 0.0249464 -0.02588"/>
@@ -403,7 +396,6 @@
                                 <joint name="L3_L4_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.1168935 0.1168935"/>
                                 <joint name="L3_L4_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.02968812 0.02968812"/>
                                 <geom name="lumbar3_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar3_geom_1_lumbar3"/>
-                                <!--geom name="lumbar3_geom_1_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>-->
                                 <site name="Ps_L3_TP_r_Ps_L3_TP_r-P1" pos="-0.0245065 0.0207283 0.0282599"/>
                                 <site name="Ps_L3_L4_IVD_r_Ps_L3_L4_IVD_r-P1" pos="0.00115193 0.00621063 0.0211533"/>
                                 <site name="Ps_L3_TP_l_Ps_L3_TP_l-P1" pos="-0.0245065 0.0207283 -0.02826"/>
@@ -462,13 +454,12 @@
                                 <site name="MF_m3t.3_l_MF_m3t.3_l-P2" pos="-0.04336 -0.01023 -0.00266"/>
                                 <site name="MF_m1.laminar_l_MF_m1.laminar_l-P1" pos="-0.0387085 0.02527 -0.01691"/>
                                 <site name="MF_m3.laminar_l_MF_m3.laminar_l-P2" pos="-0.0359442 0.00069045 -0.00635"/>
-                                <body name="lumbar2" pos="-0.0067 0.0351 0">
+                                <body name="lumbar2" pos="-0.0047 0.0351 0">
                                     <inertial pos="0.0245272 0.018 0" quat="0.707107 0 0 0.707107" mass="1.689" diaginertia="0.01682 0.01091 0.00591"/>
                                     <joint name="L2_L3_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.282282 0.1048278"/>
                                     <joint name="L2_L3_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.119075 0.119075"/>
                                     <joint name="L2_L3_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.09442594 0.09442594"/>
                                     <geom name="lumbar2_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar2_geom_1_lumbar2"/>
-                                    <!--geom name="lumbar2_geom_1_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>-->
                                     <site name="Ps_L2_TP_r_Ps_L2_TP_r-P1" pos="-0.0216214 0.014587 0.022249"/>
                                     <site name="Ps_L2_L3_IVD_r_Ps_L2_L3_IVD_r-P1" pos="0.00196252 0.00338519 0.0214479"/>
                                     <site name="Ps_L2_TP_l_Ps_L2_TP_l-P1" pos="-0.0216214 0.014587 -0.02225"/>
@@ -543,7 +534,7 @@
                                     <site name="MF_m2t.2_l_MF_m2t.2_l-P2" pos="-0.03956 -0.01839 -0.00364"/>
                                     <site name="MF_m2t.3_l_MF_m2t.3_l-P2" pos="-0.038808 -0.0187383 -0.00364"/>
                                     <site name="MF_m2.laminar_l_MF_m2.laminar_l-P2" pos="-0.032901 -0.00561 -0.00674"/>
-                                    <body name="lumbar1" pos="-0.0114 0.0288 0">
+                                    <body name="lumbar1" pos="-0.0044 0.0268 0" euler="0 0 0.2">
                                         <inertial pos="0.039 0.017 0" quat="0.707107 0 0 0.707107" mass="1.677" diaginertia="0.01753 0.01113 0.0064"/>
                                         <joint name="L1_L2_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.31161 0.115719"/>
                                         <joint name="L1_L2_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0820244 0.0820244"/>
@@ -577,7 +568,7 @@
                                         <site name="MF_m1t.2_l_MF_m1t.2_l-P2" pos="-0.04094 -0.016 -0.0031"/>
                                         <site name="MF_m1t.3_l_MF_m1t.3_l-P2" pos="-0.04094 -0.016 -0.0031"/>
                                         <site name="MF_m1.laminar_l_MF_m1.laminar_l-P2" pos="-0.0341019 -0.00560525 -0.00619"/>
-                                        <body name="torso" pos="0.0025 -0.089 0">
+                                        <body name="torso" pos="-0.023 -0.086 0" euler="0 0 -0.35">
                                             <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
                                             <geom name="torso_geom_1" pos="-0.019 0.121 0" quat="0.980067 0 0 0.198669" type="mesh" rgba="1 1 1 1" mesh="torso_geom_1_thoracic12_s"/>
                                             <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh" rgba="1 1 1 1" mesh="torso_geom_2_thoracic11_s"/>
@@ -600,16 +591,16 @@
                                             <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="wrap"/>
                                             <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                                             <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
-                                            <geom name="Cylinder_abdomen" size="0.12 0.13" pos="0.225 0.07 0" class="wrap"/>
-                                            <site name="Abs_sidesite" pos="0.05 0.05 0" class="sidesite" />
+                                            <geom name="Cylinder_abdomen" size="0.10 0.13" pos="0.225 0.09 0" class="wrap"/>
+                                            <site name="Abs_sidesite" pos="0.03 0.05 0" class="sidesite" />
                                             <site name="Chest_r_sidesite" pos="-0.02082 0.21 0.07816" class="sidesite"/>
                                             <site name="Chest_l_sidesite" pos="-0.02082 0.21 -0.07816" class="sidesite"/>
                                             <site name="rect_abd_r_rect_abd_r-P2" pos="0.0880597 0.222575 -0.0344509"/>
                                             <site name="rect_abd_l_rect_abd_l-P2" pos="0.08806 0.22257 0.03445"/>
-                                            <site name="back_cylinder_l_IL_L2_r_1_sidesite" pos="-0.0403295 -0.0732604 -0.120523" class="sidesite"/>
+                                            <site name="back_cylinder_l_IL_L2_r_1_sidesite" pos="-0.0673295 -0.0432604 -0.020523" class="sidesite"/>
                                             <site name="back_cylinder_l_IL_L3_r_1_sidesite" pos="-0.108976 0.217229 0.0537206" class="sidesite"/>
                                             <site name="back_cylinder_l_IL_L4_r_1_sidesite" pos="-0.0465512 0.162068 -0.10054" class="sidesite"/>
-                                            <site name="back_cylinder_l_IL_L2_l_1_sidesite" pos="-0.157766 -0.157199 -0.100314" class="sidesite"/>
+                                            <site name="back_cylinder_l_IL_L2_l_1_sidesite" pos="-0.067766 -0.047199 -0.020314" class="sidesite"/>
                                             <site name="back_cylinder_l_IL_L3_l_1_sidesite" pos="-0.00732879 0.0167539 0.0354792" class="sidesite"/>
                                             <site name="back_cylinder_l_IL_L4_l_1_sidesite" pos="-0.00798834 0.0115872 -0.107672" class="sidesite"/>
                                             <site name="IL_R5_r_IL_r5_R-P2_0" pos="-0.07928 0.175415 0.0432678"/>

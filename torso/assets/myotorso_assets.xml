@@ -54,9 +54,6 @@
 
 
   <equality>
-    <joint name="LB_wrapjnt_r3_con" joint1="LB_wrapjnt_r3" joint2="flex_extension" polycoef="0 0.6 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint name="LB_wrapjnt_t1_con" joint1="LB_wrapjnt_t1" joint2="flex_extension" polycoef="0 0.03306 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-    <joint name="LB_wrapjnt_t2_con" joint1="LB_wrapjnt_t2" joint2="flex_extension" polycoef="0 0.01102 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
     <joint name="Abs_r3_con" joint1="Abs_r3" joint2="flex_extension" polycoef="0 0.6429 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
     <joint name="L4_L5_FE_con" joint1="L4_L5_FE" joint2="flex_extension" polycoef="0 0.185 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
     <joint name="L4_L5_AR_con" joint1="L4_L5_AR" joint2="axial_rotation" polycoef="0 0.03778 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
