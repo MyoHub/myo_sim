@@ -24,7 +24,7 @@
             <geom type="capsule" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
             <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>
             <geom name="pelvis_wrap" type="cylinder" size=".05 .05" pos="0 0.0175 0" class="myotorso_wrap"/>
-            <geom mesh="hat_lumbar" name="lumbar" type="mesh" rgba="1 0 0 1"/>
+            <geom mesh="hat_lumbar" name="lumbar" type="mesh"/>
 
             <inertial diaginertia="1.4745 1.4314 0.7555" mass="34.2366" pos="-0.03 0.32 0" quat="0.707107 0.707107 0 0"/>
             <joint axis="0 0 1" name="lumbar_extension" pos="0 0 0" range="-0.8727 .2618"/>
@@ -40,7 +40,7 @@
             <site name="extobl_l_extobl_l-P2" pos="0.065 0.11 -0.11"/>
 
             <body name="thoracic">
-                <geom mesh="hat_thoracic" name="thoracic" type="mesh" rgba="1 0 1 1"/>
+                <geom mesh="hat_thoracic" name="thoracic" type="mesh"/>
                 <geom mesh="hat_ribs" name="ribs" type="mesh"/>
 
                 <site name="clavicle_l" pos="0.021 .390 -.058" class="myotorso_marker"/>

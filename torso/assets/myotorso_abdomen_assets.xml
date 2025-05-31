@@ -40,30 +40,30 @@
 
 
     <tendon>
-        <spatial name="ercspn_r_tendon">
+        <spatial name="ercspn_r_tendon" class="myotorso">
             <site site="ercspn_r_ercspn_r-P1"/>
             <geom geom="pelvis_wrap"/>
             <site site="ercspn_r_ercspn_r-P2"/>
         </spatial>
-        <spatial name="ercspn_l_tendon">
+        <spatial name="ercspn_l_tendon" class="myotorso">
             <site site="ercspn_l_ercspn_l-P1"/>
             <geom geom="pelvis_wrap"/>
             <site site="ercspn_l_ercspn_l-P2"/>
         </spatial>
 
-        <spatial name="intobl_r_tendon">
+        <spatial name="intobl_r_tendon" class="myotorso">
             <site site="intobl_r_intobl_r-P1"/>
             <site site="intobl_r_intobl_r-P2"/>
         </spatial>
-        <spatial name="intobl_l_tendon">
+        <spatial name="intobl_l_tendon" class="myotorso">
             <site site="intobl_l_intobl_l-P1"/>
             <site site="intobl_l_intobl_l-P2"/>
         </spatial>
-        <spatial name="extobl_r_tendon">
+        <spatial name="extobl_r_tendon" class="myotorso">
             <site site="extobl_r_extobl_r-P1"/>
             <site site="extobl_r_extobl_r-P2"/>
         </spatial>
-        <spatial name="extobl_l_tendon">
+        <spatial name="extobl_l_tendon" class="myotorso">
             <site site="extobl_l_extobl_l-P1"/>
             <site site="extobl_l_extobl_l-P2"/>
         </spatial>
