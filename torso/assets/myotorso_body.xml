@@ -8,8 +8,6 @@
   ====================================================== -->
     <body name="pelvis" pos="0 0 0.979" quat="0.707035 0.707179 0 0">
       <inertial pos="0 0 0" mass="0.001" diaginertia="0.001 0.001 0.001"/>
-      <geom name="pelvis_geom_1" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_1_pelvis_rv"/>
-      <geom name="pelvis_geom_2" type="mesh" rgba="1 1 1 1" mesh="pelvis_geom_2_pelvis_lv"/>
       <site name="Ps_L1_VB_r_Ps_L1_VB_r-P2" pos="-0.0238 -0.057 0.0759"/>
       <site name="Ps_L1_TP_r_Ps_L1_TP_r-P2" pos="-0.0238 -0.057 0.0759"/>
       <site name="Ps_L1_L2_IVD_r_Ps_L1_L2_IVD_r-P2" pos="-0.0238 -0.057 0.0759"/>
