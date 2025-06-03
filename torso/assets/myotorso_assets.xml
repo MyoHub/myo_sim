@@ -9,6 +9,7 @@
 
   <default class="main">
     <joint limited="true" armature="1e-05" damping="0.05"/>
+    <geom margin="0.001" material="mat_myotorso" rgba="0.8 0.85 0.8 1" conaffinity="0" contype="0"/>
     <site size="0.001 0.005 0.005"/>
     <tendon limited="false" width="0.005" rgba="0.95 0.3 0.3 1"/>
     <default class="myoBack_muscle">
@@ -25,6 +26,9 @@
     </default>
     <default class="motor">
       <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
+    </default>
+    <default class="myotorso_coll">
+        <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001"/>
     </default>
   </default>
 
@@ -48,6 +52,8 @@
     <mesh name="torso_geom_11_thoracic2_s" file="../myo_sim/meshes/thoracic2_s.stl" />
     <mesh name="torso_geom_12_thoracic1_s" file="../myo_sim/meshes/thoracic1_s.stl" />
     <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl" />
+    <texture name="tex_myotorso" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
+    <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
   </asset>
 
 
