@@ -12,8 +12,8 @@
   <compiler meshdir=".." texturedir=".."/>
 
   <worldbody>
-    <body name="Torso" pos="-.025 0.1 0">
-        <include file="assets/myoTorso_body.xml"/>
+    <body name="Torso" pos="-.025 0.1 0.9">
+        <include file="assets/myoTorso_chain.xml"/>
     </body>
   </worldbody>
 

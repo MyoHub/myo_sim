@@ -18,11 +18,11 @@
   </asset>
 
   <worldbody>
-    <body name="full_body" pos="-.025 0.1 0">
-      <include file="assets/myoTorso_body.xml"/>
+    <body name="full_body" pos=".005 0.1 0.93">
+      <include file="assets/myoTorso_chain.xml"/>
     </body>
 
-    <body name="exo_pelvis" pos="-.025 0.1 0.979" quat="0.707035 0.707179 0 0">
+    <body name="exo_pelvis" pos="-.035 0.1 0.979" quat="0.707035 0.707179 0 0">
       <geom name="lower_exo_legs_geom" type="mesh" class="exomesh" euler="1.57 3.14 -1.57" pos="-0.08 0.1 0" mesh="lower_exo_legs_geom_1"/>
       <site name="Lower_Exo_Left_Leg" pos="-0.08 -0.15 -0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
       <site name="Lower_Exo_Right_Leg" pos="-0.08 -0.15 0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
@@ -30,7 +30,7 @@
       <site name="Exo_RightLeg" pos="-0.2 0 0.04" size="0.0005" rgba="0 1 0 1"/>
     </body>
 
-    <body name="exo_lumbar4" pos="-0.1051 0.091 1.05" quat="0.707035 0.707179 0 0">
+    <body name="exo_lumbar4" pos="-0.0951 0.091 1.05" quat="0.707035 0.707179 0 0">
       <freejoint/>
       <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
       <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
@@ -39,7 +39,7 @@
 
     <body name="exo_torso" pos="-0.130 0.0975 1.06" quat="0.707035 0.707179 0 0">
       <freejoint/>
-      <geom name="upper_exo_geom" type="mesh" class="exomesh" euler="1.57 3.14 1.57" pos="-0.01 0.165 0" mesh="upper_exo_geom_1"/>
+      <geom name="upper_exo_geom" type="mesh" class="exomesh" euler="1.57 3.14 1.57" pos="0.01 0.165 0" mesh="upper_exo_geom_1"/>
       <geom name="Exo_cylinder" size="0.105 0.13" pos="0.025 0.03 0" class="myoBack_wrap"/>
       <site name="Exo_LeftShoulder" pos="-0.11 0.28 -0.07" size="0.0005" rgba="0 1 0 1"/>
       <site name="Exo_RightShoulder" pos="-0.11 0.28 0.07" size="0.0005" rgba="0 1 0 1"/>
