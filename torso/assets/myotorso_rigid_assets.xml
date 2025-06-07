@@ -15,7 +15,6 @@
         <default class="myotorso_coll">
             <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 1" margin="0.001" material="MatSkin_myotorso"/>
         </default>
-
     </default>
 
     <asset>
