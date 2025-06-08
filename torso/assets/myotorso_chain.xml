@@ -174,7 +174,7 @@
       <site name="MF_m5t.2_l_MF_m5t.2_l-P1" pos="-0.163116 0.0256618 -0.01171"/>
       <site name="MF_m5t.3_l_MF_m5t.3_l-P1" pos="-0.152276 0.0425844 -0.0116"/>
       <site name="MF_m4.laminar_l_MF_m4.laminar_l-P1" pos="-0.12536 0.0774879 -0.01934"/>
-      <body name="lumbar5" pos="-0.098 0.071 0" euler="0 0 -0.05">
+      <body name="lumbar5" pos="-0.108 0.061 0" euler="0 0 -0.3">
         <inertial pos="0.053744 0.02 0" quat="0.707107 0 0 0.707107" mass="1.824" diaginertia="0.01765 0.01219 0.00546"/>
         <geom name="back_cylinder_s" size="0.07 0.13" pos="-0.118 0.0768 0" class="myoBack_wrap"/>
         <site name="back_cylinder_s_IL_L1_r_1_sidesite" pos="-0.0340058 0.0977894 -0.00109894" class="sidesite"/>
@@ -304,7 +304,7 @@
           <site name="MF_m4t.3_l_MF_m4t.3_l-P2" pos="-0.0441 0.00017 -0.00288"/>
           <site name="MF_m2.laminar_l_MF_m2.laminar_l-P1" pos="-0.0305622 0.0335037 -0.01694"/>
           <site name="MF_m4.laminar_l_MF_m4.laminar_l-P2" pos="-0.0321153 0.00581344 -0.00694"/>
-          <body name="lumbar3" pos="0.0006 0.0312 0">
+          <body name="lumbar3" pos="0.0006 0.0312 0" euler="0 0 0.2">
             <inertial pos="0.0136848 0.018 0" quat="0.707107 0 0 0.707107" mass="1.67" diaginertia="0.01608 0.01066 0.00551"/>
             <joint name="L3_L4_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.249288 0.0925752"/>
             <joint name="L3_L4_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.1568935 0.1568935"/>
@@ -484,6 +484,7 @@
                 <site name="MF_m1.laminar_l_MF_m1.laminar_l-P2" pos="-0.0341019 -0.00560525 -0.00619"/>
                 <body name="torso" pos="-0.018 -0.085 0" euler="0 0 -0.33">
                   <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
+                  <include file="../../myo_sim/head/assets/myohead_rigid_chain.xml"/>
                   <geom name="torso_geom_1" pos="-0.019 0.121 0" quat="0.980067 0 0 0.198669" type="mesh" rgba="1 1 1 1" mesh="torso_geom_1_thoracic12_s"/>
                   <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh" rgba="1 1 1 1" mesh="torso_geom_2_thoracic11_s"/>
                   <geom name="torso_geom_3" pos="-0.04 0.171 0" quat="0.997189 0 0 0.0749297" type="mesh" rgba="1 1 1 1" mesh="torso_geom_3_thoracic10_s"/>
