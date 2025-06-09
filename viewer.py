@@ -1,22 +1,20 @@
 import mujoco
-from mujoco.viewer import launch
-
-# Load the MuJoCo model
-# model = mujoco.MjModel.from_xml_path("myo_sim/torso/myotorso_rigid.xml")
-# model = mujoco.MjModel.from_xml_path("myo_sim/leg/myolegs_abdomen.xml")
-#model = mujoco.MjModel.from_xml_path("myo_sim/arm/leftarm.xml") 
-#model = mujoco.MjModel.from_xml_path("arm/leftarm.xml")
- 
+from mujoco.viewer import launch    
 
 
 
-
-#model = mujoco.MjModel.from_xml_path("arm/myoarm.xml")
-#model = mujoco.MjModel.from_xml_path("arm/myoarm.xml")
-#model = mujoco.MjModel.from_xml_path("arm/assets/myoarm_body.xml")
+# model with right arm
+# model = mujoco.MjModel.from_xml_path("myo_sim/arm/myoarm.xml")
 
 
-model = mujoco.MjModel.from_xml_path("arm/leftarmtest.xml") 
+
+# model with muscles, will be the final build, don't update until truetest is finished
+# model = mujoco.MjModel.from_xml_path("myo_sim/arm/leftarm.xml") 
+
+
+# model with both arms, use for testing, doesn't have muscles
+model = mujoco.MjModel.from_xml_path("myo_sim/arm/truetest.xml") 
+
 
 data = mujoco.MjData(model)
 
