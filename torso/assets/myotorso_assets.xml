@@ -8,27 +8,26 @@
   ====================================================== -->
 
   <default class="main">
-    <joint limited="true" armature="1e-05" damping="0.05"/>
-    <geom margin="0.001" material="mat_myotorso" rgba="0.8 0.85 0.8 1" conaffinity="0" contype="0"/>
-    <site size="0.001 0.005 0.005"/>
-    <tendon limited="false" width="0.005" rgba="0.95 0.3 0.3 1"/>
-    <default class="myoBack_muscle">
-      <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
-    </default>
-    <default class="myoBack_wrap">
-        <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
-    </default>
-    <default class="exomesh">
-        <geom group="0" contype="0" conaffinity="0" rgba="0.4 0.4 0.4 1"/>
-    </default>
-    <default class="sidesite">
-        <site group="3" size="0.0005"/>
-    </default>
-    <default class="motor">
-      <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
-    </default>
-    <default class="myotorso_coll">
-        <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001"/>
+    <default class="myotorso">
+      <joint armature="0.01" damping="0.5" limited="true"/>
+      <geom margin="0.001" material="mat_myotorso" rgba="0.8 0.85 0.8 1" conaffinity="0" contype="0"/>
+      <site size="0.001 0.005 0.005"/>
+      <tendon limited="false" width="0.002" rgba="0.95 0.3 0.3 1"/>
+      <default class="myoBack_muscle">
+        <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0"/>
+      </default>
+      <default class="myoBack_wrap">
+          <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
+      </default>
+      <default class="sidesite">
+          <site group="3" size="0.0005"/>
+      </default>
+      <default class="motor">
+        <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
+      </default>
+      <default class="myotorso_coll">
+        <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" margin="0.001" material="MatSkin_myotorso"/>
+      </default>
     </default>
   </default>
 
@@ -54,6 +53,7 @@
     <mesh name="torso_geom_13_ribcage_s" file="../myo_sim/meshes/thorax.stl" />
     <texture name="tex_myotorso" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
     <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
+    <material name="MatSkin_myotorso" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.8 0.7 .5 .1" />
   </asset>
 
 
@@ -76,145 +76,145 @@
   </equality>
 
   <tendon>
-    <spatial name="Ps_L1_VB_r_tendon">
+    <spatial class="myotorso" name="Ps_L1_VB_r_tendon">
       <site site="Ps_L1_VB_r_Ps_L1_VB_r-P1"/>
       <site site="Ps_L1_VB_r_Ps_L1_VB_r-P2"/>
     </spatial>
-    <spatial name="Ps_L1_TP_r_tendon">
+    <spatial class="myotorso" name="Ps_L1_TP_r_tendon">
       <site site="Ps_L1_TP_r_Ps_L1_TP_r-P1"/>
       <site site="Ps_L1_TP_r_Ps_L1_TP_r-P2"/>
     </spatial>
-    <spatial name="Ps_L1_L2_IVD_r_tendon">
+    <spatial class="myotorso" name="Ps_L1_L2_IVD_r_tendon">
       <site site="Ps_L1_L2_IVD_r_Ps_L1_L2_IVD_r-P1"/>
       <site site="Ps_L1_L2_IVD_r_Ps_L1_L2_IVD_r-P2"/>
     </spatial>
-    <spatial name="Ps_L2_TP_r_tendon">
+    <spatial class="myotorso" name="Ps_L2_TP_r_tendon">
       <site site="Ps_L2_TP_r_Ps_L2_TP_r-P1"/>
       <site site="Ps_L2_TP_r_Ps_L2_TP_r-P2"/>
     </spatial>
-    <spatial name="Ps_L2_L3_IVD_r_tendon">
+    <spatial class="myotorso" name="Ps_L2_L3_IVD_r_tendon">
       <site site="Ps_L2_L3_IVD_r_Ps_L2_L3_IVD_r-P1"/>
       <site site="Ps_L2_L3_IVD_r_Ps_L2_L3_IVD_r-P2"/>
     </spatial>
-    <spatial name="Ps_L3_TP_r_tendon">
+    <spatial class="myotorso" name="Ps_L3_TP_r_tendon">
       <site site="Ps_L3_TP_r_Ps_L3_TP_r-P1"/>
       <site site="Ps_L3_TP_r_Ps_L3_TP_r-P2"/>
     </spatial>
-    <spatial name="Ps_L3_L4_IVD_r_tendon">
+    <spatial class="myotorso" name="Ps_L3_L4_IVD_r_tendon">
       <site site="Ps_L3_L4_IVD_r_Ps_L3_L4_IVD_r-P1"/>
       <site site="Ps_L3_L4_IVD_r_Ps_L3_L4_IVD_r-P2"/>
     </spatial>
-    <spatial name="Ps_L4_TP_r_tendon">
+    <spatial class="myotorso" name="Ps_L4_TP_r_tendon">
       <site site="Ps_L4_TP_r_Ps_L4_TP_r-P1"/>
       <site site="Ps_L4_TP_r_Ps_L4_TP_r-P2"/>
     </spatial>
-    <spatial name="Ps_L4_L5_IVD_r_tendon">
+    <spatial class="myotorso" name="Ps_L4_L5_IVD_r_tendon">
       <site site="Ps_L4_L5_IVD_r_Ps_L4_L5_IVD_r-P1"/>
       <site site="Ps_L4_L5_IVD_r_Ps_L4_L5_IVD_r-P2"/>
     </spatial>
-    <spatial name="Ps_L5_TP_r_tendon">
+    <spatial class="myotorso" name="Ps_L5_TP_r_tendon">
       <site site="Ps_L5_TP_r_Ps_L5_TP_r-P1"/>
       <site site="Ps_L5_TP_r_Ps_L5_TP_r-P2"/>
     </spatial>
-    <spatial name="Ps_L5_VB_r_tendon">
+    <spatial class="myotorso" name="Ps_L5_VB_r_tendon">
       <site site="Ps_L5_VB_r_Ps_L5_VB_r-P1"/>
       <site site="Ps_L5_VB_r_Ps_L5_VB_r-P2"/>
     </spatial>
-    <spatial name="Ps_L1_VB_l_tendon">
+    <spatial class="myotorso" name="Ps_L1_VB_l_tendon">
       <site site="Ps_L1_VB_l_Ps_L1_VB_l-P1"/>
       <site site="Ps_L1_VB_l_Ps_L1_VB_l-P2"/>
     </spatial>
-    <spatial name="Ps_L1_TP_l_tendon">
+    <spatial class="myotorso" name="Ps_L1_TP_l_tendon">
       <site site="Ps_L1_TP_l_Ps_L1_TP_l-P1"/>
       <site site="Ps_L1_TP_l_Ps_L1_TP_l-P2"/>
     </spatial>
-    <spatial name="Ps_L1_L2_IVD_l_tendon">
+    <spatial class="myotorso" name="Ps_L1_L2_IVD_l_tendon">
       <site site="Ps_L1_L2_IVD_l_Ps_L1_L2_IVD_l-P1"/>
       <site site="Ps_L1_L2_IVD_l_Ps_L1_L2_IVD_l-P2"/>
     </spatial>
-    <spatial name="Ps_L2_TP_l_tendon">
+    <spatial class="myotorso" name="Ps_L2_TP_l_tendon">
       <site site="Ps_L2_TP_l_Ps_L2_TP_l-P1"/>
       <site site="Ps_L2_TP_l_Ps_L2_TP_l-P2"/>
     </spatial>
-    <spatial name="Ps_L2_L3_IVD_l_tendon">
+    <spatial class="myotorso" name="Ps_L2_L3_IVD_l_tendon">
       <site site="Ps_L2_L3_IVD_l_Ps_L2_L3_IVD_l-P1"/>
       <site site="Ps_L2_L3_IVD_l_Ps_L2_L3_IVD_l-P2"/>
     </spatial>
-    <spatial name="Ps_L3_TP_l_tendon">
+    <spatial class="myotorso" name="Ps_L3_TP_l_tendon">
       <site site="Ps_L3_TP_l_Ps_L3_TP_l-P1"/>
       <site site="Ps_L3_TP_l_Ps_L3_TP_l-P2"/>
     </spatial>
-    <spatial name="Ps_L3_L4_IVD_l_tendon">
+    <spatial class="myotorso" name="Ps_L3_L4_IVD_l_tendon">
       <site site="Ps_L3_L4_IVD_l_Ps_L3_L4_IVD_l-P1"/>
       <site site="Ps_L3_L4_IVD_l_Ps_L3_L4_IVD_l-P2"/>
     </spatial>
-    <spatial name="Ps_L4_TP_l_tendon">
+    <spatial class="myotorso" name="Ps_L4_TP_l_tendon">
       <site site="Ps_L4_TP_l_Ps_L4_TP_l-P1"/>
       <site site="Ps_L4_TP_l_Ps_L4_TP_l-P2"/>
     </spatial>
-    <spatial name="Ps_L4_L5_IVD_l_tendon">
+    <spatial class="myotorso" name="Ps_L4_L5_IVD_l_tendon">
       <site site="Ps_L4_L5_IVD_l_Ps_L4_L5_IVD_l-P1"/>
       <site site="Ps_L4_L5_IVD_l_Ps_L4_L5_IVD_l-P2"/>
     </spatial>
-    <spatial name="Ps_L5_TP_l_tendon">
+    <spatial class="myotorso" name="Ps_L5_TP_l_tendon">
       <site site="Ps_L5_TP_l_Ps_L5_TP_l-P1"/>
       <site site="Ps_L5_TP_l_Ps_L5_TP_l-P2"/>
     </spatial>
-    <spatial name="Ps_L5_VB_l_tendon">
+    <spatial class="myotorso" name="Ps_L5_VB_l_tendon">
       <site site="Ps_L5_VB_l_Ps_L5_VB_l-P1"/>
       <site site="Ps_L5_VB_l_Ps_L5_VB_l-P2"/>
     </spatial>
-    <spatial name="rect_abd_r_tendon">
+    <spatial class="myotorso" name="rect_abd_r_tendon">
       <site site="rect_abd_r_rect_abd_r-P1"/>
       <geom geom="Cylinder_abdomen" sidesite="Abs_sidesite"/>
       <site site="rect_abd_r_rect_abd_r-P2"/>
     </spatial>
-    <spatial name="rect_abd_l_tendon">
+    <spatial class="myotorso" name="rect_abd_l_tendon">
       <site site="rect_abd_l_rect_abd_l-P1"/>
       <geom geom="Cylinder_abdomen" sidesite="Abs_sidesite"/>
       <site site="rect_abd_l_rect_abd_l-P2"/>
     </spatial>
-    <spatial name="IL_L1_r_tendon">
+    <spatial class="myotorso" name="IL_L1_r_tendon">
       <site site="IL_L1_r_IL_L1_r-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_L1_r_1_sidesite"/>
       <site site="IL_L1_r_IL_L1_r-P2"/>
     </spatial>
-    <spatial name="IL_L2_r_tendon">
+    <spatial class="myotorso" name="IL_L2_r_tendon">
       <site site="IL_L2_r_IL_L2_r-P1"/>
       <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L2_r_1_sidesite"/>
       <site site="IL_L2_r_IL_L2_r-P2"/>
     </spatial>
-    <spatial name="IL_L3_r_tendon">
+    <spatial class="myotorso" name="IL_L3_r_tendon">
       <site site="IL_L3_r_IL_L3_r-P1"/>
       <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L3_r_1_sidesite"/>
       <site site="IL_L3_r_IL_L3_r-P2"/>
     </spatial>
-    <spatial name="IL_L4_r_tendon">
+    <spatial class="myotorso" name="IL_L4_r_tendon">
       <site site="IL_L4_r_IL_L4_r-P1"/>
       <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L4_r_1_sidesite"/>
       <site site="IL_L4_r_IL_L4_r-P2"/>
     </spatial>
-    <spatial name="IL_L1_l_tendon">
+    <spatial class="myotorso" name="IL_L1_l_tendon">
       <site site="IL_L1_l_IL_L1_l-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_L1_l_1_sidesite"/>
       <site site="IL_L1_l_IL_L1_l-P2"/>
     </spatial>
-    <spatial name="IL_L2_l_tendon">
+    <spatial class="myotorso" name="IL_L2_l_tendon">
       <site site="IL_L2_l_IL_L2_l-P1"/>
       <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L2_l_1_sidesite"/>
       <site site="IL_L2_l_IL_L2_l-P2"/>
     </spatial>
-    <spatial name="IL_L3_l_tendon">
+    <spatial class="myotorso" name="IL_L3_l_tendon">
       <site site="IL_L3_l_IL_L3_l-P1"/>
       <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L3_l_1_sidesite"/>
       <site site="IL_L3_l_IL_L3_l-P2"/>
     </spatial>
-    <spatial name="IL_L4_l_tendon">
+    <spatial class="myotorso" name="IL_L4_l_tendon">
       <site site="IL_L4_l_IL_L4_l-P1"/>
       <geom geom="back_cylinder_l" sidesite="back_cylinder_l_IL_L4_l_1_sidesite"/>
       <site site="IL_L4_l_IL_L4_l-P2"/>
     </spatial>
-    <spatial name="IL_R5_r_tendon">
+    <spatial class="myotorso" name="IL_R5_r_tendon">
       <site site="IL_R5_r_IL_r5_R-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R5_r_1_sidesite"/>
       <site site="IL_R5_r_IL_r5_R-P2"/>
@@ -225,7 +225,7 @@
       <site site="IL_R5_r_IL_r5_R-P6"/>
       <site site="IL_R5_r_IL_r5_R-P7"/>
     </spatial>
-    <spatial name="IL_R6_r_tendon">
+    <spatial class="myotorso" name="IL_R6_r_tendon">
       <site site="IL_R6_r_IL_r6_R-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R6_r_1_sidesite"/>
       <site site="IL_R6_r_IL_r6_R-P2"/>
@@ -235,7 +235,7 @@
       <site site="IL_R6_r_IL_r6_R-P5"/>
       <site site="IL_R6_r_IL_r6_R-P6"/>
     </spatial>
-    <spatial name="IL_R7_r_tendon">
+    <spatial class="myotorso" name="IL_R7_r_tendon">
       <site site="IL_R7_r_IL_r7_R-P1"/>
       <site site="IL_R7_r_IL_r7_R-P2"/>
       <site site="IL_R7_r_IL_r7_R-P2_0"/>
@@ -243,34 +243,34 @@
       <site site="IL_R7_r_IL_r7_R-P4"/>
       <site site="IL_R7_r_IL_r7_R-P5"/>
     </spatial>
-    <spatial name="IL_R8_r_tendon">
+    <spatial class="myotorso" name="IL_R8_r_tendon">
       <site site="IL_R8_r_IL_r8_R-P1"/>
       <site site="IL_R8_r_IL_r8_R-P2"/>
       <site site="IL_R8_r_IL_r8_R-P2_0"/>
       <site site="IL_R8_r_IL_r8_R-P3"/>
       <site site="IL_R8_r_IL_r8_R-P4"/>
     </spatial>
-    <spatial name="IL_R9_r_tendon">
+    <spatial class="myotorso" name="IL_R9_r_tendon">
       <site site="IL_R9_r_IL_r9_R-P1"/>
       <site site="IL_R9_r_IL_r9_R-P2"/>
       <site site="IL_R9_r_IL_r9_R-P2_0"/>
       <site site="IL_R9_r_IL_r9_R-P3"/>
     </spatial>
-    <spatial name="IL_R10_r_tendon">
+    <spatial class="myotorso" name="IL_R10_r_tendon">
       <site site="IL_R10_r_IL_r10_R-P1"/>
       <site site="IL_R10_r_IL_r10_R-P2"/>
       <site site="IL_R10_r_IL_r10_R-P2_0"/>
     </spatial>
-    <spatial name="IL_R11_r_tendon">
+    <spatial class="myotorso" name="IL_R11_r_tendon">
       <site site="IL_R11_r_IL_r11_R-P1"/>
       <site site="IL_R11_r_IL_r11_R-P2"/>
       <site site="IL_R11_r_IL_r11_R-P2_0"/>
     </spatial>
-    <spatial name="IL_R12_r_tendon">
+    <spatial class="myotorso" name="IL_R12_r_tendon">
       <site site="IL_R12_r_IL_r12_R-P1"/>
       <site site="IL_R12_r_IL_r12_R-P2"/>
     </spatial>
-    <spatial name="IL_R5_l_tendon">
+    <spatial class="myotorso" name="IL_R5_l_tendon">
       <site site="IL_R5_l_IL_r5_R-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R5_l_1_sidesite"/>
       <site site="IL_R5_l_IL_r5_R-P2"/>
@@ -281,7 +281,7 @@
       <site site="IL_R5_l_IL_r5_R-P6"/>
       <site site="IL_R5_l_IL_r5_R-P7"/>
     </spatial>
-    <spatial name="IL_R6_l_tendon">
+    <spatial class="myotorso" name="IL_R6_l_tendon">
       <site site="IL_R6_l_IL_r6_R-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_IL_R6_l_1_sidesite"/>
       <site site="IL_R6_l_IL_r6_R-P2"/>
@@ -291,7 +291,7 @@
       <site site="IL_R6_l_IL_r6_R-P5"/>
       <site site="IL_R6_l_IL_r6_R-P6"/>
     </spatial>
-    <spatial name="IL_R7_l_tendon">
+    <spatial class="myotorso" name="IL_R7_l_tendon">
       <site site="IL_R7_l_IL_r7_R-P1"/>
       <site site="IL_R7_l_IL_r7_R-P2"/>
       <site site="IL_R7_l_IL_r7_R-P2_0"/>
@@ -299,109 +299,109 @@
       <site site="IL_R7_l_IL_r7_R-P4"/>
       <site site="IL_R7_l_IL_r7_R-P5"/>
     </spatial>
-    <spatial name="IL_R8_l_tendon">
+    <spatial class="myotorso" name="IL_R8_l_tendon">
       <site site="IL_R8_l_IL_r8_R-P1"/>
       <site site="IL_R8_l_IL_r8_R-P2"/>
       <site site="IL_R8_l_IL_r8_R-P2_0"/>
       <site site="IL_R8_l_IL_r8_R-P3"/>
       <site site="IL_R8_l_IL_r8_R-P4"/>
     </spatial>
-    <spatial name="IL_R9_l_tendon">
+    <spatial class="myotorso" name="IL_R9_l_tendon">
       <site site="IL_R9_l_IL_r9_R-P1"/>
       <site site="IL_R9_l_IL_r9_R-P2"/>
       <site site="IL_R9_l_IL_r9_R-P2_0"/>
       <site site="IL_R9_l_IL_r9_R-P3"/>
     </spatial>
-    <spatial name="IL_R10_l_tendon">
+    <spatial class="myotorso" name="IL_R10_l_tendon">
       <site site="IL_R10_l_IL_r10_R-P1"/>
       <site site="IL_R10_l_IL_r10_R-P2"/>
       <site site="IL_R10_l_IL_r10_R-P2_0"/>
     </spatial>
-    <spatial name="IL_R11_l_tendon">
+    <spatial class="myotorso" name="IL_R11_l_tendon">
       <site site="IL_R11_l_IL_r11_R-P1"/>
       <site site="IL_R11_l_IL_r11_R-P2"/>
       <site site="IL_R11_l_IL_r11_R-P2_0"/>
     </spatial>
-    <spatial name="IL_R12_l_tendon">
+    <spatial class="myotorso" name="IL_R12_l_tendon">
       <site site="IL_R12_l_IL_r12_R-P1"/>
       <site site="IL_R12_l_IL_r12_R-P2"/>
     </spatial>
-    <spatial name="LTpT_T1_r_tendon">
+    <spatial class="myotorso" name="LTpT_T1_r_tendon">
       <site site="LTpT_T1_r_LTpT_t1_R-P1"/>
       <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T1_r_1_sidesite"/>
       <site site="LTpT_T1_r_LTpT_t1_R-P2"/>
     </spatial>
-    <spatial name="LTpT_T2_r_tendon">
+    <spatial class="myotorso" name="LTpT_T2_r_tendon">
       <site site="LTpT_T2_r_LTpT_t2_R-P1"/>
       <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T2_r_1_sidesite"/>
       <site site="LTpT_T2_r_LTpT_t2_R-P2"/>
     </spatial>
-    <spatial name="LTpT_T3_r_tendon">
+    <spatial class="myotorso" name="LTpT_T3_r_tendon">
       <site site="LTpT_T3_r_LTpT_t3_R-P1"/>
       <site site="LTpT_T3_r_LTpT_t3_R-P2"/>
       <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T3_r_2_sidesite"/>
       <site site="LTpT_T3_r_LTpT_t3_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T4_r_tendon">
+    <spatial class="myotorso" name="LTpT_T4_r_tendon">
       <site site="LTpT_T4_r_LTpT_t4_R-P1"/>
       <site site="LTpT_T4_r_LTpT_t4_R-P2"/>
       <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T4_r_2_sidesite"/>
       <site site="LTpT_T4_r_LTpT_t4_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T5_r_tendon">
+    <spatial class="myotorso" name="LTpT_T5_r_tendon">
       <site site="LTpT_T5_r_LTpT_t5_R-P1"/>
       <site site="LTpT_T5_r_LTpT_t5_R-P2"/>
       <geom geom="Chest_r_ellipsoid" sidesite="Chest_r_ellipsoid_LTpT_T5_r_2_sidesite"/>
       <site site="LTpT_T5_r_LTpT_t5_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T6_r_tendon">
+    <spatial class="myotorso" name="LTpT_T6_r_tendon">
       <site site="LTpT_T6_r_LTpT_t6_R-P1"/>
       <site site="LTpT_T6_r_LTpT_t6_R-P2"/>
       <site site="LTpT_T6_r_LTpT_t6_R-P3"/>
       <site site="LTpT_T6_r_LTpT_t6_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T7_r_tendon">
+    <spatial class="myotorso" name="LTpT_T7_r_tendon">
       <site site="LTpT_T7_r_LTpT_t7_R-P1"/>
       <site site="LTpT_T7_r_LTpT_t7_R-P2"/>
       <site site="LTpT_T7_r_LTpT_t7_R-P3"/>
       <site site="LTpT_T7_r_LTpT_t7_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T8_r_tendon">
+    <spatial class="myotorso" name="LTpT_T8_r_tendon">
       <site site="LTpT_T8_r_LTpT_t8_R-P1"/>
       <site site="LTpT_T8_r_LTpT_t8_R-P2"/>
       <site site="LTpT_T8_r_LTpT_t8_R-P3"/>
       <site site="LTpT_T8_r_LTpT_t8_R-P2_0"/>
       <site site="LTpT_T8_r_LTpT_t8_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_T9_r_tendon">
+    <spatial class="myotorso" name="LTpT_T9_r_tendon">
       <site site="LTpT_T9_r_LTpT_t9_R-P1"/>
       <site site="LTpT_T9_r_LTpT_t9_R-P2"/>
       <site site="LTpT_T9_r_LTpT_t9_R-P3"/>
       <site site="LTpT_T9_r_LTpT_t9_R-P3_0"/>
       <site site="LTpT_T9_r_LTpT_t9_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T10_r_tendon">
+    <spatial class="myotorso" name="LTpT_T10_r_tendon">
       <site site="LTpT_T10_r_LTpT_t10_R-P1"/>
       <site site="LTpT_T10_r_LTpT_t10_R-P2"/>
       <site site="LTpT_T10_r_LTpT_t10_R-P2_0"/>
       <site site="LTpT_T10_r_LTpT_t10_R-P3"/>
       <site site="LTpT_T10_r_LTpT_t10_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_T11_r_tendon">
+    <spatial class="myotorso" name="LTpT_T11_r_tendon">
       <site site="LTpT_T11_r_LTpT_t11_R-P1"/>
       <site site="LTpT_T11_r_LTpT_t11_R-P2"/>
       <site site="LTpT_T11_r_LTpT_t11_R-P3"/>
       <site site="LTpT_T11_r_LTpT_t11_R-P2_0"/>
       <site site="LTpT_T11_r_LTpT_t11_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_T12_r_tendon">
+    <spatial class="myotorso" name="LTpT_T12_r_tendon">
       <site site="LTpT_T12_r_LTpT_t12_R-P1"/>
       <site site="LTpT_T12_r_LTpT_t12_R-P2"/>
       <site site="LTpT_T12_r_LTpT_t12_R-P3"/>
       <site site="LTpT_T12_r_LTpT_t12_R-P2_0"/>
       <site site="LTpT_T12_r_LTpT_t12_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_R4_r_tendon">
+    <spatial class="myotorso" name="LTpT_R4_r_tendon">
       <site site="LTpT_R4_r_LTpT_r4_R-P1"/>
       <site site="LTpT_R4_r_LTpT_r4_R-P2"/>
       <site site="LTpT_R4_r_LTpT_r4_R-P2_0"/>
@@ -410,7 +410,7 @@
       <site site="LTpT_R4_r_LTpT_r4_R-P5"/>
       <site site="LTpT_R4_r_LTpT_r4_R-P6"/>
     </spatial>
-    <spatial name="LTpT_R5_r_tendon">
+    <spatial class="myotorso" name="LTpT_R5_r_tendon">
       <site site="LTpT_R5_r_LTpT_r5_R-P1"/>
       <site site="LTpT_R5_r_LTpT_r5_R-P2"/>
       <site site="LTpT_R5_r_LTpT_r5_R-P2_0"/>
@@ -419,7 +419,7 @@
       <site site="LTpT_R5_r_LTpT_r5_R-P5"/>
       <site site="LTpT_R5_r_LTpT_r5_R-P6"/>
     </spatial>
-    <spatial name="LTpT_R6_r_tendon">
+    <spatial class="myotorso" name="LTpT_R6_r_tendon">
       <site site="LTpT_R6_r_LTpT_r6_R-P1"/>
       <site site="LTpT_R6_r_LTpT_r6_R-P2"/>
       <site site="LTpT_R6_r_LTpT_r6_R-P2_0"/>
@@ -429,7 +429,7 @@
       <site site="LTpT_R6_r_LTpT_r6_R-P5"/>
       <site site="LTpT_R6_r_LTpT_r6_R-P6"/>
     </spatial>
-    <spatial name="LTpT_R7_r_tendon">
+    <spatial class="myotorso" name="LTpT_R7_r_tendon">
       <site site="LTpT_R7_r_LTpT_r7_R-P1"/>
       <site site="LTpT_R7_r_LTpT_r7_R-P2"/>
       <site site="LTpT_R7_r_LTpT_r7_R-P2_0"/>
@@ -439,7 +439,7 @@
       <site site="LTpT_R7_r_LTpT_r7_R-P4"/>
       <site site="LTpT_R7_r_LTpT_r7_R-P5"/>
     </spatial>
-    <spatial name="LTpT_R8_r_tendon">
+    <spatial class="myotorso" name="LTpT_R8_r_tendon">
       <site site="LTpT_R8_r_LTpT_r8_R-P1"/>
       <site site="LTpT_R8_r_LTpT_r8_R-P2"/>
       <site site="LTpT_R8_r_LTpT_r8_R-P2_0"/>
@@ -448,7 +448,7 @@
       <site site="LTpT_R8_r_LTpT_r8_R-P3"/>
       <site site="LTpT_R8_r_LTpT_r8_R-P4"/>
     </spatial>
-    <spatial name="LTpT_R9_r_tendon">
+    <spatial class="myotorso" name="LTpT_R9_r_tendon">
       <site site="LTpT_R9_r_LTpT_r9_R-P1"/>
       <site site="LTpT_R9_r_LTpT_r9_R-P2"/>
       <site site="LTpT_R9_r_LTpT_r9_R-P2_0"/>
@@ -456,21 +456,21 @@
       <site site="LTpT_R9_r_LTpT_r9_R-P2_2"/>
       <site site="LTpT_R9_r_LTpT_r9_R-P3"/>
     </spatial>
-    <spatial name="LTpT_R10_r_tendon">
+    <spatial class="myotorso" name="LTpT_R10_r_tendon">
       <site site="LTpT_R10_r_LTpT_r10_R-P1"/>
       <site site="LTpT_R10_r_LTpT_r10_R-P2"/>
       <site site="LTpT_R10_r_LTpT_r10_R-P2_0"/>
       <site site="LTpT_R10_r_LTpT_r10_R-P2_1"/>
       <site site="LTpT_R10_r_LTpT_r10_R-P2_2"/>
     </spatial>
-    <spatial name="LTpT_R11_r_tendon">
+    <spatial class="myotorso" name="LTpT_R11_r_tendon">
       <site site="LTpT_R11_r_LTpT_r11_R-P1"/>
       <site site="LTpT_R11_r_LTpT_r11_R-P2"/>
       <site site="LTpT_R11_r_LTpT_r11_R-P3"/>
       <site site="LTpT_R11_r_LTpT_r11_R-P4"/>
       <site site="LTpT_R11_r_LTpT_r11_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_R12_r_tendon">
+    <spatial class="myotorso" name="LTpT_R12_r_tendon">
       <site site="LTpT_R12_r_LTpT_r12_R-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_1_sidesite"/>
       <site site="LTpT_R12_r_LTpT_r12_R-P2"/>
@@ -480,82 +480,82 @@
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_r_4_sidesite"/>
       <site site="LTpT_R12_r_LTpT_r12_R-P2_2"/>
     </spatial>
-    <spatial name="LTpT_T1_l_tendon">
+    <spatial class="myotorso" name="LTpT_T1_l_tendon">
       <site site="LTpT_T1_l_LTpT_t1_R-P1"/>
       <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T1_l_1_sidesite"/>
       <site site="LTpT_T1_l_LTpT_t1_R-P2"/>
     </spatial>
-    <spatial name="LTpT_T2_l_tendon">
+    <spatial class="myotorso" name="LTpT_T2_l_tendon">
       <site site="LTpT_T2_l_LTpT_t2_R-P1"/>
       <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T2_l_1_sidesite"/>
       <site site="LTpT_T2_l_LTpT_t2_R-P2"/>
     </spatial>
-    <spatial name="LTpT_T3_l_tendon">
+    <spatial class="myotorso" name="LTpT_T3_l_tendon">
       <site site="LTpT_T3_l_LTpT_t3_R-P1"/>
       <site site="LTpT_T3_l_LTpT_t3_R-P2"/>
       <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T3_l_2_sidesite"/>
       <site site="LTpT_T3_l_LTpT_t3_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T4_l_tendon">
+    <spatial class="myotorso" name="LTpT_T4_l_tendon">
       <site site="LTpT_T4_l_LTpT_t4_R-P1"/>
       <site site="LTpT_T4_l_LTpT_t4_R-P2"/>
       <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T4_l_2_sidesite"/>
       <site site="LTpT_T4_l_LTpT_t4_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T5_l_tendon">
+    <spatial class="myotorso" name="LTpT_T5_l_tendon">
       <site site="LTpT_T5_l_LTpT_t5_R-P1"/>
       <site site="LTpT_T5_l_LTpT_t5_R-P2"/>
       <geom geom="Chest_l_ellipsoid" sidesite="Chest_l_ellipsoid_LTpT_T5_l_2_sidesite"/>
       <site site="LTpT_T5_l_LTpT_t5_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T6_l_tendon">
+    <spatial class="myotorso" name="LTpT_T6_l_tendon">
       <site site="LTpT_T6_l_LTpT_t6_R-P1"/>
       <site site="LTpT_T6_l_LTpT_t6_R-P2"/>
       <site site="LTpT_T6_l_LTpT_t6_R-P3"/>
       <site site="LTpT_T6_l_LTpT_t6_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T7_l_tendon">
+    <spatial class="myotorso" name="LTpT_T7_l_tendon">
       <site site="LTpT_T7_l_LTpT_t7_R-P1"/>
       <site site="LTpT_T7_l_LTpT_t7_R-P2"/>
       <site site="LTpT_T7_l_LTpT_t7_R-P3"/>
       <site site="LTpT_T7_l_LTpT_t7_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T8_l_tendon">
+    <spatial class="myotorso" name="LTpT_T8_l_tendon">
       <site site="LTpT_T8_l_LTpT_t8_R-P1"/>
       <site site="LTpT_T8_l_LTpT_t8_R-P2"/>
       <site site="LTpT_T8_l_LTpT_t8_R-P3"/>
       <site site="LTpT_T8_l_LTpT_t8_R-P2_0"/>
       <site site="LTpT_T8_l_LTpT_t8_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_T9_l_tendon">
+    <spatial class="myotorso" name="LTpT_T9_l_tendon">
       <site site="LTpT_T9_l_LTpT_t9_R-P1"/>
       <site site="LTpT_T9_l_LTpT_t9_R-P2"/>
       <site site="LTpT_T9_l_LTpT_t9_R-P3"/>
       <site site="LTpT_T9_l_LTpT_t9_R-P3_0"/>
       <site site="LTpT_T9_l_LTpT_t9_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_T10_l_tendon">
+    <spatial class="myotorso" name="LTpT_T10_l_tendon">
       <site site="LTpT_T10_l_LTpT_t10_R-P1"/>
       <site site="LTpT_T10_l_LTpT_t10_R-P2"/>
       <site site="LTpT_T10_l_LTpT_t10_R-P2_0"/>
       <site site="LTpT_T10_l_LTpT_t10_R-P3"/>
       <site site="LTpT_T10_l_LTpT_t10_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_T11_l_tendon">
+    <spatial class="myotorso" name="LTpT_T11_l_tendon">
       <site site="LTpT_T11_l_LTpT_t11_R-P1"/>
       <site site="LTpT_T11_l_LTpT_t11_R-P2"/>
       <site site="LTpT_T11_l_LTpT_t11_R-P3"/>
       <site site="LTpT_T11_l_LTpT_t11_R-P2_0"/>
       <site site="LTpT_T11_l_LTpT_t11_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_T12_l_tendon">
+    <spatial class="myotorso" name="LTpT_T12_l_tendon">
       <site site="LTpT_T12_l_LTpT_t12_R-P1"/>
       <site site="LTpT_T12_l_LTpT_t12_R-P2"/>
       <site site="LTpT_T12_l_LTpT_t12_R-P3"/>
       <site site="LTpT_T12_l_LTpT_t12_R-P2_0"/>
       <site site="LTpT_T12_l_LTpT_t12_R-P2_1"/>
     </spatial>
-    <spatial name="LTpT_R4_l_tendon">
+    <spatial class="myotorso" name="LTpT_R4_l_tendon">
       <site site="LTpT_R4_l_LTpT_r4_R-P1"/>
       <site site="LTpT_R4_l_LTpT_r4_R-P2"/>
       <site site="LTpT_R4_l_LTpT_r4_R-P2_0"/>
@@ -564,7 +564,7 @@
       <site site="LTpT_R4_l_LTpT_r4_R-P5"/>
       <site site="LTpT_R4_l_LTpT_r4_R-P6"/>
     </spatial>
-    <spatial name="LTpT_R5_l_tendon">
+    <spatial class="myotorso" name="LTpT_R5_l_tendon">
       <site site="LTpT_R5_l_LTpT_r5_R-P1"/>
       <site site="LTpT_R5_l_LTpT_r5_R-P2"/>
       <site site="LTpT_R5_l_LTpT_r5_R-P2_0"/>
@@ -573,7 +573,7 @@
       <site site="LTpT_R5_l_LTpT_r5_R-P5"/>
       <site site="LTpT_R5_l_LTpT_r5_R-P6"/>
     </spatial>
-    <spatial name="LTpT_R6_l_tendon">
+    <spatial class="myotorso" name="LTpT_R6_l_tendon">
       <site site="LTpT_R6_l_LTpT_r6_R-P1"/>
       <site site="LTpT_R6_l_LTpT_r6_R-P2"/>
       <site site="LTpT_R6_l_LTpT_r6_R-P2_0"/>
@@ -583,7 +583,7 @@
       <site site="LTpT_R6_l_LTpT_r6_R-P5"/>
       <site site="LTpT_R6_l_LTpT_r6_R-P6"/>
     </spatial>
-    <spatial name="LTpT_R7_l_tendon">
+    <spatial class="myotorso" name="LTpT_R7_l_tendon">
       <site site="LTpT_R7_l_LTpT_r7_R-P1"/>
       <site site="LTpT_R7_l_LTpT_r7_R-P2"/>
       <site site="LTpT_R7_l_LTpT_r7_R-P2_0"/>
@@ -593,7 +593,7 @@
       <site site="LTpT_R7_l_LTpT_r7_R-P4"/>
       <site site="LTpT_R7_l_LTpT_r7_R-P5"/>
     </spatial>
-    <spatial name="LTpT_R8_l_tendon">
+    <spatial class="myotorso" name="LTpT_R8_l_tendon">
       <site site="LTpT_R8_l_LTpT_r8_R-P1"/>
       <site site="LTpT_R8_l_LTpT_r8_R-P2"/>
       <site site="LTpT_R8_l_LTpT_r8_R-P2_0"/>
@@ -602,7 +602,7 @@
       <site site="LTpT_R8_l_LTpT_r8_R-P3"/>
       <site site="LTpT_R8_l_LTpT_r8_R-P4"/>
     </spatial>
-    <spatial name="LTpT_R9_l_tendon">
+    <spatial class="myotorso" name="LTpT_R9_l_tendon">
       <site site="LTpT_R9_l_LTpT_r9_R-P1"/>
       <site site="LTpT_R9_l_LTpT_r9_R-P2"/>
       <site site="LTpT_R9_l_LTpT_r9_R-P2_0"/>
@@ -610,21 +610,21 @@
       <site site="LTpT_R9_l_LTpT_r9_R-P2_2"/>
       <site site="LTpT_R9_l_LTpT_r9_R-P3"/>
     </spatial>
-    <spatial name="LTpT_R10_l_tendon">
+    <spatial class="myotorso" name="LTpT_R10_l_tendon">
       <site site="LTpT_R10_l_LTpT_r10_R-P1"/>
       <site site="LTpT_R10_l_LTpT_r10_R-P2"/>
       <site site="LTpT_R10_l_LTpT_r10_R-P2_0"/>
       <site site="LTpT_R10_l_LTpT_r10_R-P2_1"/>
       <site site="LTpT_R10_l_LTpT_r10_R-P2_2"/>
     </spatial>
-    <spatial name="LTpT_R11_l_tendon">
+    <spatial class="myotorso" name="LTpT_R11_l_tendon">
       <site site="LTpT_R11_l_LTpT_r11_R-P1"/>
       <site site="LTpT_R11_l_LTpT_r11_R-P2"/>
       <site site="LTpT_R11_l_LTpT_r11_R-P3"/>
       <site site="LTpT_R11_l_LTpT_r11_R-P4"/>
       <site site="LTpT_R11_l_LTpT_r11_R-P2_0"/>
     </spatial>
-    <spatial name="LTpT_R12_l_tendon">
+    <spatial class="myotorso" name="LTpT_R12_l_tendon">
       <site site="LTpT_R12_l_LTpT_r12_R-P1"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_1_sidesite"/>
       <site site="LTpT_R12_l_LTpT_r12_R-P2"/>
@@ -634,485 +634,485 @@
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpT_R12_l_4_sidesite"/>
       <site site="LTpT_R12_l_LTpT_r12_R-P2_2"/>
     </spatial>
-    <spatial name="LTpL_L5_r_tendon">
+    <spatial class="myotorso" name="LTpL_L5_r_tendon">
       <site site="LTpL_L5_r_pathpoint"/>
       <site site="LTpL_L5_r_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L4_r_tendon">
+    <spatial class="myotorso" name="LTpL_L4_r_tendon">
       <site site="LTpL_L4_r_pathpoint"/>
       <site site="LTpL_L4_r_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L3_r_tendon">
+    <spatial class="myotorso" name="LTpL_L3_r_tendon">
       <site site="LTpL_L3_r_pathpoint"/>
       <site site="LTpL_L3_r_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L2_r_tendon">
+    <spatial class="myotorso" name="LTpL_L2_r_tendon">
       <site site="LTpL_L2_r_pathpoint"/>
       <site site="LTpL_L2_r_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L1_r_tendon">
+    <spatial class="myotorso" name="LTpL_L1_r_tendon">
       <site site="LTpL_L1_r_pathpoint"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpL_L1_r_1_sidesite"/>
       <site site="LTpL_L1_r_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L5_l_tendon">
+    <spatial class="myotorso" name="LTpL_L5_l_tendon">
       <site site="LTpL_L5_l_pathpoint"/>
       <site site="LTpL_L5_l_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L4_l_tendon">
+    <spatial class="myotorso" name="LTpL_L4_l_tendon">
       <site site="LTpL_L4_l_pathpoint"/>
       <site site="LTpL_L4_l_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L3_l_tendon">
+    <spatial class="myotorso" name="LTpL_L3_l_tendon">
       <site site="LTpL_L3_l_pathpoint"/>
       <site site="LTpL_L3_l_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L2_l_tendon">
+    <spatial class="myotorso" name="LTpL_L2_l_tendon">
       <site site="LTpL_L2_l_pathpoint"/>
       <site site="LTpL_L2_l_pathpoint_0"/>
     </spatial>
-    <spatial name="LTpL_L1_l_tendon">
+    <spatial class="myotorso" name="LTpL_L1_l_tendon">
       <site site="LTpL_L1_l_pathpoint"/>
       <geom geom="back_cylinder_s" sidesite="back_cylinder_s_LTpL_L1_l_1_sidesite"/>
       <site site="LTpL_L1_l_pathpoint_0"/>
     </spatial>
-    <spatial name="QL_post_I.1-L3_r_tendon">
+    <spatial class="myotorso" name="QL_post_I.1-L3_r_tendon">
       <site site="QL_post_I.1-L3_r_I.1_r-P1"/>
       <site site="QL_post_I.1-L3_r_L3_TP_r-P2"/>
     </spatial>
-    <spatial name="QL_post_I.2-L4_r_tendon">
+    <spatial class="myotorso" name="QL_post_I.2-L4_r_tendon">
       <site site="QL_post_I.2-L4_r_I.2_r-P1"/>
       <site site="QL_post_I.2-L4_r_L4_TP_r-P2"/>
     </spatial>
-    <spatial name="QL_post_I.2-L3_r_tendon">
+    <spatial class="myotorso" name="QL_post_I.2-L3_r_tendon">
       <site site="QL_post_I.2-L3_r_I.2_r-P1"/>
       <site site="QL_post_I.2-L3_r_L3_TP_r-P2"/>
     </spatial>
-    <spatial name="QL_post_I.2-L2_r_tendon">
+    <spatial class="myotorso" name="QL_post_I.2-L2_r_tendon">
       <site site="QL_post_I.2-L2_r_I.2_r-P1"/>
       <site site="QL_post_I.2-L2_r_L2_TP_r-P2"/>
     </spatial>
-    <spatial name="QL_post_I.3-L1_r_tendon">
+    <spatial class="myotorso" name="QL_post_I.3-L1_r_tendon">
       <site site="QL_post_I.3-L1_r_L1_TP-P1"/>
       <site site="QL_post_I.3-L1_r_I.3_r-P1"/>
     </spatial>
-    <spatial name="QL_post_I.3-L2_r_tendon">
+    <spatial class="myotorso" name="QL_post_I.3-L2_r_tendon">
       <site site="QL_post_I.3-L2_r_L2_TP_r-P2"/>
       <site site="QL_post_I.3-L2_r_I.3_r-P1"/>
     </spatial>
-    <spatial name="QL_post_I.3-L3_r_tendon">
+    <spatial class="myotorso" name="QL_post_I.3-L3_r_tendon">
       <site site="QL_post_I.3-L3_r_L3_TP_r-P2"/>
       <site site="QL_post_I.3-L3_r_I.3_r-P1"/>
     </spatial>
-    <spatial name="QL_post_I.1-L3_l_tendon">
+    <spatial class="myotorso" name="QL_post_I.1-L3_l_tendon">
       <site site="QL_post_I.1-L3_l_I.1_l-P1"/>
       <site site="QL_post_I.1-L3_l_L3_TP_l-P2"/>
     </spatial>
-    <spatial name="QL_post_I.2-L4_l_tendon">
+    <spatial class="myotorso" name="QL_post_I.2-L4_l_tendon">
       <site site="QL_post_I.2-L4_l_I.2_l-P1"/>
       <site site="QL_post_I.2-L4_l_L4_TP_l-P2"/>
     </spatial>
-    <spatial name="QL_post_I.2-L3_l_tendon">
+    <spatial class="myotorso" name="QL_post_I.2-L3_l_tendon">
       <site site="QL_post_I.2-L3_l_I.2_l-P1"/>
       <site site="QL_post_I.2-L3_l_L3_TP_l-P2"/>
     </spatial>
-    <spatial name="QL_post_I.2-L2_l_tendon">
+    <spatial class="myotorso" name="QL_post_I.2-L2_l_tendon">
       <site site="QL_post_I.2-L2_l_I.2_l-P1"/>
       <site site="QL_post_I.2-L2_l_L2_TP_l-P2"/>
     </spatial>
-    <spatial name="QL_post_I.3-L1_l_tendon">
+    <spatial class="myotorso" name="QL_post_I.3-L1_l_tendon">
       <site site="QL_post_I.3-L1_l_L1_TP_l-P1"/>
       <site site="QL_post_I.3-L1_l_I.3_l-P1"/>
     </spatial>
-    <spatial name="QL_post_I.3-L2_l_tendon">
+    <spatial class="myotorso" name="QL_post_I.3-L2_l_tendon">
       <site site="QL_post_I.3-L2_l_L2_TP_l-P2"/>
       <site site="QL_post_I.3-L2_l_I.3_l-P1"/>
     </spatial>
-    <spatial name="QL_post_I.3-L3_l_tendon">
+    <spatial class="myotorso" name="QL_post_I.3-L3_l_tendon">
       <site site="QL_post_I.3-L3_l_L3_TP_l-P2"/>
       <site site="QL_post_I.3-L3_l_I.3_l-P1"/>
     </spatial>
-    <spatial name="QL_mid_L3-12.3_r_tendon">
+    <spatial class="myotorso" name="QL_mid_L3-12.3_r_tendon">
       <site site="QL_mid_L3-12.3_r_quadratus_lumb_mid_L3_1_r-P1"/>
       <site site="QL_mid_L3-12.3_r_quadratus_lumb_mid_L3_1_r-P2"/>
     </spatial>
-    <spatial name="QL_mid_L3-12.2_r_tendon">
+    <spatial class="myotorso" name="QL_mid_L3-12.2_r_tendon">
       <site site="QL_mid_L3-12.2_r_quadratus_lumb_mid_L3_2_r-P2"/>
       <site site="QL_mid_L3-12.2_r_quadratus_lumb_mid_L3_2_r-P3"/>
     </spatial>
-    <spatial name="QL_mid_L3-12.1_r_tendon">
+    <spatial class="myotorso" name="QL_mid_L3-12.1_r_tendon">
       <site site="QL_mid_L3-12.1_r_quadratus_lumb_mid_L3_3_r-P2"/>
       <site site="QL_mid_L3-12.1_r_quadratus_lumb_mid_L3_3_r-P3"/>
     </spatial>
-    <spatial name="QL_mid_L2-12.1_r_tendon">
+    <spatial class="myotorso" name="QL_mid_L2-12.1_r_tendon">
       <site site="QL_mid_L2-12.1_r_QL_mid_L2-12.1_l-P1"/>
       <site site="QL_mid_L2-12.1_r_QL_mid_L2-12.1_l-P1_0"/>
     </spatial>
-    <spatial name="QL_mid_L4-12.3_r_tendon">
+    <spatial class="myotorso" name="QL_mid_L4-12.3_r_tendon">
       <site site="QL_mid_L4-12.3_r_quadratus_lumb_mid_L4_1_r-P1"/>
       <site site="QL_mid_L4-12.3_r_quadratus_lumb_mid_L4_1_r-P2"/>
     </spatial>
-    <spatial name="QL_mid_L3-12.3_l_tendon">
+    <spatial class="myotorso" name="QL_mid_L3-12.3_l_tendon">
       <site site="QL_mid_L3-12.3_l_quadratus_lumb_mid_L3_1_r-P1"/>
       <site site="QL_mid_L3-12.3_l_quadratus_lumb_mid_L3_1_r-P2"/>
     </spatial>
-    <spatial name="QL_mid_L3-12.2_l_tendon">
+    <spatial class="myotorso" name="QL_mid_L3-12.2_l_tendon">
       <site site="QL_mid_L3-12.2_l_quadratus_lumb_mid_L3_2_r-P2"/>
       <site site="QL_mid_L3-12.2_l_quadratus_lumb_mid_L3_2_r-P3"/>
     </spatial>
-    <spatial name="QL_mid_L3-12.1_l_tendon">
+    <spatial class="myotorso" name="QL_mid_L3-12.1_l_tendon">
       <site site="QL_mid_L3-12.1_l_quadratus_lumb_mid_L3_3_r-P2"/>
       <site site="QL_mid_L3-12.1_l_quadratus_lumb_mid_L3_3_r-P3"/>
     </spatial>
-    <spatial name="QL_mid_L2-12.1_l_tendon">
+    <spatial class="myotorso" name="QL_mid_L2-12.1_l_tendon">
       <site site="QL_mid_L2-12.1_l_QL_mid_L2-12.1_l-P1"/>
       <site site="QL_mid_L2-12.1_l_QL_mid_L2-12.1_l-P1_0"/>
     </spatial>
-    <spatial name="QL_mid_L4-12.3_l_tendon">
+    <spatial class="myotorso" name="QL_mid_L4-12.3_l_tendon">
       <site site="QL_mid_L4-12.3_l_quadratus_lumb_mid_L4_1_r-P1"/>
       <site site="QL_mid_L4-12.3_l_quadratus_lumb_mid_L4_1_r-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.2-T12_r_tendon">
+    <spatial class="myotorso" name="QL_ant_I.2-T12_r_tendon">
       <site site="QL_ant_I.2-T12_r_I.2_r-P1"/>
       <site site="QL_ant_I.2-T12_r_T12_r-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.3-T12_r_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-T12_r_tendon">
       <site site="QL_ant_I.3-T12_r_I.3_r-P1"/>
       <site site="QL_ant_I.3-T12_r_T12_r-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.2-12.1_r_tendon">
+    <spatial class="myotorso" name="QL_ant_I.2-12.1_r_tendon">
       <site site="QL_ant_I.2-12.1_r_I.2_r-P2"/>
       <site site="QL_ant_I.2-12.1_r_12.1_r-P3"/>
     </spatial>
-    <spatial name="QL_ant_I.3-12.1_r_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-12.1_r_tendon">
       <site site="QL_ant_I.3-12.1_r_I.3_r-P1"/>
       <site site="QL_ant_I.3-12.1_r_12.1_r-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.3-12.2_r_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-12.2_r_tendon">
       <site site="QL_ant_I.3-12.2_r_I.3_r-P1"/>
       <site site="QL_ant_I.3-12.2_r_12.2_r-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.3-12.3_r_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-12.3_r_tendon">
       <site site="QL_ant_I.3-12.3_r_I.3_r-P2"/>
       <site site="QL_ant_I.3-12.3_r_12.3_r-P3"/>
     </spatial>
-    <spatial name="QL_ant_I.2-T12_l_tendon">
+    <spatial class="myotorso" name="QL_ant_I.2-T12_l_tendon">
       <site site="QL_ant_I.2-T12_l_I.2_l-P1"/>
       <site site="QL_ant_I.2-T12_l_T12_l-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.3-T12_l_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-T12_l_tendon">
       <site site="QL_ant_I.3-T12_l_I.3_l-P1"/>
       <site site="QL_ant_I.3-T12_l_T12_l-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.2-12.1_l_tendon">
+    <spatial class="myotorso" name="QL_ant_I.2-12.1_l_tendon">
       <site site="QL_ant_I.2-12.1_l_I.2_l-P2"/>
       <site site="QL_ant_I.2-12.1_l_12.1_l-P3"/>
     </spatial>
-    <spatial name="QL_ant_I.3-12.1_l_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-12.1_l_tendon">
       <site site="QL_ant_I.3-12.1_l_I.3_l-P1"/>
       <site site="QL_ant_I.3-12.1_l_12.1_l-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.3-12.2_l_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-12.2_l_tendon">
       <site site="QL_ant_I.3-12.2_l_I.3_l-P1"/>
       <site site="QL_ant_I.3-12.2_l_12.2_l-P2"/>
     </spatial>
-    <spatial name="QL_ant_I.3-12.3_l_tendon">
+    <spatial class="myotorso" name="QL_ant_I.3-12.3_l_tendon">
       <site site="QL_ant_I.3-12.3_l_I.3_l-P2"/>
       <site site="QL_ant_I.3-12.3_l_12.3_l-P3"/>
     </spatial>
-    <spatial name="MF_m1s_r_tendon">
+    <spatial class="myotorso" name="MF_m1s_r_tendon">
       <site site="MF_m1s_r_MF_m1s_r-P1"/>
       <site site="MF_m1s_r_MF_m1s_r-P2"/>
     </spatial>
-    <spatial name="MF_m1t.1_r_tendon">
+    <spatial class="myotorso" name="MF_m1t.1_r_tendon">
       <site site="MF_m1t.1_r_MF_m1t.1_r-P1"/>
       <site site="MF_m1t.1_r_MF_m1t.1_r-P2"/>
     </spatial>
-    <spatial name="MF_m1t.2_r_tendon">
+    <spatial class="myotorso" name="MF_m1t.2_r_tendon">
       <site site="MF_m1t.2_r_MF_m1t.2_r-P1"/>
       <site site="MF_m1t.2_r_MF_m1t.2_r-P2"/>
     </spatial>
-    <spatial name="MF_m1t.3_r_tendon">
+    <spatial class="myotorso" name="MF_m1t.3_r_tendon">
       <site site="MF_m1t.3_r_MF_m1t.3_r-P1"/>
       <site site="MF_m1t.3_r_MF_m1t.3_r-P2"/>
     </spatial>
-    <spatial name="MF_m2s_r_tendon">
+    <spatial class="myotorso" name="MF_m2s_r_tendon">
       <site site="MF_m2s_r_MF_m2s_r-P1"/>
       <site site="MF_m2s_r_MF_m2s_r-P2"/>
     </spatial>
-    <spatial name="MF_m2t.1_r_tendon">
+    <spatial class="myotorso" name="MF_m2t.1_r_tendon">
       <site site="MF_m2t.1_r_MF_m2t.1_r-P1"/>
       <site site="MF_m2t.1_r_MF_m2t.1_r-P2"/>
     </spatial>
-    <spatial name="MF_m2t.2_r_tendon">
+    <spatial class="myotorso" name="MF_m2t.2_r_tendon">
       <site site="MF_m2t.2_r_MF_m2t.2_r-P1"/>
       <site site="MF_m2t.2_r_MF_m2t.2_r-P2"/>
     </spatial>
-    <spatial name="MF_m2t.3_r_tendon">
+    <spatial class="myotorso" name="MF_m2t.3_r_tendon">
       <site site="MF_m2t.3_r_MF_m2t.3_r-P1"/>
       <site site="MF_m2t.3_r_MF_m2t.3_r-P2"/>
     </spatial>
-    <spatial name="MF_m3s_r_tendon">
+    <spatial class="myotorso" name="MF_m3s_r_tendon">
       <site site="MF_m3s_r_MF_m3s_r-P1"/>
       <site site="MF_m3s_r_MF_m3s_r-P2"/>
     </spatial>
-    <spatial name="MF_m3t.1_r_tendon">
+    <spatial class="myotorso" name="MF_m3t.1_r_tendon">
       <site site="MF_m3t.1_r_MF_m3t.1_r-P1"/>
       <site site="MF_m3t.1_r_MF_m3t.1_r-P2"/>
     </spatial>
-    <spatial name="MF_m3t.2_r_tendon">
+    <spatial class="myotorso" name="MF_m3t.2_r_tendon">
       <site site="MF_m3t.2_r_MF_m3t.2_r-P1"/>
       <site site="MF_m3t.2_r_MF_m3t.2_r-P2"/>
     </spatial>
-    <spatial name="MF_m3t.3_r_tendon">
+    <spatial class="myotorso" name="MF_m3t.3_r_tendon">
       <site site="MF_m3t.3_r_MF_m3t.3_r-P1"/>
       <site site="MF_m3t.3_r_MF_m3t.3_r-P2"/>
     </spatial>
-    <spatial name="MF_m4s_r_tendon">
+    <spatial class="myotorso" name="MF_m4s_r_tendon">
       <site site="MF_m4s_r_MF_m4s_r-P1"/>
       <site site="MF_m4s_r_MF_m4s_r-P2"/>
     </spatial>
-    <spatial name="MF_m4t.1_r_tendon">
+    <spatial class="myotorso" name="MF_m4t.1_r_tendon">
       <site site="MF_m4t.1_r_MF_m4t.1_r-P1"/>
       <site site="MF_m4t.1_r_MF_m4t.1_r-P2"/>
     </spatial>
-    <spatial name="MF_m4t.2_r_tendon">
+    <spatial class="myotorso" name="MF_m4t.2_r_tendon">
       <site site="MF_m4t.2_r_MF_m4t.2_r-P1"/>
       <site site="MF_m4t.2_r_MF_m4t.2_r-P2"/>
     </spatial>
-    <spatial name="MF_m4t.3_r_tendon">
+    <spatial class="myotorso" name="MF_m4t.3_r_tendon">
       <site site="MF_m4t.3_r_MF_m4t.3_r-P1"/>
       <site site="MF_m4t.3_r_MF_m4t.3_r-P2"/>
     </spatial>
-    <spatial name="MF_m5s_r_tendon">
+    <spatial class="myotorso" name="MF_m5s_r_tendon">
       <site site="MF_m5s_r_MF_m5s_r-P1"/>
       <site site="MF_m5s_r_MF_m5s_r-P2"/>
     </spatial>
-    <spatial name="MF_m5t.1_r_tendon">
+    <spatial class="myotorso" name="MF_m5t.1_r_tendon">
       <site site="MF_m5t.1_r_MF_m5t.1_r-P1"/>
       <site site="MF_m5t.1_r_MF_m5t.1_r-P2"/>
     </spatial>
-    <spatial name="MF_m5t.2_r_tendon">
+    <spatial class="myotorso" name="MF_m5t.2_r_tendon">
       <site site="MF_m5t.2_r_MF_m5t.2_r-P1"/>
       <site site="MF_m5t.2_r_MF_m5t.2_r-P2"/>
     </spatial>
-    <spatial name="MF_m5t.3_r_tendon">
+    <spatial class="myotorso" name="MF_m5t.3_r_tendon">
       <site site="MF_m5t.3_r_MF_m5t.3_r-P1"/>
       <site site="MF_m5t.3_r_MF_m5t.3_r-P2"/>
     </spatial>
-    <spatial name="MF_m1.laminar_r_tendon">
+    <spatial class="myotorso" name="MF_m1.laminar_r_tendon">
       <site site="MF_m1.laminar_r_MF_m1.laminar_r-P1"/>
       <site site="MF_m1.laminar_r_MF_m1.laminar_r-P2"/>
     </spatial>
-    <spatial name="MF_m2.laminar_r_tendon">
+    <spatial class="myotorso" name="MF_m2.laminar_r_tendon">
       <site site="MF_m2.laminar_r_MF_m2.laminar_r-P1"/>
       <site site="MF_m2.laminar_r_MF_m2.laminar_r-P2"/>
     </spatial>
-    <spatial name="MF_m3.laminar_r_tendon">
+    <spatial class="myotorso" name="MF_m3.laminar_r_tendon">
       <site site="MF_m3.laminar_r_MF_m3.laminar_r-P1"/>
       <site site="MF_m3.laminar_r_MF_m3.laminar_r-P2"/>
     </spatial>
-    <spatial name="MF_m4.laminar_r_tendon">
+    <spatial class="myotorso" name="MF_m4.laminar_r_tendon">
       <site site="MF_m4.laminar_r_MF_m4.laminar_r-P1"/>
       <site site="MF_m4.laminar_r_MF_m4.laminar_r-P2"/>
     </spatial>
-    <spatial name="MF_m5.laminar_r_tendon">
+    <spatial class="myotorso" name="MF_m5.laminar_r_tendon">
       <site site="MF_m5.laminar_r_MF_m5.laminar_r-P1"/>
       <site site="MF_m5.laminar_r_MF_m5.laminar_-P2"/>
     </spatial>
-    <spatial name="MF_m1s_l_tendon">
+    <spatial class="myotorso" name="MF_m1s_l_tendon">
       <site site="MF_m1s_l_MF_m1s_l-P1"/>
       <site site="MF_m1s_l_MF_m1s_l-P2"/>
     </spatial>
-    <spatial name="MF_m1t.1_l_tendon">
+    <spatial class="myotorso" name="MF_m1t.1_l_tendon">
       <site site="MF_m1t.1_l_MF_m1t.1_l-P1"/>
       <site site="MF_m1t.1_l_MF_m1t.1_l-P2"/>
     </spatial>
-    <spatial name="MF_m1t.2_l_tendon">
+    <spatial class="myotorso" name="MF_m1t.2_l_tendon">
       <site site="MF_m1t.2_l_MF_m1t.2_l-P1"/>
       <site site="MF_m1t.2_l_MF_m1t.2_l-P2"/>
     </spatial>
-    <spatial name="MF_m1t.3_l_tendon">
+    <spatial class="myotorso" name="MF_m1t.3_l_tendon">
       <site site="MF_m1t.3_l_MF_m1t.3_l-P1"/>
       <site site="MF_m1t.3_l_MF_m1t.3_l-P2"/>
     </spatial>
-    <spatial name="MF_m2s_l_tendon">
+    <spatial class="myotorso" name="MF_m2s_l_tendon">
       <site site="MF_m2s_l_MF_m2s_l-P1"/>
       <site site="MF_m2s_l_MF_m2s_l-P2"/>
     </spatial>
-    <spatial name="MF_m2t.1_l_tendon">
+    <spatial class="myotorso" name="MF_m2t.1_l_tendon">
       <site site="MF_m2t.1_l_MF_m2t.1_l-P1"/>
       <site site="MF_m2t.1_l_MF_m2t.1_l-P2"/>
     </spatial>
-    <spatial name="MF_m2t.2_l_tendon">
+    <spatial class="myotorso" name="MF_m2t.2_l_tendon">
       <site site="MF_m2t.2_l_MF_m2t.2_l-P1"/>
       <site site="MF_m2t.2_l_MF_m2t.2_l-P2"/>
     </spatial>
-    <spatial name="MF_m2t.3_l_tendon">
+    <spatial class="myotorso" name="MF_m2t.3_l_tendon">
       <site site="MF_m2t.3_l_MF_m2t.3_l-P1"/>
       <site site="MF_m2t.3_l_MF_m2t.3_l-P2"/>
     </spatial>
-    <spatial name="MF_m3s_l_tendon">
+    <spatial class="myotorso" name="MF_m3s_l_tendon">
       <site site="MF_m3s_l_MF_m3s_l-P1"/>
       <site site="MF_m3s_l_MF_m3s_l-P2"/>
     </spatial>
-    <spatial name="MF_m3t.1_l_tendon">
+    <spatial class="myotorso" name="MF_m3t.1_l_tendon">
       <site site="MF_m3t.1_l_MF_m3t.1_l-P1"/>
       <site site="MF_m3t.1_l_MF_m3t.1_l-P2"/>
     </spatial>
-    <spatial name="MF_m3t.2_l_tendon">
+    <spatial class="myotorso" name="MF_m3t.2_l_tendon">
       <site site="MF_m3t.2_l_MF_m3t.2_l-P1"/>
       <site site="MF_m3t.2_l_MF_m3t.2_l-P2"/>
     </spatial>
-    <spatial name="MF_m3t.3_l_tendon">
+    <spatial class="myotorso" name="MF_m3t.3_l_tendon">
       <site site="MF_m3t.3_l_MF_m3t.3_l-P1"/>
       <site site="MF_m3t.3_l_MF_m3t.3_l-P2"/>
     </spatial>
-    <spatial name="MF_m4s_l_tendon">
+    <spatial class="myotorso" name="MF_m4s_l_tendon">
       <site site="MF_m4s_l_MF_m4s_l-P1"/>
       <site site="MF_m4s_l_MF_m4s_l-P2"/>
     </spatial>
-    <spatial name="MF_m4t.1_l_tendon">
+    <spatial class="myotorso" name="MF_m4t.1_l_tendon">
       <site site="MF_m4t.1_l_MF_m4t.1_l-P1"/>
       <site site="MF_m4t.1_l_MF_m4t.1_l-P2"/>
     </spatial>
-    <spatial name="MF_m4t.2_l_tendon">
+    <spatial class="myotorso" name="MF_m4t.2_l_tendon">
       <site site="MF_m4t.2_l_MF_m4t.2_l-P1"/>
       <site site="MF_m4t.2_l_MF_m4t.2_l-P2"/>
     </spatial>
-    <spatial name="MF_m4t.3_l_tendon">
+    <spatial class="myotorso" name="MF_m4t.3_l_tendon">
       <site site="MF_m4t.3_l_MF_m4t.3_l-P1"/>
       <site site="MF_m4t.3_l_MF_m4t.3_l-P2"/>
     </spatial>
-    <spatial name="MF_m5s_l_tendon">
+    <spatial class="myotorso" name="MF_m5s_l_tendon">
       <site site="MF_m5s_l_MF_m5s_l-P1"/>
       <site site="MF_m5s_l_MF_m5s_l-P2"/>
     </spatial>
-    <spatial name="MF_m5t.1_l_tendon">
+    <spatial class="myotorso" name="MF_m5t.1_l_tendon">
       <site site="MF_m5t.1_l_MF_m5t.1_l-P1"/>
       <site site="MF_m5t.1_l_MF_m5t.1_l-P2"/>
     </spatial>
-    <spatial name="MF_m5t.2_l_tendon">
+    <spatial class="myotorso" name="MF_m5t.2_l_tendon">
       <site site="MF_m5t.2_l_MF_m5t.2_l-P1"/>
       <site site="MF_m5t.2_l_MF_m5t.2_l-P2"/>
     </spatial>
-    <spatial name="MF_m5t.3_l_tendon">
+    <spatial class="myotorso" name="MF_m5t.3_l_tendon">
       <site site="MF_m5t.3_l_MF_m5t.3_l-P1"/>
       <site site="MF_m5t.3_l_MF_m5t.3_l-P2"/>
     </spatial>
-    <spatial name="MF_m1.laminar_l_tendon">
+    <spatial class="myotorso" name="MF_m1.laminar_l_tendon">
       <site site="MF_m1.laminar_l_MF_m1.laminar_l-P1"/>
       <site site="MF_m1.laminar_l_MF_m1.laminar_l-P2"/>
     </spatial>
-    <spatial name="MF_m2.laminar_l_tendon">
+    <spatial class="myotorso" name="MF_m2.laminar_l_tendon">
       <site site="MF_m2.laminar_l_MF_m2.laminar_l-P1"/>
       <site site="MF_m2.laminar_l_MF_m2.laminar_l-P2"/>
     </spatial>
-    <spatial name="MF_m3.laminar_l_tendon">
+    <spatial class="myotorso" name="MF_m3.laminar_l_tendon">
       <site site="MF_m3.laminar_l_MF_m3.laminar_l-P1"/>
       <site site="MF_m3.laminar_l_MF_m3.laminar_l-P2"/>
     </spatial>
-    <spatial name="MF_m4.laminar_l_tendon">
+    <spatial class="myotorso" name="MF_m4.laminar_l_tendon">
       <site site="MF_m4.laminar_l_MF_m4.laminar_l-P1"/>
       <site site="MF_m4.laminar_l_MF_m4.laminar_l-P2"/>
     </spatial>
-    <spatial name="MF_m5.laminar_l_tendon">
+    <spatial class="myotorso" name="MF_m5.laminar_l_tendon">
       <site site="MF_m5.laminar_l_MF_m5.laminar_l-P1"/>
       <site site="MF_m5.laminar_l_MF_m5.laminar_l-P2"/>
     </spatial>
-    <spatial name="EO1_r_tendon">
+    <spatial class="myotorso" name="EO1_r_tendon">
       <site site="EO1_r_EO1_r-P1"/>
       <site site="EO1_r_EO1_r-P2"/>
     </spatial>
-    <spatial name="EO2_r_tendon">
+    <spatial class="myotorso" name="EO2_r_tendon">
       <site site="EO2_r_EO2_r-P1"/>
       <site site="EO2_r_EO2_r-P2"/>
     </spatial>
-    <spatial name="EO3_r_tendon">
+    <spatial class="myotorso" name="EO3_r_tendon">
       <site site="EO3_r_EO3_r-P1"/>
       <site site="EO3_r_EO3_r-P2"/>
     </spatial>
-    <spatial name="EO4_r_tendon">
+    <spatial class="myotorso" name="EO4_r_tendon">
       <site site="EO4_r_EO4_r-P1"/>
       <site site="EO4_r_default"/>
     </spatial>
-    <spatial name="EO5_r_tendon">
+    <spatial class="myotorso" name="EO5_r_tendon">
       <site site="EO5_r_EO5_r-P1"/>
       <site site="EO5_r_EO5_r-P2"/>
     </spatial>
-    <spatial name="EO6_r_tendon">
+    <spatial class="myotorso" name="EO6_r_tendon">
       <site site="EO6_r_EO6_r-P1"/>
       <site site="EO6_r_EO6_r-P2"/>
     </spatial>
-    <spatial name="IO1_r_tendon">
+    <spatial class="myotorso" name="IO1_r_tendon">
       <site site="IO1_r_IO1_r-P1"/>
       <site site="IO1_r_IO1_r-P2"/>
     </spatial>
-    <spatial name="IO2_r_tendon">
+    <spatial class="myotorso" name="IO2_r_tendon">
       <site site="IO2_r_IO2_r-P1"/>
       <site site="IO2_r_IO2_r-P2"/>
     </spatial>
-    <spatial name="IO3_r_tendon">
+    <spatial class="myotorso" name="IO3_r_tendon">
       <site site="IO3_r_IO3_r-P1"/>
       <site site="IO3_r_IO3_r-P2"/>
     </spatial>
-    <spatial name="IO4_r_tendon">
+    <spatial class="myotorso" name="IO4_r_tendon">
       <site site="IO4_r_IO4_r-P1"/>
       <site site="IO4_r_IO4_r-P2"/>
     </spatial>
-    <spatial name="IO5_r_tendon">
+    <spatial class="myotorso" name="IO5_r_tendon">
       <site site="IO5_r_IO5_r-P1"/>
       <site site="IO5_r_IO5_r-P2"/>
     </spatial>
-    <spatial name="IO6_r_tendon">
+    <spatial class="myotorso" name="IO6_r_tendon">
       <site site="IO6_r_IO6_r-P1"/>
       <site site="IO6_r_IO6_r-P2"/>
     </spatial>
-    <spatial name="EO1_l_tendon">
+    <spatial class="myotorso" name="EO1_l_tendon">
       <site site="EO1_l_EO1_l-P1"/>
       <site site="EO1_l_EO1_l-P2"/>
     </spatial>
-    <spatial name="EO2_l_tendon">
+    <spatial class="myotorso" name="EO2_l_tendon">
       <site site="EO2_l_EO2_l-P1"/>
       <site site="EO2_l_EO2_l-P2"/>
     </spatial>
-    <spatial name="EO3_l_tendon">
+    <spatial class="myotorso" name="EO3_l_tendon">
       <site site="EO3_l_EO3_l-P1"/>
       <site site="EO3_l_EO3_l-P2"/>
     </spatial>
-    <spatial name="EO4_l_tendon">
+    <spatial class="myotorso" name="EO4_l_tendon">
       <site site="EO4_l_EO4_l-P1"/>
       <site site="EO4_l_EO4_l-P2"/>
     </spatial>
-    <spatial name="EO5_l_tendon">
+    <spatial class="myotorso" name="EO5_l_tendon">
       <site site="EO5_l_EO5_l-P1"/>
       <site site="EO5_l_EO5_l-P2"/>
     </spatial>
-    <spatial name="EO6_l_tendon">
+    <spatial class="myotorso" name="EO6_l_tendon">
       <site site="EO6_l_EO6_l-P1"/>
       <site site="EO6_l_EO6_l-P2"/>
     </spatial>
-    <spatial name="IO1_l_tendon">
+    <spatial class="myotorso" name="IO1_l_tendon">
       <site site="IO1_l_IO1_l-P1"/>
       <site site="IO1_l_IO1_l-P2"/>
     </spatial>
-    <spatial name="IO2_l_tendon">
+    <spatial class="myotorso" name="IO2_l_tendon">
       <site site="IO2_l_IO2_l-P1"/>
       <site site="IO2_l_IO2_l-P2"/>
     </spatial>
-    <spatial name="IO3_l_tendon">
+    <spatial class="myotorso" name="IO3_l_tendon">
       <site site="IO3_l_IO3_l-P1"/>
       <site site="IO3_l_IO3_l-P2"/>
     </spatial>
-    <spatial name="IO4_l_tendon">
+    <spatial class="myotorso" name="IO4_l_tendon">
       <site site="IO4_l_IO4_l-P1"/>
       <site site="IO4_l_IO4_l-P2"/>
     </spatial>
-    <spatial name="IO5_l_tendon">
+    <spatial class="myotorso" name="IO5_l_tendon">
       <site site="IO5_l_IO5_l-P1"/>
       <site site="IO5_l_IO5_l-P2"/>
     </spatial>
-    <spatial name="IO6_l_tendon">
+    <spatial class="myotorso" name="IO6_l_tendon">
       <site site="IO6_l_IO6_l-P1"/>
       <site site="IO6_l_IO6_l-P2"/>
     </spatial>
