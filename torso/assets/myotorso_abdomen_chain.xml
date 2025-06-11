@@ -9,7 +9,7 @@
 
 <!-- WARNING: This file is a duplicate of myoupperbody_chain.xml with two lines commented out. All updates should be made to myoupperbody_chain.xml and synced here when ready -->
 
-    <body name="scarum" pos="0 0 0" quat="0.707035 0.707179 0 0" childclass="myotorso">
+    <body name="sacrum" pos="0 0 0" quat="0.707035 0.707179 0 0" childclass="myotorso">
         <inertial diaginertia="0.1028 0.0871 0.0579" mass="11.777" pos="-0.0707 0 0"/>
         <geom mesh="sacrum" name="sacrum" type="mesh"/>
 
