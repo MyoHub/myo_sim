@@ -6,8 +6,10 @@
                  Mohamed Irfan Refai, Guillaume Durandau, Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
   License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
   ====================================================== -->
-    <body name="pelvis_torso" pos="0 0 0" quat="0.707035 0.707179 0 0">
-      <inertial pos="0 0 0" mass="0.001" diaginertia="0.001 0.001 0.001"/>
+    <body name="sacrum" pos="0 0 0" quat="0.707035 0.707179 0 0" childclass="myotorso">
+      <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="7.486" diaginertia="0.08 0.075 0.03"/>
+
+      <!-- pelvis sites -->
       <site name="Ps_L1_VB_r_Ps_L1_VB_r-P2" pos="-0.0238 -0.057 0.0759"/>
       <site name="Ps_L1_TP_r_Ps_L1_TP_r-P2" pos="-0.0238 -0.057 0.0759"/>
       <site name="Ps_L1_L2_IVD_r_Ps_L1_L2_IVD_r-P2" pos="-0.0238 -0.057 0.0759"/>
@@ -124,10 +126,8 @@
       <site name="IO4_l_IO4_l-P2" pos="-0.05738 0.0588991 -0.11049"/>
       <site name="IO5_l_IO5_l-P2" pos="-0.0848889 0.065154 -0.09145"/>
       <site name="IO6_l_IO6_l-P2" pos="-0.1096 0.0608563 -0.0697"/>
-    </body>
-    <body name="sacrum" pos="0 0 0" quat="0.707035 0.707179 0 0">
-      <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="7.486" diaginertia="0.08 0.075 0.03"/>
-      <geom name="sacrum_geom_1" type="mesh" rgba="1 1 1 1" mesh="sacrum_geom_1_sacrum"/>
+      <!-- lumbar sites -->
+      <geom name="sacrum_geom_1" type="mesh" mesh="sacrum_geom_1_sacrum"/>
       <site name="LTpT_T7_r_LTpT_t7_R-P1" pos="-0.131317 0.0605127 0.00027686"/>
       <site name="LTpT_T8_r_LTpT_t8_R-P1" pos="-0.142901 0.0502456 0.00037451"/>
       <site name="LTpT_T9_r_LTpT_t9_R-P1" pos="-0.165822 0.0268352 0"/>
@@ -174,7 +174,7 @@
       <site name="MF_m5t.2_l_MF_m5t.2_l-P1" pos="-0.163116 0.0256618 -0.01171"/>
       <site name="MF_m5t.3_l_MF_m5t.3_l-P1" pos="-0.152276 0.0425844 -0.0116"/>
       <site name="MF_m4.laminar_l_MF_m4.laminar_l-P1" pos="-0.12536 0.0774879 -0.01934"/>
-      <body name="lumbar5" pos="-0.098 0.071 0" euler="0 0 -0.05">
+      <body name="lumbar5" pos="-0.108 0.061 0" euler="0 0 -0.3">
         <inertial pos="0.053744 0.02 0" quat="0.707107 0 0 0.707107" mass="1.824" diaginertia="0.01765 0.01219 0.00546"/>
         <geom name="back_cylinder_s" size="0.07 0.13" pos="-0.118 0.0768 0" class="myoBack_wrap"/>
         <site name="back_cylinder_s_IL_L1_r_1_sidesite" pos="-0.0340058 0.0977894 -0.00109894" class="sidesite"/>
@@ -190,11 +190,11 @@
         <site name="back_cylinder_s_LTpT_R12_l_2_sidesite" pos="-0.03691 0.06919 -0.03508" class="sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_l_1_sidesite" pos="-0.0910785 -0.00276905 0.0534791" class="sidesite"/>
         <site name="back_cylinder_s_LTpL_L1_r_1_sidesite" pos="-0.0370101 0.0990854 -0.0777896" class="sidesite"/>
-        <site name="back_cylinder_s_LTpL_L1_l_1_sidesite" pos="-0.0370101 0.0990854 0.0777896" class="sidesite"/>  
+        <site name="back_cylinder_s_LTpL_L1_l_1_sidesite" pos="-0.0370101 0.0990854 0.0777896" class="sidesite"/>
         <joint name="flex_extension" pos="0 0 0" axis="0 0 1" range="-1.35 0.7538"/>
         <joint name="lat_bending" pos="0 0 0" axis="1 0 0" range="-0.4363 0.4363"/>
         <joint name="axial_rotation" pos="0 0 0" axis="0 1 0" range="-0.7854 0.7854"/>
-        <geom name="lumbar5_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar5_geom_1_lumbar5"/>
+        <geom name="lumbar5_geom_1" type="mesh" mesh="lumbar5_geom_1_lumbar5"/>
         <site name="Ps_L5_TP_r_Ps_L5_TP_r-P1" pos="-0.00562001 0.0291398 0.0252881"/>
         <site name="Ps_L5_VB_r_Ps_L5_VB_r-P1" pos="0.01 0.01241 0.019"/>
         <site name="Ps_L5_TP_l_Ps_L5_TP_l-P1" pos="-0.00562001 0.0291398 -0.02529"/>
@@ -247,7 +247,7 @@
           <joint name="L4_L5_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.18607 0.083953"/>
           <joint name="L4_L5_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0889703 0.089703"/>
           <joint name="L4_L5_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.3168812 0.3168812"/>
-          <geom name="lumbar4_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar4_geom_1_lumbar4"/>
+          <geom name="lumbar4_geom_1" type="mesh"  mesh="lumbar4_geom_1_lumbar4"/>
           <site name="Ps_L4_TP_r_Ps_L4_TP_r-P1" pos="-0.015649 0.0249464 0.0258768"/>
           <site name="Ps_L4_L5_IVD_r_Ps_L4_L5_IVD_r-P1" pos="0.00541963 0.00394754 0.0205966"/>
           <site name="Ps_L4_TP_l_Ps_L4_TP_l-P1" pos="-0.015649 0.0249464 -0.02588"/>
@@ -304,12 +304,12 @@
           <site name="MF_m4t.3_l_MF_m4t.3_l-P2" pos="-0.0441 0.00017 -0.00288"/>
           <site name="MF_m2.laminar_l_MF_m2.laminar_l-P1" pos="-0.0305622 0.0335037 -0.01694"/>
           <site name="MF_m4.laminar_l_MF_m4.laminar_l-P2" pos="-0.0321153 0.00581344 -0.00694"/>
-          <body name="lumbar3" pos="0.0006 0.0312 0">
+          <body name="lumbar3" pos="0.0006 0.0312 0" euler="0 0 0.2">
             <inertial pos="0.0136848 0.018 0" quat="0.707107 0 0 0.707107" mass="1.67" diaginertia="0.01608 0.01066 0.00551"/>
             <joint name="L3_L4_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.249288 0.0925752"/>
             <joint name="L3_L4_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.1568935 0.1568935"/>
             <joint name="L3_L4_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.02968812 0.02968812"/>
-            <geom name="lumbar3_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar3_geom_1_lumbar3"/>
+            <geom name="lumbar3_geom_1" type="mesh"  mesh="lumbar3_geom_1_lumbar3"/>
             <site name="Ps_L3_TP_r_Ps_L3_TP_r-P1" pos="-0.0245065 0.0207283 0.0282599"/>
             <site name="Ps_L3_L4_IVD_r_Ps_L3_L4_IVD_r-P1" pos="0.00115193 0.00621063 0.0211533"/>
             <site name="Ps_L3_TP_l_Ps_L3_TP_l-P1" pos="-0.0245065 0.0207283 -0.02826"/>
@@ -373,7 +373,7 @@
               <joint name="L2_L3_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.282282 0.1048278"/>
               <joint name="L2_L3_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.159075 0.159075"/>
               <joint name="L2_L3_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.10442594 0.10442594"/>
-              <geom name="lumbar2_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar2_geom_1_lumbar2"/>
+              <geom name="lumbar2_geom_1" type="mesh"  mesh="lumbar2_geom_1_lumbar2"/>
               <site name="Ps_L2_TP_r_Ps_L2_TP_r-P1" pos="-0.0216214 0.014587 0.022249"/>
               <site name="Ps_L2_L3_IVD_r_Ps_L2_L3_IVD_r-P1" pos="0.00196252 0.00338519 0.0214479"/>
               <site name="Ps_L2_TP_l_Ps_L2_TP_l-P1" pos="-0.0216214 0.014587 -0.02225"/>
@@ -453,7 +453,7 @@
                 <joint name="L1_L2_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.31161 0.115719"/>
                 <joint name="L1_L2_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0820244 0.0820244"/>
                 <joint name="L1_L2_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.08269806 0.08269806"/>
-                <geom name="lumbar1_geom_1" type="mesh" rgba="1 1 1 1" mesh="lumbar1_geom_1_lumbar1"/>
+                <geom name="lumbar1_geom_1" type="mesh"  mesh="lumbar1_geom_1_lumbar1"/>
                 <site name="Ps_L1_VB_r_Ps_L1_VB_r-P1" pos="-0.0101595 0.02327 0.02"/>
                 <site name="Ps_L1_TP_r_Ps_L1_TP_r-P1" pos="-0.02325 0.0146584 0.0226252"/>
                 <site name="Ps_L1_L2_IVD_r_Ps_L1_L2_IVD_r-P1" pos="-0.00125362 0.00350798 0.0206834"/>
@@ -484,19 +484,22 @@
                 <site name="MF_m1.laminar_l_MF_m1.laminar_l-P2" pos="-0.0341019 -0.00560525 -0.00619"/>
                 <body name="torso" pos="-0.018 -0.085 0" euler="0 0 -0.33">
                   <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
-                  <geom name="torso_geom_1" pos="-0.019 0.121 0" quat="0.980067 0 0 0.198669" type="mesh" rgba="1 1 1 1" mesh="torso_geom_1_thoracic12_s"/>
-                  <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh" rgba="1 1 1 1" mesh="torso_geom_2_thoracic11_s"/>
-                  <geom name="torso_geom_3" pos="-0.04 0.171 0" quat="0.997189 0 0 0.0749297" type="mesh" rgba="1 1 1 1" mesh="torso_geom_3_thoracic10_s"/>
-                  <geom name="torso_geom_4" pos="-0.043 0.198 0" quat="0.99875 0 0 0.0499792" type="mesh" rgba="1 1 1 1" mesh="torso_geom_4_thoracic9_s"/>
-                  <geom name="torso_geom_5" pos="-0.045 0.223 0" quat="0.9998 0 0 -0.0199987" type="mesh" rgba="1 1 1 1" mesh="torso_geom_5_thoracic8_s"/>
-                  <geom name="torso_geom_6" pos="-0.044 0.249 0" quat="0.99955 0 0 -0.0299955" type="mesh" rgba="1 1 1 1" mesh="torso_geom_6_thoracic7_s"/>
-                  <geom name="torso_geom_7" pos="-0.043 0.27 0" quat="0.99955 0 0 -0.0299955" type="mesh" rgba="1 1 1 1" mesh="torso_geom_7_thoracic6_s"/>
-                  <geom name="torso_geom_8" pos="-0.041 0.292 0" quat="0.99875 0 0 -0.0499792" type="mesh" rgba="1 1 1 1" mesh="torso_geom_8_thoracic5_s"/>
-                  <geom name="torso_geom_9" pos="-0.0395 0.314 0" quat="0.997189 0 0 -0.0749297" type="mesh" rgba="1 1 1 1" mesh="torso_geom_9_thoracic4_s"/>
-                  <geom name="torso_geom_10" pos="-0.036 0.337 0" quat="0.995004 0 0 -0.0998334" type="mesh" rgba="1 1 1 1" mesh="torso_geom_10_thoracic3_s"/>
-                  <geom name="torso_geom_11" pos="-0.032 0.358 0" quat="0.992198 0 0 -0.124675" type="mesh" rgba="1 1 1 1" mesh="torso_geom_11_thoracic2_s"/>
-                  <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh" rgba="1 1 1 1" mesh="torso_geom_12_thoracic1_s"/>
-                  <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh" rgba="1 1 1 1" mesh="torso_geom_13_ribcage_s"/>
+                  <body name="head_attach" pos="-0.005 -0.01 0">
+                    <include file="../../myo_sim/head/assets/myohead_rigid_chain.xml"/>
+                  </body>
+                  <geom name="torso_geom_1" pos="-0.019 0.121 0" quat="0.980067 0 0 0.198669" type="mesh"  mesh="torso_geom_1_thoracic12_s"/>
+                  <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh"  mesh="torso_geom_2_thoracic11_s"/>
+                  <geom name="torso_geom_3" pos="-0.04 0.171 0" quat="0.997189 0 0 0.0749297" type="mesh"  mesh="torso_geom_3_thoracic10_s"/>
+                  <geom name="torso_geom_4" pos="-0.043 0.198 0" quat="0.99875 0 0 0.0499792" type="mesh"  mesh="torso_geom_4_thoracic9_s"/>
+                  <geom name="torso_geom_5" pos="-0.045 0.223 0" quat="0.9998 0 0 -0.0199987" type="mesh"  mesh="torso_geom_5_thoracic8_s"/>
+                  <geom name="torso_geom_6" pos="-0.044 0.249 0" quat="0.99955 0 0 -0.0299955" type="mesh"  mesh="torso_geom_6_thoracic7_s"/>
+                  <geom name="torso_geom_7" pos="-0.043 0.27 0" quat="0.99955 0 0 -0.0299955" type="mesh"  mesh="torso_geom_7_thoracic6_s"/>
+                  <geom name="torso_geom_8" pos="-0.041 0.292 0" quat="0.99875 0 0 -0.0499792" type="mesh"  mesh="torso_geom_8_thoracic5_s"/>
+                  <geom name="torso_geom_9" pos="-0.0395 0.314 0" quat="0.997189 0 0 -0.0749297" type="mesh"  mesh="torso_geom_9_thoracic4_s"/>
+                  <geom name="torso_geom_10" pos="-0.036 0.337 0" quat="0.995004 0 0 -0.0998334" type="mesh"  mesh="torso_geom_10_thoracic3_s"/>
+                  <geom name="torso_geom_11" pos="-0.032 0.358 0" quat="0.992198 0 0 -0.124675" type="mesh"  mesh="torso_geom_11_thoracic2_s"/>
+                  <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh"  mesh="torso_geom_12_thoracic1_s"/>
+                  <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh"  mesh="torso_geom_13_ribcage_s"/>
                   <geom type="capsule" class="myotorso_coll" size="0.080 0.077" pos=".036 -.020 0" euler="0 0 1.57"/>
                   <geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
                   <geom type="capsule" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
