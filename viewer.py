@@ -15,6 +15,8 @@ from mujoco.viewer import launch
 # model with both arms, use for testing, doesn't have muscles
 model = mujoco.MjModel.from_xml_path("myo_sim/arm/truetest.xml") 
 
+model = mujoco.MjModel.from_xml_path("myo_sim/leg/myolegs_abdomen.xml") 
+
 
 data = mujoco.MjData(model)
 

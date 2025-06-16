@@ -773,6 +773,8 @@
     </tendon>
 
     <actuator>
+
+
         <general name="DELT1" tendon="DELT1_tendon" biasprm="0.33707 1.53316 1051.85 1 0 1.8 10 0.518315 1.4 0" class="upperarm_muscle_arm" gainprm="0.33707 1.53316 1051.85 1 0 1.8 10 0.518315 1.4 0" lengthrange="0.123363 0.240922"/>
         <general name="DELT2" tendon="DELT2_tendon" biasprm="0.110248 1.27804 909.342 1 0 1.8 10 1.73447 1.4 0" class="upperarm_muscle_arm" gainprm="0.110248 1.27804 909.342 1 0 1.8 10 1.73447 1.4 0" lengthrange="0.14984 0.207283"/>
         <general name="DELT3" tendon="DELT3_tendon" biasprm="0.236598 1.33978 163.23 1 0 1.8 10 0.873711 1.4 0" class="upperarm_muscle_arm" gainprm="0.236598 1.33978 163.23 1 0 1.8 10 0.873711 1.4 0" lengthrange="0.0701623 0.192737"/>
@@ -797,6 +799,9 @@
         <general name="BICshort" tendon="BICshort_tendon" biasprm="0.486445 1.50858 270.82 1 0 1.8 10 1.80875 1.4 0" class="upperarm_muscle_arm" gainprm="0.486445 1.50858 270.82 1 0 1.8 10 1.80875 1.4 0" lengthrange="0.268189 0.449579"/>
         <general name="BRA" tendon="BRA_tendon" biasprm="0.526201 1.21956 1168.76 1 0 1.8 10 0.920725 1.4 0" class="upperarm_muscle_arm" gainprm="0.526201 1.21956 1168.76 1 0 1.8 10 0.920725 1.4 0" lengthrange="0.105976 0.14593"/>
         <general name="BRD" tendon="BRD_tendon" biasprm="0.130305 1.37938 272.486 1 0 1.8 10 0.93764 1.4 0" class="upperarm_muscle_arm" gainprm="0.130305 1.37938 272.486 1 0 1.8 10 0.93764 1.4 0" lengthrange="0.200364 0.32774"/>
+        
+        
+        
         <muscle name="ECRL" force = "337.3" class="forearm_muscle_arm" tendon="ECRL_tendon" lengthrange="0.313191 0.341072"/>
         <muscle name="ECRB" force = "252.2" class="forearm_muscle_arm" tendon="ECRB_tendon" lengthrange="0.26997 0.301495"/>
         <muscle name="ECU"  force = "192.9" class="forearm_muscle_arm" tendon="ECU_tendon" lengthrange="0.279041 0.306754"/>
