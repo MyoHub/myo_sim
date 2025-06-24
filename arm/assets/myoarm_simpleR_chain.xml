@@ -1,0 +1,41 @@
+<mujocoinclude model="MyoArmR_Simple">
+<!-- =================================================
+    Copyright 2025 Vikash Kumar, Vittorio Caggiano
+    Model	:: MyoArm (MuJoCoV3.2.4)
+    Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+    source  :: https://github.com/vikashplus
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+    <body name="humerus_r" pos="0.003155 0.3715 0.17" childclass="myoarmR">
+        <joint axis="0 0 1" name="arm_flex_r" pos="0 0 0" range="-1.5708 1.5708"/>
+        <joint axis="1 0 0" name="arm_add_r" pos="0 0 0" range="-2.0944 1.5708"/>
+        <joint axis="0 1 0" name="arm_rot_r" pos="0 0 0" range="-1.5708 1.5708"/>
+        <geom mesh="humerus_rv" name="humerus_rv" type="mesh"/>
+        <geom type="capsule" class="myoarmR_coll" size="0.042 0.130" pos="0 -.13 0" euler="1.57 0 0"/>
+        <site name="RSJC" pos="0 0 0"/>
+        <site name="RUA1" pos="0 -0.05 0.02"/>
+        <site name="RUA2" pos="0 -0.2 0.02"/>
+        <site name="RUA3" pos="0.03 -0.13 0.02"/>
+        <site name="RLEL" pos="0.015 -0.28 0.04"/>
+        <site name="RMEL" pos="0.0022 -0.286 -0.046"/>
+        <body name="ulna_r" pos="0.013144 -0.286273 -0.009595">
+            <joint axis="0.226047 0.022269 0.973862" name="elbow_flex_r" pos="0 0 0" range="0 2.618"/>
+            <geom mesh="ulna_rv" name="ulna_rv" type="mesh"/>
+            <geom type="capsule" class="myoarmR_coll" size="0.030" fromto="-.01 0 0.01 -0.015 -0.235841 0.0361" euler="1.4 0.1 0.12"/>
+            <site name="RFAsuperior" pos="0.0046 -0.0801 0.0453"/>
+            <site name="REJC" pos="0 0 0"/>
+            <body name="radius_r" pos="-0.006727 -0.013007 0.026083">
+                <joint axis="0.056398 0.998406 0.001952" name="pro_sup_r" pos="0 0 0" range="0 1.5708"/>
+                <geom mesh="radius_rv" name="radius_rv" type="mesh"/>
+                <site name="RFAradius" pos="0.0005 -0.225 0.05"/>
+                <site name="RFAulna" pos="-0.022 -0.225 -0.022"/>
+                <body name="hand_r" pos="-0.008797 -0.235841 0.01361">
+                    <joint axis="0 0 1" name="wrist_flex_r" pos="0 0 0" range="-1.22173 1.22173"/>
+                    <joint axis="1 0 0" name="wrist_dev_r" pos="0 0 0" range="-0.436332 0.610865"/>
+                    <geom type="ellipsoid" size=".015 .07 .03" pos="0 -.06 0"/>
+                </body>
+            </body>
+        </body>
+    </body>
+
+</mujocoinclude>

@@ -19,6 +19,7 @@ model_paths = [
             "elbow/myoelbow_1dof6muscles_1dofSoftexo_sim2.xml",
 
             # arms
+            "arm/myoarm_simple.xml",
             "arm/myoarm.xml",
 
             # hand models
@@ -29,8 +30,18 @@ model_paths = [
             "leg/myolegs_abdomen.xml",
             "osl/myolegs_osl.xml",
 
+            # head
+            "head/myohead_simple.xml",
+
             # torso
+            "torso/myotorso.xml",
+            "torso/myotorso_exosuit.xml",
             "torso/myotorso_rigid.xml",
+            "torso/myotorso_abdomen.xml",
+
+            # full body models
+            "body/myobody.xml",
+            "body/myoupperbody.xml",
 
             # scene
             "scene/myosuite_scene_noPedestal.xml",

@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<mujoco model="MyoSuite's MyoFullBody Model">
+
+<!-- =================================================
+	Copyright 2024
+	Model	:: MyoFull (MuJoCoV3.0)
+	Author	:: Huiyi Wang, Guillaume Durandau, Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+    <include file="../scene/myosuite_scene_noPedestal.xml"/>
+    <include file="../torso/assets/myotorso_assets.xml"/>
+    <include file="../leg/assets/myolegs_assets.xml"/>
+    <include file="../leg/assets/myolegs_tendon.xml"/>
+    <include file="../leg/assets/myolegs_muscle.xml"/>
+    <compiler angle="radian" meshdir=".." texturedir=".."/>
+
+    <worldbody>
+        <body name="Full Body" pos="-.025 0.1 1">
+            <include file="../torso/assets/myotorso_chain.xml"/>
+            <include file="../leg/assets/myolegs_chain.xml"/>
+            <freejoint name = 'root'/>
+        </body>
+    </worldbody>
+    
+    <keyframe>
+        <key qpos='.036 0.045 0.9802 0.819 0.162 -0.184 0.872 -0.522 -0.057 -0.035 0.000 0.000 0.000 -0.284 -0.022 -0.037 -0.094 0.009 -0.036 0.103 0.051 -0.010 0.298 0.102 0.070 -0.279 -0.039 -0.614 -0.014 -0.006 -0.023 0.135 0.448 -0.228 -0.029 0.000 0.000 0.000 0.000 -0.705 -0.185 -0.278 0.031 -0.027 -0.063 0.254 -0.233 -0.007 -0.062 0.000 0.000 0.000 0.000'/>
+    </keyframe>
+
+</mujoco>

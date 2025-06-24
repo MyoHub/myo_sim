@@ -1,0 +1,55 @@
+
+<mujocoinclude model="MyoArmR_Simple">
+<!-- =================================================
+    Copyright 2025 Vikash Kumar, Vittorio Caggiano
+    Model	:: MyoArm (MuJoCoV3.2.4)
+    Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+    source  :: https://github.com/vikashplus
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+    <default>
+        <default class="myoarmR">
+            <joint armature="0.01" damping="0.5" limited="true"/>
+            <geom margin="0.001" material="mat_myoarmR" rgba="0.8 0.85 0.8 1" conaffinity="0" contype="0"/>
+            <site size="0.001 0.005 0.005" group="3"/>
+            <tendon rgba="0.95 0.3 0.3 1" width="0.001"/>
+            <default class="myoarmR_coll">
+                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001"/>
+            </default>
+            <default class="myoarmR_wrap">
+                <geom type="capsule" group="3" contype="0" conaffinity="0" rgba="0.5 0.5 .7 .2"/>
+            </default>
+            <default class="myoarmR_muscle">
+                <general biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biastype="muscle" ctrllimited="true" ctrlrange="0 1" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" dyntype="muscle" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" gaintype="muscle"/>
+            </default>
+            <default class="myoarmR_marker">
+                <site size="0.02" group="4" rgba="0.8 0.8 .2 1"/>
+            </default>
+        </default>
+    </default>
+
+    <asset>
+        <texture name="tex_myoarmR" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
+        <material name="mat_myoarmR" texture="tex_myoarmR" texuniform="true"/>
+        <mesh file="../myo_sim/meshes/humerus_rv.stl" name="humerus_rv"/>
+        <mesh file="../myo_sim/meshes/ulna_rv.stl" name="ulna_rv"/>
+        <mesh file="../myo_sim/meshes/radius_rv.stl" name="radius_rv"/>
+    </asset>
+
+
+
+    <actuator>
+
+        <general biasprm="0 0 2 2 0 0 0 0 0 0" class="myoarmR" gainprm="2 0 2 2 0 0 0 0 0 0" joint="arm_flex_r" name="shoulder_flex_r"/>
+        <general biasprm="0 0 2 2 0 0 0 0 0 0" class="myoarmR" gainprm="2 0 2 2 0 0 0 0 0 0" joint="arm_add_r" name="shoulder_add_r"/>
+        <general biasprm="0 0 2 2 0 0 0 0 0 0" class="myoarmR" gainprm="2 0 2 2 0 0 0 0 0 0" joint="arm_rot_r" name="shoulder_rot_r"/>
+
+        <general biasprm="0 0 2 2 0 0 0 0 0 0" class="myoarmR" gainprm="2 0 2 2 0 0 0 0 0 0" joint="elbow_flex_r" name="elbow_flex_r"/>
+
+        <general biasprm="0 0 1 1 0 0 0 0 0 0" class="myoarmR" gainprm="1 0 1 1 0 0 0 0 0 0" joint="pro_sup_r" name="pro_sup_r"/>
+        <general biasprm="0 0 1 1 0 0 0 0 0 0" class="myoarmR" gainprm="1 0 1 1 0 0 0 0 0 0" joint="wrist_flex_r" name="wrist_flex_r"/>
+        <general biasprm="0 0 1 1 0 0 0 0 0 0" class="myoarmR" gainprm="1 0 1 1 0 0 0 0 0 0" joint="wrist_dev_r" name="wrist_dev_r"/>
+
+    </actuator>
+
+</mujocoinclude>

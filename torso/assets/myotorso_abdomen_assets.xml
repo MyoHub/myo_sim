@@ -1,12 +1,11 @@
-<mujocoinclude model="MyoTorsoSimple_v0.0.1">
+<mujocoinclude model="MyoTorsoAbdomen">
 <!-- =================================================
-	Copyright 2020 Vikash Kumar, Vittorio Caggiano
-	Model	:: Myo Legs (MuJoCoV2.0)
-	Author	:: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
-	source	:: https://github.com/vikashplus
-	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+    Copyright 2025 Vikash Kumar, Vittorio Caggiano
+    Model	:: Myo Torso (MuJoCoV3.2.4)
+    Author	:: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
+    source	:: https://github.com/MyoHub/myosuite
+    License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ====================================================== -->
-
     <default>
         <default class="myotorso">
             <joint armature="0.01" damping="0.5" limited="true"/>
@@ -14,7 +13,7 @@
             <site size="0.001 0.005 0.005" group="3"/>
             <tendon rgba="0.95 0.3 0.3 1" width="0.001"/>
             <default class="myotorso_coll">
-                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001"/>
+                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" margin="0.001" material="MatSkin_myotorso"/>
             </default>
             <default class="myotorso_wrap">
                 <geom type="capsule" group="3" contype="0" conaffinity="0" rgba="0.5 0.5 .7 .2"/>
@@ -31,42 +30,40 @@
     <asset>
         <texture name="tex_myotorso" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
         <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
-        <mesh file="../myo_sim/meshes/torso_lowpoly-v1.stl" name="torso"/>
-
-        <mesh file="../myo_sim/meshes/sacrum.stl" name="pelvis_geom_1_sacrum"/>
-        <mesh file="../myo_sim/meshes/hat_spine.stl" name="torso_geom_1_hat_spine"/>
-        <mesh file="../myo_sim/meshes/hat_jaw.stl" name="torso_geom_2_hat_jaw"/>
-        <mesh file="../myo_sim/meshes/hat_skull.stl" name="torso_geom_3_hat_skull"/>
-        <mesh file="../myo_sim/meshes/hat_ribs_scap.stl" name="torso_geom_4_hat_ribs"/>
-
-        <material name="MatSkin_myotorso" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.9 .7 1 1"/>
+        <material name="MatSkin_myotorso" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.8 0.7 .5 .1" />
+        <mesh file="../myo_sim/meshes/sacrum.stl" name="sacrum"/>
+        <mesh file="../myo_sim/meshes/hat_lumbar.stl" name="hat_lumbar"/>
+        <mesh file="../myo_sim/meshes/hat_thoracic.stl" name="hat_thoracic"/>
+        <mesh file="../myo_sim/meshes/hat_ribs_scap.stl" name="hat_ribs"/>
     </asset>
+    <include file="../../myo_sim/head/assets/myohead_simple_assets.xml"/>
 
-     <tendon>
-        <spatial name="ercspn_r_tendon">
+
+    <tendon>
+        <spatial name="ercspn_r_tendon" class="myotorso">
             <site site="ercspn_r_ercspn_r-P1"/>
             <geom geom="pelvis_wrap"/>
             <site site="ercspn_r_ercspn_r-P2"/>
         </spatial>
-        <spatial name="ercspn_l_tendon">
+        <spatial name="ercspn_l_tendon" class="myotorso">
             <site site="ercspn_l_ercspn_l-P1"/>
             <geom geom="pelvis_wrap"/>
             <site site="ercspn_l_ercspn_l-P2"/>
         </spatial>
 
-        <spatial name="intobl_r_tendon">
+        <spatial name="intobl_r_tendon" class="myotorso">
             <site site="intobl_r_intobl_r-P1"/>
             <site site="intobl_r_intobl_r-P2"/>
         </spatial>
-        <spatial name="intobl_l_tendon">
+        <spatial name="intobl_l_tendon" class="myotorso">
             <site site="intobl_l_intobl_l-P1"/>
             <site site="intobl_l_intobl_l-P2"/>
         </spatial>
-        <spatial name="extobl_r_tendon">
+        <spatial name="extobl_r_tendon" class="myotorso">
             <site site="extobl_r_extobl_r-P1"/>
             <site site="extobl_r_extobl_r-P2"/>
         </spatial>
-        <spatial name="extobl_l_tendon">
+        <spatial name="extobl_l_tendon" class="myotorso">
             <site site="extobl_l_extobl_l-P1"/>
             <site site="extobl_l_extobl_l-P2"/>
         </spatial>

@@ -15,7 +15,6 @@
         <geom name="l_pelvis_col" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 -.07" euler="-.2 0 0" mass="2"/>
         <geom mesh="r_pelvis" name="r_pelvis" type="mesh"/>
         <geom mesh="l_pelvis" name="l_pelvis" type="mesh"/>
-        <geom mesh="sacrum" name="sacrum" type="mesh"/>
         <geom name="Gmax1_at_pelvis_r_wrap" pos="-0.077 -0.099 0.061" quat="0.931256 -0.288071 0.213142 -0.0659324" class="wrap" size="0.04 0.075"/>
         <geom name="Gmax2_at_pelvis_r_wrap" pos="-0.08 -0.083 0.068" quat="0.912872 -0.359331 0.180301 -0.0709714" class="wrap" size="0.04 0.05"/>
         <geom name="Gmax3_at_pelvis_r_wrap" pos="-0.083 -0.088 0.068" quat="0.99875 -0.0499792 0 0" class="wrap" size="0.04 0.05"/>
@@ -180,7 +179,7 @@
                 <body name="osl_femoral_pylon" pos="0 -0.02829 0">
 
                     <site name="r_socket_load_force" type="box" pos="0 0.105 0.005" size="0.02 0.003 0.02" euler="0 0 0" group="3" rgba="0.8 0.2 .2 .4" />
-					
+
                     <inertial pos="0 0 0" mass="0.0220583" diaginertia="0.001 0.001 0.001"/>
                     <geom name="osl_femoral_pylon_geom_1" type="cylinder" size="0.012 0.028394449243889931" quat="0.707035 0.707179 0 0" rgba="0 0 0 1.0" condim="3" contype="1"/>
                     <body name="osl_proximal_adapter" pos="0 -0.08441 -0.006">
@@ -198,16 +197,16 @@
 								<inertial pos="-0.00665 0.04539 0.00924" quat="0.612323 0.440299 -0.442253 0.485396" mass="1.739" diaginertia="0.00535042 0.00492977 0.0030318"/>
 								<geom name="osl_ankle_assembly_geom_1" type="mesh" rgba="0.071 0.169 0.62 1" mesh="osl_ankle_assembly_geom_1_osl_ankle_v2" condim="3" contype="1"/>
 								<site name="r_osl_load_force" type="box" pos="0 0.105 0.005" size="0.02 0.003 0.02" euler="0 0 0" group="3" rgba="0.8 0.2 .2 .4" />
-								
+
 								<body name="osl_foot_assembly">
 									<inertial pos="0.064562 -0.048401 0.004732" quat="0.482413 0.245831 0.66522 0.514127" mass="0.291" diaginertia="0.00145886 0.00139898 0.001"/>
 									<joint name="osl_ankle_angle_r" pos="0 0 0" axis="0 0 1" range="-0.5236 0.5236"/>
                                     <geom name="osl_foot_assembly_geom_1" type="mesh" rgba="0 0 0 1" mesh="osl_foot_assembly_geom_1_osl_custom_foot_v2"/>
-									
+
 									<geom name="osl_foot_col1" size=".012" class="coll" fromto="0.19 -0.05 0.007    -0.03 -0.05 0.007" group="5"/>
 									<geom name="osl_foot_col2" size=".012" class="coll" fromto="0.182 -0.05 0.028    -0.03 -0.05 0.028" group="5"/>
 									<geom name="osl_foot_col3" size=".012" class="coll" fromto="0.182 -0.05 -0.015    -0.03 -0.05 -0.015" group="5"/>
-									
+
 									<site name="r_osl_foot_touch" type="box" pos="0.08 -0.052 0" size=".12 .01 .05" euler="0 0 0" class="myo_leg_touch"/>
 									<site name="r_heel_btm" type="sphere" pos="-0.04 -0.055 0.007" size="0.01" group="3" rgba="0 1 0 0.4"/>
 									<site name="r_toe_btm" type="sphere" pos="0.19 -0.055 0.007" size="0.01" group="3" rgba="0 1 0 0.4"/>
