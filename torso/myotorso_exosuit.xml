@@ -8,7 +8,7 @@
   ====================================================== -->
 
   <include file="../scene/myosuite_scene.xml"/>
-  <include file="assets/myoTorso_assets.xml"/>
+  <include file="assets/myotorso_assets.xml"/>
   <compiler meshdir=".." texturedir=".."/>
 
   <default class="main">
@@ -27,7 +27,7 @@
 
   <worldbody>
     <body name="full_body" pos=".005 0.1 0.93">
-      <include file="assets/myoTorso_chain.xml"/>
+      <include file="assets/myotorso_chain.xml"/>
     </body>
 
     <body name="exo_pelvis" pos="-.035 0.1 0.979" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
@@ -80,5 +80,9 @@
         <site site="Lower_Exo_Right_Leg"/>
     </spatial>
   </tendon>
+
+  <keyframe>
+    <key qpos="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -0.0951 0.091 1.05 0.707035 0.707179 0 0 -0.13 0.0975 1.06 0.707035 0.707179 0 0"/>
+  </keyframe>
 
 </mujoco>
