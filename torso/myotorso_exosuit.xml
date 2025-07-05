@@ -9,6 +9,7 @@
 
   <include file="../scene/myosuite_scene.xml"/>
   <include file="assets/myotorso_assets.xml"/>
+  <include file="../../myo_sim/head/assets/myohead_simple_assets.xml"/>
   <compiler meshdir=".." texturedir=".."/>
 
   <default class="main">
