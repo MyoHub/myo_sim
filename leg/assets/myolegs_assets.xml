@@ -28,7 +28,7 @@
                 <geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"  type="cylinder"/>
             </default>
             <default class="coll">
-                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001" material="MatSkin"/>
+                <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001" material="MatSkin_myoleg"/>
             </default>
             <default class="myo_leg_touch">
                 <site type="box" group="3" rgba="0.8 0.2 .2 .4"/>
@@ -64,6 +64,7 @@
     <asset>
         <texture name="tex_myolegs" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
         <material name="mat_myolegs" texture="tex_myolegs" texuniform="true"/>
+        <material name="MatSkin_myoleg" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.8 0.7 .5 .1" />
         
         <mesh file="../myo_sim/meshes/r_pelvis.stl" name="r_pelvis"/>
         <mesh file="../myo_sim/meshes/l_pelvis.stl" name="l_pelvis"/>

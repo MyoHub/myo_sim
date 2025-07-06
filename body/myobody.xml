@@ -9,6 +9,7 @@
 ====================================================== -->
     <include file="../scene/myosuite_scene_noPedestal.xml"/>
     <include file="../torso/assets/myotorso_assets.xml"/>
+    <include file="../../myo_sim/head/assets/myohead_simple_assets.xml"/>
     <include file="../leg/assets/myolegs_assets.xml"/>
     <include file="../leg/assets/myolegs_tendon.xml"/>
     <include file="../leg/assets/myolegs_muscle.xml"/>

@@ -31,7 +31,7 @@
       <include file="assets/myotorso_chain.xml"/>
     </body>
 
-    <body name="exo_pelvis" pos="-.035 0.1 0.979" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
+    <body name="exo_pelvis" pos="-.025 0.1 0.979" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
       <geom name="lower_exo_legs_geom" type="mesh" euler="1.57 3.14 -1.57" pos="-0.08 0.1 0" mesh="lower_exo_legs_geom_1"/>
       <site name="Lower_Exo_Left_Leg" pos="-0.08 -0.15 -0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
       <site name="Lower_Exo_Right_Leg" pos="-0.08 -0.15 0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
@@ -46,7 +46,7 @@
       <geom name="lower_exo_belt_geom" type="mesh" euler="1.57 3.14 -1.57" pos="0.03 0.03 0" mesh="lower_exo_belt_geom_1" mass="0.094"/>
     </body>
 
-    <body name="exo_torso" pos="-0.130 0.0975 1.06" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
+    <body name="exo_torso" pos="-0.111 0.0995 1.06" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
       <freejoint/>
       <geom name="upper_exo_geom" type="mesh" euler="1.57 3.14 1.57" pos="0.01 0.165 0" mesh="upper_exo_geom_1"/>
       <geom name="Exo_cylinder" size="0.105 0.13" pos="0.025 0.03 0" class="myoBack_wrap"/>
