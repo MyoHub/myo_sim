@@ -8,6 +8,7 @@
   ====================================================== -->
 
   <include file="assets/myotorso_assets.xml"/>
+  <include file="../head/assets/myohead_simple_assets.xml"/>
   <include file="../scene/myosuite_scene.xml"/>
   <compiler meshdir=".." texturedir=".."/>
 
