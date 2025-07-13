@@ -10,13 +10,13 @@ jobs:
     strategy:
       matrix:
         mujoco-version: [3.1.6, 3.2.4]
-        python-version: [3.9, 3.10, 3.11, 3.12, 3.13]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
         exclude:
           # Exclude incompatible combinations
           - mujoco-version: 3.1.6
-            python-version: 3.11
+            python-version: "3.11"
           - mujoco-version: 3.1.6
-            python-version: 3.12
+            python-version: "3.12"
 
     steps:
     - name: Checkout code
