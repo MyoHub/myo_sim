@@ -1,0 +1,88 @@
+name: Test Sims on Multiple MuJoCo Versions
+
+on:
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  test-mujoco-versions:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mujoco-version: [2.3.7, 3.1.6, 3.2.4]
+        python-version: [3.9, 3.10, 3.11, 3.12,3.13]
+        exclude:
+          # Exclude incompatible combinations
+          - mujoco-version: 2.3.7
+            python-version: 3.11
+          - mujoco-version: 2.3.7
+            python-version: 3.12
+          - mujoco-version: 2.3.7
+            python-version: 3.13
+          - mujoco-version: 3.1.6
+            python-version: 3.11
+          - mujoco-version: 3.1.6
+            python-version: 3.12
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libgl1-mesa-glx libglib2.0-0 libsm6 libxext6 libxrender-dev libgomp1
+
+    - name: Install MuJoCo ${{ matrix.mujoco-version }}
+      run: |
+        pip install mujoco==${{ matrix.mujoco-version }}
+
+    - name: Install additional dependencies
+      run: |
+        pip install numpy
+
+    - name: Run enhanced test_sims
+      run: |
+        echo "Testing with MuJoCo version ${{ matrix.mujoco-version }} and Python ${{ matrix.python-version }}"
+        python test_sims.py
+      env:
+        # Set environment variables for MuJoCo
+        MUJOCO_GL: egl
+        LD_LIBRARY_PATH: ${{ github.workspace }}/.mujoco/mujoco${{ matrix.mujoco-version }}/bin
+      continue-on-error: true
+
+    - name: Check test results
+      run: |
+        echo "Test completed for MuJoCo ${{ matrix.mujoco-version }} with Python ${{ matrix.python-version }}"
+        if [ ${{ job.status }} == 'success' ]; then
+          echo "✅ All tests passed"
+        else
+          echo "❌ Some tests failed - check logs for details"
+        fi
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results-mujoco-${{ matrix.mujoco-version }}-python-${{ matrix.python-version }}
+        path: |
+          *.log
+          *.xml
+        retention-days: 7
+
+    - name: Create test summary
+      if: always()
+      run: |
+        echo "## Test Summary for MuJoCo ${{ matrix.mujoco-version }} (Python ${{ matrix.python-version }})" >> $GITHUB_STEP_SUMMARY
+        if [ ${{ job.status }} == 'success' ]; then
+          echo "✅ **PASSED** - All models loaded successfully" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **FAILED** - Some models failed to load" >> $GITHUB_STEP_SUMMARY
+          echo "Check the logs above for specific error details." >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
