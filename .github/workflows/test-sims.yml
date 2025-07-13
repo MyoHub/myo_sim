@@ -9,16 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        mujoco-version: [2.3.7, 3.1.6, 3.2.4]
-        python-version: [3.9, 3.10, 3.11, 3.12,3.13]
+        mujoco-version: [3.1.6, 3.2.4]
+        python-version: [3.9, 3.10, 3.11, 3.12, 3.13]
         exclude:
           # Exclude incompatible combinations
-          - mujoco-version: 2.3.7
-            python-version: 3.11
-          - mujoco-version: 2.3.7
-            python-version: 3.12
-          - mujoco-version: 2.3.7
-            python-version: 3.13
           - mujoco-version: 3.1.6
             python-version: 3.11
           - mujoco-version: 3.1.6
@@ -67,7 +61,7 @@ jobs:
 
     - name: Upload test results
       if: always()
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: test-results-mujoco-${{ matrix.mujoco-version }}-python-${{ matrix.python-version }}
         path: |
