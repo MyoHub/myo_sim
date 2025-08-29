@@ -1,0 +1,45 @@
+Wed Aug 20 18:51:34 2025
+WARNING: mju_openResource: could not open resource '../scene/myosuite_scene_noPedestal.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:34 2025
+WARNING: mju_openResource: could not open resource '../torso/assets/myotorso_rigid_assets.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:34 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_assets.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:34 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_tendon.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:34 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_muscle.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:34 2025
+WARNING: mju_openResource: could not open resource '../torso/assets/myotorso_rigid_chain.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:34 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_chain.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:57 2025
+WARNING: mju_openResource: could not open resource '../scene/myosuite_scene_noPedestal.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:57 2025
+WARNING: mju_openResource: could not open resource '../torso/assets/myotorso_rigid_assets.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:57 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_assets.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:57 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_tendon.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:57 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_muscle.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:57 2025
+WARNING: mju_openResource: could not open resource '../torso/assets/myotorso_rigid_chain.xml' with default provider at slot 1
+
+Wed Aug 20 18:51:57 2025
+WARNING: mju_openResource: could not open resource '../leg/assets/myolegs_chain.xml' with default provider at slot 1
+
+Wed Aug 20 18:52:10 2025
+WARNING: Nan, Inf or huge value in QACC at DOF 6. The simulation is unstable. Time = 12.3960.
+

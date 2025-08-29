@@ -104,6 +104,7 @@
         <site name="PS_at_brim_l_site_psoas_l_side" pos="-0.0209166 -0.0856869 -0.0790765"/>
         <site name="IL_at_brim_r_site_iliacus_r_side" pos="-0.02526034 -0.0256276 0.0928915"/>
         <site name="IL_at_brim_l_site_iliacus_l_side" pos="-0.00526034 -0.0756276 -0.0828915"/>
+
         <body name="femur_r" pos="-0.056276 -0.07849 0.07726">
             <site name="hip_r" class="myo_leg_marker"/>
             <inertial pos="0 -0.195 -0.0005" quat="0.708013 -0.7062 0 0" mass="8.4" diaginertia="0.1694 0.1694 0.0245269" />
@@ -181,6 +182,7 @@
                 <joint axis="-3.98373e-10 -0.0707131 -0.997497" name="knee_angle_r" pos="0 0 0" range="0 2.0944"/>
                 <joint axis="0.992246 0.123982 -0.00878916" name="knee_angle_r_rotation2" pos="0 0 0" range="-0.00167821 0.0335354"/>
                 <joint axis="-0.124293 0.989762 -0.0701648" name="knee_angle_r_rotation3" pos="0 0 0" range="1.08939e-08 0.262788"/>
+                
                 <geom name="r_tibia1_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 .0025" mass="3.8"/> <!-- 14cms -->
                 <geom name="r_tibia2_col" size=".048" class="coll" fromto="-0.01 -0.14 .0025 -0.01 -0.35 .005" mass="3.8"/>
                 <geom mesh="r_tibia" name="r_tibia" type="mesh"/>
@@ -194,23 +196,10 @@
                 <site name="bflh_r-P2" pos="-0.0337 -0.035 0.0253"/>
                 <site name="bflh_r-P3" pos="-0.0287 -0.0455 0.0303"/>
                 <site name="bfsh_r-P2" pos="-0.0301 -0.0419 0.0318"/>
-                <site name="edl_r-P1" pos="-0.016 -0.1157 0.0205"/>
-                <site name="edl_r-P2" pos="0.0164 -0.376 0.0112"/>
-                <site name="ehl_r-P1" pos="-0.014 -0.155 0.0189"/>
-                <site name="ehl_r-P2" pos="0.0071 -0.2909 0.0164"/>
-                <site name="ehl_r-P3" pos="0.02 -0.3693 -0.0028"/>
-                <site name="fdl_r-P1" pos="-0.0023 -0.1832 -0.0018"/>
-                <site name="fdl_r-P2" pos="-0.0176 -0.3645 -0.0124"/>
-                <site name="fhl_r-P1" pos="-0.031 -0.2163 0.02"/>
-                <site name="fhl_r-P2" pos="-0.0242 -0.3671 -0.0076"/>
+
                 <site name="grac_r-P2" pos="-0.0184 -0.0476 -0.0296"/>
                 <site name="grac_r-P3" pos="0.0018 -0.0696 -0.0157"/>
-                <site name="perbrev_r-P1" pos="-0.0243 -0.2532 0.0251"/>
-                <site name="perbrev_r-P2" pos="-0.0339 -0.3893 0.0249"/>
-                <site name="perbrev_r-P3" pos="-0.0285 -0.4004 0.0255"/>
-                <site name="perlong_r-P1" pos="-0.02 -0.1373 0.0282"/>
-                <site name="perlong_r-P2" pos="-0.0317 -0.39 0.0237"/>
-                <site name="perlong_r-P3" pos="-0.0272 -0.4014 0.024"/>
+
                 <site name="recfem_r-P5" pos="0.0326 -0.0631 -0.0005"/>
                 <site name="sart_r-P3" pos="-0.0251 -0.0401 -0.0365"/>
                 <site name="sart_r-P4" pos="-0.0159 -0.0599 -0.0264"/>
@@ -218,11 +207,9 @@
                 <site name="semimem_r-P2" pos="-0.029 -0.0417 -0.0196"/>
                 <site name="semiten_r-P2" pos="-0.0312 -0.0508 -0.0229"/>
                 <site name="semiten_r-P3" pos="0.0019 -0.0773 -0.0117"/>
-                <site name="soleus_r-P1" pos="-0.0076 -0.0916 0.0098"/>
+                
                 <site name="tfl_r-P4" pos="0.0108 -0.041 0.0346"/>
-                <site name="tibant_r-P1" pos="0.0154 -0.1312 0.0162"/>
-                <site name="tibant_r-P2" pos="0.0251 -0.1906 0.0128"/>
-                <site name="tibant_r-P3" pos="0.0233 -0.3659 -0.0132"/>
+                
                 <site name="tibpost_r-P1" pos="-0.0041 -0.1304 0.0103"/>
                 <site name="tibpost_r-P2" pos="-0.0164 -0.3655 -0.0175"/>
                 <site name="vasint_r-P5" pos="0.0326 -0.0632 0.0004"/>
@@ -241,63 +228,129 @@
                 <site name="SM_at_condyles_r_site_semimem_r_side" pos="-0.0387876 -0.035171 -0.0182577"/>
                 <site name="ST_at_condyles_r_site_semiten_r_side" pos="-0.0428471 -0.0468901 -0.0181631"/>
                 <site name="BF_at_gastroc_r_site_bfsh_r_side" pos="-0.0687049 -0.0256284 0.0426731"/>
-                <body name="talus_r" pos="-0.01 -0.4 0">
-                    <site name="ankle_r" class="myo_leg_marker"/>
-                    <joint axis="-0.105014 -0.174022 0.979126" name="ankle_angle_r" pos="0 0 0" range="-0.698132 0.523599"/>
-                    <geom mesh="r_talus" name="r_talus" type="mesh"/>
-                    <site name="RAJC" pos="0 0 0"/>
-                    <body name="calcn_r" pos="-0.04877 -0.04195 0.00792">
-                        <inertial pos="0.0821377 0.0108024 -0.000944392" quat="0.502987 0.541341 0.493601 0.458598" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
-                        <joint axis="0.78718 0.604747 -0.120949" name="subtalar_angle_r" pos="0 0 0" range="-0.349066 0.349066"/>
-                        <geom mesh="r_foot" name="r_foot" type="mesh"/>
-                        <site name="edl_r-P3" pos="0.0919 0.036 0.0008"/>
-                        <site name="edl_r-P4" pos="0.1616 0.0055 0.013"/>
-                        <site name="ehl_r-P4" pos="0.097 0.0389 -0.0211"/>
-                        <site name="ehl_r-P5" pos="0.1293 0.0309 -0.0257"/>
-                        <site name="ehl_r-P6" pos="0.1734 0.0139 -0.028"/>
-                        <site name="fdl_r-P3" pos="0.0436 0.0315 -0.028"/>
-                        <site name="fdl_r-P4" pos="0.0708 0.0176 -0.0263"/>
-                        <site name="fdl_r-P5" pos="0.1658 -0.0081 0.0116"/>
-                        <site name="fhl_r-P3" pos="0.0374 0.0276 -0.0241"/>
-                        <site name="fhl_r-P4" pos="0.1038 0.0068 -0.0256"/>
-                        <site name="fhl_r-P5" pos="0.1726 -0.0053 -0.0269"/>
-                        <site name="gaslat_r-P2" pos="0.0044 0.031 -0.0053"/>
-                        <site name="gasmed_r-P2" pos="0.0044 0.031 -0.0053"/>
-                        <site name="perbrev_r-P4" pos="0.0471 0.027 0.0233"/>
-                        <site name="perbrev_r-P5" pos="0.0677 0.0219 0.0343"/>
-                        <site name="perlong_r-P4" pos="0.0438 0.023 0.0221"/>
-                        <site name="perlong_r-P5" pos="0.0681 0.0106 0.0284"/>
-                        <site name="perlong_r-P6" pos="0.0852 0.0069 0.0118"/>
-                        <site name="perlong_r-P7" pos="0.1203 0.0085 -0.0184"/>
-                        <site name="soleus_r-P2" pos="0.0044 0.031 -0.0053"/>
-                        <site name="tibant_r-P4" pos="0.1166 0.0178 -0.0305"/>
-                        <site name="tibpost_r-P3" pos="0.0417 0.0334 -0.0286"/>
-                        <site name="tibpost_r-P4" pos="0.0772 0.0159 -0.0281"/>
-                        <site name="RCAL" pos="-0.025 0.02 -0.005"/>
-                        <site name="RTOE" pos="0.205 0.0297 -0.03"/>
-                        <site name="RMT5" pos="0.145 0.0249 0.059"/>
-                        <geom name="r_foot_col1" size=".02" class="coll" fromto="0.175 0 -.03 0.010 0 -.01"/>
-                        <!-- <geom name="l_foot_col2" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
-                        <geom name="r_foot_col3" size=".02" class="coll" fromto="0.140 0 0.03 0.010 0 0.01"/>
-                        <geom name="r_foot_col4" type="ellipsoid" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
-                        <site name="r_foot_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+               	<site name="soleus_r-P1" pos="-0.0024 -0.1533 0.0071"/>
+                <site name="tib_post_r-P1" pos="-0.0094 -0.1348 0.0019"/>
+                <site name="tib_post_r-P2" pos="-0.0144 -0.4051 -0.0229"/>
+                <site name="flex_dig_r-P1" pos="-0.0083 -0.2046 -0.0018"/>
+                <site name="flex_dig_r-P2" pos="-0.0154 -0.4051 -0.0196"/>
+                <site name="flex_hal_r-P1" pos="-0.0079 -0.2334 0.0244"/>
+                <site name="flex_hal_r-P2" pos="-0.0186 -0.4079 -0.0174"/>
+                <site name="tib_ant_r-P1" pos="0.0179 -0.1624 0.0115"/>
+                <site name="tib_ant_r-P2" pos="0.0305443 -0.397232 -0.0186437"/>
+                <site name="per_brev_r-P1" pos="-0.007 -0.2646 0.0325"/>
+                <site name="per_brev_r-P2" pos="-0.0198 -0.4184 0.0283"/>
+                <site name="per_brev_r-P3" pos="-0.0144 -0.4295 0.0289"/>
+                <site name="per_long_r-P1" pos="0.0005 -0.1568 0.0362"/>
+                <site name="per_long_r-P2" pos="-0.0207 -0.4205 0.0286"/>
+                <site name="per_long_r-P3" pos="-0.0170034 -0.433003 0.0274162"/>
+                <site name="per_tert_r-P1" pos="0.001 -0.2804 0.0231"/>
+                <site name="per_tert_r-P2" pos="0.0229 -0.4069 0.0159"/>
+                <site name="ext_dig_r-P1" pos="0.0032 -0.1381 0.0276"/>
+                <site name="ext_dig_r-P2" pos="0.0289 -0.4007 0.0072"/>
+                <site name="ext_hal_r-P1" pos="0.0012 -0.1767 0.0228"/>
+                <site name="ext_hal_r-P2" pos="0.0326 -0.3985 -0.0085"/>
+                <site name="RMKN_marker" pos="0.0009981 -0.04072 -0.04659" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="RLKN_marker" pos="-0.0006334 -0.04555 0.05765" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="RS1_marker" pos="0.06673 -0.1839 0.02305" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="RS2_marker" pos="0.047 -0.2169 0.07805" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="RS3_marker" pos="0.0656 -0.2554 0.02441" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="RMM_marker" pos="-0.006829 -0.4008 -0.03255" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="RLM_marker" pos="-0.001231 -0.4183 0.04629" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                    
+                <body name="r_talus" pos="-0.01 -0.4 0">
+				<inertial pos="0 0 0" mass="0.096588" diaginertia="0.00119861 0.00119861 0.00119861"/>
+				<joint name="ankle_flexion_r" pos="0 0 0" axis="0 0 -1" range="-1.047 1.047"/>
+				<joint name="ankle_in_ev_r" pos="0 0 0" axis="1 0 0" range="-0.0873 0.0873"/>
+				<joint name="ankle_rot_r" pos="0 0 0" axis="0 1 0" range="-0.0873 0.0873"/>
+				<geom name="r_talus" type="mesh" rgba="0.423529 0.356863 0.482353 1" mesh="r_talus"/>
+				<site name="tib_post_r-P3" pos="-0.00707004 -0.0135503 -0.02068"/>
+				<body name="r_calcaneus" pos="-0.01 -0.041 -0.005">
+					<inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0.6" diaginertia="0.0015 0.001 0.001"/>
+					<joint name="subtalar_angle_r" pos="0 0 0" axis="0.735667 0.615672 -0.282387" range="-0.5236 0.5236" user="6.56357e-07"/>
+					<geom name="r_calcaneus" type="mesh" rgba="0.207843 0.360784 0.490196 1" mesh="r_calcaneus"/>
+					<site name="soleus_r-P2" pos="-0.037 0.009 0.002"/>
+					<site name="flex_dig_r-P3" pos="-0.000170043 0.0245497 -0.01708"/>
+					<site name="flex_hal_r-P3" pos="-0.00637004 0.0206497 -0.01318"/>
+					<site name="per_brev_r-P4" pos="0.0191791 0.0148372 0.0293376"/>
+					<site name="per_long_r-P4" pos="-0.000199388 0.00839461 0.031292"/>
+					<site name="per_long_r-P5" pos="0.0252626 -0.00039412 0.0256567"/>
+					<site name="abd_hallucis_r-P1" pos="-0.00192222 -0.00779558 -0.0117445"/>
+					<site name="fdb_r-P1" pos="-0.00192222 -0.0117956 -0.0057445"/>
+					<site name="qp_r-P1" pos="-0.00192222 -0.0117956 -0.0007445"/>
+					<site name="RPC_marker" pos="-0.04565 0.02189 -0.0007668" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+					<site name="RDC_marker" pos="-0.04837 -0.003489 0.00457" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+					<site name="RLC_marker" pos="-0.002305 0.01 0.035" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+					<site name="RMC_marker" pos="0.02041 0.03 -0.03" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
 
-                        <body name="toes_r" pos="0.1788 -0.002 0.00108">
-                            <site name="toe_r" class="myo_leg_marker"/>
-                            <joint axis="0.580954 0 -0.813936" name="mtp_angle_r" pos="0 0 0" range="-0.523599 0.523599"/>
-                            <geom name="r_bofoot_col1" size=".0175 .045" class="coll" zaxis="0.880954 0 -0.813936" pos="0.04 0 .01"/>
-                            <geom name="r_bofoot_col2" size=".02 .040" class="coll" zaxis="0.580954 0 -0.813936" pos="0.01 0 0"/>
-                            <geom mesh="r_bofoot" name="r_bofoot" type="mesh"/>
-                            <site name="r_toes_touch" type="box" pos="0.0275 -.01 0" size=".04 .01 .0675" euler="0 -.7 0" class="myo_leg_touch"/>
-                            <site name="edl_r-P5" pos="0.0003 0.0047 0.0153"/>
-                            <site name="edl_r-P6" pos="0.0443 -0.0004 0.025"/>
-                            <site name="ehl_r-P7" pos="0.0298 0.0041 -0.0245"/>
-                            <site name="ehl_r-P8" pos="0.0563 0.0034 -0.0186"/>
-                            <site name="fdl_r-P6" pos="-0.0019 -0.0078 0.0147"/>
-                            <site name="fdl_r-P7" pos="0.0285 -0.0071 0.0215"/>
-                            <site name="fdl_r-P8" pos="0.0441 -0.006 0.0242"/>
-                            <site name="fhl_r-P6" pos="0.0155 -0.0064 -0.0265"/>
-                            <site name="fhl_r-P7" pos="0.0562 -0.0102 -0.0181"/>
+                    <site name="gaslat_r-P2" pos="0.0044 0.031 -0.0053"/>
+                    <site name="gasmed_r-P2" pos="0.0044 0.031 -0.0053"/>
+                    <site name="RCAL" pos="-0.025 0.02 -0.005"/>
+                    <site name="RTOE" pos="0.205 0.0297 -0.03"/>
+                    <site name="RMT5" pos="0.145 0.0249 0.059"/>
+                    <geom name="r_foot_col1" size=".02" class="coll" fromto="0.175 0 -.03 0.010 0 -.01"/>
+                    <geom name="r_foot_col3" size=".02" class="coll" fromto="0.140 0 0.03 0.010 0 0.01"/>
+                    <geom name="r_foot_col4" type="ellipsoid" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
+                    <site name="r_foot_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                    
+					<body name="r_midfoot" pos="0.047 0.025 0.004">
+						<inertial pos="0.0153464 0.00641489 0.000407659" quat="0 0.707107 0 0.707107" mass="0.20921" diaginertia="0.00101891 0.001 0.001"/>
+						<joint name="midtarsal_angle_r" pos="0 0 0" axis="0.800049 0.482653 -0.356325" range="-0.5236 0.5236"/>
+						<geom name="r_midfoot" type="mesh" rgba="0.752941 0.423529 0.517647 1" mesh="r_midfoot"/>
+						<site name="tib_post_r-P4" pos="0.00525116 -0.00614186 -0.0182003"/>
+						<site name="flex_dig_r-P4" pos="-0.01297 -0.0043503 -0.01538"/>
+						<site name="flex_hal_r-P4" pos="0.020835 -0.0131041 -0.0141225"/>
+						<site name="tib_ant_r-P3" pos="0.0162519 0.0160178 -0.0283645"/>
+						<site name="per_long_r-P6" pos="0.00721561 -0.0131329 0.0171062"/>
+						<site name="per_tert_r-P3" pos="0.00966191 0.00405524 0.0261885"/>
+						<site name="ext_dig_r-P3" pos="0.00842996 0.0168497 0.01082"/>
+						<site name="ext_hal_r-P3" pos="0.0130002 0.02 -0.011"/>
+						<site name="abd_hallucis_r-P2" pos="0.00530003 -0.0137476 -0.0159403"/>
+						<site name="qp_r-P2" pos="0.0220476 -0.0170057 0.00669157"/>
+						<site name="RNAV_marker" pos="-2.191e-05 0.01176 -0.03455" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+						<site name="RMB1_marker" pos="0.0331 0.01758 -0.02934" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+						<site name="RMB2_marker" pos="0.05012 0.02706 -0.0007471" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+						<site name="RMB5_marker" pos="0.004357 -0.006858 0.04243" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+						<body name="r_forefoot" pos="0.035 -0.005 0.006">
+							<inertial pos="0.03 0 0" quat="0 0.707107 0 0.707107" mass="0.40921" diaginertia="0.00101891 0.001 0.001"/>
+							<joint name="tarsometatarsal_angle_r" pos="0 0 0" axis="0.439515 0.477313 -0.76092" range="-0.5236 0.5236"/>
+							<geom name="r_forefoot" type="mesh" rgba="0.964706 0.447059 0.501961 1" mesh="r_forefoot"/>
+							<site name="flex_dig_r-P5" pos="0.0441986 -0.0258273 0.00332179"/>
+							<site name="flex_hal_r-P5" pos="0.0509308 -0.0271945 -0.0249394"/>
+							<site name="tib_ant_r-P4" pos="0.00343243 -0.00334339 -0.0302683"/>
+							<site name="per_brev_r-P5" pos="-0.0164368 -0.01 0.0376031"/>
+							<site name="per_long_r-P7" pos="0.0135423 -0.0121794 -0.0181136"/>
+							<site name="ext_dig_r-P4" pos="0.0553398 -0.00865731 0.0107553"/>
+							<site name="ext_hal_r-P4" pos="0.010767 0.012 -0.017"/>
+							<site name="ext_hal_r-P5" pos="0.054867 -0.007 -0.023"/>
+							<site name="abd_hallucis_r-P3" pos="0.055223 -0.0266786 -0.0307002"/>
+							<site name="fdb_r-P2" pos="0.0503283 -0.0308856 0.00424202"/>
+							<site name="RMH1_marker" pos="0.06666 -0.001754 -0.03477" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+							<site name="RMH2_marker" pos="0.06539 -0.0005206 0.0001208" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+							<site name="RMH5_marker" pos="0.04168 -0.008991 0.05089" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+							<body name="r_digits" pos="0.074 -0.03 -0.002">
+								<inertial pos="-2.26868e-05 0.00112435 9.2251e-05" quat="0 0.707107 0 0.707107" mass="0.15" diaginertia="0.001 0.001 0.001"/>
+								<joint name="mtp_angle_r" pos="0 0 0" axis="0.315797 0.263164 -0.911601" range="-1.047 0.5236"/>
+								<geom name="r_digits" type="mesh" rgba="0.270588 0.678431 0.658824 1" mesh="r_digits"/>
+								<site name="flex_dig_r-P6" pos="-0.00235137 -0.00550953 0.0142945"/>
+								<site name="flex_dig_r-P7" pos="0.0354878 -0.00423846 0.014584"/>
+								<site name="flex_hal_r-P6" pos="0.00616501 -0.00537005 -0.0218921"/>
+								<site name="flex_hal_r-P7" pos="0.046842 -0.0074141 -0.0219607"/>
+								<site name="ext_dig_r-P5" pos="0.00248646 0.0065668 0.0161441"/>
+								<site name="ext_dig_r-P6" pos="0.0357037 0.00426661 0.0151753"/>
+								<site name="ext_hal_r-P6" pos="0.0125408 0.0135643 -0.0194086"/>
+								<site name="ext_hal_r-P7" pos="0.0451029 0.00585829 -0.0216745"/>
+								<site name="abd_hallucis_r-P4" pos="0.00919066 -0.00488706 -0.0287385"/>
+								<site name="abd_hallucis_r-P5" pos="0.050027 -0.000200698 -0.032316"/>
+								<site name="fdb_r-P3" pos="0.0165979 -0.0062633 0.0152863"/>
+								<site name="RD1_marker" pos="0.05332 0.02 -0.02981" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+								<site name="RD2_marker" pos="0.04651 0.02 -0.0001268" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+								<site name="RD5_marker" pos="0.02534 0.02 0.03573" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                                <geom name="r_bofoot_col1" size=".0175 .045" class="coll" zaxis="0.880954 0 -0.813936" pos="0.04 0 .01"/>
+                                <geom name="r_bofoot_col2" size=".02 .040" class="coll" zaxis="0.580954 0 -0.813936" pos="0.01 0 0"/>
+                                <site name="r_toes_touch" type="box" pos="0.0275 -.01 0" size=".04 .01 .0675" euler="0 -.7 0" class="myo_leg_touch"/>
+                                
+                                </body>
+                            </body>
                         </body>
                     </body>
                 </body>
@@ -408,23 +461,10 @@
                 <site name="bflh_l-P2" pos="-0.0337 -0.035 -0.0253"/>
                 <site name="bflh_l-P3" pos="-0.0287 -0.0455 -0.0303"/>
                 <site name="bfsh_l-P2" pos="-0.0301 -0.0419 -0.0318"/>
-                <site name="edl_l-P1" pos="-0.016 -0.1157 -0.0205"/>
-                <site name="edl_l-P2" pos="0.0164 -0.376 -0.0112"/>
-                <site name="ehl_l-P1" pos="-0.014 -0.155 -0.0189"/>
-                <site name="ehl_l-P2" pos="0.0071 -0.2909 -0.0164"/>
-                <site name="ehl_l-P3" pos="0.02 -0.3693 0.0028"/>
-                <site name="fdl_l-P1" pos="-0.0023 -0.1832 0.0018"/>
-                <site name="fdl_l-P2" pos="-0.0176 -0.3645 0.0124"/>
-                <site name="fhl_l-P1" pos="-0.031 -0.2163 -0.02"/>
-                <site name="fhl_l-P2" pos="-0.0242 -0.3671 0.0076"/>
+                
                 <site name="grac_l-P2" pos="-0.0184 -0.0476 0.0296"/>
                 <site name="grac_l-P3" pos="0.0018 -0.0696 0.0157"/>
-                <site name="perbrev_l-P1" pos="-0.0243 -0.2532 -0.0251"/>
-                <site name="perbrev_l-P2" pos="-0.0339 -0.3893 -0.0249"/>
-                <site name="perbrev_l-P3" pos="-0.0285 -0.4004 -0.0255"/>
-                <site name="perlong_l-P1" pos="-0.02 -0.1373 -0.0282"/>
-                <site name="perlong_l-P2" pos="-0.0317 -0.39 -0.0237"/>
-                <site name="perlong_l-P3" pos="-0.0272 -0.4014 -0.024"/>
+                
                 <site name="recfem_l-P5" pos="0.0326 -0.0631 0.0005"/>
                 <site name="sart_l-P3" pos="-0.0251 -0.0401 0.0365"/>
                 <site name="sart_l-P4" pos="-0.0159 -0.0599 0.0264"/>
@@ -432,13 +472,9 @@
                 <site name="semimem_l-P2" pos="-0.029 -0.0417 0.0196"/>
                 <site name="semiten_l-P2" pos="-0.0312 -0.0508 0.0229"/>
                 <site name="semiten_l-P3" pos="0.0019 -0.0773 0.0117"/>
-                <site name="soleus_l-P1" pos="-0.0076 -0.0916 -0.0098"/>
+                
                 <site name="tfl_l-P4" pos="0.0108 -0.041 -0.0346"/>
-                <site name="tibant_l-P1" pos="0.0154 -0.1312 -0.0162"/>
-                <site name="tibant_l-P2" pos="0.0251 -0.1906 -0.0128"/>
-                <site name="tibant_l-P3" pos="0.0233 -0.3659 0.0132"/>
-                <site name="tibpost_l-P1" pos="-0.0041 -0.1304 -0.0103"/>
-                <site name="tibpost_l-P2" pos="-0.0164 -0.3655 0.0175"/>
+              
                 <site name="vasint_l-P5" pos="0.0326 -0.0632 -0.0004"/>
                 <site name="vaslat_l-P5" pos="0.0325 -0.0634 -0.0051"/>
                 <site name="vasmed_l-P5" pos="0.0319 -0.0636 0.0068"/>
@@ -455,38 +491,80 @@
                 <site name="SM_at_condyles_l_site_semimem_l_side" pos="-0.0387876 -0.035171 0.0182577"/>
                 <site name="ST_at_condyles_l_site_semiten_l_side" pos="-0.0428471 -0.0468901 0.0181631"/>
                 <site name="BF_at_gastroc_l_site_bfsh_l_side" pos="-0.0687049 -0.0256284 -0.0426731"/>
+                
+                
+            
+                
+                <site name="soleus_l-P1" pos="-0.0024 -0.1533 -0.0071"/>
+                <site name="tib_post_l-P1" pos="-0.0094 -0.1348 -0.0019"/>
+                <site name="tib_post_l-P2" pos="-0.0144 -0.4051 0.0229"/>
+                <site name="flex_dig_l-P1" pos="-0.0083 -0.2046 0.0018"/>
+                <site name="flex_dig_l-P2" pos="-0.0154 -0.4051 0.0196"/>
+                <site name="flex_hal_l-P1" pos="-0.0079 -0.2334 -0.0244"/>
+                <site name="flex_hal_l-P2" pos="-0.0186 -0.4079 0.0174"/>
+                <site name="tib_ant_l-P1" pos="0.0179 -0.1624 -0.0115"/>
+                <site name="tib_ant_l-P2" pos="0.0305443 -0.397232 0.0186437"/>
+                <site name="per_brev_l-P1" pos="-0.007 -0.2646 -0.0325"/>
+                <site name="per_brev_l-P2" pos="-0.0198 -0.4184 -0.0283"/>
+                <site name="per_brev_l-P3" pos="-0.0144 -0.4295 -0.0289"/>
+                <site name="per_long_l-P1" pos="0.0005 -0.1568 -0.0362"/>
+                <site name="per_long_l-P2" pos="-0.0207 -0.4205 -0.0286"/>
+                <site name="per_long_l-P3" pos="-0.0170034 -0.433003 -0.0274162"/>
+                <site name="per_tert_l-P1" pos="0.001 -0.2804 -0.0231"/>
+                <site name="per_tert_l-P2" pos="0.0229 -0.4069 -0.0159"/>
+                <site name="ext_dig_l-P1" pos="0.0032 -0.1381 -0.0276"/>
+                <site name="ext_dig_l-P2" pos="0.0289 -0.4007 -0.0072"/>
+                <site name="ext_hal_l-P1" pos="0.0012 -0.1767 -0.0228"/>
+                <site name="ext_hal_l-P2" pos="0.0326 -0.3985 0.0085"/>
+
+                <site name="LMKN_marker" pos="0.0009981 -0.04072 0.04659" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="LLKN_marker" pos="-0.0006334 -0.04555 -0.05765" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="LS1_marker" pos="0.06673 -0.1839 -0.02305" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="LS2_marker" pos="0.047 -0.2169 -0.07805" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="LS3_marker" pos="0.0656 -0.2554 -0.02441" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="LMM_marker" pos="-0.006829 -0.4008 0.03255" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                <site name="LLM_marker" pos="-0.001231 -0.4183 -0.04629" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+            
+
+
+
                 <body name="talus_l" pos="-0.01 -0.4 0">
+                    <inertial mass="0.096588" pos="0 0 0" fullinertia="0.00119861 0.00119861 0.00119861 0 0 0"/>
+                    <geom name="talus_l_geom_1" type="mesh" mesh="l_talus" rgba="1 1 1 1" group="0"/>
+                    
+
+                    <joint name="ankle_flexion_l" range="-1.047 1.047" limited="true" user="0.0" ref="0" axis="0 0 -1" type="hinge"/>
+                    <joint name="ankle_in_ev_l" range="-0.0873 0.0873" limited="true" user="0.0" ref="0" axis="-1 0 0" type="hinge"/>
+                    <joint name="ankle_rot_l" range="-0.0873 0.0873" limited="true" user="0.0" ref="0" axis="0 -1 0" type="hinge"/>
+                    
+                    <site name="tib_post_l-P3" pos="-0.00707004 -0.0135503 0.02068"/>
                     <site name="ankle_l" class="myo_leg_marker"/>
                     <joint axis="0.105014 0.174022 0.979126" name="ankle_angle_l" pos="0 0 0" range="-0.698132 0.523599"/>
                     <geom mesh="l_talus" name="l_talus" type="mesh"/>
                     <site name="LAJC" pos="0 0 0"/>
-                    <body name="calcn_l" pos="-0.04877 -0.04195 -0.00792">
-                        <inertial pos="0.0821377 0.0108024 0.000944392" quat="0.541341 0.502987 0.458598 0.493601" mass="1.14" diaginertia="0.00313636 0.00297113 0.000941737" />
-                        <joint axis="-0.78718 -0.604747 -0.120949" name="subtalar_angle_l" pos="0 0 0" range="-0.349066 0.349066"/>
-                        <geom mesh="l_foot" name="l_foot" type="mesh"/>
-                        <site name="edl_l-P3" pos="0.0919 0.036 -0.0008"/>
-                        <site name="edl_l-P4" pos="0.1616 0.0055 -0.013"/>
-                        <site name="ehl_l-P4" pos="0.097 0.0389 0.0211"/>
-                        <site name="ehl_l-P5" pos="0.1293 0.0309 0.0257"/>
-                        <site name="ehl_l-P6" pos="0.1734 0.0139 0.028"/>
-                        <site name="fdl_l-P3" pos="0.0436 0.0315 0.028"/>
-                        <site name="fdl_l-P4" pos="0.0708 0.0176 0.0263"/>
-                        <site name="fdl_l-P5" pos="0.1658 -0.0081 -0.0116"/>
-                        <site name="fhl_l-P3" pos="0.0374 0.0276 0.0241"/>
-                        <site name="fhl_l-P4" pos="0.1038 0.0068 0.0256"/>
-                        <site name="fhl_l-P5" pos="0.1726 -0.0053 0.0269"/>
+
+                    <body name="calcn_l" pos="-0.01 -0.041 0.005">
+                        <inertial mass="0.6" pos="0 0 0" fullinertia="0.0015 0.001 0.001 0 0 0"/>
+                        <geom name="l_calcaneus" type="mesh" mesh="l_calcaneus" rgba="1 1 1 1" group="0"/>
+                        <joint name="subtalar_angle_l" range="-0.5236 0.5236" limited="true" user="6.56357422012532e-07" ref="0" axis="-0.7357 -0.6157 -0.2824" type="hinge"/>
+                        
+                        
+                        <site name="soleus_l-P2" pos="-0.037 0.009 -0.002"/>
+                        <site name="flex_dig_l-P3" pos="-0.000170043 0.0245497 0.01708"/>
+                        <site name="flex_hal_l-P3" pos="-0.00637004 0.0206497 0.01318"/>
+                        <site name="per_brev_l-P4" pos="0.0191791 0.0148372 -0.0293376"/>
+                        <site name="per_long_l-P4" pos="-0.000199388 0.00839461 -0.031292"/>
+                        <site name="per_long_l-P5" pos="0.0252626 -0.00039412 -0.0256567"/>
+                        <site name="abd_hallucis_l-P1" pos="-0.00192222 -0.00779558 0.0117445"/>
+                        <site name="fdb_l-P1" pos="-0.00192222 -0.0117956 0.0057445"/>
+                        <site name="qp_l-P1" pos="-0.00192222 -0.0117956 0.0007445"/>
+                        <site name="LPC_marker" pos="-0.04565 0.02189 0.0007668" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                        <site name="LDC_marker" pos="-0.04837 -0.003489 -0.00457" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                        <site name="LLC_marker" pos="-0.002305 0.01 -0.035" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                        <site name="LMC_marker" pos="0.02041 0.03 0.03" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                        
                         <site name="gaslat_l-P2" pos="0.0044 0.031 0.0053"/>
                         <site name="gasmed_l-P2" pos="0.0044 0.031 0.0053"/>
-                        <site name="perbrev_l-P4" pos="0.0471 0.027 -0.0233"/>
-                        <site name="perbrev_l-P5" pos="0.0677 0.0219 -0.0343"/>
-                        <site name="perlong_l-P4" pos="0.0438 0.023 -0.0221"/>
-                        <site name="perlong_l-P5" pos="0.0681 0.0106 -0.0284"/>
-                        <site name="perlong_l-P6" pos="0.0852 0.0069 -0.0118"/>
-                        <site name="perlong_l-P7" pos="0.1203 0.0085 0.0184"/>
-                        <site name="soleus_l-P2" pos="0.0044 0.031 0.0053"/>
-                        <site name="tibant_l-P4" pos="0.1166 0.0178 0.0305"/>
-                        <site name="tibpost_l-P3" pos="0.0417 0.0334 0.0286"/>
-                        <site name="tibpost_l-P4" pos="0.0772 0.0159 0.0281"/>
                         <site name="LCAL" pos="-0.025 0.02 0.005"/>
                         <site name="LTOE" pos="0.205 0.0297 0.03"/>
                         <site name="LMT5" pos="0.145 0.0249 -0.059"/>
@@ -495,26 +573,77 @@
                         <geom name="l_foot_col3" size=".02" class="coll" fromto="0.140 0 -.03 0.010 0 -.01"/>
                         <geom name="l_foot_col4" type="ellipsoid" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
                         <site name="l_foot_touch" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                        <body name="midfoot_l" pos="0.047 0.025 0.004">
+                            <inertial mass="0.20921" pos="0.0153464 0.00641489 0.000407659" fullinertia="0.00101891 0.001 0.001 0 0 0"/>
+                            <geom name="l_midfoot" type="mesh" mesh="l_midfoot" rgba="1 1 1 1" group="0"/>
 
-                        <body name="toes_l" pos="0.1788 -0.002 -0.00108">
-                            <site name="toe_l" class="myo_leg_marker"/>
-                            <joint axis="-0.580954 0 -0.813936" name="mtp_angle_l" pos="0 0 0" range="-0.523599 0.523599"/>
-                            <geom name="l_bofoot_col1" size=".0175 .045" class="coll" zaxis="-0.880954 0 -0.813936" pos="0.04 0 -.01"/>
-                            <geom name="l_bofoot_col2" size=".02 .040" class="coll" zaxis="-0.580954 0 -0.813936" pos="0.01 0 0"/>
-                            <geom mesh="l_bofoot" name="l_bofoot" type="mesh"/>
-                            <site name="l_toes_touch" type="box" pos="0.0275 -.01 -.000" size=".04 .01 .0675" euler="0 .7 0" class="myo_leg_touch"/>
-                            <site name="edl_l-P5" pos="0.0003 0.0047 -0.0153"/>
-                            <site name="edl_l-P6" pos="0.0443 -0.0004 -0.025"/>
-                            <site name="ehl_l-P7" pos="0.0298 0.0041 0.0245"/>
-                            <site name="ehl_l-P8" pos="0.0563 0.0034 0.0186"/>
-                            <site name="fdl_l-P6" pos="-0.0019 -0.0078 -0.0147"/>
-                            <site name="fdl_l-P7" pos="0.0285 -0.0071 -0.0215"/>
-                            <site name="fdl_l-P8" pos="0.0441 -0.006 -0.0242"/>
-                            <site name="fhl_l-P6" pos="0.0155 -0.0064 0.0265"/>
-                            <site name="fhl_l-P7" pos="0.0562 -0.0102 0.0181"/>
-                        </body>
-                    </body>
-                </body>
+                            <joint name="midtarsal_angle_l" range="-0.5236 0.5236" limited="true" user="0.0" ref="0" axis="-0.9392 -0.5666 -0.4183" type="hinge"/>
+                            <site name="tib_post_l-P4" pos="0.00525116 -0.00614186 0.0182003"/>
+                            <site name="flex_dig_l-P4" pos="-0.01297 -0.0043503 0.01538"/>
+                            <site name="flex_hal_l-P4" pos="0.020835 -0.0131041 0.0141225"/>
+                            <site name="tib_ant_l-P3" pos="0.0162519 0.0160178 0.0283645"/>
+                            <site name="per_long_l-P6" pos="0.00721561 -0.0131329 -0.0171062"/>
+                            <site name="per_tert_l-P3" pos="0.00966191 0.00405524 -0.0261885"/>
+                            <site name="ext_hal_l-P3" pos="0.0130002 0.02 0.011"/>
+                            
+                            <site name="abd_hallucis_l-P2" pos="0.00530003 -0.0137476 0.0159403"/>
+                            <site name="qp_l-P2" pos="0.0220476 -0.0170057 -0.00669157"/>
+                            <site name="ext_dig_l-P3" pos="0.00842996 0.0168497 -0.01082"/>
+                            <site name="LNAV_marker" pos="-2.191e-05 0.01176 0.03455" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                            <site name="LMB1_marker" pos="0.0331 0.01758 0.02934" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                            <site name="LMB2_marker" pos="0.05012 0.02706 0.0007471" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                            <site name="LMB5_marker" pos="0.004357 -0.006858 -0.04243" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                            
+                            <body name="l_forefoot" pos="0.035 -0.005 0.006">
+                                <inertial mass="0.40921" pos="0.03 0 0" fullinertia="0.00101891 0.001 0.001 0 0 0"/>
+                                <geom name="l_forefoot" type="mesh" mesh="l_forefoot" rgba="1 1 1 1" group="0"/>
+                                <joint name="tarsometatarsal_angle_l" range="-0.5236 0.5236" limited="true" user="0.0" ref="0" axis="-0.5407 -0.5872 -0.9361" type="hinge"/>
+                                
+                                <site name="flex_dig_l-P5" pos="0.0441986 -0.0258273 -0.00332179"/>
+                                <site name="flex_hal_l-P5" pos="0.0509308 -0.0271945 0.0249394"/>
+                                <site name="per_brev_l-P5" pos="-0.0164368 -0.01 -0.0376031"/>
+                                <site name="ext_hal_l-P4" pos="0.010767 0.012 0.017"/>
+                                <site name="ext_hal_l-P5" pos="0.054867 -0.007 0.023"/>
+                                <site name="abd_hallucis_l-P3" pos="0.055223 -0.0266786 0.0307002"/>
+                                <site name="fdb_l-P2" pos="0.0503283 -0.0308856 -0.00424202"/>
+                                <site name="ext_dig_l-P4" pos="0.0553398 -0.00865731 -0.0107553"/>
+                                <site name="per_long_l-P7" pos="0.0135423 -0.0121794 0.0181136"/>
+                                <site name="tib_ant_l-P4" pos="0.00343243 -0.00334339 0.0302683"/>
+                                <site name="LMH1_marker" pos="0.06666 -0.001754 0.03477" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                                <site name="LMH2_marker" pos="0.06539 -0.0005206 -0.0001208" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                                <site name="LMH5_marker" pos="0.04168 -0.008991 -0.05089" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                                <body name="l_digits" pos="0.074 -0.03 -0.002">
+                                    <inertial mass="0.15" pos="-2.26868e-05 0.00112435 9.2251e-05" fullinertia="0.001 0.001 0.001 0 0 0"/>
+                                    <geom name="l_digits" type="mesh" mesh="l_digits" rgba="1 1 1 1" group="0"/>
+                                    <joint name="mtp_angle_l" range="-1.047 0.5236" limited="true" user="0.0" ref="0" axis="-0.3 -0.25 -0.866" type="hinge"/>
+                                    <site name="flex_dig_l-P6" pos="-0.00235137 -0.00550953 -0.0142945"/>
+                                    <site name="flex_dig_l-P7" pos="0.0354878 -0.00423846 -0.014584"/>
+                                    <site name="ext_dig_l-P5" pos="0.00248646 0.0065668 -0.0161441"/>
+                                    <site name="ext_dig_l-P6" pos="0.0357037 0.00426661 -0.0151753"/>
+                                    
+                                    <site name="flex_hal_l-P6" pos="0.00616501 -0.00537005 0.0218921"/>
+                                    <site name="flex_hal_l-P7" pos="0.046842 -0.0074141 0.0219607"/>
+                                    
+                                    <site name="ext_hal_l-P6" pos="0.0125408 0.0135643 0.0194086"/>
+                                    <site name="ext_hal_l-P7" pos="0.0451029 0.00585829 0.0216745"/>
+                                    <site name="abd_hallucis_l-P4" pos="0.00919066 -0.00488706 0.0287385"/>
+                                    <site name="abd_hallucis_l-P5" pos="0.050027 -0.000200698 0.032316"/>
+                                    <site name="fdb_l-P3" pos="0.0165979 -0.0062633 -0.0152863"/>
+                                    <site name="LD1_marker" pos="0.05332 0.02 0.02981" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                                    <site name="LD2_marker" pos="0.04651 0.02 0.0001268" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+                                    <site name="LD5_marker" pos="0.02534 0.02 -0.03573" size="0.01" group="4" rgba="1 0.1 0.5 0.5"/>
+
+                                    <site name="toe_l" class="myo_leg_marker"/>
+                                
+                                    <geom name="l_bofoot_col1" size=".0175 .045" class="coll" zaxis="-0.880954 0 -0.813936" pos="0.04 0 -.01"/>
+                                    <geom name="l_bofoot_col2" size=".02 .040" class="coll" zaxis="-0.580954 0 -0.813936" pos="0.01 0 0"/>
+                                    
+                                    <site name="l_toes_touch" type="box" pos="0.0275 -.01 -.000" size=".04 .01 .0675" euler="0 .7 0" class="myo_leg_touch"/>
+							</body>
+						</body>
+					</body>
+				</body>
+			</body>
             </body>
             <body name="patella_l" pos="-0.00809 -0.40796 0">
                 <joint axis="0 1 0" name="knee_angle_l_beta_translation2" pos="0 0 0" range="-0.0408267 -0.0108281" type="slide"/>
