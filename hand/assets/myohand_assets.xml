@@ -326,7 +326,7 @@
       <site site="EDM-P6"/>
       <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_EDC5_side"/>
       <site site="EDM-P7"/>
-      <geom geom="Fifthpm_wrap"/>
+      <geom geom="Fifthpm_wrap" sidesite="Fifthpm_site_EDC5_side"/>
       <site site="EDM-P8"/>
       <geom geom="Fifthmd_wrap" sidesite="Fifthmd_site_EDC5_side"/>
       <site site="EDM-P9"/>
@@ -358,7 +358,7 @@
       <site site="EPL-P7"/>
       <site site="EPL-P8"/>
       <site site="EPL-P9"/>
-      <geom geom="MPthumb_wrap"/>
+      <geom geom="MPthumb_wrap" sidesite="MPthumb_site_EPL_side"/>
       <site site="EPL-P10"/>
       <site site="EPL-P11"/>
       <geom geom="IPthumb_wrap" sidesite="IPthumb_site_EPL_side"/>
@@ -381,7 +381,7 @@
       <site site="FPL-P3"/>
       <site site="FPL-P4"/>
       <site site="FPL-P5"/>
-      <geom geom="FPL_ellipsoid_wrap"/>
+      <geom geom="FPL_ellipsoid_wrap" sidesite="FPL_ellipsoid_site_FPL_side"/>
       <site site="FPL-P7"/>
       <site site="FPL-P8"/>
       <geom geom="MPthumb_wrap" sidesite="MPthumb_site_FPL_side"/>
