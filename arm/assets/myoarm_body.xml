@@ -39,31 +39,31 @@
         <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite" pos="0.0510248 -0.016092 -0.0573453" rgba="1 0 0 0"/>
     </body>
 
-    <body name="clavicle" pos="0.006325 -0.02547 0.00693" childclass="arm" euler="1.57 -1.57 0">
+    <body name="clavicle_r" pos="0.006325 -0.02547 0.00693" childclass="arm" euler="1.57 -1.57 0">
         <inertial diaginertia="0.001 0.001 0.001" mass="0.156" pos="-0.011096 0.0063723 0.054168" quat="0.906292 0.0334036 0.164622 -0.387838"/>
-        <joint axis="0.0153 0.989299 -0.1451" name="sternoclavicular_r2" pos="0 0 0" range="-0.75 -0.0" user="-2.32583e-06"/>
-        <joint axis="-0.994473 0 -0.104997" name="sternoclavicular_r3" pos="0 0 0" range="0.0 0.318" user="9.85111e-07"/>
-        <geom mesh="clavicle_geom_1_clavicle" name="clavicle_geom_1" type="mesh"/>
+        <joint axis="0.0153 0.989299 -0.1451" name="sternoclavicular_r2_r" pos="0 0 0" range="-0.75 -0.0" user="-2.32583e-06"/>
+        <joint axis="-0.994473 0 -0.104997" name="sternoclavicular_r3_r" pos="0 0 0" range="0.0 0.318" user="9.85111e-07"/>
+        <geom mesh="clavicle_r" name="clavicle_r" type="mesh"/>
         <site name="DELT1_DELT1-P4" pos="-0.014 0.01106 0.08021"/>
         <site name="PECM1_PECM1-P3" pos="0.0264476 0.004005 0.057232"/>
         <site name="PECM1_PECM1-P4" pos="0.00321 -0.00013 0.05113"/>
         <site class="marker" name="R.Clavicle_marker" pos="0.01835 -0.00464 -0.00046"/>
 
-        <body name="clavphant" pos="-0.01433 0.02007 0.1355">
+        <body name="clavphant_r" pos="-0.01433 0.02007 0.1355">
             <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-            <joint axis="-0.994473 0 -0.104997" name="unrotscap_r3" pos="0 0 0" range="-0.318 -0.0" user="-9.85111e-07"/>
-            <joint axis="0.0153 0.989299 -0.1451" name="unrotscap_r2" pos="0 0 0" range="0.0 0.75" user="2.32583e-06"/>
-            <body name="scapula" pos="0 0 0">
+            <joint axis="-0.994473 0 -0.104997" name="unrotscap_r3_r" pos="0 0 0" range="-0.318 -0.0" user="-9.85111e-07"/>
+            <joint axis="0.0153 0.989299 -0.1451" name="unrotscap_r2_r" pos="0 0 0" range="0.0 0.75" user="2.32583e-06"/>
+            <body name="scapula_r" pos="0 0 0">
                 <inertial diaginertia="0.00199576 0.00103993 0.001" mass="0.70396" pos="-0.054694 -0.035032 -0.043734" quat="0.453021 0.77921 0.0744129 0.426692"/>
-                <joint axis="0.157095 0.947269 -0.279291" name="acromioclavicular_r2" pos="0 0 0" range="-0.152 -0.0" user="-4.70933e-07"/>
-                <joint axis="-0.754084 0.297594 0.585487" name="acromioclavicular_r3" pos="0 0 0" range="0.0 1.228" user="3.80592e-06"/>
-                <joint axis="0.6377 0.1186 0.7611" name="acromioclavicular_r1" pos="0 0 0" range="0.0 0.552" user="1.71073e-06"/>
-                <geom mesh="scapula_geom_1_scapula" name="scapula_geom_1" type="mesh"/>
+                <joint axis="0.157095 0.947269 -0.279291" name="acromioclavicular_r2_r" pos="0 0 0" range="-0.152 -0.0" user="-4.70933e-07"/>
+                <joint axis="-0.754084 0.297594 0.585487" name="acromioclavicular_r3_r" pos="0 0 0" range="0.0 1.228" user="3.80592e-06"/>
+                <joint axis="0.6377 0.1186 0.7611" name="acromioclavicular_r1_r" pos="0 0 0" range="0.0 0.552" user="1.71073e-06"/>
+                <geom mesh="scapula_r" name="scapula_r" type="mesh"/>
                 <geom class="wrap" name="Deltoid2_ellipsoid" pos="-0.0058 -0.0378 0.0096" quat="-0.423842 0.568442 0.433325 -0.556293" size="0.033"/>
                 <geom class="wrap" name="Delt3_torus" pos="-0.0973 -0.0428 -0.037" quat="0.916494 0.246518 0.233162 -0.211903" size="0.04"/>
                 <geom class="wrap" name="INFSP_torus" pos="-0.0561 -0.0199 -0.0112" quat="0.953924 0.0340622 0.288198 0.0762223" size="0.008"/>
                 <geom class="wrap" name="TMIN_ellipsoid" pos="-0.0418 -0.0519 -0.0359" quat="0.407504 -0.492108 -0.706779 -0.3037" size="0.03"/>
-                <geom class="wrap" name="TRIlongglen_cylinder" pos="-0.0359 -0.0309 -0.0132" quat="0.351544 0.110456 -0.628265 0.685201"  size="0.003 0.015" type="cylinder"/>
+                <geom class="wrap" name="TRIlongglen_cylinder" pos="-0.0359 -0.0309 -0.0132" quat="0.351544 0.110456 -0.628265 0.685201" size="0.003 0.015" type="cylinder"/>
                 <geom class="wrap" name="Deltoid2_ellipsoid_DELT2" pos="-0.0122268 -0.0345692 0.0127541" quat="-0.423842 0.568442 0.433325 -0.556293" size="0.0297339"/>
                 <site name="Deltoid2_sidesite" pos="-0.006523 -0.02881 0.04238"/>
                 <site name="Delt3_sidesite" pos="-0.0973 -0.0428 -0.037"/>
@@ -102,26 +102,26 @@
                 <site name="BICshort_BICshort-P1" pos="0.01268 -0.03931 -0.02625"/>
                 <site name="BICshort_BICshort-P2" pos="0.00093 -0.06704 -0.01593"/>
                 <site class="marker" name="R.Shoulder_marker" pos="0.0014 -0.00147 0.01369"/>
-                <body name="scapphant" pos="-0.00955 -0.034 0.009">
+                <body name="scapphant_r" pos="-0.00955 -0.034 0.009">
                     <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-                    <joint axis="0.6377 0.1186 0.7611" name="unrothum_r1" pos="0 0 0" range="-0.552 -0.0" user="-1.71073e-06"/>
-                    <joint axis="-0.754084 0.297594 0.585487" name="unrothum_r3" pos="0 0 0" range="-1.228 -0.0" user="-3.80592e-06"/>
-                    <joint axis="0.157095 0.947269 -0.279291" name="unrothum_r2" pos="0 0 0" range="0.0 0.152" user="4.70933e-07"/>
-                    <body name="humphant" pos="0 0 0">
+                    <joint axis="0.6377 0.1186 0.7611" name="unrothum_r1_r" pos="0 0 0" range="-0.552 -0.0" user="-1.71073e-06"/>
+                    <joint axis="-0.754084 0.297594 0.585487" name="unrothum_r3_r" pos="0 0 0" range="-1.228 -0.0" user="-3.80592e-06"/>
+                    <joint axis="0.157095 0.947269 -0.279291" name="unrothum_r2_r" pos="0 0 0" range="0.0 0.152" user="4.70933e-07"/>
+                    <body name="humphant_r" pos="0 0 0">
                         <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-                        <joint axis="0.00479995 0.999089 0.0423995" name="elv_angle" pos="0 0 0" range="-1.658 2.269" user="0.251642"/>
-                        <body name="humphant1" pos="0 0 0">
+                        <joint name="elv_angle_r" pos="0 0 0" range="-1.658 2.269" axis="0.00479995 0.999089 0.0423995" user="0.251642"/>
+                        <body name="humphant1_r" pos="0 0 0">
                             <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-                            <joint axis="-0.998261 0.00229991 0.0588977" name="shoulder_elv" pos="0 0 0" range="0 3.142" user="9.61084e-06"/>
-                            <joint axis="0.00479995 0.999089 0.0423995" name="shoulder1_r2" pos="0 0 0" range="-2.242 1.658" user="-0.251642"/>
-                            <body name="humerus" pos="0 0 0">
+                            <joint name="shoulder_elv_r" axis="-0.998261 0.00229991 0.0588977" pos="0 0 0" range="0.0 3.142" user="9.61084e-06"/>
+                            <joint name="shoulder1_r2_r" axis="0.00479995 0.999089 0.0423995" pos="0 0 0" range="-2.242 1.658" user="-0.251642"/>
+                            <body name="humerus_r" pos="0 0 0">
                                 <inertial diaginertia="0.0128576 0.0121576 0.00239265" mass="1.99757" pos="0.018064 -0.140141 -0.012746" quat="0.407851 0.343714 -0.567755 0.627034"/>
-                                <joint axis="0.00479995 0.999089 0.0423995" name="shoulder_rot" pos="0 0 0" range="-1.571 2.094" user="0.161391"/>
-                                <geom mesh="humerus_geom_1_humerus" name="humerus_geom_1" type="mesh"/>
-                                <geom name="humerus_coll" type="capsule" class="myoarm_coll" size="0.042 0.140" pos="0 -.13 0" euler="1.57 0 0"/>
+                                <joint axis="0.00479995 0.999089 0.0423995" name="shoulder_rot_r" pos="0 0 0" range="-1.571 2.094" user="0.161391"/>
+                                <geom name="humerus_r" mesh="humerus_r" type="mesh"/>
+                                <geom name="humerus_r_coll" type="capsule" class="myoarm_coll" size="0.042 0.140" pos="0 -.13 0" euler="1.57 0 0"/>
 
-                                <geom name="Elbow_PT_ECRL_wrap" type="sphere" size="0.027" pos="-0.005 -0.3 0.005" class="wrap"></geom>
-                                <geom name="Elbow_PT_FCU_wrap" type="sphere" size="0.015" pos="-0.005 -0.29 -0.033" class="wrap"></geom>
+                                <geom name="Elbow_PT_ECRL_wrap" type="sphere" size="0.027" pos="-0.005 -0.3 0.005" class="wrap"/>
+                                <geom name="Elbow_PT_FCU_wrap" type="sphere" size="0.015" pos="-0.005 -0.29 -0.053" class="wrap"/>
                                 <site name="Elbow_PT_ECRL_site_ECRL_side" pos="0.03 -0.2872 0.04"/>
                                 <site name="Elbow_PT_FCU_site_FCU_side" pos="0.03 -0.2872 -0.04"/>
 
@@ -145,7 +145,7 @@
                                 <geom class="wrap" name="delt3hum_ellipsoid" pos="0.0019 -0.0592 0.0011" quat="0.156827 0.126209 0.749421 -0.630749" size="0.01"/>
                                 <geom class="wrap" name="SUPSP_ellipsoid" pos="0.0002 0.0077 0.0043" quat="0.793859 0.0125049 0.0149602 -0.607789" size="0.02"/>
                                 <geom class="wrap" name="INFSP_and_TMIN_hum_head_ellipsoid" pos="-0.0003 0.0026 0.0038" quat="0.989183 -0.142571 -0.00937337 -0.0332047" size="0.02" rgba="1 0 0 0"/>
-                                <geom class="wrap" name="infsp_new_cylinder" pos="-0.0019 -0.019 0.0022" quat="0.634204 0.685268 0.103666 -0.342703" size="0.0235 0.0575" type="cylinder" rgba="1 0 0 0"/>
+                                <geom class="wrap" name="infsp_new_cylinder" pos="-0.0019 -0.019 0.0069" quat="0.634204 0.685268 0.103666 -0.342703" size="0.0235 0.0575" type="cylinder" rgba="1 0 0 0"/>
                                 <geom class="wrap" name="SUBSCAP_ellipsoid" pos="-0.0025 0.0007 -0.0045" quat="0.881836 -0.408886 0.210176 0.104899" size="0.017"/>
                                 <geom class="wrap" name="LIGhh_s_ellipsoid" pos="-0.001 0.003 0.003" quat="0.923956 -0.382499 0 0" size="0.02"/>
                                 <geom class="wrap" name="LIGhh_mi_ellipsoid" pos="-0.001 0.004 0.001" quat="0.923956 -0.382499 0 0" size="0.019"/>
@@ -158,11 +158,11 @@
                                 <geom class="wrap" name="LAT_TMAJhh_cylinder" pos="-0.0224 0.0102 0.0094" quat="0.931143 -0.140037 -0.0596766 -0.331362" size="0.007 0.0225" type="cylinder" rgba="1 0 0 0"/>
                                 <geom class="wrap" name="LAT_TMAJ2hh_sphere" pos="-0.0016 0.0092 0.0052" quat="0.988522 -0.0615953 0.137948 0.0010005" size="0.03" rgba="1 0 0 0"/>
                                 <geom class="wrap" name="Elbow_BIC_BRD_ellipsoid" pos="0.0019 -0.289 -0.014" quat="0.995526 -0.0630434 0.0695304 0.0108779" size="0.015"/>
-                                <geom class="wrap" name="TRIlonghh_ellipsoid" pos="-0.0078 -0.0041 -0.0014" quat="0.414166 0.226558 -0.879857 -0.0546691"  size="0.02"/>
-                                <geom class="wrap" name="TRI_cylinder" pos="0.0028 -0.2919 -0.0119" quat="0.994531 -0.0700249 0.0022946 0.0774514" size="0.016 0.05" type="cylinder" rgba="1 0 0 0"/>
+                                <geom class="wrap" name="TRIlonghh_ellipsoid" pos="-0.0078 -0.0041 -0.0014" quat="0.414166 0.226558 -0.879857 -0.0546691" size="0.02"/>
+                                <geom class="wrap" name="TRI_cylinder" pos="0.0028 -0.2919 -0.4219" quat="0.994531 -0.0700249 0.0022946 0.0774514" size="0.016 0.05" type="cylinder" rgba="1 0 0 0"/>
                                 <geom class="wrap" name="ANC_ellipsoid" pos="0.0134 -0.2861 -0.0008" quat="0.86157 -0.0459397 -0.0868616 0.498038" size="0.02"/>
                                 <geom class="wrap" name="BIClong_ellipsoid" pos="0.0033 0.005 0.0003" quat="0.227685 -0.774064 0.117793 0.578886" size="0.02"/>
-                                <geom class="wrap" name="TMAJ_LAT_PEC_CORBhh_sphere" pos="0.0007 0 0.006" size="0.03" rgba="1 0 0 0"/>
+                                <geom class="wrap" name="TMAJ_LAT_PEC_CORBhh_sphere" pos="0.0007 0.035 0.006" size="0.03" rgba="1 0 0 0"/>
                                 <geom class="wrap" name="DELT_TMAJ_LAT_PEC_CORBhh_sphere" pos="0.0007 0 0.006" size="0.03"/>
                                 <geom class="wrap" name="CORBhum_cylinder" pos="0.0027 -0.1202 -0.0059" quat="0.642357 -0.637406 0.335002 0.262422" size="0.008 0.05" type="cylinder" rgba="1 0 0 0"/>
                                 <geom class="wrap" name="Elbow_PT_ECRL_ellipsoid" pos="0.003 -0.2872 -0.0069" quat="0.947273 -0.0932693 -0.0283097 0.305242" size="0.018"/>
@@ -170,19 +170,19 @@
                                 <geom class="wrap" name="LIGhh_mi_ellipsoid_m_glenohum" pos="-0.001 0.004 0.001" quat="0.923956 -0.382499 0 0" size="0.019"/>
                                 <geom class="wrap" name="LIGhh_mi_ellipsoid_i_glenohum" pos="-0.001 0.004 0.001" quat="0.923956 -0.382499 0 0" size="0.019"/>
                                 <geom class="wrap" name="LIGhh_s_ellipsoid_coracohum" pos="-0.001 0.003 0.003" quat="0.923956 -0.382499 0 0" size="0.02"/>
-                                <geom class="wrap" name="DELT1hh_ellipsoid_DELT1" pos="-0.0109974 -0.0095035 -0.0270664" quat="0.83666 0.160028 0.454758 0.259973" size="0.029726" rgba="1 0 0 0"/>
-                                <geom class="wrap" name="delt3hum_ellipsoid_DELT3" pos="0.0044 -0.0617 0.00343794" quat="0.156827 0.126209 0.749421 -0.630749" size="0.0125"/>
+                                <geom class="wrap" name="DELT1hh_ellipsoid_DELT1" pos="-0.0179974 -0.0075035 -0.0580664" quat="0.83666 0.160028 0.454758 0.259973" size="0.029726" rgba="1 0 0 0"/>
+                                <geom class="wrap" name="delt3hum_ellipsoid_DELT3" pos="0.0044 -0.0624 0.00443794" quat="0.156827 0.126209 0.749421 -0.630749" size="0.0125"/>
                                 <geom class="wrap" name="SUPSP_ellipsoid_SUPSP" pos="0.00110546 0.00820496 0.00197985" quat="0.793859 0.0125049 0.0149602 -0.607789" size="0.0202151"/>
-                                <geom class="wrap" name="SUBSCAP_ellipsoid_SUBSC" pos="-0.0026089 -0.00113613 -0.00633073" quat="0.881836 -0.408886 0.210176 0.104899" size="0.0171729"/>
+                                <geom class="wrap" name="SUBSCAP_ellipsoid_SUBSC" pos="0.0028089 -0.00313613 -0.00633073" quat="0.881836 -0.408886 0.210176 0.104899" size="0.0171729"/>
                                 <geom class="wrap" name="INFSP_and_TMIN_hum_head_ellipsoid_TMIN" pos="-0.000927281 -0.000469167 0.00327226" quat="0.989183 -0.142571 -0.00937337 -0.0332047" size="0.025" rgba="1 0 0 0"/>
-                                <geom class="wrap" name="PEC1hh_ellipsoid_PECM1" pos="0.0013 -0.0038025 -0.00451178" quat="0.916754 -0.32328 -0.0902682 0.216573" size="0.0221545"/>
+                                <geom class="wrap" name="PEC1hh_ellipsoid_PECM1" pos="0.0013 -0.0038025 -0.00251178" quat="0.916754 -0.32328 -0.0902682 0.216573" size="0.0221545"/>
                                 <geom class="wrap" name="TRIlonghh_ellipsoid_TRIlong" pos="-0.00 -0.00 -0.00" quat="0.414166 0.226558 -0.879857 -0.0546691" size="0.02"/>
                                 <geom class="wrap" name="ANC_ellipsoid_ANC" pos="0.0121714 -0.288051 -0.00144365" quat="0.86157 -0.0459397 -0.0868616 0.498038" size="0.0180029"/>
-                                <geom class="wrap" name="Elbow_BIC_BRD_ellipsoid_BIClong" pos="0.00296577 -0.290569 -0.0121662" quat="0.995526 -0.0630434 0.0695304 0.0108779" size="0.0150371"/>
-                                <geom class="wrap" name="BIClong_ellipsoid_BIClong" pos="0.0033 0.005 0.0003" quat="0.227685 -0.774064 0.117793 0.578886" size="0.02"/>
-                                <geom class="wrap" name="Elbow_BIC_BRD_ellipsoid_BICshort" pos="0.00286868 -0.290754 -0.0140545" quat="0.995526 -0.0630434 0.0695304 0.0108779" size="0.0162859"/>
+                                <geom class="wrap" name="Elbow_BIC_BRD_ellipsoid_BIClong" pos="0.00296577 -0.290569 -0.0201662" quat="0.995526 -0.0630434 0.0695304 0.0108779" size="0.0150371"/>
+                                <geom class="wrap" name="BIClong_ellipsoid_BIClong" pos="0.0033 0.0015 0.0015" quat="0.227685 -0.774064 0.117793 0.578886" size="0.02"/>
+                                <geom class="wrap" name="Elbow_BIC_BRD_ellipsoid_BICshort" pos="0.00286868 -0.290754 0.030545" quat="0.995526 -0.0630434 0.0695304 0.0108779" size="0.0162859"/>
 
-                                <geom class="wrap" name="ElbowBICBRD_ellipsoid_wrap" pos="0.0019 -0.289 -0.014" quat="0.995524 -0.0630586 0.0695464 0.0108747" size="0.015 0.1" type="cylinder"/>
+                                <geom class="wrap" name="ElbowBICBRD_ellipsoid_wrap" pos="0.0019 -0.289 0.054" quat="0.995524 -0.0630586 0.0695464 0.0108747" size="0.015 0.1" type="cylinder"/>
 
                                 <site name="DELT1hh_sidesite" pos="0.01226 -0.01367 -0.009599"/>
                                 <site name="delt3hum_sidesite" pos="-0.008209 -0.05929 -0.003236"/>
@@ -218,7 +218,7 @@
                                 <site name="SUPSP_SUPSP-P1" pos="0.00256 0.01063 0.02593"/>
                                 <site name="SUPSP_ellipsoid_SUPSP_1_sidesite" pos="0.00229806 0.00847163 0.0284548"/>
                                 <site name="INFSP_INFSP-P1" pos="-0.00887 0.00484 0.02448"/>
-                                <site name="infsp_new_cylinder_INFSP_1_sidesite" pos="-0.0432342 -0.0560158 0.0141316" />-
+                                <site name="infsp_new_cylinder_INFSP_1_sidesite" pos="-0.0432342 -0.0560158 0.0141316"/>
                                 <site name="SUBSC_SUBSC-P1" pos="0.01403 0.0084 -0.01331"/>
                                 <site name="SUBSCAP_ellipsoid_SUBSC_1_sidesite" pos="0.0144482 0.0109872 -0.0101213"/>
                                 <site name="TMIN_TMIN-P1" pos="-0.00127 -0.01259 0.022"/>
@@ -239,8 +239,8 @@
                                 <site name="PEC23hh_sphere_PECM3_2_sidesite" pos="0.0033563 -0.0186528 0.00113941" rgba="1 0 0 0"/>
                                 <site name="LAT1_LAT1-P1" pos="0.0105 -0.03415 -0.00653"/>
                                 <site name="LAT1_LAT1-P2" pos="-0.00550867 -0.0262692 -0.0129871"/>
-                                <site name="LAT_TMAJ2hh_sphere_LAT1_2_sidesite" pos="-0.01849985 -0.0389514 -0.024259" />
-                                <site name="TMAJ_LAThum_cylinder_LAT1_1_sidesite" pos="-0.0107 -0.0257 0.0645" />
+                                <site name="LAT_TMAJ2hh_sphere_LAT1_2_sidesite" pos="-0.01849985 -0.0389514 -0.024259"/>
+                                <site name="TMAJ_LAThum_cylinder_LAT1_1_sidesite" pos="-0.0107 -0.0257 0.0645"/>
                                 <site name="LAT2_LAT2-P1" pos="0.00968 -0.04071 -0.00611"/>
                                 <site name="LAT2_LAT2-P2" pos="-0.00769792 -0.0421159 -0.0156065"/>
                                 <site name="LAT_TMAJ2hh_sphere_LAT2_2_sidesite" pos="-0.0157083 -0.017011 -0.0250469" rgba="1 0 0 0"/>
@@ -255,9 +255,9 @@
                                 <site name="TRIlong_TRIlong-P2" pos="-0.02714 -0.11441 -0.00664"/>
                                 <site name="TRIlong_TRIlong-P3" pos="-0.03184 -0.22637 -0.01217"/>
                                 <site name="TRIlong_TRIlong-P4" pos="-0.01743 -0.26757 -0.01208"/>
-                                <site name="TRI_cylinder_TRIlong_4_sidesite" pos="-0.0156503 -0.293711 0.0175748" />
-                                <site name="TRIlonghh_ellipsoid_TRIlong_1_sidesite" pos="-0.0361 -0.00673 0.02277" />
-                                <site name="TRIlong_TRIlong-P1b" pos="-0.0365 -0.0044 -0.0213" />
+                                <site name="TRI_cylinder_TRIlong_4_sidesite" pos="-0.0156503 -0.293711 0.0175748"/>
+                                <site name="TRIlonghh_ellipsoid_TRIlong_1_sidesite" pos="-0.0361 -0.00673 0.02277"/>
+                                <site name="TRIlong_TRIlong-P1b" pos="-0.0365 -0.0044 -0.0213"/>
                                 <site name="TRIlat_TRIlat-P1" pos="-0.00599 -0.12646 0.00428"/>
                                 <site name="TRIlat_TRIlat-P2" pos="-0.02344 -0.14528 0.00928"/>
                                 <site name="TRIlat_TRIlat-P3" pos="-0.03184 -0.22637 -0.01217"/>
@@ -285,18 +285,19 @@
                                 <site name="BRA_BRA-P1" pos="0.0068 -0.1739 -0.0036"/>
                                 <site name="BRD_BRD-P1" pos="-0.0098 -0.19963 0.00223"/>
 
-                                <site name="TRI_site_BRA_side" pos="0.0188814 -0.25991 0.0179386"></site>
+                                <site name="TRI_site_BRA_side" pos="0.0188814 -0.25991 0.0179386"/>
 
                                 <site class="marker" name="R.Bicep_marker" pos="0.01591 -0.181 -0.00553"/>
                                 <site class="marker" name="R.Elbow.Lateral_marker" pos="0.00509 -0.2806 0.02884"/>
                                 <site class="marker" name="R.Elbow.Medial_marker" pos="-0.00407 -0.2844 -0.05408"/>
-                                <body name="ulna" pos="0.0061 -0.2904 -0.0123" childclass="elbow">
+                                <body name="ulna_r" pos="0.0061 -0.2904 -0.0123" childclass="elbow">
                                     <inertial diaginertia="0.00543663 0.00523521 0.001" mass="1.1053" pos="0.00971783 -0.0959509 0.024286" quat="0.792048 0.609078 0.0156735 0.0379256"/>
-                                    <joint axis="0.0494004 0.0366003 0.998108" name="elbow_flexion" pos="0 0 0" range="0 2.269" user="1.05676"/>
-                                    <geom mesh="ulna_geom_1_ulna" name="ulna_geom_1" type="mesh"/>
+                                    <joint axis="0.0494004 0.0366003 0.998108" name="elbow_flexion_r" pos="0 0 0" range="0 2.269" user="1.05676"/>
+                                    <geom mesh="ulna_r" name="ulna_r" type="mesh"/>
                                     <geom class="wrap" name="PQ2_cylinder" pos="-0.0012 -0.2092 0.0428" quat="0.540392 0.481982 -0.422482 0.545141" size="0.007 0.05" type="cylinder"/>
 
-                                    <geom name="PQ2_wrap" pos="-0.0012 -0.2092 0.0428" quat="0.540178 0.481989 -0.422693 0.545183" class="wrap" size="0.007 0.005" type="cylinder"/>
+                                    <geom class="wrap" name="PQ2_wrap" pos="-0.0012 -0.2092 0.0428" quat="0.540178 0.481989 -0.422693 0.545183" size="0.007 0.005" type="cylinder"/>
+                                    <geom name="ulna_r_coll" class="myoarm_coll" size="0.015" fromto="-.02 0 .005 .005 -0.2 0.04"/>
                                     <site name="ECU-P2" pos="-0.0139 -0.032 0.0295"/>
                                     <site name="ECU-P3" pos="-0.017 -0.0543 0.0287"/>
                                     <site name="ECU-P4" pos="-0.0179 -0.0957 0.0328"/>
@@ -322,24 +323,25 @@
                                     <site name="SUP_SUP-P3" pos="-0.0136 -0.03384 0.02013"/>
                                     <site name="BRA_BRA-P4" pos="-0.0032 -0.0239 0.0009"/>
                                     <site class="marker" name="R.Ulna_marker" pos="-0.01672 -0.2416 0.04782"/>
-                                    <body name="radius" pos="0.0004 -0.0115 0.02">
+                                    <body name="radius_r" pos="0.0004 -0.0115 0.02">
                                         <inertial diaginertia="0.001 0.001 0.001" mass="0.23359" pos="0.0336341 -0.181559 0.0156" quat="0.770264 0.63559 0.0119833 0.0507376"/>
 
                                         <!-- <geom mesh="radius_geom_1_radius" name="radius_geom_1" type="mesh"/> -->
-                                        <geom name="radius_coll" type="capsule" class="myoarm_coll" size="0.030" fromto="0 0 0 0.015 -0.235841 0.028" euler="1.4 0.1 0.12"/>
+                                        <geom name="radius_r_coll" type="capsule" class="myoarm_coll" size="0.030" fromto="0 0 0 0.015 -0.235841 0.028" euler="1.4 0.1 0.12"/>
                                         <camera name="hand_top" pos="0.02 -0.2 0.55" euler="0 0 0"/>
                                         <camera name="hand_bottom" pos="0.02 -0.2 -0.55" euler="0 3.14 0"/>
                                         <camera name="hand_side_inter" pos="0.5 -0.3 0" euler="1.57 1.57 0"/>
                                         <camera name="hand_side_exter" pos="-0.5 -0.3 0" euler="1.57 -1.57 0"/>
 
-                                        <joint axis="-0.017161 0.992666 -0.119668" name="pro_sup" pos="0 0 0" range="-1.5708 1.5708" damping="0.5"/>
-                                        <geom class="myohand_coll" size="0.02" fromto="0.015 0 -.005 0.025 -0.24 0.025"/>
-                                        <geom class="myohand_coll" size="0.02" fromto="-.01 0 -.010 0.015 -0.24 0.025"/>
-                                        <geom mesh="radius" name="radius" type="mesh"/>
+                                        <joint axis="-0.017161 0.992666 -0.119668" name="pro_sup_r" pos="0 0 0" range="-1.5708 1.5708" damping="0.5"/>
+                                        <geom name="radius_r_coll_2" class="myohand_coll" size="0.02" fromto="0.015 0 -.005 0.025 -0.24 0.025"/>
+                                        <geom name="radius_r_coll_3" class="myohand_coll" size="0.02" fromto="-.01 0 -.010 0.015 -0.24 0.025"/>
+                                        <geom mesh="radius_r" name="radius_r" type="mesh"/>
 
                                         <geom name="SUP_wrap" pos="0.0045 -0.0437 0.0059" quat="0.348354 0.118086 0.653837 -0.661213" class="wrap" size="0.008 0.02" type="cylinder"/>
                                         <geom name="PQ1_wrap" pos="0.0281 -0.1986 0.0288" quat="0.15975 -0.156797 -0.702725 -0.675331" class="wrap" size="0.01 0.005" type="cylinder"/>
                                         <geom name="ECU_torus_wrap" pos="-0.0163 -0.2417 0.0349" quat="0.868975 -0.476593 -0.0126204 0.132601" class="wrap" size="0.003"/>
+
                                         <site name="ECRL-P2" pos="0.032 -0.1346 0.0278"/>
                                         <site name="ECRL-P3" pos="0.0424 -0.2368 0.0362"/>
                                         <site name="ECRB-P2" pos="0.029 -0.1309 0.0238"/>
@@ -348,7 +350,7 @@
                                         <site name="FCR-P2" pos="0.0211 -0.2194 0.0013"/>
                                         <site name="FCU-P3" pos="0.0108 -0.2233 0.0097"/>
                                         <!-- <site name="FCU-P2" pos="0.0101 -0.1835 0.002"/> -->
-                                        <site name="FCU-P2" pos="0.0095 -0.1841 0.0005"></site>
+                                        <site name="FCU-P2" pos="0.0095 -0.1841 0.0005"/>
                                         <site name="PL-P2" pos="0.0253 -0.2392 -0.0028"/>
                                         <site name="PT-P5" pos="0.0254 -0.1088 0.0198"/>
                                         <site name="PT-P4" pos="0.0236 -0.0934 0.0094"/>
@@ -407,16 +409,16 @@
                                         <site class="marker" name="R.Forearm_marker" pos="0.03828 -0.1133 0.0174"/>
                                         <site class="marker" name="R.Radius_marker" pos="0.05749 -0.2272 0.02738"/>
 
-                                        <body name="lunate" pos="0.018 -0.242 0.025" childclass="wrist">
-                                            <joint axis="0 0 1" name="deviation" pos="0 0 0" range="-0.174533 0.436332" damping="0.25"/>
-                                            <joint axis="1 0 0" name="flexion" pos="0 0 0" range="-0.785398 0.785398" damping="0.25"/>
-                                            <geom mesh="lunate" name="lunate" type="mesh"/>
+                                        <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="wrist">
+                                            <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.174533 0.436332" damping="0.25"/>
+                                            <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-0.785398 0.785398" damping="0.25"/>
+                                            <geom mesh="lunate_r" name="lunate_r" type="mesh"/>
                                             <geom name="WristExtensor_wrap" pos="0.0007 0 0.003" quat="0.807649 -0.0333177 0.588355 0.0207694" class="wrap" size="0.008 0.02" type="cylinder"/>
                                             <geom name="WristFlexor_wrap" pos="0 -0.01 -0.004" quat="0.807649 -0.0333177 0.588355 0.0207694" class="wrap" size="0.007 0.02" type="cylinder"/>
                                             <geom name="ExtensorEllipse_ellipsoid_wrap" pos="-0.00145969 -0.0120017 -0.00892632" quat="0.977473 -0.106567 0.15459 0.0963907" class="wrap" size="0.0237409"/>
                                             <!-- <geom name="PL_ellipsoid_wrap" pos="0.0170362 -0.0128706 0.0101738" quat="0.998158 -0.0141897 0.050277 0.0308429" class="wrap" size="0.0272385"/> -->
-                                            <geom name="FDS_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="0.0012 -0.0057 -0.0003" euler="0.00837758 1.48 -0.0171042" class="wrap"/>
-                                            <geom name="FDP_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0032" euler="-1.46747 1.37 0.121824" class="wrap"/>
+                                            <geom name="FDS_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="0.0012 -0.0057 0.0123" euler="0.00837758 1.48 -0.0171042" class="wrap"/>
+                                            <geom name="FDP_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0182" euler="-1.46747 1.37 0.121824" class="wrap"/>
                                             <geom name="EDM_ellipsoid_wrap" type="cylinder" size="0.014 0.018" pos="-0.0167 -0.0022 0.0048" euler="2.9627 1.73 0.117984" class="wrap"/>
                                             <geom name="FPL_ellipsoid_wrap" type="sphere" size="0.015" pos="0.02 -0.025 -0.0033" class="wrap"/>
                                             <geom name="ECRL_torus_wrap" pos="0.0222 -0.0096 0.0208" quat="0.637339 0.675155 -0.168467 0.331034" class="wrap" size="0.008"/>
@@ -426,14 +428,14 @@
                                             <geom name="EDCL_torus_wrap" pos="-0.0128 -0.0133 0.0148" quat="0.386237 0.907673 0.159784 0.037683" class="wrap" size="0.004"/>
                                             <geom name="EDCR_torus_wrap" pos="-0.0098 -0.0137 0.0166" quat="0.516906 0.814718 -0.18962 0.1819" class="wrap" size="0.003"/>
                                             <geom name="EDCM_torus_wrap" pos="-0.0007 -0.0117 0.0191" quat="0.516192 0.831214 -0.100219 0.180516" class="wrap" size="0.0035"/>
-                                            <geom name="EDCI_torus_wrap" pos="0.009 -0.0149 0.0211" quat="0.660055 0.749868 0.0267535 0.0361877" class="wrap" size="0.0035"/>
+                                            <geom name="EDCI_torus_wrap" pos="0.009 -0.0149 0.0215" quat="0.660055 0.749868 0.0267535 0.0361877" class="wrap" size="0.0035"/>
                                             <site name="ExtensorEllipse_ellipsoid_site_EIP_side" pos="-0.0195105 -0.00430577 0.0636576"/>
                                             <site name="PL_ellipsoid_site_PL_side" pos="-0.0286005 -0.023546 -0.0168168"/>
 
                                             <site name="FDS_ellipsoid_site_FDS5_side" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="FDS_ellipsoid_site_FDS4_side" pos="-0.00481002 -0.034454 -0.0213554" />
-                                            <site name="FDS_ellipsoid_site_FDS3_side" pos="-0.00481002 -0.034454 -0.0213554" />
-                                            <site name="FDS_ellipsoid_site_FDS2_side" pos="-0.00481002 -0.034454 -0.0213554" />
+                                            <site name="FDS_ellipsoid_site_FDS4_side" pos="-0.00481002 -0.034454 -0.0213554"/>
+                                            <site name="FDS_ellipsoid_site_FDS3_side" pos="-0.00481002 -0.034454 -0.0213554"/>
+                                            <site name="FDS_ellipsoid_site_FDS2_side" pos="-0.00481002 -0.034454 -0.0213554"/>
 
                                             <site name="FDP_ellipsoid_site_FDP5_side" pos="-0.00481002 -0.034454 -0.0213554"/>
                                             <site name="FDP_ellipsoid_site_FDP4_side" pos="-0.00481002 -0.034454 -0.0213554"/>
@@ -449,22 +451,23 @@
                                             <site name="EDCR_torus_site_EDC4_side" pos="-0.0098 -0.0137 0.0166"/>
                                             <site name="EDCM_torus_site_EDC3_side" pos="-0.0007 -0.0117 0.0191"/>
                                             <site name="EDCI_torus_site_EDC2_side" pos="0.009 -0.0149 0.0211"/>
-                                            <body name="scaphoid" pos="0.012345 -0.004464 -0.001254">
-                                                <geom mesh="scaphoid" name="scaphoid" type="mesh"/>
+
+                                            <body name="scaphoid_r" pos="0.012345 -0.004464 -0.001254">
+                                                <geom mesh="scaphoid_r" name="scaphoid_r" type="mesh"/>
                                                 <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                             </body>
-                                            <body name="pisiform" pos="-0.013388 -0.009886 -0.010593">
-                                                <geom mesh="pisiform" name="pisiform" type="mesh"/>
-                                                <geom name="FCU_wrap" pos="0 0 0.006" quat="0.600794 -0.4144 0.573042 -0.372748" class="wrap" size="0.005 0.01" type="cylinder"/>
+                                            <body name="pisiform_r" pos="-0.013388 -0.009886 -0.010593">
+                                                <geom mesh="pisiform_r" name="pisiform_r" type="mesh"/>
+                                                <!--<geom name="FCU_wrap" pos="0 0 0.006" quat="0.600794 -0.4144 0.573042 -0.372748" class="wrap" size="0.005 0.01" type="cylinder"/> -->
                                                 <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                 <site name="FCU-P4" pos="0.001 0.003 -0.01"/>
                                             </body>
-                                            <body name="triquetrum" pos="-0.010784 -0.007499 -0.001289">
-                                                <geom mesh="triquetrum" name="triquetrum" type="mesh"/>
+                                            <body name="triquetrum_r" pos="-0.010784 -0.007499 -0.001289">
+                                                <geom mesh="triquetrum_r" name="triquetrum_r" type="mesh"/>
                                                 <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                             </body>
-                                            <body name="capitate" pos="0.003992 -0.015054 0.002327" childclass="fingers">
-                                                <geom mesh="capitate" name="capitate" type="mesh"/>
+                                            <body name="capitate_r" pos="0.003992 -0.015054 0.002327" childclass="fingers">
+                                                <geom mesh="capitate_r" name="capitate" type="mesh"/>
                                                 <site name="PL-P3" pos="0.0092 -0.019 -0.0175"/>
                                                 <site name="FDS5-P3" pos="-0.0024 -0.0139 -0.0138"/>
                                                 <site name="FDS4-P3" pos="-0.0008 -0.0134 -0.0136"/>
@@ -477,11 +480,12 @@
                                                 <site name="EPL-P6" pos="0.0243 0.0001 0.0061"/>
                                                 <site name="EPB-P5" pos="0.0312 0.0026 -0.0033"/>
                                                 <!-- <site name="FPL-P5" pos="0.0179 0.0064 -0.0168"/> -->
-                                                <site name="FPL-P5" pos="0.0187 0.0088 -0.0155"></site>
-                                                <body name="trapezium" pos="0.015293 -0.004569 -0.010308">
-                                                    <geom mesh="trapezium" name="trapezium" type="mesh"/>
+                                                <site name="FPL-P5" pos="0.0187 0.0088 -0.0155"/>
+
+                                                <body name="trapezium_r" pos="0.015293 -0.004569 -0.010308">
+                                                    <geom mesh="trapezium_r" name="trapezium_r" type="mesh"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
-                                                    <geom name="Trpzm_wrap" pos="0.002 -0.003 0" quat="0.708942 0.660448 0.181023 0.16864" class="wrap" size="0.011"/>
+                                                    <!-- <geom name="Trpzm_wrap" pos="0.002 -0.003 0" quat="0.708942 0.660448 0.181023 0.16864" class="wrap" size="0.011"/> -->
                                                     <site name="EPL-P7" pos="0.0081 -0.0046 0.0099"/>
                                                     <site name="OP-P1" pos="-0.011 -0.005 -0.004"/>
                                                     <site name="Trpzm_site_FPL_side" pos="0.0125474 -0.0222585 0.00136571"/>
@@ -490,11 +494,11 @@
                                                     <camera name="plam_lookat" pos="-0.011 -0.06 -0.5" euler="0 3.14 0"/>
 
                                                     <!-- THUMB FINGER -->
-                                                    <body name="firstmc" pos="0.0072 -0.0054 -0.0025">
-                                                        <joint axis="-0.042399 -0.665286 0.745384" name="cmc_abduction" pos="0 0 0" range="-0.5 0.78"/>
-                                                        <joint axis="0.495557 0.731736 0.467959"  name="cmc_flexion" pos="0 0 0" range="-0.78 0.7"/>
-                                                        <geom name="1mcskin" class="myohand_coll" size="0.0095" fromto="-.002 0.004 0.003 0.0165 -0.0292 -0.0127"/>
-                                                        <geom mesh="1mc" name="1mc" type="mesh"/>
+                                                    <body name="firstmc_r" pos="0.0072 -0.0054 -0.0025">
+                                                        <joint axis="-0.042399 -0.665286 0.745384" name="cmc_flexion" pos="0 0 0" range="-0.5 0.78"/>
+                                                        <joint axis="0.495557 0.731736 0.467959"  name="cmc_abduction" pos="0 0 0" range="-0.78 0.7"/>
+                                                        <geom name="1mcskin_r" class="myohand_coll" size="0.0095" fromto="-.002 0.004 0.003 0.0165 -0.0292 -0.0127"/>
+                                                        <geom mesh="1mc_r" name="1mc_r" type="mesh"/>
                                                         <geom name="MPthumb_wrap" type="cylinder" size="0.0085 0.01" pos="0.0177 -0.0305 -0.0143" euler="0.32131512 0.11013028 -0.83479098" class="wrap"/>
                                                         <inertial pos="0.0078 -0.0147 -0.006" mass="0.016" fullinertia="1.2e-06 7.1e-07 1.3e-06 4.7e-07 2.5e-07 -4.1e-07"/>
                                                         <site name="EPL-P8" pos="0.0066 -0.0043 0.0079"/>
@@ -506,56 +510,57 @@
                                                         <site name="APL-P6" pos="0 0.006 -0.01"/>
                                                         <site name="APL-P7" pos="0.0063 0.0032 -0.0059"/>
                                                         <site name="APL-P8" pos="0.014 -0.019 -0.014"/> -->
-                                                        <site name="FPL-P7" pos="-0.0061 -0.0162 -0.0094"></site>
-                                                        <site name="FPL-P8" pos="0.0021 -0.023 -0.0096"></site>
-                                                        <site name="APL-P6" pos="0 0.006 -0.01"></site>
-                                                        <site name="APL-P7" pos="0.0063 0.0032 -0.0059"></site>
-                                                        <site name="APL-P8" pos="0.0083 -0.0059 -0.006"></site>
+                                                        <site name="FPL-P7" pos="-0.0061 -0.0162 -0.0094"/>
+                                                        <site name="FPL-P8" pos="0.0021 -0.023 -0.0096"/>
+                                                        <site name="APL-P6" pos="0 0.006 -0.01"/>
+                                                        <site name="APL-P7" pos="0.0063 0.0032 -0.0059"/>
+                                                        <site name="APL-P8" pos="0.0083 -0.0059 -0.006"/>
                                                         <site name="OP-P2" pos="0.011 -0.03 -0.016"/>
-                                                        <!-- <site name="MPthumb_site_EPL_side" pos="0.0233473 -0.0173314 -0.02" /> -->
-                                                        <site name="MPthumb_site_EPB_side" pos="0.0252901 -0.0179637 -0.00935966" />
+                                                        <!-- <site name="MPthumb_site_EPL_side" pos="0.0233473 -0.0173314 -0.02"/> -->
+                                                        <site name="MPthumb_site_EPB_side" pos="0.0252901 -0.0179637 -0.00935966"/>
                                                         <site name="MPthumb_site_FPL_side" pos="0.0177 -0.0305 -0.0143"/>
-                                                        <body name="proximal_thumb" pos="0.0165 -0.0292 -0.0127">
-                                                            <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion" pos="0 0 0" range="-0.785398 0.698132"/>
-                                                            <geom class="myohand_coll" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
-                                                            <geom mesh="thumbprox" name="thumbprox" type="mesh"/>
-                                                            <geom name="IPthumb_wrap" type="cylinder" size="0.00450000 0.005" pos="0.0121 -0.0302 -0.0096" euler="0.30473449 0.01291544 0.08796459" class="wrap"/>
+                                                        <body name="proximal_thumb_r" pos="0.0165 -0.0292 -0.0127">
+                                                            <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion_r" pos="0 0 0" range="-0.785398 0.698132"/>
+                                                            <geom name="proximal_thumb_r_coll" class="myohand_coll" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
+                                                            <geom mesh="thumbprox_r" name="thumbprox" type="mesh"/>
+                                                            <geom name="IPthumb_wrap" type="cylinder" size="0.00450000 0.005" pos="0.0121 -0.0232 -0.0096" euler="0.30473449 0.01291544 0.08796459" class="wrap"/>
                                                             <inertial pos="0.0096 -0.0163 -0.0063" mass="0.0079" fullinertia="2.6e-07 7.1e-07 2.9e-07 1e-07 4e-08 -6e-08"/>
                                                             <site name="EPL-P10" pos="0.0115 -0.0036 0.0016"/>
                                                             <site name="EPL-P11" pos="0.0192 -0.0265 -0.0104"/>
                                                             <site name="EPB-P8" pos="0.0093 -0.0062 -0.0056"/>
                                                             <!-- <site name="FPL-P9" pos="-0.005 -0.006 -0.002"/> -->
-                                                            <site name="FPL-P9" pos="-0.0045 -0.0184 -0.0051"></site>
+                                                            <site name="FPL-P9" pos="-0.0045 -0.0184 -0.0051"/>
                                                             <site name="FPL-P10" pos="0.0059 -0.026 -0.0111"/>
                                                             <site name="IPthumb_site_EPL_side" pos="0.0167862 -0.030399 -0.0079041"/>
                                                             <site name="IPthumb_site_FPL_side" pos="0.00820158 -0.028993 -0.00586527"/>
-                                                            <body name="distal_thumb" pos="0.014 -0.0259 -0.0101">
-                                                                <geom class="myohand_coll" size="0.0065" fromto="0 0 0 0.010 -0.018 -0.007"/>
-                                                                <joint axis="-0.050102 -0.479623 0.876043" name="ip_flexion" pos="0 0 0" range="-1.309 0.436332"/>
-                                                                <geom mesh="thumbdist" name="thumbdist" type="mesh"/>
+
+                                                            <body name="distal_thumb_r" pos="0.014 -0.0259 -0.0101">
+                                                                <geom name="distal_thumb_r_coll" class="myohand_coll" size="0.0065" fromto="0 0 0 0.010 -0.018 -0.007"/>
+                                                                <joint axis="-0.050102 -0.479623 0.876043" name="ip_flexion_r" pos="0 0 0" range="-1.309 0.436332"/>
+                                                                <geom mesh="thumbdist_r" name="thumbdist_r" type="mesh"/>
                                                                 <inertial pos="0.0056 -0.0104 -0.0044" mass="0.003" fullinertia="5e-08 3e-08 5e-08 1e-08 1e-08 -1e-08"/>
                                                                 <site name="EPL-P12" pos="0.0054 -0.0071 -0.0046"/>
                                                                 <site name="FPL-P11" pos="0.0024 -0.0113 -0.0041"/>
-                                                                <geom class="myohand_coll" type="ellipsoid" size=".007 .0055 .002" pos=".015 -.018 -.007" euler="0.2 1.57 1.5" rgba="1 1 1 .8"/>
+                                                                <geom name="distal_thumb_r_coll_2" class="myohand_coll" type="ellipsoid" size=".007 .0055 .002" pos=".015 -.018 -.007" euler="0.2 1.57 1.5" rgba="1 1 1 .8"/>
                                                                 <site name="THtip" size="0.005" pos=".010 -.020 -.008" rgba=".8 0 0 1"/>
                                                             </body>
                                                         </body>
                                                     </body>
                                                 </body>
-                                                <body name="trapezoid" pos="0.009143 -0.004062 -0.002464">
-                                                    <geom mesh="trapezoid" name="trapezoid" type="mesh"/>
+                                                <body name="trapezoid_r" pos="0.009143 -0.004062 -0.002464">
+                                                    <geom mesh="trapezoid_r" name="trapezoid_r" type="mesh"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                 </body>
-                                                <body name="hamate" pos="-0.010969 -0.002495 -0.00075">
-                                                    <geom mesh="hamate" name="hamate" type="mesh"/>
-                                                    <geom name="APL_torus_wrap" pos="0.0082 0.0023 -0.0101" quat="0.686412 -0.716478 0.0748666 -0.0994649" class="wrap" size="0.004"/>
+                                                <body name="hamate_r" pos="-0.010969 -0.002495 -0.00075">
+                                                    <geom mesh="hamate_r" name="hamate_r" type="mesh"/>
+                                                    <!-- Never used <geom name="APL_torus_wrap" pos="0.0082 0.0023 -0.0101" quat="0.686412 -0.716478 0.0748666 -0.0994649" class="wrap" size="0.004"/> -->
                                                     <site name="APL_torus_site_APL_side" pos="0.0082 0.0023 -0.0101"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                 </body>
-                                                <body name="secondmc" pos="0.014685 -0.03762 0.005032">
-                                                    <geom name="2mcskin" class="myohand_coll" size="0.010 0.028" euler="1.42 0.15 -.1"/>
-                                                    <geom mesh="2mc" name="2mc" type="mesh"/>
-                                                    <geom name="2ndmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="0.0058 -0.0294 0.0007" euler="0.84927721 -1.33552594 1.33814394" class="wrap"/>
+                                                <body name="secondmc_r" pos="0.014685 -0.03762 0.005032">
+                                                    <geom name="2mcskin_r_coll" class="myohand_coll" size="0.010 0.028" euler="1.42 0.15 -.1"/>
+                                                    <geom mesh="2mc_r" name="2mc_r" type="mesh"/>
+                                                    <geom name="2ndmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="0.0058 -0.0314 0.0007" euler="0.84927721 -1.33552594 1.33814394" class="wrap"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                     <!-- <site name="ECRL-P4" pos="0.0025 0.0164 0.0008"/>
                                                     <site name="FCR-P3" pos="-0.0034 0.0192 -0.0092"/>
@@ -572,31 +577,31 @@
                                                     <site name="LU_RB2-P2" pos="0.0102 -0.0265 0"/>
                                                     <site name="UI_UB2-P1" pos="-0.0041 -0.0002 -0.0048"/>
                                                     <site name="UI_UB2-P2" pos="-0.0033 -0.0294 -0.0001"/> -->
-                                                    <site name="ECRL-P4" pos="0.0025 0.0164 0.0008"></site>
-                                                    <site name="FCR-P3" pos="-0.0034 0.0192 -0.0092"></site>
-                                                    <site name="FDS2-P4" pos="-0.0041 -0.0002 -0.0048"></site>
-                                                    <site name="FDS2-P5" pos="0.0049 -0.0138 -0.0007"></site>
-                                                    <site name="FDP2-P4" pos="-0.0043 0.0066 -0.0025"></site>
-                                                    <site name="FDP2-P5" pos="0.0041 -0.016 -0.0042"></site>
-                                                    <site name="EDC2-P4" pos="0.0031 -0.0295 0.0124"></site>
-                                                    <site name="EIP-P4" pos="-0.0108 0.0153 0.0068"></site>
-                                                    <site name="EIP-P5" pos="0.0044 -0.026 0.0128"></site>
-                                                    <site name="RI2-P1" pos="-0.0041 -0.0002 -0.0048"></site>
-                                                    <site name="RI2-P2" pos="0.0091 -0.02 -0.0049"></site>
-                                                    <site name="LU_RB2-P1" pos="-0.0041 -0.0002 -0.0048"></site>
-                                                    <site name="LU_RB2-P2" pos="0.0102 -0.0265 -0"></site>
-                                                    <site name="UI_UB2-P1" pos="-0.0041 -0.0002 -0.0048"></site>
-                                                    <site name="UI_UB2-P2" pos="-0.0033 -0.0294 -0.0001"></site>
+                                                    <site name="ECRL-P4" pos="0.0025 0.0164 0.0008"/>
+                                                    <site name="FCR-P3" pos="-0.0034 0.0192 -0.0092"/>
+                                                    <site name="FDS2-P4" pos="-0.0041 -0.0002 -0.0048"/>
+                                                    <site name="FDS2-P5" pos="0.0049 -0.0138 -0.0007"/>
+                                                    <site name="FDP2-P4" pos="-0.0043 0.0066 -0.0025"/>
+                                                    <site name="FDP2-P5" pos="0.0041 -0.016 -0.0042"/>
+                                                    <site name="EDC2-P4" pos="0.0031 -0.0295 0.0124"/>
+                                                    <site name="EIP-P4" pos="-0.0108 0.0153 0.0068"/>
+                                                    <site name="EIP-P5" pos="0.0044 -0.026 0.0128"/>
+                                                    <site name="RI2-P1" pos="-0.0041 -0.0002 -0.0048"/>
+                                                    <site name="RI2-P2" pos="0.0091 -0.02 -0.0049"/>
+                                                    <site name="LU_RB2-P1" pos="-0.0041 -0.0002 -0.0048"/>
+                                                    <site name="LU_RB2-P2" pos="0.0102 -0.0265 -0"/>
+                                                    <site name="UI_UB2-P1" pos="-0.0041 -0.0002 -0.0048"/>
+                                                    <site name="UI_UB2-P2" pos="-0.0033 -0.0294 -0.0001"/>
                                                     <site name="2ndmcp_ellipsoid_site_FDS2_side" pos="0 0 0"/>
                                                     <site name="2ndmcp_ellipsoid_site_FDP2_side" pos="0.0058 -0.0294 -0.0087"/>
                                                     <site name="2ndmcp_ellipsoid_site_EDC2_side" pos="0.0058 -0.0294 0.0087"/>
                                                     <site name="2ndmcp_ellipsoid_site_EIP_side" pos="0.0058 -0.0294 0.0087"/>
                                                     <site name="2ndmcp_ellipsoid_site_RI2_side" pos="-0.0107522 -0.0332733 0.00473501"/>
-                                                    <body name="proxph2" pos="0.003501 -0.028243 0.00362">
-                                                        <joint axis="0.995013 0.09975 0" name="mcp2_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                        <joint axis="-0.054999 0.085899 0.994785"  name="mcp2_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
-                                                        <geom class="myohand_coll" size="0.009 0.020" pos="0.004 -0.0210 0.00362" euler="1.45 0.15 -.35"/>
-                                                        <geom mesh="2proxph" name="2proxph" type="mesh"/>
+                                                    <body name="proxph2_r" pos="0.003501 -0.028243 0.00362">
+                                                        <joint axis="0.995013 0.09975 0" name="mcp2_flexion_r" pos="0 0 0" range="0.0 1.5708"/>
+                                                        <joint axis="-0.054999 0.085899 0.994785" name="mcp2_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
+                                                        <geom name="proxph2_r_coll" class="myohand_coll" size="0.009 0.020" pos="0.004 -0.0210 0.00362" euler="1.45 0.15 -.35"/>
+                                                        <geom mesh="2proxph_r" name="2proxph_r" type="mesh"/>
                                                         <geom name="Secondpm_wrap" type="cylinder" size="0.0042 0.005" pos="0.0075 -0.0407 0.0061" euler="0.74193947 -1.47393055 0.70965087" class="wrap"/>
                                                         <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                         <!-- <site name="FDS2-P6" pos="0.001 -0.001 -0.009"/>
@@ -612,27 +617,27 @@
                                                         <site name="LU_RB2-P4" pos="0.013 -0.042 0.007"/>
                                                         <site name="UI_UB2-P3" pos="-0.005 -0.013 0.004"/>
                                                         <site name="UI_UB2-P4" pos="0.002 -0.045 0.011"/> -->
-                                                        <site name="FDS2-P6" pos="0.0013 -0.0084 -0.012"></site>
-                                                        <site name="FDS2-P7" pos="0.0064 -0.0368 0.0023"></site>
-                                                        <site name="FDP2-P6" pos="0.0033 -0.0202 -0.005"></site>
-                                                        <site name="FDP2-P7" pos="0.0063 -0.0343 -0.0006"></site>
-                                                        <site name="EDC2-P5" pos="0.002 -0.01 0.007"></site>
-                                                        <site name="EDC2-P6" pos="0.007 -0.038 0.012"></site>
-                                                        <site name="EIP-P6" pos="0.0017 -0.0103 0.0095"></site>
-                                                        <site name="EIP-P7" pos="0.0071 -0.0413 0.0141"></site>
-                                                        <site name="RI2-P3" pos="0.007 -0.0067 -0.0001"></site>
-                                                        <site name="LU_RB2-P3" pos="0.0084 -0.0083 -0"></site>
-                                                        <site name="LU_RB2-P4" pos="0.0113 -0.0339 0.0094"></site>
-                                                        <site name="UI_UB2-P3" pos="-0.0043 -0.0159 0.0024"></site>
-                                                        <site name="UI_UB2-P4" pos="0.001 -0.0394 0.0111"></site>
+                                                        <site name="FDS2-P6" pos="0.0013 -0.0084 -0.012"/>
+                                                        <site name="FDS2-P7" pos="0.0064 -0.0368 0.0023"/>
+                                                        <site name="FDP2-P6" pos="0.0033 -0.0202 -0.005"/>
+                                                        <site name="FDP2-P7" pos="0.0063 -0.0343 -0.0006"/>
+                                                        <site name="EDC2-P5" pos="0.002 -0.01 0.007"/>
+                                                        <site name="EDC2-P6" pos="0.007 -0.038 0.012"/>
+                                                        <site name="EIP-P6" pos="0.0017 -0.0103 0.0095"/>
+                                                        <site name="EIP-P7" pos="0.0071 -0.0413 0.0141"/>
+                                                        <site name="RI2-P3" pos="0.007 -0.0067 -0.0001"/>
+                                                        <site name="LU_RB2-P3" pos="0.0084 -0.0083 -0"/>
+                                                        <site name="LU_RB2-P4" pos="0.0113 -0.0339 0.0094"/>
+                                                        <site name="UI_UB2-P3" pos="-0.0043 -0.0159 0.0024"/>
+                                                        <site name="UI_UB2-P4" pos="0.001 -0.0394 0.0111"/>
                                                         <site name="Secondpm_site_EDC2_side" pos="0.0075 -0.0407 0.0121"/>
                                                         <site name="Secondpm_site_EIP_side" pos="0.00869283 -0.0401863 0.0131834"/>
                                                         <site name="Secondpm_site_LU_RB2_side" pos="0.075 -0.0507 0.01"/>
                                                         <site name="Secondpm_site_UI_UB2_side" pos="0.0147187 -0.0418367 0.0110691"/>
-                                                        <body name="midph2" pos="0.00751 -0.041273 0.007326">
-                                                            <geom class="myohand_coll" size="0.008 0.012" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
-                                                            <joint axis="0.97517 0.0998334 -0.197677" name="pm2_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                            <geom mesh="2midph" name="2midph" type="mesh"/>
+                                                        <body name="midph2_r" pos="0.00751 -0.041273 0.007326">
+                                                            <geom name="midph2_r_coll" class="myohand_coll" size="0.008 0.012" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
+                                                            <joint axis="0.97517 0.0998334 -0.197677" name="pm2_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                            <geom mesh="2midph_r" name="2midph_r" type="mesh"/>
                                                             <geom name="Secondmd_wrap" pos="0.0036 -0.0243 0.0003" quat="0.749819 -0.0209733 -0.656264 0.0815428" class="wrap" size="0.003 0.005" type="cylinder"/>
                                                             <inertial pos="0 0 0" mass="0.003" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                             <!-- <site name="FDS2-P8" pos="0.0013 -0.019 -0.0034"/>
@@ -646,23 +651,24 @@
                                                             <site name="LU_RB2-P6" pos="0.006 -0.021 0.002"/>
                                                             <site name="UI_UB2-P5" pos="-0.003 -0.01 0.004"/>
                                                             <site name="UI_UB2-P6" pos="0.001 -0.023 0.003"/> -->
-                                                            <site name="FDS2-P8" pos="-0.0002 -0.0088 -0.0041"></site>
-                                                            <site name="FDP2-P8" pos="0.0006 -0.0088 -0.0058"></site>
-                                                            <site name="FDP2-P9" pos="0.0043 -0.0196 -0.0035"></site>
-                                                            <!-- <site name="EDC2-P7" pos="0.001 -0.009 0.0035"></site>
-                                                            <site name="EDC2-P8" pos="0.003 -0.025 0.0035"></site> -->
+                                                            <site name="FDS2-P8" pos="-0.0002 -0.0088 -0.0041"/>
+                                                            <site name="FDP2-P8" pos="0.0006 -0.0088 -0.0058"/>
+                                                            <site name="FDP2-P9" pos="0.0043 -0.0196 -0.0035"/>
+                                                            <!-- <site name="EDC2-P7" pos="0.001 -0.009 0.0035"/>
+                                                            <site name="EDC2-P8" pos="0.003 -0.025 0.0035"/> -->
                                                             <site name="EDC2-P7" pos="-0.0009 -0.0046 0.0074"/>
                                                             <site name="EDC2-P8" pos="0.003 -0.0249 0.0048"/>
-                                                            <site name="LU_RB2-P5" pos="0.006 -0.008 0.001"></site>
-                                                            <site name="LU_RB2-P6" pos="0.006 -0.021 0.002"></site>
-                                                            <site name="UI_UB2-P5" pos="-0.0041 -0.0066 0.0038"></site>
-                                                            <site name="UI_UB2-P6" pos="0.001 -0.023 0.003"></site>
+                                                            <site name="LU_RB2-P5" pos="0.006 -0.008 0.001"/>
+                                                            <site name="LU_RB2-P6" pos="0.006 -0.021 0.002"/>
+                                                            <site name="UI_UB2-P5" pos="-0.0041 -0.0066 0.0038"/>
+                                                            <site name="UI_UB2-P6" pos="0.001 -0.023 0.003"/>
                                                             <site name="Secondmd_site_EDC2_side" pos="0.00435202 -0.0234011 0.00618443"/>
                                                             <site name="Secondmd_site_EIP_side" pos="0.00435202 -0.0234011 0.00618443"/>
-                                                            <body name="distph2" pos="0.003333 -0.024888 0.00122">
-                                                                <joint axis="0.995004 0.0998334 0" name="md2_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                                <geom class="myohand_coll" size="0.007 0.008" pos="0.001 -0.008 0.00" euler="1.5 0.14 -.35"/>
-                                                                <geom mesh="2distph" name="2distph" type="mesh"/>
+
+                                                            <body name="distph2_r" pos="0.003333 -0.024888 0.00122">
+                                                                <joint axis="0.995004 0.0998334 0" name="md2_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                                <geom name="distph2_r_coll" class="myohand_coll" size="0.007 0.008" pos="0.001 -0.008 0.00" euler="1.5 0.14 -.35"/>
+                                                                <geom mesh="2distph_r" name="2distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                                 <site name="FDP2-P10" pos="0.0007 -0.0056 -0.004"/>
                                                                 <site name="EDC2-P9" pos="0 -0.0056 0.0034"/>
@@ -675,11 +681,11 @@
                                                     </body>
                                                 </body>
                                                 <!-- MIDDLE FINGER -->
-                                                <body name="thirdmc" pos="0.000477 -0.039239 0.007377">
-                                                    <geom name="3mcskin" class="myohand_coll" size="0.010 0.028" euler="1.42 0.01 0" pos="0 0 0"/>
+                                                <body name="thirdmc_r" pos="0.000477 -0.039239 0.007377">
+                                                    <geom name="3mcskin_r_coll" class="myohand_coll" size="0.010 0.028" euler="1.42 0.01 0" pos="0 0 0"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
-                                                    <geom mesh="3mc" name="3mc" type="mesh"/>
-                                                    <geom name="3rdmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="0.0016 -0.0271 0.0001" euler="2.5794221 -1.44967048 2.90614774" class="wrap"/>
+                                                    <geom mesh="3mc_r" name="3mc_r" type="mesh"/>
+                                                    <geom name="3rdmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="0.0016 -0.0271 0.0001" euler="-2.5794221 -1.44967048 2.90614774" class="wrap"/>
                                                     <site name="ECRB-P4" pos="0.0045 0.0279 0.0011"/>
                                                     <site name="PL-P4" pos="0.0018 0.0083 -0.0024"/>
                                                     <site name="FDS4-P4" pos="-0.0091 0.0054 -0.0108"/>
@@ -688,16 +694,16 @@
                                                     <site name="FDP4-P4" pos="-0.0104 0.0047 -0.008"/>
                                                     <site name="FDP3-P4" pos="-0.0013 0.0061 -0.0084"/>
                                                     <!-- <site name="FDP3-P5" pos="0.0005 -0.019 -0.0031"/> -->
-                                                    <site name="FDP3-P5" pos="0.0019 -0.0151 -0.0068"></site>
+                                                    <site name="FDP3-P5" pos="0.0019 -0.0151 -0.0068"/>
                                                     <site name="EDC3-P4" pos="-0.0007 -0.0263 0.0112"/>
                                                     <site name="RI3-P1" pos="0.0013 0.0064 -0.0095"/>
                                                     <site name="RI3-P2" pos="0.0096 -0.0027 -0.0048"/>
                                                     <site name="LU_RB3-P1" pos="0.0013 0.0064 -0.0095"/>
                                                     <!-- <site name="LU_RB3-P2" pos="0.009 -0.019 -0.005"/> -->
-                                                    <site name="LU_RB3-P2" pos="0.0102 -0.0232 -0.0008"></site>
+                                                    <site name="LU_RB3-P2" pos="0.0102 -0.0232 -0.0008"/>
                                                     <site name="UI_UB3-P1" pos="0.0013 0.0064 -0.0095"/>
                                                     <!-- <site name="UI_UB3-P2" pos="-0.0077 -0.0271 -0.004"/> -->
-                                                    <site name="UI_UB3-P2" pos="-0.0031 -0.0248 -0.0034"></site>
+                                                    <site name="UI_UB3-P2" pos="-0.0031 -0.0248 -0.0034"/>
                                                     <site name="RI4-P1" pos="-0.0091 0.0054 -0.0108"/>
                                                     <site name="LU_RB4-P1" pos="-0.0091 0.0054 -0.0108"/>
                                                     <site name="UI_UB4-P1" pos="-0.0091 0.0054 -0.0108"/>
@@ -708,11 +714,11 @@
                                                     <site name="3rdmcp_ellipsoid_site_FDP3_side" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_EDC3_side" pos="0.0016 -0.0291 0.0081"/>
                                                     <site name="3rdmcp_ellipsoid_site_LU_RB3_side" pos="0 0 0"/>
-                                                    <body name="proxph3" pos="0.00024 -0.02629 0.001778">
-                                                        <geom class="myohand_coll" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
-                                                        <joint axis="0.980067 0 0.198669" name="mcp3_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                        <joint axis="-0.198669 0 0.980067" name="mcp3_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
-                                                        <geom mesh="3proxph" name="3proxph" type="mesh"/>
+                                                    <body name="proxph3_r" pos="0.00024 -0.02629 0.001778">
+                                                        <geom name="proxph3_r_coll" class="myohand_coll" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
+                                                        <joint axis="0.980067 0 0.198669" name="mcp3_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                        <joint axis="-0.198669 0 0.980067" name="mcp3_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
+                                                        <geom mesh="3proxph_r" name="3proxph_r" type="mesh"/>
                                                         <geom name="Thirdpm_wrap" pos="0.0017 -0.0439 0.005" quat="0.700673 0.00645453 -0.712452 0.0377825" class="wrap" size="0.004 0.005" type="cylinder"/>
                                                         <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                         <!-- <site name="FDS3-P6" pos="0.0009 -0.017 -0.0128"/>
@@ -726,23 +732,24 @@
                                                         <site name="LU_RB3-P4" pos="0.009 -0.039 0.014"/>
                                                         <site name="UI_UB3-P3" pos="-0.0074 -0.0117 -0.0018"/>
                                                         <site name="UI_UB3-P4" pos="-0.0053 -0.0352 0.0116"/> -->
-                                                        <site name="FDS3-P6" pos="0.0006 -0.0146 -0.0088"></site>
-                                                        <site name="FDS3-P7" pos="0.0045 -0.0376 -0.0021"></site>
-                                                        <site name="FDP3-P6" pos="0.0007 -0.0158 -0.0081"></site>
-                                                        <site name="FDP3-P7" pos="0.0024 -0.0364 -0.0005"></site>
-                                                        <site name="EDC3-P5" pos="-0.0012 -0.0122 0.0107"></site>
-                                                        <site name="EDC3-P6" pos="0.0017 -0.0414 0.0113"></site>
-                                                        <site name="RI3-P3" pos="0.0076 -0.0117 0.0005"></site>
-                                                        <site name="LU_RB3-P3" pos="0.0068 -0.022 0.0073"></site>
-                                                        <site name="LU_RB3-P4" pos="0.0058 -0.0447 0.0076"></site>
-                                                        <site name="UI_UB3-P3" pos="-0.0012 -0.0183 -0.0093"></site>
-                                                        <site name="UI_UB3-P4" pos="-0.0043 -0.0428 0.0069"></site>                                <site name="Thirdpm_site_EDC3_side" pos="0.00155575 -0.04355 0.012991"/>
+                                                        <site name="FDS3-P6" pos="0.0006 -0.0146 -0.0088"/>
+                                                        <site name="FDS3-P7" pos="0.0045 -0.0376 -0.0021"/>
+                                                        <site name="FDP3-P6" pos="0.0007 -0.0158 -0.0081"/>
+                                                        <site name="FDP3-P7" pos="0.0024 -0.0364 -0.0005"/>
+                                                        <site name="EDC3-P5" pos="-0.0012 -0.0122 0.0107"/>
+                                                        <site name="EDC3-P6" pos="0.0017 -0.0414 0.0113"/>
+                                                        <site name="RI3-P3" pos="0.0076 -0.0117 0.0005"/>
+                                                        <site name="LU_RB3-P3" pos="0.0068 -0.022 0.0073"/>
+                                                        <site name="LU_RB3-P4" pos="0.0058 -0.0447 0.0076"/>
+                                                        <site name="UI_UB3-P3" pos="-0.0012 -0.0183 -0.0093"/>
+                                                        <site name="UI_UB3-P4" pos="-0.0043 -0.0428 0.0069"/>
+                                                        <site name="Thirdpm_site_EDC3_side" pos="0.00155575 -0.04355 0.012991"/>
                                                         <site name="Thirdpm_site_LU_RB3_side" pos="0.00155575 -0.04355 0.012991"/>
                                                         <site name="Thirdpm_site_UI_UB3_side" pos="0.00155575 -0.04355 0.012991"/>
-                                                        <body name="midph3" pos="0.00165 -0.044211 0.00623">
-                                                            <joint axis="1 0 0" name="pm3_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                            <geom class="myohand_coll" size="0.008 0.014" pos="0.0012 -0.014 0.00" euler="1.55 0.06 -.35"/>
-                                                            <geom mesh="3midph" name="3midph" type="mesh"/>
+                                                        <body name="midph3_r" pos="0.00165 -0.044211 0.00623">
+                                                            <joint axis="1 0 0" name="pm3_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                            <geom name="midph3_r_coll" class="myohand_coll" size="0.008 0.014" pos="0.0012 -0.014 0.00" euler="1.55 0.06 -.35"/>
+                                                            <geom mesh="3midph_r" name="3midph_r" type="mesh"/>
                                                             <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                             <geom name="Thirdmd_wrap" pos="0.0014 -0.0289 0.0012" quat="0.708186 -0.0221627 -0.701515 0.0765368" class="wrap" size="0.003 0.005" type="cylinder"/>
                                                             <!-- <site name="FDS3-P8" pos="-0.001 -0.013 -0.006"/>
@@ -752,22 +759,23 @@
                                                             <site name="EDC3-P8" pos="0.0011 -0.029 0.0051"/>
                                                             <site name="LU_RB3-P5" pos="0.006 -0.007 0.006"/>
                                                             <site name="UI_UB3-P5" pos="-0.0055 -0.0088 0.0058"/> -->
-                                                            <site name="FDS3-P8" pos="0.0002 -0.0107 -0.0054"></site>
-                                                            <site name="FDP3-P8" pos="0.0016 -0.0115 -0.0051"></site>
-                                                            <site name="FDP3-P9" pos="0.0021 -0.0214 -0.0021"></site>
-                                                            <site name="EDC3-P7" pos="0.0004 -0.0042 0.0062"></site>
-                                                            <site name="EDC3-P8" pos="0.0011 -0.029 0.0051"></site>
-                                                            <site name="LU_RB3-P5" pos="0.0049 -0.0116 0.0035"></site>
-                                                            <site name="UI_UB3-P5" pos="-0.0054 -0.0077 0.006"></site>
+                                                            <site name="FDS3-P8" pos="0.0002 -0.0107 -0.0054"/>
+                                                            <site name="FDP3-P8" pos="0.0016 -0.0115 -0.0051"/>
+                                                            <site name="FDP3-P9" pos="0.0021 -0.0214 -0.0021"/>
+                                                            <site name="EDC3-P7" pos="0.0004 -0.0042 0.0062"/>
+                                                            <site name="EDC3-P8" pos="0.0011 -0.029 0.0051"/>
+                                                            <site name="LU_RB3-P5" pos="0.0049 -0.0116 0.0035"/>
+                                                            <site name="UI_UB3-P5" pos="-0.0054 -0.0077 0.006"/>
                                                             <site name="Thirdmd_site_EDC3_side" pos="0.00142423 -0.028063 0.00714128"/>
-                                                            <body name="distph3" pos="0.001365 -0.029047 0.001954">
+
+                                                            <body name="distph3_r" pos="0.001365 -0.029047 0.001954">
                                                                 <joint axis="1 0 0" name="md3_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                                <geom class="myohand_coll" size="0.007 0.008" pos="0.0013 -0.009 -.002" euler="1.6 .05 0"/>
-                                                                <geom mesh="3distph" name="3distph" type="mesh"/>
+                                                                <geom name="distph3_r_coll" class="myohand_coll" size="0.007 0.008" pos="0.0013 -0.009 -.002" euler="1.6 .05 0"/>
+                                                                <geom mesh="3distph_r" name="3distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                                 <site name="FDP3-P10" pos="0.0008 -0.004 -0.002"/>
                                                                 <site name="EDC3-P9" pos="0.0008 -0.0058 0.0041"/>
-                                                                <geom class="myohand_coll" type="ellipsoid" size=".0055 .008 .002" pos="0.002 -.019 0.003" euler="0.2 0 0.0" rgba="1 1 1 .8"/>
+                                                                <geom name="distph3_r_coll_2" class="myohand_coll" type="ellipsoid" size=".0055 .008 .002" pos="0.002 -.019 0.003" euler="0.2 0 0.0" rgba="1 1 1 .8"/>
                                                                 <site name="MFtip" size="0.005" pos=".002 -.019 -.001" rgba="0 0 0.8 1"/>
                                                             </body>
                                                         </body>
@@ -775,9 +783,9 @@
                                                 </body>
 
                                                 <!-- RING FINGER -->
-                                                <body name="fourthmc" pos="-0.012046 -0.040519 0.003513">
-                                                    <geom name="4mcskin" class="myohand_coll" size="0.0095 0.026" euler="1.55 -.08 0" pos=".001 0.002 -.00"/>
-                                                    <geom mesh="4mc" name="4mc" type="mesh"/>
+                                                <body name="fourthmc_r" pos="-0.012046 -0.040519 0.003513">
+                                                    <geom name="4mcski_r" class="myohand_coll" size="0.0095 0.026" euler="1.55 -.08 0" pos=".001 0.002 -.00"/>
+                                                    <geom mesh="4mc_r" name="4mc_r" type="mesh"/>
                                                     <!-- <geom name="4thmcp_ellipsoid_wrap" pos="-0.00413111 -0.0311007 0.00480312" quat="0.562021 -0.225806 -0.785857 0.124787" class="wrap" size="0.00604155"/> -->
                                                     <geom name="4thmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="-0.0003 -0.0254 -0.0003" euler="-2.97212118 -1.22173048 -2.46318317" class="wrap"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -789,30 +797,30 @@
                                                     <site name="RI4-P2" pos="0.0079 -0.0144 -0.0003"/>
                                                     <site name="LU_RB4-P2" pos="0.006 -0.0054 -0.0067"/>
                                                     <site name="UI_UB4-P2" pos="-0.006 -0.021 -0.006"/> -->
-                                                    <site name="FDS5-P4" pos="-0.0029 0.0085 -0.0121"></site>
-                                                    <site name="FDS4-P5" pos="0.002 -0.0138 -0.006"></site>
-                                                    <site name="FDP5-P4" pos="-0.0069 0.0089 -0.0062"></site>
-                                                    <site name="FDP4-P5" pos="-0.0006 -0.0136 -0.0063"></site>
-                                                    <site name="EDC4-P4" pos="-0.0004 -0.0207 0.0095"></site>
-                                                    <site name="RI4-P2" pos="0.0079 -0.0144 -0.0003"></site>
-                                                    <site name="LU_RB4-P2" pos="0.0032 -0.0224 -0.0008"></site>
-                                                    <site name="UI_UB4-P2" pos="-0.0048 -0.0241 -0.0044"></site>
+                                                    <site name="FDS5-P4" pos="-0.0029 0.0085 -0.0121"/>
+                                                    <site name="FDS4-P5" pos="0.002 -0.0138 -0.006"/>
+                                                    <site name="FDP5-P4" pos="-0.0069 0.0089 -0.0062"/>
+                                                    <site name="FDP4-P5" pos="-0.0006 -0.0136 -0.0063"/>
+                                                    <site name="EDC4-P4" pos="-0.0004 -0.0207 0.0095"/>
+                                                    <site name="RI4-P2" pos="0.0079 -0.0144 -0.0003"/>
+                                                    <site name="LU_RB4-P2" pos="0.0032 -0.0224 -0.0008"/>
+                                                    <site name="UI_UB4-P2" pos="-0.0048 -0.0241 -0.0044"/>
                                                     <site name="4thmcp_ellipsoid_site_FDS4_side" pos="-0.002 -0.024 0.002"/>
                                                     <site name="4thmcp_ellipsoid_site_FDP4_side" pos="-0.002 -0.024 0.002"/>
                                                     <site name="4thmcp_ellipsoid_site_EDC4_side" pos="-0.0003 -0.0254 0.0083"/>
                                                     <!-- <site name="4thmcp_ellipsoid_site_LU_RB4_side" pos="0.00421203 -0.0190492 -0.00875925"/> -->
                                                     <site name="4thmcp_ellipsoid_site_UI_UB4_side" pos="-0.0107758 -0.0261555 -0.00498369"/>
 
-                                                    <body name="proxph4" pos="-0.00183 -0.023689 -0.000173">
-                                                        <joint axis="0.900447 0 0.434966"  name="mcp4_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                        <joint axis="-0.434966 0 0.900447" name="mcp4_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
-                                                        <geom class="myohand_coll" size="0.0085 0.018" pos="-.001 -0.0200 .0008" euler="1.57 -.08 0"/>
-                                                        <geom mesh="4proxph" name="4proxph" type="mesh"/>
+                                                    <body name="proxph4_r" pos="-0.00183 -0.023689 -0.000173">
+                                                        <joint axis="0.900447 0 0.434966" name="mcp4_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                        <joint axis="-0.434966 0 0.900447" name="mcp4_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
+                                                        <geom name="proxph4_r_coll" class="myohand_coll" size="0.0085 0.018" pos="-.001 -0.0200 .0008" euler="1.57 -.08 0"/>
+                                                        <geom mesh="4proxph_r" name="4proxph_r" type="mesh"/>
                                                         <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                         <!-- <geom name="Fourthpm_wrap" pos="-0.0033 -0.0401 -0.0001" quat="0.35623 -0.660837 -0.527455 0.397727" class="wrap" size="0.004 0.005" type="cylinder"/> -->
-                                                        <geom name="Fourthpm_wrap" type="cylinder" size="0.00400000 0.005" pos="-0.0033 -0.0401 -0.0001" euler="-3.02291026 -1.12311937 -1.27251956" class="wrap"/>
-                                                        <!-- <site name="FDS4-P6" pos="0.0019 -0.02 -0.0049"/>
-                                                        <site name="FDS4-P7" pos="0.0011 -0.0331 -0.0063"/>
+                                                        <geom name="Fourthpm_wrap" type="cylinder" size="0.004  1e-2" pos="-3.3e-3 -4e-2 -1e-4" euler="-3.28989 -1.12312 -1.27252" class="wrap"/>
+                                                        <!-- <site name="FDS4-P6" pos="   19e-3 -2e-2 -49e-4"/>
+                                                        <site name="FDS4-P7" pos="   11e-3 -33e-3 -63e-4"/>
                                                         <site name="FDP4-P6" pos="0.0018 -0.0199 -0.004"/>
                                                         <site name="FDP4-P7" pos="-0.001 -0.034 -0.006"/>
                                                         <site name="EDC4-P5" pos="-0.002 -0.013 0.01"/>
@@ -822,24 +830,24 @@
                                                         <site name="LU_RB4-P4" pos="0.0017 -0.0304 0.0059"/>
                                                         <site name="UI_UB4-P3" pos="-0.009 -0.017 0.005"/>
                                                         <site name="UI_UB4-P4" pos="-0.0086 -0.0401 0.0045"/> -->
-                                                        <site name="FDS4-P6" pos="0.0001 -0.0127 -0.0075"></site>
-                                                        <site name="FDS4-P7" pos="0.0006 -0.0361 -0.001"></site>
-                                                        <site name="FDP4-P6" pos="-0.0012 -0.012 -0.0088"></site>
-                                                        <site name="FDP4-P7" pos="-0.0034 -0.0332 -0.0019"></site>
-                                                        <site name="EDC4-P5" pos="-0.002 -0.0084 0.0088"></site>
-                                                        <site name="EDC4-P6" pos="-0.0038 -0.038 0.0048"></site>
-                                                        <site name="RI4-P3" pos="0.0031 -0.0243 0.0001"></site>
-                                                        <site name="LU_RB4-P3" pos="0.0002 -0.0146 0.0006"></site>
-                                                        <site name="LU_RB4-P4" pos="0.0013 -0.0403 0.0041"></site>
-                                                        <site name="UI_UB4-P3" pos="-0.0042 -0.0212 -0.0055"></site>
-                                                        <site name="UI_UB4-P4" pos="-0.0089 -0.0388 0.0018"></site>
+                                                        <site name="FDS4-P6" pos="0.0001 -0.0127 -0.0075"/>
+                                                        <site name="FDS4-P7" pos="0.0006 -0.0361 -0.001"/>
+                                                        <site name="FDP4-P6" pos="-0.0012 -0.012 -0.0088"/>
+                                                        <site name="FDP4-P7" pos="-0.0034 -0.0332 -0.0019"/>
+                                                        <site name="EDC4-P5" pos="-0.002 -0.0084 0.0088"/>
+                                                        <site name="EDC4-P6" pos="-0.0038 -0.038 0.0048"/>
+                                                        <site name="RI4-P3" pos="0.0031 -0.0243 0.0001"/>
+                                                        <site name="LU_RB4-P3" pos="0.0002 -0.0146 0.0006"/>
+                                                        <site name="LU_RB4-P4" pos="0.0013 -0.0403 0.0041"/>
+                                                        <site name="UI_UB4-P3" pos="-0.0042 -0.0212 -0.0055"/>
+                                                        <site name="UI_UB4-P4" pos="-0.0089 -0.0388 0.0018"/>
                                                         <site name="Fourthpm_site_EDC4_side" pos="0.00028232 -0.0402561 0.008299"/>
                                                         <!-- <site name="Fourthpm_site_LU_RB4_side" pos="-0.00228232 -0.0322561 -0.001299"/> -->
                                                         <site name="Fourthpm_site_UI_UB4_side" pos="-0.0089 -0.0388 0.0018"/>
-                                                        <body name="midph4" pos="-0.003528 -0.040255 0.001345">
+                                                        <body name="midph4_r" pos="-0.003528 -0.040255 0.001345">
                                                             <joint axis="0.921061 0 0.389418" name="pm4_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                            <geom class="myohand_coll" size="0.0075 0.01" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
-                                                            <geom mesh="4midph" name="4midph" type="mesh"/>
+                                                            <geom name="midph4_r_coll" class="myohand_coll" size="0.0075 0.01" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
+                                                            <geom mesh="4midph_r" name="4midph_r" type="mesh"/>
                                                             <geom name="Fourthmd_wrap" type="cylinder" size="0.00300000 0.005" pos="-0.0021 -0.0247 -0.0001" euler="-3.02971705 -1.10287355 -2.87211382" class="wrap"/>
                                                             <inertial pos="0 0 0" mass="0.003" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                             <!-- <site name="FDS4-P8" pos="-0.0009 -0.0147 -0.0021"/>
@@ -849,23 +857,23 @@
                                                             <site name="EDC4-P8" pos="-0.004 -0.026 0.006"/>
                                                             <site name="LU_RB4-P5" pos="0.0005 -0.0149 0.0048"/>
                                                             <site name="UI_UB4-P5" pos="-0.005 -0.014 0.004"/> -->
-                                                            <site name="FDS4-P8" pos="0 -0.0119 -0.0018"></site>
-                                                            <site name="FDP4-P8" pos="0.0023 -0.0071 -0.006"></site>
-                                                            <site name="FDP4-P9" pos="-0.0007 -0.0197 -0.0013"></site>
-                                                            <site name="EDC4-P7" pos="-0.0019 -0.0058 0.0088"></site>
-                                                            <site name="EDC4-P8" pos="-0.004 -0.026 0.006"></site>
-                                                            <site name="LU_RB4-P5" pos="0.0043 -0.0045 0.0043"></site>
-                                                            <site name="UI_UB4-P5" pos="-0.0058 -0.004 0.0034"></site>
+                                                            <site name="FDS4-P8" pos="0 -0.0119 -0.0018"/>
+                                                            <site name="FDP4-P8" pos="0.0023 -0.0071 -0.006"/>
+                                                            <site name="FDP4-P9" pos="-0.0007 -0.0197 -0.0013"/>
+                                                            <site name="EDC4-P7" pos="-0.0019 -0.0058 0.0088"/>
+                                                            <site name="EDC4-P8" pos="-0.004 -0.026 0.006"/>
+                                                            <site name="LU_RB4-P5" pos="0.0043 -0.0045 0.0043"/>
+                                                            <site name="UI_UB4-P5" pos="-0.0058 -0.004 0.0034"/>
                                                             <site name="Fourthmd_site_EDC4_side" pos="-0.0021 -0.0247 0.0061" rgba="1 0 0 1"/>
 
-                                                            <body name="distph4" pos="-0.002317 -0.024789 0.000563">
-                                                                <joint axis="0.825336 0 0.564642" name="md4_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                                <geom class="myohand_coll" size="0.0068 0.008" pos="0.00 -0.01 -.002" euler="1.6 -.1 0"/>
-                                                                <geom mesh="4distph" name="4distph" type="mesh"/>
+                                                            <body name="distph4_r" pos="-0.002317 -0.024789 0.000563">
+                                                                <joint axis="0.825336 0 0.564642" name="md4_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                                <geom name="distph4_r_coll" class="myohand_coll" size="0.0068 0.008" pos="0.00 -0.01 -.002" euler="1.6 -.1 0"/>
+                                                                <geom mesh="4distph_r" name="4distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                                 <site name="FDP4-P10" pos="0.0002 -0.014 -0.0022"/>
                                                                 <site name="EDC4-P9" pos="-0.001 -0.008 0.003"/>
-                                                                <geom class="myohand_coll" type="ellipsoid" size=".005 .008 .002" pos="-.004 -.019 0.003" euler="0.2 -.5 0.0" rgba="1 1 1 .8"/>
+                                                                <geom name="distph4_r_coll_2" class="myohand_coll" type="ellipsoid" size=".005 .008 .002" pos="-.004 -.019 0.003" euler="0.2 -.5 0.0" rgba="1 1 1 .8"/>
                                                                 <site name="RFtip" size="0.005" pos="-.001 -.018 .001" rgba="0.8 0.8 0 1"/>
                                                             </body>
                                                         </body>
@@ -873,9 +881,9 @@
                                                 </body>
 
                                                 <!-- Little Finger -->
-                                                <body name="fifthmc" pos="-0.021896 -0.034683 -0.004218">
-                                                    <geom name="5mcskin" class="myohand_coll" size="0.0095 0.024" euler="1.6 -.13 0" pos=".001 0.002 -.001"/>
-                                                    <geom mesh="5mc" name="5mc" type="mesh"/>
+                                                <body name="fifthmc_r" pos="-0.021896 -0.034683 -0.004218">
+                                                    <geom name="5mcskin_r" class="myohand_coll" size="0.0095 0.024" euler="1.6 -.13 0" pos=".001 0.002 -.001"/>
+                                                    <geom mesh="5mc_r" name="5mc_r" type="mesh"/>
                                                     <!-- <geom name="5thmcp_ellipsoid_wrap" pos="0.00188166 -0.0190329 -0.0064628" quat="0.442485 -0.205619 -0.870066 -0.070096" class="wrap" size="0.00833444"/> -->
                                                     <geom name="5thmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="-0.0004 -0.0218 -0.0037" euler="-2.67175002 -0.83479098 -2.4659757" class="wrap"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -884,26 +892,27 @@
                                                     <site name="FDS5-P5" pos="-0.00010445     -0.01308000     -0.00952000"/>
                                                     <!-- <site name="FDP5-P5" pos="0.004 0 -0.004"/>
                                                     <site name="EDC5-P4" pos="-0.005 -0.018 0.004"/> -->
-                                                    <site name="FDP5-P5" pos="0.001 -0.013 -0.0087"></site>
-                                                    <site name="EDC5-P4" pos="-0.0013 -0.0182 0.0057"></site>
+                                                    <site name="FDP5-P5" pos="0.001 -0.013 -0.0087"/>
+                                                    <site name="EDC5-P4" pos="-0.0013 -0.0182 0.0057"/>
                                                     <site name="EDM-P5" pos="0.0013 0.0244 0.0079"/>
                                                     <site name="EDM-P6" pos="-0.0054 -0.0185 0.0032"/>
                                                     <!-- <site name="RI5-P2" pos="0.003 -0.0162 0.005"/>
                                                     <site name="LU_RB5-P2" pos="0.0034 -0.0001 -0.0009"/>
                                                     <site name="UI_UB5-P2" pos="-0.008 -0.019 -0.006"/> -->
-                                                    <site name="RI5-P2" pos="0.0061 -0.0149 -0.0066"></site>
-                                                    <site name="LU_RB5-P2" pos="0.0061 -0.0199 -0.0002"></site>
-                                                    <site name="UI_UB5-P2" pos="-0.0051 -0.0197 -0.0076"></site>
+                                                    <site name="RI5-P2" pos="0.0061 -0.0149 -0.0066"/>
+                                                    <site name="LU_RB5-P2" pos="0.0061 -0.0199 -0.0002"/>
+                                                    <site name="UI_UB5-P2" pos="-0.0051 -0.0197 -0.0076"/>
                                                     <site name="5thmcp_ellipsoid_site_FDS5_side" pos="0.00787277 -0.0230374 -0.0115918"/>
                                                     <site name="5thmcp_ellipsoid_site_FDP5_side" pos="-0.0107453 -0.0256233 -0.000443011"/>
                                                     <site name="5thmcp_ellipsoid_site_EDC5_side" pos="-0.0101211 -0.0279141 -0.00430677"/>
                                                     <site name="5thmcp_ellipsoid_site_LU_RB5_side" pos="-0.00890322 -0.0194098 -0.0110643"/>
                                                     <site name="5thmcp_ellipsoid_site_UI_UB5_side" pos="0.00407413 -0.0225573 -0.0142669"/>
-                                                    <body name="proxph5" pos="-0.001597 -0.021431 -0.001496">
-                                                        <joint axis="0.825336 0 0.564642"  name="mcp5_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                        <joint axis="-0.564642 0 0.825336" name="mcp5_abduction" pos="0 0 0" range="-0.261799 0.261799"/>
-                                                        <geom class="myohand_coll" size="0.008 0.016" pos="-.003 -0.018 -.002" euler="1.68 -.1 0"/>
-                                                        <geom mesh="5proxph" name="5proxph" type="mesh"/>
+
+                                                    <body name="proxph5_r" pos="-0.001597 -0.021431 -0.001496">
+                                                        <joint axis="0.825336 0 0.564642" name="mcp5_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                        <joint axis="-0.564642 0 0.825336" name="mcp5_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
+                                                        <geom name="5proxph_r_coll" class="myohand_coll" size="0.008 0.016" pos="-.003 -0.018 -.002" euler="1.68 -.1 0"/>
+                                                        <geom mesh="5proxph_r" name="5proxph_r" type="mesh"/>
                                                         <geom name="Fifthpm_wrap" pos="-0.0046 -0.0349 -0.0042" quat="0.4295 -0.0398509 -0.90052 -0.0548241" class="wrap" size="0.004 0.005" type="cylinder"/>
                                                         <inertial pos="0 0 0" mass="0.005" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                         <!-- <site name="FDS5-P6" pos="0.0018 -0.0143 -0.0055"/>
@@ -918,26 +927,26 @@
                                                         <site name="LU_RB5-P4" pos="-0.002 -0.034 0.002"/>
                                                         <site name="UI_UB5-P3" pos="-0.0073 -0.0152 -0.0032"/>
                                                         <site name="UI_UB5-P4" pos="-0.009 -0.034 -0.006"/> -->
-                                                        <site name="FDS5-P6" pos="-0.0017 -0.0149 -0.0071"></site>
-                                                        <site name="FDS5-P7" pos="-0.0025 -0.0259 -0.0054"></site>
-                                                        <site name="FDP5-P6" pos="-0.001 -0.0137 -0.0051"></site>
-                                                        <site name="FDP5-P7" pos="-0.0005 -0.0291 -0.008"></site>
-                                                        <site name="EDC5-P5" pos="-0.0045 -0.0123 0.0063"></site>
-                                                        <site name="EDC5-P6" pos="-0.0079 -0.0322 0.0025"></site>
-                                                        <site name="RI5-P3" pos="0.0047 -0.0143 0.0023"></site>
-                                                        <site name="LU_RB5-P3" pos="0.0035 -0.0131 0.002"></site>
-                                                        <site name="LU_RB5-P4" pos="-0.0032 -0.0372 0.0031"></site>
-                                                        <site name="UI_UB5-P3" pos="-0.0031 -0.0177 -0.0079"></site>
-                                                        <site name="UI_UB5-P4" pos="-0.0107 -0.0359 -0.0032"></site>
+                                                        <site name="FDS5-P6" pos="-0.0017 -0.0149 -0.0071"/>
+                                                        <site name="FDS5-P7" pos="-0.0025 -0.0259 -0.0054"/>
+                                                        <site name="FDP5-P6" pos="-0.001 -0.0137 -0.0051"/>
+                                                        <site name="FDP5-P7" pos="-0.0005 -0.0291 -0.008"/>
+                                                        <site name="EDC5-P5" pos="-0.0045 -0.0123 0.0063"/>
+                                                        <site name="EDC5-P6" pos="-0.0079 -0.0322 0.0025"/>
+                                                        <site name="RI5-P3" pos="0.0047 -0.0143 0.0023"/>
+                                                        <site name="LU_RB5-P3" pos="0.0035 -0.0131 0.002"/>
+                                                        <site name="LU_RB5-P4" pos="-0.0032 -0.0372 0.0031"/>
+                                                        <site name="UI_UB5-P3" pos="-0.0031 -0.0177 -0.0079"/>
+                                                        <site name="UI_UB5-P4" pos="-0.0107 -0.0359 -0.0032"/>
 
                                                         <site name="Fifthpm_site_EDC5_side" pos="-0.0026 -0.0399 -0.0022"/>
                                                         <site name="Fifthpm_site_LU_RB5_side" pos="-0.0032 -0.0372 0.0031"/>
                                                         <site name="Fifthpm_site_UI_UB5_side" pos="-0.0107 -0.0359 -0.0032"/>
 
-                                                        <body name="midph5" pos="-0.005279 -0.035563 -0.002879">
-                                                            <joint axis="0.825336 0 0.564642" name="pm5_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                            <geom class="myohand_coll" size="0.007 0.009" pos="-.001 -0.011 -.0025" euler="1.68 -.12 0"/>
-                                                            <geom mesh="5midph" name="5midph" type="mesh"/>
+                                                        <body name="midph5_r" pos="-0.005279 -0.035563 -0.002879">
+                                                            <joint axis="0.825336 0 0.564642" name="pm5_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                            <geom name="5midph_r_coll" class="myohand_coll" size="0.007 0.009" pos="-.001 -0.011 -.0025" euler="1.68 -.12 0"/>
+                                                            <geom mesh="5midph_r" name="5midph_r" type="mesh"/>
                                                             <geom name="Fifthmd_wrap" pos="-0.0025 -0.0205 -0.0025" quat="0.35929 -0.0253303 -0.929016 -0.0848458" class="wrap" size="0.003 0.005" type="cylinder"/>
                                                             <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                             <site name="FDS5-P8" pos="0.0011 -0.0182 -0.0046"/>
@@ -950,23 +959,23 @@
                                                             <site name="Fifthmd_site_EDC5_side" pos="-0.00694323 -0.0205834 0.00153122"/>
                                                             <site name="EDM-P8" pos="-0.002 -0.003 0.003"/>
 
-                                                            <body name="distph5" pos="-0.002871 -0.020677 -0.002243">
-                                                                <joint axis="0.643112 -0.226804 0.731414" name="md5_flexion" pos="0 0 0" range="0 1.5708"/>
-                                                                <geom class="myohand_coll" size="0.006 0.007" pos="-.0002 -0.009 -.002" euler="1.65 -.1 0"/>
-                                                                <geom mesh="5distph" name="5distph" type="mesh"/>
-                                                                <inertial pos="0 0 0" mass="0.001" fullinertia="0.0001 0.0001 0.0001 0 0 0"></inertial>
+                                                            <body name="distph5_r" pos="-0.002871 -0.020677 -0.002243">
+                                                                <joint axis="0.643112 -0.226804 0.731414" name="md5_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                                <geom name="5distph_r_coll" class="myohand_coll" size="0.006 0.007" pos="-.0002 -0.009 -.002" euler="1.65 -.1 0"/>
+                                                                <geom mesh="5distph_r" name="5distph" type="mesh"/>
+                                                                <inertial pos="0 0 0" mass="0.001" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                                 <site name="FDP5-P10" pos="-0.0003 -0.0139 -0.0048"/>
                                                                 <site name="EDC5-P9" pos="-0.002 -0.007 0"/>
                                                                 <site name="EDM-P9" pos="-0.0023 -0.0033 0.0006"/>
-                                                                <geom class="myohand_coll" type="ellipsoid" size=".0045 .006 .002" pos="-.005 -.018 0.000" euler="0.2 -.8 0.0" rgba="1 1 1 .8"/>
+                                                                <geom name="5distph_r_coll_2" class="myohand_coll" type="ellipsoid" size=".0045 .006 .002" pos="-.005 -.018 0.000" euler="0.2 -.8 0.0" rgba="1 1 1 .8"/>
                                                                 <site name="LFtip" size="0.005" pos="-.001 -.017 -.003" rgba="0.8 0 0.8 1"/>
                                                             </body>
                                                         </body>
                                                     </body>
                                                 </body>
-                                                </body>
                                             </body>
                                         </body>
+                                    </body>
                                 </body>
                             </body>
                         </body>

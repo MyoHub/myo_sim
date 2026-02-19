@@ -22,7 +22,7 @@
         <default class="arm">
             <joint limited="true" damping="1.05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
-            <site size="0.0025" group="2"/>
+            <site size="0.0025" group="3"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.003"/>
             <default class="muscle">
                 <general biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biastype="muscle" ctrllimited="true" ctrlrange="0 1" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" dyntype="muscle" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" gaintype="muscle"/>
@@ -51,68 +51,57 @@
         <default class="elbow">
             <joint limited="true" damping="0.75" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
-            <site size="0.0025" group="2"/>
+            <site size="0.0025" group="3"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.002"/>
         </default>
         <default class="wrist">
             <joint limited="true" damping=".05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
-            <site size="0.0025" group="2"/>
+            <site size="0.0025" group="3"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.002"/>
         </default>
         <default class="fingers">
             <joint limited="true" damping=".05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
-            <site size="0.0025" group="2"/>
+            <site size="0.0025" group="3"/>
         </default>
 
     </default>
 
     <asset>
-        <mesh file="../myo_sim/meshes/thorax.stl" name="ground_geom_1_thorax"/>
-        <mesh file="../myo_sim/meshes/clavicle.stl" name="clavicle_geom_1_clavicle"/>
-        <mesh file="../myo_sim/meshes/scapula.stl" name="scapula_geom_1_scapula"/>
-        <mesh file="../myo_sim/meshes/humerus.stl" name="humerus_geom_1_humerus"/>
-        <mesh file="../myo_sim/meshes/ulna.stl" name="ulna_geom_1_ulna"/>
-        <mesh file="../myo_sim/meshes/radius.stl" name="radius_geom_1_radius"/>
-        <mesh file="../myo_sim/meshes/lunate.stl" name="proximal_row_geom_1_lunate"/>
-        <mesh file="../myo_sim/meshes/scaphoid.stl" name="proximal_row_geom_2_sdfastSCAPHOIDw"/>
-        <mesh file="../myo_sim/meshes/pisiform.stl" name="proximal_row_geom_3_sdfastPISIFORMw"/>
-        <mesh file="../myo_sim/meshes/triquetrum.stl" name="proximal_row_geom_4_sdfastTRIQUETRALw"/>
-
-        <mesh name="thorax" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"/>
-        <mesh name="clavicle" file="../myo_sim/meshes/clavicle.stl" scale="1 1 1"/>
-        <mesh name="scapula" file="../myo_sim/meshes/scapula.stl" scale="1 1 1"/>
-        <mesh name="humerus" file="../myo_sim/meshes/humerus.stl" scale="1 1 1"/>
-        <mesh name="ulna" file="../myo_sim/meshes/ulna.stl" scale="1 1 1"/>
-        <mesh name="radius" file="../myo_sim/meshes/radius.stl" scale="1 1 1"/>
-        <mesh name="lunate" file="../myo_sim/meshes/lunate.stl" scale="1 1 1"/>
-        <mesh name="scaphoid" file="../myo_sim/meshes/scaphoid.stl" scale="1 1 1"/>
-        <mesh name="pisiform" file="../myo_sim/meshes/pisiform.stl" scale="1 1 1"/>
-        <mesh name="triquetrum" file="../myo_sim/meshes/triquetrum.stl" scale="1 1 1"/>
-        <mesh name="capitate" file="../myo_sim/meshes/capitate.stl" scale="1 1 1"/>
-        <mesh name="trapezium" file="../myo_sim/meshes/trapezium.stl" scale="1 1 1"/>
-        <mesh name="1mc" file="../myo_sim/meshes/1mc.stl" scale="1 1 1"/>
-        <mesh name="thumbprox" file="../myo_sim/meshes/thumbprox.stl" scale="1 1 1"/>
-        <mesh name="thumbdist" file="../myo_sim/meshes/thumbdist.stl" scale="1 1 1"/>
-        <mesh name="trapezoid" file="../myo_sim/meshes/trapezoid.stl" scale="1 1 1"/>
-        <mesh name="hamate" file="../myo_sim/meshes/hamate.stl" scale="1 1 1"/>
-        <mesh name="2mc" file="../myo_sim/meshes/2mc.stl" scale="1 1 1"/>
-        <mesh name="2proxph" file="../myo_sim/meshes/2proxph.stl" scale="1 1 1"/>
-        <mesh name="2midph" file="../myo_sim/meshes/2midph.stl" scale="1 1 1"/>
-        <mesh name="2distph" file="../myo_sim/meshes/2distph.stl" scale="1 1 1"/>
-        <mesh name="3mc" file="../myo_sim/meshes/3mc.stl" scale="1 1 1"/>
-        <mesh name="3proxph" file="../myo_sim/meshes/3proxph.stl" scale="1 1 1"/>
-        <mesh name="3midph" file="../myo_sim/meshes/3midph.stl" scale="1 1 1"/>
-        <mesh name="3distph" file="../myo_sim/meshes/3distph.stl" scale="1 1 1"/>
-        <mesh name="4mc" file="../myo_sim/meshes/4mc.stl" scale="1 1 1"/>
-        <mesh name="4proxph" file="../myo_sim/meshes/4proxph.stl" scale="1 1 1"/>
-        <mesh name="4midph" file="../myo_sim/meshes/4midph.stl" scale="1 1 1"/>
-        <mesh name="4distph" file="../myo_sim/meshes/4distph.stl" scale="1 1 1"/>
-        <mesh name="5mc" file="../myo_sim/meshes/5mc.stl" scale="1 1 1"/>
-        <mesh name="5proxph" file="../myo_sim/meshes/5proxph.stl" scale="1 1 1"/>
-        <mesh name="5midph" file="../myo_sim/meshes/5midph.stl" scale="1 1 1"/>
-        <mesh name="5distph" file="../myo_sim/meshes/5distph.stl" scale="1 1 1"/>
+        <mesh name="thorax_r" file="../myo_sim/meshes/thorax.stl" scale="1 1 1"/>
+        <mesh name="clavicle_r" file="../myo_sim/meshes/clavicle.stl" scale="1 1 1"/>
+        <mesh name="scapula_r" file="../myo_sim/meshes/scapula.stl" scale="1 1 1"/>
+        <mesh name="humerus_r" file="../myo_sim/meshes/humerus.stl" scale="1 1 1"/>
+        <mesh name="ulna_r" file="../myo_sim/meshes/ulna.stl" scale="1 1 1"/>
+        <mesh name="radius_r" file="../myo_sim/meshes/radius.stl" scale="1 1 1"/>
+        <mesh name="lunate_r" file="../myo_sim/meshes/lunate.stl" scale="1 1 1"/>
+        <mesh name="scaphoid_r" file="../myo_sim/meshes/scaphoid.stl" scale="1 1 1"/>
+        <mesh name="pisiform_r" file="../myo_sim/meshes/pisiform.stl" scale="1 1 1"/>
+        <mesh name="triquetrum_r" file="../myo_sim/meshes/triquetrum.stl" scale="1 1 1"/>
+        <mesh name="capitate_r" file="../myo_sim/meshes/capitate.stl" scale="1 1 1"/>
+        <mesh name="trapezium_r" file="../myo_sim/meshes/trapezium.stl" scale="1 1 1"/>
+        <mesh name="1mc_r" file="../myo_sim/meshes/1mc.stl" scale="1 1 1"/>
+        <mesh name="thumbprox_r" file="../myo_sim/meshes/thumbprox.stl" scale="1 1 1"/>
+        <mesh name="thumbdist_r" file="../myo_sim/meshes/thumbdist.stl" scale="1 1 1"/>
+        <mesh name="trapezoid_r" file="../myo_sim/meshes/trapezoid.stl" scale="1 1 1"/>
+        <mesh name="hamate_r" file="../myo_sim/meshes/hamate.stl" scale="1 1 1"/>
+        <mesh name="2mc_r" file="../myo_sim/meshes/2mc.stl" scale="1 1 1"/>
+        <mesh name="2proxph_r" file="../myo_sim/meshes/2proxph.stl" scale="1 1 1"/>
+        <mesh name="2midph_r" file="../myo_sim/meshes/2midph.stl" scale="1 1 1"/>
+        <mesh name="2distph_r" file="../myo_sim/meshes/2distph.stl" scale="1 1 1"/>
+        <mesh name="3mc_r" file="../myo_sim/meshes/3mc.stl" scale="1 1 1"/>
+        <mesh name="3proxph_r" file="../myo_sim/meshes/3proxph.stl" scale="1 1 1"/>
+        <mesh name="3midph_r" file="../myo_sim/meshes/3midph.stl" scale="1 1 1"/>
+        <mesh name="3distph_r" file="../myo_sim/meshes/3distph.stl" scale="1 1 1"/>
+        <mesh name="4mc_r" file="../myo_sim/meshes/4mc.stl" scale="1 1 1"/>
+        <mesh name="4proxph_r" file="../myo_sim/meshes/4proxph.stl" scale="1 1 1"/>
+        <mesh name="4midph_r" file="../myo_sim/meshes/4midph.stl" scale="1 1 1"/>
+        <mesh name="4distph_r" file="../myo_sim/meshes/4distph.stl" scale="1 1 1"/>
+        <mesh name="5mc_r" file="../myo_sim/meshes/5mc.stl" scale="1 1 1"/>
+        <mesh name="5proxph_r" file="../myo_sim/meshes/5proxph.stl" scale="1 1 1"/>
+        <mesh name="5midph_r" file="../myo_sim/meshes/5midph.stl" scale="1 1 1"/>
+        <mesh name="5distph_r" file="../myo_sim/meshes/5distph.stl" scale="1 1 1"/>
 
         <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .19 .2" rgb2=".1 0.11 0.11" width="50" height="50"/>
         <texture name="texgeom" type="cube" builtin="flat" mark="cross" width="127" height="1278" rgb1="0.7 0.7 0.7" rgb2="0.9 0.9 0.9" markrgb="1 1 1" random="0.01"/>
@@ -122,31 +111,31 @@
     </asset>
 
     <contact>
-        <pair geom1="humerus_coll" geom2="thorax_coll0" condim="3"/>
-        <pair geom1="humerus_coll" geom2="thorax_coll1" condim="3"/>
-        <pair geom1="radius_coll" geom2="thorax_coll0" condim="3"/>
-        <pair geom1="radius_coll" geom2="thorax_coll1" condim="3"/>
-        <pair geom1="radius_coll" geom2="thorax_coll2" condim="3"/>
-        <pair geom1="radius_coll" geom2="thorax_coll3" condim="3"/>
-       <exclude body1="ulna" body2="radius"/>
-        <exclude body1="radius" body2="firstmc"/>
-        <exclude body1="proxph2" body2="proxph3"/>
-        <exclude body1="proxph3" body2="proxph4"/>
-        <exclude body1="proxph4" body2="proxph5"/>
+        <pair geom1="humerus_r_coll" geom2="thorax_coll0" condim="3"/>
+        <pair geom1="humerus_r_coll" geom2="thorax_coll1" condim="3"/>
+        <pair geom1="radius_r_coll" geom2="thorax_coll0" condim="3"/>
+        <pair geom1="radius_r_coll" geom2="thorax_coll1" condim="3"/>
+        <pair geom1="radius_r_coll" geom2="thorax_coll2" condim="3"/>
+        <pair geom1="radius_r_coll" geom2="thorax_coll3" condim="3"/>
+       <exclude body1="ulna_r" body2="radius_r"/>
+        <exclude body1="radius_r" body2="firstmc_r"/>
+        <exclude body1="proxph2_r" body2="proxph3_r"/>
+        <exclude body1="proxph3_r" body2="proxph4_r"/>
+        <exclude body1="proxph4_r" body2="proxph5_r"/>
     </contact>
 
     <equality>
-        <joint joint1="sternoclavicular_r2" joint2="shoulder_elv" name="sternoclavicular_r2_con" polycoef="0 -0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="sternoclavicular_r3" joint2="shoulder_elv" name="sternoclavicular_r3_con" polycoef="0 0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrotscap_r2" joint2="shoulder_elv" name="unrotscap_r2_con" polycoef="0 0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrotscap_r3" joint2="shoulder_elv" name="unrotscap_r3_con" polycoef="0 -0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="acromioclavicular_r1" joint2="shoulder_elv" name="acromioclavicular_r1_con" polycoef="0 0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="acromioclavicular_r2" joint2="shoulder_elv" name="acromioclavicular_r2_con" polycoef="0 -0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="acromioclavicular_r3" joint2="shoulder_elv" name="acromioclavicular_r3_con" polycoef="0 0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrothum_r1" joint2="shoulder_elv" name="unrothum_r1_con" polycoef="0 -0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrothum_r2" joint2="shoulder_elv" name="unrothum_r2_con" polycoef="0 0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrothum_r3" joint2="shoulder_elv" name="unrothum_r3_con" polycoef="0 -0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="shoulder1_r2" joint2="elv_angle" name="shoulder1_r2_con" polycoef="0 -1 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="sternoclavicular_r2_r" joint2="shoulder_elv_r" name="sternoclavicular_r2_con" polycoef="0 -0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="sternoclavicular_r3_r" joint2="shoulder_elv_r" name="sternoclavicular_r3_con" polycoef="0 0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrotscap_r2_r" joint2="shoulder_elv_r" name="unrotscap_r2_con" polycoef="0 0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrotscap_r3_r" joint2="shoulder_elv_r" name="unrotscap_r3_con" polycoef="0 -0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r1_r" joint2="shoulder_elv_r" name="acromioclavicular_r1_con" polycoef="0 0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r2_r" joint2="shoulder_elv_r" name="acromioclavicular_r2_con" polycoef="0 -4e-4 -4e-4 -4e-4 -4e-4 " solimp="-4e-4 -4e-4 -4e-4 -4e-4 -4e-4 "/>
+        <joint joint1="acromioclavicular_r3_r" joint2="shoulder_elv_r" name="acromioclavicular_r3_con" polycoef="0 0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r1_r" joint2="shoulder_elv_r" name="unrothum_r1_con" polycoef="0 -0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r2_r" joint2="shoulder_elv_r" name="unrothum_r2_con" polycoef="0 0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r3_r" joint2="shoulder_elv_r" name="unrothum_r3_con" polycoef="0 -0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="shoulder1_r2_r" joint2="elv_angle_r" name="shoulder1_r2_con" polycoef="0 -1 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
     </equality>
 
     <tendon>
