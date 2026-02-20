@@ -1,10 +1,10 @@
 <mujocoinclude model="MyoLegs_v0.0.1">
 <!-- =================================================
-	Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
-	Model	:: Myo Legs (MuJoCoV2.0)
-	Author	:: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huawei Wang
-	source	:: https://github.com/vikashplus
-	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+    Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
+    Model   :: Myo Hand (MuJoCoV2.0)
+    Author	:: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huawei Wang, (Charlie) Li, Cheryl Wang
+    source  :: https://github.com/vikashplus
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ====================================================== -->
 
     <body name="pelvis" pos="0 0 0" quat="0.707107 0.707107 0 0" childclass="myolegs">
@@ -390,11 +390,11 @@
             <body name="tibia_l" pos="-4.6e-07 -0.404425 0.00126526">
                 <site name="knee_l" class="myo_leg_marker"/>
                 <inertial pos="-0.005 -0.175 -0.0025" quat="0.712137 -0.701754 0.0200501 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
-                <joint axis="-0.992246 -0.123982 -0.00878916" name="knee_angle_l_translation2" pos="0 0 0" range="-0.006792 -7.69254e-11" type="slide"/>
+                <joint axis="0.992246 0.123982 0.00878916" name="knee_angle_l_translation2" pos="0 0 0" range="7.69254e-11 0.006792" type="slide"/>
                 <joint axis="-0.124293 0.989762 0.0701648" name="knee_angle_l_translation1" pos="0 0 0" range="9.53733e-08 0.00159883" type="slide"/>
                 <joint axis="3.98373e-10 0.0707131 -0.997497" name="knee_angle_l" pos="0 0 0" range="0 2.0944"/>
                 <joint axis="-0.992246 -0.123982 -0.00878916" name="knee_angle_l_rotation2" pos="0 0 0" range="-0.00167821 0.0335354"/>
-                <joint axis="-0.124293 0.989762 0.0701648" name="knee_angle_l_rotation3" pos="0 0 0" range="-0.262788 -1.08939e-08"/>
+                <joint axis="0.124293 -0.989762 -0.0701648" name="knee_angle_l_rotation3" pos="0 0 0" range="-0.262788 0.262788"/>
                 <geom name="l_tibia1_col" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="3.8"/> <!-- 14cms -->
                 <geom name="l_tibia2_col" size=".048" class="coll" fromto="-0.01 -0.14 -.0025 -0.01 -0.35 -.005" mass="3.8"/>
                 <geom mesh="l_tibia" name="l_tibia" type="mesh"/>

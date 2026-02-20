@@ -65,6 +65,11 @@ The contact geometries take the well defined [Yeadon measurement method](https:/
 
 ## ChangeLog
 
+**Feb 2026 (contributed by MuscleMimic Team (2025-2026)**
+	  - Corrected left-right limb asymmetries in joint definitions
+	  - Fixed muscle-jumping behaviors at joint limits
+	  - Added collision pairs for leg-leg and foot-foot self-contact
+
 **myoleg_v0.51(mj120).mjb**
 - new keyposes added to mark convenient poses.
 
