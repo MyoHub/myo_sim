@@ -12,7 +12,6 @@
     <compiler meshdir=".." texturedir=".."/>
 
     <asset>
-        <!-- pick a body mesh below -->
         <mesh file="../myo_sim/meshes/human_lowpoly_nohand.stl" name="human_body"/>
     </asset>
 
@@ -23,5 +22,4 @@
             <include file="assets/myoarm_body.xml"/>
         </body>
     </worldbody>
-
 </mujoco>

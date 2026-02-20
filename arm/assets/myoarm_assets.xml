@@ -111,12 +111,6 @@
     </asset>
 
     <contact>
-        <pair geom1="humerus_r_coll" geom2="thorax_coll0" condim="3"/>
-        <pair geom1="humerus_r_coll" geom2="thorax_coll1" condim="3"/>
-        <pair geom1="radius_r_coll" geom2="thorax_coll0" condim="3"/>
-        <pair geom1="radius_r_coll" geom2="thorax_coll1" condim="3"/>
-        <pair geom1="radius_r_coll" geom2="thorax_coll2" condim="3"/>
-        <pair geom1="radius_r_coll" geom2="thorax_coll3" condim="3"/>
        <exclude body1="ulna_r" body2="radius_r"/>
         <exclude body1="radius_r" body2="firstmc_r"/>
         <exclude body1="proxph2_r" body2="proxph3_r"/>
@@ -125,17 +119,17 @@
     </contact>
 
     <equality>
-        <joint joint1="sternoclavicular_r2_r" joint2="shoulder_elv_r" name="sternoclavicular_r2_con" polycoef="0 -0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="sternoclavicular_r3_r" joint2="shoulder_elv_r" name="sternoclavicular_r3_con" polycoef="0 0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrotscap_r2_r" joint2="shoulder_elv_r" name="unrotscap_r2_con" polycoef="0 0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrotscap_r3_r" joint2="shoulder_elv_r" name="unrotscap_r3_con" polycoef="0 -0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="acromioclavicular_r1_r" joint2="shoulder_elv_r" name="acromioclavicular_r1_con" polycoef="0 0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="acromioclavicular_r2_r" joint2="shoulder_elv_r" name="acromioclavicular_r2_con" polycoef="0 -4e-4 -4e-4 -4e-4 -4e-4 " solimp="-4e-4 -4e-4 -4e-4 -4e-4 -4e-4 "/>
-        <joint joint1="acromioclavicular_r3_r" joint2="shoulder_elv_r" name="acromioclavicular_r3_con" polycoef="0 0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrothum_r1_r" joint2="shoulder_elv_r" name="unrothum_r1_con" polycoef="0 -0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrothum_r2_r" joint2="shoulder_elv_r" name="unrothum_r2_con" polycoef="0 0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="unrothum_r3_r" joint2="shoulder_elv_r" name="unrothum_r3_con" polycoef="0 -0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
-        <joint joint1="shoulder1_r2_r" joint2="elv_angle_r" name="shoulder1_r2_con" polycoef="0 -1 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="sternoclavicular_r2_r" joint2="shoulder_elv_r" name="sternoclavicular_r2_con_r" polycoef="0 -0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="sternoclavicular_r3_r" joint2="shoulder_elv_r" name="sternoclavicular_r3_con_r" polycoef="0 0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrotscap_r2_r" joint2="shoulder_elv_r" name="unrotscap_r2_con_r" polycoef="0 0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrotscap_r3_r" joint2="shoulder_elv_r" name="unrotscap_r3_con_r" polycoef="0 -0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r1_r" joint2="shoulder_elv_r" name="acromioclavicular_r1_con_r" polycoef="0 0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r2_r" joint2="shoulder_elv_r" name="acromioclavicular_r2_con_r" polycoef="0 -0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r3_r" joint2="shoulder_elv_r" name="acromioclavicular_r3_con_r" polycoef="0 0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r1_r" joint2="shoulder_elv_r" name="unrothum_r1_con_r" polycoef="0 -0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r2_r" joint2="shoulder_elv_r" name="unrothum_r2_con_r" polycoef="0 0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r3_r" joint2="shoulder_elv_r" name="unrothum_r3_con_r" polycoef="0 -0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="shoulder1_r2_r" joint2="elv_angle_r" name="shoulder1_r2_con_r" polycoef="0 -1 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
     </equality>
 
     <tendon>
