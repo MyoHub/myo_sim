@@ -11,11 +11,6 @@
     <size njmax="1000" nconmax="400" nuser_jnt="1"/>
     <option timestep="0.002"/>
 
-    <visual>
-        <headlight diffuse="1 1 1"/>
-        <scale actuatorwidth=".075"/>
-    </visual>
-
     <default class="main">
         <geom contype="0" conaffinity="0"/>
         <tendon rgba="0.95 0.3 0.3 41" width="0.001"/>

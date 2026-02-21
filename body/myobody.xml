@@ -13,18 +13,43 @@
     <include file="../leg/assets/myolegs_assets.xml"/>
     <include file="../leg/assets/myolegs_tendon.xml"/>
     <include file="../leg/assets/myolegs_muscle.xml"/>
+    <include file="../arm/assets/myoarmR_assets.xml"/>
+    <include file="../arm/assets/myoarmL_assets.xml"/>
+
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
     <worldbody>
-        <body name="Full Body" pos="-.025 0.1 1">
-            <include file="../torso/assets/myotorso_chain.xml"/>
+        <body name="Full Body" pos="-.025 0.1 1" euler="0 0 -1.57">
+            <include file="../torso/assets/myotorso_arm_chain.xml"/>
             <include file="../leg/assets/myolegs_chain.xml"/>
             <freejoint name = 'root'/>
         </body>
     </worldbody>
-    
-    <keyframe>
+
+    <contact>
+        <pair geom1="radius_r_coll" geom2="r_femur2_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_femur1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_tibia1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_tibia2_col" condim="3" />
+
+        <pair geom1="radius_l_coll" geom2="l_femur2_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_femur1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_tibia1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_tibia2_col" condim="3" />
+
+        <pair geom1="radius_l_coll" geom2="r_femur2_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_femur1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_tibia1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_tibia2_col" condim="3" />
+
+        <pair geom1="radius_r_coll" geom2="l_femur2_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_femur1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_tibia1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_tibia2_col" condim="3" />
+    </contact>
+
+    <!-- <keyframe>
         <key qpos='.036 0.045 0.9802 0.819 0.162 -0.184 0.872 -0.522 -0.057 -0.035 0.000 0.000 0.000 -0.284 -0.022 -0.037 -0.094 0.009 -0.036 0.103 0.051 -0.010 0.298 0.102 0.070 -0.279 -0.039 -0.614 -0.014 -0.006 -0.023 0.135 0.448 -0.228 -0.029 0.000 0.000 0.000 0.000 -0.705 -0.185 -0.278 0.031 -0.027 -0.063 0.254 -0.233 -0.007 -0.062 0.000 0.000 0.000 0.000'/>
-    </keyframe>
+    </keyframe> -->
 
 </mujoco>
