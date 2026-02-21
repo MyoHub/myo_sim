@@ -26,7 +26,7 @@
         <general gainprm="5 0 0 0 0 0 0 0 0 0"/>
       </default>
       <default class="myotorso_coll">
-        <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" margin="0.001" material="matskin_myotorso"/>
+        <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001" material="matskin_myotorso"/>
       </default>
     </default>
   </default>
