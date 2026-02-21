@@ -811,6 +811,6 @@
         <muscle name="RI5"    force = "59.9" class="forearm_muscle" tendon="RI5_tendon" lengthrange="0.0425128 0.0462661"/>
         <muscle name="LU_RB5" force = "47.9" class="forearm_muscle" tendon="LU_RB5_tendon" lengthrange="0.0970142 0.100417"/>
         <muscle name="UI_UB5" force = "47.9" class="forearm_muscle" tendon="UI_UB5_tendon" lengthrange="0.0910226 0.0976845"/>
-     </actuator>
+    </actuator>
 
 </mujocoinclude>
