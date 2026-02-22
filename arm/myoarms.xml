@@ -1,4 +1,4 @@
-<mujoco model="MyoArm_BiManual">
+<mujoco model="MyoArms">
 <!-- =================================================
     Model	:: MyoArm (MuJoCoV3.2.4)
     Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huiyi Wang, Chengkun Li
