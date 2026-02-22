@@ -16,7 +16,7 @@ The models present in the library are:
 | **MyoArm**  <br>  - 38 Degree of Freedom (DoF) <br> - 63 muscles | <img src="https://github.com/MyoHub/myo_sim/assets/23240128/1f57c639-b7de-4bbb-a3c2-d2c29716e6c8" width="200">|
 | **MyoArms**  <br>  - 77 Degree of Freedom (DoF) <br> - 126 muscles | <img src="https://github.com/user-attachments/assets/c505a51a-989e-4528-99c9-1f4a1cd141e7" width="200">|
 | **MyoOSL**  <br>  - 19 Degree of Freedom (DoF) <br> - 54 muscles, 2 torque actuators | <img src="https://github.com/elladyr/myo_sim/assets/5383997/ec9dfc65-94ba-457f-8375-594c0e3a89b5" width="200">|
-| **MyoBack**  <br>  - 18 Degree of Freedom (DoF) <br> - 210 muscles | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="200">|
+| **MyoTorso**  <br>  - 18 Degree of Freedom (DoF) <br> - 210 muscles | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="200">|
 | **MyoBody**  <br>  - 128 Degree of Freedom (DoF) <br> - 416 muscles | <img width="248" height="566" alt="image" src="https://github.com/user-attachments/assets/c0d8efa7-5d8c-4746-9160-80351aeaf89b" width="200">|
 
 
