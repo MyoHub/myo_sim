@@ -1,5 +1,6 @@
-import unittest
 import os
+import unittest
+
 import mujoco
 
 model_paths = [
@@ -21,6 +22,7 @@ model_paths = [
             # arms
             "arm/myoarm_simple.xml",
             "arm/myoarm.xml",
+            "arm/myoarms.xml",
 
             # hand models
             "hand/myohand.xml",
@@ -40,6 +42,7 @@ model_paths = [
             "torso/myotorso_abdomen.xml",
 
             # full body models
+            "body/myobody_simpleupper.xml",
             "body/myobody.xml",
             "body/myoupperbody.xml",
 
