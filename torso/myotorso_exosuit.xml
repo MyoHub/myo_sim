@@ -27,11 +27,11 @@
   </asset>
 
   <worldbody>
-    <body name="full_body" pos=".005 0.1 0.93">
+    <body name="full_body" pos="0 0 0.93" quat="0.707388 0 0 -0.706825">
       <include file="assets/myotorso_chain.xml"/>
     </body>
 
-    <body name="exo_pelvis" pos="-.025 0.1 0.979" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
+    <body name="exo_pelvis" childclass="myotorsoexo" pos="0 0.030 0.979" quat="0.500148 0.50025 -0.499852 -0.49975">
       <geom name="lower_exo_legs_geom" type="mesh" euler="1.57 3.14 -1.57" pos="-0.08 0.1 0" mesh="lower_exo_legs_geom_1"/>
       <site name="Lower_Exo_Left_Leg" pos="-0.08 -0.15 -0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
       <site name="Lower_Exo_Right_Leg" pos="-0.08 -0.15 0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
@@ -39,17 +39,17 @@
       <site name="Exo_RightLeg" pos="-0.2 0 0.04" size="0.0005" rgba="0 1 0 1"/>
     </body>
 
-    <body name="exo_lumbar4" pos="-0.0951 0.091 1.05" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
+    <body name="exo_lumbar4" childclass="myotorsoexo" pos="0.009 0.1001 1.05" quat="0.500148 0.50025 -0.499852 -0.49975">
       <freejoint/>
       <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
       <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
       <geom name="lower_exo_belt_geom" type="mesh" euler="1.57 3.14 -1.57" pos="0.03 0.03 0" mesh="lower_exo_belt_geom_1" mass="0.094"/>
     </body>
 
-    <body name="exo_torso" pos="-0.111 0.0995 1.06" quat="0.707035 0.707179 0 0" childclass="myotorsoexo">
+    <body name="exo_torso" childclass="myotorsoexo" pos="-.0005 0.116 1.06" quat="0.500148 0.50025 -0.499852 -0.49975">
       <freejoint/>
       <geom name="upper_exo_geom" type="mesh" euler="1.57 3.14 1.57" pos="0.01 0.165 0" mesh="upper_exo_geom_1"/>
-      <geom name="Exo_cylinder" size="0.105 0.13" pos="0.025 0.03 0" class="myoBack_wrap"/>
+      <geom name="Exo_cylinder" size="0.105 0.13" pos="0.025 0.03 0" class="myoTorso_wrap"/>
       <site name="Exo_LeftShoulder" pos="-0.11 0.28 -0.07" size="0.0005" rgba="0 1 0 1"/>
       <site name="Exo_RightShoulder" pos="-0.11 0.28 0.07" size="0.0005" rgba="0 1 0 1"/>
       <site name="Exo_sidesite" pos="-0.14 0.05 0" class="sidesite"/>
