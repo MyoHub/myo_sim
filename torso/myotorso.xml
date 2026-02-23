@@ -13,7 +13,7 @@
   <compiler meshdir=".." texturedir=".."/>
 
   <worldbody>
-    <body name="Torso" pos="-.025 0.1 0.9">
+    <body name="Torso" pos="-.025 0.1 0.9" euler="0 0 -1.57">
         <include file="assets/myotorso_chain.xml"/>
     </body>
   </worldbody>
