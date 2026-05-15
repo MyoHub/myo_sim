@@ -1,4 +1,4 @@
-﻿<mujocoinclude model="MyoArmRight_v0.01">
+﻿<mujocoinclude model="MyoArmLeft_v0.01">
 <!-- =================================================
     Copyright 2026 MyoSuite
     Model	:: MyoArm (MuJoCoV3.0)
@@ -7,7 +7,6 @@
 ====================================================== -->
 
     <body name="chest_l" pos="0 0 0" childclass="arm" euler="-1.57 1.57 0">
-
         <geom class="wrap" name="thorax_ellipsoid_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08"/>
         <geom class="wrap" name="thorax_ellipsoid_PECM2_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
         <geom class="wrap" name="thorax_ellipsoid_PECM3_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
@@ -32,8 +31,8 @@
 
     <body name="clavicle_l" pos="-0.02 -0.02547 -0.00693" childclass="arm" euler="-1.57 1.57 0">
         <inertial diaginertia="0.001 0.001 0.001" mass="0.156" pos="-0.011096 0.0063723 -0.054168" quat="0.906292 -0.0334036 -0.164622 -0.387838"/>
-        <joint axis="-0.0153 -0.989299 -0.1451" name="sternoclavicular_r2_l" pos="0 0 0" range="-0.75 -0.0" user="-2.32583e-06"/>
-        <joint axis="0.994473 0 -0.104997" name="sternoclavicular_r3_l" pos="0 0 0" range="0.0 0.318" user="9.85111e-07"/>
+        <joint axis="-0.0153 -0.989299 -0.1451" name="sternoclavicular_r2_l" pos="0 0 0" range="-0.75 -0.0"/>
+        <joint axis="0.994473 0 -0.104997" name="sternoclavicular_r3_l" pos="0 0 0" range="0.0 0.318"/>
         <geom mesh="clavicle_l" name="clavicle_l" type="mesh"/>
         <site name="DELT1_DELT1-P4_l" pos="-0.014 0.01106 -0.08021"/>
         <site name="PECM1_PECM1-P3_l" pos="0.0264476 0.004005 -0.057232"/>
@@ -42,13 +41,13 @@
 
         <body name="clavphant_l" pos="-0.01433 0.02007 -0.1355">
             <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-            <joint axis="0.994473 0 -0.104997" name="unrotscap_r3_l" pos="0 0 0" range="-0.318 -0.0" user="-9.85111e-07"/>
-            <joint axis="-0.0153 -0.989299 -0.1451" name="unrotscap_r2_l" pos="0 0 0" range="0.0 0.75" user="2.32583e-06"/>
+            <joint axis="0.994473 0 -0.104997" name="unrotscap_r3_l" pos="0 0 0" range="-0.318 -0.0"/>
+            <joint axis="-0.0153 -0.989299 -0.1451" name="unrotscap_r2_l" pos="0 0 0" range="0.0 0.75"/>
             <body name="scapula_l" pos="0 0 0">
                 <inertial diaginertia="0.00199576 0.00103993 0.001" mass="0.70396" pos="-0.054694 -0.035032 0.043734" quat="0.453021 -0.77921 -0.0744129 0.426692"/>
-                <joint axis="-0.157095 -0.947269 -0.279291" name="acromioclavicular_r2_l" pos="0 0 0" range="-0.152 -0.0" user="-4.70933e-07"/>
-                <joint axis="0.754084 -0.297594 0.585487" name="acromioclavicular_r3_l" pos="0 0 0" range="0.0 1.228" user="3.80592e-06"/>
-                <joint axis="-0.6377 -0.1186 0.7611" name="acromioclavicular_r1_l" pos="0 0 0" range="0.0 0.552" user="1.71073e-06"/>
+                <joint axis="-0.157095 -0.947269 -0.279291" name="acromioclavicular_r2_l" pos="0 0 0" range="-0.152 -0.0"/>
+                <joint axis="0.754084 -0.297594 0.585487" name="acromioclavicular_r3_l" pos="0 0 0" range="0.0 1.228"/>
+                <joint axis="-0.6377 -0.1186 0.7611" name="acromioclavicular_r1_l" pos="0 0 0" range="0.0 0.552"/>
                 <geom mesh="scapula_l" name="scapula_l" type="mesh"/>
                 <geom class="wrap" name="Deltoid2_ellipsoid_l" pos="-0.0058 -0.0378 -0.0096" quat="-0.423842 -0.568442 -0.433325 -0.556293" size="0.033"/>
                 <geom class="wrap" name="Delt3_torus_l" pos="-0.0973 -0.0428 0.037" quat="0.916494 -0.246518 -0.233162 -0.211903" size="0.04"/>
@@ -95,19 +94,19 @@
                 <site class="marker" name="L.Shoulder_marker" pos="0.0014 -0.00147 -0.01369"/>
                 <body name="scapphant_l" pos="-0.00955 -0.034 -0.009">
                     <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-                    <joint axis="-0.6377 -0.1186 0.7611" name="unrothum_r1_l" pos="0 0 0" range="-0.552 -0.0" user="-1.71073e-06"/>
-                    <joint axis="0.754084 -0.297594 0.585487" name="unrothum_r3_l" pos="0 0 0" range="-1.228 -0.0" user="-3.80592e-06"/>
-                    <joint axis="-0.157095 -0.947269 -0.279291" name="unrothum_r2_l" pos="0 0 0" range="0.0 0.152" user="4.70933e-07"/>
+                    <joint axis="-0.6377 -0.1186 0.7611" name="unrothum_r1_l" pos="0 0 0" range="-0.552 -0.0"/>
+                    <joint axis="0.754084 -0.297594 0.585487" name="unrothum_r3_l" pos="0 0 0" range="-1.228 -0.0"/>
+                    <joint axis="-0.157095 -0.947269 -0.279291" name="unrothum_r2_l" pos="0 0 0" range="0.0 0.152"/>
                     <body name="humphant_l" pos="0 0 0">
                         <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-                        <joint name="elv_angle_l" pos="0 0 0" range="-1.658 2.269" axis="-0.00479995 -0.999089 0.0423995" user="0.251642"/>
+                        <joint name="elv_angle_l" pos="0 0 0" range="-1.658 2.269" axis="-0.00479995 -0.999089 0.0423995"/>
                         <body name="humphant1_l" pos="0 0 0">
                             <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-                            <joint name="shoulder_elv_l" axis="0.998261 -0.00229991 0.0588977" pos="0 0 0" range="0.0 3.142" user="9.61084e-06"/>
-                            <joint name="shoulder1_r2_l" axis="-0.00479995 -0.999089 0.0423995" pos="0 0 0" range="-2.242 1.658" user="-0.251642"/>
+                            <joint name="shoulder_elv_l" axis="0.998261 -0.00229991 0.0588977" pos="0 0 0" range="0.0 3.142"/>
+                            <joint name="shoulder1_r2_l" axis="-0.00479995 -0.999089 0.0423995" pos="0 0 0" range="-2.242 1.658"/>
                             <body name="humerus_l" pos="0 0 0">
                                 <inertial diaginertia="0.0128576 0.0121576 0.00239265" mass="1.99757" pos="0.018064 -0.140141 0.012746" quat="0.407851 -0.343714 0.567755 0.627034"/>
-                                <joint axis="-0.00479995 -0.999089 0.0423995" name="shoulder_rot_l" pos="0 0 0" range="-1.571 2.094" user="0.161391"/>
+                                <joint axis="-0.00479995 -0.999089 0.0423995" name="shoulder_rot_l" pos="0 0 0" range="-1.571 2.094"/>
                                 <geom name="humerus_l" mesh="humerus_l" type="mesh"/>
                                 <geom name="humerus_l_coll" type="capsule" class="myoarm_coll" size="0.042 0.140" pos="0 -0.13 0" euler="-1.57 0 0"/>
 
@@ -283,7 +282,7 @@
                                 <site class="marker" name="L.Elbow.Medial_marker" pos="-0.00407 -0.2844 0.05408"/>
                                 <body name="ulna_l" pos="0.0061 -0.2904 0.0123" childclass="elbow">
                                     <inertial diaginertia="0.00543663 0.00523521 0.001" mass="1.1053" pos="0.00971783 -0.0959509 -0.024286" quat="0.792048 -0.609078 -0.0156735 0.0379256"/>
-                                    <joint axis="-0.0494004 -0.0366003 0.998108" name="elbow_flexion_l" pos="0 0 0" range="0 2.269" user="1.05676"/>
+                                    <joint axis="-0.0494004 -0.0366003 0.998108" name="elbow_flexion_l" pos="0 0 0" range="0 2.269"/>
                                     <geom mesh="ulna_l" name="ulna_l" type="mesh"/>
                                     <geom class="wrap" name="PQ2_cylinder_l" pos="-0.0012 -0.2092 -0.0428" quat="0.540392 -0.481982 0.422482 0.545141" size="0.007 0.05" type="cylinder"/>
 
