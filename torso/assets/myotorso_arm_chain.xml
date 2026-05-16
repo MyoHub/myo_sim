@@ -5,8 +5,12 @@
   Author	::  Rohan Walia, Morgane Billot, Kevin Garzon-Aguirre, Swathika Subramanian, Huiyi Wang,
                  Mohamed Irfan Refai, Guillaume Durandau, Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano
   License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+  Modified by MuscleMimic Team (2025-2026):
+    - Adapted kinematic chain for BimanualMuscle and MyoFullBody configurations
+    - Added collision geometry for torso self-contact
   ====================================================== -->
-    <body name="sacrum" pos="0 0 0" quat="0.707035 0.707179 0 0" childclass="myotorso">
+    <body name="sacrum" pos="0 0 0" euler="1.57 -1.57 0" childclass="myotorso">
       <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="7.486" diaginertia="0.08 0.075 0.03"/>
 
       <!-- pelvis sites -->
@@ -102,22 +106,22 @@
       <site name="MF_m4t.3_r_MF_m4t.3_r-P1" pos="-0.170828 0.007819 0.012722"/>
       <site name="MF_m5.laminar_r_MF_m5.laminar_r-P1" pos="-0.134206 0.060110 0.012380"/>
       <site name="MF_m1t.3_l_MF_m1t.3_l-P1" pos="-0.144573 0.075421 -0.038350"/>
-      <site name="MF_m2t.2_l_MF_m2t.2_l-P1" pos="-0.147335 0.070159 -0.036850"/>
-      <site name="MF_m2t.3_l_MF_m2t.3_l-P1" pos="-0.149720 0.056998 -0.034580"/>
+      <site name="MF_m2t.2_l_MF_m2t.2_l-P1" pos="-0.147335 0.070159 -0.036849"/>
+      <site name="MF_m2t.3_l_MF_m2t.3_l-P1" pos="-0.149720 0.056998 -0.034578"/>
       <site name="MF_m3t.1_l_MF_m3t.1_l-P1" pos="-0.164505 0.014023 -0.017100"/>
-      <site name="MF_m3t.2_l_MF_m3t.2_l-P1" pos="-0.153875 0.032938 -0.021850"/>
-      <site name="MF_m3t.3_l_MF_m3t.3_l-P1" pos="-0.153875 0.032938 -0.021850"/>
-      <site name="MF_m4t.2_l_MF_m4t.2_l-P1" pos="-0.162292 0.020342 -0.015200"/>
-      <site name="MF_m4t.3_l_MF_m4t.3_l-P1" pos="-0.170828 0.007819 -0.012720"/>
+      <site name="MF_m3t.2_l_MF_m3t.2_l-P1" pos="-0.153875 0.032938 -0.021854"/>
+      <site name="MF_m3t.3_l_MF_m3t.3_l-P1" pos="-0.153875 0.032938 -0.021854"/>
+      <site name="MF_m4t.2_l_MF_m4t.2_l-P1" pos="-0.162292 0.020342 -0.015204"/>
+      <site name="MF_m4t.3_l_MF_m4t.3_l-P1" pos="-0.170828 0.007819 -0.012722"/>
       <site name="MF_m5.laminar_l_MF_m5.laminar_l-P1" pos="-0.134206 0.060110 -0.012380"/>
-      <site name="EO5_r_EO5_r-P2" pos="-0.059266 0.108414 0.113816"/>
-      <site name="EO6_r_EO6_r-P2" pos="-0.070076 0.111137 0.104119"/>
-      <site name="IO1_r_IO1_r-P2" pos="-0.025649 0.049609 0.102457"/>
-      <site name="IO2_r_IO2_r-P2" pos="-0.034589 0.074567 0.107072"/>
-      <site name="IO3_r_IO3_r-P2" pos="-0.044680 0.095659 0.102425"/>
-      <site name="IO4_r_IO4_r-P2" pos="-0.057380 0.107899 0.110489"/>
+      <site name="EO5_r_EO5_r-P2" pos="-0.059266 0.108414 0.113820"/>
+      <site name="EO6_r_EO6_r-P2" pos="-0.070076 0.111137 0.104120"/>
+      <site name="IO1_r_IO1_r-P2" pos="-0.025649 0.049609 0.122460"/>
+      <site name="IO2_r_IO2_r-P2" pos="-0.034589 0.074567 0.127070"/>
+      <site name="IO3_r_IO3_r-P2" pos="-0.044680 0.095659 0.122430"/>
+      <site name="IO4_r_IO4_r-P2" pos="-0.057380 0.107899 0.110490"/>
       <site name="IO5_r_IO5_r-P2" pos="-0.084889 0.114154 0.091450"/>
-      <site name="IO6_r_IO6_r-P2" pos="-0.109600 0.109856 0.069698"/>
+      <site name="IO6_r_IO6_r-P2" pos="-0.109600 0.109856 0.069700"/>
       <site name="EO5_l_EO5_l-P2" pos="-0.059266 0.108414 -0.113820"/>
       <site name="EO6_l_EO6_l-P2" pos="-0.070076 0.111137 -0.104120"/>
       <site name="IO1_l_IO1_l-P2" pos="-0.025649 0.049609 -0.122460"/>
@@ -136,33 +140,33 @@
       <site name="LTpT_T12_r_LTpT_t12_R-P1" pos="-0.14476 0.0488 0.02793"/>
       <site name="LTpT_R7_r_LTpT_r7_R-P1" pos="-0.13132 0.06051 0.00028"/>
       <site name="LTpT_R8_r_LTpT_r8_R-P1" pos="-0.1429 0.05025 0.00037"/>
-      <site name="LTpT_R9_r_LTpT_r9_R-P1" pos="-0.16582 0.02684 0"/>
+      <site name="LTpT_R9_r_LTpT_r9_R-P1" pos="-0.16582 0.0268352 0"/>
       <site name="LTpT_R10_r_LTpT_r10_R-P1" pos="-0.16446 0.02456 0.01072"/>
       <site name="LTpT_R11_r_LTpT_r11_R-P1" pos="-0.15765 0.03071 0.02404"/>
       <site name="LTpT_R12_r_LTpT_r12_R-P1" pos="-0.14476 0.0488 0.02793"/>
-      <site name="LTpT_T7_l_LTpT_t7_R-P1" pos="-0.131317 0.0605127 -0.00028"/>
-      <site name="LTpT_T8_l_LTpT_t8_R-P1" pos="-0.142901 0.0502456 -0.00037"/>
+      <site name="LTpT_T7_l_LTpT_t7_R-P1" pos="-0.131317 0.0605127 -0.00027686"/>
+      <site name="LTpT_T8_l_LTpT_t8_R-P1" pos="-0.142901 0.0502456 -0.00037451"/>
       <site name="LTpT_T9_l_LTpT_t9_R-P1" pos="-0.165822 0.0268352 0"/>
       <site name="LTpT_T10_l_LTpT_t10_R-P1" pos="-0.164463 0.0245611 -0.01072"/>
       <site name="LTpT_T11_l_LTpT_t11_R-P1" pos="-0.157649 0.0307094 -0.02404"/>
       <site name="LTpT_T12_l_LTpT_t12_R-P1" pos="-0.14476 0.0488 0.02793"/>
       <site name="LTpT_R7_l_LTpT_r7_R-P1" pos="-0.13132 0.06051 -0.00028"/>
       <site name="LTpT_R8_l_LTpT_r8_R-P1" pos="-0.1429 0.05025 -0.00037"/>
-      <site name="LTpT_R9_l_LTpT_r9_R-P1" pos="-0.16582 0.02684 0"/>
+      <site name="LTpT_R9_l_LTpT_r9_R-P1" pos="-0.16582 0.0268352 0"/>
       <site name="LTpT_R10_l_LTpT_r10_R-P1" pos="-0.16446 0.02456 -0.01072"/>
       <site name="LTpT_R11_l_LTpT_r11_R-P1" pos="-0.15765 0.03071 -0.02404"/>
       <site name="LTpT_R12_l_LTpT_r12_R-P1" pos="-0.14476 0.0488 -0.02793"/>
-      <site name="LTpL_L5_r_pathpoint" pos="-0.14125 0.07389 0.03487"/>
+      <site name="LTpL_L5_r_pathpoint" pos="-0.14125 0.0738877 0.034867"/>
       <site name="LTpL_L5_l_pathpoint" pos="-0.14125 0.0738877 -0.034867"/>
       <site name="MF_m1t.2_r_MF_m1t.2_r-P1" pos="-0.121424 0.0839766 0.01884"/>
-      <site name="MF_m2t.1_r_MF_m2t.1_r-P1" pos="-0.120758 0.0852181 0.0204354"/>
-      <site name="MF_m3s_r_MF_m3s_r-P1" pos="-0.121511 0.0836358 0.0174159"/>
-      <site name="MF_m4s_r_MF_m4s_r-P1" pos="-0.143689 0.0547099 0.0161792"/>
-      <site name="MF_m4t.1_r_MF_m4t.1_r-P1" pos="-0.152233 0.0415265 0.0153586"/>
-      <site name="MF_m5s_r_MF_m5s_r-P1" pos="-0.130455 0.0662703 0.0104264"/>
-      <site name="MF_m5t.1_r_MF_m5t.1_r-P1" pos="-0.174067 0.00522922 0.0100331"/>
-      <site name="MF_m5t.2_r_MF_m5t.2_r-P1" pos="-0.163116 0.0256618 0.0117079"/>
-      <site name="MF_m5t.3_r_MF_m5t.3_r-P1" pos="-0.152276 0.0425844 0.0115967"/>
+      <site name="MF_m2t.1_r_MF_m2t.1_r-P1" pos="-0.120758 0.0852181 0.02044"/>
+      <site name="MF_m3s_r_MF_m3s_r-P1" pos="-0.121511 0.0836358 0.01742"/>
+      <site name="MF_m4s_r_MF_m4s_r-P1" pos="-0.143689 0.0547099 0.01618"/>
+      <site name="MF_m4t.1_r_MF_m4t.1_r-P1" pos="-0.152233 0.0415265 0.01536"/>
+      <site name="MF_m5s_r_MF_m5s_r-P1" pos="-0.130455 0.0662703 0.01043"/>
+      <site name="MF_m5t.1_r_MF_m5t.1_r-P1" pos="-0.174067 0.00522922 0.01003"/>
+      <site name="MF_m5t.2_r_MF_m5t.2_r-P1" pos="-0.163116 0.0256618 0.01171"/>
+      <site name="MF_m5t.3_r_MF_m5t.3_r-P1" pos="-0.152276 0.0425844 0.0116"/>
       <site name="MF_m4.laminar_r_MF_m4.laminar_r-P1" pos="-0.12536 0.0774879 0.01934"/>
       <site name="MF_m1t.2_l_MF_m1t.2_l-P1" pos="-0.121424 0.0839766 -0.01884"/>
       <site name="MF_m2t.1_l_MF_m2t.1_l-P1" pos="-0.120758 0.0852181 -0.02044"/>
@@ -422,7 +426,7 @@
               <site name="LTpT_T11_l_LTpT_t11_R-P2_0" pos="-0.046 0.00338 -0.01983"/>
               <site name="LTpT_T12_l_LTpT_t12_R-P2_0" pos="-0.0458028 0.00398333 0.0225543"/>
               <site name="LTpT_R4_l_LTpT_r4_R-P2" pos="-0.0463322 0.00545622 -0.01148"/>
-               <site name="LTpT_R5_l_LTpT_r5_R-P2" pos="-0.0474338 0.00463268 -0.0141962"/>
+              <site name="LTpT_R5_l_LTpT_r5_R-P2" pos="-0.0474338 0.00463268 -0.0141962"/>
               <site name="LTpT_R6_l_LTpT_r6_R-P2_0" pos="-0.044 0.0044 -0.014"/>
               <site name="LTpT_R7_l_LTpT_r7_R-P2_1" pos="-0.04399 0.00431532 -0.0172724"/>
               <site name="LTpT_R8_l_LTpT_r8_R-P2_1" pos="-0.04399 0.00388 -0.0205414"/>
@@ -485,7 +489,7 @@
                 <body name="torso" pos="0.0025 -0.089 0">
                   <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
                   <body name="head_attach" pos="-0.005 -0.01 0">
-                    <include file="../../myo_sim/head/assets/myohead_rigid_chain.xml"/>
+                    <include file="../../head/assets/myohead_rigid_chain.xml"/>
                   </body>
                   <geom name="torso_geom_1" pos="-0.016 0.119 0" quat="0.980067 0 0 0.198669" type="mesh"  mesh="torso_geom_1_thoracic12_s"/>
                   <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh"  mesh="torso_geom_2_thoracic11_s"/>
@@ -500,14 +504,14 @@
                   <geom name="torso_geom_11" pos="-0.032 0.358 0" quat="0.992198 0 0 -0.124675" type="mesh"  mesh="torso_geom_11_thoracic2_s"/>
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh"  mesh="torso_geom_12_thoracic1_s"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh"  mesh="torso_geom_13_ribcage_s"/>
-                  <body pos="0 0.36 0.0" euler="-1.57 0 1.57">
-                      <include file="../../myo_sim/arm/assets/myoarmR_body.xml"/>
-                      <include file="../../myo_sim/arm/assets/myoarmL_body.xml"/>
+                  <body name="ArmR_attachment" pos="0.02 0.37 0" euler="-1.57 0 1.57">
+                      <include file="../../arm/assets/myoarmR_body.xml"/>        
+                      <include file="../../arm/assets/myoarmL_body.xml"/>  
                   </body>
                   <geom type="capsule" class="myotorso_coll" size="0.080 0.077" pos=".036 -.020 0" euler="0 0 1.57"/>
-                  <geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
+                  <!--geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
                   <geom type="capsule" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
-                  <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>
+                  <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>-->
                   <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="myoBack_wrap"/>
                   <geom name="Chest_r_ellipsoid" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Chest_l_ellipsoid" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
