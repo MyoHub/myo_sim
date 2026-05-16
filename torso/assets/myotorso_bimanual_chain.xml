@@ -504,6 +504,12 @@
                   <geom name="torso_geom_11" pos="-0.032 0.358 0" quat="0.992198 0 0 -0.124675" type="mesh"  mesh="torso_geom_11_thoracic2_s"/>
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh"  mesh="torso_geom_12_thoracic1_s"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh"  mesh="torso_geom_13_ribcage_s"/>
+                  <body name="ArmR_attachment" pos="0.02 0.37 0" euler="-1.57 0 1.57">
+                      <include file="../../arm/assets/myoarmR_body.xml"/>          
+                  </body>
+                  <body name="ArmL_attachment" pos="0.02 0.37 0" euler="1.57 0 1.57">
+                      <include file="../../arm/assets/myoarmL_body.xml"/>
+                  </body>
                   <geom type="capsule" class="myotorso_coll" size="0.080 0.077" pos=".036 -.020 0" euler="0 0 1.57"/>
                   <!--geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
                   <geom type="capsule" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
