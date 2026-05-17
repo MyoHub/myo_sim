@@ -135,7 +135,7 @@
             <site site="PECM2_PECM2-P2_l" />
             <geom geom="TMAJ_LAT_PEC_CORBhh_sphere_l" />
             <site site="PECM2_PECM2-P3_l" />
-            <geom geom="thorax_ellipsoid_PECM2_l" sidesite="thorax_ellipsoid_PECM2_3_sidesite_l" />
+            <geom geom="thorax_ellipsoid_PECM2_l" sidesite="Thorax_ellipsoid_PECM2_3_sidesite_l" />
             <site site="PECM2_PECM2-P4_l" />
         </spatial>
         <spatial name="PECM3_tendon_l" class="upperarm_muscle">
@@ -143,7 +143,7 @@
             <site site="PECM3_PECM3-P2_l" />
             <geom geom="PEC23hh_sphere_l" />
             <site site="PECM3_PECM3-P3_l" />
-            <geom geom="thorax_ellipsoid_PECM3_l" sidesite="thorax_ellipsoid_PECM3_3_sidesite_l" />
+            <geom geom="thorax_ellipsoid_PECM3_l" sidesite="Thorax_ellipsoid_PECM3_3_sidesite_l" />
             <site site="PECM3_PECM3-P4_l" />
         </spatial>
         <spatial name="LAT1_tendon_l" class="upperarm_muscle">
