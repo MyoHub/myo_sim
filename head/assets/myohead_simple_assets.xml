@@ -24,7 +24,7 @@
             <tendon rgba="0.95 0.3 0.3 1" width="0.001"/>
         </default>
         <default class="myohead_coll">
-            <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .25" margin="0.001"/>
+            <geom type="capsule" mass="0" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .25" margin="0.001"/>
         </default>
     </default>
 

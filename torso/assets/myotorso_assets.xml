@@ -31,7 +31,7 @@
 					biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" />
 			</default>
 			<default class="myoBack_wrap">
-				<geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0" type="cylinder" />
+				<geom rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0" type="cylinder" mass="0"/>
 			</default>
 			<default class="sidesite">
 				<site group="3" size="0.0005" />
