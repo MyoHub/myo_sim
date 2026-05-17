@@ -30,7 +30,7 @@
 
     <worldbody>
         <body name="Full Body" pos="-.025 0.1 1">
-            <include file="../torso/assets/myotorso_bimanual_chain.xml"/>
+            <include file="../torso/assets/myotorso_arm_chain.xml"/>
             <body name="leg_body" pos="0 0 0" euler="0 0 -1.57">
                 <include file="../leg/assets/myolegs_chain.xml"/>
             </body>
