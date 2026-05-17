@@ -508,9 +508,9 @@
                       <include file="../../arm/assets/myoarmL_body.xml"/>  
                   </body>
                   <geom type="capsule" class="myotorso_coll" size="0.080 0.077" pos=".036 -.020 0" euler="0 0 1.57"/>
-                  <!--geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
+                  <geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
                   <geom type="capsule" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
-                  <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>-->
+                  <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>
                   <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="myoBack_wrap"/>
                   <geom name="Chest_ellipsoid_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Chest_ellipsoid_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
