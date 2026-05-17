@@ -11,6 +11,7 @@ import numpy as np
 from muscle_analysis_utils import (
     compute_moment_arm_curve,
     compute_force_length_curve,
+    parse_model_joint_equalities,
     plot_pair,
 )
 
@@ -25,6 +26,7 @@ ACTIVATION = 1.0
 
 model = mujoco.MjModel.from_xml_path(str(XML_PATH))
 data = mujoco.MjData(model)
+EQ_MAP = parse_model_joint_equalities(model)
 
 
 def analyze_pair(base_muscle: str, base_joint: str):
@@ -46,13 +48,13 @@ def analyze_pair(base_muscle: str, base_joint: str):
             return None
 
         jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS
+            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
         )
         if jnt_range is None or ma is None or np.allclose(ma, 0, atol=1e-6):
             return None
 
         mtu_len, forces = compute_force_length_curve(
-            model, data, act_id, jnt_id, activation=ACTIVATION
+            model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=EQ_MAP
         )
 
         curves[side] = dict(
@@ -101,7 +103,7 @@ for act_id in range(model.nu):
             continue
 
         jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS
+            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
         )
         if jnt_range is None or np.allclose(ma, 0, atol=1e-6):
             continue

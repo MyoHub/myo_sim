@@ -11,6 +11,8 @@ import numpy as np
 from muscle_analysis_utils import (
     compute_moment_arm_curve,
     compute_force_length_curve,
+    pair_discrepancy_summary,
+    parse_model_joint_equalities,
     plot_pair,
 )
 
@@ -22,6 +24,7 @@ XML_PATH = XML_PATH / "arm" / "myoarms.xml"
 
 model = mujoco.MjModel.from_xml_path(str(XML_PATH))
 data = mujoco.MjData(model)
+EQ_MAP = parse_model_joint_equalities(model)
 
 ACTIVATION = 1.0
 EPS = 1e-5
@@ -53,13 +56,13 @@ def analyze_pair(base_muscle: str, base_joint: str):
             return None
 
         jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS
+            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
         )
-        if jnt_range is None or np.allclose(ma, 0, atol=1e-6):
+        if jnt_range is None or np.allclose(ma, 0, atol=5e-5):
             return None
 
         mtu_len, forces = compute_force_length_curve(
-            model, data, act_id, jnt_id, activation=ACTIVATION
+            model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=EQ_MAP
         )
 
         curves[side] = dict(
@@ -70,11 +73,13 @@ def analyze_pair(base_muscle: str, base_joint: str):
             forces=forces,
         )
 
-    return plot_pair(
+    summary = pair_discrepancy_summary(curves)
+    ok = plot_pair(
         curves,
         title=f"{base_muscle} @ {base_joint}",
         out_path=OUT_DIR / f"{base_muscle}_{base_joint}.png",
     )
+    return ok, summary
 
 
 print("\nRunning BIMANUAL muscle symmetry analysis...\n")
@@ -103,9 +108,9 @@ for act_id in range(model.nu):
             continue
 
         jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS
+            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
         )
-        if jnt_range is None or np.allclose(ma, 0, atol=1e-6):
+        if jnt_range is None or np.allclose(ma, 0, atol=5e-5):
             continue
 
         base_joint = jnt_name[:-2]
@@ -116,12 +121,22 @@ for act_id in range(model.nu):
         if res is None:
             skip_cnt += 1
             print(f"skip: {pair}", flush=True)
-        elif res:
+            continue
+
+        ok, diff = res
+        diff_msg = (
+            f"max |dMA|={diff['moment_arm']:.6g} m, "
+            f"max |dF|={diff['force']:.6g} N "
+            f"({diff['force_pct']:.6g}%), "
+            f"MA {'ok' if diff['moment_arm_ok'] else 'fail'}, "
+            f"F {'ok' if diff['force_ok'] else 'fail'}"
+        )
+        if ok:
             ok_cnt += 1
-            print(f"ok:   {pair}", flush=True)
+            print(f"ok:   {pair} ({diff_msg})", flush=True)
         else:
             bad_cnt += 1
-            print(f"x:    {pair}", flush=True)
+            print(f"x:    {pair} ({diff_msg})", flush=True)
 
 print("\n" + "=" * 60)
 print(f"ok           : {ok_cnt}")
