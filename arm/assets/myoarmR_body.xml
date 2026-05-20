@@ -768,7 +768,7 @@
                                                             <site name="Thirdmd_site_EDC3_side_r" pos="0.00142423 -0.028063 0.00714128"/>
 
                                                             <body name="distph3_r" pos="0.001365 -0.029047 0.001954">
-                                                                <joint axis="1 0 0" name="md3_flexion" pos="0 0 0" range="0 1.5708"/>
+                                                                <joint axis="1 0 0" name="md3_flexion_r" pos="0 0 0" range="0 1.5708"/>
                                                                 <geom name="distph3_coll_r" class="myohand_coll" size="0.007 0.008" pos="0.0013 -0.009 -.002" euler="1.6 .05 0"/>
                                                                 <geom mesh="3distph_r" name="3distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -844,7 +844,7 @@
                                                         <!-- <site name="Fourthpm_site_LU_RB4_side_r" pos="-0.00228232 -0.0322561 -0.001299"/> -->
                                                         <site name="Fourthpm_site_UI_UB4_side_r" pos="-0.0089 -0.0388 0.0018"/>
                                                         <body name="midph4_r" pos="-0.003528 -0.040255 0.001345">
-                                                            <joint axis="0.921061 0 0.389418" name="pm4_flexion" pos="0 0 0" range="0 1.5708"/>
+                                                            <joint axis="0.921061 0 0.389418" name="pm4_flexion_r" pos="0 0 0" range="0 1.5708"/>
                                                             <geom name="midph4_coll_r" class="myohand_coll" size="0.0075 0.01" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
                                                             <geom mesh="4midph_r" name="4midph_r" type="mesh"/>
                                                             <geom name="Fourthmd_wrap" type="cylinder" size="0.00300000 0.005" pos="-0.0021 -0.0247 -0.0001" euler="-3.02971705 -1.10287355 -2.87211382" class="wrap"/>

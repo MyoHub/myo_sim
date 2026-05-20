@@ -10,7 +10,7 @@
     - Adapted kinematic chain for BimanualMuscle and MyoFullBody configurations
     - Added collision geometry for torso self-contact
   ====================================================== -->
-    <body name="sacrum" pos="0 0 0" euler="1.57 -1.57 0" childclass="myotorso">
+    <body name="sacrum" pos="0 0 0" euler="1.57079632679 -1.57079632679 0" childclass="myotorso">
       <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="7.486" diaginertia="0.08 0.075 0.03"/>
 
       <!-- pelvis sites -->
@@ -149,7 +149,7 @@
       <site name="LTpT_T9_LTpT_t9_R-P1_l" pos="-0.165822 0.0268352 0"/>
       <site name="LTpT_T10_LTpT_t10_R-P1_l" pos="-0.164463 0.0245611 -0.01072"/>
       <site name="LTpT_T11_LTpT_t11_R-P1_l" pos="-0.157649 0.0307094 -0.02404"/>
-      <site name="LTpT_T12_LTpT_t12_R-P1_l" pos="-0.14476 0.0488 -0.02793"/>
+      <site name="LTpT_T12_LTpT_t12_R-P1_l" pos="-0.14476 0.0488 0.02793"/>
       <site name="LTpT_R7_LTpT_r7_R-P1_l" pos="-0.13132 0.06051 -0.00028"/>
       <site name="LTpT_R8_LTpT_r8_R-P1_l" pos="-0.1429 0.05025 -0.00037"/>
       <site name="LTpT_R9_LTpT_r9_R-P1_l" pos="-0.16582 0.0268352 0"/>
@@ -504,9 +504,9 @@
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh"  mesh="torso_geom_12_thoracic1_s"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh"  mesh="torso_geom_13_ribcage_s"/>
                   <geom type="capsule" class="myotorso_coll" size="0.080 0.077" pos=".036 -.020 0" euler="0 0 1.57"/>
-                  <!--geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
+                  <geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
                   <geom type="capsule" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
-                  <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>-->
+                  <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>
                   <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="myoBack_wrap"/>
                   <geom name="Chest_ellipsoid_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Chest_ellipsoid_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
