@@ -494,8 +494,8 @@
 
                                                     <!-- THUMB FINGER -->
                                                     <body name="firstmc_r" pos="0.0072 -0.0054 -0.0025">
-                                                        <joint axis="-0.042399 -0.665286 0.745384" name="cmc_flexion" pos="0 0 0" range="-0.5 0.78"/>
-                                                        <joint axis="0.495557 0.731736 0.467959"  name="cmc_abduction" pos="0 0 0" range="-0.78 0.7"/>
+                                                        <joint axis="-0.042399 -0.665286 0.745384" name="cmc_flexion_r" pos="0 0 0" range="-0.5 0.78"/>
+                                                        <joint axis="0.495557 0.731736 0.467959"  name="cmc_abduction_r" pos="0 0 0" range="-0.78 0.7"/>
                                                         <geom name="1mcskin_r" class="myohand_coll" size="0.0095" fromto="-.002 0.004 0.003 0.0165 -0.0292 -0.0127"/>
                                                         <geom mesh="1mc_r" name="1mc_r" type="mesh"/>
                                                         <geom name="MPthumb_wrap" type="cylinder" size="0.0085 0.01" pos="0.0177 -0.0305 -0.0143" euler="0.32131512 0.11013028 -0.83479098" class="wrap"/>

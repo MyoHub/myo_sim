@@ -21,7 +21,7 @@
 	<default class="main">
 		<default class="myotorso">
 			<joint armature="0.01" damping="0.5" limited="true" />
-			<geom margin="0.001" material="mat_myotorso" rgba="0.8 0.7 .5 .1" conaffinity="0" contype="0" />
+			<geom margin="0.001" material="mat_myotorso" rgba="0.8 0.8 0.8 1" conaffinity="0" contype="0" />
 			<site size="0.001 0.005 0.005" group="3" />
 			<tendon limited="false" width="0.005" rgba="0.95 0.3 0.3 1" />
 			<default class="myoBack_muscle">
@@ -39,10 +39,10 @@
 			<default class="motor">
 				<general gainprm="5 0 0 0 0 0 0 0 0 0" />
 			</default>
-			<default class="myotorso_coll">
-				<geom type="capsule" mass="0" group="4" contype="1" conaffinity="0" condim="3"
-					margin="0.001" material="MatSkin_myotorso" />
-			</default>
+		</default>
+		<default class="myotorso_coll">
+			<geom type="capsule" mass="0" group="4" contype="1" conaffinity="0" condim="3"
+				margin="0.001" material="MatSkin_myotorso" />
 		</default>
 	</default>
 
