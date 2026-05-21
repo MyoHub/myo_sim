@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<mujoco model="MyoArm Bimanual">
+<!-- =================================================
+    Copyright 2026 MuscleMimic Team
+    Model   :: MyoArm Bimanual (MuJoCo v3.0)
+    License :: Apache License, Version 2.0
+====================================================== -->
+
+    <include file="../scene/myosuite_scene.xml"/>
+    <include file="../arm/assets/myoarm_bimanual_assets.xml"/>
+    <compiler angle="radian" meshdir=".." texturedir=".."/>
+
+    <worldbody>
+        <include file="../arm/assets/myoarm_bimanual_body.xml"/>
+    </worldbody>
+
+</mujoco>

@@ -1,0 +1,109 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Overview
+
+`myo_sim` is a library of MuJoCo musculoskeletal (MSK) XML model definitions used by [MyoSuite](https://github.com/facebookresearch/myoSuite). It contains no Python package — the primary artifacts are `.xml` model files (and referenced `.stl` meshes) that MuJoCo loads directly.
+
+## Running Tests
+
+```bash
+# Run the full model-loading smoke test
+python -m pytest test_sims.py
+
+# Run a single test class
+python -m pytest test_sims.py::TestSims::test_sims
+
+# Run a muscle-symmetry analysis script (not pytest — runs as a standalone script)
+cd tests && python debug_muscle_leg.py
+cd tests && python debug_muscle_torso.py
+cd tests && python debug_muscle_bimanual.py
+```
+
+Requires `mujoco` and `numpy` (plus `matplotlib` for analysis plots). No `setup.py` or `pyproject.toml` at the repo root.
+
+## Repository Structure
+
+```
+<model>/              # One directory per body segment / assembly
+  <model>.xml         # Top-level MuJoCo model (entry point)
+  assets/             # Sub-XMLs included via <include> or <compiler meshdir>
+    *_assets.xml      # Mesh/texture/material declarations
+    *_body.xml        # Kinematic chain (bodies, joints, geoms)
+    *_chain.xml       # Variant used for composing into full-body models
+meshes/               # Shared .stl mesh files (referenced by all models)
+scene/                # Scene wrapper XMLs (lighting, ground plane, camera)
+body/                 # Full-body assemblies (myobody, myoupperbody, myofullbody)
+tests/                # Muscle analysis scripts + utilities
+test_sims.py          # Pytest smoke test: loads every model via mujoco.MjModel
+```
+
+Key model directories: `finger`, `elbow`, `hand`, `arm`, `leg`, `torso`, `body`, `osl`, `head`.
+
+## Model Architecture
+
+Models are composed via MuJoCo's `<include>` and `<compiler meshdir>` mechanisms:
+
+- **Assets XMLs** (`*_assets.xml`) declare meshes, materials, tendons.
+- **Body/Chain XMLs** (`*_body.xml`, `*_chain.xml`) define the kinematic tree, joints, muscles, and contact geometries.
+- **Top-level XMLs** (e.g., `arm/myoarms.xml`) compose left + right chains into a bilateral model.
+- **Full-body models** (`body/myobody.xml`, `body/myofullbody.xml`) include torso, arm, and leg chains together.
+
+All meshes live in `meshes/` and are shared across models. `scene/` XMLs wrap individual models with environment assets for rendering.
+
+## Design Principles (issue #75)
+
+The target architecture separates concerns into four layers:
+
+1. **Kinematics** (`kinematics/`) — immutable skeleton: bodies, joints, and global structural sites. Defined once; never duplicated across parts.
+2. **Parts** (`parts/`) — body-part-local actuation: muscles, tendons, wrapping surfaces, equality constraints, and local via/wrapping sites.
+3. **Interfaces** (`interfaces/`) — explicit cross-part attachment and muscle-ownership declarations.
+4. **Build** (`build/`) — deterministic composition pipeline that assembles kinematics + parts into full models.
+
+When adding or editing model elements, respect this separation: structural geometry belongs in kinematics, actuation belongs in parts, and cross-part dependencies must be declared in interfaces.
+
+## Naming Conventions
+
+- Body parts use the `Myo` prefix (e.g., `MyoLeg`, `MyoArm`).
+- Bilateral structures use `_r` / `_l` suffixes (right / left) for joints, muscles, bodies, and sites.
+- Muscles follow OpenSim naming (e.g., `gaslat_r`, `psoas_l`).
+- Sites used for attachment/endpoint markers are placed in group 3 (inactive by default).
+
+## Muscle Analysis Utilities (`tests/muscle_analysis_utils.py`)
+
+Provides helpers for validating MSK model quality:
+- `compute_moment_arm_curve` / `compute_force_length_curve` — sweep joint angles and record muscle properties.
+- `parse_model_joint_equalities` / `apply_eq_constraints` — resolve MuJoCo joint equality constraints (polynomial coupling between joints) before computing forward kinematics.
+- `plot_pair` — compare left/right muscle pairs visually.
+
+Analysis scripts output plots to `tests/output/muscle_analysis/`.
+
+## Model Conversion Pipeline
+
+Models are converted from OpenSim (`.osim`) format via a three-step pipeline (not in this repo):
+1. Basic element conversion (bones, joints, muscle paths, wrapping objects)
+2. Moment arm optimization (wrapping geometry tuning)
+3. Muscle force optimization (force-length parameter fitting)
+
+Post-conversion manual adjustments are documented in each model's `README.md`.
+
+## Development Workflow
+
+- Always use `uv run`, not `python`.
+- Always run `uv run pytest -n 8` before creating a PR.
+- Run `uv run pre-commit install` after cloning to enable pre-commit hooks (ruff, uv-lock, kernel-analyzer).
+- Prefer running individual tests rather than the full test suite to improve iteration speed.
+
+## Commits and PRs
+
+- PR body should be plain, concise prose. Describe the problem, what the change does, and any non-obvious tradeoffs. Bullet points listing changes are fine, but avoid section headers, structured templates, and emojis.
+- PR and commit messages are rendered on GitHub, so don't hard-wrap them at 88 columns. Let each sentence flow on one line.
+- Push branches to your own fork, not to the MyoHub/myo_sim repo directly.
+- Amending commits is fine before a PR has reviewers looking at it. Once a PR is under review, use new commits so reviewers can see what changed.
+- When responding to PR review comments: reply to each comment individually confirming what you did (or why you didn't), resolve addressed threads, and add a summary comment on the PR covering what was applied and what was intentionally skipped.
+
+## Code Style
+
+- Line length limit is 128 characters. Docstring length limit is 100 characters.
+- Prefer targeted, efficient tests over exhaustive edge-case coverage.

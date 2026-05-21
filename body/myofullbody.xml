@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<mujoco model="MuscleMimic and MyoSuite MyoFullBody">
+
+<!-- =================================================
+    Copyright 2026 MuscleMimic Team
+    Model           :: MyoFullBody (MuJoCo v3.0)
+    Author          :: MuscleMimic Team
+    Initial Creator :: Huiyi Wang built upon MyoSuite models
+    Refinement      :: Chengkun Li
+    License         :: Apache License, Version 2.0
+                       You may not use this file except in compliance with the License.
+                       You may obtain a copy of the License at
+                       http://www.apache.org/licenses/LICENSE-2.0
+====================================================== -->
+
+    <include file="../scene/myosuite_scene_musclemimic.xml"/>
+    <include file="../torso/assets/myotorso_assets.xml"/>
+    <include file="../arm/assets/myoarm_bimanual_assets.xml"/>
+    <include file="../head/assets/myohead_simple_assets.xml"/>
+    <include file="../leg/assets/myolegs_assets.xml"/>
+    <include file="../leg/assets/myolegs_tendon.xml"/>
+    <include file="../leg/assets/myolegs_muscle.xml"/>
+    <compiler angle="radian" meshdir=".." texturedir=".."/>
+
+    <worldbody>
+        <body name="Full Body" pos="-.025 0.1 1">
+            <include file="../torso/assets/myotorso_bimanual_chain.xml"/>
+            <include file="../leg/assets/myolegs_chain.xml"/>
+            <freejoint name="root"/>
+        </body>
+    </worldbody>
+
+    <contact>
+        <pair geom1="radius_r_coll" geom2="r_femur2_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_femur1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_tibia1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_tibia2_col" condim="3" />
+
+        <pair geom1="radius_l_coll" geom2="l_femur2_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_femur1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_tibia1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_tibia2_col" condim="3" />
+
+        <pair geom1="radius_l_coll" geom2="r_femur2_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_femur1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_tibia1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_tibia2_col" condim="3" />
+
+        <pair geom1="radius_r_coll" geom2="l_femur2_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_femur1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_tibia1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_tibia2_col" condim="3" />
+    </contact>
+
+</mujoco>
