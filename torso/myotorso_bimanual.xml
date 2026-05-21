@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<mujoco model="MyoTorso Bimanual">
+<!-- =================================================
+    Copyright 2026 MuscleMimic Team
+    Model   :: MyoTorso Bimanual (MuJoCo v3.0)
+    License :: Apache License, Version 2.0
+====================================================== -->
+
+    <include file="../scene/myosuite_scene.xml"/>
+    <include file="../torso/assets/myotorso_assets.xml"/>
+    <include file="../arm/assets/myoarm_bimanual_assets.xml"/>
+    <include file="../head/assets/myohead_simple_assets.xml"/>
+    <compiler angle="radian" meshdir=".." texturedir=".."/>
+
+    <worldbody>
+        <body name="Full Body" pos="0 0 1">
+            <include file="../torso/assets/myotorso_bimanual_chain.xml"/>
+            <freejoint name="root"/>
+        </body>
+    </worldbody>
+
+</mujoco>
