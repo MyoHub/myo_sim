@@ -1,8 +1,8 @@
 """Utilities for analyzing muscle symmetry via moment arm and force-length curves."""
 
+import matplotlib.pyplot as plt
 import mujoco
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=1e-5, n=100):
@@ -55,11 +55,10 @@ def compute_force_length_curve(model, data, act_id, jnt_id, activation=1.0, n=10
 
 def plot_pair(curves, title, out_path=None, tol=1e-6):
     """Plot left/right muscle comparison. Saves plot only if discrepancy found."""
-    r, l = curves["right"], curves["left"]
+    right, left = curves["right"], curves["left"]
 
-    discrep = (
-        not np.allclose(r["moment_arms"], l["moment_arms"], atol=tol, rtol=1e-5)
-        or not np.allclose(r["forces"], l["forces"], atol=tol, rtol=1e-5)
+    discrep = not np.allclose(right["moment_arms"], left["moment_arms"], atol=tol, rtol=1e-5) or not np.allclose(
+        right["forces"], left["forces"], atol=tol, rtol=1e-5
     )
 
     fig, axes = plt.subplots(1, 2, figsize=(12, 5))

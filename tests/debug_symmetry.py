@@ -21,12 +21,12 @@ Examples:
 
 import xml.etree.ElementTree as ET
 from pathlib import Path
+
 import numpy as np
 from scipy.spatial.transform import Rotation as R
 
-
-#some finger geoms have euler angles for wrapping that are different 
-#in order to achieve muscle symmetry
+# some finger geoms have euler angles for wrapping that are different
+# in order to achieve muscle symmetry
 GEOM_EULER_SIGNFLIP_EXCEPTIONS = {
     "MPthumb_wrap",
     "2ndmcp_ellipsoid_wrap",
@@ -35,8 +35,9 @@ GEOM_EULER_SIGNFLIP_EXCEPTIONS = {
     "4thmcp_ellipsoid_wrap",
     "Fourthpm_wrap",
     "Fourthmd_wrap",
-    "5thmcp_ellipsoid_wrap"
+    "5thmcp_ellipsoid_wrap",
 }
+
 
 def euler_signflip_match(elem1, elem2, tol=1e-6):
     """
@@ -54,6 +55,7 @@ def euler_signflip_match(elem1, elem2, tol=1e-6):
 
     return np.allclose(e1, -e2, atol=tol, rtol=0.0)
 
+
 def _iter_includes(root: ET.Element):
     """Yield file attribute values from <include file="..."> tags."""
     for inc in root.iter("include"):
@@ -61,8 +63,13 @@ def _iter_includes(root: ET.Element):
         if f:
             yield f
 
+
 def has_discrepancy(
-    pos1, ori1, pos2, ori2, *,
+    pos1,
+    ori1,
+    pos2,
+    ori2,
+    *,
     is_joint=False,
     pos_tol=1e-8,
     ori_tol_rad=1e-6,
@@ -116,6 +123,7 @@ def has_discrepancy(
         # If comparison fails, treat as discrepancy
         return True
 
+
 def collect_mjcf_files(main_xml: str | Path):
     """
     Recursively collect all MJCF XML files reachable via <include file="...">.
@@ -151,31 +159,34 @@ def collect_mjcf_files(main_xml: str | Path):
 def parse_float_list(text):
     return list(map(float, text.strip().split()))
 
+
 def get_orientation_info(elem):
     quat = axisangle = euler = None
 
-    if 'euler' in elem.attrib:
-        euler = parse_float_list(elem.attrib['euler'])
-        quat = R.from_euler('xyz', euler).as_quat()
+    if "euler" in elem.attrib:
+        euler = parse_float_list(elem.attrib["euler"])
+        quat = R.from_euler("xyz", euler).as_quat()
 
-    elif 'quat' in elem.attrib:
-        quat = parse_float_list(elem.attrib['quat'])
-        euler = R.from_quat(quat).as_euler('xyz', degrees=True)
+    elif "quat" in elem.attrib:
+        quat = parse_float_list(elem.attrib["quat"])
+        euler = R.from_quat(quat).as_euler("xyz", degrees=True)
 
-    elif 'axisangle' in elem.attrib:
-        axisangle = parse_float_list(elem.attrib['axisangle'])
+    elif "axisangle" in elem.attrib:
+        axisangle = parse_float_list(elem.attrib["axisangle"])
         axis = np.array(axisangle[:3])
         angle = axisangle[3]
         if np.linalg.norm(axis) > 0:
             quat = R.from_rotvec(axis / np.linalg.norm(axis) * angle).as_quat()
-            euler = R.from_quat(quat).as_euler('xyz', degrees=True)
+            euler = R.from_quat(quat).as_euler("xyz", degrees=True)
 
     return quat, axisangle, euler
 
+
 def get_pos_and_ori(elem):
-    pos = elem.attrib.get('pos', 'N/A')
+    pos = elem.attrib.get("pos", "N/A")
     quat, axisangle, euler = get_orientation_info(elem)
     return pos, quat, axisangle, euler
+
 
 def safe_parse_array(val):
     """
@@ -218,23 +229,23 @@ def parse_elements_from_files(xml_files):
         tree = ET.parse(xml_path)
         root = tree.getroot()
 
-        for body in root.iter('body'):
-            name = body.attrib.get('name')
+        for body in root.iter("body"):
+            name = body.attrib.get("name")
             if name:
                 add_unique(bodies, name, body, xml_path)
 
-        for geom in root.iter('geom'):
-            name = geom.attrib.get('name')
+        for geom in root.iter("geom"):
+            name = geom.attrib.get("name")
             if name:
                 add_unique(geoms, name, geom, xml_path)
 
-        for site in root.iter('site'):
-            name = site.attrib.get('name')
+        for site in root.iter("site"):
+            name = site.attrib.get("name")
             if name:
                 add_unique(sites, name, site, xml_path)
 
-        for joint in root.iter('joint'):
-            name = joint.attrib.get('name')
+        for joint in root.iter("joint"):
+            name = joint.attrib.get("name")
             if name:
                 add_unique(joints, name, joint, xml_path)
 
@@ -242,15 +253,23 @@ def parse_elements_from_files(xml_files):
 
 
 def print_pair(
-    name1, elem1, name2=None, elem2=None, *,
-    is_joint=False, src1=None, src2=None,
-    print_all=False, pause=True, skip_single = True,
+    name1,
+    elem1,
+    name2=None,
+    elem2=None,
+    *,
+    is_joint=False,
+    src1=None,
+    src2=None,
+    print_all=False,
+    pause=True,
+    skip_single=True,
 ):
     # ---- FIRST: extract values silently ----
     def extract_info(elem, is_joint=False):
         if is_joint:
-            pos = safe_parse_array(elem.attrib.get('pos', 'N/A'))
-            axis = safe_parse_array(elem.attrib.get('axis', 'N/A'))
+            pos = safe_parse_array(elem.attrib.get("pos", "N/A"))
+            axis = safe_parse_array(elem.attrib.get("axis", "N/A"))
             return pos, axis
         else:
             pos, quat, _, _ = get_pos_and_ori(elem)
@@ -261,11 +280,9 @@ def print_pair(
     if name2 and elem2 is not None:
         pos2, ori2 = extract_info(elem2, is_joint)
 
-        discrep = has_discrepancy(
-            pos1, ori1, pos2, ori2, is_joint=is_joint
-        )
+        discrep = has_discrepancy(pos1, ori1, pos2, ori2, is_joint=is_joint)
 
-        if (discrep and (not is_joint) and name1 is not None):
+        if discrep and (not is_joint) and name1 is not None:
             base = name1[:-5] if name1.endswith("_left") else name1
             if base in GEOM_EULER_SIGNFLIP_EXCEPTIONS:
                 if euler_signflip_match(elem1, elem2):
@@ -276,8 +293,8 @@ def print_pair(
     else:
         # No counterpart
         if skip_single and not print_all:
-            return  "single" # default: skip singletons entirely
-        pos2a = pos2b = None
+            return "single"  # default: skip singletons entirely
+
         discrep = True  # if we're printing all, show it
 
     print("=" * 60)
@@ -285,9 +302,9 @@ def print_pair(
     def print_info(name, elem, is_joint=False, src=None):
         src_s = f"  [src: {src}]" if src is not None else ""
         if is_joint:
-            pos = elem.attrib.get('pos', 'N/A')
-            axis = elem.attrib.get('axis', 'N/A')
-            rng = elem.attrib.get('range', 'N/A')
+            pos = elem.attrib.get("pos", "N/A")
+            axis = elem.attrib.get("axis", "N/A")
+            rng = elem.attrib.get("range", "N/A")
             print(f"{name}:{src_s}")
             print(f"  type  : {elem.attrib.get('type', 'N/A')}")
             print(f"  pos   : {pos}")
@@ -306,7 +323,7 @@ def print_pair(
     if name2 and elem2 is not None:
         print("\nvs\n")
         print_info(name2, elem2, is_joint, src2)
-    
+
     if discrep:
         q1 = ori1 / np.linalg.norm(ori1)
         q2 = ori2 / np.linalg.norm(ori2)
@@ -315,12 +332,12 @@ def print_pair(
         q2m[2] *= -1
         ang = 2 * np.arccos(np.clip(np.dot(q1, q2m), -1.0, 1.0))
         print(f"[DEBUG] angle diff (deg): {np.degrees(ang)}")
-    
+
     if pause:
         input("\nPress Enter to continue...\n")
-    
-    
+
     return "discrepancy" if discrep else "clean"
+
 
 def resolve_checks(args):
     checks = {
@@ -334,13 +351,14 @@ def resolve_checks(args):
             checks[k] = True
     return checks
 
+
 def main(xml_path, checks, *, include=True, print_all=False, pause=True, skip_single=True):
     counts = {
         "discrepancy": 0,
         "clean": 0,
         "single": 0,
     }
-    
+
     # Collect files: main + sub-xmls (via <include>)
     if include:
         xml_files = collect_mjcf_files(xml_path)
@@ -356,58 +374,118 @@ def main(xml_path, checks, *, include=True, print_all=False, pause=True, skip_si
     # --- Bodies ---
     if checks["bodies"]:
         for name, (elem, src) in bodies.items():
-            if name.endswith('_l'):
+            if name.endswith("_l"):
                 continue
-            if name.endswith('_r'):
+            if name.endswith("_r"):
                 base = name[:-2]
                 mirror_name = f"{base}_l"
                 mirror = bodies.get(mirror_name)
                 mirror_elem, mirror_src = (mirror[0], mirror[1]) if mirror else (None, None)
-                status = print_pair(name, elem, mirror_name, mirror_elem, is_joint=False, src1=src, src2=mirror_src, print_all=print_all, pause=pause, skip_single=True)
+                status = print_pair(
+                    name,
+                    elem,
+                    mirror_name,
+                    mirror_elem,
+                    is_joint=False,
+                    src1=src,
+                    src2=mirror_src,
+                    print_all=print_all,
+                    pause=pause,
+                    skip_single=True,
+                )
             else:
-                status = print_pair(name, elem, is_joint=False, src1=src, print_all=print_all, pause=pause, skip_single=True)
+                status = print_pair(
+                    name,
+                    elem,
+                    is_joint=False,
+                    src1=src,
+                    print_all=print_all,
+                    pause=pause,
+                    skip_single=True,
+                )
             if status is not None:
                 counts[status] += 1
     # --- Sites ---
     if checks["sites"]:
         for name, (elem, src) in sites.items():
-            if name.endswith('_left'):
+            if name.endswith("_left"):
                 continue
             mirror_name = f"{name}_left"
             mirror = sites.get(mirror_name)
             mirror_elem, mirror_src = (mirror[0], mirror[1]) if mirror else (None, None)
-            status = print_pair(name, elem, mirror_name, mirror_elem, is_joint=False, src1=src, src2=mirror_src, print_all=print_all, pause=pause, skip_single=True)
+            status = print_pair(
+                name,
+                elem,
+                mirror_name,
+                mirror_elem,
+                is_joint=False,
+                src1=src,
+                src2=mirror_src,
+                print_all=print_all,
+                pause=pause,
+                skip_single=True,
+            )
             if status is not None:
                 counts[status] += 1
 
     # --- Geoms ---
     if checks["geoms"]:
         for name, (elem, src) in geoms.items():
-            if name.endswith('_left'):
+            if name.endswith("_left"):
                 continue
             mirror_name = f"{name}_left"
             mirror = geoms.get(mirror_name)
             mirror_elem, mirror_src = (mirror[0], mirror[1]) if mirror else (None, None)
-            status = print_pair(name, elem, mirror_name, mirror_elem, is_joint=False, src1=src, src2=mirror_src, print_all=print_all, pause=pause, skip_single=True)
+            status = print_pair(
+                name,
+                elem,
+                mirror_name,
+                mirror_elem,
+                is_joint=False,
+                src1=src,
+                src2=mirror_src,
+                print_all=print_all,
+                pause=pause,
+                skip_single=True,
+            )
             if status is not None:
                 counts[status] += 1
 
     # --- Joints ---
     if checks["joints"]:
         for name, (elem, src) in joints.items():
-            if name.endswith('_l'):
+            if name.endswith("_l"):
                 continue
-            if name.endswith('_r'):
+            if name.endswith("_r"):
                 base = name[:-2]
                 mirror_name = f"{base}_l"
                 mirror = joints.get(mirror_name)
                 mirror_elem, mirror_src = (mirror[0], mirror[1]) if mirror else (None, None)
-                status = print_pair(name, elem, mirror_name, mirror_elem, is_joint=True, src1=src, src2=mirror_src, print_all=print_all, pause=pause, skip_single=True)
+                status = print_pair(
+                    name,
+                    elem,
+                    mirror_name,
+                    mirror_elem,
+                    is_joint=True,
+                    src1=src,
+                    src2=mirror_src,
+                    print_all=print_all,
+                    pause=pause,
+                    skip_single=True,
+                )
             else:
-                status = print_pair(name, elem, is_joint=True, src1=src, print_all=print_all, pause=pause, skip_single=True)
+                status = print_pair(
+                    name,
+                    elem,
+                    is_joint=True,
+                    src1=src,
+                    print_all=print_all,
+                    pause=pause,
+                    skip_single=True,
+                )
             if status is not None:
                 counts[status] += 1
-    
+
     total_pairs = counts["discrepancy"] + counts["clean"]
 
     print("\n" + "=" * 60)
@@ -421,13 +499,14 @@ def main(xml_path, checks, *, include=True, print_all=False, pause=True, skip_si
 
 if __name__ == "__main__":
     import argparse
+
     parser = argparse.ArgumentParser()
     parser.add_argument("xml_path", help="Path to the MAIN MJCF XML file")
 
     parser.add_argument("--bodies", action="store_true", help="Check body symmetry")
     parser.add_argument("--joints", action="store_true", help="Check joint symmetry")
-    parser.add_argument("--geoms",  action="store_true", help="Check geom symmetry")
-    parser.add_argument("--sites",  action="store_true", help="Check site symmetry")
+    parser.add_argument("--geoms", action="store_true", help="Check geom symmetry")
+    parser.add_argument("--sites", action="store_true", help="Check site symmetry")
 
     parser.add_argument(
         "--print-all",
