@@ -1,1 +1,26 @@
-*.DS_Store
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.ruff_cache/
+
+# uv / packaging
+.venv/
+uv.lock
+*.egg-info/
+dist/
+
+# Test output (generated plots and reports)
+tests/output/
+
+# Temporary MuJoCo XML wrappers created at runtime
+leg/_tmp_myoleg.xml
+torso/_tmp_myotorso.xml
+arm/_tmp_myoarm.xml
+
+# Scratch / sandbox
+sandbox/
