@@ -31,6 +31,10 @@ After the conversion, a manual adjusting process is done to correct the abnormal
 ## Issues:
 - N/A
 
+## Change Log
+**Feb 2026**
+- Improved left-right assymetries (contributed by [muscle mimic team](https://amathislab.github.io/mm-blog/))
+
 ## Citation
 
 If you use this repository in your research, please cite the following:

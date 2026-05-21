@@ -29,3 +29,12 @@ After the conversion, a manual adjusting process is done to correct the abnormal
 
 ## Issues:
 - N/A
+
+## Change log
+**Feb 2026**
+- Moving sites to group 3 for them to start inactive
+- Removed duplicate meshes that were a part of the assets load
+- Removing thorax from the arm models (and associated collisions, inertias, etc). Renaming it to chest_r body to host all related insersion points and wrap geometry.
+- Making clavicle symmertic around sternum
+- renamed arms to armsR (to accommodate left arm)
+- Appended _r to right hand names (to accommodate left arm)

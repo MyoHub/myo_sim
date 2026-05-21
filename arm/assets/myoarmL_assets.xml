@@ -1,0 +1,732 @@
+﻿<mujocoinclude model="MyoArm_v0.01">
+<!-- =================================================
+    Copyright 2026 MyoSuite
+    Model	:: MyoArm (MuJoCoV3.0)
+    Author	:: Bianca Ziliotto, Chengkun Li, Huiyi Wang, Vittorio Caggiano, Vikash Kumar
+    License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+
+    <!-- TODO: Resolve these default classes post sync -->
+    <default class="main">
+        <default class="myo_coll">
+            <geom type="capsule" group="4" mass="0" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .1" margin="0.001" material="MatSkin" />
+        </default>
+    </default>
+
+    <asset>
+        <mesh name="clavicle_l" file="meshes/clavicle.stl" scale="1 1 -1" />
+        <mesh name="scapula_l" file="meshes/scapula.stl" scale="1 1 -1" />
+        <mesh name="humerus_l" file="meshes/humerus.stl" scale="1 1 -1" />
+        <mesh name="ulna_l" file="meshes/ulna.stl" scale="1 1 -1" />
+        <mesh name="radius_l" file="meshes/radius.stl" scale="1 1 -1" />
+        <mesh name="lunate_l" file="meshes/lunate.stl" scale="1 1 -1" />
+        <mesh name="scaphoid_l" file="meshes/scaphoid.stl" scale="1 1 -1" />
+        <mesh name="pisiform_l" file="meshes/pisiform.stl" scale="1 1 -1" />
+        <mesh name="triquetrum_l" file="meshes/triquetrum.stl" scale="1 1 -1" />
+        <mesh name="capitate_l" file="meshes/capitate.stl" scale="1 1 -1" />
+        <mesh name="trapezium_l" file="meshes/trapezium.stl" scale="1 1 -1" />
+        <mesh name="1mc_l" file="meshes/1mc.stl" scale="1 1 -1" />
+        <mesh name="thumbprox_l" file="meshes/thumbprox.stl" scale="1 1 -1" />
+        <mesh name="thumbdist_l" file="meshes/thumbdist.stl" scale="1 1 -1" />
+        <mesh name="trapezoid_l" file="meshes/trapezoid.stl" scale="1 1 -1" />
+        <mesh name="hamate_l" file="meshes/hamate.stl" scale="1 1 -1" />
+        <mesh name="2mc_l" file="meshes/2mc.stl" scale="1 1 -1" />
+        <mesh name="2proxph_l" file="meshes/2proxph.stl" scale="1 1 -1" />
+        <mesh name="2midph_l" file="meshes/2midph.stl" scale="1 1 -1" />
+        <mesh name="2distph_l" file="meshes/2distph.stl" scale="1 1 -1" />
+        <mesh name="3mc_l" file="meshes/3mc.stl" scale="1 1 -1" />
+        <mesh name="3proxph_l" file="meshes/3proxph.stl" scale="1 1 -1" />
+        <mesh name="3midph_l" file="meshes/3midph.stl" scale="1 1 -1" />
+        <mesh name="3distph_l" file="meshes/3distph.stl" scale="1 1 -1" />
+        <mesh name="4mc_l" file="meshes/4mc.stl" scale="1 1 -1" />
+        <mesh name="4proxph_l" file="meshes/4proxph.stl" scale="1 1 -1" />
+        <mesh name="4midph_l" file="meshes/4midph.stl" scale="1 1 -1" />
+        <mesh name="4distph_l" file="meshes/4distph.stl" scale="1 1 -1" />
+        <mesh name="5mc_l" file="meshes/5mc.stl" scale="1 1 -1" />
+        <mesh name="5proxph_l" file="meshes/5proxph.stl" scale="1 1 -1" />
+        <mesh name="5midph_l" file="meshes/5midph.stl" scale="1 1 -1" />
+        <mesh name="5distph_l" file="meshes/5distph.stl" scale="1 1 -1" />
+    </asset>
+
+    <tendon>
+        <spatial name="s_glenohum_ligament_l" springlength="0.0448" class="upperarm_muscle">
+            <site site="s_glenohum_s_glenohum-P1_l" />
+            <geom geom="LIGhh_s_ellipsoid_s_glenohum_l" sidesite="LIGhh_s_ellipsoid_s_glenohum_1_sidesite_l" />
+            <site site="s_glenohum_s_glenohum-P2_l" />
+        </spatial>
+        <spatial name="m_glenohum_ligament_l" springlength="0.0452" class="upperarm_muscle">
+            <site site="m_glenohum_m_glenohum-P1_l" />
+            <geom geom="LIGhh_mi_ellipsoid_m_glenohum_l" sidesite="LIGhh_mi_ellipsoid_m_glenohum_1_sidesite_l" />
+            <site site="m_glenohum_m_glenohum-P2_l" />
+        </spatial>
+        <spatial name="i_glenohum_ligament_l" springlength="0.0421" class="upperarm_muscle">
+            <site site="i_glenohum_i_glenohum-P1_l" />
+            <geom geom="LIGhh_mi_ellipsoid_i_glenohum_l" sidesite="LIGhh_mi_ellipsoid_i_glenohum_1_sidesite_l" />
+            <site site="i_glenohum_i_glenohum-P2_l" />
+        </spatial>
+        <spatial name="coracohum_ligament_l" springlength="0.0501" class="upperarm_muscle">
+            <site site="coracohum_coracohum-P1_l" />
+            <geom geom="LIGhh_s_ellipsoid_coracohum_l" sidesite="LIGhh_s_ellipsoid_coracohum_1_sidesite_l" />
+            <site site="coracohum_coracohum-P2_l" />
+        </spatial>
+        <spatial name="DELT1_tendon_l" class="upperarm_muscle">
+            <site site="DELT1_DELT1-P1_l" />
+            <site site="DELT1_DELT1-P2_l" />
+            <geom geom="DELT1hh_ellipsoid_DELT1_l" sidesite="DELT1hh_ellipsoid_DELT1_2_sidesite_l" />
+            <site site="DELT1_DELT1-P3_l" />
+            <site site="DELT1_DELT1-P4_l" />
+        </spatial>
+        <spatial name="DELT2_tendon_l" class="upperarm_muscle">
+            <site site="DELT2_DELT2-P1_l" />
+            <geom geom="delt2hum_cylinder_l" sidesite="delt2hum_cylinder_DELT2_1_sidesite_l" />
+            <site site="DELT2_DELT2-P2_l" />
+            <geom geom="Deltoid2_ellipsoid_DELT2_l" sidesite="Deltoid2_ellipsoid_DELT2_2_sidesite_l" />
+            <site site="DELT2_DELT2-P3_l" />
+            <site site="DELT2_DELT2-P4_l" />
+        </spatial>
+        <spatial name="DELT3_tendon_l" class="upperarm_muscle">
+            <site site="DELT3_DELT3-P1_l" />
+            <geom geom="Delt3_torus_l" sidesite="Delt3_torus_DELT3_1_sidesite_l" />
+            <site site="DELT3_DELT3-P2_l" />
+            <geom geom="delt3hum_ellipsoid_DELT3_l" sidesite="delt3hum_ellipsoid_DELT3_2_sidesite_l" />
+            <site site="DELT3_DELT3-P3_l" />
+        </spatial>
+        <spatial name="SUPSP_tendon_l" class="upperarm_muscle">
+            <site site="SUPSP_SUPSP-P1_l" />
+            <geom geom="SUPSP_ellipsoid_SUPSP_l" sidesite="SUPSP_ellipsoid_SUPSP_1_sidesite_l" />
+            <site site="SUPSP_SUPSP-P2_l" />
+            <site site="SUPSP_SUPSP-P3_l" />
+        </spatial>
+        <spatial name="INFSP_tendon_l" class="upperarm_muscle">
+            <site site="INFSP_INFSP-P1_l" />
+            <geom geom="infsp_new_cylinder_l" sidesite="infsp_new_sidesite_l" />
+            <site site="INFSP_INFSP-P2_l" />
+            <site site="INFSP_INFSP-P3_l" />
+        </spatial>
+        <spatial name="SUBSC_tendon_l" class="upperarm_muscle">
+            <site site="SUBSC_SUBSC-P1_l" />
+            <geom geom="SUBSCAP_ellipsoid_SUBSC_l" sidesite="SUBSCAP_ellipsoid_SUBSC_1_sidesite_l" />
+            <site site="SUBSC_SUBSC-P2_l" />
+            <site site="SUBSC_SUBSC-P3_l" />
+        </spatial>
+        <spatial name="TMIN_tendon_l" class="upperarm_muscle">
+            <site site="TMIN_TMIN-P1_l" />
+            <site site="TMIN_TMIN-P2_l" />
+            <site site="TMIN_TMIN-P3_l" />
+        </spatial>
+        <spatial name="TMAJ_tendon_l" class="upperarm_muscle">
+            <site site="TMAJ_TMAJ-P1_l" />
+            <geom geom="TMAJ_LAThum_cylinder_l" sidesite="TMAJ_LAThum_cylinder_TMAJ_1_sidesite_l" />
+            <site site="TMAJ_TMAJ-P2_l" />
+            <geom geom="LAT_TMAJ2hh_sphere_l" sidesite="LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_l" />
+            <site site="TMAJ_TMAJ-P3_l" />
+            <site site="TMAJ_TMAJ-P4_l" />
+        </spatial>
+        <spatial name="PECM1_tendon_l" class="upperarm_muscle">
+            <site site="PECM1_PECM1-P1_l" />
+            <site site="PECM1_PECM1-P2_l" />
+            <geom geom="PEC1hh_ellipsoid_PECM1_l" sidesite="PEC1hh_ellipsoid_PECM1_2_sidesite_l" />
+            <site site="PECM1_PECM1-P3_l" />
+            <site site="PECM1_PECM1-P4_l" />
+        </spatial>
+        <spatial name="PECM2_tendon_l" class="upperarm_muscle">
+            <site site="PECM2_PECM2-P1_l" />
+            <geom geom="PEC12hum_cylinder_l" sidesite="PEC12hum_cylinder_PECM2_1_sidesite_l" />
+            <site site="PECM2_PECM2-P2_l" />
+            <geom geom="TMAJ_LAT_PEC_CORBhh_sphere_l" />
+            <site site="PECM2_PECM2-P3_l" />
+            <geom geom="thorax_ellipsoid_PECM2_l" sidesite="Thorax_ellipsoid_PECM2_3_sidesite_l" />
+            <site site="PECM2_PECM2-P4_l" />
+        </spatial>
+        <spatial name="PECM3_tendon_l" class="upperarm_muscle">
+            <site site="PECM3_PECM3-P1_l" />
+            <site site="PECM3_PECM3-P2_l" />
+            <geom geom="PEC23hh_sphere_l" />
+            <site site="PECM3_PECM3-P3_l" />
+            <geom geom="thorax_ellipsoid_PECM3_l" sidesite="Thorax_ellipsoid_PECM3_3_sidesite_l" />
+            <site site="PECM3_PECM3-P4_l" />
+        </spatial>
+        <spatial name="LAT1_tendon_l" class="upperarm_muscle">
+            <site site="LAT1_LAT1-P1_l" />
+            <geom geom="TMAJ_LAThum_cylinder_l" sidesite="TMAJ_LAThum_cylinder_LAT1_1_sidesite_l" />
+            <site site="LAT1_LAT1-P2_l" />
+            <geom geom="delt2hum_cylinder_l" sidesite="LAT_TMAJ2hh_sphere_LAT1_2_sidesite_l" />
+            <site site="LAT1_LAT1-P3_l" />
+            <site site="LAT1_LAT1-P4_l" />
+            <site site="LAT1_LAT1-P5_l" />
+            <site site="LAT1_LAT1-P6_l" />
+        </spatial>
+        <spatial name="LAT2_tendon_l" class="upperarm_muscle">
+            <site site="LAT2_LAT2-P1_l" />
+            <geom geom="TMAJ_LAThum_cylinder_l" sidesite="TMAJ_LAThum_cylinder_LAT2_1_sidesite_l" />
+            <site site="LAT2_LAT2-P2_l" />
+            <geom geom="delt2hum_cylinder_l" />
+            <site site="LAT2_LAT2-P3_l" />
+            <site site="LAT2_LAT2-P4_l" />
+            <site site="LAT2_LAT2-P5_l" />
+            <site site="LAT2_LAT2-P6_l" />
+        </spatial>
+        <spatial name="LAT3_tendon_l" class="upperarm_muscle">
+            <site site="LAT3_LAT3-P1_l" />
+            <geom geom="TMAJ_LAThum_cylinder_l" sidesite="TMAJ_LAThum_cylinder_LAT3_1_sidesite_l" />
+            <site site="LAT3_LAT3-P2_l" />
+            <geom geom="delt2hum_cylinder_l" sidesite="LAT_TMAJ2hh_sphere_LAT3_2_sidesite_l" />
+            <site site="LAT3_LAT3-P3_l" />
+            <site site="LAT3_LAT3-P4_l" />
+            <site site="LAT3_LAT3-P5_l" />
+            <site site="LAT3_LAT3-P6_l" />
+        </spatial>
+        <spatial name="CORB_tendon_l" class="upperarm_muscle">
+            <site site="CORB_CORB-P1_l" />
+            <site site="CORB_CORB-P2_l" />
+            <geom geom="TMAJ_LAT_PEC_CORBhh_sphere_l" />
+            <site site="CORB_CORB-P3_l" />
+        </spatial>
+        <spatial name="TRIlong_tendon_l" class="upperarm_muscle">
+            <site site="TRIlong_TRIlong-P1_l" />
+            <geom geom="TRIlonghh_ellipsoid_TRIlong_l" />
+            <site site="TRIlong_TRIlong-P1b_l" />
+            <site site="TRIlong_TRIlong-P2_l" />
+            <site site="TRIlong_TRIlong-P3_l" />
+            <site site="TRIlong_TRIlong-P4_l" />
+            <geom geom="TRI_cylinder_l" sidesite="TRI_cylinder_TRIlong_4_sidesite_l" />
+            <site site="TRIlong_TRIlong-P5_l" />
+        </spatial>
+        <spatial name="TRIlat_tendon_l" class="upperarm_muscle">
+            <site site="TRIlat_TRIlat-P1_l" />
+            <site site="TRIlat_TRIlat-P2_l" />
+            <site site="TRIlat_TRIlat-P3_l" />
+            <site site="TRIlat_TRIlat-P4_l" />
+            <geom geom="TRI_cylinder_l" sidesite="TRI_cylinder_TRIlat_4_sidesite_l" />
+            <site site="TRIlat_TRIlat-P5_l" />
+        </spatial>
+        <spatial name="TRImed_tendon_l" class="upperarm_muscle">
+            <site site="TRImed_TRImed-P1_l" />
+            <site site="TRImed_TRImed-P2_l" />
+            <site site="TRImed_TRImed-P3_l" />
+            <site site="TRImed_TRImed-P4_l" />
+            <geom geom="TRI_cylinder_l" sidesite="TRI_cylinder_TRImed_4_sidesite_l" />
+            <site site="TRImed_TRImed-P5_l" />
+        </spatial>
+        <spatial name="ANC_tendon_l" class="upperarm_muscle">
+            <site site="ANC_ANC-P1_l" />
+            <geom geom="ANC_ellipsoid_ANC_l" sidesite="ANC_ellipsoid_ANC_1_sidesite_l" />
+            <site site="ANC_ANC-P2_l" />
+        </spatial>
+        <spatial name="SUP_tendon_l" class="upperarm_muscle">
+            <site site="SUP_SUP-P1_l" />
+            <site site="SUP_SUP-P2_l" />
+            <geom geom="SUP_cylinder_l" sidesite="SUP_cylinder_SUP_2_sidesite_l" />
+            <site site="SUP_SUP-P3_l" />
+        </spatial>
+        <spatial name="BIClong_tendon_l" class="upperarm_muscle">
+            <site site="BIClong_BIClong-P1_l" />
+            <site site="BIClong_BIClong-P2_l" />
+            <geom geom="BIClong_ellipsoid_BIClong_l" sidesite="BIClong_ellipsoid_BIClong_2_sidesite_l" />
+            <site site="BIClong_BIClong-P3_l" />
+            <site site="BIClong_BIClong-P4_l" />
+            <site site="BIClong_BIClong-P5_l" />
+            <site site="BIClong_BIClong-P6_l" />
+            <site site="BIClong_BIClong-P7_l" />
+            <site site="BIClong_BIClong-P8_l" />
+            <geom geom="Elbow_BIC_BRD_ellipsoid_BIClong_l" sidesite="Elbow_BIC_BRD_ellipsoid_BIClong_7_sidesite_l" />
+            <site site="BIClong_BIClong-P10_l" />
+            <site site="BIClong_BIClong-P11_l" />
+        </spatial>
+        <spatial name="BICshort_tendon_l" class="upperarm_muscle">
+            <site site="BICshort_BICshort-P1_l" />
+            <site site="BICshort_BICshort-P2_l" />
+            <site site="BICshort_BICshort-P3_l" />
+            <site site="BICshort_BICshort-P4_l" />
+            <site site="BICshort_BICshort-P5_l" />
+            <geom geom="Elbow_BIC_BRD_ellipsoid_BICshort_l" sidesite="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite_l" />
+            <site site="BICshort_BICshort-P6_l" />
+            <site site="BICshort_BICshort-P7_l" />
+        </spatial>
+        <spatial name="BRA_tendon_l" class="upperarm_muscle">
+            <site site="BRA_BRA-P1_l" />
+            <geom geom="TRI_cylinder_l" sidesite="TRI_site_BRA_side_l" />
+            <site site="BRA_BRA-P4_l" />
+        </spatial>
+        <spatial name="BRD_tendon_l" class="upperarm_muscle">
+            <site site="BRD_BRD-P1_l" />
+            <geom geom="ElbowBICBRD_ellipsoid_wrap_l" sidesite="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite_l" />
+            <site site="BRD_BRD-P2_l" />
+            <site site="BRD_BRD-P3_l" />
+        </spatial>
+        <spatial name="ECRL_tendon_l" class="forearm_muscle">
+            <site site="ECRL-P1_l" />
+            <geom geom="Elbow_PT_ECRL_wrap_l" sidesite="Elbow_PT_ECRL_site_ECRL_side_l" />
+            <site site="ECRL-P2_l" />
+            <site site="ECRL-P3_l" />
+            <geom geom="ECRL_torus_wrap_l" sidesite="ECRL_torus_site_ECRL_side_l" />
+            <site site="ECRL-P4_l" />
+        </spatial>
+        <spatial name="ECRB_tendon_l" class="forearm_muscle">
+            <site site="ECRB-P1_l" />
+            <site site="ECRB-P2_l" />
+            <site site="ECRB-P3_l" />
+            <geom geom="ECRB_torus_wrap_l" sidesite="ECRB_torus_site_ECRB_side_l" />
+            <site site="ECRB-P4_l" />
+        </spatial>
+        <spatial name="ECU_tendon_l" class="forearm_muscle">
+            <site site="ECU-P1_l" />
+            <site site="ECU-P2_l" />
+            <site site="ECU-P3_l" />
+            <site site="ECU-P4_l" />
+            <site site="ECU-P5_l" />
+            <geom geom="ECU_torus_wrap_l" sidesite="ECU_torus_site_ECU_side_l" />
+            <site site="ECU-P6_l" />
+        </spatial>
+        <spatial name="FCR_tendon_l" class="forearm_muscle">
+            <site site="FCR-P1_l" />
+            <geom geom="Elbow_PT_FCU_wrap_l" sidesite="Elbow_PT_FCU_site_FCU_side_l" />
+            <site site="FCR-P2_l" />
+            <geom geom="FCR_torus_wrap_l" sidesite="FCR_torus_site_FCR_side_l" />
+            <site site="FCR-P3_l" />
+        </spatial>
+        <spatial name="FCU_tendon_l" class="forearm_muscle">
+            <site site="FCU-P1_l" />
+            <geom geom="Elbow_PT_FCU_wrap_l" sidesite="Elbow_PT_FCU_site_FCU_side_l" />
+            <site site="FCU-P2_l" />
+            <site site="FCU-P3_l" />
+            <site site="FCU-P4_l" />
+            <site site="FCU-P5_l" />
+        </spatial>
+        <spatial name="PL_tendon_l" class="forearm_muscle">
+            <site site="PL-P1_l" />
+            <geom geom="Elbow_PT_FCU_wrap_l" sidesite="Elbow_PT_FCU_site_FCU_side_l" />
+            <site site="PL-P2_l" />
+            <site site="PL-P3_l" />
+            <site site="PL-P4_l" />
+        </spatial>
+        <spatial name="PT_tendon_l" class="forearm_muscle">
+            <site site="PT-P1_l" />
+            <geom geom="Elbow_PT_FCU_wrap_l" sidesite="Elbow_PT_FCU_site_FCU_side_l" />
+            <site site="PT-P2_l" />
+            <site site="PT-P3_l" />
+            <site site="PT-P4_l" />
+            <site site="PT-P5_l" />
+        </spatial>
+        <spatial name="PQ_tendon_l" class="forearm_muscle">
+            <site site="PQ-P1_l" />
+            <geom geom="PQ2_wrap_l" sidesite="PQ2_site_PQ_side_l" />
+            <site site="PQ-P2_l" />
+        </spatial>
+        <spatial name="FDS5_tendon_l" class="forearm_muscle">
+            <site site="FDS5-P1_l" />
+            <geom geom="Elbow_PT_FCU_wrap_l" sidesite="Elbow_PT_FCU_site_FCU_side_l" />
+            <site site="FDS5-P2_l" />
+            <geom geom="FDS_ellipsoid_wrap_l" sidesite="FDS_ellipsoid_site_FDS5_side_l" />
+            <site site="FDS5-P3_l" />
+            <site site="FDS5-P4_l" />
+            <site site="FDS5-P5_l" />
+            <site site="FDS5-P6_l" />
+            <site site="FDS5-P7_l" />
+            <site site="FDS5-P8_l" />
+        </spatial>
+        <spatial name="FDS4_tendon_l" class="forearm_muscle">
+            <site site="FDS4-P1_l" />
+            <geom geom="Elbow_PT_FCU_wrap_l" sidesite="Elbow_PT_FCU_site_FCU_side_l" />
+            <site site="FDS4-P2_l" />
+            <geom geom="FDS_ellipsoid_wrap_l" sidesite="FDS_ellipsoid_site_FDS4_side_l" />
+            <site site="FDS4-P3_l" />
+            <site site="FDS4-P4_l" />
+            <site site="FDS4-P5_l" />
+            <site site="FDS4-P6_l" />
+            <site site="FDS4-P7_l" />
+            <site site="FDS4-P8_l" />
+        </spatial>
+        <spatial name="FDS3_tendon_l" class="forearm_muscle">
+            <site site="FDS3-P1_l" />
+            <site site="FDS3-P2_l" />
+            <geom geom="FDS_ellipsoid_wrap_l" sidesite="FDS_ellipsoid_site_FDS3_side_l" />
+            <site site="FDS3-P3_l" />
+            <site site="FDS3-P4_l" />
+            <site site="FDS3-P6_l" />
+            <site site="FDS3-P7_l" />
+            <site site="FDS3-P8_l" />
+        </spatial>
+        <spatial name="FDS2_tendon_l" class="forearm_muscle">
+            <site site="FDS2-P1_l" />
+            <site site="FDS2-P2_l" />
+            <geom geom="FDS_ellipsoid_wrap_l" sidesite="FDS_ellipsoid_site_FDS2_side_l" />
+            <site site="FDS2-P3_l" />
+            <site site="FDS2-P4_l" />
+            <site site="FDS2-P5_l" />
+            <site site="FDS2-P6_l" />
+            <site site="FDS2-P7_l" />
+            <site site="FDS2-P8_l" />
+        </spatial>
+        <spatial name="FDP5_tendon_l" class="forearm_muscle">
+            <site site="FDP5-P1_l" />
+            <site site="FDP5-P2_l" />
+            <geom geom="FDP_ellipsoid_wrap_l" sidesite="FDP_ellipsoid_site_FDP5_side_l" />
+            <site site="FDP5-P3_l" />
+            <site site="FDP5-P4_l" />
+            <site site="FDP5-P5_l" />
+            <site site="FDP5-P6_l" />
+            <site site="FDP5-P7_l" />
+            <site site="FDP5-P8_l" />
+            <site site="FDP5-P9_l" />
+            <site site="FDP5-P10_l" />
+        </spatial>
+        <spatial name="FDP4_tendon_l" class="forearm_muscle">
+            <site site="FDP4-P1_l" />
+            <site site="FDP4-P2_l" />
+            <geom geom="FDP_ellipsoid_wrap_l" sidesite="FDP_ellipsoid_site_FDP4_side_l" />
+            <site site="FDP4-P3_l" />
+            <site site="FDP4-P4_l" />
+            <geom geom="4thmcp_ellipsoid_wrap_l" sidesite="4thmcp_ellipsoid_site_FDP4_side_l" />
+            <site site="FDP4-P5_l" />
+            <site site="FDP4-P6_l" />
+            <site site="FDP4-P8_l" />
+            <site site="FDP4-P9_l" />
+            <site site="FDP4-P10_l" />
+        </spatial>
+        <spatial name="FDP3_tendon_l" class="forearm_muscle">
+            <site site="FDP3-P1_l" />
+            <site site="FDP3-P2_l" />
+            <geom geom="FDP_ellipsoid_wrap_l" sidesite="FDP_ellipsoid_site_FDP3_side_l" />
+            <site site="FDP3-P3_l" />
+            <site site="FDP3-P4_l" />
+            <site site="FDP3-P5_l" />
+            <site site="FDP3-P6_l" />
+            <site site="FDP3-P8_l" />
+            <site site="FDP3-P9_l" />
+            <site site="FDP3-P10_l" />
+        </spatial>
+        <spatial name="FDP2_tendon_l" class="forearm_muscle">
+            <site site="FDP2-P1_l" />
+            <site site="FDP2-P2_l" />
+            <geom geom="FDP_ellipsoid_wrap_l" sidesite="FDP_ellipsoid_site_FDP2_side_l" />
+            <site site="FDP2-P3_l" />
+            <site site="FDP2-P4_l" />
+            <site site="FDP2-P5_l" />
+            <geom geom="2ndmcp_ellipsoid_wrap_l" sidesite="2ndmcp_ellipsoid_site_FDP2_side_l" />
+            <site site="FDP2-P6_l" />
+            <site site="FDP2-P7_l" />
+            <site site="FDP2-P8_l" />
+            <site site="FDP2-P9_l" />
+            <site site="FDP2-P10_l" />
+        </spatial>
+        <spatial name="EDC5_tendon_l" class="forearm_muscle">
+            <site site="EDC5-P1_l" />
+            <site site="EDC5-P2_l" />
+            <site site="EDC5-P3_l" />
+            <geom geom="EDCL_torus_wrap_l" sidesite="EDCL_torus_site_EDC5_side_l" />
+            <site site="EDC5-P4_l" />
+            <geom geom="5thmcp_ellipsoid_wrap_l" sidesite="5thmcp_ellipsoid_site_EDC5_side_l" />
+            <site site="EDC5-P5_l" />
+            <site site="EDC5-P6_l" />
+            <geom geom="Fifthpm_wrap_l" sidesite="Fifthpm_site_EDC5_side_l" />
+            <site site="EDC5-P7_l" />
+            <site site="EDC5-P8_l" />
+            <geom geom="Fifthmd_wrap_l" sidesite="Fifthmd_site_EDC5_side_l" />
+            <site site="EDC5-P9_l" />
+        </spatial>
+        <spatial name="EDC4_tendon_l" class="forearm_muscle">
+            <site site="EDC4-P1_l" />
+            <site site="EDC4-P2_l" />
+            <site site="EDC4-P3_l" />
+            <geom geom="EDCR_torus_wrap_l" sidesite="EDCR_torus_site_EDC4_side_l" />
+            <site site="EDC4-P4_l" />
+            <geom geom="4thmcp_ellipsoid_wrap_l" sidesite="4thmcp_ellipsoid_site_EDC4_side_l" />
+            <site site="EDC4-P5_l" />
+            <site site="EDC4-P6_l" />
+            <geom geom="Fourthpm_wrap_l" sidesite="Fourthpm_site_EDC4_side_l" />
+            <site site="EDC4-P7_l" />
+            <site site="EDC4-P8_l" />
+            <geom geom="Fourthmd_wrap_l" sidesite="Fourthmd_site_EDC4_side_l" />
+            <site site="EDC4-P9_l" />
+        </spatial>
+        <spatial name="EDC3_tendon_l" class="forearm_muscle">
+            <site site="EDC3-P1_l" />
+            <site site="EDC3-P2_l" />
+            <site site="EDC3-P3_l" />
+            <geom geom="EDCM_torus_wrap_l" sidesite="EDCM_torus_site_EDC3_side_l" />
+            <site site="EDC3-P4_l" />
+            <geom geom="3rdmcp_ellipsoid_wrap_l" sidesite="3rdmcp_ellipsoid_site_EDC3_side_l" />
+            <site site="EDC3-P5_l" />
+            <site site="EDC3-P6_l" />
+            <geom geom="Thirdpm_wrap_l" sidesite="Thirdpm_site_EDC3_side_l" />
+            <site site="EDC3-P7_l" />
+            <site site="EDC3-P8_l" />
+            <geom geom="Thirdmd_wrap_l" sidesite="Thirdmd_site_EDC3_side_l" />
+            <site site="EDC3-P9_l" />
+        </spatial>
+        <spatial name="EDC2_tendon_l" class="forearm_muscle">
+            <site site="EDC2-P1_l" />
+            <site site="EDC2-P2_l" />
+            <site site="EDC2-P3_l" />
+            <geom geom="EDCI_torus_wrap_l" sidesite="EDCI_torus_site_EDC2_side_l" />
+            <site site="EDC2-P4_l" />
+            <geom geom="2ndmcp_ellipsoid_wrap_l" sidesite="2ndmcp_ellipsoid_site_EDC2_side_l" />
+            <site site="EDC2-P5_l" />
+            <site site="EDC2-P6_l" />
+            <geom geom="Secondpm_wrap_l" sidesite="Secondpm_site_EDC2_side_l" />
+            <site site="EDC2-P7_l" />
+            <site site="EDC2-P8_l" />
+            <geom geom="Secondmd_wrap_l" sidesite="Secondmd_site_EDC2_side_l" />
+            <site site="EDC2-P9_l" />
+        </spatial>
+        <spatial name="EDM_tendon_l" class="forearm_muscle">
+            <site site="EDM-P1_l" />
+            <site site="EDM-P2_l" />
+            <site site="EDM-P3_l" />
+            <site site="EDM-P4_l" />
+            <geom geom="EDM_ellipsoid_wrap_l" sidesite="EDM_ellipsoid_site_EDM_side_l" />
+            <site site="EDM-P5_l" />
+            <site site="EDM-P6_l" />
+            <geom geom="5thmcp_ellipsoid_wrap_l" sidesite="5thmcp_ellipsoid_site_EDC5_side_l" />
+            <site site="EDM-P7_l" />
+            <geom geom="Fifthpm_wrap_l" />
+            <site site="EDM-P8_l" />
+            <geom geom="Fifthmd_wrap_l" sidesite="Fifthmd_site_EDC5_side_l" />
+            <site site="EDM-P9_l" />
+        </spatial>
+        <spatial name="EIP_tendon_l" class="forearm_muscle">
+            <site site="EIP-P1_l" />
+            <site site="EIP-P2_l" />
+            <site site="EIP-P3_l" />
+            <geom geom="ExtensorEllipse_ellipsoid_wrap_l" sidesite="ExtensorEllipse_ellipsoid_site_EIP_side_l" />
+            <site site="EIP-P4_l" />
+            <site site="EIP-P5_l" />
+            <geom geom="2ndmcp_ellipsoid_wrap_l" sidesite="2ndmcp_ellipsoid_site_EIP_side_l" />
+            <site site="EIP-P6_l" />
+            <site site="EIP-P7_l" />
+            <geom geom="Secondpm_wrap_l" sidesite="Secondpm_site_EIP_side_l" />
+            <site site="EIP-P8_l" />
+            <site site="EIP-P9_l" />
+            <geom geom="Secondmd_wrap_l" sidesite="Secondmd_site_EIP_side_l" />
+            <site site="EIP-P10_l" />
+            <site site="EIP-P11_l" />
+        </spatial>
+        <spatial name="EPL_tendon_l" springlength="0.2305" class="forearm_muscle">
+            <site site="EPL-P1_l" />
+            <site site="EPL-P2_l" />
+            <site site="EPL-P3_l" />
+            <site site="EPL-P4_l" />
+            <site site="EPL-P5_l" />
+            <site site="EPL-P6_l" />
+            <site site="EPL-P7_l" />
+            <site site="EPL-P8_l" />
+            <site site="EPL-P9_l" />
+            <geom geom="MPthumb_wrap_l" />
+            <site site="EPL-P10_l" />
+            <site site="EPL-P11_l" />
+            <geom geom="IPthumb_wrap_l" sidesite="IPthumb_site_EPL_side_l" />
+            <site site="EPL-P12_l" />
+        </spatial>
+        <spatial name="EPB_tendon_l" class="forearm_muscle">
+            <site site="EPB-P1_l" />
+            <site site="EPB-P2_l" />
+            <site site="EPB-P3_l" />
+            <site site="EPB-P4_l" />
+            <site site="EPB-P5_l" />
+            <site site="EPB-P6_l" />
+            <site site="EPB-P7_l" />
+            <geom geom="MPthumb_wrap_l" sidesite="MPthumb_site_EPB_side_l" />
+            <site site="EPB-P8_l" />
+        </spatial>
+        <spatial name="FPL_tendon_l" class="forearm_muscle">
+            <site site="FPL-P1_l" />
+            <site site="FPL-P2_l" />
+            <site site="FPL-P3_l" />
+            <site site="FPL-P4_l" />
+            <site site="FPL-P5_l" />
+            <geom geom="FPL_ellipsoid_wrap_l" />
+            <site site="FPL-P7_l" />
+            <site site="FPL-P8_l" />
+            <geom geom="MPthumb_wrap_l" sidesite="MPthumb_site_FPL_side_l" />
+            <site site="FPL-P9_l" />
+            <site site="FPL-P10_l" />
+            <geom geom="IPthumb_wrap_l" sidesite="IPthumb_site_FPL_side_l" />
+            <site site="FPL-P11_l" />
+        </spatial>
+        <spatial name="APL_tendon_l" class="forearm_muscle">
+            <site site="APL-P1_l" />
+            <site site="APL-P2_l" />
+            <site site="APL-P3_l" />
+            <site site="APL-P4_l" />
+            <site site="APL-P5_l" />
+            <site site="APL-P6_l" />
+            <site site="APL-P7_l" />
+            <site site="APL-P8_l" />
+        </spatial>
+        <spatial name="OP_tendon_l" class="forearm_muscle">
+            <site site="OP-P1_l" />
+            <site site="OP-P2_l" />
+        </spatial>
+        <spatial name="RI2_tendon_l" class="forearm_muscle">
+            <site site="RI2-P1_l" />
+            <site site="RI2-P2_l" />
+            <geom geom="2ndmcp_ellipsoid_wrap_l" sidesite="2ndmcp_ellipsoid_site_RI2_side_l" />
+            <site site="RI2-P3_l" />
+        </spatial>
+        <spatial name="LU_RB2_tendon_l" class="forearm_muscle">
+            <site site="LU_RB2-P1_l" />
+            <site site="LU_RB2-P2_l" />
+            <site site="LU_RB2-P3_l" />
+            <site site="LU_RB2-P4_l" />
+            <geom geom="Secondpm_wrap_l" sidesite="Secondpm_site_LU_RB2_side_l" />
+            <site site="LU_RB2-P5_l" />
+            <site site="LU_RB2-P6_l" />
+        </spatial>
+        <spatial name="UI_UB2_tendon_l" class="forearm_muscle">
+            <site site="UI_UB2-P1_l" />
+            <site site="UI_UB2-P2_l" />
+            <site site="UI_UB2-P3_l" />
+            <site site="UI_UB2-P4_l" />
+            <geom geom="Secondpm_wrap_l" sidesite="Secondpm_site_UI_UB2_side_l" />
+            <site site="UI_UB2-P5_l" />
+            <site site="UI_UB2-P6_l" />
+        </spatial>
+        <spatial name="RI3_tendon_l" class="forearm_muscle">
+            <site site="RI3-P1_l" />
+            <site site="RI3-P2_l" />
+            <site site="RI3-P3_l" />
+        </spatial>
+        <spatial name="LU_RB3_tendon_l" class="forearm_muscle">
+            <site site="LU_RB3-P1_l" />
+            <site site="LU_RB3-P2_l" />
+            <site site="LU_RB3-P3_l" />
+            <site site="LU_RB3-P4_l" />
+            <geom geom="Thirdpm_wrap_l" sidesite="Thirdpm_site_LU_RB3_side_l" />
+            <site site="LU_RB3-P5_l" />
+        </spatial>
+        <spatial name="UI_UB3_tendon_l" class="forearm_muscle">
+            <site site="UI_UB3-P1_l" />
+            <site site="UI_UB3-P2_l" />
+            <site site="UI_UB3-P3_l" />
+            <site site="UI_UB3-P4_l" />
+            <geom geom="Thirdpm_wrap_l" sidesite="Thirdpm_site_UI_UB3_side_l" />
+            <site site="UI_UB3-P5_l" />
+        </spatial>
+        <spatial name="RI4_tendon_l" class="forearm_muscle">
+            <site site="RI4-P1_l" />
+            <site site="RI4-P2_l" />
+            <site site="RI4-P3_l" />
+        </spatial>
+        <spatial name="LU_RB4_tendon_l" class="forearm_muscle">
+            <site site="LU_RB4-P1_l" />
+            <site site="LU_RB4-P2_l" />
+            <site site="LU_RB4-P3_l" />
+            <site site="LU_RB4-P4_l" />
+            <site site="LU_RB4-P5_l" />
+        </spatial>
+        <spatial name="UI_UB4_tendon_l" class="forearm_muscle">
+            <site site="UI_UB4-P1_l" />
+            <site site="UI_UB4-P2_l" />
+            <geom geom="4thmcp_ellipsoid_wrap_l" sidesite="4thmcp_ellipsoid_site_UI_UB4_side_l" />
+            <site site="UI_UB4-P3_l" />
+            <site site="UI_UB4-P4_l" />
+            <geom geom="Fourthpm_wrap_l" sidesite="Fourthpm_site_UI_UB4_side_l" />
+            <site site="UI_UB4-P5_l" />
+        </spatial>
+        <spatial name="RI5_tendon_l" class="forearm_muscle">
+            <site site="RI5-P1_l" />
+            <site site="RI5-P2_l" />
+            <site site="RI5-P3_l" />
+        </spatial>
+        <spatial name="LU_RB5_tendon_l" class="forearm_muscle">
+            <site site="LU_RB5-P1_l" />
+            <site site="LU_RB5-P2_l" />
+            <geom geom="5thmcp_ellipsoid_wrap_l" sidesite="5thmcp_ellipsoid_site_LU_RB5_side_l" />
+            <site site="LU_RB5-P3_l" />
+            <site site="LU_RB5-P4_l" />
+            <geom geom="Fifthpm_wrap_l" sidesite="Fifthpm_site_LU_RB5_side_l" />
+            <site site="LU_RB5-P5_l" />
+        </spatial>
+        <spatial name="UI_UB5_tendon_l" class="forearm_muscle">
+            <site site="UI_UB5-P1_l" />
+            <site site="UI_UB5-P2_l" />
+            <geom geom="5thmcp_ellipsoid_wrap_l" sidesite="5thmcp_ellipsoid_site_UI_UB5_side_l" />
+            <site site="UI_UB5-P3_l" />
+            <site site="UI_UB5-P4_l" />
+            <geom geom="Fifthpm_wrap_l" sidesite="Fifthpm_site_UI_UB5_side_l" />
+            <site site="UI_UB5-P5_l" />
+        </spatial>
+    </tendon>
+
+    <equality>
+        <joint joint1="sternoclavicular_r2_l" joint2="shoulder_elv_l" name="sternoclavicular_r2_con_l" polycoef="0 -0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="sternoclavicular_r3_l" joint2="shoulder_elv_l" name="sternoclavicular_r3_con_l" polycoef="0 0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrotscap_r2_l" joint2="shoulder_elv_l" name="unrotscap_r2_con_l" polycoef="0 0.242 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrotscap_r3_l" joint2="shoulder_elv_l" name="unrotscap_r3_con_l" polycoef="0 -0.1025 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r1_l" joint2="shoulder_elv_l" name="acromioclavicular_r1_con_l" polycoef="0 0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r2_l" joint2="shoulder_elv_l" name="acromioclavicular_r2_con_l" polycoef="0 -0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="acromioclavicular_r3_l" joint2="shoulder_elv_l" name="acromioclavicular_r3_con_l" polycoef="0 0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r1_l" joint2="shoulder_elv_l" name="unrothum_r1_con_l" polycoef="0 -0.178 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r2_l" joint2="shoulder_elv_l" name="unrothum_r2_con_l" polycoef="0 0.049 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="unrothum_r3_l" joint2="shoulder_elv_l" name="unrothum_r3_con_l" polycoef="0 -0.396 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+        <joint joint1="shoulder1_r2_l" joint2="elv_angle_l" name="shoulder1_r2_con_l" polycoef="0 -1 0 0 0" solimp="0.9999 0.9999 0.001 0.5 2"/>
+    </equality>
+
+    <actuator>
+        <general name="DELT1_l" tendon="DELT1_tendon_l" biasprm="0.33707 1.53316 1051.85 1.0 0.0 1.8 10.0 0.518315 1.4 0.0" class="upperarm_muscle" gainprm="0.33707 1.53316 1051.85 1.0 0.0 1.8 10.0 0.518315 1.4 0.0" lengthrange="0.123363 0.240922" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="DELT2_l" tendon="DELT2_tendon_l" biasprm="0.110248 1.27804 909.342 1.0 0.0 1.8 10.0 1.73447 1.4 0.0" class="upperarm_muscle" gainprm="0.110248 1.27804 909.342 1.0 0.0 1.8 10.0 1.73447 1.4 0.0" lengthrange="0.14984 0.207283" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="DELT3_l" tendon="DELT3_tendon_l" biasprm="0.236598 1.33978 163.23 1.0 0.0 1.8 10.0 0.873711 1.4 0.0" class="upperarm_muscle" gainprm="0.236598 1.33978 163.23 1.0 0.0 1.8 10.0 0.873711 1.4 0.0" lengthrange="0.0701623 0.192737" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="SUPSP_l" tendon="SUPSP_tendon_l" biasprm="0.305222 1.50664 496.738 1 0 1.8 10 0.288421 1.4 0" class="upperarm_muscle" gainprm="0.305222 1.50664 496.738 1 0 1.8 10 0.288421 1.4 0" lengthrange="0.0802709 0.142442"/>
+        <general name="INFSP_l" tendon="INFSP_tendon_l" biasprm="0.622412 1.44899 2150.71 1.0 0.0 1.8 10.0 0.429583 1.4 0.0" class="upperarm_muscle" gainprm="0.622412 1.44899 2150.71 1.0 0.0 1.8 10.0 0.429583 1.4 0.0" lengthrange="0.0683206 0.15287" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="SUBSC_l" tendon="SUBSC_tendon_l" biasprm="0.697966 1.36281 1174.3 1.0 0.0 1.8 10.0 0.653193 1.4 0.0" class="upperarm_muscle" gainprm="0.697966 1.36281 1174.3 1.0 0.0 1.8 10.0 0.653193 1.4 0.0" lengthrange="0.0871706 0.138301" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="TMIN_l" tendon="TMIN_tendon_l" biasprm="0.73477 1.3801 539.0 1.0 0.0 1.8 10.0 1.25396 1.4 0.0" class="upperarm_muscle" gainprm="0.73477 1.3801 539.0 1.0 0.0 1.8 10.0 1.25396 1.4 0.0" lengthrange="0.107634 0.196342" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="TMAJ_l" tendon="TMAJ_tendon_l" biasprm="0.577355 1.30849 288.0 1.0 0.0 1.8 10.0 0.819968 1.4 0.0" class="upperarm_muscle" gainprm="0.577355 1.30849 288.0 1.0 0.0 1.8 10.0 0.819968 1.4 0.0" lengthrange="0.146328 0.243646" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="PECM1_l" tendon="PECM1_tendon_l" biasprm="0.960131 1.25668 335.746 1.0 0.0 1.8 10.0 0.948201 1.4 0.0" class="upperarm_muscle" gainprm="0.960131 1.25668 335.746 1.0 0.0 1.8 10.0 0.948201 1.4 0.0" lengthrange="0.11622 0.172236" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="PECM2_l" tendon="PECM2_tendon_l" biasprm="0.491843 1.46175 570.669 1.0 0.0 1.8 10.0 0.321921 1.4 0.0" class="upperarm_muscle" gainprm="0.491843 1.46175 570.669 1.0 0.0 1.8 10.0 0.321921 1.4 0.0" lengthrange="0.143031 0.26756" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="PECM3_l" tendon="PECM3_tendon_l" biasprm="0.314624 1.43381 418.121 1.0 0.0 1.8 10.0 0.649603 1.4 0.0" class="upperarm_muscle" gainprm="0.314624 1.43381 418.121 1.0 0.0 1.8 10.0 0.649603 1.4 0.0" lengthrange="0.167005 0.297832" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="LAT1_l" tendon="LAT1_tendon_l" biasprm="0.522816 1.50837 335.3 1.0 0.0 1.8 10.0 0.163018 1.4 0.0" class="upperarm_muscle" gainprm="0.522816 1.50837 335.3 1.0 0.0 1.8 10.0 0.163018 1.4 0.0" lengthrange="0.377294 0.45406" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="LAT2_l" tendon="LAT2_tendon_l" biasprm="0.964571 1.31615 535.42 1.0 0.0 1.8 10.0 0.546803 1.4 0.0" class="upperarm_muscle" gainprm="0.964571 1.31615 535.42 1.0 0.0 1.8 10.0 0.546803 1.4 0.0" lengthrange="0.320374 0.459133" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="LAT3_l" tendon="LAT3_tendon_l" biasprm="0.613008 1.41778 179.495 1.0 0.0 1.8 10.0 0.281095 1.4 0.0" class="upperarm_muscle" gainprm="0.613008 1.41778 179.495 1.0 0.0 1.8 10.0 0.281095 1.4 0.0" lengthrange="0.369693 0.493048" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="CORB_l" tendon="CORB_tendon_l" biasprm="0.583243 1.36819 172.994 1.0 0.0 1.8 10.0 0.261906 1.4 0.0" class="upperarm_muscle" gainprm="0.583243 1.36819 172.994 1.0 0.0 1.8 10.0 0.261906 1.4 0.0" lengthrange="0.136913 0.381615" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="TRIlong_l" tendon="TRIlong_tendon_l" biasprm="0.692589 1.5232 670.069 1.0 0.0 1.8 10.0 1.87109 1.4 0.0" class="upperarm_muscle" gainprm="0.692589 1.5232 670.069 1.0 0.0 1.8 10.0 1.87109 1.4 0.0" lengthrange="0.244705 0.39348" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="TRIlat_l" tendon="TRIlat_tendon_l" biasprm="0.53832 1.29451 682.224 1.0 0.0 1.8 10.0 1.16899 1.4 0.0" class="upperarm_muscle" gainprm="0.53832 1.29451 682.224 1.0 0.0 1.8 10.0 1.16899 1.4 0.0" lengthrange="0.16661 0.214704" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="TRImed_l" tendon="TRImed_tendon_l" biasprm="0.445238 1.38156 660.895 1.0 0.0 1.8 10.0 1.18143 1.4 0.0" class="upperarm_muscle" gainprm="0.445238 1.38156 660.895 1.0 0.0 1.8 10.0 1.18143 1.4 0.0" lengthrange="0.154238 0.202332" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="ANC_l" tendon="ANC_tendon_l" biasprm="0.1 1.10666 262.904 1.0 0.0 1.8 10.0 0.450635 1.4 0.0" class="upperarm_muscle" gainprm="0.1 1.10666 262.904 1.0 0.0 1.8 10.0 0.450635 1.4 0.0" lengthrange="0.0215049 0.047622" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="SUP_l" tendon="SUP_tendon_l" biasprm="0.759864 1.45381 339.132 1.0 0.0 1.8 10.0 0.436943 1.4 0.0" class="upperarm_muscle" gainprm="0.759864 1.45381 339.132 1.0 0.0 1.8 10.0 0.436943 1.4 0.0" lengthrange="0.0500531 0.0752479" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="BIClong_l" tendon="BIClong_tendon_l" biasprm="0.297699 1.6 421.718 1.0 0.0 1.8 10.0 1.1404 1.4 0.0" class="upperarm_muscle" gainprm="0.297699 1.6 421.718 1.0 0.0 1.8 10.0 1.1404 1.4 0.0" lengthrange="0.314572 0.480222" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="BICshort_l" tendon="BICshort_tendon_l" biasprm="0.486445 1.50858 270.82 1.0 0.0 1.8 10.0 1.80875 1.4 0.0" class="upperarm_muscle" gainprm="0.486445 1.50858 270.82 1.0 0.0 1.8 10.0 1.80875 1.4 0.0" lengthrange="0.268189 0.449579" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="BRA_l" tendon="BRA_tendon_l" biasprm="0.526201 1.21956 1168.76 1.0 0.0 1.8 10.0 0.920725 1.4 0.0" class="upperarm_muscle" gainprm="0.526201 1.21956 1168.76 1.0 0.0 1.8 10.0 0.920725 1.4 0.0" lengthrange="0.105976 0.14593" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <general name="BRD_l" tendon="BRD_tendon_l" biasprm="0.130305 1.37938 272.486 1.0 0.0 1.8 10.0 0.93764 1.4 0.0" class="upperarm_muscle" gainprm="0.130305 1.37938 272.486 1.0 0.0 1.8 10.0 0.93764 1.4 0.0" lengthrange="0.200364 0.32774" dynprm="0.01 0.04 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0" />
+        <muscle name="ECRL_l" force="337.3" class="forearm_muscle" tendon="ECRL_tendon_l" lengthrange="0.313191 0.341072" />
+        <muscle name="ECRB_l" force="252.2" class="forearm_muscle" tendon="ECRB_tendon_l" lengthrange="0.26997 0.301495" />
+        <muscle name="ECU_l" force="192.9" class="forearm_muscle" tendon="ECU_tendon_l" lengthrange="0.279041 0.306754" />
+        <muscle name="FCR_l" force="407.9" class="forearm_muscle" tendon="FCR_tendon_l" lengthrange="0.295866 0.331494" />
+        <muscle name="FCU_l" force="479.8" class="forearm_muscle" tendon="FCU_tendon_l" lengthrange="0.293357 0.332707" />
+        <muscle name="PL_l" force="101.0" class="forearm_muscle" tendon="PL_tendon_l" lengthrange="0.311593 0.362396" />
+        <muscle name="PT_l" force="557.2" class="forearm_muscle" tendon="PT_tendon_l" lengthrange="0.147243 0.170204" />
+        <muscle name="PQ_l" force="284.7" class="forearm_muscle" tendon="PQ_tendon_l" lengthrange="0.0220792 0.0371669" />
+        <muscle name="FDS5_l" force="75.3" class="forearm_muscle" tendon="FDS5_tendon_l" lengthrange="0.354916 0.423992" />
+        <muscle name="FDS4_l" force="171.2" class="forearm_muscle" tendon="FDS4_tendon_l" lengthrange="0.422088 0.480218" />
+        <muscle name="FDS3_l" force="258.8" class="forearm_muscle" tendon="FDS3_tendon_l" lengthrange="0.328489 0.390589" />
+        <muscle name="FDS2_l" force="162.5" class="forearm_muscle" tendon="FDS2_tendon_l" lengthrange="0.330149 0.392331" />
+        <muscle name="FDP5_l" force="236.8" class="forearm_muscle" tendon="FDP5_tendon_l" lengthrange="0.387224 0.450745" />
+        <muscle name="FDP4_l" force="172.9" class="forearm_muscle" tendon="FDP4_tendon_l" lengthrange="0.348164 0.417976" />
+        <muscle name="FDP3_l" force="212.4" class="forearm_muscle" tendon="FDP3_tendon_l" lengthrange="0.336078 0.398672" />
+        <muscle name="FDP2_l" force="197.3" class="forearm_muscle" tendon="FDP2_tendon_l" lengthrange="0.336953 0.40261" />
+        <muscle name="EDC5_l" force="139.4" class="forearm_muscle" tendon="EDC5_tendon_l" lengthrange="0.381709 0.426592" />
+        <muscle name="EDC4_l" force="109.2" class="forearm_muscle" tendon="EDC4_tendon_l" lengthrange="0.391706 0.456154" />
+        <muscle name="EDC3_l" force="94.4" class="forearm_muscle" tendon="EDC3_tendon_l" lengthrange="0.399791 0.456735" />
+        <muscle name="EDC2_l" force="48.8" class="forearm_muscle" tendon="EDC2_tendon_l" lengthrange="0.395914 0.455475" />
+        <muscle name="EDM_l" force="72.4" class="forearm_muscle" tendon="EDM_tendon_l" lengthrange="0.37707 0.417549" />
+        <muscle name="EIP_l" force="47.3" class="forearm_muscle" tendon="EIP_tendon_l" lengthrange="0.245809 0.291046" />
+        <muscle name="EPL_l" force="88.3" class="forearm_muscle" tendon="EPL_tendon_l" lengthrange="0.253147 0.327478" />
+        <muscle name="EPB_l" force="46" class="forearm_muscle" tendon="EPB_tendon_l" lengthrange="0.146292 0.199276" />
+        <muscle name="FPL_l" force="201" class="forearm_muscle" tendon="FPL_tendon_l" lengthrange="0.22287 0.27967" />
+        <muscle name="APL_l" force="116.7" class="forearm_muscle" tendon="APL_tendon_l" lengthrange="0.204756 0.228384" />
+        <muscle name="OP_l" force="180" class="forearm_muscle" tendon="OP_tendon_l" lengthrange="0.0314264 0.0518708" />
+        <muscle name="RI2_l" force="61.2" class="forearm_muscle" tendon="RI2_tendon_l" lengthrange="0.0314087 0.0423628" />
+        <muscle name="LU_RB2_l" force="61.2" class="forearm_muscle" tendon="LU_RB2_tendon_l" lengthrange="0.0898587 0.0998069" />
+        <muscle name="UI_UB2_l" force="61.2" class="forearm_muscle" tendon="UI_UB2_tendon_l" lengthrange="0.0913261 0.105141" />
+        <muscle name="RI3_l" force="61.2" class="forearm_muscle" tendon="RI3_tendon_l" lengthrange="0.0358365 0.0509725" />
+        <muscle name="LU_RB3_l" force="98" class="forearm_muscle" tendon="LU_RB3_tendon_l" lengthrange="0.0827603 0.0988323" />
+        <muscle name="UI_UB3_l" force="98" class="forearm_muscle" tendon="UI_UB3_tendon_l" lengthrange="0.0853434 0.0997261" />
+        <muscle name="RI4_l" force="97.0" class="forearm_muscle" tendon="RI4_tendon_l" lengthrange="0.0435566 0.058459" />
+        <muscle name="LU_RB4_l" force="76.9" class="forearm_muscle" tendon="LU_RB4_tendon_l" lengthrange="0.0797904 0.0909592" />
+        <muscle name="UI_UB4_l" force="76.9" class="forearm_muscle" tendon="UI_UB4_tendon_l" lengthrange="0.0819919 0.0969029" />
+        <muscle name="RI5_l" force="59.9" class="forearm_muscle" tendon="RI5_tendon_l" lengthrange="0.0425128 0.0462661" />
+        <muscle name="LU_RB5_l" force="47.9" class="forearm_muscle" tendon="LU_RB5_tendon_l" lengthrange="0.0970142 0.100417" />
+        <muscle name="UI_UB5_l" force="47.9" class="forearm_muscle" tendon="UI_UB5_tendon_l" lengthrange="0.0910226 0.0976845" />
+    </actuator>
+
+</mujocoinclude>

@@ -1,4 +1,4 @@
-# <img  style="float: left;" src="https://user-images.githubusercontent.com/23240128/233209820-821715e0-07e6-4dbc-8133-d915a7ea06b7.png" width=40> MyoSim: MyoSuite's musculoskeletal model library
+# <img  style="float: left;" src="https://user-images.githubusercontent.com/23240128/233209820-821715e0-07e6-4dbc-8133-d915a7ea06b7.png" width=60> MyoSim: MyoSuite's musculoskeletal model library
 
  `MyoSim` is the library of MuJoCo Musculoskeletal Models of [MyoSuite](https://github.com/facebookresearch/myoSuite).
 
@@ -13,9 +13,12 @@ The models present in the library are:
 | **MyoElbow**  <br> - 2 Degree of Freedom (DoF) <br> - 6 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="200">|
 | **MyoHand**  <br>  - 23 Degree of Freedom (DoF) <br> - 39 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="200">|
 | **MyoLeg**  <br>  - 20 Degree of Freedom (DoF) <br> - 80 muscles | <img src="https://user-images.githubusercontent.com/12837145/236839645-e34eab3f-0358-4ca8-8ae0-68a5c08585e4.png" width="200">|
-| **MyoArm**  <br>  - 27 Degree of Freedom (DoF) <br> - 63 muscles | <img src="https://github.com/MyoHub/myo_sim/assets/23240128/1f57c639-b7de-4bbb-a3c2-d2c29716e6c8" width="200">|
+| **MyoArm**  <br>  - 38 Degree of Freedom (DoF) <br> - 63 muscles | <img src="https://github.com/MyoHub/myo_sim/assets/23240128/1f57c639-b7de-4bbb-a3c2-d2c29716e6c8" width="200">|
+| **MyoArms**  <br>  - 77 Degree of Freedom (DoF) <br> - 126 muscles | <img src="https://github.com/user-attachments/assets/c505a51a-989e-4528-99c9-1f4a1cd141e7" width="200">|
 | **MyoOSL**  <br>  - 19 Degree of Freedom (DoF) <br> - 54 muscles, 2 torque actuators | <img src="https://github.com/elladyr/myo_sim/assets/5383997/ec9dfc65-94ba-457f-8375-594c0e3a89b5" width="200">|
 | **MyoBack**  <br>  - 18 Degree of Freedom (DoF) <br> - 210 muscles | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="200">|
+| **MyoBody**  <br>  - 128 Degree of Freedom (DoF) <br> - 416 muscles | <img width="248" height="566" alt="image" src="https://github.com/user-attachments/assets/c0d8efa7-5d8c-4746-9160-80351aeaf89b" width="200">|
+
 
 Description of the models can be found [here](https://myosuite.readthedocs.io/en/latest/suite.html#models).
 

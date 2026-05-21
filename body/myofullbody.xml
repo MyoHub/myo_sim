@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<mujoco model="MuscleMimic and MyoSuite MyoFullBody">
+
+<!-- =================================================
+    Copyright 2026 MuscleMimic Team
+    Model           :: MyoFullBody (MuJoCo v3.0)
+    Author          :: MuscleMimic Team
+    Initial Creator :: Huiyi Wang built upon MyoSuite models
+    Refinement      :: Chengkun Li
+    License         :: Apache License, Version 2.0
+                       You may not use this file except in compliance with the License.
+                       You may obtain a copy of the License at
+                       http://www.apache.org/licenses/LICENSE-2.0
+                       Unless required by applicable law or agreed to in writing, software
+                       distributed under the License is distributed on an "AS IS" BASIS,
+                       WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+                       See the License for the specific language governing permissions and
+                       limitations under the License.
+====================================================== -->
+
+    <include file="../scene/myosuite_scene_noPedestal.xml"/>
+    <include file="../torso/assets/myotorso_assets.xml"/>
+    <include file="../arm/assets/myoarmR_assets.xml"/>
+    <include file="../arm/assets/myoarmL_assets.xml"/>
+    <include file="../head/assets/myohead_simple_assets.xml"/>
+    <include file="../leg/assets/myolegs_assets.xml"/>
+    <include file="../leg/assets/myolegs_tendon.xml"/>
+    <include file="../leg/assets/myolegs_muscle.xml"/>
+    <compiler angle="radian" meshdir=".." texturedir=".."/>
+
+    <worldbody>
+        <body name="Full Body" pos="-.025 0.1 1">
+            <include file="../torso/assets/myotorso_arm_chain.xml"/>
+            <body name="leg_body" pos="0 0 0" euler="0 0 -1.57079632679">
+                <include file="../leg/assets/myolegs_chain.xml"/>
+            </body>
+            <freejoint name = 'root'/>
+        </body>
+    </worldbody>
+
+    <contact>
+        <pair geom1="radius_coll_r" geom2="femur2_col_r" condim="3" />
+        <pair geom1="radius_coll_r" geom2="femur1_col_r" condim="3" />
+        <pair geom1="radius_coll_r" geom2="tibia1_col_r" condim="3" />
+        <pair geom1="radius_coll_r" geom2="tibia2_col_r" condim="3" />
+
+        <pair geom1="radius_coll_l" geom2="femur2_col_l" condim="3" />
+        <pair geom1="radius_coll_l" geom2="femur1_col_l" condim="3" />
+        <pair geom1="radius_coll_l" geom2="tibia1_col_l" condim="3" />
+        <pair geom1="radius_coll_l" geom2="tibia2_col_l" condim="3" />
+
+        <pair geom1="radius_coll_l" geom2="femur2_col_r" condim="3" />
+        <pair geom1="radius_coll_l" geom2="femur1_col_r" condim="3" />
+        <pair geom1="radius_coll_l" geom2="tibia1_col_r" condim="3" />
+        <pair geom1="radius_coll_l" geom2="tibia2_col_r" condim="3" />
+
+        <pair geom1="radius_coll_r" geom2="femur2_col_l" condim="3" />
+        <pair geom1="radius_coll_r" geom2="femur1_col_l" condim="3" />
+        <pair geom1="radius_coll_r" geom2="tibia1_col_l" condim="3" />
+        <pair geom1="radius_coll_r" geom2="tibia2_col_l" condim="3" />
+    </contact>
+
+</mujoco>
