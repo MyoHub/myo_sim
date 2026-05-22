@@ -13,6 +13,7 @@
     <include file="../leg/assets/myolegs_assets.xml"/>
     <include file="../leg/assets/myolegs_tendon.xml"/>
     <include file="../leg/assets/myolegs_muscle.xml"/>
+    <include file="../leg/assets/myolegs_contacts.xml"/>
     <!-- <include file="../leg/assets/myolegs_tendon_act.xml"/> -->
     <!-- <include file="../leg/assets/myolegs_jnt_act.xml"/> -->
 

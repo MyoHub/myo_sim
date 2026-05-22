@@ -23,10 +23,12 @@
     <include file="../arm/assets/myoarm_l_tendons.xml"/>
     <include file="../arm/assets/myoarm_r_muscles.xml"/>
     <include file="../arm/assets/myoarm_l_muscles.xml"/>
+    <include file="../arm/assets/myoarm_contacts.xml"/>
     <include file="../head/assets/myohead_simple_assets.xml"/>
     <include file="../leg/assets/myolegs_assets.xml"/>
     <include file="../leg/assets/myolegs_tendon.xml"/>
     <include file="../leg/assets/myolegs_muscle.xml"/>
+    <include file="../leg/assets/myolegs_contacts.xml"/>
     <include file="assets/myofullbody_contacts.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 

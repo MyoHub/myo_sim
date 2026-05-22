@@ -12,6 +12,7 @@
     <include file="../leg/assets/myolegs_assets.xml"/>
     <include file="../leg/assets/myolegs_tendon.xml"/>
     <include file="../leg/assets/myolegs_muscle.xml"/>
+    <include file="../leg/assets/myolegs_contacts.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
     <worldbody>
