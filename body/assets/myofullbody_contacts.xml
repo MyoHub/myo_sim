@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujocoinclude>
+    <!-- Cross-part contact pairs: arm radius geoms (arm) <-> femur/tibia geoms (leg).
+         These live here because neither the arm nor the leg part owns both geom names. -->
+    <contact>
+        <pair geom1="radius_r_coll" geom2="r_femur2_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_femur1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_tibia1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="r_tibia2_col" condim="3" />
+
+        <pair geom1="radius_l_coll" geom2="l_femur2_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_femur1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_tibia1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="l_tibia2_col" condim="3" />
+
+        <pair geom1="radius_l_coll" geom2="r_femur2_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_femur1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_tibia1_col" condim="3" />
+        <pair geom1="radius_l_coll" geom2="r_tibia2_col" condim="3" />
+
+        <pair geom1="radius_r_coll" geom2="l_femur2_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_femur1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_tibia1_col" condim="3" />
+        <pair geom1="radius_r_coll" geom2="l_tibia2_col" condim="3" />
+    </contact>
+</mujocoinclude>

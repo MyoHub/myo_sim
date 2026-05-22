@@ -8,6 +8,8 @@
 
     <include file="../scene/myosuite_scene.xml"/>
     <include file="../arm/assets/myoarm_bimanual_assets.xml"/>
+    <include file="../arm/assets/myoarm_bimanual_tendon.xml"/>
+    <include file="../arm/assets/myoarm_bimanual_muscle.xml"/>
     <compiler angle="radian" meshdir=".." texturedir=".."/>
 
     <worldbody>
