@@ -60,7 +60,11 @@ def comment_out_lines(src: Path, dst: Path, start: int, end: int):
 def build_tmp_wrapper_xml(chain_include: str) -> str:
     return rf"""<mujoco model="MyoTorso_v1.0">
   <include file="assets/myotorso_assets.xml"/>
+  <include file="assets/myotorso_tendon.xml"/>
+  <include file="assets/myotorso_muscle.xml"/>
   <include file="../arm/assets/myoarm_bimanual_assets.xml"/>
+  <include file="../arm/assets/myoarm_bimanual_tendon.xml"/>
+  <include file="../arm/assets/myoarm_bimanual_muscle.xml"/>
   <include file="../head/assets/myohead_simple_assets.xml"/>
   <compiler meshdir=".." texturedir=".."/>
 
