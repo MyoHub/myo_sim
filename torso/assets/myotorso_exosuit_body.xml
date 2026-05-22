@@ -1,0 +1,26 @@
+<?xml version="1.0" ?>
+<mujocoinclude>
+  <body name="exo_pelvis" pos="-.025 0.1 0.949" quat="0.5 0.5 -0.5 -0.5" childclass="myotorsoexo">
+    <geom name="lower_exo_legs_geom" type="mesh" euler="1.57079632679 3.14159265359 -1.57079632679" pos="-0.08 0.1 0" mesh="lower_exo_legs_geom_1"/>
+    <site name="Lower_Exo_Left_Leg" pos="-0.08 -0.15 -0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
+    <site name="Lower_Exo_Right_Leg" pos="-0.08 -0.15 0.17" size="0.005" rgba="0.4 0.4 0.4 1"/>
+    <site name="Exo_LeftLeg" pos="-0.2 0 -0.04" size="0.0005" rgba="0 1 0 1"/>
+    <site name="Exo_RightLeg" pos="-0.2 0 0.04" size="0.0005" rgba="0 1 0 1"/>
+  </body>
+
+  <body name="exo_lumbar4" pos="-0.0251 0.191 1.02" quat="0.5 0.5 -0.5 -0.5" childclass="myotorsoexo">
+    <freejoint/>
+    <site name="Lower_Exo_Left_Belt" pos="0.02 0.02 -0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
+    <site name="Lower_Exo_Right_Belt" pos="0.02 0.02 0.158" size="0.005" rgba="0.4 0.4 0.4 1"/>
+    <geom name="lower_exo_belt_geom" type="mesh" euler="1.57079632679 3.14159265359 -1.57079632679" pos="0.03 0.03 0" mesh="lower_exo_belt_geom_1" mass="0.094"/>
+  </body>
+
+  <body name="exo_torso" pos="-0.027 0.21995 1.03" quat="0.5 0.5 -0.5 -0.5" childclass="myotorsoexo">
+    <freejoint/>
+    <geom name="upper_exo_geom" type="mesh" euler="1.57079632679 3.14159265359 1.57079632679" pos="0.01 0.165 0" mesh="upper_exo_geom_1"/>
+    <geom name="Exo_cylinder" size="0.105 0.13" pos="0.025 0.03 0" class="myoBack_wrap"/>
+    <site name="Exo_LeftShoulder" pos="-0.11 0.28 -0.07" size="0.0005" rgba="0 1 0 1"/>
+    <site name="Exo_RightShoulder" pos="-0.11 0.28 0.07" size="0.0005" rgba="0 1 0 1"/>
+    <site name="Exo_sidesite" pos="-0.14 0.05 0" class="sidesite"/>
+  </body>
+</mujocoinclude>
