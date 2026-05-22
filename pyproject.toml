@@ -18,9 +18,17 @@ dev = [
     "pre-commit>=3.0",
 ]
 
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["myo_sim*"]
+
 [tool.pytest.ini_options]
-testpaths = ["."]
-python_files = ["test_sims.py"]
+testpaths = [".", "tests"]
+python_files = ["test_sims.py", "test_*.py"]
 
 [tool.ruff]
 line-length = 128
