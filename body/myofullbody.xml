@@ -17,9 +17,12 @@
     <include file="../torso/assets/myotorso_assets.xml"/>
     <include file="../torso/assets/myotorso_tendon.xml"/>
     <include file="../torso/assets/myotorso_muscle.xml"/>
-    <include file="../arm/assets/myoarm_bimanual_assets.xml"/>
-    <include file="../arm/assets/myoarm_bimanual_tendon.xml"/>
-    <include file="../arm/assets/myoarm_bimanual_muscle.xml"/>
+    <include file="../arm/assets/myoarm_r_assets.xml"/>
+    <include file="../arm/assets/myoarm_l_assets.xml"/>
+    <include file="../arm/assets/myoarm_r_tendons.xml"/>
+    <include file="../arm/assets/myoarm_l_tendons.xml"/>
+    <include file="../arm/assets/myoarm_r_muscles.xml"/>
+    <include file="../arm/assets/myoarm_l_muscles.xml"/>
     <include file="../head/assets/myohead_simple_assets.xml"/>
     <include file="../leg/assets/myolegs_assets.xml"/>
     <include file="../leg/assets/myolegs_tendon.xml"/>

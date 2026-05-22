@@ -1,5 +1,6 @@
-<?xml version='1.0' encoding='utf-8'?>
-<mujocoinclude><actuator><general name="Ps_L1_VB_r" class="myoBack_muscle" tendon="Ps_L1_VB_r_tendon" lengthrange="0.091234 0.282334" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0" biasprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0" />
+<mujocoinclude>
+	<actuator>
+		<general name="Ps_L1_VB_r" class="myoBack_muscle" tendon="Ps_L1_VB_r_tendon" lengthrange="0.091234 0.282334" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0" biasprm="0.906929 1.07277 102.673 1 0 2 10 2.41059 1.4 0" />
 		<general name="Ps_L1_TP_r" class="myoBack_muscle" tendon="Ps_L1_TP_r_tendon" lengthrange="0.0926074 0.274687" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.860707 1.70615 32.6017 1 0 2 10 0.74068 1.4 0" biasprm="0.860707 1.70615 32.6017 1 0 2 10 0.74068 1.4 0" />
 		<general name="Ps_L1_L2_IVD_r" class="myoBack_muscle" tendon="Ps_L1_L2_IVD_r_tendon" lengthrange="0.0841522 0.265894" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.901295 1.03079 59.5889 1 0 2 10 1.45782 1.4 0" biasprm="0.901295 1.03079 59.5889 1 0 2 10 1.45782 1.4 0" />
 		<general name="Ps_L2_TP_r" class="myoBack_muscle" tendon="Ps_L2_TP_r_tendon" lengthrange="0.0837741 0.248876" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.85313 1.53139 110.113 1 0 2 10 0.823943 1.4 0" biasprm="0.85313 1.53139 110.113 1 0 2 10 0.823943 1.4 0" />
@@ -209,4 +210,5 @@
 		<general name="IO4_l" class="myoBack_muscle" tendon="IO4_l_tendon" lengthrange="0.068495 0.259944" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.0136584 1.58536 190.421 1 0 2 10 5 1.4 0" biasprm="0.0136584 1.58536 190.421 1 0 2 10 5 1.4 0" />
 		<general name="IO5_l" class="myoBack_muscle" tendon="IO5_l_tendon" lengthrange="0.0448549 0.200246" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.123837 1.55547 122.431 1 0 2 10 4.37035 1.4 0" biasprm="0.123837 1.55547 122.431 1 0 2 10 4.37035 1.4 0" />
 		<general name="IO6_l" class="myoBack_muscle" tendon="IO6_l_tendon" lengthrange="0.0608242 0.226526" dynprm="0.015 0.05 0 0 0 0 0 0 0 0" gainprm="0.603004 1.85219 94.4598 1 0 2 10 3.31653 1.4 0" biasprm="0.603004 1.85219 94.4598 1 0 2 10 3.31653 1.4 0" />
-	</actuator></mujocoinclude>
+	</actuator>
+</mujocoinclude>
