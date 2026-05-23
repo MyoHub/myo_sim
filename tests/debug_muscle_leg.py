@@ -11,11 +11,12 @@ import numpy as np
 from muscle_analysis_utils import (
     compute_moment_arm_curve,
     compute_force_length_curve,
+    parse_model_joint_equalities,
     plot_pair,
 )
 
-BASE_DIR = Path(__file__).resolve().parent.parent / "leg"
-TMP_XML = BASE_DIR / "_tmp_myoleg.xml"
+XML_PATH = Path(__file__).resolve().parent.parent
+XML_PATH = XML_PATH / "leg" / "myolegs.xml"
 
 OUT_DIR = Path(__file__).resolve().parent / "output" / "muscle_analysis"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -23,28 +24,9 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 EPS = 1e-5
 ACTIVATION = 1.0
 
-
-def build_tmp_leg_wrapper_xml() -> str:
-    return r"""<?xml version="1.0"?>
-<mujoco model="tmp">
-  <include file="../leg/assets/myolegs_assets.xml"/>
-  <include file="../leg/assets/myolegs_tendon.xml"/>
-  <include file="../leg/assets/myolegs_muscle.xml"/>
-  <compiler angle="radian" meshdir=".." texturedir=".."/>
-
-  <worldbody>
-    <body name="root" pos="0 0 1" euler="0 0 -1.57">
-      <include file="../leg/assets/myolegs_chain.xml"/>
-      <freejoint name="root"/>
-    </body>
-  </worldbody>
-</mujoco>
-"""
-
-
-TMP_XML.write_text(build_tmp_leg_wrapper_xml())
-model = mujoco.MjModel.from_xml_path(str(TMP_XML))
+model = mujoco.MjModel.from_xml_path(str(XML_PATH))
 data = mujoco.MjData(model)
+EQ_MAP = parse_model_joint_equalities(model)
 
 
 def analyze_pair(base_muscle: str, base_joint: str):
@@ -65,11 +47,15 @@ def analyze_pair(base_muscle: str, base_joint: str):
         if tendon_id < 0:
             return None
 
-        jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS)
+        jnt_range, ma = compute_moment_arm_curve(
+            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
+        )
         if jnt_range is None or ma is None or np.allclose(ma, 0, atol=1e-6):
             return None
 
-        mtu_len, forces = compute_force_length_curve(model, data, act_id, jnt_id, activation=ACTIVATION)
+        mtu_len, forces = compute_force_length_curve(
+            model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=EQ_MAP
+        )
 
         curves[side] = dict(
             muscle=muscle,
@@ -80,7 +66,9 @@ def analyze_pair(base_muscle: str, base_joint: str):
         )
 
     out_path = OUT_DIR / f"{base_muscle}_{base_joint}.png"
-    return plot_pair(curves, title=f"{base_muscle} @ {base_joint}", out_path=out_path)
+    return plot_pair(
+        curves, title=f"{base_muscle} @ {base_joint}", out_path=out_path
+    )
 
 
 print("\nRunning LEG muscle symmetry analysis...\n", flush=True)
@@ -90,52 +78,55 @@ bad_cnt = 0
 skip_cnt = 0
 total = 0
 
-try:
-    for act_id in range(model.nu):
-        muscle_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, act_id)
-        if muscle_name is None or not muscle_name.endswith("_r"):
+
+for act_id in range(model.nu):
+    muscle_name = mujoco.mj_id2name(
+        model, mujoco.mjtObj.mjOBJ_ACTUATOR, act_id
+    )
+    if muscle_name is None or not muscle_name.endswith("_r"):
+        continue
+
+    base_muscle = muscle_name[:-2]
+    tendon_id = model.actuator_trnid[act_id, 0]
+    if tendon_id < 0:
+        continue
+
+    for jnt_id in range(model.njnt):
+        jnt_name = mujoco.mj_id2name(
+            model, mujoco.mjtObj.mjOBJ_JOINT, jnt_id
+        )
+        if jnt_name is None:
             continue
 
-        base_muscle = muscle_name[:-2]
-        tendon_id = model.actuator_trnid[act_id, 0]
-        if tendon_id < 0:
+        q0, q1 = model.jnt_range[jnt_id]
+        if q0 == q1:
             continue
 
-        for jnt_id in range(model.njnt):
-            jnt_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, jnt_id)
-            if jnt_name is None:
-                continue
+        jnt_range, ma = compute_moment_arm_curve(
+            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
+        )
+        if jnt_range is None or np.allclose(ma, 0, atol=1e-6):
+            continue
 
-            q0, q1 = model.jnt_range[jnt_id]
-            if q0 == q1:
-                continue
+        if jnt_name.endswith(("_r", "_l")):
+            base_joint = jnt_name[:-2]
+        else:
+            base_joint = jnt_name
 
-            jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS)
-            if jnt_range is None or np.allclose(ma, 0, atol=1e-6):
-                continue
+        res = analyze_pair(base_muscle, base_joint)
+        pair = f"{base_muscle}_{base_joint}"
 
-            if jnt_name.endswith(("_r", "_l")):
-                base_joint = jnt_name[:-2]
-            else:
-                base_joint = jnt_name
+        if res is None:
+            skip_cnt += 1
+            print(f"skip: {pair}", flush=True)
+        elif res:
+            ok_cnt += 1
+            print(f"ok:   {pair}", flush=True)
+        else:
+            bad_cnt += 1
+            print(f"x:    {pair}", flush=True)
 
-            res = analyze_pair(base_muscle, base_joint)
-            pair = f"{base_muscle}_{base_joint}"
-
-            if res is None:
-                skip_cnt += 1
-                print(f"skip: {pair}", flush=True)
-            elif res:
-                ok_cnt += 1
-                print(f"ok:   {pair}", flush=True)
-            else:
-                bad_cnt += 1
-                print(f"x:    {pair}", flush=True)
-
-            total += 1
-
-finally:
-    TMP_XML.unlink(missing_ok=True)
+        total += 1
 
 print("\n" + "=" * 60, flush=True)
 print(f"checked      : {total}", flush=True)

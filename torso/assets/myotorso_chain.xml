@@ -488,7 +488,7 @@
                 <body name="torso" pos="0.0025 -0.089 0">
                   <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
                   <body name="head_attach" pos="-0.005 -0.01 0">
-                    <include file="../../head/assets/myohead_rigid_chain.xml"/>
+                    <include file="../head/assets/myohead_rigid_chain.xml"/>
                   </body>
                   <geom name="torso_geom_1" pos="-0.016 0.119 0" quat="0.980067 0 0 0.198669" type="mesh"  mesh="torso_geom_1_thoracic12_s"/>
                   <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh"  mesh="torso_geom_2_thoracic11_s"/>
@@ -504,9 +504,9 @@
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh"  mesh="torso_geom_12_thoracic1_s"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh"  mesh="torso_geom_13_ribcage_s"/>
                   <geom type="capsule" class="myotorso_coll" size="0.080 0.077" pos=".036 -.020 0" euler="0 0 1.57"/>
-                  <!--geom type="ellipsoid" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
-                  <geom type="capsule" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
-                  <geom type="capsule" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>-->
+                  <geom type="ellipsoid" name="thorax_coll1" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>
+                  <geom type="capsule" name="thorax_coll2" class="myotorso_coll" size="0.110 0.065" pos=".011 .250 0" euler="0 0 1.57"/>
+                  <geom type="capsule" name="thorax_coll3" class="myotorso_coll" size="0.075 0.145" pos="-.009 .335 0" euler="0 0 1.57"/>
                   <geom name="back_cylinder_l" size="0.17 0.13" pos="-0.21 0.04 0" class="myoBack_wrap"/>
                   <geom name="Chest_ellipsoid_r" size="0.073" pos="0.008 0.21 0.01" quat="0.97517 -0.0198338 -0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
                   <geom name="Chest_ellipsoid_l" size="0.073" pos="0.008 0.21 -0.01" quat="0.97517 0.0198338 0.197677 0.0978434" rgba=".5 .5 .9 0.5" group="3" contype="0" conaffinity="0"/>
