@@ -42,10 +42,30 @@ def parse_joint_equalities(expanded_xml_path, model):
 
 def parse_model_joint_equalities(model):
     """Save the compiled model XML and parse resolved joint equalities from it."""
-    with tempfile.TemporaryDirectory() as tmpdir:
-        expanded_xml_path = Path(tmpdir) / "expanded_model.xml"
-        mujoco.mj_saveLastXML(str(expanded_xml_path), model)
-        return parse_joint_equalities(expanded_xml_path, model)
+    try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            expanded_xml_path = Path(tmpdir) / "expanded_model.xml"
+            mujoco.mj_saveLastXML(str(expanded_xml_path), model)
+            return parse_joint_equalities(expanded_xml_path, model)
+    except mujoco.FatalError:
+        return parse_compiled_joint_equalities(model)
+
+
+def parse_compiled_joint_equalities(model):
+    """Parse joint equality constraints directly from a compiled model."""
+    eq = {}
+    for eq_id in range(model.neq):
+        if model.eq_type[eq_id] != mujoco.mjtEq.mjEQ_JOINT:
+            continue
+
+        slave_id = int(model.eq_obj1id[eq_id])
+        master_id = int(model.eq_obj2id[eq_id])
+        if slave_id < 0 or master_id < 0:
+            continue
+
+        coeffs = [float(value) for value in model.eq_data[eq_id, :5]]
+        eq[slave_id] = (master_id, coeffs)
+    return eq
 
 
 def apply_eq_constraints(data, model, eq_map):
