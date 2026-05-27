@@ -29,7 +29,7 @@ class MirrorRules:
 
     mirrored_material: str = "MatSkin_l"
     common_names: frozenset[str] = frozenset({"texgeom", "geom"})
-    body_pos_x_mirror_names: frozenset[str] = frozenset({"clavicle_r", "clavicle_l"})
+    body_pos_x_mirror_names: frozenset[str] = frozenset()
     lowercase_geom_prefixes: tuple[str, ...] = ("Thorax_ellipsoid",)
     replacements: tuple[tuple[str, str], ...] = ()
     prefix_replacements: tuple[tuple[str, str], ...] = ()
