@@ -52,9 +52,9 @@ ROOT = Path(__file__).resolve().parents[1]
 TORSO_XML = ROOT / "torso" / "myotorso.xml"
 TORSO_BASE_XML = ROOT / "torso" / "myotorso_base.xml"
 RIGHT_ARM_XML = ROOT / "arm" / "myoarm_r.xml"
-ARM_CONTACTS_XML = ROOT / "arm" / "assets" / "myoarm_contacts.xml"
-LEG_CONTACTS_XML = ROOT / "leg" / "assets" / "myolegs_contacts.xml"
-FULLBODY_CONTACTS_XML = ROOT / "body" / "assets" / "myofullbody_contacts.xml"
+ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
+LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
+FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
 RIGHT_ARM_ASSETS_XML = ROOT / "arm" / "assets" / "myoarm_r_assets.xml"
 RIGHT_ARM_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_tendons.xml"
 RIGHT_ARM_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_muscles.xml"
@@ -101,8 +101,8 @@ MODEL_REGISTRY = {
         include_left_arm_contacts=True,
         arms_body_only=True,
     ),
-    "myotorso_right_arm": ModelRegistration(
-        name="myotorso_right_arm",
+    "myotorso_arm_r": ModelRegistration(
+        name="myotorso_arm_r",
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
         description="Torso + right arm only",
         include_left_arm_contacts=False,
