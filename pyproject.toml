@@ -26,6 +26,12 @@ build-backend = "setuptools.build_meta"
 where = ["."]
 include = ["myo_sim*"]
 
+[tool.setuptools.package-data]
+myo_sim = [
+    "models/**/*",
+    "mjspec/**/*",
+]
+
 [tool.pytest.ini_options]
 testpaths = [".", "tests"]
 python_files = ["test_sims.py", "test_*.py"]

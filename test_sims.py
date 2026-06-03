@@ -1,45 +1,16 @@
 import unittest
-import os
+from pathlib import Path
+
 import mujoco
+import myo_sim
+from myo_sim.mjspec.prototype_mjspec_attach import build_model
 
 model_paths = [
-    # Basic models
-    "basic/myomuscle.xml",
-    # finger models
-    "finger/finger_v0.xml",
-    "finger/myofinger_v0.xml",
-    "finger/motorfinger_v0.xml",
-    # elbow models
-    "elbow/myoelbow_1dof6muscles_1dofexo.xml",
-    "elbow/myoelbow_1dof6muscles.xml",
-    "elbow/myoelbow_2dof6muscles.xml",
-    "elbow/myoelbow_1dof6muscles_1dofSoftexo_Ideal.xml",
-    "elbow/myoelbow_1dof6muscles_1dofSoftexo_sim2.xml",
-    # arms
-    "arm/myoarm_simple.xml",
-    "arm/myoarm.xml",
-    "arm/myoarm_bimanual.xml",
     "arm/myoarm_r.xml",
-    "arm/myoarm_l.xml",
-    # hand models
-    "hand/myohand.xml",
-    # leg models
-    "leg/myolegs.xml",
     "leg/myolegs_abdomen.xml",
-    "osl/myolegs_osl.xml",
-    # head
-    "head/myohead_simple.xml",
-    # torso
     "torso/myotorso.xml",
-    "torso/myotorso_exosuit.xml",
-    "torso/myotorso_rigid.xml",
+    "torso/myotorso_base.xml",
     "torso/myotorso_abdomen.xml",
-    "torso/myotorso_bimanual.xml",
-    # full body models
-    "body/myobody.xml",
-    "body/myoupperbody.xml",
-    "body/myofullbody.xml",
-    # scene
     "scene/myosuite_scene_noPedestal.xml",
     "scene/myosuite_scene.xml",
     "scene/myosuite_quad.xml",
@@ -59,8 +30,8 @@ class TestSims(unittest.TestCase):
             if model_path.startswith("/"):
                 fullpath = model_path
             else:
-                fullpath = os.path.join(os.path.dirname(__file__), model_path)
-            if not os.path.exists(fullpath):
+                fullpath = str(myo_sim.MODELS_DIR / model_path)
+            if not Path(fullpath).exists():
                 raise IOError("File %s does not exist" % fullpath)
 
             # load model
@@ -93,11 +64,12 @@ class TestMuscleMimicFullBody(unittest.TestCase):
     """Numerical validation: myofullbody must match musclemimic spec exactly."""
 
     def _load(self, rel_path):
-        fullpath = os.path.join(os.path.dirname(__file__), rel_path)
-        return mujoco.MjModel.from_xml_path(fullpath)
+        if rel_path == "myofullbody":
+            return build_model("myofullbody")
+        return mujoco.MjModel.from_xml_path(str(myo_sim.MODELS_DIR / rel_path))
 
     def test_myofullbody_joints(self):
-        m = self._load("body/myofullbody.xml")
+        m = self._load("myofullbody")
         self.assertEqual(
             m.njnt,
             MUSCLEMIMIC_FULLBODY_SPEC["njnt"],
@@ -105,7 +77,7 @@ class TestMuscleMimicFullBody(unittest.TestCase):
         )
 
     def test_myofullbody_actuators(self):
-        m = self._load("body/myofullbody.xml")
+        m = self._load("myofullbody")
         self.assertEqual(
             m.nu,
             MUSCLEMIMIC_FULLBODY_SPEC["nu"],
@@ -114,7 +86,7 @@ class TestMuscleMimicFullBody(unittest.TestCase):
 
     def test_myofullbody_report(self):
         """Print a summary report for PR inclusion."""
-        m = self._load("body/myofullbody.xml")
+        m = self._load("myofullbody")
         report = (
             f"\n=== myofullbody.xml vs musclemimic spec ===\n"
             f"  joints (njnt):    {m.njnt:4d}  expected {MUSCLEMIMIC_FULLBODY_SPEC['njnt']}\n"
@@ -127,18 +99,18 @@ class TestMuscleMimicFullBody(unittest.TestCase):
     def test_part_models_summary(self):
         """Print joint/actuator counts for all musclemimic-derived models."""
         parts = [
-            ("leg/myolegs.xml", "myolegs"),
             ("arm/myoarm_r.xml", "myoarm_r"),
-            ("arm/myoarm_l.xml", "myoarm_l"),
-            ("arm/myoarm_bimanual.xml", "myoarm_bimanual"),
-            ("torso/myotorso_bimanual.xml", "myotorso_bimanual"),
-            ("body/myofullbody.xml", "myofullbody"),
+            ("torso/myotorso.xml", "myotorso"),
+            ("myofullbody", "myofullbody"),
         ]
         print("\n=== Part model counts ===")
         for path, name in parts:
-            fullpath = os.path.join(os.path.dirname(__file__), path)
-            if os.path.exists(fullpath):
-                m = mujoco.MjModel.from_xml_path(fullpath)
+            fullpath = myo_sim.MODELS_DIR / path
+            if path == "myofullbody":
+                m = build_model("myofullbody")
+                print(f"  {name:30s}  njnt={m.njnt:4d}  nu={m.nu:4d}")
+            elif fullpath.exists():
+                m = mujoco.MjModel.from_xml_path(str(fullpath))
                 print(f"  {name:30s}  njnt={m.njnt:4d}  nu={m.nu:4d}")
             else:
                 print(f"  {name:30s}  MISSING")

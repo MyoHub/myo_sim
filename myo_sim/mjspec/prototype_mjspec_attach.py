@@ -2,9 +2,9 @@
 
 Run from the repository root:
 
-    python mjspec/prototype_mjspec_attach.py
-    python mjspec/prototype_mjspec_attach.py --model myotorso_right_arm
-    python mjspec/prototype_mjspec_attach.py --view
+    python -m myo_sim.mjspec.prototype_mjspec_attach
+    python -m myo_sim.mjspec.prototype_mjspec_attach --model myotorso_right_arm
+    python -m myo_sim.mjspec.prototype_mjspec_attach --view
 
 The model registry below controls how each composed model is built. The default
 `myotorso_arms` model loads the right arm and mirrors it in memory to create the
@@ -20,6 +20,7 @@ import sys
 import time
 
 import mujoco
+from myo_sim import MODELS_DIR
 
 try:
     from .hand import prune_arm_spec_to_hand
@@ -47,7 +48,7 @@ except ImportError:
     )
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = MODELS_DIR
 
 TORSO_XML = ROOT / "torso" / "myotorso.xml"
 TORSO_BASE_XML = ROOT / "torso" / "myotorso_base.xml"
@@ -339,7 +340,7 @@ def view_model(model):
             script = Path(__file__).name
             raise SystemExit(
                 "MuJoCo passive viewer requires mjpython on macOS.\n"
-                f"Run: mjpython mjspec/{script} --view"
+                f"Run: mjpython -m myo_sim.mjspec.{Path(script).stem} --view"
             ) from exc
         raise
 

@@ -15,11 +15,9 @@ import mujoco
 import musclemimic_models
 import numpy as np
 import pytest
+from myo_sim.mjspec.prototype_mjspec_attach import build_model
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO_ROOT))
 sys.path.insert(0, str(Path(__file__).parent))
-from mjspec.prototype_mjspec_attach import build_model
 from muscle_analysis_utils import (
     compute_force_length_curve,
     compute_moment_arm_curve,

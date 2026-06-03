@@ -11,20 +11,22 @@
     <compiler angle="radian" meshdir=".." texturedir=".."/>
     <asset>
         <!-- Scene -©vk©-->
-        <texture name="textscene" type="2d" file="../myo_sim/scene/myosuite_scene.png"/>
+        <texture name="textscene" type="2d" file="scene/myosuite_scene.png"/>
         <material name="matscene" texture="textscene"/>
-        <mesh name="meshscene" file="../myo_sim/scene/myosuite_scene_noFloor.msh" scale=".01 .01 .01"/>
+        <mesh name="meshscene" file="scene/myosuite_scene_noFloor_noPedestal.msh" scale=".01 .01 .01"/>
+        <!-- <texture name="textwarning" type="2d" file="scene/myosuite_warning.png"/> -->
+        <!-- <material name="matwarning" texture="textwarning"/> -->
 
         <!-- Floor -©vk©-->
-        <texture name="texfloor" type="2d" height="1" width="1" file="../myo_sim/scene/floor0.png"/>
+        <texture name="texfloor" type="2d" height="1" width="1" file="scene/floor0.png"/>
         <material name="matfloor" reflectance="0.01" texture="texfloor" texrepeat="1 1" texuniform="true"/>
 
         <!-- Logo -©vk©-->
-        <texture name="textlogo" type="2d" file="../myo_sim/scene/myosuite_logo.png"/>
-        <mesh name="logo" file="../myo_sim/scene/myosuite_logo.msh" scale="1 1 1"/>
+        <texture name="textlogo" type="2d" file="scene/myosuite_logo.png"/>
+        <mesh name="logo" file="scene/myosuite_logo.msh" scale="1 1 1"/>
         <material name="matlogo" texture="textlogo"/>
 
-        <!-- <mesh name="human" file="../myo_sim/body/Geometry/human_lowpoly.stl" scale="1 1 1"/> -->
+        <!-- <mesh name="human" file="body/Geometry/human_lowpoly.stl" scale="1 1 1"/> -->
     </asset>
 
     <statistic extent="5" center="0 -1 1"/>
@@ -36,7 +38,6 @@
         <rgba actuator='.7 .4 .4 1' actuatorpositive='1 0 0 1' actuatornegative='.175 .1 .1 1'/>
     </visual>
 
-
     <!-- Add files to the world -©vk©-->
     <worldbody>
         <!-- indoor lights -©vk©-->
@@ -45,9 +46,9 @@
         <camera name="front_view" pos="0 -3 2.25" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
 
 
-        <geom name="floor" pos="0 0 -.4" size="7 7 .1" conaffinity="1" contype="1" type="plane" material="matfloor" condim="3"/>
-        <geom type="mesh" mesh="meshscene" material="matscene" pos="0 0 -.41326" euler="0 0 0"  conaffinity="0" contype="0"/>
-        <geom type="cylinder" pos="0 0 -.190" size="1.05 .205" contype="1" conaffinity="1" group="4"/>
+        <geom name="floor" pos="0 0 0" size="7 7 .1" conaffinity="1" contype="1" type="plane" material="matfloor" condim="3"/>
+        <geom type="mesh" pos="0 0 0" mesh="meshscene" material="matscene" conaffinity="0" contype="0"/>
+        <!-- <geom type="box" pos="0 0 0" size="1.05 1.05 .005" conaffinity="0" contype="0" group="1" material="matwarning" /> -->
         <geom type="mesh" mesh="logo" material="matlogo" group="1" conaffinity="0" contype="0" euler="1.57 0 0" pos="0 6.95 2.1"/>
 
         <!-- <geom type="box" size=".01 .01 0.85" pos="0 0 0.85"/> -->

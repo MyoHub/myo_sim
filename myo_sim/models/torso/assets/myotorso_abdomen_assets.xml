@@ -31,12 +31,12 @@
         <texture name="tex_myotorso" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
         <material name="mat_myotorso" texture="tex_myotorso" texuniform="true"/>
         <material name="MatSkin_myotorso" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.8 0.7 .5 .1" />
-        <mesh file="../myo_sim/meshes/sacrum.stl" name="sacrum"/>
-        <mesh file="../myo_sim/meshes/hat_lumbar.stl" name="hat_lumbar"/>
-        <mesh file="../myo_sim/meshes/hat_thoracic.stl" name="hat_thoracic"/>
-        <mesh file="../myo_sim/meshes/hat_ribs_scap.stl" name="hat_ribs"/>
+        <mesh file="meshes/sacrum.stl" name="sacrum"/>
+        <mesh file="meshes/hat_lumbar.stl" name="hat_lumbar"/>
+        <mesh file="meshes/hat_thoracic.stl" name="hat_thoracic"/>
+        <mesh file="meshes/hat_ribs_scap.stl" name="hat_ribs"/>
     </asset>
-    <include file="../../myo_sim/head/assets/myohead_simple_assets.xml"/>
+    <include file="../../head/assets/myohead_simple_assets.xml"/>
 
 
     <tendon>

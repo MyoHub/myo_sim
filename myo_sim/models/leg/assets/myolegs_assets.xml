@@ -43,22 +43,22 @@
         <material name="myolegs_mat" texture="myolegs_tex" texuniform="true"/>
         <material name="myoleg_matskin" specular="0.2" shininess=".1" reflectance="0.5" rgba="0.8 0.7 .5 .1" />
 
-        <mesh file="../myo_sim/meshes/r_pelvis.stl" name="r_pelvis"/>
-        <mesh file="../myo_sim/meshes/l_pelvis.stl" name="l_pelvis"/>
-        <mesh file="../myo_sim/meshes/r_femur.stl" name="r_femur"/>
-        <mesh file="../myo_sim/meshes/r_tibia.stl" name="r_tibia"/>
-        <mesh file="../myo_sim/meshes/r_fibula.stl" name="r_fibula"/>
-        <mesh file="../myo_sim/meshes/r_talus.stl" name="r_talus"/>
-        <mesh file="../myo_sim/meshes/r_foot.stl" name="r_foot"/>
-        <mesh file="../myo_sim/meshes/r_bofoot.stl" name="r_bofoot"/>
-        <mesh file="../myo_sim/meshes/r_patella.stl" name="r_patella"/>
-        <mesh file="../myo_sim/meshes/l_femur.stl" name="l_femur"/>
-        <mesh file="../myo_sim/meshes/l_tibia.stl" name="l_tibia"/>
-        <mesh file="../myo_sim/meshes/l_fibula.stl" name="l_fibula"/>
-        <mesh file="../myo_sim/meshes/l_talus.stl" name="l_talus"/>
-        <mesh file="../myo_sim/meshes/l_foot.stl" name="l_foot"/>
-        <mesh file="../myo_sim/meshes/l_bofoot.stl" name="l_bofoot"/>
-        <mesh file="../myo_sim/meshes/l_patella.stl" name="l_patella"/>
+        <mesh file="meshes/r_pelvis.stl" name="r_pelvis"/>
+        <mesh file="meshes/l_pelvis.stl" name="l_pelvis"/>
+        <mesh file="meshes/r_femur.stl" name="r_femur"/>
+        <mesh file="meshes/r_tibia.stl" name="r_tibia"/>
+        <mesh file="meshes/r_fibula.stl" name="r_fibula"/>
+        <mesh file="meshes/r_talus.stl" name="r_talus"/>
+        <mesh file="meshes/r_foot.stl" name="r_foot"/>
+        <mesh file="meshes/r_bofoot.stl" name="r_bofoot"/>
+        <mesh file="meshes/r_patella.stl" name="r_patella"/>
+        <mesh file="meshes/l_femur.stl" name="l_femur"/>
+        <mesh file="meshes/l_tibia.stl" name="l_tibia"/>
+        <mesh file="meshes/l_fibula.stl" name="l_fibula"/>
+        <mesh file="meshes/l_talus.stl" name="l_talus"/>
+        <mesh file="meshes/l_foot.stl" name="l_foot"/>
+        <mesh file="meshes/l_bofoot.stl" name="l_bofoot"/>
+        <mesh file="meshes/l_patella.stl" name="l_patella"/>
     </asset>
 
     <equality>

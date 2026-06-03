@@ -10,7 +10,7 @@
     </default>
 
     <asset>
-        <mesh file="../myo_sim/meshes/human_lowpoly_nohand.stl" name="human_body" scale="1.0 1.0 1"/>
+        <mesh file="meshes/human_lowpoly_nohand.stl" name="human_body" scale="1.0 1.0 1"/>
     </asset>
 
     <worldbody>

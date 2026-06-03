@@ -7,6 +7,7 @@ from pathlib import Path
 
 import mujoco
 import numpy as np
+import myo_sim
 
 from muscle_analysis_utils import (
     compute_moment_arm_curve,
@@ -15,8 +16,7 @@ from muscle_analysis_utils import (
     plot_pair,
 )
 
-XML_PATH = Path(__file__).resolve().parent.parent
-XML_PATH = XML_PATH / "leg" / "myolegs.xml"
+XML_PATH = myo_sim.MODELS_DIR / "leg" / "myolegs.xml"
 
 OUT_DIR = Path(__file__).resolve().parent / "output" / "muscle_analysis"
 OUT_DIR.mkdir(parents=True, exist_ok=True)

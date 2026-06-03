@@ -4,42 +4,44 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-`myo_sim` is a library of MuJoCo musculoskeletal (MSK) XML model definitions used by [MyoSuite](https://github.com/facebookresearch/myoSuite). It contains no Python package — the primary artifacts are `.xml` model files (and referenced `.stl` meshes) that MuJoCo loads directly.
+`myo_sim` is a packaged library of MuJoCo musculoskeletal (MSK) XML model definitions used by [MyoSuite](https://github.com/facebookresearch/myoSuite). The primary artifacts are `.xml` model files and referenced assets under `myo_sim/models/`, plus Python helpers for registry lookup and MjSpec composition.
 
 ## Running Tests
 
 ```bash
 # Run the full model-loading smoke test
-python -m pytest test_sims.py
+uv run pytest test_sims.py
 
 # Run a single test class
-python -m pytest test_sims.py::TestSims::test_sims
+uv run pytest test_sims.py::TestSims::test_sims
 
 # Run a muscle-symmetry analysis script (not pytest — runs as a standalone script)
-cd tests && python debug_muscle_leg.py
-cd tests && python debug_muscle_torso.py
-cd tests && python debug_muscle_bimanual.py
+cd tests && uv run python debug_muscle_leg.py
+cd tests && uv run python debug_muscle_torso.py
+cd tests && uv run python debug_muscle_bimanual.py
 ```
 
-Requires `mujoco` and `numpy` (plus `matplotlib` for analysis plots). No `setup.py` or `pyproject.toml` at the repo root.
+Requires `mujoco` and `numpy` (plus `matplotlib` for analysis plots). Package metadata lives in `pyproject.toml`.
 
 ## Repository Structure
 
 ```
-<model>/              # One directory per body segment / assembly
-  <model>.xml         # Top-level MuJoCo model (entry point)
-  assets/             # Sub-XMLs included via <include> or <compiler meshdir>
-    *_assets.xml      # Mesh/texture/material declarations
-    *_body.xml        # Kinematic chain (bodies, joints, geoms)
-    *_chain.xml       # Variant used for composing into full-body models
-meshes/               # Shared .stl mesh files (referenced by all models)
-scene/                # Scene wrapper XMLs (lighting, ground plane, camera)
-body/                 # Full-body assemblies (myobody, myoupperbody, myofullbody)
+myo_sim/              # Installable Python package
+  models/             # Packaged XML model tree and assets
+    <model>/          # One directory per body segment / assembly
+      <model>.xml     # Top-level MuJoCo model (entry point)
+      assets/         # Sub-XMLs included via <include> or <compiler meshdir>
+        *_assets.xml  # Mesh/texture/material declarations
+        *_chain.xml   # Kinematic chain (bodies, joints, geoms)
+    meshes/           # Shared .stl mesh files
+    scene/            # Scene wrapper XMLs
+    contacts/         # Shared contact-pair XMLs for MjSpec composition
+  mjspec/             # MjSpec composition helpers and model registry
 tests/                # Muscle analysis scripts + utilities
 test_sims.py          # Pytest smoke test: loads every model via mujoco.MjModel
 ```
 
-Key model directories: `finger`, `elbow`, `hand`, `arm`, `leg`, `torso`, `body`, `osl`, `head`.
+Key packaged model directories include `arm`, `leg`, `torso`, `head`, `body`, `contacts`, `meshes`, `scene`, and `textures`.
 
 ## Model Architecture
 
@@ -47,10 +49,10 @@ Models are composed via MuJoCo's `<include>` and `<compiler meshdir>` mechanisms
 
 - **Assets XMLs** (`*_assets.xml`) declare meshes, materials, tendons.
 - **Body/Chain XMLs** (`*_body.xml`, `*_chain.xml`) define the kinematic tree, joints, muscles, and contact geometries.
-- **Top-level XMLs** (e.g., `arm/myoarms.xml`) compose left + right chains into a bilateral model.
-- **Full-body models** (`body/myobody.xml`, `body/myofullbody.xml`) include torso, arm, and leg chains together.
+- **Top-level XMLs** (e.g., `myo_sim/models/arm/myoarm_r.xml`) define directly loadable static models.
+- **MjSpec models** compose mirrored arms, legs, contacts, and full-body variants in `myo_sim/mjspec/prototype_mjspec_attach.py`.
 
-All meshes live in `meshes/` and are shared across models. `scene/` XMLs wrap individual models with environment assets for rendering.
+All meshes live in `myo_sim/models/meshes/` and are shared across models. `scene/` XMLs wrap individual models with environment assets for rendering.
 
 ## Design Principles (issue #75)
 

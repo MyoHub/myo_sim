@@ -12,17 +12,17 @@
 
   <asset>
     <!-- Scene -©vk©-->
-    <texture name="textscene" type="2d" file="../myo_sim/scene/myosuite_scene.png"/>
+    <texture name="textscene" type="2d" file="scene/myosuite_scene.png"/>
     <material name="matscene" texture="textscene"/>
-    <mesh name="meshscene" file="../myo_sim/scene/myosuite_scene_noFloor.msh" scale=".01 .01 .01"/>
+    <mesh name="meshscene" file="scene/myosuite_scene_noFloor.msh" scale=".01 .01 .01"/>
 
     <!-- Floor -©vk©-->
-    <texture name="texfloor" type="2d" height="1" width="1" file="../myo_sim/scene/floor0.png"/>
+    <texture name="texfloor" type="2d" height="1" width="1" file="scene/floor0.png"/>
     <material name="matfloor" reflectance="0.01" texture="texfloor" texrepeat="1 1" texuniform="true"/>
 
     <!-- Logo -©vk©-->
-    <texture name="textlogo" type="2d" file="../myo_sim/scene/myosuite_logo.png"/>
-    <mesh name="logo" file="../myo_sim/scene/myosuite_logo.msh" scale="2 2 2"/>
+    <texture name="textlogo" type="2d" file="scene/myosuite_logo.png"/>
+    <mesh name="logo" file="scene/myosuite_logo.msh" scale="2 2 2"/>
     <material name="matlogo" texture="textlogo"/>
 
     <!-- Fense -©vk©-->

@@ -5,7 +5,6 @@ joints use _r/_l suffixes.
 """
 
 import argparse
-import sys
 from pathlib import Path
 
 import mujoco
@@ -22,7 +21,6 @@ from muscle_analysis_utils import (
 OUT_DIR = Path(__file__).resolve().parent / "output" / "muscle_analysis"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_MODEL = "myotorso_arms"
 
 ACTIVATION = 1.0
@@ -33,8 +31,7 @@ JOINT_SUFFIX = {"right": "_r", "left": "_l"}
 
 
 def load_model(model_name: str):
-    sys.path.insert(0, str(REPO_ROOT))
-    from mjspec.prototype_mjspec_attach import build_model
+    from myo_sim.mjspec.prototype_mjspec_attach import build_model
 
     return build_model(model_name)
 
@@ -44,8 +41,7 @@ def load_equality_map(model, model_name: str):
 
 
 def model_choices():
-    sys.path.insert(0, str(REPO_ROOT))
-    from mjspec.prototype_mjspec_attach import MODEL_REGISTRY
+    from myo_sim.mjspec.prototype_mjspec_attach import MODEL_REGISTRY
 
     return tuple(sorted(MODEL_REGISTRY))
 

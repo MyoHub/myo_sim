@@ -18,9 +18,9 @@ dist/
 tests/output/
 
 # Temporary MuJoCo XML wrappers created at runtime
-leg/_tmp_myoleg.xml
-torso/_tmp_myotorso.xml
-arm/_tmp_myoarm.xml
+myo_sim/models/leg/_tmp_myoleg.xml
+myo_sim/models/torso/_tmp_myotorso.xml
+myo_sim/models/arm/_tmp_myoarm.xml
 
 # Scratch / sandbox
 sandbox/

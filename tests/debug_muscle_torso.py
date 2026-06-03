@@ -8,6 +8,7 @@ from pathlib import Path
 
 import mujoco
 import numpy as np
+import myo_sim
 
 from muscle_analysis_utils import (
     compute_moment_arm_curve,
@@ -19,7 +20,7 @@ from muscle_analysis_utils import (
 OUT_DIR = Path(__file__).resolve().parent / "output" / "muscle_analysis"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-BASE_DIR = Path(__file__).resolve().parent.parent / "torso"
+BASE_DIR = myo_sim.MODELS_DIR / "torso"
 XML_PATH = BASE_DIR / "myotorso.xml"
 
 EPS = 1e-5

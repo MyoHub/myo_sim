@@ -51,9 +51,9 @@
                 <site name="thoracis_spine" pos="-.018 .194 0" class="myotorso_marker"/>
                 <site name="chest" pos="0.084 0.221 0" class="myotorso_marker"/>
 
-                <include file="../../myo_sim/head/assets/myohead_rigid_chain.xml"/>
-                <!-- <include file="../../myo_sim/arm/assets/myoarm_simpleR_chain.xml"/> -->
-                <!-- <include file="../../myo_sim/arm/assets/myoarm_simpleL_chain.xml"/> -->
+                <include file="../../head/assets/myohead_rigid_chain.xml"/>
+                <!-- <include file="../../arm/assets/myoarm_simpleR_chain.xml"/> -->
+                <!-- <include file="../../arm/assets/myoarm_simpleL_chain.xml"/> -->
             </body>
 
         </body>
