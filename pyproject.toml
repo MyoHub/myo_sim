@@ -29,7 +29,7 @@ include = ["myo_sim*"]
 [tool.setuptools.package-data]
 myo_sim = [
     "models/**/*",
-    "mjspec/**/*",
+    "build/**/*",
 ]
 
 [tool.pytest.ini_options]

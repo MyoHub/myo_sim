@@ -3,10 +3,11 @@ from pathlib import Path
 
 import mujoco
 import myo_sim
-from myo_sim.mjspec.prototype_mjspec_attach import build_model
+from myo_sim.build.compose import build_model
 
 model_paths = [
     "arm/myoarm_r.xml",
+    "leg/myolegs.xml",
     "leg/myolegs_abdomen.xml",
     "torso/myotorso.xml",
     "torso/myotorso_base.xml",

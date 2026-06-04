@@ -15,7 +15,7 @@ import mujoco
 import musclemimic_models
 import numpy as np
 import pytest
-from myo_sim.mjspec.prototype_mjspec_attach import build_model
+from myo_sim.build.compose import build_model
 
 sys.path.insert(0, str(Path(__file__).parent))
 from muscle_analysis_utils import (

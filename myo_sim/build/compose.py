@@ -2,9 +2,9 @@
 
 Run from the repository root:
 
-    python -m myo_sim.mjspec.prototype_mjspec_attach
-    python -m myo_sim.mjspec.prototype_mjspec_attach --model myotorso_right_arm
-    python -m myo_sim.mjspec.prototype_mjspec_attach --view
+    python -m myo_sim.build.compose
+    python -m myo_sim.build.compose --model myotorso_arm_r
+    python -m myo_sim.build.compose --view
 
 The model registry below controls how each composed model is built. The default
 `myotorso_arms` model loads the right arm and mirrors it in memory to create the
@@ -14,6 +14,7 @@ left arm before attaching both specs to the torso.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
 import argparse
 import sys
@@ -72,9 +73,19 @@ LEFT_ARM_ATTACH_SITE = "arm_attach_l"
 LEFT_ARM_STRATEGY_MIRROR_RIGHT = "mirror_right_to_left"
 LEFT_ARM_STRATEGY_NONE = "none"
 
+
+class BuildStrategy(str, Enum):
+    TORSO_ARMS = "torso_arms"
+    ARMS_BODY = "arms_body"
+    RIGHT_HAND = "right_hand"
+    BOTH_HANDS = "both_hands"
+    FULLBODY = "fullbody"
+
+
 @dataclass(frozen=True)
 class ModelRegistration:
     name: str
+    build_strategy: BuildStrategy
     left_arm_strategy: str
     description: str
     include_left_arm_contacts: bool
@@ -83,47 +94,47 @@ class ModelRegistration:
     add_root_freejoint: bool = False
     root_pos: tuple[float, float, float] = (0, 0, 1)
     mirror_rules: MirrorRules = MirrorRules()
-    arms_body_only: bool = False
-    right_hand_from_arm: bool = False
-    both_hands_from_arm: bool = False
 
 
 MODEL_REGISTRY = {
     "myotorso_arms": ModelRegistration(
         name="myotorso_arms",
+        build_strategy=BuildStrategy.TORSO_ARMS,
         left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
         description="Torso + right arm + mirrored-right left arm",
         include_left_arm_contacts=True,
     ),
     "myoarms": ModelRegistration(
         name="myoarms",
+        build_strategy=BuildStrategy.ARMS_BODY,
         left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
         description="Base scene + torso scaffold + mirrored arms",
         include_left_arm_contacts=True,
-        arms_body_only=True,
     ),
     "myotorso_arm_r": ModelRegistration(
         name="myotorso_arm_r",
+        build_strategy=BuildStrategy.TORSO_ARMS,
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
         description="Torso + right arm only",
         include_left_arm_contacts=False,
     ),
     "myohand_r": ModelRegistration(
         name="myohand_r",
+        build_strategy=BuildStrategy.RIGHT_HAND,
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
         description="Torso base + right hand derived from pruned right arm",
         include_left_arm_contacts=False,
-        right_hand_from_arm=True,
     ),
     "myohands": ModelRegistration(
         name="myohands",
+        build_strategy=BuildStrategy.BOTH_HANDS,
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
         description="Torso base + right hand + mirrored-left hand from pruned arms",
         include_left_arm_contacts=False,
-        both_hands_from_arm=True,
     ),
     "myofullbody": ModelRegistration(
         name="myofullbody",
+        build_strategy=BuildStrategy.FULLBODY,
         left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
         description="Full body: torso + mirrored arms + legs",
         include_left_arm_contacts=True,
@@ -282,6 +293,14 @@ def build_both_hands_from_arm_model():
     return torso.compile()
 
 
+def build_right_hand_model(registration: ModelRegistration):
+    return build_right_hand_from_arm_model()
+
+
+def build_both_hands_model(registration: ModelRegistration):
+    return build_both_hands_from_arm_model()
+
+
 def load_left_arm_spec(registration: ModelRegistration):
     if registration.left_arm_strategy == LEFT_ARM_STRATEGY_MIRROR_RIGHT:
         return load_mirrored_left_arm_spec(registration.mirror_rules)
@@ -293,16 +312,7 @@ def load_left_arm_spec(registration: ModelRegistration):
     )
 
 
-def build_registered_model(registration: ModelRegistration):
-    if registration.right_hand_from_arm:
-        return build_right_hand_from_arm_model()
-
-    if registration.both_hands_from_arm:
-        return build_both_hands_from_arm_model()
-
-    if registration.arms_body_only:
-        return build_arms_body_model(registration)
-
+def build_torso_arms_model(registration: ModelRegistration):
     torso = load_torso_spec(registration)
     right_arm = load_right_arm_spec()
     left_arm = load_left_arm_spec(registration)
@@ -310,12 +320,35 @@ def build_registered_model(registration: ModelRegistration):
     attach_to_site(torso, right_arm, find_site(torso, RIGHT_ARM_ATTACH_SITE))
     if left_arm is not None:
         attach_to_site(torso, left_arm, find_site(torso, LEFT_ARM_ATTACH_SITE))
-    if registration.include_legs:
-        full_body = find_body(torso, "Full Body")
-        legs_frame = full_body.add_frame(name="legs_attach")
-        attach_to_frame(torso, load_legs_spec(), legs_frame)
 
     return torso.compile()
+
+
+def build_fullbody_model(registration: ModelRegistration):
+    torso = load_torso_spec(registration)
+    attach_to_site(torso, load_right_arm_spec(), find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    left_arm = load_left_arm_spec(registration)
+    if left_arm is not None:
+        attach_to_site(torso, left_arm, find_site(torso, LEFT_ARM_ATTACH_SITE))
+
+    full_body = find_body(torso, "Full Body")
+    legs_frame = full_body.add_frame(name="legs_attach")
+    attach_to_frame(torso, load_legs_spec(), legs_frame)
+
+    return torso.compile()
+
+
+BUILDERS = {
+    BuildStrategy.TORSO_ARMS: build_torso_arms_model,
+    BuildStrategy.ARMS_BODY: build_arms_body_model,
+    BuildStrategy.RIGHT_HAND: build_right_hand_model,
+    BuildStrategy.BOTH_HANDS: build_both_hands_model,
+    BuildStrategy.FULLBODY: build_fullbody_model,
+}
+
+
+def build_registered_model(registration: ModelRegistration):
+    return BUILDERS[registration.build_strategy](registration)
 
 
 def build_model(model_name: str):
@@ -340,7 +373,7 @@ def view_model(model):
             script = Path(__file__).name
             raise SystemExit(
                 "MuJoCo passive viewer requires mjpython on macOS.\n"
-                f"Run: mjpython -m myo_sim.mjspec.{Path(script).stem} --view"
+                f"Run: mjpython -m myo_sim.build.{Path(script).stem} --view"
             ) from exc
         raise
 

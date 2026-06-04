@@ -7,8 +7,8 @@ ROOT = Path(__file__).resolve().parents[1]
 MODELS_DIR = myo_sim.MODELS_DIR
 
 
-def test_mjspec_contact_sources_are_centralized():
-    source = (ROOT / "myo_sim" / "mjspec" / "prototype_mjspec_attach.py").read_text()
+def test_build_contact_sources_are_centralized():
+    source = (ROOT / "myo_sim" / "build" / "compose.py").read_text()
 
     assert 'ROOT / "contacts" / "myoarm_contacts.xml"' in source
     assert 'ROOT / "contacts" / "myolegs_contacts.xml"' in source

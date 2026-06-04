@@ -4,12 +4,17 @@ Naming convention: muscles and joints use _r/_l suffixes.
 """
 
 from pathlib import Path
+import sys
 
-import mujoco
-import numpy as np
-import myo_sim
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
-from muscle_analysis_utils import (
+import mujoco  # noqa: E402
+import numpy as np  # noqa: E402
+import myo_sim  # noqa: E402
+
+from muscle_analysis_utils import (  # noqa: E402
     compute_moment_arm_curve,
     compute_force_length_curve,
     parse_model_joint_equalities,

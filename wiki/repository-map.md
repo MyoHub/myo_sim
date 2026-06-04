@@ -8,7 +8,7 @@ This page describes how `myo_sim` is organized so agents can quickly find the ri
 - `myo_sim/models/` - Model directories and shared assets packaged into wheels.
 - `myo_sim/models/<model>/assets/` - Model-local MJCF fragments for assets, kinematic chains, tendons, muscles, and related model pieces.
 - `myo_sim/models/contacts/` - Shared contact-pair XML files used by MjSpec composition.
-- `myo_sim/mjspec/` - Python prototypes for composing models with `mujoco.MjSpec`.
+- `myo_sim/build/` - Python prototypes for composing models with `mujoco.MjSpec`.
 - `myo_sim/models/meshes/` - Shared `.stl` mesh files referenced by model XMLs.
 - `myo_sim/models/textures/` - Shared texture assets.
 - `myo_sim/models/scene/` - Scene wrappers, floors, cameras, lighting, and display assets.
@@ -55,13 +55,13 @@ Contacts that are owned by a composed model should live in `contacts/`, not in a
 - `myo_sim/models/contacts/myolegs_contacts.xml` - Leg-to-leg contact pairs.
 - `myo_sim/models/contacts/myofullbody_contacts.xml` - Cross-part full-body contact pairs, such as arm-to-leg pairs.
 
-MjSpec composition should inject these contacts with `add_contact_pairs()` in `myo_sim/mjspec/utils.py`. Static XML entry points should only include contacts when that model directly owns the complete contact context. Cross-part contacts should not be hidden inside part-local XML fragments.
+MjSpec composition should inject these contacts with `add_contact_pairs()` in `myo_sim/build/utils.py`. Static XML entry points should only include contacts when that model directly owns the complete contact context. Cross-part contacts should not be hidden inside part-local XML fragments.
 
 ## MjSpec Structure
 
-`myo_sim/mjspec/prototype_mjspec_attach.py` is the current MjSpec composition entry point. It registers named composed models and builds them from reusable torso, arm, leg, and hand specs.
+`myo_sim/build/compose.py` is the current MjSpec composition entry point. It registers named composed models and builds them from reusable torso, arm, leg, and hand specs.
 
-Use `myo_sim/mjspec/utils.py` for shared XML parsing, mirroring, attachment, and contact-pair helpers. Use `myo_sim/mjspec/hand.py` for hand-specific pruning logic.
+Use `myo_sim/build/utils.py` for shared XML parsing, mirroring, attachment, and contact-pair helpers. Use `myo_sim/build/hand.py` for hand-specific pruning logic.
 
 MjSpec should be the preferred place for deterministic composition logic: attaching parts, mirroring symmetric parts, injecting contact pairs, and deriving simple variants from canonical fragments. Static XML should remain the source for canonical part definitions, not a place to duplicate every assembled variant.
 
@@ -103,7 +103,7 @@ Rules:
 - Add model-local XML fragments under `myo_sim/models/<model>/assets/`.
 - Add complete loadable model entry points under the relevant `myo_sim/models/<model>/` directory.
 - Add cross-part contact definitions under `myo_sim/models/contacts/`.
-- Add MjSpec composition helpers under `myo_sim/mjspec/`.
+- Add MjSpec composition helpers under `myo_sim/build/`.
 - Add regression tests under `tests/` when the change affects composition, naming, paths, parsing, or expected model behavior.
 - Update the relevant model `README.md` when changing model behavior, conversion assumptions, or manual adjustments.
 - Do not add assistive devices, exoskeletons, orthoses, prostheses, controllers, or device-specific assets to this repository. Put them in `myoassist` and keep only biological model interfaces here if needed.
@@ -121,15 +121,15 @@ Rules:
 
 - Use `uv run` for Python commands.
 - For static model-loading changes, run focused MuJoCo load tests first, then broader tests as needed.
-- For MjSpec composition changes, run the relevant registered model from `myo_sim/mjspec/prototype_mjspec_attach.py`.
+- For MjSpec composition changes, run the relevant registered model from `myo_sim/build/compose.py`.
 - Add focused regression tests for path, registry, or parsing conventions so future moves fail loudly.
 
 Examples:
 
 ```bash
 uv run pytest tests/test_contact_paths.py
-uv run python -m myo_sim.mjspec.prototype_mjspec_attach --model myoarms
-uv run python -m myo_sim.mjspec.prototype_mjspec_attach --model myofullbody
+uv run python -m myo_sim.build.compose --model myoarms
+uv run python -m myo_sim.build.compose --model myofullbody
 ```
 
 ## Navigation Heuristics
@@ -140,7 +140,7 @@ uv run python -m myo_sim.mjspec.prototype_mjspec_attach --model myofullbody
 - If adding or changing tendons, start in `myo_sim/models/<model>/assets/*_tendon.xml`.
 - If adding or changing materials, meshes, or texture declarations, start in `myo_sim/models/<model>/assets/*_assets.xml`.
 - If adding or changing cross-part contacts, start in `myo_sim/models/contacts/` and then check MjSpec injection.
-- If adding or changing MjSpec composition, start in `myo_sim/mjspec/prototype_mjspec_attach.py` and `myo_sim/mjspec/utils.py`.
+- If adding or changing MjSpec composition, start in `myo_sim/build/compose.py` and `myo_sim/build/utils.py`.
 - If adding or changing assistive devices, work in `myoassist`, not `myo_sim`.
 - If changing model quality or symmetry analysis, inspect `tests/muscle_analysis_utils.py` and the relevant `tests/debug_muscle_*.py` script.
 
