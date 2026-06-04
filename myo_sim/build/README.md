@@ -14,9 +14,10 @@ Available registered models:
 - `myotorso_arms`: full torso plus right arm and a mirrored-left arm.
 - `myotorso_right_arm`: full torso plus right arm only.
 - `myofullbody`: torso, mirrored arms, and legs.
-- `myoarms`: lightweight torso base plus mirrored arms.
-- `myohand_r`: torso base plus a right hand derived by pruning `myoarm_r`.
-- `myohands`: torso base plus right and mirrored-left hands derived from arm specs.
+- `myolegs_abdomen`: simple abdomen scaffold plus legs.
+- `myoarms`: passive anatomical torso scaffold plus mirrored arms.
+- `myohand_r`: passive anatomical torso scaffold plus a right hand derived by pruning `myoarm_r`.
+- `myohands`: passive anatomical torso scaffold plus right and mirrored-left hands derived from arm specs.
 
 `utils.py` contains shared XML and mirroring helpers. `hand.py` contains the
 hand-specific pruning logic used to derive hand-only specs from arm specs.

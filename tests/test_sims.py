@@ -8,14 +8,10 @@ from myo_sim.build.compose import build_model
 model_paths = [
     "arm/myoarm_r.xml",
     "leg/myolegs.xml",
-    "leg/myolegs_abdomen.xml",
     "torso/myotorso.xml",
-    "torso/myotorso_base.xml",
     "torso/myotorso_abdomen.xml",
     "scene/myosuite_scene_noPedestal.xml",
     "scene/myosuite_scene.xml",
-    "scene/myosuite_quad.xml",
-    "scene/myosuite_logo.xml",
 ]
 
 

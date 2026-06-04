@@ -22,7 +22,6 @@ _FRAGMENT_CATALOG: list[tuple[str, str, int]] = [
     # Current static models.
     ("myoarm_r", "arm/myoarm_r.xml", 1),
     ("myolegs", "leg/myolegs.xml", 1),
-    ("myolegs_abdomen", "leg/myolegs_abdomen.xml", 1),
     ("myotorso", "torso/myotorso.xml", 1),
 ]
 
@@ -34,7 +33,6 @@ for _name, _rel, _ver in _FRAGMENT_CATALOG:
 REGISTRY = {
     "myoarm_r": "arm/myoarm_r.xml",
     "myolegs": "leg/myolegs.xml",
-    "myolegs_abdomen": "leg/myolegs_abdomen.xml",
     "myotorso": "torso/myotorso.xml",
 }
 

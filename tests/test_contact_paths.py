@@ -19,7 +19,7 @@ def test_build_contact_sources_are_centralized():
 
 
 def test_standalone_xml_models_do_not_include_contact_pairs():
-    for model_xml in (MODELS_DIR / "leg" / "myolegs.xml", MODELS_DIR / "leg" / "myolegs_abdomen.xml"):
+    for model_xml in (MODELS_DIR / "leg" / "myolegs.xml",):
         source = model_xml.read_text()
 
         assert "contacts.xml" not in source

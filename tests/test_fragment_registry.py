@@ -45,4 +45,5 @@ def test_fragment_info_attributes():
 
 def test_contains():
     assert "myoarm_r" in myo_sim.FragmentRegistry
+    assert "myolegs_abdomen" not in myo_sim.FragmentRegistry
     assert "does_not_exist" not in myo_sim.FragmentRegistry
