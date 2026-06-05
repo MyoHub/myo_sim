@@ -36,6 +36,12 @@
 			<default class="sidesite">
 				<site group="3" size="0.0005" />
 			</default>
+			<default class="wrap">
+				<geom group="3" rgba="0.19 0.83 0.78 0.2" contype="0" conaffinity="0" />
+			</default>
+			<default class="marker">
+				<site rgba="1 0.1 0.5 0.5" size="0.001" group="4" />
+			</default>
 			<default class="motor">
 				<general gainprm="5 0 0 0 0 0 0 0 0 0" />
 			</default>

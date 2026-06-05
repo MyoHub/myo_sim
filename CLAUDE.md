@@ -49,7 +49,7 @@ Models are composed via MuJoCo's `<include>` and `<compiler meshdir>` mechanisms
 
 - **Assets XMLs** (`*_assets.xml`) declare meshes, materials, tendons.
 - **Body/Chain XMLs** (`*_body.xml`, `*_chain.xml`) define the kinematic tree, joints, muscles, and contact geometries.
-- **Top-level XMLs** (e.g., `myo_sim/models/arm/myoarm_r.xml`) define directly loadable static models.
+- **Top-level XMLs** define directly loadable static models where a part is self-contained; torso-dependent parts are composed through `myo_sim/build/compose.py`.
 - **MjSpec models** compose mirrored arms, legs, contacts, and full-body variants in `myo_sim/build/compose.py`.
 
 All meshes live in `myo_sim/models/meshes/` and are shared across models. `scene/` XMLs wrap individual models with environment assets for rendering.

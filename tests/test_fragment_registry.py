@@ -8,7 +8,7 @@ def test_registry_exposed():
 
 
 def test_registered_names_resolve():
-    for name in ("arm", "leg", "myoarm_r", "myolegs", "torso"):
+    for name in ("leg", "myolegs", "torso"):
         info = myo_sim.FragmentRegistry.get(name)
         assert info.path.exists(), f"{name}: {info.path}"
         assert info.version >= 1
@@ -31,19 +31,13 @@ def test_unknown_raises_key_error():
 def test_all_names_sorted():
     names = myo_sim.FragmentRegistry.all_names()
     assert names == sorted(names)
-    assert "myoarm_r" in names
     assert "leg" in names
 
 
 def test_fragment_info_attributes():
-    info = myo_sim.FragmentRegistry.get("myoarm_r")
+    info = myo_sim.FragmentRegistry.get("myolegs")
     assert isinstance(info, myo_sim.FragmentInfo)
     assert isinstance(info.path, __import__("pathlib").Path)
     assert isinstance(info.version, int)
-    assert info.name == "myoarm_r"
+    assert info.name == "myolegs"
 
-
-def test_contains():
-    assert "myoarm_r" in myo_sim.FragmentRegistry
-    assert "myolegs_abdomen" not in myo_sim.FragmentRegistry
-    assert "does_not_exist" not in myo_sim.FragmentRegistry

@@ -12,7 +12,7 @@ python -m myo_sim.build.compose --model myotorso_arms --view
 Available registered models:
 
 - `myotorso_arms`: full torso plus right arm and a mirrored-left arm.
-- `myotorso_right_arm`: full torso plus right arm only.
+- `myotorso_arm_r`: full torso plus right arm only.
 - `myofullbody`: torso, mirrored arms, and legs.
 - `myolegs_abdomen`: simple abdomen scaffold plus legs.
 - `myoarms`: passive anatomical torso scaffold plus mirrored arms.

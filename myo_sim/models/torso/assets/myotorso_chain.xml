@@ -504,8 +504,52 @@
                   <geom name="torso_geom_12" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" type="mesh"  mesh="torso_geom_12_thoracic1_s"/>
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh"  mesh="torso_geom_13_ribcage_s"/>
                   <body name="Arm_attachment" pos="0.02 0.37 0" euler="-1.57079632679 0 1.57079632679">
-                       <site name="arm_attach_r" size="0.01"/>
-                       <site name="arm_attach_l" size="0.01"/>
+                    <body name="chest_r" pos="0 0 0" euler="1.57079632679 -1.57079632679 0">
+                      <geom class="wrap" name="Thorax_ellipsoid" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08"/>
+                      <geom class="wrap" name="thorax_ellipsoid_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08"/>
+                      <geom class="wrap" name="Thorax_ellipsoid_PECM2" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
+                      <geom class="wrap" name="thorax_ellipsoid_PECM2_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
+                      <geom class="wrap" name="Thorax_ellipsoid_PECM3" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
+                      <geom class="wrap" name="thorax_ellipsoid_PECM3_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>
+                      <site name="PECM2_PECM2-P3_r" pos="0.03091 -0.03922 0.09705"/>
+                      <site name="PECM2_PECM2-P3_l" pos="0.03091 -0.03922 -0.09705"/>
+                      <site name="PECM2_PECM2-P4_r" pos="0.02769 -0.04498 0.02271"/>
+                      <site name="PECM2_PECM2-P4_l" pos="0.02769 -0.04498 -0.02271"/>
+                      <site name="Thorax_ellipsoid_PECM2_3_sidesite_r" pos="0.7614 0.6727 0.8709"/>
+                      <site name="Thorax_ellipsoid_PECM2_3_sidesite_l" pos="0.7614 0.6727 -0.8709"/>
+                      <site name="PECM3_PECM3-P3_r" pos="0.0525 -0.08417 0.08935"/>
+                      <site name="PECM3_PECM3-P3_l" pos="0.0525 -0.08417 -0.08935"/>
+                      <site name="PECM3_PECM3-P4_r" pos="0.05724 -0.11654 0.03787"/>
+                      <site name="PECM3_PECM3-P4_l" pos="0.05724 -0.11654 -0.03787"/>
+                      <site name="Thorax_ellipsoid_PECM3_3_sidesite_r" pos="0.7614 0.6727 0.8709"/>
+                      <site name="Thorax_ellipsoid_PECM3_3_sidesite_l" pos="0.7614 0.6727 -0.8709"/>
+                      <site name="LAT1_LAT1-P4_r" pos="-0.11859497376930025 -0.079928388492435526 0.068157061603091193"/>
+                      <site name="LAT1_LAT1-P4_l" pos="-0.11859497376930025 -0.079928388492435526 -0.068157061603091193"/>
+                      <site name="LAT1_LAT1-P5_r" pos="-0.11828 -0.10118 0.03316"/>
+                      <site name="LAT1_LAT1-P5_l" pos="-0.11828 -0.10118 -0.03316"/>
+                      <site name="LAT1_LAT1-P6_r" pos="-0.09578 -0.11724 0.00882"/>
+                      <site name="LAT1_LAT1-P6_l" pos="-0.09578 -0.11724 -0.00882"/>
+                      <site name="LAT2_LAT2-P4_r" pos="-0.12371858734822989 -0.12417032086185528 0.077034033720721373"/>
+                      <site name="LAT2_LAT2-P4_l" pos="-0.12371858734822989 -0.12417032086185528 -0.077034033720721373"/>
+                      <site name="LAT2_LAT2-P5_r" pos="-0.10992 -0.16908 0.02878"/>
+                      <site name="LAT2_LAT2-P5_l" pos="-0.10992 -0.16908 -0.02878"/>
+                      <site name="LAT2_LAT2-P6_r" pos="-0.07186 -0.18818 0.00815"/>
+                      <site name="LAT2_LAT2-P6_l" pos="-0.07186 -0.18818 -0.00815"/>
+                      <site name="LAT3_LAT3-P4_r" pos="-0.1204266823427011 -0.15954523000255943 0.092743411376397689"/>
+                      <site name="LAT3_LAT3-P4_l" pos="-0.1204266823427011 -0.15954523000255943 -0.092743411376397689"/>
+                      <site name="LAT3_LAT3-P5_r" pos="-0.11157 -0.19387 0.05532"/>
+                      <site name="LAT3_LAT3-P5_l" pos="-0.11157 -0.19387 -0.05532"/>
+                      <site name="LAT3_LAT3-P6_r" pos="-0.07117 -0.24858 0.00907"/>
+                      <site name="LAT3_LAT3-P6_l" pos="-0.07117 -0.24858 -0.00907"/>
+                      <site class="marker" name="C7_marker_r" pos="-0.05613 0.05528 -0.00151"/>
+                      <site class="marker" name="C7_marker_l" pos="-0.05613 0.05528 0.00151"/>
+                      <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite_r" pos="0.0510248 -0.016092 -0.0573453" rgba="1 0 0 0"/>
+                      <site name="TMAJ_LAT_PEC_CORBhh_sphere_PECM2_2_sidesite_l" pos="0.0510248 -0.016092 0.0573453" rgba="1 0 0 0"/>
+                      <body name="cervical_spine" pos="-0.03634 0.025 0">
+                        <site name="arm_attach_r" pos="0.044675 -0.01807 0.025465" size="0.01"/>
+                        <site name="arm_attach_l" pos="0.044675 -0.01807 -0.025465" size="0.01"/>
+                      </body>
+                    </body>
                   </body>
                   <geom type="capsule" class="myotorso_coll" size="0.080 0.077" pos=".036 -.020 0" euler="0 0 1.57"/>
                   <geom type="ellipsoid" name="thorax_coll1" class="myotorso_coll" size="0.260 0.095 0.140" pos=".016 .160 0" euler="0 0 1.7"/>

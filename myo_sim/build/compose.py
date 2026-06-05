@@ -53,7 +53,6 @@ ROOT = MODELS_DIR
 
 TORSO_XML = ROOT / "torso" / "myotorso.xml"
 TORSO_ABDOMEN_XML = ROOT / "torso" / "myotorso_abdomen.xml"
-RIGHT_ARM_XML = ROOT / "arm" / "myoarm_r.xml"
 ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
 LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
@@ -278,7 +277,7 @@ def build_arms_body_model(registration: ModelRegistration):
 
 
 def load_right_hand_from_arm_spec():
-    hand = mujoco.MjSpec.from_file(str(RIGHT_ARM_XML))
+    hand = load_right_arm_spec()
     hand.modelname = "myohand_r_from_myoarm_r"
     hand.compiler.balanceinertia = True
     prune_arm_spec_to_hand(hand, "r")

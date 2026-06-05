@@ -6,7 +6,6 @@ from myo_sim.build.compose import build_model
 
 
 ARM_BODY_PAIRS = (
-    "chest",
     "clavicle",
     "scapula",
     "humerus",
@@ -43,8 +42,8 @@ def joint_id(model, name):
 
 
 def mirror_plane_x(model, data):
-    right = body_id(model, "chest_r")
-    left = body_id(model, "chest_l")
+    right = body_id(model, "clavicle_r")
+    left = body_id(model, "clavicle_l")
     return float((data.xipos[right, 0] + data.xipos[left, 0]) / 2.0)
 
 

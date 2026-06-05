@@ -16,11 +16,9 @@ MODELS_DIR = Path(__file__).resolve().parent / "models"
 # via FragmentRegistry before falling back to the simhive submodule.
 _FRAGMENT_CATALOG: list[tuple[str, str, int]] = [
     # Legacy part aliases.
-    ("arm", "arm/myoarm_r.xml", 1),
     ("leg", "leg/myolegs.xml", 1),
     ("torso", "torso/myotorso.xml", 1),
     # Current static models.
-    ("myoarm_r", "arm/myoarm_r.xml", 1),
     ("myolegs", "leg/myolegs.xml", 1),
     ("myotorso", "torso/myotorso.xml", 1),
 ]
@@ -31,7 +29,6 @@ for _name, _rel, _ver in _FRAGMENT_CATALOG:
         FragmentRegistry._store[_name] = FragmentInfo(name=_name, path=_p, version=_ver)
 
 REGISTRY = {
-    "myoarm_r": "arm/myoarm_r.xml",
     "myolegs": "leg/myolegs.xml",
     "myotorso": "torso/myotorso.xml",
 }
