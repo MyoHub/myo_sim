@@ -28,10 +28,8 @@ for _name, _rel, _ver in _FRAGMENT_CATALOG:
     if _p.exists():
         FragmentRegistry._store[_name] = FragmentInfo(name=_name, path=_p, version=_ver)
 
-REGISTRY = {
-    "myolegs": "leg/myolegs.xml",
-    "myotorso": "torso/myotorso.xml",
-}
+# Derived from _FRAGMENT_CATALOG so adding a model requires editing one place.
+REGISTRY = {name: rel for name, rel, _ in _FRAGMENT_CATALOG}
 
 
 def get_xml_path(name: str) -> Path:
