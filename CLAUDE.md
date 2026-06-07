@@ -56,14 +56,14 @@ All meshes live in `myo_sim/models/meshes/` and are shared across models. `scene
 
 ## Design Principles (issue #75)
 
-The target architecture separates concerns into four layers:
+The architecture separates concerns into four layers, implemented through file-naming conventions within `myo_sim/models/<part>/assets/` and the `myo_sim/build/` package:
 
-1. **Kinematics** (`kinematics/`) — immutable skeleton: bodies, joints, and global structural sites. Defined once; never duplicated across parts.
-2. **Parts** (`parts/`) — body-part-local actuation: muscles, tendons, wrapping surfaces, equality constraints, and local via/wrapping sites.
-3. **Interfaces** (`interfaces/`) — explicit cross-part attachment and muscle-ownership declarations.
-4. **Build** (`build/`) — deterministic composition pipeline that assembles kinematics + parts into full models.
+1. **Kinematics** (`*_chain.xml`) — immutable skeleton: bodies, joints, and global structural sites. Defined once per body part; never duplicated across assemblies.
+2. **Actuation** (`*_muscle.xml`, `*_tendon.xml`) — body-part-local actuation: muscles, tendons, wrapping surfaces, equality constraints, and local via/wrapping sites.
+3. **Assets** (`*_assets.xml`) — mesh, material, and texture declarations shared within a body part.
+4. **Build** (`myo_sim/build/compose.py`) — deterministic composition pipeline that assembles chains, actuation, and contacts into full models using MjSpec.
 
-When adding or editing model elements, respect this separation: structural geometry belongs in kinematics, actuation belongs in parts, and cross-part dependencies must be declared in interfaces.
+When adding or editing model elements, respect this separation: structural geometry belongs in chain files, actuation belongs in muscle/tendon files, and cross-part composition is handled in `myo_sim/build/`.
 
 ## Naming Conventions
 
