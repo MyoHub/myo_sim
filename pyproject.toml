@@ -28,7 +28,9 @@ include = ["myo_sim*"]
 
 [tool.setuptools.package-data]
 myo_sim = [
+    "models/*",
     "models/**/*",
+    "build/*",
     "build/**/*",
 ]
 
