@@ -33,19 +33,27 @@ ACTIVATION = 1.0
 
 # Joints that are inherently non-symmetric (lateral bending, axial rotation)
 SKIP_JOINTS = {
-    "lat_bending", "axial_rotation",
-    "L4_L5_LB", "L4_L5_AR", "Abs_t1",
-    "L3_L4_LB", "L3_L4_AR", "Abs_t2",
-    "L2_L3_LB", "L2_L3_AR", "Abs_r3",
-    "L1_L2_LB", "L1_L2_AR",
+    "lat_bending",
+    "axial_rotation",
+    "L4_L5_LB",
+    "L4_L5_AR",
+    "Abs_t1",
+    "L3_L4_LB",
+    "L3_L4_AR",
+    "Abs_t2",
+    "L2_L3_LB",
+    "L2_L3_AR",
+    "Abs_r3",
+    "L1_L2_LB",
+    "L1_L2_AR",
 }
 
 
 def comment_out_lines(src: Path, dst: Path, start: int, end: int):
     """Comment out lines [start, end] in src and write to dst."""
     lines = src.read_text().splitlines(True)
-    chunk = "".join(lines[start - 1:end])
-    lines[start - 1:end] = [f"<!--\n{chunk}-->\n"]
+    chunk = "".join(lines[start - 1 : end])
+    lines[start - 1 : end] = [f"<!--\n{chunk}-->\n"]
     dst.parent.mkdir(parents=True, exist_ok=True)
     dst.write_text("".join(lines))
 
@@ -88,15 +96,11 @@ def analyze_pair(base_muscle: str, base_joint: str):
         if tendon_id < 0:
             continue
 
-        jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
-        )
+        jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP)
         if jnt_range is None or ma is None or np.allclose(ma, 0, atol=1e-6):
             return None
 
-        mtu_len, forces = compute_force_length_curve(
-            model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=EQ_MAP
-        )
+        mtu_len, forces = compute_force_length_curve(model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=EQ_MAP)
 
         curves[side] = dict(
             muscle=muscle,
@@ -110,9 +114,7 @@ def analyze_pair(base_muscle: str, base_joint: str):
         return None
 
     out_path = OUT_DIR / f"{base_muscle}_{base_joint}.png"
-    return plot_pair(
-        curves, title=f"{base_muscle} @ {base_joint}", out_path=out_path
-    )
+    return plot_pair(curves, title=f"{base_muscle} @ {base_joint}", out_path=out_path)
 
 
 print("\nRunning TORSO muscle symmetry analysis...\n", flush=True)
@@ -123,9 +125,7 @@ skip_cnt = 0
 total = 0
 
 for act_id in range(model.nu):
-    base_muscle = mujoco.mj_id2name(
-        model, mujoco.mjtObj.mjOBJ_ACTUATOR, act_id
-    )
+    base_muscle = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, act_id)
     if base_muscle is None:
         continue
 
@@ -134,9 +134,7 @@ for act_id in range(model.nu):
         continue
 
     for jnt_id in range(model.njnt):
-        jnt_name = mujoco.mj_id2name(
-            model, mujoco.mjtObj.mjOBJ_JOINT, jnt_id
-        )
+        jnt_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, jnt_id)
         if jnt_name is None or jnt_name in SKIP_JOINTS:
             continue
 
@@ -144,9 +142,7 @@ for act_id in range(model.nu):
         if q0 == q1:
             continue
 
-        jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
-        )
+        jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP)
         if jnt_range is None or np.allclose(ma, 0, atol=1e-6):
             continue
 

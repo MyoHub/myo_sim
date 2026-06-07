@@ -101,20 +101,14 @@ def prune_arm_spec_to_hand(spec, side: str):
     removed_joints = {side_name(name, side) for name in RIGHT_HAND_REMOVED_JOINTS}
 
     for equality in list(spec.equalities):
-        if (
-            equality.name1 in removed_joints
-            or equality.name2 in removed_joints
-        ):
+        if equality.name1 in removed_joints or equality.name2 in removed_joints:
             spec.delete(equality)
 
     for actuator in list(spec.actuators):
         if base_actuator_name(actuator.name, side) not in RIGHT_HAND_ACTUATORS:
             spec.delete(actuator)
 
-    tendon_name_map = {
-        actuator.target: add_side_suffix(actuator.target, side)
-        for actuator in spec.actuators
-    }
+    tendon_name_map = {actuator.target: add_side_suffix(actuator.target, side) for actuator in spec.actuators}
     for tendon in list(spec.tendons):
         if tendon.name not in tendon_name_map:
             spec.delete(tendon)

@@ -12,11 +12,7 @@ def body_id(model, name: str) -> int:
 
 
 def xml_body_names(path):
-    return {
-        body.get("name")
-        for body in ET.parse(path).getroot().iter("body")
-        if body.get("name")
-    }
+    return {body.get("name") for body in ET.parse(path).getroot().iter("body") if body.get("name")}
 
 
 def test_chest_scaffold_is_torso_owned_not_arm_owned():

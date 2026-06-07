@@ -156,10 +156,7 @@ MODEL_REGISTRY = {
 def pair_is_supported(pair, include_left_arm_contacts: bool):
     if include_left_arm_contacts:
         return True
-    return not (
-        pair.get("geom1", "").endswith("_l")
-        or pair.get("geom2", "").endswith("_l")
-    )
+    return not (pair.get("geom1", "").endswith("_l") or pair.get("geom2", "").endswith("_l"))
 
 
 def load_torso_spec(registration: ModelRegistration):
@@ -176,9 +173,7 @@ def load_torso_spec(registration: ModelRegistration):
     add_contact_pairs(
         torso,
         ARM_CONTACTS_XML,
-        include_pair=lambda pair: pair_is_supported(
-            pair, registration.include_left_arm_contacts
-        ),
+        include_pair=lambda pair: pair_is_supported(pair, registration.include_left_arm_contacts),
     )
     if registration.include_legs:
         add_contact_pairs(torso, LEG_CONTACTS_XML)
@@ -329,10 +324,7 @@ def load_left_arm_spec(registration: ModelRegistration):
         return load_mirrored_left_arm_spec(registration.mirror_rules)
     if registration.left_arm_strategy == LEFT_ARM_STRATEGY_NONE:
         return None
-    raise ValueError(
-        f"Unknown left arm strategy for {registration.name}: "
-        f"{registration.left_arm_strategy}"
-    )
+    raise ValueError(f"Unknown left arm strategy for {registration.name}: {registration.left_arm_strategy}")
 
 
 def build_torso_arms_model(registration: ModelRegistration):
@@ -392,9 +384,7 @@ def build_model(model_name: str):
         registration = MODEL_REGISTRY[model_name]
     except KeyError as exc:
         available = ", ".join(sorted(MODEL_REGISTRY))
-        raise ValueError(
-            f"Unknown model selection: {model_name}. Available: {available}"
-        ) from exc
+        raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
     return build_registered_model(registration)
 
 
@@ -408,8 +398,7 @@ def view_model(model):
         if sys.platform == "darwin" and "mjpython" in str(exc):
             script = Path(__file__).name
             raise SystemExit(
-                "MuJoCo passive viewer requires mjpython on macOS.\n"
-                f"Run: mjpython -m myo_sim.build.{Path(script).stem} --view"
+                f"MuJoCo passive viewer requires mjpython on macOS.\nRun: mjpython -m myo_sim.build.{Path(script).stem} --view"
             ) from exc
         raise
 
@@ -433,10 +422,7 @@ def main():
 
     model = build_model(args.model)
     registration = MODEL_REGISTRY[args.model]
-    print(
-        f"compiled {args.model}: "
-        f"nbody={model.nbody}, njnt={model.njnt}, nu={model.nu}"
-    )
+    print(f"compiled {args.model}: nbody={model.nbody}, njnt={model.njnt}, nu={model.nu}")
     print(f"description: {registration.description}")
 
     if args.view:

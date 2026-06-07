@@ -59,12 +59,8 @@ def analyze_pair(model, data, eq_map, base_muscle: str, base_joint: str, *, plot
         muscle = base_muscle + MUSCLE_SUFFIX[side]
         joint = base_joint + JOINT_SUFFIX[side]
 
-        act_id = mujoco.mj_name2id(
-            model, mujoco.mjtObj.mjOBJ_ACTUATOR, muscle
-        )
-        jnt_id = mujoco.mj_name2id(
-            model, mujoco.mjtObj.mjOBJ_JOINT, joint
-        )
+        act_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, muscle)
+        jnt_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, joint)
 
         if act_id < 0 or jnt_id < 0:
             return None
@@ -73,15 +69,11 @@ def analyze_pair(model, data, eq_map, base_muscle: str, base_joint: str, *, plot
         if tendon_id < 0:
             return None
 
-        jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS, eq_map=eq_map
-        )
+        jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS, eq_map=eq_map)
         if jnt_range is None or np.allclose(ma, 0, atol=5e-5):
             return None
 
-        mtu_len, forces = compute_force_length_curve(
-            model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=eq_map
-        )
+        mtu_len, forces = compute_force_length_curve(model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=eq_map)
 
         curves[side] = dict(
             muscle=muscle,
@@ -155,9 +147,7 @@ def run_all(model, data, eq_map, *, plot=False):
             if q0 == q1:
                 continue
 
-            jnt_range, ma = compute_moment_arm_curve(
-                model, data, tendon_id, jnt_id, eps=EPS, eq_map=eq_map
-            )
+            jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS, eq_map=eq_map)
             if jnt_range is None or np.allclose(ma, 0, atol=5e-5):
                 continue
 

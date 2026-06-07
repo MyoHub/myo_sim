@@ -44,6 +44,7 @@ CURVE_POINTS = 100
 # musclemimic uses _left suffix for left arm muscles; myo_sim uses _l
 # ---------------------------------------------------------------------------
 
+
 def _ref_to_tgt_actuator(name: str) -> str:
     if name.endswith("_left"):
         return name[: -len("_left")] + "_l"
@@ -248,6 +249,7 @@ def _joint_region(ref_jnt_name: str) -> str | None:
 # Module-scoped fixtures: load models once per test session
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture(scope="module")
 def ref_model():
     return mujoco.MjModel.from_xml_path(str(REF_XML))
@@ -272,14 +274,12 @@ def tgt_eq_map(tgt_model):
 # Shared actuator list — cheap to build, just name lookups
 # ---------------------------------------------------------------------------
 
+
 def _shared_actuator_names() -> list[str]:
     """Return ref-side actuator names whose tgt mapping also exists."""
     ref = mujoco.MjModel.from_xml_path(str(REF_XML))
     tgt = build_model(TGT_MODEL_NAME)
-    tgt_names = {
-        mujoco.mj_id2name(tgt, mujoco.mjtObj.mjOBJ_ACTUATOR, i)
-        for i in range(tgt.nu)
-    }
+    tgt_names = {mujoco.mj_id2name(tgt, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(tgt.nu)}
     shared = []
     for i in range(ref.nu):
         ref_name = mujoco.mj_id2name(ref, mujoco.mjtObj.mjOBJ_ACTUATOR, i)
@@ -290,14 +290,14 @@ def _shared_actuator_names() -> list[str]:
 
 _SHARED_MUSCLES = _shared_actuator_names()
 _SHARED_MUSCLES_BY_REGION = {
-    region: [name for name in _SHARED_MUSCLES if _actuator_region(name) == region]
-    for region in _REGIONS
+    region: [name for name in _SHARED_MUSCLES if _actuator_region(name) == region] for region in _REGIONS
 }
 
 
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
+
 
 def _check_muscle_equivalence(
     ref_act_name,
@@ -318,10 +318,7 @@ def _check_muscle_equivalence(
     ref_tendon_id = ref_model.actuator_trnid[ref_act_id, 0]
     tgt_tendon_id = tgt_model.actuator_trnid[tgt_act_id, 0]
 
-    tgt_joint_names = {
-        mujoco.mj_id2name(tgt_model, mujoco.mjtObj.mjOBJ_JOINT, i)
-        for i in range(tgt_model.njnt)
-    }
+    tgt_joint_names = {mujoco.mj_id2name(tgt_model, mujoco.mjtObj.mjOBJ_JOINT, i) for i in range(tgt_model.njnt)}
 
     joints_checked = 0
     failures = []
@@ -421,30 +418,22 @@ def _check_muscle_equivalence(
     if joints_checked == 0:
         pytest.skip("no joints with non-zero moment arm found")
 
-    assert not failures, (
-        f"{ref_act_name}: {len(failures)} joint(s) failed:\n" + "\n".join(failures)
-    )
+    assert not failures, f"{ref_act_name}: {len(failures)} joint(s) failed:\n" + "\n".join(failures)
 
 
 @pytest.mark.parametrize("ref_act_name", _SHARED_MUSCLES_BY_REGION["arms"])
 def test_arm_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map, tgt_eq_map):
-    _check_muscle_equivalence(
-        ref_act_name, "arms", ref_model, tgt_model, ref_eq_map, tgt_eq_map
-    )
+    _check_muscle_equivalence(ref_act_name, "arms", ref_model, tgt_model, ref_eq_map, tgt_eq_map)
 
 
 @pytest.mark.parametrize("ref_act_name", _SHARED_MUSCLES_BY_REGION["legs"])
 def test_leg_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map, tgt_eq_map):
-    _check_muscle_equivalence(
-        ref_act_name, "legs", ref_model, tgt_model, ref_eq_map, tgt_eq_map
-    )
+    _check_muscle_equivalence(ref_act_name, "legs", ref_model, tgt_model, ref_eq_map, tgt_eq_map)
 
 
 @pytest.mark.parametrize("ref_act_name", _SHARED_MUSCLES_BY_REGION["torso"])
 def test_torso_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map, tgt_eq_map):
-    _check_muscle_equivalence(
-        ref_act_name, "torso", ref_model, tgt_model, ref_eq_map, tgt_eq_map
-    )
+    _check_muscle_equivalence(ref_act_name, "torso", ref_model, tgt_model, ref_eq_map, tgt_eq_map)
 
 
 def test_actuator_coverage():
