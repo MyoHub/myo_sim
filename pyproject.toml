@@ -38,6 +38,7 @@ python_files = ["test_sims.py", "test_*.py"]
 
 [tool.ruff]
 line-length = 128
+extend-exclude = ["sandbox", ".claude"]
 
 [tool.ruff.lint]
 select = ["E", "F", "W"]

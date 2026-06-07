@@ -69,7 +69,7 @@ class TestMuscleMimicFullBody(unittest.TestCase):
         self.assertEqual(
             m.njnt,
             MUSCLEMIMIC_FULLBODY_SPEC["njnt"],
-            f"myofullbody.xml has {m.njnt} joints, expected {MUSCLEMIMIC_FULLBODY_SPEC['njnt']} " f"(musclemimic spec)",
+            f"myofullbody.xml has {m.njnt} joints, expected {MUSCLEMIMIC_FULLBODY_SPEC['njnt']} (musclemimic spec)",
         )
 
     def test_myofullbody_actuators(self):
@@ -77,7 +77,7 @@ class TestMuscleMimicFullBody(unittest.TestCase):
         self.assertEqual(
             m.nu,
             MUSCLEMIMIC_FULLBODY_SPEC["nu"],
-            f"myofullbody.xml has {m.nu} actuators, expected {MUSCLEMIMIC_FULLBODY_SPEC['nu']} " f"(musclemimic spec)",
+            f"myofullbody.xml has {m.nu} actuators, expected {MUSCLEMIMIC_FULLBODY_SPEC['nu']} (musclemimic spec)",
         )
 
     def test_myofullbody_report(self):

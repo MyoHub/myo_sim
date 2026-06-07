@@ -110,11 +110,7 @@ def add_contact_pairs(spec, contacts_xml: Path, include_pair=None):
             geomname2=pair.get("geom2"),
             condim=int(pair.get("condim")) if pair.get("condim") else None,
             solref=float_list(pair.get("solref")) if pair.get("solref") else None,
-            solreffriction=(
-                float_list(pair.get("solreffriction"))
-                if pair.get("solreffriction")
-                else None
-            ),
+            solreffriction=(float_list(pair.get("solreffriction")) if pair.get("solreffriction") else None),
             solimp=float_list(pair.get("solimp")) if pair.get("solimp") else None,
             margin=float(pair.get("margin")) if pair.get("margin") else None,
             gap=float(pair.get("gap")) if pair.get("gap") else None,
@@ -130,7 +126,7 @@ def mirror_name(value: str, rules: MirrorRules):
             return value.replace(old, new)
     for old, new in rules.prefix_replacements:
         if value.startswith(old):
-            return f"{new}{value[len(old):]}"
+            return f"{new}{value[len(old) :]}"
     if value == "MatSkin":
         return rules.mirrored_material
     if value.endswith("_r"):
@@ -148,9 +144,7 @@ def should_mirror_class_name(value: str, rules: MirrorRules):
 
 def mirror_reference(element, attr_name: str, attr_value: str, rules: MirrorRules):
     mirrored = mirror_name(attr_value, rules)
-    should_lowercase_geom = (attr_name == "name" and element.tag == "geom") or (
-        attr_name == "geom"
-    )
+    should_lowercase_geom = (attr_name == "name" and element.tag == "geom") or (attr_name == "geom")
     if should_lowercase_geom:
         for prefix in rules.lowercase_geom_prefixes:
             if mirrored.startswith(prefix):
@@ -163,11 +157,7 @@ def mirror_xyz_attribute(element, attr_name: str, rules: MirrorRules):
     if len(values) != 3:
         return
     element_name = element.get("name")
-    if (
-        element.tag == "body"
-        and element_name in rules.body_pos_x_mirror_names
-        and attr_name == "pos"
-    ):
+    if element.tag == "body" and element_name in rules.body_pos_x_mirror_names and attr_name == "pos":
         values[0] *= -1
     else:
         values[2] *= -1

@@ -24,12 +24,8 @@ def parse_joint_equalities(expanded_xml_path, model):
         if slave_name is None or master_name is None:
             continue
 
-        slave_id = mujoco.mj_name2id(
-            model, mujoco.mjtObj.mjOBJ_JOINT, slave_name
-        )
-        master_id = mujoco.mj_name2id(
-            model, mujoco.mjtObj.mjOBJ_JOINT, master_name
-        )
+        slave_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, slave_name)
+        master_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, master_name)
         if slave_id < 0 or master_id < 0:
             continue
 
@@ -77,14 +73,12 @@ def apply_eq_constraints(data, model, eq_map):
 
         slave_value = 0.0
         for power, coeff in enumerate(coeffs):
-            slave_value += coeff * (master_value ** power)
+            slave_value += coeff * (master_value**power)
 
         data.qpos[slave_q] = slave_value
 
 
-def compute_moment_arm_curve(
-    model, data, tendon_id, jnt_id, eps=1e-5, n=100, eq_map=None
-):
+def compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=1e-5, n=100, eq_map=None):
     """Compute moment arm curve for a tendon across a joint's range using finite differences."""
     qpos_id = model.jnt_qposadr[jnt_id]
     q0, q1 = model.jnt_range[jnt_id]
@@ -112,9 +106,7 @@ def compute_moment_arm_curve(
     return qs, ma
 
 
-def compute_force_length_curve(
-    model, data, act_id, jnt_id, activation=1.0, n=100, eq_map=None
-):
+def compute_force_length_curve(model, data, act_id, jnt_id, activation=1.0, n=100, eq_map=None):
     """Compute MTU force-length curve for an actuator across a joint's range."""
     qpos_id = model.jnt_qposadr[jnt_id]
     q0, q1 = model.jnt_range[jnt_id]
@@ -147,27 +139,21 @@ def pair_discrepancy_summary(
     force_atol=0.1,
 ):
     """Compare left/right curves and return pass/fail flags plus max discrepancies."""
-    r, l = curves["right"], curves["left"]
+    right, left = curves["right"], curves["left"]
 
-    moment_arm_diff = np.abs(r["moment_arms"] - l["moment_arms"])
+    moment_arm_diff = np.abs(right["moment_arms"] - left["moment_arms"])
     moment_arm_ok = np.allclose(
-        r["moment_arms"],
-        l["moment_arms"],
+        right["moment_arms"],
+        left["moment_arms"],
         atol=moment_arm_tol,
         rtol=moment_arm_rtol,
     )
 
-    force_diff = np.abs(r["forces"] - l["forces"])
-    force_scale = np.maximum(np.abs(r["forces"]), np.abs(l["forces"]))
-    force_ok = np.all(
-        (force_diff < force_atol) | (force_diff < force_rtol * force_scale)
-    )
+    force_diff = np.abs(right["forces"] - left["forces"])
+    force_scale = np.maximum(np.abs(right["forces"]), np.abs(left["forces"]))
+    force_ok = np.all((force_diff < force_atol) | (force_diff < force_rtol * force_scale))
     nonzero_force = force_scale > 0.0
-    force_pct = (
-        float(np.max(force_diff[nonzero_force] / force_scale[nonzero_force]) * 100.0)
-        if np.any(nonzero_force)
-        else 0.0
-    )
+    force_pct = float(np.max(force_diff[nonzero_force] / force_scale[nonzero_force]) * 100.0) if np.any(nonzero_force) else 0.0
 
     return {
         "ok": bool(moment_arm_ok and force_ok),
