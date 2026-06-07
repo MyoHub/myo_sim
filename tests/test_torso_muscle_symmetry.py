@@ -54,4 +54,3 @@ def test_discovered_torso_muscle_pairs_have_symmetric_curves(torso_model_context
             failures.append((pair.label, summary))
 
     assert not failures
-

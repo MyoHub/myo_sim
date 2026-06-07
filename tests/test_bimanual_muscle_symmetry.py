@@ -46,4 +46,3 @@ def test_discovered_bimanual_muscle_pairs_have_symmetric_curves(
             failures.append((pair.label, summary))
 
     assert not failures
-

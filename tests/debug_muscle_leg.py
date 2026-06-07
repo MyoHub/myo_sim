@@ -52,15 +52,11 @@ def analyze_pair(base_muscle: str, base_joint: str):
         if tendon_id < 0:
             return None
 
-        jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
-        )
+        jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP)
         if jnt_range is None or ma is None or np.allclose(ma, 0, atol=1e-6):
             return None
 
-        mtu_len, forces = compute_force_length_curve(
-            model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=EQ_MAP
-        )
+        mtu_len, forces = compute_force_length_curve(model, data, act_id, jnt_id, activation=ACTIVATION, eq_map=EQ_MAP)
 
         curves[side] = dict(
             muscle=muscle,
@@ -71,9 +67,7 @@ def analyze_pair(base_muscle: str, base_joint: str):
         )
 
     out_path = OUT_DIR / f"{base_muscle}_{base_joint}.png"
-    return plot_pair(
-        curves, title=f"{base_muscle} @ {base_joint}", out_path=out_path
-    )
+    return plot_pair(curves, title=f"{base_muscle} @ {base_joint}", out_path=out_path)
 
 
 print("\nRunning LEG muscle symmetry analysis...\n", flush=True)
@@ -85,9 +79,7 @@ total = 0
 
 
 for act_id in range(model.nu):
-    muscle_name = mujoco.mj_id2name(
-        model, mujoco.mjtObj.mjOBJ_ACTUATOR, act_id
-    )
+    muscle_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, act_id)
     if muscle_name is None or not muscle_name.endswith("_r"):
         continue
 
@@ -97,9 +89,7 @@ for act_id in range(model.nu):
         continue
 
     for jnt_id in range(model.njnt):
-        jnt_name = mujoco.mj_id2name(
-            model, mujoco.mjtObj.mjOBJ_JOINT, jnt_id
-        )
+        jnt_name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, jnt_id)
         if jnt_name is None:
             continue
 
@@ -107,9 +97,7 @@ for act_id in range(model.nu):
         if q0 == q1:
             continue
 
-        jnt_range, ma = compute_moment_arm_curve(
-            model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP
-        )
+        jnt_range, ma = compute_moment_arm_curve(model, data, tendon_id, jnt_id, eps=EPS, eq_map=EQ_MAP)
         if jnt_range is None or np.allclose(ma, 0, atol=1e-6):
             continue
 

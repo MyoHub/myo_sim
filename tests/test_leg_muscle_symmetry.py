@@ -49,4 +49,3 @@ def test_discovered_leg_muscle_pairs_have_symmetric_curves(leg_model_context, di
 
     assert checked_pairs
     assert not failures
-

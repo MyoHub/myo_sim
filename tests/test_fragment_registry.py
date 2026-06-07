@@ -40,4 +40,3 @@ def test_fragment_info_attributes():
     assert isinstance(info.path, __import__("pathlib").Path)
     assert isinstance(info.version, int)
     assert info.name == "myolegs"
-

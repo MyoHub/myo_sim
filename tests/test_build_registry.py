@@ -23,7 +23,4 @@ def test_every_registered_model_has_build_strategy():
         "myolegs_abdomen": BuildStrategy.LEGS_ABDOMEN,
     }
 
-    assert {
-        name: registration.build_strategy
-        for name, registration in MODEL_REGISTRY.items()
-    } == expected
+    assert {name: registration.build_strategy for name, registration in MODEL_REGISTRY.items()} == expected
