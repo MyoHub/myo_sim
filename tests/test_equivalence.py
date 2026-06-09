@@ -288,10 +288,23 @@ def _shared_actuator_names() -> list[str]:
     return shared
 
 
-_SHARED_MUSCLES = _shared_actuator_names()
-_SHARED_MUSCLES_BY_REGION = {
-    region: [name for name in _SHARED_MUSCLES if _actuator_region(name) == region] for region in _REGIONS
-}
+def _get_shared_muscles_by_region() -> dict[str, list[str]]:
+    """Compute shared muscles by region, called lazily during test generation."""
+    shared = _shared_actuator_names()
+    return {region: [name for name in shared if _actuator_region(name) == region] for region in _REGIONS}
+
+
+def pytest_generate_tests(metafunc):
+    """Lazily parametrize equivalence tests from the shared muscle list."""
+    region_map = {
+        "test_arm_muscle_equivalence": "arms",
+        "test_leg_muscle_equivalence": "legs",
+        "test_torso_muscle_equivalence": "torso",
+    }
+    if metafunc.function.__name__ in region_map and "ref_act_name" in metafunc.fixturenames:
+        region = region_map[metafunc.function.__name__]
+        by_region = _get_shared_muscles_by_region()
+        metafunc.parametrize("ref_act_name", by_region[region])
 
 
 # ---------------------------------------------------------------------------
@@ -421,17 +434,14 @@ def _check_muscle_equivalence(
     assert not failures, f"{ref_act_name}: {len(failures)} joint(s) failed:\n" + "\n".join(failures)
 
 
-@pytest.mark.parametrize("ref_act_name", _SHARED_MUSCLES_BY_REGION["arms"])
 def test_arm_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map, tgt_eq_map):
     _check_muscle_equivalence(ref_act_name, "arms", ref_model, tgt_model, ref_eq_map, tgt_eq_map)
 
 
-@pytest.mark.parametrize("ref_act_name", _SHARED_MUSCLES_BY_REGION["legs"])
 def test_leg_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map, tgt_eq_map):
     _check_muscle_equivalence(ref_act_name, "legs", ref_model, tgt_model, ref_eq_map, tgt_eq_map)
 
 
-@pytest.mark.parametrize("ref_act_name", _SHARED_MUSCLES_BY_REGION["torso"])
 def test_torso_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map, tgt_eq_map):
     _check_muscle_equivalence(ref_act_name, "torso", ref_model, tgt_model, ref_eq_map, tgt_eq_map)
 
