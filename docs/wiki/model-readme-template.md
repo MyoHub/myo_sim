@@ -4,14 +4,9 @@ This document describes when to update a model README, provides the canonical RE
 
 ---
 
-## When to update a model README
+## When to update
 
-Update (or create) a model README when any of the following occur:
-
-- A new body-part model is added to the repository.
-- A manual adjustment is made to the model (wrapping change, parameter re-fit, joint range edit, inertia correction).
-- An open issue linked in the README is resolved.
-- A paper describing or validating this model is published or posted as a preprint.
+Update when: a model is added, a manual adjustment is made, a linked issue is resolved, or a paper is published.
 
 ---
 
