@@ -63,7 +63,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.
 
 ## Citation
 
-If you find this repository useful in your research, please cite:
+If you find this repository useful in your research, please cite the following works:
 
 ```bibtex
 @misc{MyoSuite2022,
@@ -73,6 +73,15 @@ If you find this repository useful in your research, please cite:
   year      = {2022},
   doi       = {10.48550/ARXIV.2205.13600},
   url       = {https://arxiv.org/abs/2205.13600},
+}
+```
+
+```bibtex
+@article{Li2026MuscleMimic,
+  title={Towards Embodied AI with MuscleMimic: Unlocking full-body musculoskeletal motor learning at scale},
+  author={Li, Chengkun and Wang, Cheryl and Ziliotto, Bianca and Simos, Merkourios and Kovecses, Jozsef and Durandau, Guillaume and Mathis, Alexander},
+  journal={arXiv preprint arXiv:2603.25544},
+  year={2026}
 }
 ```
 
