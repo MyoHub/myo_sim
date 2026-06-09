@@ -1,105 +1,53 @@
 # Repository Map
 
-Navigation guide for agents and contributors working in `myo_sim`.
+Navigation guide for agents and contributors.
 
-## Top-Level Layout
+## Top-level layout
 
 ```
-myo_sim/              # installable Python package (pip install myo-sim)
-  __init__.py         # FragmentRegistry, MODELS_DIR, load(), get_xml_path(), _FRAGMENT_CATALOG, REGISTRY
-  fragments.py        # FragmentInfo and _FragmentRegistry class definitions
-  models/             # all MJCF content — packaged into wheels via package-data glob
+myo_sim/              # installable Python package
+  __init__.py         # FragmentRegistry, MODELS_DIR, load(), get_xml_path(), _FRAGMENT_CATALOG
+  fragments.py        # FragmentInfo and _FragmentRegistry definitions
+  models/             # all MJCF content — packaged into wheels
+    arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscles.xml, myoarm_r_tendons.xml, myoarm_r_assets.xml
+    leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
+    torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
+    head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml
+    leg/myolegs.xml               # standalone leg entry point
+    torso/myotorso.xml            # standalone torso entry point
+    torso/myotorso_abdomen.xml    # minimal abdomen scaffold
+    meshes/           # 127 shared STL files
+    contacts/         # myoarm_contacts.xml, myolegs_contacts.xml, myofullbody_contacts.xml
+    scene/            # scene wrapper XMLs for rendering
+    textures/         # shared textures
   build/
-    compose.py        # MODEL_REGISTRY, BuildStrategy enum, build_model(), all builder functions
-    utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), attach_to_site(),
-                      # build_child_xml_from_components(), build_mirrored_child_xml()
+    compose.py        # MODEL_REGISTRY, BuildStrategy, build_model(), all builder functions
+    utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), attach helpers
     hand.py           # prune_arm_spec_to_hand()
 tests/
-  test_sims.py                     # smoke test: loads static XML models
+  test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
-  test_contact_paths.py            # contacts centralized in contacts/, not embedded
-  test_mirror_symmetry.py          # body positions and joint axes are bilateral reflections
+  test_contact_paths.py            # contacts centralized, not embedded
+  test_mirror_symmetry.py          # body positions and axes are bilateral reflections
   test_chest_ownership.py          # chest_r in torso chain, not arm chain
-  test_leg_muscle_symmetry.py      # leg muscle moment arms symmetric L/R
-  test_torso_muscle_symmetry.py    # torso muscle moment arms symmetric L/R
-  test_equivalence.py              # numerical: myofullbody vs musclemimic reference (manual only)
-  test_bimanual_muscle_symmetry.py # bimanual arm muscle symmetry (manual only)
+  test_leg_muscle_symmetry.py      # leg moment arms symmetric L/R
+  test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # FragmentRegistry names and paths valid
-  test_passive_torso_build.py
-  test_legs_abdomen_build.py
-  muscle_analysis_utils.py         # moment arm / force-length computation helpers
-  muscle_symmetry_checks.py
-  debug_muscle_leg.py              # standalone analysis scripts (not pytest)
-  debug_muscle_torso.py
-  debug_muscle_bimanual.py
-docs/wiki/            # canonical wiki location (this directory)
-wiki/                 # old location, being migrated to docs/wiki/
-pyproject.toml        # package metadata, dependencies, pytest config, ruff config
+  test_passive_torso_build.py / test_legs_abdomen_build.py
+  test_equivalence.py              # manual only — needs musclemimic_models
+  test_bimanual_muscle_symmetry.py # manual only
+  muscle_analysis_utils.py / muscle_symmetry_checks.py
+  debug_muscle_leg.py / debug_muscle_torso.py / debug_muscle_bimanual.py
+docs/wiki/            # canonical wiki location
 ```
 
-## models/ Directory
-
-```
-myo_sim/models/
-  arm/assets/
-    myoarm_r_chain.xml      # right-arm kinematic tree (bodies, joints, geoms)
-    myoarm_r_muscles.xml    # right-arm muscle actuators
-    myoarm_r_tendons.xml    # right-arm tendon definitions
-    myoarm_r_assets.xml     # right-arm mesh/material/texture declarations
-  leg/assets/
-    myolegs_chain.xml
-    myolegs_muscle.xml
-    myolegs_tendon.xml
-    myolegs_assets.xml
-  torso/assets/
-    myotorso_chain.xml      # torso kinematic tree; owns chest_r and cervical_spine
-    myotorso_muscle.xml
-    myotorso_tendon.xml
-    myotorso_assets.xml
-  head/assets/
-    myohead_rigid_chain.xml
-    myohead_simple_assets.xml
-  leg/
-    myolegs.xml             # standalone leg model entry point
-  torso/
-    myotorso.xml            # standalone torso model entry point
-    myotorso_abdomen.xml    # minimal abdomen scaffold used by myolegs_abdomen
-  meshes/                   # 127 shared STL mesh files referenced by all models
-  contacts/
-    myoarm_contacts.xml
-    myolegs_contacts.xml
-    myofullbody_contacts.xml
-  scene/
-    myosuite_scene.xml
-    myosuite_scene_noPedestal.xml
-  textures/                 # shared texture files
-```
-
-## Where to Look for Each Kind of Change
+## Where to make each kind of change
 
 | Task | Location |
 |---|---|
 | Edit a muscle path or via-point | `myo_sim/models/<part>/assets/*_muscle.xml` and `*_tendon.xml` |
-| Edit skeleton geometry (bodies, joints, geoms) | `myo_sim/models/<part>/assets/*_chain.xml` |
-| Add a new composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder function, `BUILDERS` entry, `MODEL_REGISTRY` entry |
-| Add cross-part contact pairs | `myo_sim/models/contacts/` (new or existing contacts XML), then `add_contact_pairs()` in `build/compose.py` |
+| Edit skeleton geometry | `myo_sim/models/<part>/assets/*_chain.xml` |
+| Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `BUILDERS` and `MODEL_REGISTRY` entries |
+| Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
-| Add a scene wrapper | `myo_sim/models/scene/` |
-| Edit the static-model Python registry | `myo_sim/__init__.py` — `_FRAGMENT_CATALOG` and `REGISTRY` dicts |
-| Edit the composed-model build registry | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
-
-## Key Invariants
-
-These must never be violated.
-
-**Site ownership.** Sites belong to the file that owns their body. Never declare a site on a body defined in another file.
-
-**Left-arm generation.** Left-arm content is generated by mirroring the right arm at build time in `build/compose.py`. There is no separate left-arm XML. Never create or maintain one.
-
-**Chest and cervical spine ownership.** `chest_r` and `cervical_spine` are defined in `myo_sim/models/torso/assets/myotorso_chain.xml`. They must never appear in `myoarm_r_chain.xml`. The composed bilateral models must have `chest_r` but never `chest_l`.
-
-**Contact centralization.** Cross-part contact pairs live exclusively in `myo_sim/models/contacts/`. They must never be embedded inside a part's `assets/` XML. `compose.py` injects them via `add_contact_pairs()`.
-
-**Assistive devices.** Exoskeletons, prostheses, and orthoses do not belong in this repo. They go in `myoassist`.
-
-**Mesh sharing.** All STL files live in `myo_sim/models/meshes/`. Never place a mesh alongside an individual part's assets.
+| Edit the static-model registry | `myo_sim/__init__.py` — `_FRAGMENT_CATALOG` |
