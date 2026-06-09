@@ -1,41 +1,81 @@
-# <img  style="float: left;" src="https://user-images.githubusercontent.com/23240128/233209820-821715e0-07e6-4dbc-8133-d915a7ea06b7.png" width=40> MyoSim: MyoSuite's musculoskeletal model library
+# MyoSim
 
- `MyoSim` is the library of MuJoCo Musculoskeletal Models of [MyoSuite](https://github.com/facebookresearch/myoSuite).
+[![CI](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml/badge.svg?branch=mm_refactor_mjspec)](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-%3E%3D3.10-blue.svg)](pyproject.toml)
 
+MyoSim is the MuJoCo musculoskeletal model library used by [MyoSuite](https://github.com/facebookresearch/myoSuite).
+It provides anatomically detailed XML models of the human arm, leg, torso, and hand,
+plus a Python package for loading and composing them.
 
-The models present in the library are:
+## Models
 
+| Model | DoF | Muscles | Status |
+|---|---|---|---|
+| MyoLeg | 20 | 80 | stable |
+| MyoArm | 27 | 63 | stable |
+| MyoTorso (MyoBack) | 18 | 210 | stable |
+| MyoHand | 23 | 39 | stable |
 
+MyoFinger, MyoElbow, and MyoOSL no longer have top-level entry points in the current package. They are legacy models not included in the registry.
 
-| Model name  | |
-|-----------|--------------------|
-| **MyoFinger** <br> - 4 Degree of Freedom (DoF) <br> - 5 simplified muscles |<img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="200">|
-| **MyoElbow**  <br> - 2 Degree of Freedom (DoF) <br> - 6 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="200">|
-| **MyoHand**  <br>  - 23 Degree of Freedom (DoF) <br> - 39 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="200">|
-| **MyoLeg**  <br>  - 20 Degree of Freedom (DoF) <br> - 80 muscles | <img src="https://user-images.githubusercontent.com/12837145/236839645-e34eab3f-0358-4ca8-8ae0-68a5c08585e4.png" width="200">|
-| **MyoArm**  <br>  - 27 Degree of Freedom (DoF) <br> - 63 muscles | <img src="https://github.com/MyoHub/myo_sim/assets/23240128/1f57c639-b7de-4bbb-a3c2-d2c29716e6c8" width="200">|
-| **MyoOSL**  <br>  - 19 Degree of Freedom (DoF) <br> - 54 muscles, 2 torque actuators | <img src="https://github.com/elladyr/myo_sim/assets/5383997/ec9dfc65-94ba-457f-8375-594c0e3a89b5" width="200">|
-| **MyoBack**  <br>  - 18 Degree of Freedom (DoF) <br> - 210 muscles | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="200">|
+## Install
 
-Description of the models can be found [here](https://myosuite.readthedocs.io/en/latest/suite.html#models).
+```bash
+pip install git+https://github.com/MyoHub/myo_sim.git@mm_refactor_mjspec
+```
 
-## License
+Note: the PyPI package `myo-sim` currently points to an older incompatible version.
+Use the git install above until a new release is published.
 
-MyoSuite is licensed under the [Apache License](LICENSE).
+## Quickstart
+
+```python
+import mujoco
+import myo_sim
+
+# Load a model by registry name
+model, data = myo_sim.load("myolegs")
+print(f"Joints: {model.njnt}, Muscles: {model.nu}")
+
+# Or get the path directly
+xml_path = myo_sim.get_xml_path("myotorso")
+model = mujoco.MjModel.from_xml_path(str(xml_path))
+```
+
+```python
+# Compose a full-body MjSpec model
+from myo_sim.build.compose import build_model
+model = build_model("myofullbody")
+print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")
+```
+
+## Development
+
+```bash
+git clone https://github.com/MyoHub/myo_sim.git
+cd myo_sim
+uv sync --dev
+uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.
 
 ## Citation
 
-If you find this repository useful in your research, please consider giving a star ⭐ and cite our [arXiv paper](https://arxiv.org/abs/2205.13600)  by using the following BibTeX entrys.
+If you find this repository useful in your research, please cite:
 
-```BibTeX
-@Misc{MyoSuite2022,
-  author = {Vittorio, Caggiano AND Huawei, Wang AND Guillaume, Durandau AND Massimo, Sartori AND Vikash, Kumar},
-  title = {MyoSuite -- A contact-rich simulation suite for musculoskeletal motor control},
-  publisher = {arXiv},
-  year = {2022},
-  howpublished = {\url{https://github.com/facebookresearch/myosuite}},
-  year = {2022}
-  doi = {10.48550/ARXIV.2205.13600},
-  url = {https://arxiv.org/abs/2205.13600},
+```bibtex
+@misc{MyoSuite2022,
+  author    = {Caggiano, Vittorio and Wang, Huawei and Durandau, Guillaume
+               and Sartori, Massimo and Kumar, Vikash},
+  title     = {{MyoSuite}: A contact-rich simulation suite for musculoskeletal motor control},
+  year      = {2022},
+  doi       = {10.48550/ARXIV.2205.13600},
+  url       = {https://arxiv.org/abs/2205.13600},
 }
 ```
+
+## License
+
+Apache 2.0 — see [LICENSE](LICENSE).
