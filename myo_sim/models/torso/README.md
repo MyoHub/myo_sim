@@ -23,9 +23,7 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 ## Known limitations
 
 - [ ] #70 — Myotorso seems asymmetric
-- [ ] #49 — No collision geoms found in myoback
 - [ ] #51 — Improve passive dynamics of torso
-- [ ] #48 — Terminate torso with sacrum, not pelvis
 
 ## Manual adjustments
 
