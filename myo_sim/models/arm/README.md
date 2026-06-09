@@ -1,31 +1,47 @@
-# MyoArm 0.1
+# MyoArm
 
-## General:
+MyoArm is a MuJoCo musculoskeletal model of the right upper extremity — shoulder girdle through hand — derived from the MoBL upper-extremity OpenSim model and the MyoHand model.
 
-The myoArm mujoco musculoskeletal (MSK) model is generated from: MoBL - human upper
-extremity model [https://simtk.org/projects/upexdyn/] from Opensim and the MyoHand model [https://github.com/MyoHub/myo_sim/tree/main/hand].
+## Anatomical scope
 
-This generated mujoco MSK model has almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
+| Property | Value |
+|---|---|
+| Degrees of freedom | 38 |
+| Actuators (muscles) | 63 |
+| Body segments | clavicle, scapula, humerus, radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1–5), proximal/middle/distal phalanges (digits 2–5), thumb phalanges |
+| Primary joints | shoulder (sternoclavicular, acromioclavicular, glenohumeral, scapulothoracic constraints), elbow flexion, forearm pronation/supination, wrist flexion/deviation, finger MCP/PIP/DIP (digits 2–5), thumb CMC/MCP/IP |
 
+## Reference model
 
-## Conversion process:
+- **Source:** [MoBL Upper Extremity Dynamic Model](https://simtk.org/projects/upexdyn/)
+- **Paper:** Holzbaur et al., 2005 ([DOI](https://doi.org/10.1007/s10439-005-3320-7))
 
-The myoHand model was generated using our developed automatic conversion pipeline (released on June 2023).
+## Fidelity
 
-Three Conversion steps were taken to generate the myoLeg models from the reference Osim model:
+<!-- TODO: review -->
 
-1. Basic element conversion [bone meshes, joint definitions, muscle paths, wrapping objects]
-2. Moment arm optimization [matching the moment arm of each muscle by optimizing how muscles wrap over wrapping objects]
-3. Muscle force optimizaiton [matching the muscle force-length relationship by optimizing muscle parameters]
+## Known limitations
 
-After the conversion, a manual adjusting process is done to correct the abnormal results.
+- [ ] No open arm-specific issues at this time — see [all open issues](https://github.com/MyoHub/myo_sim/issues)
 
-## Maunal adjustment:
-- Adjustments post conversion to optimize for kinematic and dynamic behaviors
+## Manual adjustments
 
-## Contact Geometries:
-- Manually designed with references
-- Contact properties optimized for contact rich behaviors
+- Post-conversion adjustments to kinematic and dynamic behaviors to correct abnormal results from the automatic pipeline.
+- Contact geometries manually designed with anatomical references; contact properties optimized for contact-rich behaviors.
+- Muscle parameters updated during the 2026-05 refactor to improve force-length accuracy.
 
-## Issues:
-- N/A
+## Changelog
+
+**2026-06-05** — Moved chest ownership to myotorso; added unit tests.
+
+**2026-06-03** — Refactored model structure and enhanced asset management.
+
+**2026-05-27** — Added contact XML; refactored arm model structure and updated muscle parameters.
+
+**2026-05-25** — Removed redundant left arm; left arm now mirrored via mjspec. Hands extracted from arms via mjspec.
+
+**2023-12-26** — Initial XML release of myoarm models.
+
+## Citation
+
+See repository README.
