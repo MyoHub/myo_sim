@@ -89,7 +89,7 @@ All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/mode
    uv run python -m myo_sim.build.compose --model my_new_model
    ```
 
-6. **Add a test entry** in `tests/test_build_registry.py` — update the `expected` dict in `test_every_registered_model_has_build_strategy`.
+6. Add a test entry in `tests/test_build_registry.py` per `docs/wiki/testing-guide.md`.
 
 ## Key Utilities in utils.py
 

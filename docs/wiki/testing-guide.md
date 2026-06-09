@@ -60,9 +60,3 @@ Output goes to `tests/output/muscle_analysis/`. The scripts use helpers from `mu
 - `compute_moment_arm_curve` / `compute_force_length_curve` — sweep joint angles and record muscle properties.
 - `parse_model_joint_equalities` / `apply_eq_constraints` — resolve MuJoCo joint equality constraints before computing forward kinematics.
 - `plot_pair` — compare left/right muscle pairs visually.
-
-## Test Infrastructure Notes
-
-`pyproject.toml` configures pytest with `testpaths = [".", "tests"]` and `python_files = ["test_sims.py", "test_*.py"]`. The test runner discovers both `test_sims.py` at the repo root and all `test_*.py` files under `tests/`.
-
-Tests that call `build_model()` exercise the full MjSpec composition pipeline and require `mujoco >= 3.0`. Tests that parse XML directly (e.g., `test_chest_ownership.py`, `test_contact_paths.py`) have no MuJoCo runtime dependency and run faster.
