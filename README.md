@@ -10,14 +10,17 @@ plus a Python package for loading and composing them.
 
 ## Models
 
-| Model | DoF | Muscles | Status |
-|---|---|---|---|
-| MyoLeg | 20 | 80 | stable |
-| MyoArm | 27 | 63 | stable |
-| MyoTorso (MyoBack) | 18 | 210 | stable |
-| MyoHand | 23 | 39 | stable |
+| Model | | |
+|---|---|---|
+| **MyoLeg** <br> 20 DoF · 80 muscles | <img src="https://user-images.githubusercontent.com/12837145/236839645-e34eab3f-0358-4ca8-8ae0-68a5c08585e4.png" width="160"> | stable |
+| **MyoArm** <br> 27 DoF · 63 muscles | <img src="https://github.com/MyoHub/myo_sim/assets/23240128/1f57c639-b7de-4bbb-a3c2-d2c29716e6c8" width="160"> | stable |
+| **MyoTorso** (MyoBack) <br> 18 DoF · 210 muscles | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="160"> | stable |
+| **MyoHand** <br> 23 DoF · 39 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="160"> | stable |
+| **MyoFinger** <br> 4 DoF · 5 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="160"> | legacy |
+| **MyoElbow** <br> 2 DoF · 6 muscles | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="160"> | legacy |
+| **MyoOSL** <br> 19 DoF · 54 muscles, 2 torque actuators | <img src="https://github.com/elladyr/myo_sim/assets/5383997/ec9dfc65-94ba-457f-8375-594c0e3a89b5" width="160"> | legacy |
 
-MyoFinger, MyoElbow, and MyoOSL no longer have top-level entry points in the current package. They are legacy models not included in the registry.
+Legacy models are not included in the current package registry but remain in the repository.
 
 ## Install
 
