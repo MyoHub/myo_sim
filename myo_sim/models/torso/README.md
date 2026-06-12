@@ -14,11 +14,11 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 ## Reference model
 
 - **Source:** [Constrained Lumbar Spine model - 210](https://simtk.org/projects/lumbarspine)
-- **Paper:** Walia et al., 2025 ([DOI](https://doi.org/10.1101/2025.03.13.643057))
+- **Paper:** Walia et al., 2025. MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton. IROS 2025. ([IEEE](https://ieeexplore.ieee.org/document/11063132))
 
 ## Fidelity
 
-<!-- TODO: review -->
+Moment arm symmetry between left and right muscle groups has been validated for a representative subset of the 210 muscles; full quantitative results are reported in Walia et al. 2025. Note that the model was adjusted after publication — see Manual adjustments.
 
 ## Known limitations
 
@@ -42,13 +42,11 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 ## Citation
 
 ```bibtex
-@article{Walia2025,
-  title = {MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton},
-  url = {http://dx.doi.org/10.1101/2025.03.13.643057},
-  DOI = {10.1101/2025.03.13.643057},
-  publisher = {Cold Spring Harbor Laboratory},
-  author = {Walia, Rohan and Garzon, Kevin and Billot, Morgane and Subramanian, Swathika and Wang, Huiyi and Refai, Mohamed Irfan and Durandau, Guillaume},
-  year = {2025},
-  month = mar
+@inproceedings{Walia2025,
+  title     = {MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton},
+  author    = {Walia, Rohan and Garzon, Kevin and Billot, Morgane and Subramanian, Swathika and Wang, Huiyi and Refai, Mohamed Irfan and Durandau, Guillaume},
+  booktitle = {2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year      = {2025},
+  url       = {https://ieeexplore.ieee.org/document/11063132},
 }
 ```
