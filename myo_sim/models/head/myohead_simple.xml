@@ -13,7 +13,7 @@
 
     <worldbody>
         <body name="root" pos="0 0 1.49" euler="1.57 -1.57 0">
-            <include file="assets/myohead_simple_chain.xml"/>
+            <include file="assets/myohead_rigid_chain.xml"/>
         </body>
     </worldbody>
 
