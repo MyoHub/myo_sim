@@ -16,6 +16,7 @@ def test_every_registered_model_has_build_strategy():
     expected = {
         "myotorso_arms": BuildStrategy.TORSO_ARMS,
         "myoarms": BuildStrategy.ARMS_BODY,
+        "myoarm_r": BuildStrategy.RIGHT_ARM_BODY,
         "myotorso_arm_r": BuildStrategy.TORSO_ARMS,
         "myohand_r": BuildStrategy.RIGHT_HAND,
         "myohands": BuildStrategy.BOTH_HANDS,
