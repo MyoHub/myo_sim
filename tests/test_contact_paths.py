@@ -36,10 +36,13 @@ def test_model_xml_paths_do_not_reference_old_repo_layout():
 
 
 def test_no_static_xml_combines_conflicting_asset_files():
-    """MuJoCo 3.8 rejects models that include two *_assets.xml files sharing class names.
+    """Enforce policy: no static XML may combine myotorso_assets.xml and myoarm_r_assets.xml.
 
-    myotorso_assets.xml and myoarm_r_assets.xml both declare class="main", "wrap", and
-    "marker". Any static top-level XML that includes both will fail to load.
+    Before the rename in this PR, both files declared class="wrap" and class="marker",
+    causing MuJoCo 3.8 to raise "repeated default class name". Those names are now
+    scoped (myotorso_wrap, myoarm_wrap, etc.) so the pair can in principle be composed,
+    but multi-part assemblies must still go through build_model() in compose.py to keep
+    contact pairs and bilateral symmetry centralised.
     """
     conflicting_pairs = [
         ("myotorso_assets.xml", "myoarm_r_assets.xml"),
@@ -53,7 +56,7 @@ def test_no_static_xml_combines_conflicting_asset_files():
             includes_a = a in source
             includes_b = b in source
             assert not (includes_a and includes_b), (
-                f"{model_xml} includes both {a} and {b}, which share duplicate "
-                f"MuJoCo default class names (wrap, marker, main) and will fail "
-                f"to load on MuJoCo >= 3.8. Use build_model() instead."
+                f"{model_xml} includes both {a} and {b}. "
+                f"Multi-part assemblies must use build_model() in compose.py "
+                f"to keep contact pairs and bilateral symmetry centralised."
             )

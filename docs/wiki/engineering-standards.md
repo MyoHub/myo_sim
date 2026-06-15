@@ -23,7 +23,7 @@ These rules apply to every change in this repository.
 
 **Naming rule for `*_assets.xml` files:** all nested default class names must be scoped to the body part — never use generic names like `wrap` or `marker`. Use `myotorso_wrap`, `myoarm_wrap`, `myotorso_marker`, `myoarm_marker`, etc. The leg assets already follow this (`myoleg_wrap`, `myo_leg_marker`).
 
-**Composition rule:** never write a static top-level XML that includes two or more `*_assets.xml` files that each declare `<default class="main">`. Multi-part assemblies must use `build_model()` in `myo_sim/build/compose.py`, which uses MjSpec attachment with independent per-child namespaces and is not affected by class name collisions. Asset files with bare `<default>` (no `class="main"`) are safe to combine: `leg/assets/myolegs_assets.xml`, `torso/assets/myotorso_abdomen_assets.xml`, `head/assets/myohead_simple_assets.xml`.
+**Composition rule:** multi-part assemblies must use `build_model()` in `myo_sim/build/compose.py`, which uses MjSpec attachment with independent per-child namespaces and sidesteps class name collisions entirely. Sharing `class="main"` across two included files is accepted by MuJoCo 3.8 — it is the nested sub-class names (e.g. `wrap`, `marker`) that must be unique. The naming rule above ensures this.
 
 ## Python
 
