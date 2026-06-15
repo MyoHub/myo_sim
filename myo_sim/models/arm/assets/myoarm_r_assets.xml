@@ -28,10 +28,10 @@
             <default class="myoarm_coll">
                 <geom type="capsule" group="4" contype="1" conaffinity="0" condim="3" rgba="0.8 0.7 .5 .8" margin="0.001" material="MatSkin"/>
             </default>
-            <default class="wrap">
+            <default class="myoarm_wrap">
                 <geom group="3" rgba="0.19 0.83 0.78 0.2"/>
             </default>
-            <default class="marker">
+            <default class="myoarm_marker">
                  <site rgba="1 0.1 0.5 0.5" size="0.001" group="4"/>
             </default>
         </default>

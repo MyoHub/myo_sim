@@ -19,14 +19,11 @@ These rules apply to every change in this repository.
 
 **Numeric formatting.** Preserve existing numeric formatting unless the value itself is part of an intentional edit.
 
-**Multi-part composition (MuJoCo ≥ 3.8).** MuJoCo 3.8 rejects a compiled model that contains two default class names with the same identifier, whether from the top-level `class="main"` or from any nested `<default class="...">`. Two issues arise when `myotorso_assets.xml` and `myoarm_r_assets.xml` are combined via static `<include>`:
+**Multi-part composition (MuJoCo ≥ 3.8).** MuJoCo 3.8 rejects a compiled model where two included files declare a default class with the same name. The name `"main"` is required for the top-level default and cannot be renamed.
 
-1. Both declare `<default class="main">` — the top-level required name, which cannot be renamed.
-2. Both declare `<default class="wrap">` and `<default class="marker">` — duplicate nested class names.
+**Naming rule for `*_assets.xml` files:** all nested default class names must be scoped to the body part — never use generic names like `wrap` or `marker`. Use `myotorso_wrap`, `myoarm_wrap`, `myotorso_marker`, `myoarm_marker`, etc. The leg assets already follow this (`myoleg_wrap`, `myo_leg_marker`).
 
-Either collision alone is enough for MuJoCo 3.8 to raise `"repeated default class name"`.
-
-**Rule:** never write a static top-level XML that combines `myotorso_assets.xml` with `myoarm_r_assets.xml`. More generally, when adding a new `*_assets.xml`, ensure its class names do not collide with those of any other asset file it could be included alongside. Asset files with bare `<default>` and no `class="main"` (`leg/assets/myolegs_assets.xml`, `torso/assets/myotorso_abdomen_assets.xml`, `head/assets/myohead_simple_assets.xml`) are safe to combine. Multi-part assemblies must use `build_model()` in `myo_sim/build/compose.py`, which uses MjSpec attachment with independent per-child namespaces. All current standalone XMLs comply.
+**Composition rule:** never write a static top-level XML that includes two or more `*_assets.xml` files that each declare `<default class="main">`. Multi-part assemblies must use `build_model()` in `myo_sim/build/compose.py`, which uses MjSpec attachment with independent per-child namespaces and is not affected by class name collisions. Asset files with bare `<default>` (no `class="main"`) are safe to combine: `leg/assets/myolegs_assets.xml`, `torso/assets/myotorso_abdomen_assets.xml`, `head/assets/myohead_simple_assets.xml`.
 
 ## Python
 
