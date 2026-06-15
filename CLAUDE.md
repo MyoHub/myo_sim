@@ -72,6 +72,23 @@ When adding or editing model elements, respect this separation: structural geome
 - Muscles follow OpenSim naming (e.g., `gaslat_r`, `psoas_l`).
 - Sites used for attachment/endpoint markers are placed in group 3 (inactive by default).
 
+### MuJoCo default class names (MuJoCo ≥ 3.8 enforcement)
+
+**Never use `class="main"` as a default class name in any `*_assets.xml` or top-level model XML.**
+
+MuJoCo 3.8 rejects models that include two or more files that each declare `<default class="main">` — the name is treated as globally unique across the entire composed model. When torso and arm assets are both included (as in `myoarm_tabletennis.xml`), a duplicate `"main"` causes a hard parse error.
+
+**Rule:** the root `<default>` class in every `*_assets.xml` must be named after its body part:
+
+| File | Required root class name |
+|------|--------------------------|
+| `arm/assets/myoarm_assets.xml` | `myoarm_main` |
+| `arm/assets/myoarm_r_assets.xml` | `myoarm_r_main` |
+| `torso/assets/myotorso_assets.xml` | `myotorso_main` |
+| Any new `*_assets.xml` | `<bodypart>_main` |
+
+Update all `childclass="main"` references in the corresponding `*_body.xml` and `*_chain.xml` files when renaming. Verify with `uv run pytest test_sims.py` and by loading any multi-part assembly (e.g. `arm/myoarm_tabletennis.xml`) before merging.
+
 ## Muscle Analysis Utilities (`tests/muscle_analysis_utils.py`)
 
 Provides helpers for validating MSK model quality:
