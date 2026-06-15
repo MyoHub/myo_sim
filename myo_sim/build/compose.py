@@ -76,6 +76,7 @@ LEFT_ARM_STRATEGY_NONE = "none"
 class BuildStrategy(str, Enum):
     TORSO_ARMS = "torso_arms"
     ARMS_BODY = "arms_body"
+    RIGHT_ARM_BODY = "right_arm_body"
     RIGHT_HAND = "right_hand"
     BOTH_HANDS = "both_hands"
     FULLBODY = "fullbody"
@@ -110,6 +111,13 @@ MODEL_REGISTRY = {
         left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
         description="Passive anatomical torso scaffold + mirrored arms",
         include_left_arm_contacts=True,
+    ),
+    "myoarm_r": ModelRegistration(
+        name="myoarm_r",
+        build_strategy=BuildStrategy.RIGHT_ARM_BODY,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Passive anatomical torso scaffold + right arm",
+        include_left_arm_contacts=False,
     ),
     "myotorso_arm_r": ModelRegistration(
         name="myotorso_arm_r",
@@ -271,6 +279,17 @@ def build_arms_body_model(registration: ModelRegistration):
     return torso.compile()
 
 
+def build_right_arm_body_model(registration: ModelRegistration):
+    torso = load_passive_torso_spec(registration)
+    attach_to_site(
+        torso,
+        load_right_arm_spec(),
+        find_site(torso, RIGHT_ARM_ATTACH_SITE),
+    )
+
+    return torso.compile()
+
+
 def load_right_hand_from_arm_spec():
     hand = load_right_arm_spec()
     hand.modelname = "myohand_r_from_myoarm_r"
@@ -368,6 +387,7 @@ def build_legs_abdomen_model(registration: ModelRegistration):
 BUILDERS = {
     BuildStrategy.TORSO_ARMS: build_torso_arms_model,
     BuildStrategy.ARMS_BODY: build_arms_body_model,
+    BuildStrategy.RIGHT_ARM_BODY: build_right_arm_body_model,
     BuildStrategy.RIGHT_HAND: build_right_hand_model,
     BuildStrategy.BOTH_HANDS: build_both_hands_model,
     BuildStrategy.FULLBODY: build_fullbody_model,
