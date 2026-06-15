@@ -23,7 +23,7 @@
      <default>
         <default class="myohead">
             <joint armature="0.01" damping="0.5" limited="true"/>
-            <geom margin="0.001" material="mat_myohead" rgba="0.8 0.85 0.8 1" conaffinity="0" contype="0"/>
+            <geom margin="0.001" material="mat_myohead" rgba="0.8 0.8 0.8 1" conaffinity="0" contype="0"/>
             <site size="0.001 0.005 0.005" group="3"/>
             <tendon rgba="0.95 0.3 0.3 1" width="0.001"/>
         </default>
