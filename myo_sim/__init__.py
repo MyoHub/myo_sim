@@ -15,12 +15,23 @@ MODELS_DIR = Path(__file__).resolve().parent / "models"
 # Legacy names match myosuite's _FALLBACK_PATHS so ModelBuilder resolves them
 # via FragmentRegistry before falling back to the simhive submodule.
 _FRAGMENT_CATALOG: list[tuple[str, str, int]] = [
-    # Legacy part aliases.
+    # Legacy part aliases (match myosuite's _FALLBACK_PATHS keys).
     ("leg", "leg/myolegs.xml", 1),
     ("torso", "torso/myotorso.xml", 1),
+    ("arm", "arm/myoarm.xml", 1),
+    ("shoulder", "arm/myoarm.xml", 1),
+    ("finger", "finger/myofinger_v0.xml", 1),
+    ("motorfinger", "finger/motorfinger_v0.xml", 1),
+    ("torso_exosuit", "torso/myotorso_exosuit.xml", 1),
+    # Elbow models.
+    ("elbow", "elbow/myoelbow_1dof6muscles.xml", 1),
+    ("myoelbow", "elbow/myoelbow_1dof6muscles.xml", 1),
     # Current static models.
     ("myolegs", "leg/myolegs.xml", 1),
     ("myotorso", "torso/myotorso.xml", 1),
+    ("myoarm", "arm/myoarm.xml", 1),
+    ("myofinger", "finger/myofinger_v0.xml", 1),
+    ("myotorso_exosuit", "torso/myotorso_exosuit.xml", 1),
 ]
 
 for _name, _rel, _ver in _FRAGMENT_CATALOG:

@@ -1,6 +1,6 @@
 [project]
 name = "myo-sim"
-version = "0.2.0"
+version = "0.3.0"
 description = "MuJoCo musculoskeletal model definitions for MyoSuite"
 requires-python = ">=3.10"
 dependencies = [
