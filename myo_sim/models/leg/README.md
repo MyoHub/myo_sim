@@ -1,79 +1,55 @@
 # MyoLeg
 
-## General:
+MuJoCo musculoskeletal model of the bilateral lower extremity, derived from Rajagopal et al.'s full-body gait model.
 
-The myoLeg mujoco musculoskeletal (MSK) models are generated with taking [Rajagopal's full body gait model](https://github.com/opensim-org/opensim-models/tree/master/Models/RajagopalModel) as close
-reference.
+## Anatomical scope
 
-These generated mujoco MSK models have almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
+| Property | Value |
+|---|---|
+| Degrees of freedom | 29 |
+| Actuators (muscles) | 80 |
+| Body segments | calcn_l, calcn_r, femur_l, femur_r, patella_l, patella_r, pelvis, talus_l, talus_r, tibia_l, tibia_r, toes_l, toes_r |
+| Primary joints | hip_flexion, hip_adduction, hip_rotation, knee_angle, ankle_angle, subtalar_angle, mtp_angle (bilateral) |
 
+## Reference model
 
-## Conversion process:
+- **Source:** [Rajagopal Full-Body Musculoskeletal Model](https://simtk.org/projects/full_body)
+- **Paper:** Rajagopal A, Dembia C, DeMers M, Delp D, Hicks J, Delp S (2016). Full-Body Musculoskeletal Model for Muscle-Driven Simulation of Human Gait. IEEE Transactions on Biomedical Engineering. ([DOI: 10.1109/TBME.2016.2586891](https://doi.org/10.1109/TBME.2016.2586891))
 
-The myoLeg models were generated using our developed automatic conversion pipeline (will release at June 2023).
+## Fidelity
 
-Three Conversion steps were taken to generate the myoLeg models from the reference Osim model:
+<!-- TODO: review -->
 
-1. Basic element conversion [bone meshes, joint definitions, muscle paths, wrapping objects]
-2. Moment arm optimization [matching the moment arm of each muscle by optimizing how muscles wrap over wrapping objects]
-3. Muscle force optimizaiton [matching the muscle force-length relationship by optimizing muscle parameters]
+## Known limitations
 
-After the conversion, a manual adjusting process is done to correct the abnormal results.
+- [ ] #64 — `myoleg` naming used inconsistently across the repository
+- [ ] Endpoints (markers) below the knee joints have approximately 1 cm position differences between the converted MuJoCo and OpenSim model. This may be due to the polynomial approximation of the OpenSim lookup table for knee translation degrees of freedom.
+- [ ] Vastus muscle moment arms at the knee joint have relatively large differences (same sign, a few cm). This may be caused by the dependent joint constraints at the knee and also affects knee extensor muscle force.
+- [ ] Muscle forces are not identical between the converted MuJoCo and OpenSim models due to differences in muscle model definitions (stiff vs. elastic tendons). Elastic tendon support in MuJoCo is not yet implemented for this model.
+- [ ] Muscle moment arms in the reference OpenSim model contain sudden changes (wrapping path jumps), which required the manual adjustments described below.
 
-## Maunal adjustment:
+## Manual adjustments
 
-1. Removed wrapping objects for glmax1_l, glmax2_l, glmax1_r, glmax2_r, psoas_l, and psoas_r muscles to avoid the wrapping path jumping. These wrapping objects are:
-	- Gmax1_at_pelvis_l_wrap
-	- Gmax2_at_pelvis_l_wrap
-	- Gmax1_at_pelvis_r_wrap
-	- Gmax2_at_pelvis_r_wrap
-	- PS_at_brim_l_wrap
-	- PS_at_brim_r_wrap
+- Removed wrapping objects for glmax1_l, glmax2_l, glmax1_r, glmax2_r, psoas_l, and psoas_r to prevent wrapping path jumping. Objects removed: Gmax1_at_pelvis_l_wrap, Gmax2_at_pelvis_l_wrap, Gmax1_at_pelvis_r_wrap, Gmax2_at_pelvis_r_wrap, PS_at_brim_l_wrap, PS_at_brim_r_wrap.
+- Changed wrapping object type from `cylinder` to `sphere` for iliacus_l and iliacus_r (IL_at_brim_l_wrap, IL_at_brim_r_wrap) to prevent wrapping path jumping.
+- Adjusted `lmin` of gaslat_l, gaslat_r, semimem_l, and semimem_r from 0.1 to 0.05 to prevent negative muscle forces.
+- Post-conversion adjustments to kinematic and dynamic behaviors, inertial properties, and joint dynamics properties.
+- Contact geometries based on the [Yeadon measurement method](https://yeadon.readthedocs.io/en/latest/measurements.html#measurements), slightly adjusted to fit the MuJoCo MSK model. Contact properties were optimized for contact-rich behaviors.
 
-2. Changed the wrapping objects from 'cylinder' to 'sphere' for iliacus_l and iliacus_r muscles to avoid the wrapping path jumping. These wrapping objects are:
-	- IL_at_brim_l_wrap
-	- IL_at_brim_r_wrap
+## Changelog
 
-3. Adjusted the 'lmin' of gaslat_l, gaslat_r, semimem_l, and semimem_r muscles to avoid negative muscle forces.
-	- changed from 0.1 to 0.05
+**2026-06-04** — Refactored model loading to use updated leg model XML; added muscle symmetry checks and contact assertion tests.
 
-4. Adjustments post conversion to optimize for kitnematic and dynamic behaviors
-5. Inertial properties
-6. Dynamics properties of the joints
+**2026-06-03** — Refactored model structure and enhanced asset management.
 
+**myoleg_v0.56 (mj237)** — Adjusted height field; migrated to MuJoCo 2.3.7.
 
-## Contact Geometries:
+**myoleg_v0.53 (mj120)** — Improved collisions; added height field.
 
-The contact geometries take the well defined [Yeadon measurement method](https://yeadon.readthedocs.io/en/latest/measurements.html#measurements) as reference. Geometries are very close to the reference but slightly adjusted to fit our MKS mode. Contact properties were optimized for contact rich behaviors.
+**myoleg_v0.52 (mj120)** — Removed extra body that made the torso twice as heavy; body mass is now approximately 80 kg.
 
+**myoleg_v0.51 (mj120)** — Added new keyposes to mark convenient poses.
 
-## Issues:
+## Citation
 
-1. Endpoints (markers) below the knee joints have around 1 cm differences between the converted Mujoco and Osim model.
-	- This may due to the constraints defined at the knee translation DoF. In Mujoco model, a polynomial function is used to approximate the Osim lookup table. Differences may generated.
-	- Will look into this approximation to improve the accuracy.
-
-2. Muscle moment arms inside the reference Osim model contains sudden changes (muscle wrapping path jumping), which need to be corrected.
-	- This is why the manual adjustment is needed
-
-3. Vastus muscle moment arms at the knee joint has relatively large differences (same sign, a few cm).
-	- Need to check whether this is caused by the dependend joint constraints at knee.
-	- This moment arm difference also affected the knee extenser muscle force, will look into in future.
-
-4. Muscle forces are not identical between the converted MuJoCo and Osim models, due to the difference in muscle model definitions (stiff vs elastic tendons).
-	- Will investage to implement elastic tendon inside mujoco.
-
-## ChangeLog
-
-**myoleg_v0.51(mj120).mjb**
-- new keyposes added to mark convenient poses.
-
-**myoleg_v0.52(mj120).mjb**
-- Removing the extra body that made the torso twice as heavy. The body now is ~80 kgs.
-
-**myoleg_v0.53(mj120).mjb**
-- Improved collisions. Adding a height field.
-
-**myoleg_v0.56(mj237).mjb**
-- height field adjusted
-- moved to mujoco 2.3.7
+See repository README.
