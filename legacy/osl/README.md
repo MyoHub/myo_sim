@@ -1,3 +1,5 @@
+> **LEGACY** — OSL and other assistive/exoskeletal models will move to the `myoassist` package (see [#100](https://github.com/MyoHub/myo_sim/issues/100)). Do not add new dependencies on this path.
+
 # MyoProsthesis
 
 ## General:

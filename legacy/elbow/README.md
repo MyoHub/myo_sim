@@ -1,3 +1,5 @@
+> **LEGACY** — this model is pending proper pip-package integration (see [#97](https://github.com/MyoHub/myo_sim/issues/97)). Softexo variants will move to `myoassist` ([#100](https://github.com/MyoHub/myo_sim/issues/100)). Do not add new dependencies on this path.
+
 # MyoElbow 0.1
 
 ## General:

@@ -1,3 +1,5 @@
+> **LEGACY** — this model is pending proper pip-package integration (see [#99](https://github.com/MyoHub/myo_sim/issues/99)). Do not add new dependencies on this path.
+
 # MyoFinger 0.1
 
 ## General:
