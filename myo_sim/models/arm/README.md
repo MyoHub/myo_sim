@@ -18,7 +18,7 @@ MyoArm is a MuJoCo musculoskeletal model of the right upper extremity — should
 
 ## Fidelity
 
-![DELT1 left/right shoulder elevation relationship](../../../../docs/images/DELT1_DELT1_l_shoulder_elv_r.png)
+![DELT1 left/right shoulder elevation relationship](../../../docs/images/DELT1_DELT1_l_shoulder_elv_r.png)
 
 Example fidelity check (DELT1 left/right moment-arm and force-length plot) for symmetry and muscle jumping for upper limb. The full bimanual arm muscle check can be run with `tests/debug_muscle_bimanual.py`.
 

@@ -20,9 +20,9 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 
 Moment arm symmetry between left and right muscle groups has been validated for a representative subset of the 210 muscles; full quantitative results are reported in Walia et al. 2025. Note that the model was adjusted after publication — see Manual adjustments.
 
-![IL_L1 left/right flexion-extension relationship](../../../../docs/images/IL_L1_r_IL_L1_l_flex_extension.png)
+![IL_L1 left/right flexion-extension relationship](../../../docs/images/IL_L1_r_IL_L1_l_flex_extension.png)
 
-Example fidelity check (IL_L1 left/right moment-arm and force-length plot) for symmetry and muscle jumping for upper limb. The full torso muscle check can be run with `tests/debug_muscle_torso.py`.
+Example fidelity check (IL_L1 left/right moment-arm and force-length plot) for symmetry and muscle jumping for torso. The full torso muscle check can be run with `tests/debug_muscle_torso.py`.
 
 ## Known limitations
 
