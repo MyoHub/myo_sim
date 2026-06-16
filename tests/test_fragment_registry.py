@@ -40,3 +40,22 @@ def test_fragment_info_attributes():
     assert isinstance(info.path, __import__("pathlib").Path)
     assert isinstance(info.version, int)
     assert info.name == "myolegs"
+
+
+def test_myohand_r_matches_main_spec():
+    """Built myohand_r must match the static myohand from main: njnt=23, nu=39."""
+    import myo_sim
+
+    model, _ = myo_sim.load("myohand_r")
+    assert model.njnt == 23, f"Expected 23 joints, got {model.njnt}"
+    assert model.nu == 39, f"Expected 39 actuators, got {model.nu}"
+
+
+def test_load_composed_models():
+    """myo_sim.load() resolves MjSpec-composed model names without a static XML."""
+    import myo_sim
+
+    for name in ("myohand_r", "myohands"):
+        model, data = myo_sim.load(name)
+        assert model.njnt > 0, f"{name}: no joints"
+        assert model.nu > 0, f"{name}: no actuators"
