@@ -9,7 +9,7 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 | Degrees of freedom | 18 |
 | Actuators (muscles) | 210 |
 | Body segments | Abdomen, Arm_attachment, cervical_spine, chest_r, head_attach, lumbar1, lumbar2, lumbar3, lumbar4, lumbar5, sacrum, torso |
-| Primary joints | L1_L2_AR, L1_L2_FE, L1_L2_LB, L2_L3_AR, L2_L3_FE, L2_L3_LB, L3_L4_AR, L3_L4_FE, L3_L4_LB, L4_L5_AR, L4_L5_FE, L4_L5_LB, flex_extension, lat_bending, axial_rotation (virtual), Abs_r3, Abs_t1, Abs_t2 |
+| Primary joints | L1_L2_AR, L1_L2_FE, L1_L2_LB, L2_L3_AR, L2_L3_FE, L2_L3_LB, L3_L4_AR, L3_L4_FE, L3_L4_LB, L4_L5_AR, L4_L5_FE, L4_L5_LB, flex_extension, lat_bending, axial_rotation, Abs_r3, Abs_t1 (locked), Abs_t2 (locked) |
 
 ## Reference model
 
@@ -20,9 +20,13 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 
 Moment arm symmetry between left and right muscle groups has been validated for a representative subset of the 210 muscles; full quantitative results are reported in Walia et al. 2025. Note that the model was adjusted after publication — see Manual adjustments.
 
+![IL_L1 left/right flexion-extension relationship](../../../../docs/images/IL_L1_r_IL_L1_l_flex_extension.png)
+
+Example fidelity check (IL_L1 left/right moment-arm and force-length plot) for symmetry and muscle jumping for upper limb. The full torso muscle check can be run with `tests/debug_muscle_torso.py`.
+
 ## Known limitations
 
-- [ ] #70 — Myotorso seems asymmetric
+- [ ] #52 — Flexors - Extensor flipping
 - [ ] #51 — Improve passive dynamics of torso
 
 ## Manual adjustments

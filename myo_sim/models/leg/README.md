@@ -18,7 +18,10 @@ MuJoCo musculoskeletal model of the bilateral lower extremity, derived from Raja
 
 ## Fidelity
 
-<!-- TODO: review -->
+![glmax1 left/right hip flexion relationship](../../../../docs/images/glmax1_r_glmax1_l_hip_flexion_r.png)
+
+Example fidelity check (glmax1 left/right moment-arm and force-length plot) for symmetry and muscle jumping for upper limb. The full leg muscle check can be run with `tests/debug_muscle_leg.py`.
+
 
 ## Known limitations
 

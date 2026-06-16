@@ -11,15 +11,6 @@ A simplified rigid kinematic head-and-neck model (no muscle actuators) derived f
 | Body segments | neck, head |
 | Primary joints | neck_rotation, neck_flexion |
 
-## Reference model
-
-- **Source:** <!-- TODO: review — mesh names suggest HAT segment from an OpenSim full-body model; confirm exact source -->
-- **Paper:** <!-- TODO: review -->
-
-## Fidelity
-
-<!-- TODO: review -->
-
 ## Known limitations
 
 - [ ] No muscle actuators — the model provides geometry and kinematics only; neck muscle forces are not represented.
