@@ -21,6 +21,9 @@ _FRAGMENT_CATALOG: list[tuple[str, str, int]] = [
     ("torso", "torso/myotorso.xml", 1),
     ("myolegs", "leg/myolegs.xml", 1),
     ("myotorso", "torso/myotorso.xml", 1),
+    # Generated from arm assets; regenerate with:
+    #   uv run python -m myo_sim.build.compose --generate
+    ("myohand_r", "hand/myohand_r.xml", 1),
 ]
 
 for _name, _rel, _ver in _FRAGMENT_CATALOG:
@@ -43,7 +46,9 @@ def get_xml_path(name: str) -> Path:
 
 
 # MjSpec-composed models: built via build_model() rather than a static XML path.
-_COMPOSED_MODELS: frozenset[str] = frozenset({"hand", "myohand", "myohand_r", "myohands", "myoarm_r", "myoarms", "myofullbody"})
+# myohand_r is NOT listed here — it has a committed static XML (hand/myohand_r.xml)
+# and resolves through _FRAGMENT_CATALOG / get_xml_path() like myolegs/myotorso.
+_COMPOSED_MODELS: frozenset[str] = frozenset({"myohands", "myoarm_r", "myoarms", "myofullbody"})
 
 
 def _right_hand_spec():
@@ -58,13 +63,10 @@ def _left_hand_spec():
     return load_left_hand_from_arm_spec()
 
 
-# Maps fragment names to zero-arg callables returning MjSpec (hand-only, no torso
-# scaffold).  Used by downstream consumers (e.g. myosuite ModelBuilder) so that
-# attach_fragment("hand") transparently routes through the compose pipeline instead
-# of falling back to a bundled static XML.
+# Maps fragment names to zero-arg callables returning a bare MjSpec (hand only,
+# no torso scaffold).  Used by myosuite's ModelBuilder.attach_spec() so it can
+# attach the hand into its own scene without the passive-torso wrapper.
 _FRAGMENT_SPEC_BUILDERS: dict[str, object] = {
-    "hand": _right_hand_spec,
-    "myohand": _right_hand_spec,
     "myohand_r": _right_hand_spec,
     "myohand_l": _left_hand_spec,
 }
@@ -81,9 +83,7 @@ def load(name: str) -> tuple:
     if name in _COMPOSED_MODELS:
         from myo_sim.build.compose import build_model
 
-        # Legacy aliases: myohand and hand resolve to the composed right-hand model.
-        composed_name = {"hand": "myohand_r", "myohand": "myohand_r"}.get(name, name)
-        model = build_model(composed_name)
+        model = build_model(name)
         return model, mujoco.MjData(model)
 
     xml_path = get_xml_path(name)

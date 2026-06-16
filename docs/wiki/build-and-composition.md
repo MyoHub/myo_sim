@@ -32,7 +32,7 @@ All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/mode
 | `myotorso_arms` | `TORSO_ARMS` | Torso with active muscles + right arm + mirrored left arm |
 | `myotorso_arm_r` | `TORSO_ARMS` | Torso with active muscles + right arm only |
 | `myoarms` | `ARMS_BODY` | Passive anatomical torso scaffold + mirrored arms |
-| `myohand_r` | `RIGHT_HAND` | Passive torso scaffold + right hand (pruned from right arm) |
+| `myohand_r` | `RIGHT_HAND` | Passive torso scaffold + right hand (pruned from right arm). Also available as a static XML via `get_xml_path("myohand_r")` — see [Generated XML artefacts](#generated-xml-artefacts). |
 | `myohands` | `BOTH_HANDS` | Passive torso scaffold + right hand + mirrored left hand |
 | `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
@@ -149,6 +149,51 @@ Contacts are stored in separate XML files under `myo_sim/models/contacts/`:
 None of these files are referenced via `<include>` from any model XML. They are parsed and injected programmatically at build time by `load_torso_spec()`, which calls `add_contact_pairs()` based on flags in the `ModelRegistration`. This keeps contacts out of standalone XML models (which don't need them) while making them available in all composed models that do.
 
 The `test_contact_paths.py` test enforces this: it verifies that contact XML paths appear only via `ROOT / "contacts" / ...` in `compose.py`, never embedded in `assets/` XMLs.
+
+## Generated XML Artefacts
+
+Some models are committed to the repository as static XML files derived from the
+compose pipeline. These files are present at pip-install time so downstream
+consumers can reference them by path without importing the build pipeline.
+
+| File | Source | Regenerate |
+|---|---|---|
+| `myo_sim/models/hand/myohand_r.xml` | `load_right_hand_from_arm_spec()` | `uv run python -m myo_sim.build.compose --generate` |
+
+**Do not edit generated files directly.** Edit the arm asset XMLs instead, then
+regenerate.
+
+### Keeping artefacts in sync
+
+The CI `generated-xml` job re-runs `--generate` on every PR and fails with:
+
+```
+myo_sim/models/hand/myohand_r.xml is out of sync with the arm XML.
+Run: uv run python -m myo_sim.build.compose --generate
+```
+
+if the committed file diverges from the arm source. Run `--generate` and commit
+the updated file as part of any PR that touches `myo_sim/models/arm/`.
+
+### Using myohand_r as a static path
+
+`myohand_r` is registered in `_FRAGMENT_CATALOG` (like `myolegs` and `myotorso`),
+so all standard access patterns work:
+
+```python
+import myo_sim
+
+model, data = myo_sim.load("myohand_r")
+xml_path = myo_sim.get_xml_path("myohand_r")  # absolute Path, safe after pip install
+```
+
+For myosuite's `attach_spec()` use case (attaching the bare hand into a custom
+scene without the passive-torso wrapper), use `_FRAGMENT_SPEC_BUILDERS`:
+
+```python
+from myo_sim import _FRAGMENT_SPEC_BUILDERS
+spec = _FRAGMENT_SPEC_BUILDERS["myohand_r"]()  # returns MjSpec, no torso
+```
 
 ## Known Limitations and Gotchas
 

@@ -37,17 +37,20 @@ Use the git install above until a new release is published.
 import mujoco
 import myo_sim
 
-# Load a model by registry name
+# Load a model by registry name (returns MjModel, MjData)
 model, data = myo_sim.load("myolegs")
 print(f"Joints: {model.njnt}, Muscles: {model.nu}")
 
-# Or get the path directly
-xml_path = myo_sim.get_xml_path("myotorso")
+model, data = myo_sim.load("myohand_r")
+print(f"Hand — joints: {model.njnt}, muscles: {model.nu}")
+
+# Or get the file path directly (works for myolegs, myotorso, myohand_r)
+xml_path = myo_sim.get_xml_path("myohand_r")
 model = mujoco.MjModel.from_xml_path(str(xml_path))
 ```
 
 ```python
-# Compose a full-body MjSpec model
+# Compose a full-body MjSpec model (built at runtime from components)
 from myo_sim.build.compose import build_model
 model = build_model("myofullbody")
 print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")

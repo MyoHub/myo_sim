@@ -16,6 +16,7 @@ myo_sim/              # installable Python package
     leg/myolegs.xml               # standalone leg entry point
     torso/myotorso.xml            # standalone torso entry point
     torso/myotorso_abdomen.xml    # minimal abdomen scaffold
+    hand/myohand_r.xml            # generated from arm assets — do not edit by hand
     meshes/           # 127 shared STL files
     contacts/         # myoarm_contacts.xml, myolegs_contacts.xml, myofullbody_contacts.xml
     scene/            # scene wrapper XMLs for rendering
@@ -51,3 +52,4 @@ docs/wiki/            # canonical wiki location
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
 | Edit the static-model registry | `myo_sim/__init__.py` — `_FRAGMENT_CATALOG` |
+| Regenerate `hand/myohand_r.xml` after arm XML changes | `uv run python -m myo_sim.build.compose --generate` |
