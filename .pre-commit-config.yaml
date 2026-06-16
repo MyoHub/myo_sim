@@ -1,0 +1,10 @@
+repos:
+  - repo: local
+    hooks:
+      - id: check-generated-xml
+        name: Reject manual edits to generated XML artefacts
+        language: python
+        entry: python scripts/check_generated_xml.py
+        files: ^myo_sim/models/hand/myohand_r\.xml$
+        pass_filenames: false
+        additional_dependencies: []

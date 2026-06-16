@@ -7,14 +7,18 @@ Read `docs/wiki/index.md` before making any substantial change.
 ## Quickstart
 
 ```bash
-# Install
+# Install (also installs pre-commit hooks)
 uv sync
+uv run pre-commit install
 
 # Run tests
 uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py
 
 # Compose a bilateral model
 uv run python -m myo_sim.build.compose --model myoarms
+
+# Regenerate myohand_r.xml after editing arm XML (do not edit it directly)
+uv run python -m myo_sim.build.compose --generate
 
 # Run a muscle-symmetry analysis script (standalone, not pytest)
 cd tests && uv run python debug_muscle_leg.py

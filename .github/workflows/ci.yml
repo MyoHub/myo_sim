@@ -29,8 +29,16 @@ jobs:
   generated-xml:
     runs-on: ubuntu-latest
     needs: lint
+    # Write permission needed to push auto-committed artefacts back to the branch.
+    # Fork PRs have read-only tokens; the job falls back to failing with instructions.
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Fetch the full ref so we can push back to the PR branch.
+          ref: ${{ github.head_ref || github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v4
@@ -46,12 +54,18 @@ jobs:
       - name: Regenerate committed XML artefacts
         run: uv run python -m myo_sim.build.compose --generate
 
-      - name: Fail if generated XML is out of sync with arm source
+      - name: Commit regenerated XML if it changed
         run: |
           if ! git diff --exit-code myo_sim/models/hand/myohand_r.xml; then
-            echo "::error::myo_sim/models/hand/myohand_r.xml is out of sync with the arm XML."
-            echo "::error::Run: uv run python -m myo_sim.build.compose --generate"
-            exit 1
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add myo_sim/models/hand/myohand_r.xml
+            git commit -m "chore: regenerate myohand_r.xml from arm XML [skip ci]"
+            git push || {
+              echo "::error::myohand_r.xml is out of sync and could not be auto-committed (fork PR?)."
+              echo "::error::Run locally: uv run python -m myo_sim.build.compose --generate"
+              exit 1
+            }
           fi
 
   test:
