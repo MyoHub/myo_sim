@@ -46,6 +46,30 @@ def get_xml_path(name: str) -> Path:
 _COMPOSED_MODELS: frozenset[str] = frozenset({"hand", "myohand", "myohand_r", "myohands", "myoarm_r", "myoarms", "myofullbody"})
 
 
+def _right_hand_spec():
+    from myo_sim.build.compose import load_right_hand_from_arm_spec
+
+    return load_right_hand_from_arm_spec()
+
+
+def _left_hand_spec():
+    from myo_sim.build.compose import load_left_hand_from_arm_spec
+
+    return load_left_hand_from_arm_spec()
+
+
+# Maps fragment names to zero-arg callables returning MjSpec (hand-only, no torso
+# scaffold).  Used by downstream consumers (e.g. myosuite ModelBuilder) so that
+# attach_fragment("hand") transparently routes through the compose pipeline instead
+# of falling back to a bundled static XML.
+_FRAGMENT_SPEC_BUILDERS: dict[str, object] = {
+    "hand": _right_hand_spec,
+    "myohand": _right_hand_spec,
+    "myohand_r": _right_hand_spec,
+    "myohand_l": _left_hand_spec,
+}
+
+
 def load(name: str) -> tuple:
     """Load a MuJoCo model by registry name. Returns (MjModel, MjData).
 
