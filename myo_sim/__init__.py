@@ -15,11 +15,23 @@ MODELS_DIR = Path(__file__).resolve().parent / "models"
 # Legacy names match myosuite's _FALLBACK_PATHS so ModelBuilder resolves them
 # via FragmentRegistry before falling back to the simhive submodule.
 _FRAGMENT_CATALOG: list[tuple[str, str, int]] = [
-    # Legacy part aliases.
+    # Legacy part aliases — names match myosuite's _FALLBACK_PATHS.
+    ("elbow", "elbow/myoelbow_2dof6muscles.xml", 1),
+    ("finger", "finger/myofinger_v0.xml", 1),
+    ("hand", "hand/myohand.xml", 1),
+    ("shoulder", "arm/myoarm_r.xml", 1),
+    ("arm", "arm/myoarm_r.xml", 1),
     ("leg", "leg/myolegs.xml", 1),
+    ("osl", "osl/myolegs_osl.xml", 1),
+    ("body", "body/myobody.xml", 1),
     ("torso", "torso/myotorso.xml", 1),
-    # Current static models.
+    # Current static models (canonical names).
+    ("myoelbow", "elbow/myoelbow_2dof6muscles.xml", 1),
+    ("myofinger", "finger/myofinger_v0.xml", 1),
+    ("myohand", "hand/myohand.xml", 1),
+    ("myoarm", "arm/myoarm_r.xml", 1),
     ("myolegs", "leg/myolegs.xml", 1),
+    ("myobody", "body/myobody.xml", 1),
     ("myotorso", "torso/myotorso.xml", 1),
 ]
 
@@ -49,6 +61,28 @@ def load(name: str) -> tuple:
     xml_path = get_xml_path(name)
     model = mujoco.MjModel.from_xml_path(str(xml_path))
     return model, mujoco.MjData(model)
+
+
+def get_path(rel: str) -> Path:
+    """Return the absolute Path to a model file by relative path within MODELS_DIR.
+
+    This is a convenience wrapper for scripts and tutorials that prefer to
+    reference models by relative path (e.g. ``"arm/myoarm.xml"``) rather than
+    registry name.
+
+    Args:
+        rel: Relative path inside MODELS_DIR, e.g. ``"arm/myoarm.xml"``.
+
+    Returns:
+        Absolute Path to the file.
+
+    Raises:
+        FileNotFoundError: If the path does not exist.
+    """
+    p = MODELS_DIR / rel
+    if not p.exists():
+        raise FileNotFoundError(f"Model file not found: {p}")
+    return p
 
 
 def print_path(name: str | None = None) -> None:
