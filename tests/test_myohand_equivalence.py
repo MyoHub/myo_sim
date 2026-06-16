@@ -21,15 +21,11 @@ from myo_sim.build.compose import load_right_hand_from_arm_spec
 
 
 def _joint_names(m: mujoco.MjModel) -> list[str]:
-    return sorted(
-        mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_JOINT, i) for i in range(m.njnt)
-    )
+    return sorted(mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_JOINT, i) for i in range(m.njnt))
 
 
 def _actuator_names(m: mujoco.MjModel) -> list[str]:
-    return sorted(
-        mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(m.nu)
-    )
+    return sorted(mujoco.mj_id2name(m, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(m.nu))
 
 
 @pytest.fixture(scope="module")
