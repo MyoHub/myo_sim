@@ -11,27 +11,15 @@ except PackageNotFoundError:
 # Root of the packaged XML model tree.
 MODELS_DIR = Path(__file__).resolve().parent / "models"
 
-# Catalog of fragments: (name, rel_path, version).
+# Catalog of static XML fragments: (name, rel_path, version).
+# Only list models whose XML files are actually present in myo_sim/models/.
 # Legacy names match myosuite's _FALLBACK_PATHS so ModelBuilder resolves them
 # via FragmentRegistry before falling back to the simhive submodule.
 _FRAGMENT_CATALOG: list[tuple[str, str, int]] = [
-    # Legacy part aliases — names match myosuite's _FALLBACK_PATHS.
-    ("elbow", "elbow/myoelbow_2dof6muscles.xml", 1),
-    ("finger", "finger/myofinger_v0.xml", 1),
-    ("hand", "hand/myohand.xml", 1),
-    ("shoulder", "arm/myoarm_r.xml", 1),
-    ("arm", "arm/myoarm_r.xml", 1),
+    # Static models present in this package.
     ("leg", "leg/myolegs.xml", 1),
-    ("osl", "osl/myolegs_osl.xml", 1),
-    ("body", "body/myobody.xml", 1),
     ("torso", "torso/myotorso.xml", 1),
-    # Current static models (canonical names).
-    ("myoelbow", "elbow/myoelbow_2dof6muscles.xml", 1),
-    ("myofinger", "finger/myofinger_v0.xml", 1),
-    ("myohand", "hand/myohand.xml", 1),
-    ("myoarm", "arm/myoarm_r.xml", 1),
     ("myolegs", "leg/myolegs.xml", 1),
-    ("myobody", "body/myobody.xml", 1),
     ("myotorso", "torso/myotorso.xml", 1),
 ]
 
@@ -54,9 +42,25 @@ def get_xml_path(name: str) -> Path:
     return MODELS_DIR / REGISTRY[name]
 
 
+# MjSpec-composed models: built via build_model() rather than a static XML path.
+_COMPOSED_MODELS: frozenset[str] = frozenset({"hand", "myohand", "myohand_r", "myohands", "myoarm_r", "myoarms", "myofullbody"})
+
+
 def load(name: str) -> tuple:
-    """Load a MuJoCo model by registry name. Returns (MjModel, MjData)."""
+    """Load a MuJoCo model by registry name. Returns (MjModel, MjData).
+
+    Supports both static XML models (resolved via REGISTRY) and MjSpec-composed
+    models (myohand_r, myohands, myoarms, myofullbody).
+    """
     import mujoco
+
+    if name in _COMPOSED_MODELS:
+        from myo_sim.build.compose import build_model
+
+        # Legacy aliases: myohand and hand resolve to the composed right-hand model.
+        composed_name = {"hand": "myohand_r", "myohand": "myohand_r"}.get(name, name)
+        model = build_model(composed_name)
+        return model, mujoco.MjData(model)
 
     xml_path = get_xml_path(name)
     model = mujoco.MjModel.from_xml_path(str(xml_path))
