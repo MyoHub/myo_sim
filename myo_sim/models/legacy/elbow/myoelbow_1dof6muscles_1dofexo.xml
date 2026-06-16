@@ -9,7 +9,7 @@
 
     <include file="assets/myoelbow_assets.xml"/>
     <include file="assets/myoelbow_1dof6muscles_1dofexo_body.xml"/>
-    <include file="../../scene/myosuite_scene.xml"/>
+
     <compiler meshdir="../../meshes" texturedir="../../textures"/>
 
 </mujoco>
