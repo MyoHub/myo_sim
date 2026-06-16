@@ -28,3 +28,15 @@ path = myo_sim.get_xml_path("elbow")
 ```
 
 These registry names are provisional. Once each issue above is resolved, the name will either be reassigned to the new location or removed.
+
+## Meshes to remove when legacy models migrate
+
+The following STL files in `myo_sim/models/meshes/` exist solely to support legacy models and should be deleted once the corresponding model is migrated or removed:
+
+| Mesh | Used by | Remove when |
+|------|---------|-------------|
+| `ground_jaw.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
+| `ground_skull.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
+| `ground_spine.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
+| `human_lowpoly_norighthand.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
+| `torso_lowpoly-v1.stl` | `torso/assets/myotorso_rigid_assets.xml` (OSL rigid torso) | #100 resolved |
