@@ -68,12 +68,12 @@ RIGHT_HAND_REMOVED_JOINTS = frozenset(
 )
 
 
-def add_side_suffix(name: str, side: str):
+def add_side_suffix(name: str, side: str) -> str:
     suffix = f"_{side}"
     return name if name.endswith(suffix) else f"{name}{suffix}"
 
 
-def side_name(name: str, side: str):
+def side_name(name: str, side: str) -> str:
     if side == "r":
         return name
     if name.endswith("_r"):
@@ -81,12 +81,12 @@ def side_name(name: str, side: str):
     return name
 
 
-def base_actuator_name(name: str, side: str):
+def base_actuator_name(name: str, side: str) -> str:
     suffix = f"_{side}"
     return name[: -len(suffix)] if name.endswith(suffix) else name
 
 
-def tendon_wrap_geom_names(spec):
+def tendon_wrap_geom_names(spec: object) -> set[str]:
     geom_names = set()
     for tendon in spec.tendons:
         for index in range(len(tendon.path)):
@@ -96,7 +96,7 @@ def tendon_wrap_geom_names(spec):
     return geom_names
 
 
-def prune_arm_spec_to_hand(spec, side: str):
+def prune_arm_spec_to_hand(spec: object, side: str) -> None:
     """Remove proximal arm dynamics from an arm spec, leaving wrist/hand controls."""
     removed_joints = {side_name(name, side) for name in RIGHT_HAND_REMOVED_JOINTS}
 

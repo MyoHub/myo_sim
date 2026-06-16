@@ -161,13 +161,13 @@ MODEL_REGISTRY = {
 }
 
 
-def pair_is_supported(pair, include_left_arm_contacts: bool):
+def pair_is_supported(pair: dict, include_left_arm_contacts: bool) -> bool:
     if include_left_arm_contacts:
         return True
     return not (pair.get("geom1", "").endswith("_l") or pair.get("geom2", "").endswith("_l"))
 
 
-def load_torso_spec(registration: ModelRegistration):
+def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     """Load the single-torso model and make it match the bimanual root pose."""
     torso = mujoco.MjSpec.from_file(str(TORSO_XML))
     torso.compiler.balanceinertia = True
@@ -190,7 +190,7 @@ def load_torso_spec(registration: ModelRegistration):
     return torso
 
 
-def make_torso_passive(torso: mujoco.MjSpec):
+def make_torso_passive(torso: mujoco.MjSpec) -> None:
     """Remove torso dynamics so the anatomical torso acts as a fixed scaffold."""
     for equality in list(torso.equalities):
         torso.delete(equality)
@@ -203,13 +203,13 @@ def make_torso_passive(torso: mujoco.MjSpec):
     return torso
 
 
-def load_passive_torso_spec(registration: ModelRegistration):
+def load_passive_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_torso_spec(registration)
     make_torso_passive(torso)
     return torso
 
 
-def load_right_arm_spec():
+def load_right_arm_spec() -> mujoco.MjSpec:
     right_arm_xml = build_child_xml_from_components(
         model_name="myoarm_r_attach",
         compiler_meshdir=ROOT,
@@ -225,7 +225,7 @@ def load_right_arm_spec():
     return right_arm
 
 
-def build_mirrored_left_arm_xml(mirror_rules: MirrorRules):
+def build_mirrored_left_arm_xml(mirror_rules: MirrorRules) -> str:
     """Build a left-arm MJCF child by mirroring the right-arm XML in memory."""
     return build_mirrored_child_xml(
         model_name="myoarm_l_mirrored_from_r",
@@ -240,13 +240,13 @@ def build_mirrored_left_arm_xml(mirror_rules: MirrorRules):
     )
 
 
-def load_mirrored_left_arm_spec(mirror_rules: MirrorRules):
+def load_mirrored_left_arm_spec(mirror_rules: MirrorRules) -> mujoco.MjSpec:
     left_arm = mujoco.MjSpec.from_string(build_mirrored_left_arm_xml(mirror_rules))
     left_arm.compiler.balanceinertia = True
     return left_arm
 
 
-def load_legs_spec():
+def load_legs_spec() -> mujoco.MjSpec:
     legs_xml = build_child_xml_from_components(
         model_name="myolegs_attach",
         compiler_meshdir=ROOT,
@@ -262,7 +262,7 @@ def load_legs_spec():
     return legs
 
 
-def build_arms_body_model(registration: ModelRegistration):
+def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     torso = load_passive_torso_spec(registration)
     attach_to_site(
         torso,
@@ -279,7 +279,7 @@ def build_arms_body_model(registration: ModelRegistration):
     return torso.compile()
 
 
-def build_right_arm_body_model(registration: ModelRegistration):
+def build_right_arm_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     torso = load_passive_torso_spec(registration)
     attach_to_site(
         torso,
@@ -290,7 +290,7 @@ def build_right_arm_body_model(registration: ModelRegistration):
     return torso.compile()
 
 
-def load_right_hand_from_arm_spec():
+def load_right_hand_from_arm_spec() -> mujoco.MjSpec:
     hand = load_right_arm_spec()
     hand.modelname = "myohand_r_from_myoarm_r"
     hand.compiler.balanceinertia = True
@@ -298,14 +298,14 @@ def load_right_hand_from_arm_spec():
     return hand
 
 
-def load_left_hand_from_arm_spec():
+def load_left_hand_from_arm_spec() -> mujoco.MjSpec:
     hand = load_mirrored_left_arm_spec(MirrorRules())
     hand.modelname = "myohand_l_from_mirrored_myoarm_r"
     prune_arm_spec_to_hand(hand, "l")
     return hand
 
 
-def build_right_hand_from_arm_model():
+def build_right_hand_from_arm_model() -> mujoco.MjModel:
     torso = load_passive_torso_spec(MODEL_REGISTRY["myohand_r"])
     attach_to_site(
         torso,
@@ -315,7 +315,7 @@ def build_right_hand_from_arm_model():
     return torso.compile()
 
 
-def build_both_hands_from_arm_model():
+def build_both_hands_from_arm_model() -> mujoco.MjModel:
     torso = load_passive_torso_spec(MODEL_REGISTRY["myohands"])
     attach_to_site(
         torso,
@@ -330,15 +330,15 @@ def build_both_hands_from_arm_model():
     return torso.compile()
 
 
-def build_right_hand_model(registration: ModelRegistration):
+def build_right_hand_model(registration: ModelRegistration) -> mujoco.MjModel:
     return build_right_hand_from_arm_model()
 
 
-def build_both_hands_model(registration: ModelRegistration):
+def build_both_hands_model(registration: ModelRegistration) -> mujoco.MjModel:
     return build_both_hands_from_arm_model()
 
 
-def load_left_arm_spec(registration: ModelRegistration):
+def load_left_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec | None:
     if registration.left_arm_strategy == LEFT_ARM_STRATEGY_MIRROR_RIGHT:
         return load_mirrored_left_arm_spec(registration.mirror_rules)
     if registration.left_arm_strategy == LEFT_ARM_STRATEGY_NONE:
@@ -346,7 +346,7 @@ def load_left_arm_spec(registration: ModelRegistration):
     raise ValueError(f"Unknown left arm strategy for {registration.name}: {registration.left_arm_strategy}")
 
 
-def build_torso_arms_model(registration: ModelRegistration):
+def build_torso_arms_model(registration: ModelRegistration) -> mujoco.MjModel:
     torso = load_torso_spec(registration)
     right_arm = load_right_arm_spec()
     left_arm = load_left_arm_spec(registration)
@@ -358,7 +358,7 @@ def build_torso_arms_model(registration: ModelRegistration):
     return torso.compile()
 
 
-def build_fullbody_model(registration: ModelRegistration):
+def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
     torso = load_torso_spec(registration)
     attach_to_site(torso, load_right_arm_spec(), find_site(torso, RIGHT_ARM_ATTACH_SITE))
     left_arm = load_left_arm_spec(registration)
@@ -372,7 +372,7 @@ def build_fullbody_model(registration: ModelRegistration):
     return torso.compile()
 
 
-def build_legs_abdomen_model(registration: ModelRegistration):
+def build_legs_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
     abdomen = mujoco.MjSpec.from_file(str(TORSO_ABDOMEN_XML))
     abdomen.compiler.balanceinertia = True
 
@@ -395,11 +395,11 @@ BUILDERS = {
 }
 
 
-def build_registered_model(registration: ModelRegistration):
+def build_registered_model(registration: ModelRegistration) -> mujoco.MjModel:
     return BUILDERS[registration.build_strategy](registration)
 
 
-def build_model(model_name: str):
+def build_model(model_name: str) -> mujoco.MjModel:
     try:
         registration = MODEL_REGISTRY[model_name]
     except KeyError as exc:
@@ -408,7 +408,7 @@ def build_model(model_name: str):
     return build_registered_model(registration)
 
 
-def view_model(model):
+def view_model(model: mujoco.MjModel) -> None:
     import mujoco.viewer
 
     data = mujoco.MjData(model)
@@ -429,7 +429,7 @@ def view_model(model):
             time.sleep(model.opt.timestep)
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--model",

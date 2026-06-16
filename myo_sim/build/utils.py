@@ -36,7 +36,7 @@ class MirrorRules:
     mirror_file_attributes: bool = False
 
 
-def find_body(spec, body_name: str):
+def find_body(spec: object, body_name: str) -> object:
     """Find a body across MuJoCo Python API variants."""
     if hasattr(spec, "find_body"):
         body = spec.find_body(body_name)
@@ -53,7 +53,7 @@ def find_body(spec, body_name: str):
     return body
 
 
-def find_site(spec, site_name: str):
+def find_site(spec: object, site_name: str) -> object:
     """Find a site across MuJoCo Python API variants."""
     if hasattr(spec, "find_site"):
         site = spec.find_site(site_name)
@@ -70,25 +70,25 @@ def find_site(spec, site_name: str):
     return site
 
 
-def attach_to_site(parent_spec, child_spec, parent_site):
+def attach_to_site(parent_spec: object, child_spec: object, parent_site: object) -> None:
     """Attach child spec at a parent attachment site."""
     parent_spec.attach(child_spec, prefix="", suffix="", site=parent_site)
 
 
-def attach_to_frame(parent_spec, child_spec, parent_frame):
+def attach_to_frame(parent_spec: object, child_spec: object, parent_frame: object) -> None:
     """Attach child spec at a parent frame."""
     parent_spec.attach(child_spec, prefix="", suffix="", frame=parent_frame)
 
 
-def float_list(value: str):
+def float_list(value: str) -> list[float]:
     return [float(item) for item in value.split()]
 
 
-def format_floats(values):
+def format_floats(values: list[float]) -> str:
     return " ".join(f"{value:.12g}" for value in values)
 
 
-def rename_material(spec, old_name: str, new_name: str):
+def rename_material(spec: object, old_name: str, new_name: str) -> None:
     """Avoid shared material-name collisions across attached specs."""
     try:
         material = spec.material(old_name)
@@ -99,7 +99,7 @@ def rename_material(spec, old_name: str, new_name: str):
     material.name = new_name
 
 
-def add_contact_pairs(spec, contacts_xml: Path, include_pair=None):
+def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = None) -> None:
     """Add contact pairs from an MJCF include file."""
     for pair in ET.parse(contacts_xml).getroot().iter("pair"):
         if include_pair is not None and not include_pair(pair):
@@ -118,7 +118,7 @@ def add_contact_pairs(spec, contacts_xml: Path, include_pair=None):
         )
 
 
-def mirror_name(value: str, rules: MirrorRules):
+def mirror_name(value: str, rules: MirrorRules) -> str:
     if value in rules.common_names:
         return value
     for old, new in rules.replacements:
@@ -134,7 +134,7 @@ def mirror_name(value: str, rules: MirrorRules):
     return f"{value}_l"
 
 
-def should_mirror_class_name(value: str, rules: MirrorRules):
+def should_mirror_class_name(value: str, rules: MirrorRules) -> bool:
     if value.endswith("_r"):
         return True
     if any(old in value for old, _ in rules.replacements):
@@ -142,7 +142,7 @@ def should_mirror_class_name(value: str, rules: MirrorRules):
     return any(value.startswith(old) for old, _ in rules.prefix_replacements)
 
 
-def mirror_reference(element, attr_name: str, attr_value: str, rules: MirrorRules):
+def mirror_reference(element: ET.Element, attr_name: str, attr_value: str, rules: MirrorRules) -> str:
     mirrored = mirror_name(attr_value, rules)
     should_lowercase_geom = (attr_name == "name" and element.tag == "geom") or (attr_name == "geom")
     if should_lowercase_geom:
@@ -152,7 +152,7 @@ def mirror_reference(element, attr_name: str, attr_value: str, rules: MirrorRule
     return mirrored
 
 
-def mirror_xyz_attribute(element, attr_name: str, rules: MirrorRules):
+def mirror_xyz_attribute(element: ET.Element, attr_name: str, rules: MirrorRules) -> None:
     values = float_list(element.get(attr_name))
     if len(values) != 3:
         return
@@ -164,7 +164,7 @@ def mirror_xyz_attribute(element, attr_name: str, rules: MirrorRules):
     element.set(attr_name, format_floats(values))
 
 
-def mirror_axial_attribute(element, attr_name: str):
+def mirror_axial_attribute(element: ET.Element, attr_name: str) -> None:
     values = float_list(element.get(attr_name))
     if len(values) != 3:
         return
@@ -173,7 +173,7 @@ def mirror_axial_attribute(element, attr_name: str):
     element.set(attr_name, format_floats(values))
 
 
-def mirror_quaternion(element):
+def mirror_quaternion(element: ET.Element) -> None:
     values = float_list(element.get("quat"))
     if len(values) != 4:
         return
@@ -182,7 +182,7 @@ def mirror_quaternion(element):
     element.set("quat", format_floats(values))
 
 
-def mirror_fromto(element):
+def mirror_fromto(element: ET.Element) -> None:
     values = float_list(element.get("fromto"))
     if len(values) != 6:
         return
@@ -191,7 +191,7 @@ def mirror_fromto(element):
     element.set("fromto", format_floats(values))
 
 
-def mirror_fullinertia(element):
+def mirror_fullinertia(element: ET.Element) -> None:
     values = float_list(element.get("fullinertia"))
     if len(values) != 6:
         return
@@ -201,7 +201,7 @@ def mirror_fullinertia(element):
     element.set("fullinertia", format_floats(values))
 
 
-def mirror_element(element, rules: MirrorRules):
+def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
     mirrored = copy.deepcopy(element)
     for child in list(mirrored):
         index = list(mirrored).index(child)
@@ -251,8 +251,8 @@ def build_mirrored_child_xml(
     source_chain_xml: Path,
     root_body_name: str,
     root_site_name: str,
-    rules=None,
-):
+    rules: MirrorRules | None = None,
+) -> str:
     """Build a mirrored MJCF child XML from right-side arm component files."""
     if rules is None:
         rules = MirrorRules()
@@ -301,7 +301,7 @@ def build_child_xml_from_components(
     chain_xml: Path,
     root_body_name: str,
     root_site_name: str,
-):
+) -> str:
     """Build a standalone child XML from asset/tendon/muscle/chain includes."""
     root = ET.Element("mujoco", {"model": model_name})
     ET.SubElement(

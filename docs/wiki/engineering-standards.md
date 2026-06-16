@@ -19,6 +19,12 @@ These rules apply to every change in this repository.
 
 **Numeric formatting.** Preserve existing numeric formatting unless the value itself is part of an intentional edit.
 
+**Multi-part composition (MuJoCo ≥ 3.8).** MuJoCo 3.8 rejects a compiled model where two included files declare a default class with the same name. The name `"main"` is required for the top-level default and cannot be renamed.
+
+**Naming rule for `*_assets.xml` files:** all nested default class names must be scoped to the body part — never use generic names like `wrap` or `marker`. Use `myotorso_wrap`, `myoarm_wrap`, `myotorso_marker`, `myoarm_marker`, etc. The leg assets already follow this (`myoleg_wrap`, `myo_leg_marker`).
+
+**Composition rule:** multi-part assemblies must use `build_model()` in `myo_sim/build/compose.py`, which uses MjSpec attachment with independent per-child namespaces and sidesteps class name collisions entirely. Sharing `class="main"` across two included files is accepted by MuJoCo 3.8 — it is the nested sub-class names (e.g. `wrap`, `marker`) that must be unique. The naming rule above ensures this.
+
 ## Python
 
 - Always use `uv run`, never bare `python`.

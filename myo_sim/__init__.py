@@ -42,7 +42,7 @@ def get_xml_path(name: str) -> Path:
     return MODELS_DIR / REGISTRY[name]
 
 
-def load(name: str):
+def load(name: str) -> tuple:
     """Load a MuJoCo model by registry name. Returns (MjModel, MjData)."""
     import mujoco
 
