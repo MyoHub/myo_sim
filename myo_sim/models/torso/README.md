@@ -1,48 +1,52 @@
 # MyoTorso
 
-## General:
+MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), derived from the Constrained Lumbar Spine model - 210 on SimTK.
 
-The myoTorso mujoco musculoskeletal (MSK) model is generated from: Constrained Lumbar Spine model - 210 [https://simtk.org/projects/lumbarspine] from Opensim.
+## Anatomical scope
 
-This generated mujoco MSK model has almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
+| Property | Value |
+|---|---|
+| Degrees of freedom | 18 |
+| Actuators (muscles) | 210 |
+| Body segments | Abdomen, Arm_attachment, cervical_spine, chest_r, head_attach, lumbar1, lumbar2, lumbar3, lumbar4, lumbar5, sacrum, torso |
+| Primary joints | L1_L2_AR, L1_L2_FE, L1_L2_LB, L2_L3_AR, L2_L3_FE, L2_L3_LB, L3_L4_AR, L3_L4_FE, L3_L4_LB, L4_L5_AR, L4_L5_FE, L4_L5_LB, flex_extension, lat_bending, axial_rotation (virtual), Abs_r3, Abs_t1, Abs_t2 |
 
-The model have 210 actuators and 18 joints. The model can be controlled by 3 "virtual joints": Flexion extension, lateral bending, and axial rotation, that maps onto the real joints.
+## Reference model
 
-## Conversion process:
+- **Source:** [Constrained Lumbar Spine model - 210](https://simtk.org/projects/lumbarspine)
+- **Paper:** Walia et al., 2025. MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton. IROS 2025. ([IEEE](https://ieeexplore.ieee.org/document/11063132))
 
-The myoTorso model was generated using our developed automatic conversion pipeline (released on June 2023).
+## Fidelity
 
-Three Conversion steps were taken to generate the myoLeg models from the reference Osim model:
+Moment arm symmetry between left and right muscle groups has been validated for a representative subset of the 210 muscles; full quantitative results are reported in Walia et al. 2025. Note that the model was adjusted after publication — see Manual adjustments.
 
-1. Basic element conversion [bone meshes, joint definitions, muscle paths, wrapping objects]
-2. Moment arm optimization [matching the moment arm of each muscle by optimizing how muscles wrap over wrapping objects]
-3. Muscle force optimizaiton [matching the muscle force-length relationship by optimizing muscle parameters]
+## Known limitations
 
-After the conversion, a manual adjusting process is done to correct the abnormal results.
+- [ ] #70 — Myotorso seems asymmetric
+- [ ] #51 — Improve passive dynamics of torso
 
-## Maunal adjustment:
-- Adjustments post conversion to optimize for kinematic and dynamic behaviors are detailed in our paper published at ICORR 2025 (see last section for reference).
-- Wrapping surfaces are stable against flipping tendons at every RoM.
+## Manual adjustments
 
-## Contact Geometries:
-- Manually designed with references
-- Contact properties optimized for contact rich behaviors
+- Adjustments post conversion to optimize for kinematic and dynamic behaviors are detailed in the ICORR 2025 paper (see Citation).
+- Wrapping surfaces are stable against flipping tendons at every range of motion.
+- Contact geometries manually designed with references; contact properties optimized for contact-rich behaviors.
 
-## Issues:
-- N/A
+## Changelog
+
+**2026-06-05** — Moved chest ownership to myotorso; added unit tests.
+
+**2026-06-04** — Removed deprecated myolegs_abdomen from fragment catalog and registry; introduced passive torso model loading functions; refactored myotorso to use one model and remove joints.
+
+**2026-06-03** — Refactored model structure and enhanced asset management.
 
 ## Citation
 
-If you use this repository in your research, please cite the following:
-
 ```bibtex
-@article{Walia2025,
-  title = {MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton},
-  url = {http://dx.doi.org/10.1101/2025.03.13.643057},
-  DOI = {10.1101/2025.03.13.643057},
-  publisher = {Cold Spring Harbor Laboratory},
-  author = {Walia,  Rohan and Garzon,  Kevin and Billot,  Morgane and Subramanian,  Swathika and WANG,  HUIYI and Refai,  Mohamed Irfan and Durandau,  Guillaume},
-  year = {2025},
-  month = mar
+@inproceedings{Walia2025,
+  title     = {MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton},
+  author    = {Walia, Rohan and Garzon, Kevin and Billot, Morgane and Subramanian, Swathika and Wang, Huiyi and Refai, Mohamed Irfan and Durandau, Guillaume},
+  booktitle = {2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  year      = {2025},
+  url       = {https://ieeexplore.ieee.org/document/11063132},
 }
 ```
