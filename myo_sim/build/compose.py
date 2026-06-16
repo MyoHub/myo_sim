@@ -295,12 +295,34 @@ def build_right_arm_body_model(registration: ModelRegistration) -> mujoco.MjMode
     return torso.compile()
 
 
+GENERATED_HAND_XML = ROOT / "hand" / "myohand_r.xml"
+
+
 def load_right_hand_from_arm_spec() -> mujoco.MjSpec:
     hand = load_right_arm_spec()
     hand.modelname = "myohand_r_from_myoarm_r"
     hand.compiler.balanceinertia = True
     prune_arm_spec_to_hand(hand, "r")
     return hand
+
+
+def generate_hand_xml() -> Path:
+    """Write a self-contained myohand_r.xml derived from the arm assets.
+
+    The generated file uses relative mesh/texture paths so it works from any
+    install location.  Call this whenever the arm XML changes; CI enforces it
+    stays in sync.
+    """
+    spec = load_right_hand_from_arm_spec()
+    xml = spec.to_xml()
+    # to_xml() bakes in absolute meshdir/texturedir; replace with relative paths
+    # so the file is portable after pip install.
+    abs_models_dir = str(ROOT) + "/"
+    xml = xml.replace(f'meshdir="{abs_models_dir}"', 'meshdir=".."')
+    xml = xml.replace(f'texturedir="{abs_models_dir}"', 'texturedir=".."')
+    GENERATED_HAND_XML.parent.mkdir(parents=True, exist_ok=True)
+    GENERATED_HAND_XML.write_text(xml)
+    return GENERATED_HAND_XML
 
 
 def load_left_hand_from_arm_spec() -> mujoco.MjSpec:
@@ -449,7 +471,17 @@ def main() -> None:
         help="Which registered MjSpec-composed model to compile",
     )
     parser.add_argument("--view", action="store_true", help="Open MuJoCo viewer")
+    parser.add_argument(
+        "--generate",
+        action="store_true",
+        help="Regenerate committed XML artefacts derived from source models (e.g. myohand_r.xml)",
+    )
     args = parser.parse_args()
+
+    if args.generate:
+        path = generate_hand_xml()
+        print(f"generated {path}")
+        return
 
     model = build_model(args.model)
     registration = MODEL_REGISTRY[args.model]

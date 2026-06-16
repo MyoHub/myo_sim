@@ -26,6 +26,34 @@ jobs:
       - name: Check formatting with ruff
         run: uv run ruff format --check .
 
+  generated-xml:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies for MuJoCo
+        run: sudo apt-get install -y libgl1 libglib2.0-0 libosmesa6
+
+      - name: Install package
+        run: uv sync --dev
+
+      - name: Regenerate committed XML artefacts
+        run: uv run python -m myo_sim.build.compose --generate
+
+      - name: Fail if generated XML is out of sync with arm source
+        run: |
+          if ! git diff --exit-code myo_sim/models/hand/myohand_r.xml; then
+            echo "::error::myo_sim/models/hand/myohand_r.xml is out of sync with the arm XML."
+            echo "::error::Run: uv run python -m myo_sim.build.compose --generate"
+            exit 1
+          fi
+
   test:
     runs-on: ubuntu-latest
     needs: lint
