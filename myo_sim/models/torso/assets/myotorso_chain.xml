@@ -507,7 +507,7 @@
                   <site name="thoracis_spine" pos="-.018 .194 0" class="myotorso_marker"/>
                   <site name="chest" pos="0.084 0.221 0" class="myotorso_marker"/>
                   <body name="head_attach" pos="-0.005 -0.01 0">
-                    <include file="../head/assets/myohead_rigid_chain.xml"/>
+                    <include file="../../head/assets/myohead_rigid_chain.xml"/>
                   </body>
                   <geom name="torso_geom_1" pos="-0.016 0.119 0" quat="0.980067 0 0 0.198669" type="mesh"  mesh="torso_geom_1_thoracic12_s"/>
                   <geom name="torso_geom_2" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" type="mesh"  mesh="torso_geom_2_thoracic11_s"/>

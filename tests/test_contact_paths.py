@@ -1,4 +1,5 @@
 from pathlib import Path
+import re
 
 import myo_sim
 
@@ -28,6 +29,25 @@ def test_model_xml_paths_do_not_reference_old_repo_layout():
 
         for prefix in stale_prefixes:
             assert prefix not in source, f"{model_xml} contains stale path prefix {prefix!r}"
+
+
+def test_model_xml_file_references_exist():
+    """Every file="*.xml" include must resolve from the including file's directory.
+
+    Matches MuJoCo native resolution and expand_component_element() in build/utils.py.
+    Wrong relative paths must not rely on a parent-directory search fallback.
+    """
+    xml_file_reference = re.compile(r"""file=(["'])([^"']+\.xml)\1""")
+
+    missing = []
+    for model_xml in MODELS_DIR.rglob("*.xml"):
+        source = model_xml.read_text()
+        for match in xml_file_reference.finditer(source):
+            rel_path = match.group(2)
+            if not (model_xml.parent / rel_path).exists():
+                missing.append(f"{model_xml.relative_to(MODELS_DIR)} -> {rel_path}")
+
+    assert missing == []
 
 
 def test_no_static_xml_combines_conflicting_asset_files():

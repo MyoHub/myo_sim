@@ -105,7 +105,7 @@ def expand_component_element(element: ET.Element, base_path: Path) -> list[ET.El
             return []
         include_path = base_path / include_file
         if not include_path.exists():
-            include_path = base_path.parent / include_file
+            raise FileNotFoundError(f"MJCF include not found: {include_path} (resolved from {base_path} / {include_file!r})")
         return component_children(include_path)
 
     expanded = copy.deepcopy(element)

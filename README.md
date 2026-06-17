@@ -20,7 +20,7 @@ plus a Python package for loading and composing them.
 | **MyoFinger** | 4 | 5 | <img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="160"> | legacy |
 | **MyoElbow** | 2 | 6 | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="160"> | legacy |
 
-Legacy models are not included in the current package registry but remain in the repository.
+Legacy models ship in the pip package under `myo_sim/models/legacy/` and load via registry names such as `myoelbow`, `myofinger`, and `osl`. They are maintained for backwards compatibility only — see `myo_sim/models/legacy/README.md`.
 
 ## Install
 
@@ -43,6 +43,9 @@ print(f"Joints: {model.njnt}, Muscles: {model.nu}")
 
 # Or compose another registered model
 model, data = myo_sim.load("myotorso")
+
+# Legacy models (backwards compatibility)
+model, data = myo_sim.load("myoelbow")
 ```
 
 ```python
