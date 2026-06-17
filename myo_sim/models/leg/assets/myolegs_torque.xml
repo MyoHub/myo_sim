@@ -1,0 +1,27 @@
+<mujocoinclude>
+<!-- =================================================
+    Torque-driven alternative to myolegs_muscle.xml + myolegs_tendon.xml.
+    One direct joint motor per independently-actuated leg DOF (excludes the
+    knee_angle_{beta,rotation,translation}* joints, which are passive and
+    driven by polynomial equality constraints in myolegs_assets.xml).
+    gear/forcerange values follow MyoHub/myosuite's torque-branch myoskeleton
+    (myosuite/envs/myo/mjx/myoskeleton_edited.xml), which uses the same
+    OpenSim-derived leg joint names.
+====================================================== -->
+    <actuator>
+        <general name="mot_hip_flexion_r" joint="hip_flexion_r" gear="300" ctrlrange="-1 1" forcerange="-300 300"/>
+        <general name="mot_hip_adduction_r" joint="hip_adduction_r" gear="530" ctrlrange="-1 1" forcerange="-500 500"/>
+        <general name="mot_hip_rotation_r" joint="hip_rotation_r" gear="600" ctrlrange="-1 1" forcerange="-400 400"/>
+        <general name="mot_knee_angle_r" joint="knee_angle_r" gear="700" ctrlrange="-1 1" forcerange="-700 700"/>
+        <general name="mot_ankle_angle_r" joint="ankle_angle_r" gear="500" ctrlrange="-1 1" forcerange="-500 500"/>
+        <general name="mot_subtalar_angle_r" joint="subtalar_angle_r" gear="100" ctrlrange="-1 1" forcerange="-100 100"/>
+        <general name="mot_mtp_angle_r" joint="mtp_angle_r" gear="100" ctrlrange="-1 1" forcerange="-100 100"/>
+        <general name="mot_hip_flexion_l" joint="hip_flexion_l" gear="300" ctrlrange="-1 1" forcerange="-300 300"/>
+        <general name="mot_hip_adduction_l" joint="hip_adduction_l" gear="530" ctrlrange="-1 1" forcerange="-500 500"/>
+        <general name="mot_hip_rotation_l" joint="hip_rotation_l" gear="600" ctrlrange="-1 1" forcerange="-400 400"/>
+        <general name="mot_knee_angle_l" joint="knee_angle_l" gear="700" ctrlrange="-1 1" forcerange="-700 700"/>
+        <general name="mot_ankle_angle_l" joint="ankle_angle_l" gear="500" ctrlrange="-1 1" forcerange="-500 500"/>
+        <general name="mot_subtalar_angle_l" joint="subtalar_angle_l" gear="100" ctrlrange="-1 1" forcerange="-100 100"/>
+        <general name="mot_mtp_angle_l" joint="mtp_angle_l" gear="100" ctrlrange="-1 1" forcerange="-100 100"/>
+    </actuator>
+</mujocoinclude>

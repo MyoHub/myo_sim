@@ -9,9 +9,9 @@ myo_sim/              # installable Python package
   __init__.py         # MODELS_DIR, load(), get_path(), composed-model aliases
   fragments.py        # FragmentInfo and _FragmentRegistry definitions
   models/             # all MJCF content — packaged into wheels
-    arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscles.xml, myoarm_r_tendons.xml, myoarm_r_assets.xml
-    leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
-    torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
+    arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscles.xml, myoarm_r_tendons.xml, myoarm_r_torque.xml, myoarm_r_assets.xml
+    leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_torque.xml, myolegs_assets.xml
+    torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _torque.xml, _assets.xml
     head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml
     meshes/           # 127 shared STL files
     contacts/         # myoarm_contacts.xml, myolegs_contacts.xml, myofullbody_contacts.xml
@@ -45,6 +45,7 @@ docs/wiki/            # canonical wiki location
 | Edit a muscle path or via-point | `myo_sim/models/<part>/assets/*_muscle.xml` and `*_tendon.xml` |
 | Edit skeleton geometry | `myo_sim/models/<part>/assets/*_chain.xml` |
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `BUILDERS` and `MODEL_REGISTRY` entries |
+| Build a part with torque instead of muscles | `build_model(name, actuation=...)` — see `docs/wiki/build-and-composition.md#torque-driven-actuation` |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |

@@ -1,0 +1,18 @@
+<mujocoinclude>
+<!-- =================================================
+    Torque-driven alternative to myotorso_muscle.xml + myotorso_tendon.xml.
+    One direct joint motor per independently-actuated torso DOF (excludes the
+    Abs_* and L1_L2.../L4_L5... segment joints, which are passive and driven
+    by polynomial equality constraints in myotorso_assets.xml relative to
+    flex_extension/lat_bending/axial_rotation).
+    gear/forcerange values are estimated lumped-trunk equivalents of
+    MyoHub/myosuite's torque-branch myoskeleton, which actuates the five
+    lumbar segments individually (mot_L*_Flex_Ext etc., gear 800/400 each);
+    tune with task-specific RL runs.
+====================================================== -->
+    <actuator>
+        <general name="mot_flex_extension" joint="flex_extension" gear="600" ctrlrange="-1 1" forcerange="-600 600"/>
+        <general name="mot_lat_bending" joint="lat_bending" gear="600" ctrlrange="-1 1" forcerange="-600 600"/>
+        <general name="mot_axial_rotation" joint="axial_rotation" gear="300" ctrlrange="-1 1" forcerange="-300 300"/>
+    </actuator>
+</mujocoinclude>
