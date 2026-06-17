@@ -25,9 +25,6 @@ from muscle_analysis_utils import (  # noqa: E402
 OUT_DIR = Path(__file__).resolve().parent / "output" / "muscle_analysis"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-BASE_DIR = myo_sim.MODELS_DIR / "torso"
-XML_PATH = BASE_DIR / "myotorso.xml"
-
 EPS = 1e-5
 ACTIVATION = 1.0
 
@@ -58,8 +55,7 @@ def comment_out_lines(src: Path, dst: Path, start: int, end: int):
     dst.write_text("".join(lines))
 
 
-model = mujoco.MjModel.from_xml_path(str(XML_PATH))
-data = mujoco.MjData(model)
+model, data = myo_sim.load("myotorso")
 EQ_MAP = parse_model_joint_equalities(model)
 
 

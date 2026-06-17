@@ -178,9 +178,16 @@
       <site name="MF_m5t.2_MF_m5t.2-P1_l" pos="-0.163116 0.0256618 -0.01171"/>
       <site name="MF_m5t.3_MF_m5t.3-P1_l" pos="-0.152276 0.0425844 -0.0116"/>
       <site name="MF_m4.laminar_MF_m4.laminar-P1_l" pos="-0.12536 0.0774879 -0.01934"/>
+      <site name="ercspn_r_ercspn_r-P1" pos="-0.14 0.0439 0.0436"/>
+      <site name="ercspn_l_ercspn_l-P1" pos="-0.14 0.0439 -0.0436"/>
+      <site name="intobl_r_intobl_r-P1" pos="-0.04 0.07 0.1157"/>
+      <site name="intobl_l_intobl_l-P1" pos="-0.04 0.07 -0.1157"/>
+      <site name="extobl_r_extobl_r-P1" pos="-0.03 -0.0636 0.01"/>
+      <site name="extobl_l_extobl_l-P1" pos="-0.03 -0.0636 -0.01"/>
       <body name="lumbar5" pos="-0.098 0.071 0">
         <inertial pos="0.053744 0.02 0" quat="0.707107 0 0 0.707107" mass="1.824" diaginertia="0.01765 0.01219 0.00546"/>
         <geom name="back_cylinder_s" size="0.07 0.13" pos="-0.144 0.0768 0" class="myoBack_wrap"/>
+        <geom name="pelvis_wrap" type="cylinder" size=".05 .05" pos="0 0.0175 0" class="myotorso_wrap"/>
         <site name="back_cylinder_s_IL_L1_1_sidesite_r" pos="-0.0340058 0.0977894 -0.00109894" class="sidesite"/>
         <site name="back_cylinder_s_IL_L1_1_sidesite_l" pos="-0.0340058 0.0977894 0.00109894" class="sidesite"/>
         <site name="back_cylinder_s_IL_R5_1_sidesite_r" pos="-0.0340043 0.0759544 -0.0125701" class="sidesite"/>
@@ -225,6 +232,13 @@
         <site name="MF_m5t.3_MF_m5t.3-P2_l" pos="-0.0328228 0.015247 -0.00232083"/>
         <site name="MF_m3.laminar_MF_m3.laminar-P1_l" pos="-0.0187003 0.0374421 -0.01617"/>
         <site name="MF_m5.laminar_l_MF_m5.laminar-P2_l" pos="-0.0258996 0.01705 -0.00564"/>
+        <site name="lumbar_spine" pos="0.030 0 0" class="myotorso_marker"/>
+        <site name="ercspn_r_ercspn_r-P2" pos="-0.055 0.11 0.0241"/>
+        <site name="ercspn_l_ercspn_l-P2" pos="-0.055 0.11 -0.0241"/>
+        <site name="intobl_r_intobl_r-P2" pos="0.07 0.16 0.015"/>
+        <site name="intobl_l_intobl_l-P2" pos="0.07 0.16 -0.015"/>
+        <site name="extobl_r_extobl_r-P2" pos="0.065 0.11 0.11"/>
+        <site name="extobl_l_extobl_l-P2" pos="0.065 0.11 -0.11"/>
         <body name="Abdomen" pos="0.098 0.0711 0">
           <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
           <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.05 .015"/>
@@ -487,6 +501,11 @@
                 <site name="MF_m1.laminar_MF_m1.laminar-P2_l" pos="-0.0341019 -0.00560525 -0.00619"/>
                 <body name="torso" pos="0.0025 -0.089 0">
                   <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
+                  <site name="clavicle_l" pos="0.021 .390 -.058" class="myotorso_marker"/>
+                  <site name="clavicle_r" pos="0.021 .390 0.058" class="myotorso_marker"/>
+                  <site name="clavicle_spine" pos="-.01 .4 0" class="myotorso_marker"/>
+                  <site name="thoracis_spine" pos="-.018 .194 0" class="myotorso_marker"/>
+                  <site name="chest" pos="0.084 0.221 0" class="myotorso_marker"/>
                   <body name="head_attach" pos="-0.005 -0.01 0">
                     <include file="../head/assets/myohead_rigid_chain.xml"/>
                   </body>

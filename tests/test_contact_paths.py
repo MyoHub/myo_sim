@@ -20,13 +20,6 @@ def test_build_contact_sources_are_centralized():
     assert 'assets" / "myofullbody_contacts.xml"' not in source
 
 
-def test_standalone_xml_models_do_not_include_contact_pairs():
-    for model_xml in (MODELS_DIR / "leg" / "myolegs.xml",):
-        source = model_xml.read_text()
-
-        assert "contacts.xml" not in source
-
-
 def test_model_xml_paths_do_not_reference_old_repo_layout():
     stale_prefixes = ("../myo_sim/", "../../myo_sim/")
 

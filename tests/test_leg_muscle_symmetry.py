@@ -1,4 +1,3 @@
-import mujoco
 import pytest
 
 import myo_sim
@@ -11,8 +10,7 @@ from muscle_symmetry_checks import (
 
 @pytest.fixture(scope="module")
 def leg_model_context():
-    model = mujoco.MjModel.from_xml_path(str(myo_sim.MODELS_DIR / "leg" / "myolegs.xml"))
-    data = mujoco.MjData(model)
+    model, data = myo_sim.load("myolegs")
     eq_map = parse_model_joint_equalities(model)
     return model, data, eq_map
 

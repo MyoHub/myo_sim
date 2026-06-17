@@ -21,16 +21,13 @@ from muscle_analysis_utils import (  # noqa: E402
     plot_pair,
 )
 
-XML_PATH = myo_sim.MODELS_DIR / "leg" / "myolegs.xml"
-
 OUT_DIR = Path(__file__).resolve().parent / "output" / "muscle_analysis"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 EPS = 1e-5
 ACTIVATION = 1.0
 
-model = mujoco.MjModel.from_xml_path(str(XML_PATH))
-data = mujoco.MjData(model)
+model, data = myo_sim.load("myolegs")
 EQ_MAP = parse_model_joint_equalities(model)
 
 

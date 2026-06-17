@@ -1,4 +1,3 @@
-import mujoco
 import pytest
 
 import myo_sim
@@ -25,8 +24,7 @@ SKIP_JOINTS = {
 
 @pytest.fixture(scope="module")
 def torso_model_context():
-    model = mujoco.MjModel.from_xml_path(str(myo_sim.MODELS_DIR / "torso" / "myotorso.xml"))
-    data = mujoco.MjData(model)
+    model, data = myo_sim.load("myotorso")
     eq_map = parse_model_joint_equalities(model)
     return model, data, eq_map
 

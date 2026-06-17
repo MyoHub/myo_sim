@@ -31,8 +31,7 @@ See `docs/wiki/model-authoring.md` for the full authoring guide. Brief summary:
 - XML fragments go in `myo_sim/models/<part>/assets/`.
 - Four file types: `*_chain.xml` (bodies, joints, geoms, structural sites), `*_muscle.xml` (actuator/muscle definitions), `*_tendon.xml` (tendon routing), `*_assets.xml` (meshes, materials, defaults).
 - The left side of any bilateral part is derived by mirroring the right side in memory via `myo_sim/build/utils.py`. Never create or maintain a hand-edited left-side XML.
-- Register new static models in `myo_sim/__init__.py` (`_FRAGMENT_CATALOG` and `REGISTRY`).
-- Register composed models in `myo_sim/build/compose.py` (`MODEL_REGISTRY`) if the part needs to be assembled with other parts via MjSpec.
+- Register public composed models in `myo_sim/build/compose.py` (`MODEL_REGISTRY`).
 
 ## Model conversion pipeline
 

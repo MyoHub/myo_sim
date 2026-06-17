@@ -6,9 +6,6 @@ import myo_sim
 from myo_sim.build.compose import build_model
 
 model_paths = [
-    "leg/myolegs.xml",
-    "torso/myotorso.xml",
-    "torso/myotorso_abdomen.xml",
     "scene/myosuite_scene_noPedestal.xml",
     "scene/myosuite_scene.xml",
 ]
@@ -96,13 +93,13 @@ class TestMuscleMimicFullBody(unittest.TestCase):
         """Print joint/actuator counts for all musclemimic-derived models."""
         parts = [
             ("myotorso_arm_r", "myotorso_arm_r"),
-            ("torso/myotorso.xml", "myotorso"),
+            ("myotorso", "myotorso"),
             ("myofullbody", "myofullbody"),
         ]
         print("\n=== Part model counts ===")
         for path, name in parts:
             fullpath = myo_sim.MODELS_DIR / path
-            if path in {"myofullbody", "myotorso_arm_r"}:
+            if path in {"myofullbody", "myotorso_arm_r", "myotorso"}:
                 m = build_model(path)
                 print(f"  {name:30s}  njnt={m.njnt:4d}  nu={m.nu:4d}")
             elif fullpath.exists():

@@ -20,9 +20,12 @@ All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/mode
 |---|---|
 | `TORSO_ARMS` | `build_torso_arms_model` |
 | `ARMS_BODY` | `build_arms_body_model` |
-| `RIGHT_HAND` | `build_right_hand_model` |
-| `BOTH_HANDS` | `build_both_hands_model` |
+| `RIGHT_ARM_BODY` | `build_right_arm_body_model` |
+| `RIGHT_HAND` | `build_right_hand_from_arm_model` |
+| `BOTH_HANDS` | `build_both_hands_from_arm_model` |
 | `FULLBODY` | `build_fullbody_model` |
+| `LEGS_BODY` | `build_legs_body_model` |
+| `TORSO_ABDOMEN` | `build_torso_abdomen_model` |
 | `LEGS_ABDOMEN` | `build_legs_abdomen_model` |
 
 ### Registered models
@@ -32,9 +35,12 @@ All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/mode
 | `myotorso_arms` | `TORSO_ARMS` | Torso with active muscles + right arm + mirrored left arm |
 | `myotorso_arm_r` | `TORSO_ARMS` | Torso with active muscles + right arm only |
 | `myoarms` | `ARMS_BODY` | Passive anatomical torso scaffold + mirrored arms |
+| `myoarm_r` | `RIGHT_ARM_BODY` | Passive anatomical torso scaffold + right arm |
 | `myohand_r` | `RIGHT_HAND` | Passive torso scaffold + right hand (pruned from right arm) |
 | `myohands` | `BOTH_HANDS` | Passive torso scaffold + right hand + mirrored left hand |
 | `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
+| `myolegs` | `LEGS_BODY` | Passive anatomical torso scaffold + legs |
+| `myotorso_abdomen` | `TORSO_ABDOMEN` | Simple abdomen scaffold |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
 
 `ModelRegistration` fields that control composition:
@@ -60,7 +66,7 @@ All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/mode
    ```python
    def build_my_new_model(registration: ModelRegistration):
        torso = load_torso_spec(registration)  # or load_passive_torso_spec
-       attach_to_site(torso, load_right_arm_spec(), find_site(torso, RIGHT_ARM_ATTACH_SITE))
+       torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
        # ... additional attachments ...
        return torso.compile()
    ```
@@ -93,13 +99,9 @@ All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/mode
 
 ## Key Utilities in utils.py
 
-### `attach_to_site(parent_spec, child_spec, parent_site)`
+### `MjSpec.attach(...)`
 
-Attaches a child `MjSpec` to a named attachment site in the parent spec. Use this when the attachment point is a `<site>` element already declared in the parent XML (e.g., `arm_attach_r`, `arm_attach_l`).
-
-### `attach_to_frame(parent_spec, child_spec, parent_frame)`
-
-Attaches a child `MjSpec` to a `frame` object created programmatically (e.g., `root_body.add_frame(...)`). Use this when no pre-existing site is available — for instance, attaching legs to the full-body root body at runtime.
+Builders attach child `MjSpec` objects directly with MuJoCo's `spec.attach(...)` API. Use the `site=` argument when attaching to a named site already declared in the parent XML (e.g., `arm_attach_r`, `arm_attach_l`). Use the `frame=` argument when attaching to a programmatically created frame (e.g., `root_body.add_frame(...)` for leg attachment).
 
 ### `build_child_xml_from_components(...)`
 

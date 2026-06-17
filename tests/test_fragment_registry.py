@@ -7,20 +7,8 @@ def test_registry_exposed():
     assert hasattr(myo_sim, "FragmentInfo")
 
 
-def test_registered_names_resolve():
-    for name in ("leg", "myolegs", "torso"):
-        info = myo_sim.FragmentRegistry.get(name)
-        assert info.path.exists(), f"{name}: {info.path}"
-        assert info.version >= 1
-
-
-def test_registered_models_load_from_registry():
-    import mujoco
-
-    for name in myo_sim.FragmentRegistry.all_names():
-        info = myo_sim.FragmentRegistry.get(name)
-        m = mujoco.MjModel.from_xml_path(str(info.path))
-        assert m.njnt > 0, name
+def test_static_fragment_registry_is_empty():
+    assert myo_sim.FragmentRegistry.all_names() == []
 
 
 def test_unknown_raises_key_error():
@@ -28,18 +16,17 @@ def test_unknown_raises_key_error():
         myo_sim.FragmentRegistry.get("does_not_exist")
 
 
-def test_all_names_sorted():
-    names = myo_sim.FragmentRegistry.all_names()
-    assert names == sorted(names)
-    assert "leg" in names
+@pytest.mark.parametrize("name", ["leg", "torso"])
+def test_removed_static_aliases_do_not_load(name):
+    with pytest.raises(ValueError):
+        myo_sim.load(name)
 
 
-def test_fragment_info_attributes():
-    info = myo_sim.FragmentRegistry.get("myolegs")
-    assert isinstance(info, myo_sim.FragmentInfo)
-    assert isinstance(info.path, __import__("pathlib").Path)
-    assert isinstance(info.version, int)
-    assert info.name == "myolegs"
+def test_myotorso_loads_from_composed_registry():
+    model, _ = myo_sim.load("myotorso")
+
+    assert model.njnt > 0
+    assert model.nu > 0
 
 
 def test_myohand_r_matches_main_spec():

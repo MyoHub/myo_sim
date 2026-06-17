@@ -41,9 +41,8 @@ import myo_sim
 model, data = myo_sim.load("myolegs")
 print(f"Joints: {model.njnt}, Muscles: {model.nu}")
 
-# Or get the path directly
-xml_path = myo_sim.get_xml_path("myotorso")
-model = mujoco.MjModel.from_xml_path(str(xml_path))
+# Or compose another registered model
+model, data = myo_sim.load("myotorso")
 ```
 
 ```python

@@ -64,8 +64,8 @@ Sites that serve as wrapping sidesiotes follow the naming pattern `<WrapObjectNa
 
 ```bash
 uv run python -c "
-import mujoco, myo_sim
-m = mujoco.MjModel.from_xml_path(str(myo_sim.MODELS_DIR / 'leg/myolegs.xml'))
+import myo_sim
+m, _ = myo_sim.load('myolegs')
 print('nu:', m.nu)
 "
 ```
@@ -109,7 +109,7 @@ Both the geom and sidesite must be on the same body (or a nearby body if the mus
 
 4. Add contact pairs between this part and any parts it interacts with in `myo_sim/models/contacts/myo<part>_contacts.xml`. Do not embed cross-part contact pairs inside the part's own asset files.
 
-5. Register entry points for the assembled model in `myo_sim/__init__.py` inside `_FRAGMENT_CATALOG`.
+5. Register public assembled-model entry points in `myo_sim/build/compose.py` inside `MODEL_REGISTRY`.
 
 6. Add the model path to the smoke test list in `test_sims.py` so the CI will verify it loads.
 
