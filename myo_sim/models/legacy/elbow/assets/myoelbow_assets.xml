@@ -32,7 +32,45 @@
 
 
   <asset>
-    <mesh name="body_norighthand" file="human_lowpoly_norighthand.stl" scale="1 1 1"/>
+    <!-- decorative full-body backdrop, assembled from existing bone meshes -->
+    <mesh name="hat_cervical" file="hat_cervical.stl"/>
+    <mesh name="hat_jaw" file="hat_jaw.stl"/>
+    <mesh name="hat_skull" file="hat_skull.stl"/>
+    <mesh name="sacrum" file="sacrum.stl"/>
+    <mesh name="lumbar1" file="lumbar1.stl"/>
+    <mesh name="lumbar2" file="lumbar2.stl"/>
+    <mesh name="lumbar3" file="lumbar3.stl"/>
+    <mesh name="lumbar4" file="lumbar4.stl"/>
+    <mesh name="lumbar5" file="lumbar5.stl"/>
+    <mesh name="thoracic1_s" file="thoracic1_s.stl"/>
+    <mesh name="thoracic2_s" file="thoracic2_s.stl"/>
+    <mesh name="thoracic3_s" file="thoracic3_s.stl"/>
+    <mesh name="thoracic4_s" file="thoracic4_s.stl"/>
+    <mesh name="thoracic5_s" file="thoracic5_s.stl"/>
+    <mesh name="thoracic6_s" file="thoracic6_s.stl"/>
+    <mesh name="thoracic7_s" file="thoracic7_s.stl"/>
+    <mesh name="thoracic8_s" file="thoracic8_s.stl"/>
+    <mesh name="thoracic9_s" file="thoracic9_s.stl"/>
+    <mesh name="thoracic10_s" file="thoracic10_s.stl"/>
+    <mesh name="thoracic11_s" file="thoracic11_s.stl"/>
+    <mesh name="thoracic12_s" file="thoracic12_s.stl"/>
+    <mesh name="thorax" file="thorax.stl"/>
+    <mesh name="r_pelvis" file="r_pelvis.stl"/>
+    <mesh name="l_pelvis" file="l_pelvis.stl"/>
+    <mesh name="r_femur" file="r_femur.stl"/>
+    <mesh name="l_femur" file="l_femur.stl"/>
+    <mesh name="r_tibia" file="r_tibia.stl"/>
+    <mesh name="l_tibia" file="l_tibia.stl"/>
+    <mesh name="r_fibula" file="r_fibula.stl"/>
+    <mesh name="l_fibula" file="l_fibula.stl"/>
+    <mesh name="r_talus" file="r_talus.stl"/>
+    <mesh name="l_talus" file="l_talus.stl"/>
+    <mesh name="r_foot" file="r_foot.stl"/>
+    <mesh name="l_foot" file="l_foot.stl"/>
+    <mesh name="r_bofoot" file="r_bofoot.stl"/>
+    <mesh name="l_bofoot" file="l_bofoot.stl"/>
+    <mesh name="r_patella" file="r_patella.stl"/>
+    <mesh name="l_patella" file="l_patella.stl"/>
     <mesh name="ground_ribs" file="thorax.stl" scale="1 1 1"></mesh>
     <mesh name="ground_spine" file="ground_spine.stl" scale="1 1 1"></mesh>
     <mesh name="ground_skull" file="ground_skull.stl" scale="1 1 1"></mesh>

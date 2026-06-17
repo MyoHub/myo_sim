@@ -1,0 +1,42 @@
+<mujocoinclude model="MyoBodySkeletonDecorAssets">
+  <asset>
+    <mesh name="hat_cervical" file="../meshes/hat_cervical.stl"/>
+    <mesh name="hat_jaw" file="../meshes/hat_jaw.stl"/>
+    <mesh name="hat_skull" file="../meshes/hat_skull.stl"/>
+    <mesh name="sacrum" file="../meshes/sacrum.stl"/>
+    <mesh name="lumbar1" file="../meshes/lumbar1.stl"/>
+    <mesh name="lumbar2" file="../meshes/lumbar2.stl"/>
+    <mesh name="lumbar3" file="../meshes/lumbar3.stl"/>
+    <mesh name="lumbar4" file="../meshes/lumbar4.stl"/>
+    <mesh name="lumbar5" file="../meshes/lumbar5.stl"/>
+    <mesh name="thoracic1_s" file="../meshes/thoracic1_s.stl"/>
+    <mesh name="thoracic2_s" file="../meshes/thoracic2_s.stl"/>
+    <mesh name="thoracic3_s" file="../meshes/thoracic3_s.stl"/>
+    <mesh name="thoracic4_s" file="../meshes/thoracic4_s.stl"/>
+    <mesh name="thoracic5_s" file="../meshes/thoracic5_s.stl"/>
+    <mesh name="thoracic6_s" file="../meshes/thoracic6_s.stl"/>
+    <mesh name="thoracic7_s" file="../meshes/thoracic7_s.stl"/>
+    <mesh name="thoracic8_s" file="../meshes/thoracic8_s.stl"/>
+    <mesh name="thoracic9_s" file="../meshes/thoracic9_s.stl"/>
+    <mesh name="thoracic10_s" file="../meshes/thoracic10_s.stl"/>
+    <mesh name="thoracic11_s" file="../meshes/thoracic11_s.stl"/>
+    <mesh name="thoracic12_s" file="../meshes/thoracic12_s.stl"/>
+    <mesh name="thorax" file="../meshes/thorax.stl"/>
+    <mesh name="r_pelvis" file="../meshes/r_pelvis.stl"/>
+    <mesh name="l_pelvis" file="../meshes/l_pelvis.stl"/>
+    <mesh name="r_femur" file="../meshes/r_femur.stl"/>
+    <mesh name="l_femur" file="../meshes/l_femur.stl"/>
+    <mesh name="r_tibia" file="../meshes/r_tibia.stl"/>
+    <mesh name="l_tibia" file="../meshes/l_tibia.stl"/>
+    <mesh name="r_fibula" file="../meshes/r_fibula.stl"/>
+    <mesh name="l_fibula" file="../meshes/l_fibula.stl"/>
+    <mesh name="r_talus" file="../meshes/r_talus.stl"/>
+    <mesh name="l_talus" file="../meshes/l_talus.stl"/>
+    <mesh name="r_foot" file="../meshes/r_foot.stl"/>
+    <mesh name="l_foot" file="../meshes/l_foot.stl"/>
+    <mesh name="r_bofoot" file="../meshes/r_bofoot.stl"/>
+    <mesh name="l_bofoot" file="../meshes/l_bofoot.stl"/>
+    <mesh name="r_patella" file="../meshes/r_patella.stl"/>
+    <mesh name="l_patella" file="../meshes/l_patella.stl"/>
+  </asset>
+</mujocoinclude>

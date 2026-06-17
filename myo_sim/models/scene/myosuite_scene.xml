@@ -24,7 +24,7 @@
         <mesh name="logo" file="scene/myosuite_logo.msh" scale="1 1 1"/>
         <material name="matlogo" texture="textlogo"/>
 
-        <!-- <mesh name="human" file="body/Geometry/human_lowpoly.stl" scale="1 1 1"/> -->
+        <!-- decorative full-body backdrop: include scene/myobody_skeleton_decor_assets.xml + scene/myobody_skeleton_decor.xml (see myo_sim/models/scene/README.md) -->
     </asset>
 
     <statistic extent="5" center="0 -1 1"/>
@@ -51,6 +51,6 @@
         <geom type="mesh" mesh="logo" material="matlogo" group="1" conaffinity="0" contype="0" euler="1.57 0 0" pos="0 6.95 2.1"/>
 
         <!-- <geom type="box" size=".01 .01 0.85" pos="0 0 0.85"/> -->
-        <!-- <geom type="mesh" mesh="human" rgba=".8 .8 .8 1" euler="0 0 3.14" pos="0 0 0"/> -->
+        
     </worldbody>
 </mujoco>

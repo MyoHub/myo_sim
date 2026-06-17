@@ -8,7 +8,9 @@
 ====================================================== -->
   <worldbody>
     <body childclass="myoElbow" name="full_body">
-      <geom name="body" type="mesh" mesh="body_norighthand" euler="0 0 3.14"/>
+      <body name="body_decor" pos="0 0 0.94">
+        <include file="../../../scene/myobody_skeleton_decor.xml"/>
+      </body>
       <body name="base" pos="0 .08 1.4" euler="1.57 -1.57 0">
         <!-- <geom name="ground_ribs" type="mesh" mesh="ground_ribs"></geom> -->
         <!-- <geom name="ground_spine" type="mesh" mesh="ground_spine"></geom> -->
