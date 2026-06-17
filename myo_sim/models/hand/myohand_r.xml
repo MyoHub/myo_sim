@@ -62,39 +62,39 @@
     <texture type="cube" colorspace="auto" name="texgeom" builtin="flat" mark="cross" rgb1="0.7 0.7 0.7" rgb2="0.9 0.9 0.9" markrgb="1 1 1" width="127" height="762"/>
     <material name="geom" texture="texgeom" texuniform="true"/>
     <material name="MatSkin" specular="0.2" shininess="0.1" reflectance="0.5" rgba="0.9 0.7 0.5 1"/>
-    <mesh name="thorax_r" content_type="model/stl" file="meshes/thorax.stl"/>
-    <mesh name="clavicle_r" content_type="model/stl" file="meshes/clavicle.stl"/>
-    <mesh name="scapula_r" content_type="model/stl" file="meshes/scapula.stl"/>
-    <mesh name="humerus_r" content_type="model/stl" file="meshes/humerus.stl"/>
-    <mesh name="ulna_r" content_type="model/stl" file="meshes/ulna.stl"/>
-    <mesh name="radius_r" content_type="model/stl" file="meshes/radius.stl"/>
-    <mesh name="lunate_r" content_type="model/stl" file="meshes/lunate.stl"/>
-    <mesh name="scaphoid_r" content_type="model/stl" file="meshes/scaphoid.stl"/>
-    <mesh name="pisiform_r" content_type="model/stl" file="meshes/pisiform.stl"/>
-    <mesh name="triquetrum_r" content_type="model/stl" file="meshes/triquetrum.stl"/>
-    <mesh name="capitate_r" content_type="model/stl" file="meshes/capitate.stl"/>
-    <mesh name="trapezium_r" content_type="model/stl" file="meshes/trapezium.stl"/>
-    <mesh name="1mc_r" content_type="model/stl" file="meshes/1mc.stl"/>
-    <mesh name="thumbprox_r" content_type="model/stl" file="meshes/thumbprox.stl"/>
-    <mesh name="thumbdist_r" content_type="model/stl" file="meshes/thumbdist.stl"/>
-    <mesh name="trapezoid_r" content_type="model/stl" file="meshes/trapezoid.stl"/>
-    <mesh name="hamate_r" content_type="model/stl" file="meshes/hamate.stl"/>
-    <mesh name="2mc_r" content_type="model/stl" file="meshes/2mc.stl"/>
-    <mesh name="2proxph_r" content_type="model/stl" file="meshes/2proxph.stl"/>
-    <mesh name="2midph_r" content_type="model/stl" file="meshes/2midph.stl"/>
-    <mesh name="2distph_r" content_type="model/stl" file="meshes/2distph.stl"/>
-    <mesh name="3mc_r" content_type="model/stl" file="meshes/3mc.stl"/>
-    <mesh name="3proxph_r" content_type="model/stl" file="meshes/3proxph.stl"/>
-    <mesh name="3midph_r" content_type="model/stl" file="meshes/3midph.stl"/>
-    <mesh name="3distph_r" content_type="model/stl" file="meshes/3distph.stl"/>
-    <mesh name="4mc_r" content_type="model/stl" file="meshes/4mc.stl"/>
-    <mesh name="4proxph_r" content_type="model/stl" file="meshes/4proxph.stl"/>
-    <mesh name="4midph_r" content_type="model/stl" file="meshes/4midph.stl"/>
-    <mesh name="4distph_r" content_type="model/stl" file="meshes/4distph.stl"/>
-    <mesh name="5mc_r" content_type="model/stl" file="meshes/5mc.stl"/>
-    <mesh name="5proxph_r" content_type="model/stl" file="meshes/5proxph.stl"/>
-    <mesh name="5midph_r" content_type="model/stl" file="meshes/5midph.stl"/>
-    <mesh name="5distph_r" content_type="model/stl" file="meshes/5distph.stl"/>
+    <mesh name="thorax_r" file="meshes/thorax.stl"/>
+    <mesh name="clavicle_r" file="meshes/clavicle.stl"/>
+    <mesh name="scapula_r" file="meshes/scapula.stl"/>
+    <mesh name="humerus_r" file="meshes/humerus.stl"/>
+    <mesh name="ulna_r" file="meshes/ulna.stl"/>
+    <mesh name="radius_r" file="meshes/radius.stl"/>
+    <mesh name="lunate_r" file="meshes/lunate.stl"/>
+    <mesh name="scaphoid_r" file="meshes/scaphoid.stl"/>
+    <mesh name="pisiform_r" file="meshes/pisiform.stl"/>
+    <mesh name="triquetrum_r" file="meshes/triquetrum.stl"/>
+    <mesh name="capitate_r" file="meshes/capitate.stl"/>
+    <mesh name="trapezium_r" file="meshes/trapezium.stl"/>
+    <mesh name="1mc_r" file="meshes/1mc.stl"/>
+    <mesh name="thumbprox_r" file="meshes/thumbprox.stl"/>
+    <mesh name="thumbdist_r" file="meshes/thumbdist.stl"/>
+    <mesh name="trapezoid_r" file="meshes/trapezoid.stl"/>
+    <mesh name="hamate_r" file="meshes/hamate.stl"/>
+    <mesh name="2mc_r" file="meshes/2mc.stl"/>
+    <mesh name="2proxph_r" file="meshes/2proxph.stl"/>
+    <mesh name="2midph_r" file="meshes/2midph.stl"/>
+    <mesh name="2distph_r" file="meshes/2distph.stl"/>
+    <mesh name="3mc_r" file="meshes/3mc.stl"/>
+    <mesh name="3proxph_r" file="meshes/3proxph.stl"/>
+    <mesh name="3midph_r" file="meshes/3midph.stl"/>
+    <mesh name="3distph_r" file="meshes/3distph.stl"/>
+    <mesh name="4mc_r" file="meshes/4mc.stl"/>
+    <mesh name="4proxph_r" file="meshes/4proxph.stl"/>
+    <mesh name="4midph_r" file="meshes/4midph.stl"/>
+    <mesh name="4distph_r" file="meshes/4distph.stl"/>
+    <mesh name="5mc_r" file="meshes/5mc.stl"/>
+    <mesh name="5proxph_r" file="meshes/5proxph.stl"/>
+    <mesh name="5midph_r" file="meshes/5midph.stl"/>
+    <mesh name="5distph_r" file="meshes/5distph.stl"/>
   </asset>
 
   <worldbody>
@@ -151,11 +151,11 @@
             <site name="Shoulder_marker_r" class="myoarm_marker" pos="0.0014 -0.00147 0.01369"/>
             <body name="scapphant_r" pos="-0.00955 -0.034 0.009">
               <inertial pos="0 0 0" mass="0.001" diaginertia="1 1 1"/>
-              <body name="humphant_r">
+              <body name="humphant_r" quat="0.707388 0.00339273 0.706181 0.029969">
                 <inertial pos="0 0 0" mass="0.001" diaginertia="1 1 1"/>
-                <body name="humphant1_r">
+                <body name="humphant1_r" quat="0.707388 -0.705596 0.00162563 0.0416304">
                   <inertial pos="0 0 0" mass="0.001" diaginertia="1 1 1"/>
-                  <body name="humerus_r">
+                  <body name="humerus_r" quat="0.707388 -0.00339273 -0.706181 -0.029969">
                     <inertial pos="0.018064 -0.140141 -0.012746" quat="0.407851 0.343714 -0.567755 0.627034" mass="1.99757" diaginertia="0.0128576 0.0121576 0.00239265"/>
                     <geom name="humerus_r" type="mesh" mesh="humerus_r"/>
                     <geom name="humerus_coll_r" class="myoarm_coll" size="0.042 0.14" pos="0 -0.13 0" quat="0.707107 0.707107 0 0"/>
