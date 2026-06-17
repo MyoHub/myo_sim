@@ -10,7 +10,7 @@
   <worldbody>
   <body childclass="myoElbow" name="full_body">
       <body name="body_decor" pos="0 0 0.94">
-        <include file="../../scene/myobody_skeleton_decor.xml"/>
+        <include file="../../../scene/myobody_skeleton_decor.xml"/>
       </body>
 
       <body name="base" pos="0 .08 1.4" euler="1.57 -1.57 0">
