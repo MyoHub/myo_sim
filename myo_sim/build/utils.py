@@ -70,33 +70,12 @@ def find_site(spec: object, site_name: str) -> object:
     return site
 
 
-def attach_to_site(parent_spec: object, child_spec: object, parent_site: object) -> None:
-    """Attach child spec at a parent attachment site."""
-    parent_spec.attach(child_spec, prefix="", suffix="", site=parent_site)
-
-
-def attach_to_frame(parent_spec: object, child_spec: object, parent_frame: object) -> None:
-    """Attach child spec at a parent frame."""
-    parent_spec.attach(child_spec, prefix="", suffix="", frame=parent_frame)
-
-
 def float_list(value: str) -> list[float]:
     return [float(item) for item in value.split()]
 
 
 def format_floats(values: list[float]) -> str:
     return " ".join(f"{value:.12g}" for value in values)
-
-
-def rename_material(spec: object, old_name: str, new_name: str) -> None:
-    """Avoid shared material-name collisions across attached specs."""
-    try:
-        material = spec.material(old_name)
-    except KeyError:
-        return
-    if material is None:
-        return
-    material.name = new_name
 
 
 def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = None) -> None:
@@ -116,6 +95,34 @@ def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = N
             gap=float(pair.get("gap")) if pair.get("gap") else None,
             friction=float_list(pair.get("friction")) if pair.get("friction") else None,
         )
+
+
+def expand_component_element(element: ET.Element, base_path: Path) -> list[ET.Element]:
+    """Expand local MJCF include elements inside a component tree."""
+    if element.tag == "include":
+        include_file = element.get("file")
+        if include_file is None:
+            return []
+        include_path = base_path / include_file
+        if not include_path.exists():
+            raise FileNotFoundError(f"MJCF include not found: {include_path} (resolved from {base_path} / {include_file!r})")
+        return component_children(include_path)
+
+    expanded = copy.deepcopy(element)
+    for child in list(expanded):
+        expanded.remove(child)
+        for replacement in expand_component_element(child, base_path):
+            expanded.append(replacement)
+    return [expanded]
+
+
+def component_children(xml_path: Path) -> list[ET.Element]:
+    """Return component children, recursively expanding local MJCF includes."""
+    children = []
+    root = ET.parse(xml_path).getroot()
+    for child in list(root):
+        children.extend(expand_component_element(child, xml_path.parent))
+    return children
 
 
 def mirror_name(value: str, rules: MirrorRules) -> str:
@@ -265,8 +272,7 @@ def build_mirrored_child_xml(
         texturedir=str(compiler_meshdir),
     )
 
-    source_assets = ET.parse(source_assets_xml).getroot()
-    for child in list(source_assets):
+    for child in component_children(source_assets_xml):
         if child.tag in {"compiler", "size", "option"}:
             continue
         mirrored = mirror_element(child, rules)
@@ -279,13 +285,13 @@ def build_mirrored_child_xml(
     for xml_path in (source_tendons_xml, source_muscles_xml):
         if xml_path is None:
             continue
-        for child in list(ET.parse(xml_path).getroot()):
+        for child in component_children(xml_path):
             root.append(mirror_element(child, rules))
 
     worldbody = ET.SubElement(root, "worldbody")
     child_root = ET.SubElement(worldbody, "body", name=root_body_name)
     ET.SubElement(child_root, "site", name=root_site_name, size="0.01")
-    for child in list(ET.parse(source_chain_xml).getroot()):
+    for child in component_children(source_chain_xml):
         child_root.append(mirror_element(child, rules))
 
     return ET.tostring(root, encoding="unicode")
@@ -301,6 +307,8 @@ def build_child_xml_from_components(
     chain_xml: Path,
     root_body_name: str,
     root_site_name: str,
+    extra_assets_xmls: tuple[Path, ...] = (),
+    scene_xmls: tuple[Path, ...] = (),
 ) -> str:
     """Build a standalone child XML from asset/tendon/muscle/chain includes."""
     root = ET.Element("mujoco", {"model": model_name})
@@ -312,22 +320,34 @@ def build_child_xml_from_components(
         texturedir=str(compiler_meshdir),
     )
 
-    source_assets = ET.parse(assets_xml).getroot()
-    for child in list(source_assets):
-        if child.tag in {"compiler", "size", "option"}:
-            continue
-        root.append(copy.deepcopy(child))
+    for asset_xml in (assets_xml, *extra_assets_xmls):
+        for child in component_children(asset_xml):
+            if child.tag in {"compiler", "size", "option"}:
+                continue
+            root.append(child)
 
     for xml_path in (tendons_xml, muscles_xml):
         if xml_path is None:
             continue
-        for child in list(ET.parse(xml_path).getroot()):
-            root.append(copy.deepcopy(child))
+        for child in component_children(xml_path):
+            root.append(child)
+
+    scene_worldbody_children = []
+    for scene_xml in scene_xmls:
+        for child in component_children(scene_xml):
+            if child.tag in {"compiler", "size", "option"}:
+                continue
+            if child.tag == "worldbody":
+                scene_worldbody_children.extend(list(child))
+                continue
+            root.append(child)
 
     worldbody = ET.SubElement(root, "worldbody")
+    for child in scene_worldbody_children:
+        worldbody.append(child)
     child_root = ET.SubElement(worldbody, "body", name=root_body_name)
     ET.SubElement(child_root, "site", name=root_site_name, size="0.01")
-    for child in list(ET.parse(chain_xml).getroot()):
-        child_root.append(copy.deepcopy(child))
+    for child in component_children(chain_xml):
+        child_root.append(child)
 
     return ET.tostring(root, encoding="unicode")

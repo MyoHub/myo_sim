@@ -1,16 +1,17 @@
-# MyoHand 0.1
+> **LEGACY** — pip-accessible for backwards compatibility ([#97](https://github.com/MyoHub/myo_sim/issues/97)). Biological variants will migrate to `myo_sim/models/elbow/`; softexo variants will move to `myoassist`. Do not add new dependencies on this path.
+
+# MyoElbow 0.1
 
 ## General:
 
-The myoHand mujoco musculoskeletal (MSK) model is taking 2 popular OpenSim models: MoBL - human upper
-extremity model [https://simtk.org/projects/upexdyn/] and the 2nd-Hand [https://simtk.org/projects/hand_muscle], for hand and fingers MSK model references.
+The myoElbow mujoco musculoskeletal (MSK) model takes the OpenSim [elbow26 model](https://github.com/opensim-org/opensim-models/tree/master/Models/Arm26) as reference.
 
 This generated mujoco MSK model has almost identical kinematics, and very similar muscle kinematics (moment arms) and kinetic (forces) properties.
 
 
 ## Conversion process:
 
-The myoHand model was generated using our developed automatic conversion pipeline (will release at June 2023).
+The myoElbow model was generated using our developed automatic conversion pipeline (will release at June 2023).
 
 Three Conversion steps were taken to generate the myoLeg models from the reference Osim model:
 
@@ -18,7 +19,7 @@ Three Conversion steps were taken to generate the myoLeg models from the referen
 2. Moment arm optimization [matching the moment arm of each muscle by optimizing how muscles wrap over wrapping objects]
 3. Muscle force optimizaiton [matching the muscle force-length relationship by optimizing muscle parameters]
 
-After the conversion, a manual adjusting process is done to correct the abnormal results.
+After the conversion, No manual adjusting process is done to correct the abnormal results.
 
 ## Maunal adjustment:
 - Adjustments post conversion to optimize for kitnematic and dynamic behaviors

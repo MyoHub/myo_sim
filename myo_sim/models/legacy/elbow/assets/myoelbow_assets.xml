@@ -1,0 +1,116 @@
+<mujocoinclude model="MyoElbow_v0.1.7">
+<!-- =================================================
+	Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
+	Model	  :: Myo Elbow (MuJoCoV2.0)
+	Author	:: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huawei Wang
+	source	:: https://github.com/vikashplus
+	License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+  <compiler inertiafromgeom="auto" angle="radian" balanceinertia="true" boundmass="0.001" boundinertia="0.001">
+    <lengthrange inttotal="500"></lengthrange>
+  </compiler>
+
+  <default>
+    <default class="myoElbow">
+      <joint limited="true" damping="0.5" armature="0.01" stiffness="0"></joint>
+      <geom contype="1" conaffinity="0" condim="3" rgba="0.8 0.85 0.8 1" margin="0.001" solref=".02 1" solimp=".8 .8 .01" material="geom"></geom>
+      <site size="0.001"></site>
+      <tendon width="0.005" rgba=".95 .3 .3 1" limited="false"></tendon>
+      <default class="muscle">
+        <muscle ctrllimited="true" ctrlrange="0.001 1" scale="1" vmax="15" fvmax="1.4" timeconst="0.01 0.04"></muscle>
+      </default>
+    </default>
+  </default>
+
+  <option timestep="0.002"/>
+  <size njmax="1000" nconmax="400" nuser_jnt="1"/>
+
+  <visual>
+    <headlight diffuse="1 1 1"/>
+    <scale actuatorwidth=".075"/>
+  </visual>
+
+
+  <asset>
+    <!-- decorative full-body backdrop, assembled from existing bone meshes -->
+    <mesh name="hat_cervical" file="hat_cervical.stl"/>
+    <mesh name="hat_jaw" file="hat_jaw.stl"/>
+    <mesh name="hat_skull" file="hat_skull.stl"/>
+    <mesh name="sacrum" file="sacrum.stl"/>
+    <mesh name="lumbar1" file="lumbar1.stl"/>
+    <mesh name="lumbar2" file="lumbar2.stl"/>
+    <mesh name="lumbar3" file="lumbar3.stl"/>
+    <mesh name="lumbar4" file="lumbar4.stl"/>
+    <mesh name="lumbar5" file="lumbar5.stl"/>
+    <mesh name="thoracic1_s" file="thoracic1_s.stl"/>
+    <mesh name="thoracic2_s" file="thoracic2_s.stl"/>
+    <mesh name="thoracic3_s" file="thoracic3_s.stl"/>
+    <mesh name="thoracic4_s" file="thoracic4_s.stl"/>
+    <mesh name="thoracic5_s" file="thoracic5_s.stl"/>
+    <mesh name="thoracic6_s" file="thoracic6_s.stl"/>
+    <mesh name="thoracic7_s" file="thoracic7_s.stl"/>
+    <mesh name="thoracic8_s" file="thoracic8_s.stl"/>
+    <mesh name="thoracic9_s" file="thoracic9_s.stl"/>
+    <mesh name="thoracic10_s" file="thoracic10_s.stl"/>
+    <mesh name="thoracic11_s" file="thoracic11_s.stl"/>
+    <mesh name="thoracic12_s" file="thoracic12_s.stl"/>
+    <mesh name="thorax" file="thorax.stl"/>
+    <mesh name="r_pelvis" file="r_pelvis.stl"/>
+    <mesh name="l_pelvis" file="l_pelvis.stl"/>
+    <mesh name="r_femur" file="r_femur.stl"/>
+    <mesh name="l_femur" file="l_femur.stl"/>
+    <mesh name="r_tibia" file="r_tibia.stl"/>
+    <mesh name="l_tibia" file="l_tibia.stl"/>
+    <mesh name="r_fibula" file="r_fibula.stl"/>
+    <mesh name="l_fibula" file="l_fibula.stl"/>
+    <mesh name="r_talus" file="r_talus.stl"/>
+    <mesh name="l_talus" file="l_talus.stl"/>
+    <mesh name="r_foot" file="r_foot.stl"/>
+    <mesh name="l_foot" file="l_foot.stl"/>
+    <mesh name="r_bofoot" file="r_bofoot.stl"/>
+    <mesh name="l_bofoot" file="l_bofoot.stl"/>
+    <mesh name="r_patella" file="r_patella.stl"/>
+    <mesh name="l_patella" file="l_patella.stl"/>
+    <mesh name="ground_ribs" file="thorax.stl" scale="1 1 1"></mesh>
+    <mesh name="ground_spine" file="ground_spine.stl" scale="1 1 1"></mesh>
+    <mesh name="ground_skull" file="ground_skull.stl" scale="1 1 1"></mesh>
+    <mesh name="ground_jaw" file="ground_jaw.stl" scale="1 1 1"></mesh>
+    <mesh name="ground_r_clavicle" file="clavicle.stl" scale="1 1 1"></mesh>
+    <mesh name="ground_r_scapula" file="scapula.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_humerus" file="humerus.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_ulna" file="ulna.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_radius" file="radius.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_lunate" file="lunate.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_scaphoid" file="scaphoid.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_pisiform" file="pisiform.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_triquetrum" file="triquetrum.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_capitate" file="capitate.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_trapezium" file="trapezium.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_trapezoid" file="trapezoid.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_hamate" file="hamate.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_1mc" file="1mc.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_2mc" file="2mc.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_3mc" file="3mc.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_4mc" file="4mc.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_5mc" file="5mc.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_thumbprox" file="thumbprox.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_thumbdist" file="thumbdist.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_2proxph" file="2proxph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_2midph" file="2midph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_2distph" file="2distph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_3proxph" file="3proxph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_3midph" file="3midph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_3distph" file="3distph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_4proxph" file="4proxph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_4midph" file="4midph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_4distph" file="4distph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_5proxph" file="5proxph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_5midph" file="5midph.stl" scale="1 1 1"></mesh>
+    <mesh name="arm_r_5distph" file="5distph.stl" scale="1 1 1"></mesh>
+    <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .19 .2" rgb2=".1 0.11 0.11" width="50" height="50"></texture>
+    <texture name="texgeom" type="cube" builtin="flat" mark="cross" width="127" height="1278" rgb1="0.7 0.7 0.7" rgb2="0.9 0.9 0.9" markrgb="1 1 1" random="0.01"></texture>
+    <material name="MatPlane" reflectance="0.5" texture="texplane" texrepeat="4 4" texuniform="true"></material>
+    <material name="geom" texture="texgeom" texuniform="true"></material>
+  </asset>
+
+</mujocoinclude>

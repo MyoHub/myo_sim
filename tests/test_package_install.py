@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import myo_sim
+import mujoco
 
 
 def test_models_dir_exists():
@@ -20,8 +21,10 @@ def test_stl_files_present():
 
 
 def test_load_myolegs():
-    model, data = myo_sim.load("myolegs")
+    model, _ = myo_sim.load("myolegs")
     assert model.njnt > 0, "Loaded myolegs model has no joints"
+    assert mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "Full Body") >= 0
+    assert mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "floor") >= 0
 
 
 def test_build_compose_import():

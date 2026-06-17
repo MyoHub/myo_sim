@@ -28,8 +28,6 @@ try:
     from .utils import (
         MirrorRules,
         add_contact_pairs,
-        attach_to_frame,
-        attach_to_site,
         build_child_xml_from_components,
         build_mirrored_child_xml,
         find_body,
@@ -40,8 +38,6 @@ except ImportError:
     from utils import (
         MirrorRules,
         add_contact_pairs,
-        attach_to_frame,
-        attach_to_site,
         build_child_xml_from_components,
         build_mirrored_child_xml,
         find_body,
@@ -51,8 +47,15 @@ except ImportError:
 
 ROOT = MODELS_DIR
 
-TORSO_XML = ROOT / "torso" / "myotorso.xml"
-TORSO_ABDOMEN_XML = ROOT / "torso" / "myotorso_abdomen.xml"
+TORSO_ABDOMEN_TENDONS_XML = ROOT / "torso" / "assets" / "myotorso_abdomen_tendon.xml"
+TORSO_ABDOMEN_MUSCLES_XML = ROOT / "torso" / "assets" / "myotorso_abdomen_muscle.xml"
+TORSO_ASSETS_XML = ROOT / "torso" / "assets" / "myotorso_assets.xml"
+TORSO_TENDONS_XML = ROOT / "torso" / "assets" / "myotorso_tendon.xml"
+TORSO_MUSCLES_XML = ROOT / "torso" / "assets" / "myotorso_muscle.xml"
+TORSO_CHAIN_XML = ROOT / "torso" / "assets" / "myotorso_chain.xml"
+HEAD_SIMPLE_ASSETS_XML = ROOT / "head" / "assets" / "myohead_simple_assets.xml"
+SCENE_XML = ROOT / "scene" / "myosuite_scene.xml"
+TORSO_ABDOMEN_UNLOCKED_JOINTS = {"flex_extension", "lat_bending", "axial_rotation"}
 ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
 HAND_CONTACTS_XML = ROOT / "contacts" / "myohand_contacts.xml"
 LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
@@ -69,18 +72,22 @@ LEGS_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs_chain.xml"
 TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
 LEFT_ARM_ATTACH_SITE = "arm_attach_l"
+TORSO_ABDOMEN_ROOT_QUAT = (0.707388, 0, 0, -0.706825)
 
 LEFT_ARM_STRATEGY_MIRROR_RIGHT = "mirror_right_to_left"
 LEFT_ARM_STRATEGY_NONE = "none"
 
 
 class BuildStrategy(str, Enum):
+    TORSO_BODY = "torso_body"
     TORSO_ARMS = "torso_arms"
     ARMS_BODY = "arms_body"
     RIGHT_ARM_BODY = "right_arm_body"
     RIGHT_HAND = "right_hand"
     BOTH_HANDS = "both_hands"
     FULLBODY = "fullbody"
+    LEGS_BODY = "legs_body"
+    TORSO_ABDOMEN = "torso_abdomen"
     LEGS_ABDOMEN = "legs_abdomen"
 
 
@@ -100,6 +107,14 @@ class ModelRegistration:
 
 
 MODEL_REGISTRY = {
+    "myotorso": ModelRegistration(
+        name="myotorso",
+        build_strategy=BuildStrategy.TORSO_BODY,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Torso scaffold with torso muscles",
+        include_left_arm_contacts=False,
+        include_arm_contacts=False,
+    ),
     "myotorso_arms": ModelRegistration(
         name="myotorso_arms",
         build_strategy=BuildStrategy.TORSO_ARMS,
@@ -155,6 +170,22 @@ MODEL_REGISTRY = {
         add_root_freejoint=True,
         root_pos=(-0.025, 0.1, 1),
     ),
+    "myolegs": ModelRegistration(
+        name="myolegs",
+        build_strategy=BuildStrategy.LEGS_BODY,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Passive anatomical torso scaffold + legs",
+        include_left_arm_contacts=False,
+        include_arm_contacts=False,
+        include_legs=True,
+    ),
+    "myotorso_abdomen": ModelRegistration(
+        name="myotorso_abdomen",
+        build_strategy=BuildStrategy.TORSO_ABDOMEN,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Simple abdomen scaffold",
+        include_left_arm_contacts=False,
+    ),
     "myolegs_abdomen": ModelRegistration(
         name="myolegs_abdomen",
         build_strategy=BuildStrategy.LEGS_ABDOMEN,
@@ -172,8 +203,20 @@ def pair_is_supported(pair: dict, include_left_arm_contacts: bool) -> bool:
 
 
 def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
-    """Load the single-torso model and make it match the bimanual root pose."""
-    torso = mujoco.MjSpec.from_file(str(TORSO_XML))
+    """Build the single-torso model from component XMLs."""
+    torso_xml = build_child_xml_from_components(
+        model_name="myotorso_attach",
+        compiler_meshdir=ROOT,
+        assets_xml=TORSO_ASSETS_XML,
+        tendons_xml=TORSO_TENDONS_XML,
+        muscles_xml=TORSO_MUSCLES_XML,
+        chain_xml=TORSO_CHAIN_XML,
+        root_body_name=TORSO_ROOT_BODY,
+        root_site_name="torso_root_attach",
+        extra_assets_xmls=(HEAD_SIMPLE_ASSETS_XML,),
+        scene_xmls=(SCENE_XML,),
+    )
+    torso = mujoco.MjSpec.from_string(torso_xml)
     torso.compiler.balanceinertia = True
 
     root_body = find_body(torso, TORSO_ROOT_BODY)
@@ -193,6 +236,10 @@ def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     if registration.include_fullbody_contacts:
         add_contact_pairs(torso, FULLBODY_CONTACTS_XML)
     return torso
+
+
+def build_torso_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return load_torso_spec(registration).compile()
 
 
 def make_torso_passive(torso: mujoco.MjSpec) -> None:
@@ -267,17 +314,42 @@ def load_legs_spec() -> mujoco.MjSpec:
     return legs
 
 
+def load_torso_abdomen_spec() -> mujoco.MjSpec:
+    abdomen_xml = build_child_xml_from_components(
+        model_name="myotorso_abdomen_attach",
+        compiler_meshdir=ROOT,
+        assets_xml=TORSO_ASSETS_XML,
+        tendons_xml=TORSO_ABDOMEN_TENDONS_XML,
+        muscles_xml=TORSO_ABDOMEN_MUSCLES_XML,
+        chain_xml=TORSO_CHAIN_XML,
+        root_body_name="root",
+        root_site_name="torso_abdomen_root_attach",
+        extra_assets_xmls=(HEAD_SIMPLE_ASSETS_XML,),
+        scene_xmls=(SCENE_XML,),
+    )
+    abdomen = mujoco.MjSpec.from_string(abdomen_xml)
+    abdomen.compiler.balanceinertia = True
+    lock_torso_abdomen_joints(abdomen)
+    return abdomen
+
+
+def lock_torso_abdomen_joints(abdomen: mujoco.MjSpec) -> None:
+    """Keep only the base L5 torso joints movable for the simple abdomen scaffold."""
+    for equality in list(abdomen.equalities):
+        abdomen.delete(equality)
+    for joint in list(abdomen.joints):
+        if joint.name not in TORSO_ABDOMEN_UNLOCKED_JOINTS:
+            abdomen.delete(joint)
+
+
 def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     torso = load_passive_torso_spec(registration)
-    attach_to_site(
-        torso,
-        load_right_arm_spec(),
-        find_site(torso, RIGHT_ARM_ATTACH_SITE),
-    )
-    attach_to_site(
-        torso,
+    torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    torso.attach(
         load_mirrored_left_arm_spec(registration.mirror_rules),
-        find_site(torso, LEFT_ARM_ATTACH_SITE),
+        prefix="",
+        suffix="",
+        site=find_site(torso, LEFT_ARM_ATTACH_SITE),
     )
     add_contact_pairs(torso, ARM_CONTACTS_XML)
 
@@ -286,11 +358,7 @@ def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
 
 def build_right_arm_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     torso = load_passive_torso_spec(registration)
-    attach_to_site(
-        torso,
-        load_right_arm_spec(),
-        find_site(torso, RIGHT_ARM_ATTACH_SITE),
-    )
+    torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
 
     return torso.compile()
 
@@ -332,13 +400,9 @@ def load_left_hand_from_arm_spec() -> mujoco.MjSpec:
     return hand
 
 
-def build_right_hand_from_arm_model() -> mujoco.MjModel:
-    torso = load_passive_torso_spec(MODEL_REGISTRY["myohand_r"])
-    attach_to_site(
-        torso,
-        load_right_hand_from_arm_spec(),
-        find_site(torso, RIGHT_ARM_ATTACH_SITE),
-    )
+def build_right_hand_from_arm_model(registration: ModelRegistration) -> mujoco.MjModel:
+    torso = load_passive_torso_spec(registration)
+    torso.attach(load_right_hand_from_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     add_contact_pairs(
         torso,
         HAND_CONTACTS_XML,
@@ -347,28 +411,12 @@ def build_right_hand_from_arm_model() -> mujoco.MjModel:
     return torso.compile()
 
 
-def build_both_hands_from_arm_model() -> mujoco.MjModel:
-    torso = load_passive_torso_spec(MODEL_REGISTRY["myohands"])
-    attach_to_site(
-        torso,
-        load_right_hand_from_arm_spec(),
-        find_site(torso, RIGHT_ARM_ATTACH_SITE),
-    )
-    attach_to_site(
-        torso,
-        load_left_hand_from_arm_spec(),
-        find_site(torso, LEFT_ARM_ATTACH_SITE),
-    )
+def build_both_hands_from_arm_model(registration: ModelRegistration) -> mujoco.MjModel:
+    torso = load_passive_torso_spec(registration)
+    torso.attach(load_right_hand_from_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    torso.attach(load_left_hand_from_arm_spec(), prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
     add_contact_pairs(torso, HAND_CONTACTS_XML)
     return torso.compile()
-
-
-def build_right_hand_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_right_hand_from_arm_model()
-
-
-def build_both_hands_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_both_hands_from_arm_model()
 
 
 def load_left_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec | None:
@@ -384,52 +432,70 @@ def build_torso_arms_model(registration: ModelRegistration) -> mujoco.MjModel:
     right_arm = load_right_arm_spec()
     left_arm = load_left_arm_spec(registration)
 
-    attach_to_site(torso, right_arm, find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    torso.attach(right_arm, prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     if left_arm is not None:
-        attach_to_site(torso, left_arm, find_site(torso, LEFT_ARM_ATTACH_SITE))
+        torso.attach(left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
 
     return torso.compile()
 
 
 def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
     torso = load_torso_spec(registration)
-    attach_to_site(torso, load_right_arm_spec(), find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     left_arm = load_left_arm_spec(registration)
     if left_arm is not None:
-        attach_to_site(torso, left_arm, find_site(torso, LEFT_ARM_ATTACH_SITE))
+        torso.attach(left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
 
     full_body = find_body(torso, "Full Body")
     legs_frame = full_body.add_frame(name="legs_attach")
-    attach_to_frame(torso, load_legs_spec(), legs_frame)
+    torso.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
     return torso.compile()
 
 
-def build_legs_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
-    abdomen = mujoco.MjSpec.from_file(str(TORSO_ABDOMEN_XML))
-    abdomen.compiler.balanceinertia = True
-
-    root_body = find_body(abdomen, "root")
+def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    torso = load_passive_torso_spec(registration)
+    root_body = find_body(torso, "Full Body")
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
-    attach_to_frame(abdomen, load_legs_spec(), legs_frame)
+    torso.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
+
+    return torso.compile()
+
+
+def build_torso_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
+    abdomen = load_torso_abdomen_spec()
+    root_body = find_body(abdomen, "root")
+    root_body.pos = registration.root_pos
+    root_body.quat = TORSO_ABDOMEN_ROOT_QUAT
+    return abdomen.compile()
+
+
+def build_legs_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
+    abdomen = load_torso_abdomen_spec()
+
+    root_body = find_body(abdomen, "root")
+    root_body.pos = registration.root_pos
+    root_body.quat = TORSO_ABDOMEN_ROOT_QUAT
+    root_body.add_freejoint(name="root")
+    legs_frame = root_body.add_frame(name="legs_attach")
+    abdomen.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
     return abdomen.compile()
 
 
 BUILDERS = {
+    BuildStrategy.TORSO_BODY: build_torso_body_model,
     BuildStrategy.TORSO_ARMS: build_torso_arms_model,
     BuildStrategy.ARMS_BODY: build_arms_body_model,
     BuildStrategy.RIGHT_ARM_BODY: build_right_arm_body_model,
-    BuildStrategy.RIGHT_HAND: build_right_hand_model,
-    BuildStrategy.BOTH_HANDS: build_both_hands_model,
+    BuildStrategy.RIGHT_HAND: build_right_hand_from_arm_model,
+    BuildStrategy.BOTH_HANDS: build_both_hands_from_arm_model,
     BuildStrategy.FULLBODY: build_fullbody_model,
+    BuildStrategy.LEGS_BODY: build_legs_body_model,
+    BuildStrategy.TORSO_ABDOMEN: build_torso_abdomen_model,
     BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_model,
 }
-
-
-def build_registered_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return BUILDERS[registration.build_strategy](registration)
 
 
 def build_model(model_name: str) -> mujoco.MjModel:
@@ -438,7 +504,7 @@ def build_model(model_name: str) -> mujoco.MjModel:
     except KeyError as exc:
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
-    return build_registered_model(registration)
+    return BUILDERS[registration.build_strategy](registration)
 
 
 def view_model(model: mujoco.MjModel) -> None:
