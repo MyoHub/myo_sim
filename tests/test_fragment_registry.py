@@ -59,3 +59,34 @@ def test_load_composed_models():
         model, data = myo_sim.load(name)
         assert model.njnt > 0, f"{name}: no joints"
         assert model.nu > 0, f"{name}: no actuators"
+
+
+def test_composed_hand_models_can_forward():
+    """Hand-only builds must not retain static-static arm contact pairs."""
+    import mujoco
+    import myo_sim
+
+    for name in ("myohand_r", "myohands"):
+        model, data = myo_sim.load(name)
+        assert model.npair > 0, f"{name}: no explicit contact pairs"
+        mujoco.mj_forward(model, data)
+
+
+def test_composed_hand_models_default_to_raised_front_pose():
+    import mujoco
+    import myo_sim
+
+    expected_body_names = {
+        "myohand_r": ("capitate_r",),
+        "myohands": ("capitate_r", "capitate_l"),
+    }
+    for name, body_names in expected_body_names.items():
+        model, data = myo_sim.load(name)
+        mujoco.mj_forward(model, data)
+        torso_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, "torso")
+        torso_y = data.xpos[torso_id, 1]
+        torso_z = data.xpos[torso_id, 2]
+        for body_name in body_names:
+            body_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, body_name)
+            assert data.xpos[body_id, 1] < torso_y - 0.25
+            assert data.xpos[body_id, 2] > torso_z + 0.35

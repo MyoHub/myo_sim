@@ -54,6 +54,7 @@ ROOT = MODELS_DIR
 TORSO_XML = ROOT / "torso" / "myotorso.xml"
 TORSO_ABDOMEN_XML = ROOT / "torso" / "myotorso_abdomen.xml"
 ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
+HAND_CONTACTS_XML = ROOT / "contacts" / "myohand_contacts.xml"
 LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
 RIGHT_ARM_ASSETS_XML = ROOT / "arm" / "assets" / "myoarm_r_assets.xml"
@@ -90,6 +91,7 @@ class ModelRegistration:
     left_arm_strategy: str
     description: str
     include_left_arm_contacts: bool
+    include_arm_contacts: bool = True
     include_legs: bool = False
     include_fullbody_contacts: bool = False
     add_root_freejoint: bool = False
@@ -132,6 +134,7 @@ MODEL_REGISTRY = {
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
         description="Passive anatomical torso scaffold + right hand derived from pruned right arm",
         include_left_arm_contacts=False,
+        include_arm_contacts=False,
     ),
     "myohands": ModelRegistration(
         name="myohands",
@@ -139,6 +142,7 @@ MODEL_REGISTRY = {
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
         description="Passive anatomical torso scaffold + right hand + mirrored-left hand from pruned arms",
         include_left_arm_contacts=False,
+        include_arm_contacts=False,
     ),
     "myofullbody": ModelRegistration(
         name="myofullbody",
@@ -178,11 +182,12 @@ def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     if registration.add_root_freejoint:
         root_body.add_freejoint(name="root")
 
-    add_contact_pairs(
-        torso,
-        ARM_CONTACTS_XML,
-        include_pair=lambda pair: pair_is_supported(pair, registration.include_left_arm_contacts),
-    )
+    if registration.include_arm_contacts:
+        add_contact_pairs(
+            torso,
+            ARM_CONTACTS_XML,
+            include_pair=lambda pair: pair_is_supported(pair, registration.include_left_arm_contacts),
+        )
     if registration.include_legs:
         add_contact_pairs(torso, LEG_CONTACTS_XML)
     if registration.include_fullbody_contacts:
@@ -312,6 +317,11 @@ def build_right_hand_from_arm_model() -> mujoco.MjModel:
         load_right_hand_from_arm_spec(),
         find_site(torso, RIGHT_ARM_ATTACH_SITE),
     )
+    add_contact_pairs(
+        torso,
+        HAND_CONTACTS_XML,
+        include_pair=lambda pair: pair_is_supported(pair, include_left_arm_contacts=False),
+    )
     return torso.compile()
 
 
@@ -327,6 +337,7 @@ def build_both_hands_from_arm_model() -> mujoco.MjModel:
         load_left_hand_from_arm_spec(),
         find_site(torso, LEFT_ARM_ATTACH_SITE),
     )
+    add_contact_pairs(torso, HAND_CONTACTS_XML)
     return torso.compile()
 
 

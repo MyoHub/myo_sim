@@ -11,9 +11,11 @@ def test_build_contact_sources_are_centralized():
     source = (ROOT / "myo_sim" / "build" / "compose.py").read_text()
 
     assert 'ROOT / "contacts" / "myoarm_contacts.xml"' in source
+    assert 'ROOT / "contacts" / "myohand_contacts.xml"' in source
     assert 'ROOT / "contacts" / "myolegs_contacts.xml"' in source
     assert 'ROOT / "contacts" / "myofullbody_contacts.xml"' in source
     assert 'assets" / "myoarm_contacts.xml"' not in source
+    assert 'assets" / "myohand_contacts.xml"' not in source
     assert 'assets" / "myolegs_contacts.xml"' not in source
     assert 'assets" / "myofullbody_contacts.xml"' not in source
 
