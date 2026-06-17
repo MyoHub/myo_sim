@@ -1,4 +1,4 @@
-> **LEGACY** — pending proper pip-package integration ([#99](https://github.com/MyoHub/myo_sim/issues/99)). Do not add new dependencies on this path.
+> **LEGACY** — pip-accessible for backwards compatibility ([#99](https://github.com/MyoHub/myo_sim/issues/99)). Will migrate to `myo_sim/models/finger/`. Do not add new dependencies on this path.
 
 # MyoFinger 0.1
 

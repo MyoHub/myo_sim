@@ -17,7 +17,7 @@ A simplified rigid kinematic head-and-neck model (no muscle actuators) derived f
 
 ## Manual adjustments
 
-- Joint `neck_rotation` and `neck_flexion` were commented out in `myohead_rigid_chain.xml` to produce a fully locked (zero-DOF) rigid variant; `myohead_simple_chain.xml` re-enables both joints for the standard two-DOF configuration.
+- Joint `neck_rotation` and `neck_flexion` are commented out in `myohead_rigid_chain.xml`, producing a fully locked (zero-DOF) rigid head used when the torso chain is composed. Uncomment both joints there to restore the standard two-DOF neck configuration.
 
 ## Changelog
 

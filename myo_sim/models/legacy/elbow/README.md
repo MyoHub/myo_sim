@@ -1,4 +1,4 @@
-> **LEGACY** — pending proper pip-package integration ([#97](https://github.com/MyoHub/myo_sim/issues/97)). Softexo variants will move to `myoassist`. Do not add new dependencies on this path.
+> **LEGACY** — pip-accessible for backwards compatibility ([#97](https://github.com/MyoHub/myo_sim/issues/97)). Biological variants will migrate to `myo_sim/models/elbow/`; softexo variants will move to `myoassist`. Do not add new dependencies on this path.
 
 # MyoElbow 0.1
 

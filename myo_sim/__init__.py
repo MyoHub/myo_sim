@@ -81,8 +81,9 @@ def _left_hand_spec():
 # Maps fragment names to zero-arg callables returning MjSpec (hand-only, no torso
 # scaffold).  Used by downstream consumers (e.g. myosuite ModelBuilder) so that
 # attach_fragment("hand") transparently routes through the compose pipeline instead
-# of falling back to a bundled static XML.
-_FRAGMENT_SPEC_BUILDERS: dict[str, object] = {
+# of falling back to a bundled static XML.  Includes myohand_l (left hand only);
+# there is no myo_sim.load("myohand_l") alias — use this dict or myohands instead.
+FRAGMENT_SPEC_BUILDERS: dict[str, object] = {
     "hand": _right_hand_spec,
     "myohand": _right_hand_spec,
     "myohand_r": _right_hand_spec,
@@ -94,7 +95,8 @@ def load(name: str) -> tuple:
     """Load a MuJoCo model by registry name. Returns (MjModel, MjData).
 
     Supports MjSpec-composed models such as myohand_r, myohands, myoarms,
-    myofullbody, and myolegs, plus packaged legacy static XMLs.
+    myofullbody, and myolegs, plus packaged legacy static XMLs. For a
+    left-hand-only MjSpec builder, use FRAGMENT_SPEC_BUILDERS["myohand_l"].
     """
     import mujoco
 

@@ -29,6 +29,17 @@ path = myo_sim.get_xml_path("elbow")
 
 These registry names are provisional. Once each issue above is resolved, the name will either be reassigned to the new location or removed.
 
+## Unregistered variants (path access only)
+
+These XML files load via `myo_sim.get_path(...)` but are intentionally omitted from `FragmentRegistry`:
+
+| Path | Notes |
+|------|-------|
+| `legacy/elbow/myoelbow_1dof6muscles_1dofSoftexo_Ideal.xml` | Softexo variant → `myoassist` ([#97](https://github.com/MyoHub/myo_sim/issues/97)) |
+| `legacy/elbow/myoelbow_1dof6muscles_1dofSoftexo_sim2.xml` | Softexo variant → `myoassist` ([#97](https://github.com/MyoHub/myo_sim/issues/97)) |
+| `legacy/finger/finger_v0.xml` | Kinematic scaffold included by `myofinger_v0.xml` |
+| `legacy/finger/motorfinger_v0.xml` | Motor-actuated finger variant |
+
 ## Meshes to remove when legacy models migrate
 
 The following STL files in `myo_sim/models/meshes/` exist solely to support legacy models and should be deleted once the corresponding model is migrated or removed:

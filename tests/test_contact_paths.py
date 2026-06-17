@@ -32,6 +32,11 @@ def test_model_xml_paths_do_not_reference_old_repo_layout():
 
 
 def test_model_xml_file_references_exist():
+    """Every file="*.xml" include must resolve from the including file's directory.
+
+    Matches MuJoCo native resolution and expand_component_element() in build/utils.py.
+    Wrong relative paths must not rely on a parent-directory search fallback.
+    """
     xml_file_reference = re.compile(r"""file=(["'])([^"']+\.xml)\1""")
 
     missing = []
