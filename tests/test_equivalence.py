@@ -12,10 +12,11 @@ import sys
 from pathlib import Path
 
 import mujoco
-import musclemimic_models
 import numpy as np
 import pytest
 from myo_sim.build.compose import build_model
+
+musclemimic_models = pytest.importorskip("musclemimic_models")
 
 sys.path.insert(0, str(Path(__file__).parent))
 from muscle_analysis_utils import (
