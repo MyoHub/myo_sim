@@ -49,5 +49,4 @@ The following STL files in `myo_sim/models/meshes/` exist solely to support lega
 | `ground_jaw.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
 | `ground_skull.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
 | `ground_spine.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
-| `human_lowpoly_norighthand.stl` | `legacy/elbow/` (cosmetic body display) | #97 resolved |
 | `torso_lowpoly-v1.stl` | `legacy/torso/assets/myotorso_rigid_assets.xml` (OSL rigid torso) | #100 resolved |
