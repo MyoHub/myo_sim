@@ -57,6 +57,35 @@ RIGHT_HAND_ACTUATORS = frozenset(
     }
 )
 
+WRIST_MUSCLE_ACTUATORS = frozenset({"ECRL", "ECRB", "ECU", "FCR", "FCU", "PL", "PT", "PQ"})
+
+FINGER_MUSCLE_ACTUATORS = RIGHT_HAND_ACTUATORS - WRIST_MUSCLE_ACTUATORS
+
+RIGHT_FINGER_JOINTS = frozenset(
+    {
+        "cmc_flexion",
+        "cmc_abduction",
+        "mp_flexion_r",
+        "ip_flexion_r",
+        "mcp2_flexion_r",
+        "mcp2_abduction_r",
+        "pm2_flexion_r",
+        "md2_flexion_r",
+        "mcp3_flexion_r",
+        "mcp3_abduction_r",
+        "pm3_flexion_r",
+        "md3_flexion",
+        "mcp4_flexion_r",
+        "mcp4_abduction_r",
+        "pm4_flexion",
+        "md4_flexion_r",
+        "mcp5_flexion_r",
+        "mcp5_abduction_r",
+        "pm5_flexion_r",
+        "md5_flexion_r",
+    }
+)
+
 RIGHT_HAND_REMOVED_JOINTS = frozenset(
     {
         "sternoclavicular_r2_r",
@@ -155,6 +184,42 @@ def bake_hand_preview_pose(spec: object, side: str) -> None:
     apply_joint_pose(data, model, HAND_PREVIEW_JOINT_POSE, side)
     mujoco.mj_forward(model, data)
     bake_current_body_poses(spec, model, data)
+
+
+def finger_joint_names(side: str) -> frozenset[str]:
+    if side == "r":
+        return RIGHT_FINGER_JOINTS
+    return frozenset(
+        f"{joint_name}_l" if not joint_name.endswith("_r") else f"{joint_name[:-2]}_l"
+        for joint_name in RIGHT_FINGER_JOINTS
+    )
+
+
+def disable_fingers_on_arm_spec(spec: object, side: str) -> None:
+    """Remove finger joints and their actuators from an arm spec, keeping the wrist."""
+    removed_joints = finger_joint_names(side)
+
+    tendons_to_delete: set[str] = set()
+    for actuator in list(spec.actuators):
+        if base_actuator_name(actuator.name, side) in FINGER_MUSCLE_ACTUATORS:
+            tendons_to_delete.add(actuator.target)
+            spec.delete(actuator)
+            continue
+        if actuator.target in removed_joints:
+            spec.delete(actuator)
+
+    for tendon in list(spec.tendons):
+        if tendon.name in tendons_to_delete:
+            spec.delete(tendon)
+
+    for equality in list(spec.equalities):
+        if equality.name1 in removed_joints or equality.name2 in removed_joints:
+            spec.delete(equality)
+
+    for joint_name in removed_joints:
+        joint = spec.joint(joint_name)
+        if joint is not None:
+            spec.delete(joint)
 
 
 def prune_arm_spec_to_hand(spec: object, side: str) -> None:

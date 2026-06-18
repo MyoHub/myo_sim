@@ -97,6 +97,36 @@ All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/mode
 
 6. Add a test entry in `tests/test_build_registry.py` per `docs/wiki/testing-guide.md`.
 
+## Torque-driven actuation
+
+Each body part can be built with direct per-joint torque motors instead of muscles+tendons, via an `actuation` argument threaded through `build_model()` and every builder function:
+
+```python
+from myo_sim.build.compose import PART_ARMS, PART_LEGS, PART_TORSO, build_model
+
+build_model("myofullbody")                          # default: every part muscle-driven
+build_model("myofullbody", actuation="torque")       # every part torque-driven
+build_model(                                          # mixed: torso/arms torque, legs muscle
+    "myofullbody",
+    actuation={PART_TORSO: "torque", PART_ARMS: "torque", PART_LEGS: "muscle"},
+)
+```
+
+CLI equivalent:
+
+```bash
+uv run python -m myo_sim.build.compose --model myofullbody --actuation torque
+uv run python -m myo_sim.build.compose --model myofullbody --actuation arms=torque --actuation legs=muscle
+```
+
+Each part's torque actuators live in a fourth asset file, parallel to `*_muscle.xml`/`*_tendon.xml`: `myo<part>_torque.xml` (or `myo<part>_r_torque.xml` for parts mirrored from a right-side source, e.g. the arm). It contains only `<general name="mot_<joint>" joint="<joint>" gear="..." ctrlrange="-1 1" forcerange="..."/>` elements — one per independently-actuated joint in that part's chain file. Joints that are passive and driven by polynomial `<equality>` constraints (e.g. the leg's `knee_angle_beta_*`/`knee_angle_rotation*`/`knee_angle_translation*`, the arm's scapulothoracic/clavicular joints, the torso's `Abs_*`/`L*_L*_*` segment joints) are not actuated directly and have no entry in the torque file.
+
+`load_torso_spec()`, `load_right_arm_spec()`, `load_mirrored_left_arm_spec()`, and `load_legs_spec()` each accept an `actuation: str` parameter (`"muscle"` or `"torque"`) that selects which pair of files (`tendons_xml`/`muscles_xml` vs. `None`/`torque_xml`) gets merged into that part's child XML by `build_child_xml_from_components()`/`build_mirrored_child_xml()`. `resolve_actuation()` turns a `build_model()`-level `actuation` argument (`None`, a string, or a per-part dict) into a fully-resolved `{PART_TORSO: ..., PART_ARMS: ..., PART_LEGS: ...}` mapping, falling back to each `ModelRegistration.default_actuation` (currently always `"muscle"`) for parts not specified.
+
+Mirroring a torque file works through the existing `mirror_element()` pipeline unchanged — `<general>` motor elements have no sites or tendons, so only the `name`/`joint` attribute renaming (`_r` -> `_l`) applies.
+
+Hand-only and abdomen-only builds (`myohand_r`, `myohands`, `myotorso_abdomen`) do not yet have torque files; their builder functions accept the `actuation` argument for a uniform `BUILDERS` dispatch signature but currently ignore it.
+
 ## Key Utilities in utils.py
 
 ### `MjSpec.attach(...)`

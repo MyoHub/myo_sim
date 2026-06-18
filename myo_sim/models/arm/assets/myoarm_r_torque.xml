@@ -1,0 +1,42 @@
+<mujocoinclude>
+<!-- =================================================
+    Torque-driven alternative to myoarm_r_muscles.xml + myoarm_r_tendons.xml.
+    One direct joint motor per independently-actuated right-arm DOF (excludes
+    the scapulothoracic/clavicular and Abs-coupling joints driven by
+    polynomial equality constraints in myoarm_r_assets.xml). Left-side motors
+    are produced automatically by the existing mirror pipeline.
+    Elbow/pronation-supination values follow MyoHub/myosuite's torque-branch
+    myoskeleton (elbow_flex_r, pro_sup_l); shoulder, wrist, and digit values
+    are estimated to be in the same order of magnitude as the equivalent
+    muscle-driven actuators and should be tuned with task-specific RL runs.
+====================================================== -->
+    <actuator>
+        <general name="mot_shoulder_elv_r" joint="shoulder_elv_r" gear="90" ctrlrange="-1 1" forcerange="-90 90"/>
+        <general name="mot_elv_angle_r" joint="elv_angle_r" gear="80" ctrlrange="-1 1" forcerange="-80 80"/>
+        <general name="mot_shoulder_rot_r" joint="shoulder_rot_r" gear="60" ctrlrange="-1 1" forcerange="-60 60"/>
+        <general name="mot_elbow_flexion_r" joint="elbow_flexion_r" gear="300" ctrlrange="-1 1" forcerange="-250 250"/>
+        <general name="mot_pro_sup_r" joint="pro_sup_r" gear="250" ctrlrange="-1 1" forcerange="-100 100"/>
+        <general name="mot_flexion_r" joint="flexion_r" gear="20" ctrlrange="-1 1" forcerange="-20 20"/>
+        <general name="mot_deviation_r" joint="deviation_r" gear="20" ctrlrange="-1 1" forcerange="-20 20"/>
+        <general name="mot_cmc_flexion" joint="cmc_flexion" gear="10" ctrlrange="-1 1" forcerange="-10 10"/>
+        <general name="mot_cmc_abduction" joint="cmc_abduction" gear="10" ctrlrange="-1 1" forcerange="-10 10"/>
+        <general name="mot_mp_flexion_r" joint="mp_flexion_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_ip_flexion_r" joint="ip_flexion_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp2_flexion_r" joint="mcp2_flexion_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp2_abduction_r" joint="mcp2_abduction_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp3_flexion_r" joint="mcp3_flexion_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp3_abduction_r" joint="mcp3_abduction_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp4_flexion_r" joint="mcp4_flexion_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp4_abduction_r" joint="mcp4_abduction_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp5_flexion_r" joint="mcp5_flexion_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_mcp5_abduction_r" joint="mcp5_abduction_r" gear="5" ctrlrange="-1 1" forcerange="-5 5"/>
+        <general name="mot_md2_flexion_r" joint="md2_flexion_r" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+        <general name="mot_md3_flexion" joint="md3_flexion" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+        <general name="mot_md4_flexion_r" joint="md4_flexion_r" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+        <general name="mot_md5_flexion_r" joint="md5_flexion_r" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+        <general name="mot_pm2_flexion_r" joint="pm2_flexion_r" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+        <general name="mot_pm3_flexion_r" joint="pm3_flexion_r" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+        <general name="mot_pm4_flexion" joint="pm4_flexion" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+        <general name="mot_pm5_flexion_r" joint="pm5_flexion_r" gear="3" ctrlrange="-1 1" forcerange="-3 3"/>
+    </actuator>
+</mujocoinclude>
