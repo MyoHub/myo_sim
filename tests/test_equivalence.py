@@ -19,7 +19,7 @@ from myo_sim.build.compose import build_model
 musclemimic_models = pytest.importorskip("musclemimic_models")
 
 sys.path.insert(0, str(Path(__file__).parent))
-from muscle_analysis_utils import (
+from muscle_analysis_utils import (  # noqa: E402
     compute_force_length_curve,
     compute_moment_arm_curve,
     pair_discrepancy_summary,
