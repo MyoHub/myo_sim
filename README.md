@@ -12,13 +12,13 @@ plus a Python package for loading and composing them.
 
 | Model | DoF | Muscles | Preview | Version |
 |---|---:|---:|---|---|
-| **MyoLeg** | 20 | 80 | <img src="https://user-images.githubusercontent.com/12837145/236839645-e34eab3f-0358-4ca8-8ae0-68a5c08585e4.png" width="160"> | stable |
-| **MyoArm** | 27 | 63 | <img alt="myoarm_demo" src="https://github.com/user-attachments/assets/eab77a8b-18af-445c-826f-b050b2a6ed7d" width="160"/> | stable |
-| **MyoTorso** (MyoBack) | 18 | 210 | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="160"> | stable |
-| **MyoHand** | 23 | 39 | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="160"> | stable |
-| **MyoFullBody** | 123 | 416 | <img src="https://github.com/user-attachments/assets/37976636-1952-48a6-83c4-506722db4c82" width="160"/> | stable |
-| **MyoFinger** | 4 | 5 | <img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="160"> | legacy |
-| **MyoElbow** | 2 | 6 | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="160"> | legacy |
+| [**MyoLeg**](myo_sim/models/leg/README.md) | 29 | 80 | <img src="https://user-images.githubusercontent.com/12837145/236839645-e34eab3f-0358-4ca8-8ae0-68a5c08585e4.png" width="160"> | stable |
+| [**MyoArm**](myo_sim/models/arm/README.md) | 38 | 63 | <img alt="myoarm_demo" src="https://github.com/user-attachments/assets/eab77a8b-18af-445c-826f-b050b2a6ed7d" width="160"/> | stable |
+| [**MyoTorso**](myo_sim/models/torso/README.md) (MyoBack) | 18 | 210 | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="160"> | stable |
+| [**MyoHand**](myo_sim/models/arm/README.md) | 23 | 39 | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="160"> | stable |
+| [**MyoFullBody**](docs/wiki/build-and-composition.md) | 123 | 416 | <img src="https://github.com/user-attachments/assets/37976636-1952-48a6-83c4-506722db4c82" width="160"/> | stable |
+| [**MyoFinger**](myo_sim/models/legacy/README.md) | 4 | 5 | <img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="160"> | legacy |
+| [**MyoElbow**](myo_sim/models/legacy/README.md) | 2 | 6 | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="160"> | legacy |
 
 Legacy models ship in the pip package under `myo_sim/models/legacy/` and load via registry names such as `myoelbow`, `myofinger`, and `osl`. They are maintained for backwards compatibility only — see `myo_sim/models/legacy/README.md`.
 

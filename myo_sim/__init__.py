@@ -53,6 +53,7 @@ _COMPOSED_MODELS: frozenset[str] = frozenset(
         "myohand",
         "myohand_r",
         "myohands",
+        "myoarm",
         "myoarm_r",
         "myoarms",
         "myofullbody",
@@ -104,7 +105,7 @@ def load(name: str) -> tuple:
         from myo_sim.build.compose import build_model
 
         # Legacy aliases: myohand and hand resolve to the composed right-hand model.
-        composed_name = {"hand": "myohand_r", "myohand": "myohand_r"}.get(name, name)
+        composed_name = {"hand": "myohand_r", "myohand": "myohand_r", "myoarm": "myoarm_r"}.get(name, name)
         model = build_model(composed_name)
         return model, mujoco.MjData(model)
 
