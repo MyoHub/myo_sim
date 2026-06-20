@@ -529,21 +529,6 @@
                                                     <geom mesh="2mc_r" name="2mc_r" type="mesh"/>
                                                     <geom name="2ndmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="0.0058 -0.0314 0.0007" euler="0.84927721 -1.33552594 1.33814394" class="myoarm_wrap"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
-                                                    <!-- <site name="ECRL-P4_r" pos="0.0025 0.0164 0.0008"/>
-                                                    <site name="FCR-P3_r" pos="-0.0034 0.0192 -0.0092"/>
-                                                    <site name="FDS2-P4_r" pos="-0.003 0.001 -0.008"/>
-                                                    <site name="FDS2-P5_r" pos="0.001 -0.023 -0.004"/>
-                                                    <site name="FDP2-P4_r" pos="-0.004 0.007 -0.002"/>
-                                                    <site name="FDP2-P5_r" pos="0.0028 -0.0215 -0.004"/>
-                                                    <site name="EDC2-P4_r" pos="0.003 -0.0282 0.015"/>
-                                                    <site name="EIP-P4_r" pos="-0.0108 0.0153 0.0068"/>
-                                                    <site name="EIP-P5_r" pos="0.0044 -0.026 0.0128"/>
-                                                    <site name="RI2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
-                                                    <site name="RI2-P2_r" pos="0.0091 -0.02 -0.0049"/>
-                                                    <site name="LU_RB2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
-                                                    <site name="LU_RB2-P2_r" pos="0.0102 -0.0265 0"/>
-                                                    <site name="UI_UB2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
-                                                    <site name="UI_UB2-P2_r" pos="-0.0033 -0.0294 -0.0001"/> -->
                                                     <site name="ECRL-P4_r" pos="0.0025 0.0164 0.0008"/>
                                                     <site name="FCR-P3_r" pos="-0.0034 0.0192 -0.0092"/>
                                                     <site name="FDS2-P4_r" pos="-0.0041 -0.0002 -0.0048"/>
@@ -571,19 +556,6 @@
                                                         <geom mesh="2proxph_r" name="2proxph_r" type="mesh"/>
                                                         <geom name="Secondpm_wrap" type="cylinder" size="0.0042 0.005" pos="0.0075 -0.0407 0.0061" euler="0.74193947 -1.47393055 0.70965087" class="myoarm_wrap"/>
                                                         <inertial pos="0 0 0" mass="0.01" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
-                                                        <!-- <site name="FDS2-P6_r" pos="0.001 -0.001 -0.009"/>
-                                                        <site name="FDS2-P7_r" pos="0.0064 -0.0368 0.0023"/>
-                                                        <site name="FDP2-P6_r" pos="0.001 -0.0134 -0.0095"/>
-                                                        <site name="FDP2-P7_r" pos="0.008 -0.0363 0.0026"/>
-                                                        <site name="EDC2-P5_r" pos="-0.0003 -0.0108 0.0116"/>
-                                                        <site name="EDC2-P6_r" pos="0.006 -0.041 0.013"/>
-                                                        <site name="EIP-P6_r" pos="0.0017 -0.0103 0.0095"/>
-                                                        <site name="EIP-P7_r" pos="0.0071 -0.0413 0.0141"/>
-                                                        <site name="RI2-P3_r" pos="0.007 -0.0067 -0.0001"/>
-                                                        <site name="LU_RB2-P3_r" pos="0.0084 -0.0083 0"/>
-                                                        <site name="LU_RB2-P4_r" pos="0.013 -0.042 0.007"/>
-                                                        <site name="UI_UB2-P3_r" pos="-0.005 -0.013 0.004"/>
-                                                        <site name="UI_UB2-P4_r" pos="0.002 -0.045 0.011"/> -->
                                                         <site name="FDS2-P6_r" pos="0.0013 -0.0084 -0.012"/>
                                                         <site name="FDS2-P7_r" pos="0.0064 -0.0368 0.0023"/>
                                                         <site name="FDP2-P6_r" pos="0.0033 -0.0202 -0.005"/>
