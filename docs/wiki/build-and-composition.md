@@ -12,6 +12,23 @@ Reference for agents editing the MjSpec composition pipeline in `myo_sim/build/c
 
 All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/models/` directory). The `compiler_meshdir` for child XMLs is always set to `MODELS_DIR` (the repo root of the models tree) so that relative mesh paths inside the XML resolve correctly.
 
+## Generating Binary MJB Files
+
+Run the compose CLI with `--generate` to write binary `.mjb` files for the primary shipped assemblies:
+
+```bash
+uv run python -m myo_sim.build.compose --generate
+```
+
+This generates:
+
+- `myo_sim/models/arm/myoarms.mjb`
+- `myo_sim/models/torso/myotorso.mjb`
+- `myo_sim/models/leg/myolegs.mjb`
+- `myo_sim/models/myofullbody.mjb`
+
+Generation compiles each registered MjSpec-composed model and writes the binary model with `mujoco.mj_saveModel()`. Treat these `.mjb` files as loadable generated artifacts, not editable source files; make source changes in the component XML files and `compose.py`, then regenerate.
+
 ## MODEL_REGISTRY and BuildStrategy
 
 `BuildStrategy` is a `str` enum. Each value maps to one builder function in `BUILDERS`.

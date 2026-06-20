@@ -46,6 +46,12 @@ except ImportError:
 
 
 ROOT = MODELS_DIR
+GENERATE_MJB_TARGETS: dict[str, Path] = {
+    "myoarms": Path("arm/myoarms.mjb"),
+    "myotorso": Path("torso/myotorso.mjb"),
+    "myolegs": Path("leg/myolegs.mjb"),
+    "myofullbody": Path("myofullbody.mjb"),
+}
 
 TORSO_ABDOMEN_TENDONS_XML = ROOT / "torso" / "assets" / "myotorso_abdomen_tendon.xml"
 TORSO_ABDOMEN_MUSCLES_XML = ROOT / "torso" / "assets" / "myotorso_abdomen_muscle.xml"
@@ -238,8 +244,12 @@ def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
+def build_torso_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
+    return load_torso_spec(registration)
+
+
 def build_torso_body_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return load_torso_spec(registration).compile()
+    return build_torso_body_spec(registration).compile()
 
 
 def make_torso_passive(torso: mujoco.MjSpec) -> None:
@@ -342,7 +352,7 @@ def lock_torso_abdomen_joints(abdomen: mujoco.MjSpec) -> None:
             abdomen.delete(joint)
 
 
-def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_arms_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     torso.attach(
@@ -353,7 +363,11 @@ def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     )
     add_contact_pairs(torso, ARM_CONTACTS_XML)
 
-    return torso.compile()
+    return torso
+
+
+def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_arms_body_spec(registration).compile()
 
 
 def build_right_arm_body_model(registration: ModelRegistration) -> mujoco.MjModel:
@@ -417,7 +431,7 @@ def build_torso_arms_model(registration: ModelRegistration) -> mujoco.MjModel:
     return torso.compile()
 
 
-def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_torso_spec(registration)
     torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     left_arm = load_left_arm_spec(registration)
@@ -428,17 +442,25 @@ def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
     legs_frame = full_body.add_frame(name="legs_attach")
     torso.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
-    return torso.compile()
+    return torso
 
 
-def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_fullbody_spec(registration).compile()
+
+
+def build_legs_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     root_body = find_body(torso, "Full Body")
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
     torso.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
-    return torso.compile()
+    return torso
+
+
+def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_legs_body_spec(registration).compile()
 
 
 def build_torso_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
@@ -475,7 +497,6 @@ BUILDERS = {
     BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_model,
 }
 
-
 def build_model(model_name: str) -> mujoco.MjModel:
     try:
         registration = MODEL_REGISTRY[model_name]
@@ -483,6 +504,22 @@ def build_model(model_name: str) -> mujoco.MjModel:
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
     return BUILDERS[registration.build_strategy](registration)
+
+
+def write_mjb_file(model: mujoco.MjModel, output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    mujoco.mj_saveModel(model, str(output_path))
+
+
+def generate_mjb_files(output_root: Path = ROOT) -> list[Path]:
+    """Generate binary MJB files for the primary composed models."""
+    output_paths: list[Path] = []
+    for model_name, rel_path in GENERATE_MJB_TARGETS.items():
+        output_path = output_root / rel_path
+        model = build_model(model_name)
+        write_mjb_file(model, output_path)
+        output_paths.append(output_path)
+    return output_paths
 
 
 def view_model(model: mujoco.MjModel) -> None:
@@ -514,8 +551,18 @@ def main() -> None:
         default="myotorso_arms",
         help="Which registered MjSpec-composed model to compile",
     )
+    parser.add_argument(
+        "--generate",
+        action="store_true",
+        help="Generate binary MJB files for myoarms, myotorso, myolegs, and myofullbody",
+    )
     parser.add_argument("--view", action="store_true", help="Open MuJoCo viewer")
     args = parser.parse_args()
+
+    if args.generate:
+        for output_path in generate_mjb_files():
+            print(f"generated: {output_path}")
+        return
 
     model = build_model(args.model)
     registration = MODEL_REGISTRY[args.model]

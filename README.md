@@ -38,6 +38,14 @@ The following registered models can be compiled with `myo_sim.build.compose.buil
 - `myolegs_abdomen` — simple abdomen scaffold with legs.
 - `myofullbody` — full body with torso, mirrored arms, and legs.
 
+To generate binary MuJoCo model files for the primary composed assemblies, run:
+
+```bash
+uv run python -m myo_sim.build.compose --generate
+```
+
+This writes `.mjb` files for `myoarms`, `myotorso`, `myolegs`, and `myofullbody` under `myo_sim/models/`. These are GUI-friendly binary artifacts when loaded with a compatible MuJoCo version, but they are version-dependent and not editable source files. For source edits, update the component XML files and `myo_sim/build/compose.py`, then regenerate.
+
 ## Install
 
 ```bash
