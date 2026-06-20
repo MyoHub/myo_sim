@@ -497,6 +497,7 @@ BUILDERS = {
     BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_model,
 }
 
+
 def build_model(model_name: str) -> mujoco.MjModel:
     try:
         registration = MODEL_REGISTRY[model_name]
