@@ -22,10 +22,26 @@ plus a Python package for loading and composing them.
 
 Legacy models ship in the pip package under `myo_sim/models/legacy/` and load via registry names such as `myoelbow`, `myofinger`, and `osl`. They are maintained for backwards compatibility only — see `myo_sim/models/legacy/README.md`.
 
+## Buildable Models
+
+The following registered models can be compiled with `myo_sim.build.compose.build_model("<name>")`:
+
+- `myotorso` — torso scaffold with torso muscles.
+- `myotorso_abdomen` — simple abdomen scaffold.
+- `myotorso_arm_r` — torso with the right arm only.
+- `myotorso_arms` — torso with the right arm plus a mirrored-left arm.
+- `myoarm_r` — passive anatomical torso scaffold with the right arm.
+- `myoarms` — passive anatomical torso scaffold with mirrored arms.
+- `myohand_r` — passive anatomical torso scaffold with the right hand derived from the pruned right arm.
+- `myohands` — passive anatomical torso scaffold with right and mirrored-left hands derived from pruned arms.
+- `myolegs` — passive anatomical torso scaffold with legs.
+- `myolegs_abdomen` — simple abdomen scaffold with legs.
+- `myofullbody` — full body with torso, mirrored arms, and legs.
+
 ## Install
 
 ```bash
-pip install git+https://github.com/MyoHub/myo_sim.git@mm_refactor_mjspec
+pip install git+https://github.com/MyoHub/myo_sim.git@dev
 ```
 
 Note: the PyPI package `myo-sim` currently points to an older incompatible version.

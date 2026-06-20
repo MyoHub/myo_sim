@@ -115,12 +115,26 @@ MODEL_REGISTRY = {
         include_left_arm_contacts=False,
         include_arm_contacts=False,
     ),
+    "myotorso_abdomen": ModelRegistration(
+        name="myotorso_abdomen",
+        build_strategy=BuildStrategy.TORSO_ABDOMEN,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Simple abdomen scaffold",
+        include_left_arm_contacts=False,
+    ),
     "myotorso_arms": ModelRegistration(
         name="myotorso_arms",
         build_strategy=BuildStrategy.TORSO_ARMS,
         left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
         description="Torso + right arm + mirrored-right left arm",
         include_left_arm_contacts=True,
+    ),
+    "myotorso_arm_r": ModelRegistration(
+        name="myotorso_arm_r",
+        build_strategy=BuildStrategy.TORSO_ARMS,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Torso + right arm only",
+        include_left_arm_contacts=False,
     ),
     "myoarms": ModelRegistration(
         name="myoarms",
@@ -136,12 +150,13 @@ MODEL_REGISTRY = {
         description="Passive anatomical torso scaffold + right arm",
         include_left_arm_contacts=False,
     ),
-    "myotorso_arm_r": ModelRegistration(
-        name="myotorso_arm_r",
-        build_strategy=BuildStrategy.TORSO_ARMS,
+    "myohands": ModelRegistration(
+        name="myohands",
+        build_strategy=BuildStrategy.BOTH_HANDS,
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
-        description="Torso + right arm only",
+        description="Passive anatomical torso scaffold + right hand + mirrored-left hand from pruned arms",
         include_left_arm_contacts=False,
+        include_arm_contacts=False,
     ),
     "myohand_r": ModelRegistration(
         name="myohand_r",
@@ -151,13 +166,21 @@ MODEL_REGISTRY = {
         include_left_arm_contacts=False,
         include_arm_contacts=False,
     ),
-    "myohands": ModelRegistration(
-        name="myohands",
-        build_strategy=BuildStrategy.BOTH_HANDS,
+    "myolegs": ModelRegistration(
+        name="myolegs",
+        build_strategy=BuildStrategy.LEGS_BODY,
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
-        description="Passive anatomical torso scaffold + right hand + mirrored-left hand from pruned arms",
+        description="Passive anatomical torso scaffold + legs",
         include_left_arm_contacts=False,
         include_arm_contacts=False,
+        include_legs=True,
+    ),
+    "myolegs_abdomen": ModelRegistration(
+        name="myolegs_abdomen",
+        build_strategy=BuildStrategy.LEGS_ABDOMEN,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Simple abdomen scaffold plus legs",
+        include_left_arm_contacts=False,
     ),
     "myofullbody": ModelRegistration(
         name="myofullbody",
@@ -169,29 +192,6 @@ MODEL_REGISTRY = {
         include_fullbody_contacts=True,
         add_root_freejoint=True,
         root_pos=(-0.025, 0.1, 1),
-    ),
-    "myolegs": ModelRegistration(
-        name="myolegs",
-        build_strategy=BuildStrategy.LEGS_BODY,
-        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
-        description="Passive anatomical torso scaffold + legs",
-        include_left_arm_contacts=False,
-        include_arm_contacts=False,
-        include_legs=True,
-    ),
-    "myotorso_abdomen": ModelRegistration(
-        name="myotorso_abdomen",
-        build_strategy=BuildStrategy.TORSO_ABDOMEN,
-        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
-        description="Simple abdomen scaffold",
-        include_left_arm_contacts=False,
-    ),
-    "myolegs_abdomen": ModelRegistration(
-        name="myolegs_abdomen",
-        build_strategy=BuildStrategy.LEGS_ABDOMEN,
-        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
-        description="Simple abdomen scaffold plus legs",
-        include_left_arm_contacts=False,
     ),
 }
 
