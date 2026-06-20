@@ -62,10 +62,13 @@ def test_generate_xml_files_writes_base_model_outputs(tmp_path, monkeypatch):
         def __init__(self, model_name):
             self.model_name = model_name
             self.compiler = type("Compiler", (), {"meshdir": "", "texturedir": ""})()
+            self.ngeom = 0
+            self.geom_contype = []
+            self.geom_conaffinity = []
 
         def compile(self):
             compile_calls.append(self.model_name)
-            return object()
+            return self
 
         def to_xml(self):
             assert self.compiler.meshdir == ""
@@ -125,3 +128,26 @@ def test_sanitize_spec_xml_unwraps_nested_classless_defaults():
     assert '<default class="arm">' in sanitized
     assert sanitized.count('class="arm"') == 1
     assert sanitized.count("<default>") == 1
+
+
+def test_generated_xml_keeps_floor_collision_enabled(tmp_path):
+    output_paths = compose.generate_xml_files(tmp_path)
+
+    for output_path in output_paths:
+        model = mujoco.MjModel.from_xml_path(str(output_path))
+        floor_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "floor")
+
+        assert floor_id >= 0, output_path
+        assert model.geom_contype[floor_id] == 1, output_path
+        assert model.geom_conaffinity[floor_id] == 1, output_path
+
+
+def test_generated_xml_preserves_geom_collision_flags(tmp_path):
+    output_paths = compose.generate_xml_files(tmp_path)
+
+    for model_name, output_path in zip(compose.GENERATE_XML_TARGETS, output_paths):
+        built_model = build_model(model_name)
+        generated_model = mujoco.MjModel.from_xml_path(str(output_path))
+
+        assert list(generated_model.geom_contype) == list(built_model.geom_contype), output_path
+        assert list(generated_model.geom_conaffinity) == list(built_model.geom_conaffinity), output_path

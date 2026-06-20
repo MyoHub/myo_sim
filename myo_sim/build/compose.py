@@ -570,7 +570,32 @@ def drop_duplicate_default_classes(element: ET.Element, seen: set[str] | None = 
         drop_duplicate_default_classes(child, seen)
 
 
-def sanitize_spec_xml(xml: str, asset_dir: str | None = None) -> str:
+def enable_floor_collision(root: ET.Element) -> None:
+    for geom in root.iter("geom"):
+        if geom.get("name") == "floor":
+            geom.set("contype", "1")
+            geom.set("conaffinity", "1")
+
+
+def iter_worldbody_geoms(root: ET.Element) -> list[ET.Element]:
+    worldbody = root.find("worldbody")
+    if worldbody is None:
+        return []
+    return list(worldbody.iter("geom"))
+
+
+def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Preserve collision flags that can be lost through exported default inheritance."""
+    geoms = iter_worldbody_geoms(root)
+    if len(geoms) != model.ngeom:
+        raise ValueError(f"Generated XML has {len(geoms)} geoms, but compiled model has {model.ngeom}")
+
+    for geom_id, geom in enumerate(geoms):
+        geom.set("contype", str(int(model.geom_contype[geom_id])))
+        geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
+
+
+def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjModel | None = None) -> str:
     root = ET.fromstring(xml)
     if asset_dir is not None:
         compiler = root.find("compiler")
@@ -582,15 +607,18 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None) -> str:
     unwrap_nested_classless_defaults(root)
     dedupe_default_element_children(root)
     drop_duplicate_default_classes(root)
+    enable_floor_collision(root)
+    if model is not None:
+        apply_compiled_geom_collision_flags(root, model)
     ET.indent(root, space="  ")
     return ET.tostring(root, encoding="unicode") + "\n"
 
 
 def write_spec_xml(spec: mujoco.MjSpec, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    spec.compile()
+    model = spec.compile()
     asset_dir = os.path.relpath(ROOT, output_path.parent)
-    output_path.write_text(sanitize_spec_xml(spec.to_xml(), asset_dir=asset_dir))
+    output_path.write_text(sanitize_spec_xml(spec.to_xml(), asset_dir=asset_dir, model=model))
 
 
 def generate_xml_files(output_root: Path = ROOT) -> list[Path]:
