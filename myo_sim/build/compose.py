@@ -17,8 +17,10 @@ from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
 import argparse
+import os
 import sys
 import time
+import xml.etree.ElementTree as ET
 
 import mujoco
 from myo_sim import MODELS_DIR
@@ -46,6 +48,12 @@ except ImportError:
 
 
 ROOT = MODELS_DIR
+GENERATE_XML_TARGETS: dict[str, Path] = {
+    "myoarms": Path("arm/myoarms.xml"),
+    "myotorso": Path("torso/myotorso.xml"),
+    "myolegs": Path("leg/myolegs.xml"),
+    "myofullbody": Path("myofullbody.xml"),
+}
 
 TORSO_ABDOMEN_TENDONS_XML = ROOT / "torso" / "assets" / "myotorso_abdomen_tendon.xml"
 TORSO_ABDOMEN_MUSCLES_XML = ROOT / "torso" / "assets" / "myotorso_abdomen_muscle.xml"
@@ -238,8 +246,12 @@ def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
+def build_torso_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
+    return load_torso_spec(registration)
+
+
 def build_torso_body_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return load_torso_spec(registration).compile()
+    return build_torso_body_spec(registration).compile()
 
 
 def make_torso_passive(torso: mujoco.MjSpec) -> None:
@@ -342,7 +354,7 @@ def lock_torso_abdomen_joints(abdomen: mujoco.MjSpec) -> None:
             abdomen.delete(joint)
 
 
-def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_arms_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     torso.attach(
@@ -353,7 +365,11 @@ def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     )
     add_contact_pairs(torso, ARM_CONTACTS_XML)
 
-    return torso.compile()
+    return torso
+
+
+def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_arms_body_spec(registration).compile()
 
 
 def build_right_arm_body_model(registration: ModelRegistration) -> mujoco.MjModel:
@@ -417,7 +433,7 @@ def build_torso_arms_model(registration: ModelRegistration) -> mujoco.MjModel:
     return torso.compile()
 
 
-def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_torso_spec(registration)
     torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     left_arm = load_left_arm_spec(registration)
@@ -428,17 +444,25 @@ def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
     legs_frame = full_body.add_frame(name="legs_attach")
     torso.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
-    return torso.compile()
+    return torso
 
 
-def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_fullbody_spec(registration).compile()
+
+
+def build_legs_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     root_body = find_body(torso, "Full Body")
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
     torso.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
-    return torso.compile()
+    return torso
+
+
+def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_legs_body_spec(registration).compile()
 
 
 def build_torso_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
@@ -475,6 +499,13 @@ BUILDERS = {
     BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_model,
 }
 
+GENERATE_SPEC_BUILDERS = {
+    "myoarms": build_arms_body_spec,
+    "myotorso": build_torso_body_spec,
+    "myolegs": build_legs_body_spec,
+    "myofullbody": build_fullbody_spec,
+}
+
 
 def build_model(model_name: str) -> mujoco.MjModel:
     try:
@@ -483,6 +514,122 @@ def build_model(model_name: str) -> mujoco.MjModel:
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
     return BUILDERS[registration.build_strategy](registration)
+
+
+def build_generated_model_spec(model_name: str) -> mujoco.MjSpec:
+    try:
+        registration = MODEL_REGISTRY[model_name]
+        builder = GENERATE_SPEC_BUILDERS[model_name]
+    except KeyError as exc:
+        available = ", ".join(GENERATE_XML_TARGETS)
+        raise ValueError(f"Cannot generate XML for model selection: {model_name}. Available: {available}") from exc
+    return builder(registration)
+
+
+def unwrap_nested_classless_defaults(element: ET.Element) -> None:
+    for child in list(element):
+        unwrap_nested_classless_defaults(child)
+        if element.tag == "default" and child.tag == "default" and child.get("class") is None:
+            index = list(element).index(child)
+            element.remove(child)
+            for grandchild in list(child):
+                element.insert(index, grandchild)
+                index += 1
+
+
+def dedupe_default_element_children(element: ET.Element) -> None:
+    for child in list(element):
+        dedupe_default_element_children(child)
+
+    if element.tag != "default":
+        return
+
+    seen: dict[str, ET.Element] = {}
+    for child in list(element):
+        if child.tag == "default":
+            continue
+        existing = seen.get(child.tag)
+        if existing is None:
+            seen[child.tag] = child
+            continue
+        existing.attrib.update(child.attrib)
+        element.remove(child)
+
+
+def drop_duplicate_default_classes(element: ET.Element, seen: set[str] | None = None) -> None:
+    if seen is None:
+        seen = set()
+
+    for child in list(element):
+        if child.tag == "default" and child.get("class") is not None:
+            class_name = child.get("class", "")
+            if class_name in seen:
+                element.remove(child)
+                continue
+            seen.add(class_name)
+        drop_duplicate_default_classes(child, seen)
+
+
+def enable_floor_collision(root: ET.Element) -> None:
+    for geom in root.iter("geom"):
+        if geom.get("name") == "floor":
+            geom.set("contype", "1")
+            geom.set("conaffinity", "1")
+
+
+def iter_worldbody_geoms(root: ET.Element) -> list[ET.Element]:
+    worldbody = root.find("worldbody")
+    if worldbody is None:
+        return []
+    return list(worldbody.iter("geom"))
+
+
+def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Preserve collision flags that can be lost through exported default inheritance."""
+    geoms = iter_worldbody_geoms(root)
+    if len(geoms) != model.ngeom:
+        raise ValueError(f"Generated XML has {len(geoms)} geoms, but compiled model has {model.ngeom}")
+
+    for geom_id, geom in enumerate(geoms):
+        geom.set("contype", str(int(model.geom_contype[geom_id])))
+        geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
+
+
+def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjModel | None = None) -> str:
+    root = ET.fromstring(xml)
+    if asset_dir is not None:
+        compiler = root.find("compiler")
+        if compiler is None:
+            compiler = ET.Element("compiler")
+            root.insert(0, compiler)
+        compiler.set("meshdir", asset_dir)
+        compiler.set("texturedir", asset_dir)
+    unwrap_nested_classless_defaults(root)
+    dedupe_default_element_children(root)
+    drop_duplicate_default_classes(root)
+    enable_floor_collision(root)
+    if model is not None:
+        apply_compiled_geom_collision_flags(root, model)
+    ET.indent(root, space="  ")
+    return ET.tostring(root, encoding="unicode") + "\n"
+
+
+def write_spec_xml(spec: mujoco.MjSpec, output_path: Path) -> None:
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    model = spec.compile()
+    asset_dir = os.path.relpath(ROOT, output_path.parent)
+    output_path.write_text(sanitize_spec_xml(spec.to_xml(), asset_dir=asset_dir, model=model))
+
+
+def generate_xml_files(output_root: Path = ROOT) -> list[Path]:
+    """Generate compiled base XML files for the primary composed models."""
+    output_paths: list[Path] = []
+    for model_name, rel_path in GENERATE_XML_TARGETS.items():
+        output_path = output_root / rel_path
+        spec = build_generated_model_spec(model_name)
+        write_spec_xml(spec, output_path)
+        output_paths.append(output_path)
+    return output_paths
 
 
 def view_model(model: mujoco.MjModel) -> None:
@@ -514,8 +661,18 @@ def main() -> None:
         default="myotorso_arms",
         help="Which registered MjSpec-composed model to compile",
     )
+    parser.add_argument(
+        "--generate",
+        action="store_true",
+        help="Generate compiled XML files for myoarms, myotorso, myolegs, and myofullbody",
+    )
     parser.add_argument("--view", action="store_true", help="Open MuJoCo viewer")
     args = parser.parse_args()
+
+    if args.generate:
+        for output_path in generate_xml_files():
+            print(f"generated: {output_path}")
+        return
 
     model = build_model(args.model)
     registration = MODEL_REGISTRY[args.model]
