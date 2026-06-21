@@ -7,47 +7,47 @@
     License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ====================================================== -->
     <tendon>
-        <spatial name="addbrev_r_tendon" springlength="0.0354503" class="myoleg_muscle">
+        <spatial name="addbrev_r_tendon" springlength="0.0354503" class="myolegs_muscle">
             <site site="addbrev-P1_r"/>
             <geom geom="AB_at_femshaft_wrap_r" sidesite="AB_at_femshaft_site_addbrev_r"/>
             <site site="addbrev-P2_r"/>
         </spatial>
-        <spatial name="addlong_r_tendon" springlength="0.131799" class="myoleg_muscle">
+        <spatial name="addlong_r_tendon" springlength="0.131799" class="myolegs_muscle">
             <site site="addlong-P1_r"/>
             <geom geom="AL_at_femshaft_wrap_r" sidesite="AL_at_femshaft_site_addlong_r"/>
             <site site="addlong-P2_r"/>
         </spatial>
-        <spatial name="addmagDist_r_tendon" springlength="0.0873807" class="myoleg_muscle">
+        <spatial name="addmagDist_r_tendon" springlength="0.0873807" class="myolegs_muscle">
             <site site="addmagDist-P1_r"/>
             <geom geom="AMdist_at_femshaft_wrap_r" sidesite="AMdist_at_femshaft_site_addmagDist_r"/>
             <site site="addmagDist-P2_r"/>
         </spatial>
-        <spatial name="addmagIsch_r_tendon" springlength="0.216343" class="myoleg_muscle">
+        <spatial name="addmagIsch_r_tendon" springlength="0.216343" class="myolegs_muscle">
             <site site="addmagIsch-P1_r"/>
             <geom geom="AMisch_at_condyles_wrap_r" sidesite="AMisch_at_condyles_site_addmagIsch_r"/>
             <site site="addmagIsch-P2_r"/>
         </spatial>
-        <spatial name="addmagMid_r_tendon" springlength="0.0466277" class="myoleg_muscle">
+        <spatial name="addmagMid_r_tendon" springlength="0.0466277" class="myolegs_muscle">
             <site site="addmagMid-P1_r"/>
             <geom geom="AMmid_at_femshaft_wrap_r" sidesite="AMmid_at_femshaft_site_addmagMid_r"/>
             <site site="addmagMid-P2_r"/>
         </spatial>
-        <spatial name="addmagProx_r_tendon" springlength="0.0403241" class="myoleg_muscle">
+        <spatial name="addmagProx_r_tendon" springlength="0.0403241" class="myolegs_muscle">
             <site site="addmagProx-P1_r"/>
             <geom geom="AMprox_at_femshaft_wrap_r" sidesite="AMprox_at_femshaft_site_addmagProx_r"/>
             <site site="addmagProx-P2_r"/>
         </spatial>
-        <spatial name="bflh_r_tendon" springlength="0.325227" class="myoleg_muscle">
+        <spatial name="bflh_r_tendon" springlength="0.325227" class="myolegs_muscle">
             <site site="bflh-P1_r"/>
             <site site="bflh-P2_r"/>
             <site site="bflh-P3_r"/>
         </spatial>
-        <spatial name="bfsh_r_tendon" springlength="0.105817" class="myoleg_muscle">
+        <spatial name="bfsh_r_tendon" springlength="0.105817" class="myolegs_muscle">
             <site site="bfsh-P1_r"/>
             <geom geom="BF_at_gastroc_wrap_r" sidesite="BF_at_gastroc_site_bfsh_r"/>
             <site site="bfsh-P2_r"/>
         </spatial>
-        <spatial name="edl_r_tendon" springlength="0.368875" class="myoleg_muscle">
+        <spatial name="edl_r_tendon" springlength="0.368875" class="myolegs_muscle">
             <site site="edl-P1_r"/>å
             <site site="edl-P2_r"/>
             <site site="edl-P3_r"/>
@@ -55,7 +55,7 @@
             <site site="edl-P5_r"/>
             <site site="edl-P6_r"/>
         </spatial>
-        <spatial name="ehl_r_tendon" springlength="0.326795" class="myoleg_muscle">
+        <spatial name="ehl_r_tendon" springlength="0.326795" class="myolegs_muscle">
             <site site="ehl-P1_r"/>
             <site site="ehl-P2_r"/>
             <site site="ehl-P3_r"/>
@@ -65,7 +65,7 @@
             <site site="ehl-P7_r"/>
             <site site="ehl-P8_r"/>
         </spatial>
-        <spatial name="fdl_r_tendon" springlength="0.378773" class="myoleg_muscle">
+        <spatial name="fdl_r_tendon" springlength="0.378773" class="myolegs_muscle">
             <site site="fdl-P1_r"/>
             <site site="fdl-P2_r"/>
             <site site="fdl-P3_r"/>
@@ -75,7 +75,7 @@
             <site site="fdl-P7_r"/>
             <site site="fdl-P8_r"/>
         </spatial>
-        <spatial name="fhl_r_tendon" springlength="0.35434" class="myoleg_muscle">
+        <spatial name="fhl_r_tendon" springlength="0.35434" class="myolegs_muscle">
             <site site="fhl-P1_r"/>
             <site site="fhl-P2_r"/>
             <site site="fhl-P3_r"/>
@@ -84,82 +84,82 @@
             <site site="fhl-P6_r"/>
             <site site="fhl-P7_r"/>
         </spatial>
-        <spatial name="gaslat_r_tendon" springlength="0.37607" class="myoleg_muscle">
+        <spatial name="gaslat_r_tendon" springlength="0.37607" class="myolegs_muscle">
             <site site="gaslat-P1_r"/>
             <geom geom="GasLat_at_shank_wrap_r" sidesite="GasLat_at_shank_site_gaslat_r"/>
             <site site="gaslat-P2_r"/>
         </spatial>
-        <spatial name="gasmed_r_tendon" springlength="0.398716" class="myoleg_muscle">
+        <spatial name="gasmed_r_tendon" springlength="0.398716" class="myolegs_muscle">
             <site site="gasmed-P1_r"/>
             <geom geom="GasMed_at_shank_wrap_r" sidesite="GasMed_at_shank_site_gasmed_r"/>
             <site site="gasmed-P2_r"/>
         </spatial>
-        <spatial name="glmax1_r_tendon" springlength="0.0488409" class="myoleg_muscle">
+        <spatial name="glmax1_r_tendon" springlength="0.0488409" class="myolegs_muscle">
             <site site="glmax1-P1_r"/>
             <site site="glmax1-P2_r"/>
             <!-- <geom geom="Gmax1_at_pelvis_wrap_r" sidesite="Gmax1_at_pelvis_site_glmax1_r"/> -->
             <site site="glmax1-P3_r"/>
             <site site="glmax1-P4_r"/>
         </spatial>
-        <spatial name="glmax2_r_tendon" springlength="0.0678872" class="myoleg_muscle">
+        <spatial name="glmax2_r_tendon" springlength="0.0678872" class="myolegs_muscle">
             <site site="glmax2-P1_r"/>
             <site site="glmax2-P2_r"/>
             <!-- <geom geom="Gmax2_at_pelvis_wrap_r" sidesite="Gmax2_at_pelvis_site_glmax2_r"/> -->
             <site site="glmax2-P3_r"/>
             <site site="glmax2-P4_r"/>
         </spatial>
-        <spatial name="glmax3_r_tendon" springlength="0.0697166" class="myoleg_muscle">
+        <spatial name="glmax3_r_tendon" springlength="0.0697166" class="myolegs_muscle">
             <site site="glmax3-P1_r"/>
             <site site="glmax3-P2_r"/>
             <geom geom="Gmax3_at_pelvis_wrap_r" sidesite="Gmax3_at_pelvis_site_glmax3_r"/>
             <site site="glmax3-P3_r"/>
             <site site="glmax3-P4_r"/>
         </spatial>
-        <spatial name="glmed1_r_tendon" springlength="0.0558168" class="myoleg_muscle">
+        <spatial name="glmed1_r_tendon" springlength="0.0558168" class="myolegs_muscle">
             <site site="glmed1-P1_r"/>
             <site site="glmed1-P2_r"/>
         </spatial>
-        <spatial name="glmed2_r_tendon" springlength="0.0652488" class="myoleg_muscle">
+        <spatial name="glmed2_r_tendon" springlength="0.0652488" class="myolegs_muscle">
             <site site="glmed2-P1_r"/>
             <site site="glmed2-P2_r"/>
         </spatial>
-        <spatial name="glmed3_r_tendon" springlength="0.0452328" class="myoleg_muscle">
+        <spatial name="glmed3_r_tendon" springlength="0.0452328" class="myolegs_muscle">
             <site site="glmed3-P1_r"/>
             <site site="glmed3-P2_r"/>
         </spatial>
-        <spatial name="glmin1_r_tendon" springlength="0.0161378" class="myoleg_muscle">
+        <spatial name="glmin1_r_tendon" springlength="0.0161378" class="myolegs_muscle">
             <site site="glmin1-P1_r"/>
             <site site="glmin1-P2_r"/>
         </spatial>
-        <spatial name="glmin2_r_tendon" springlength="0.0260991" class="myoleg_muscle">
+        <spatial name="glmin2_r_tendon" springlength="0.0260991" class="myolegs_muscle">
             <site site="glmin2-P1_r"/>
             <site site="glmin2-P2_r"/>
         </spatial>
-        <spatial name="glmin3_r_tendon" springlength="0.0508725" class="myoleg_muscle">
+        <spatial name="glmin3_r_tendon" springlength="0.0508725" class="myolegs_muscle">
             <site site="glmin3-P1_r"/>
             <site site="glmin3-P2_r"/>
         </spatial>
-        <spatial name="grac_r_tendon" springlength="0.172014" class="myoleg_muscle">
+        <spatial name="grac_r_tendon" springlength="0.172014" class="myolegs_muscle">
             <site site="grac-P1_r"/>
             <geom geom="GR_at_condyles_wrap_r" sidesite="GR_at_condyles_site_grac_r"/>
             <site site="grac-P2_r"/>
             <site site="grac-P3_r"/>
         </spatial>
-        <spatial name="iliacus_r_tendon" springlength="0.0961207" class="myoleg_muscle">
+        <spatial name="iliacus_r_tendon" springlength="0.0961207" class="myolegs_muscle">
             <site site="iliacus-P1_r"/>
             <site site="iliacus-P2_r"/>
             <geom geom="IL_at_brim_wrap_r" sidesite="IL_at_brim_site_iliacus_r"/>
             <site site="iliacus-P3_r"/>
             <site site="iliacus-P4_r"/>
         </spatial>
-        <spatial name="perbrev_r_tendon" springlength="0.147528" class="myoleg_muscle">
+        <spatial name="perbrev_r_tendon" springlength="0.147528" class="myolegs_muscle">
             <site site="perbrev-P1_r"/>
             <site site="perbrev-P2_r"/>
             <site site="perbrev-P3_r"/>
             <site site="perbrev-P4_r"/>
             <site site="perbrev-P5_r"/>
         </spatial>
-        <spatial name="perlong_r_tendon" springlength="0.332221" class="myoleg_muscle">
+        <spatial name="perlong_r_tendon" springlength="0.332221" class="myolegs_muscle">
             <site site="perlong-P1_r"/>
             <site site="perlong-P2_r"/>
             <site site="perlong-P3_r"/>
@@ -168,19 +168,19 @@
             <site site="perlong-P6_r"/>
             <site site="perlong-P7_r"/>
         </spatial>
-        <spatial name="piri_r_tendon" springlength="0.114906" class="myoleg_muscle">
+        <spatial name="piri_r_tendon" springlength="0.114906" class="myolegs_muscle">
             <site site="piri-P1_r"/>
             <site site="piri-P2_r"/>
             <site site="piri-P3_r"/>
         </spatial>
-        <spatial name="psoas_r_tendon" springlength="0.0995432" class="myoleg_muscle">
+        <spatial name="psoas_r_tendon" springlength="0.0995432" class="myolegs_muscle">
             <site site="psoas-P1_r"/>
             <site site="psoas-P2_r"/>
             <!-- <geom geom="PS_at_brim_wrap_r" sidesite="PS_at_brim_site_psoas_r"/> -->
             <site site="psoas-P3_r"/>
             <site site="psoas-P4_r"/>
         </spatial>
-        <spatial name="recfem_r_tendon" springlength="0.448494" class="myoleg_muscle">
+        <spatial name="recfem_r_tendon" springlength="0.448494" class="myolegs_muscle">
             <site site="recfem-P1_r"/>
             <geom geom="KnExt_at_fem_wrap_r" sidesite="KnExt_at_fem_site_recfem_r"/>
             <site site="recfem-P2_r"/>
@@ -188,47 +188,47 @@
             <site site="recfem-P4_r"/>
             <site site="recfem-P5_r"/>
         </spatial>
-        <spatial name="sart_r_tendon" springlength="0.124" class="myoleg_muscle">
+        <spatial name="sart_r_tendon" springlength="0.124" class="myolegs_muscle">
             <site site="sart-P1_r"/>
             <site site="sart-P2_r"/>
             <site site="sart-P3_r"/>
             <site site="sart-P4_r"/>
             <site site="sart-P5_r"/>
         </spatial>
-        <spatial name="semimem_r_tendon" springlength="0.347586" class="myoleg_muscle">
+        <spatial name="semimem_r_tendon" springlength="0.347586" class="myolegs_muscle">
             <site site="semimem-P1_r"/>
             <geom geom="SM_at_condyles_wrap_r" sidesite="SM_at_condyles_site_semimem_r"/>
             <site site="semimem-P2_r"/>
         </spatial>
-        <spatial name="semiten_r_tendon" springlength="0.247199" class="myoleg_muscle">
+        <spatial name="semiten_r_tendon" springlength="0.247199" class="myolegs_muscle">
             <site site="semiten-P1_r"/>
             <geom geom="ST_at_condyles_wrap_r" sidesite="ST_at_condyles_site_semiten_r"/>
             <site site="semiten-P2_r"/>
             <site site="semiten-P3_r"/>
         </spatial>
-        <spatial name="soleus_r_tendon" springlength="0.276756" class="myoleg_muscle">
+        <spatial name="soleus_r_tendon" springlength="0.276756" class="myolegs_muscle">
             <site site="soleus-P1_r"/>
             <site site="soleus-P2_r"/>
         </spatial>
-        <spatial name="tfl_r_tendon" springlength="0.449497" class="myoleg_muscle">
+        <spatial name="tfl_r_tendon" springlength="0.449497" class="myolegs_muscle">
             <site site="tfl-P1_r"/>
             <site site="tfl-P2_r"/>
             <site site="tfl-P3_r"/>
             <site site="tfl-P4_r"/>
         </spatial>
-        <spatial name="tibant_r_tendon" springlength="0.240461" class="myoleg_muscle">
+        <spatial name="tibant_r_tendon" springlength="0.240461" class="myolegs_muscle">
             <site site="tibant-P1_r"/>
             <site site="tibant-P2_r"/>
             <site site="tibant-P3_r"/>
             <site site="tibant-P4_r"/>
         </spatial>
-        <spatial name="tibpost_r_tendon" springlength="0.28078" class="myoleg_muscle">
+        <spatial name="tibpost_r_tendon" springlength="0.28078" class="myolegs_muscle">
             <site site="tibpost-P1_r"/>
             <site site="tibpost-P2_r"/>
             <site site="tibpost-P3_r"/>
             <site site="tibpost-P4_r"/>
         </spatial>
-        <spatial name="vasint_r_tendon" springlength="0.202211" class="myoleg_muscle">
+        <spatial name="vasint_r_tendon" springlength="0.202211" class="myolegs_muscle">
             <site site="vasint-P1_r"/>
             <site site="vasint-P2_r"/>
             <geom geom="KnExt_at_fem_wrap_r" sidesite="KnExt_at_fem_site_vasint_r"/>
@@ -236,7 +236,7 @@
             <site site="vasint-P4_r"/>
             <site site="vasint-P5_r"/>
         </spatial>
-        <spatial name="vaslat_r_tendon" springlength="0.220601" class="myoleg_muscle">
+        <spatial name="vaslat_r_tendon" springlength="0.220601" class="myolegs_muscle">
             <site site="vaslat-P1_r"/>
             <site site="vaslat-P2_r"/>
             <geom geom="KnExt_at_fem_wrap_r" sidesite="KnExt_at_fem_site_vaslat_r"/>
@@ -244,7 +244,7 @@
             <site site="vaslat-P4_r"/>
             <site site="vaslat-P5_r"/>
         </spatial>
-        <spatial name="vasmed_r_tendon" springlength="0.199904" class="myoleg_muscle">
+        <spatial name="vasmed_r_tendon" springlength="0.199904" class="myolegs_muscle">
             <site site="vasmed-P1_r"/>
             <site site="vasmed-P2_r"/>
             <geom geom="KnExt_at_fem_wrap_r" sidesite="KnExt_at_fem_site_vasmed_r"/>
@@ -252,47 +252,47 @@
             <site site="vasmed-P4_r"/>
             <site site="vasmed-P5_r"/>
         </spatial>
-        <spatial name="addbrev_l_tendon" springlength="0.0354503" class="myoleg_muscle">
+        <spatial name="addbrev_l_tendon" springlength="0.0354503" class="myolegs_muscle">
             <site site="addbrev-P1_l"/>
             <geom geom="AB_at_femshaft_wrap_l" sidesite="AB_at_femshaft_site_addbrev_l"/>
             <site site="addbrev-P2_l"/>
         </spatial>
-        <spatial name="addlong_l_tendon" springlength="0.131799" class="myoleg_muscle">
+        <spatial name="addlong_l_tendon" springlength="0.131799" class="myolegs_muscle">
             <site site="addlong-P1_l"/>
             <geom geom="AL_at_femshaft_wrap_l" sidesite="AL_at_femshaft_site_addlong_l"/>
             <site site="addlong-P2_l"/>
         </spatial>
-        <spatial name="addmagDist_l_tendon" springlength="0.0873807" class="myoleg_muscle">
+        <spatial name="addmagDist_l_tendon" springlength="0.0873807" class="myolegs_muscle">
             <site site="addmagDist-P1_l"/>
             <geom geom="AMdist_at_femshaft_wrap_l" sidesite="AMdist_at_femshaft_site_addmagDist_l"/>
             <site site="addmagDist-P2_l"/>
         </spatial>
-        <spatial name="addmagIsch_l_tendon" springlength="0.216343" class="myoleg_muscle">
+        <spatial name="addmagIsch_l_tendon" springlength="0.216343" class="myolegs_muscle">
             <site site="addmagIsch-P1_l"/>
             <geom geom="AMisch_at_condyles_wrap_l" sidesite="AMisch_at_condyles_site_addmagIsch_l"/>
             <site site="addmagIsch-P2_l"/>
         </spatial>
-        <spatial name="addmagMid_l_tendon" springlength="0.0466277" class="myoleg_muscle">
+        <spatial name="addmagMid_l_tendon" springlength="0.0466277" class="myolegs_muscle">
             <site site="addmagMid-P1_l"/>
             <geom geom="AMmid_at_femshaft_wrap_l" sidesite="AMmid_at_femshaft_site_addmagMid_l"/>
             <site site="addmagMid-P2_l"/>
         </spatial>
-        <spatial name="addmagProx_l_tendon" springlength="0.0403241" class="myoleg_muscle">
+        <spatial name="addmagProx_l_tendon" springlength="0.0403241" class="myolegs_muscle">
             <site site="addmagProx-P1_l"/>
             <geom geom="AMprox_at_femshaft_wrap_l" sidesite="AMprox_at_femshaft_site_addmagProx_l"/>
             <site site="addmagProx-P2_l"/>
         </spatial>
-        <spatial name="bflh_l_tendon" springlength="0.325227" class="myoleg_muscle">
+        <spatial name="bflh_l_tendon" springlength="0.325227" class="myolegs_muscle">
             <site site="bflh-P1_l"/>
             <site site="bflh-P2_l"/>
             <site site="bflh-P3_l"/>
         </spatial>
-        <spatial name="bfsh_l_tendon" springlength="0.105817" class="myoleg_muscle">
+        <spatial name="bfsh_l_tendon" springlength="0.105817" class="myolegs_muscle">
             <site site="bfsh-P1_l"/>
             <geom geom="BF_at_gastroc_wrap_l" sidesite="BF_at_gastroc_site_bfsh_l"/>
             <site site="bfsh-P2_l"/>
         </spatial>
-        <spatial name="edl_l_tendon" springlength="0.368875" class="myoleg_muscle">
+        <spatial name="edl_l_tendon" springlength="0.368875" class="myolegs_muscle">
             <site site="edl-P1_l"/>
             <site site="edl-P2_l"/>
             <site site="edl-P3_l"/>
@@ -300,7 +300,7 @@
             <site site="edl-P5_l"/>
             <site site="edl-P6_l"/>
         </spatial>
-        <spatial name="ehl_l_tendon" springlength="0.326795" class="myoleg_muscle">
+        <spatial name="ehl_l_tendon" springlength="0.326795" class="myolegs_muscle">
             <site site="ehl-P1_l"/>
             <site site="ehl-P2_l"/>
             <site site="ehl-P3_l"/>
@@ -310,7 +310,7 @@
             <site site="ehl-P7_l"/>
             <site site="ehl-P8_l"/>
         </spatial>
-        <spatial name="fdl_l_tendon" springlength="0.378773" class="myoleg_muscle">
+        <spatial name="fdl_l_tendon" springlength="0.378773" class="myolegs_muscle">
             <site site="fdl-P1_l"/>
             <site site="fdl-P2_l"/>
             <site site="fdl-P3_l"/>
@@ -320,7 +320,7 @@
             <site site="fdl-P7_l"/>
             <site site="fdl-P8_l"/>
         </spatial>
-        <spatial name="fhl_l_tendon" springlength="0.35434" class="myoleg_muscle">
+        <spatial name="fhl_l_tendon" springlength="0.35434" class="myolegs_muscle">
             <site site="fhl-P1_l"/>
             <site site="fhl-P2_l"/>
             <site site="fhl-P3_l"/>
@@ -329,82 +329,82 @@
             <site site="fhl-P6_l"/>
             <site site="fhl-P7_l"/>
         </spatial>
-        <spatial name="gaslat_l_tendon" springlength="0.37607" class="myoleg_muscle">
+        <spatial name="gaslat_l_tendon" springlength="0.37607" class="myolegs_muscle">
             <site site="gaslat-P1_l"/>
             <geom geom="GasLat_at_shank_wrap_l" sidesite="GasLat_at_shank_site_gaslat_l"/>
             <site site="gaslat-P2_l"/>
         </spatial>
-        <spatial name="gasmed_l_tendon" springlength="0.398716" class="myoleg_muscle">
+        <spatial name="gasmed_l_tendon" springlength="0.398716" class="myolegs_muscle">
             <site site="gasmed-P1_l"/>
             <geom geom="GasMed_at_shank_wrap_l" sidesite="GasMed_at_shank_site_gasmed_l"/>
             <site site="gasmed-P2_l"/>
         </spatial>
-        <spatial name="glmax1_l_tendon" springlength="0.0488409" class="myoleg_muscle">
+        <spatial name="glmax1_l_tendon" springlength="0.0488409" class="myolegs_muscle">
             <site site="glmax1-P1_l"/>
             <site site="glmax1-P2_l"/>
             <!-- <geom geom="Gmax1_at_pelvis_wrap_l" sidesite="Gmax1_at_pelvis_site_glmax1_l"/> -->
             <site site="glmax1-P3_l"/>
             <site site="glmax1-P4_l"/>
         </spatial>
-        <spatial name="glmax2_l_tendon" springlength="0.0678872" class="myoleg_muscle">
+        <spatial name="glmax2_l_tendon" springlength="0.0678872" class="myolegs_muscle">
             <site site="glmax2-P1_l"/>
             <site site="glmax2-P2_l"/>
             <!-- <geom geom="Gmax2_at_pelvis_wrap_l" sidesite="Gmax2_at_pelvis_site_glmax2_l"/> -->
             <site site="glmax2-P3_l"/>
             <site site="glmax2-P4_l"/>
         </spatial>
-        <spatial name="glmax3_l_tendon" springlength="0.0697166" class="myoleg_muscle">
+        <spatial name="glmax3_l_tendon" springlength="0.0697166" class="myolegs_muscle">
             <site site="glmax3-P1_l"/>
             <site site="glmax3-P2_l"/>
             <geom geom="Gmax3_at_pelvis_wrap_l" sidesite="Gmax3_at_pelvis_site_glmax3_l"/>
             <site site="glmax3-P3_l"/>
             <site site="glmax3-P4_l"/>
         </spatial>
-        <spatial name="glmed1_l_tendon" springlength="0.0558168" class="myoleg_muscle">
+        <spatial name="glmed1_l_tendon" springlength="0.0558168" class="myolegs_muscle">
             <site site="glmed1-P1_l"/>
             <site site="glmed1-P2_l"/>
         </spatial>
-        <spatial name="glmed2_l_tendon" springlength="0.0652488" class="myoleg_muscle">
+        <spatial name="glmed2_l_tendon" springlength="0.0652488" class="myolegs_muscle">
             <site site="glmed2-P1_l"/>
             <site site="glmed2-P2_l"/>
         </spatial>
-        <spatial name="glmed3_l_tendon" springlength="0.0452328" class="myoleg_muscle">
+        <spatial name="glmed3_l_tendon" springlength="0.0452328" class="myolegs_muscle">
             <site site="glmed3-P1_l"/>
             <site site="glmed3-P2_l"/>
         </spatial>
-        <spatial name="glmin1_l_tendon" springlength="0.0161378" class="myoleg_muscle">
+        <spatial name="glmin1_l_tendon" springlength="0.0161378" class="myolegs_muscle">
             <site site="glmin1-P1_l"/>
             <site site="glmin1-P2_l"/>
         </spatial>
-        <spatial name="glmin2_l_tendon" springlength="0.0260991" class="myoleg_muscle">
+        <spatial name="glmin2_l_tendon" springlength="0.0260991" class="myolegs_muscle">
             <site site="glmin2-P1_l"/>
             <site site="glmin2-P2_l"/>
         </spatial>
-        <spatial name="glmin3_l_tendon" springlength="0.0508725" class="myoleg_muscle">
+        <spatial name="glmin3_l_tendon" springlength="0.0508725" class="myolegs_muscle">
             <site site="glmin3-P1_l"/>
             <site site="glmin3-P2_l"/>
         </spatial>
-        <spatial name="grac_l_tendon" springlength="0.172014" class="myoleg_muscle">
+        <spatial name="grac_l_tendon" springlength="0.172014" class="myolegs_muscle">
             <site site="grac-P1_l"/>
             <geom geom="GR_at_condyles_wrap_l" sidesite="GR_at_condyles_site_grac_l"/>
             <site site="grac-P2_l"/>
             <site site="grac-P3_l"/>
         </spatial>
-        <spatial name="iliacus_l_tendon" springlength="0.0961207" class="myoleg_muscle">
+        <spatial name="iliacus_l_tendon" springlength="0.0961207" class="myolegs_muscle">
             <site site="iliacus-P1_l"/>
             <site site="iliacus-P2_l"/>
             <geom geom="IL_at_brim_wrap_l" sidesite="IL_at_brim_site_iliacus_l"/>
             <site site="iliacus-P3_l"/>
             <site site="iliacus-P4_l"/>
         </spatial>
-        <spatial name="perbrev_l_tendon" springlength="0.147528" class="myoleg_muscle">
+        <spatial name="perbrev_l_tendon" springlength="0.147528" class="myolegs_muscle">
             <site site="perbrev-P1_l"/>
             <site site="perbrev-P2_l"/>
             <site site="perbrev-P3_l"/>
             <site site="perbrev-P4_l"/>
             <site site="perbrev-P5_l"/>
         </spatial>
-        <spatial name="perlong_l_tendon" springlength="0.332221" class="myoleg_muscle">
+        <spatial name="perlong_l_tendon" springlength="0.332221" class="myolegs_muscle">
             <site site="perlong-P1_l"/>
             <site site="perlong-P2_l"/>
             <site site="perlong-P3_l"/>
@@ -413,19 +413,19 @@
             <site site="perlong-P6_l"/>
             <site site="perlong-P7_l"/>
         </spatial>
-        <spatial name="piri_l_tendon" springlength="0.114906" class="myoleg_muscle">
+        <spatial name="piri_l_tendon" springlength="0.114906" class="myolegs_muscle">
             <site site="piri-P1_l"/>
             <site site="piri-P2_l"/>
             <site site="piri-P3_l"/>
         </spatial>
-        <spatial name="psoas_l_tendon" springlength="0.0995432" class="myoleg_muscle">
+        <spatial name="psoas_l_tendon" springlength="0.0995432" class="myolegs_muscle">
             <site site="psoas-P1_l"/>
             <site site="psoas-P2_l"/>
             <!-- <geom geom="PS_at_brim_wrap_l" sidesite="PS_at_brim_site_psoas_l"/> -->
             <site site="psoas-P3_l"/>
             <site site="psoas-P4_l"/>
         </spatial>
-        <spatial name="recfem_l_tendon" springlength="0.448494" class="myoleg_muscle">
+        <spatial name="recfem_l_tendon" springlength="0.448494" class="myolegs_muscle">
             <site site="recfem-P1_l"/>
             <geom geom="KnExt_at_fem_wrap_l" sidesite="KnExt_at_fem_site_recfem_l"/>
             <site site="recfem-P2_l"/>
@@ -433,47 +433,47 @@
             <site site="recfem-P4_l"/>
             <site site="recfem-P5_l"/>
         </spatial>
-        <spatial name="sart_l_tendon" springlength="0.124" class="myoleg_muscle">
+        <spatial name="sart_l_tendon" springlength="0.124" class="myolegs_muscle">
             <site site="sart-P1_l"/>
             <site site="sart-P2_l"/>
             <site site="sart-P3_l"/>
             <site site="sart-P4_l"/>
             <site site="sart-P5_l"/>
         </spatial>
-        <spatial name="semimem_l_tendon" springlength="0.347586" class="myoleg_muscle">
+        <spatial name="semimem_l_tendon" springlength="0.347586" class="myolegs_muscle">
             <site site="semimem-P1_l"/>
             <geom geom="SM_at_condyles_wrap_l" sidesite="SM_at_condyles_site_semimem_l"/>
             <site site="semimem-P2_l"/>
         </spatial>
-        <spatial name="semiten_l_tendon" springlength="0.247199" class="myoleg_muscle">
+        <spatial name="semiten_l_tendon" springlength="0.247199" class="myolegs_muscle">
             <site site="semiten-P1_l"/>
             <geom geom="ST_at_condyles_wrap_l" sidesite="ST_at_condyles_site_semiten_l"/>
             <site site="semiten-P2_l"/>
             <site site="semiten-P3_l"/>
         </spatial>
-        <spatial name="soleus_l_tendon" springlength="0.276756" class="myoleg_muscle">
+        <spatial name="soleus_l_tendon" springlength="0.276756" class="myolegs_muscle">
             <site site="soleus-P1_l"/>
             <site site="soleus-P2_l"/>
         </spatial>
-        <spatial name="tfl_l_tendon" springlength="0.449497" class="myoleg_muscle">
+        <spatial name="tfl_l_tendon" springlength="0.449497" class="myolegs_muscle">
             <site site="tfl-P1_l"/>
             <site site="tfl-P2_l"/>
             <site site="tfl-P3_l"/>
             <site site="tfl-P4_l"/>
         </spatial>
-        <spatial name="tibant_l_tendon" springlength="0.240461" class="myoleg_muscle">
+        <spatial name="tibant_l_tendon" springlength="0.240461" class="myolegs_muscle">
             <site site="tibant-P1_l"/>
             <site site="tibant-P2_l"/>
             <site site="tibant-P3_l"/>
             <site site="tibant-P4_l"/>
         </spatial>
-        <spatial name="tibpost_l_tendon" springlength="0.28078" class="myoleg_muscle">
+        <spatial name="tibpost_l_tendon" springlength="0.28078" class="myolegs_muscle">
             <site site="tibpost-P1_l"/>
             <site site="tibpost-P2_l"/>
             <site site="tibpost-P3_l"/>
             <site site="tibpost-P4_l"/>
         </spatial>
-        <spatial name="vasint_l_tendon" springlength="0.202211" class="myoleg_muscle">
+        <spatial name="vasint_l_tendon" springlength="0.202211" class="myolegs_muscle">
             <site site="vasint-P1_l"/>
             <site site="vasint-P2_l"/>
             <geom geom="KnExt_at_fem_wrap_l" sidesite="KnExt_at_fem_site_vasint_l"/>
@@ -481,7 +481,7 @@
             <site site="vasint-P4_l"/>
             <site site="vasint-P5_l"/>
         </spatial>
-        <spatial name="vaslat_l_tendon" springlength="0.220601" class="myoleg_muscle">
+        <spatial name="vaslat_l_tendon" springlength="0.220601" class="myolegs_muscle">
             <site site="vaslat-P1_l"/>
             <site site="vaslat-P2_l"/>
             <geom geom="KnExt_at_fem_wrap_l" sidesite="KnExt_at_fem_site_vaslat_l"/>
@@ -489,7 +489,7 @@
             <site site="vaslat-P4_l"/>
             <site site="vaslat-P5_l"/>
         </spatial>
-        <spatial name="vasmed_l_tendon" springlength="0.199904" class="myoleg_muscle">
+        <spatial name="vasmed_l_tendon" springlength="0.199904" class="myolegs_muscle">
             <site site="vasmed-P1_l"/>
             <site site="vasmed-P2_l"/>
             <geom geom="KnExt_at_fem_wrap_l" sidesite="KnExt_at_fem_site_vasmed_l"/>

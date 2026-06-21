@@ -14,12 +14,12 @@
     <default class="main">
         <geom contype="0" conaffinity="0"/>
         <tendon rgba="0.95 0.3 0.3 41" width="0.001"/>
-        <default class="arm">
+        <default class="myoarm">
             <joint limited="true" damping="1.05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
             <site size="0.0025" group="3"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.003"/>
-            <default class="muscle">
+            <default class="myoarm_muscle">
                 <general biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biastype="muscle" ctrllimited="true" ctrlrange="0 1" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" dyntype="muscle" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" gaintype="muscle"/>
             </default>
             <default class="myohand_coll">
@@ -35,27 +35,27 @@
                  <site rgba="1 0.1 0.5 0.5" size="0.001" group="4"/>
             </default>
         </default>
-        <default class="upperarm_muscle">
+        <default class="myoarm_upperarm_muscle">
             <general biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biastype="muscle" ctrllimited="true" ctrlrange="0 1" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" dyntype="muscle" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" gaintype="muscle"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.007"/>
         </default>
-        <default class="forearm_muscle">
+        <default class="myoarm_forearm_muscle">
             <muscle ctrllimited="true" ctrlrange="0 1" />
             <tendon rgba="0.95 0.3 0.3 41" width="0.002"/>
         </default>
-        <default class="elbow">
+        <default class="myoarm_elbow">
             <joint limited="true" damping="0.75" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
             <site size="0.0025" group="3"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.002"/>
         </default>
-        <default class="wrist">
+        <default class="myoarm_wrist">
             <joint limited="true" damping=".05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
             <site size="0.0025" group="3"/>
             <tendon rgba="0.95 0.3 0.3 41" width="0.002"/>
         </default>
-        <default class="fingers">
+        <default class="myoarm_fingers">
             <joint limited="true" damping=".05" armature="1e-4" stiffness="0"/>
             <geom margin="0.001" rgba="0.8 0.8 0.8 1" contype="0" conaffinity="0"/>
             <site size="0.0025" group="3"/>

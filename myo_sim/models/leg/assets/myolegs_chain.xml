@@ -8,26 +8,26 @@
 ====================================================== -->
 
     <body name="pelvis" pos="0 0 0" euler="1.57 -1.57 0" childclass="myolegs">
-        <site name="pelvis" class="myo_leg_marker"/>
+        <site name="pelvis" class="myolegs_marker"/>
         <inertial pos="-0.07 -0.03 0" mass="10.96" diaginertia="0.0622075 0.0532711 0.0299242" />
-        <geom name="pelvis_col_r" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>
-        <geom name="pelvis_col_l" type="ellipsoid" size=".110 .13 0.11" class="coll" pos="-.08 -.03 -.07" euler="-.2 0 0" mass="2"/>
+        <geom name="pelvis_col_r" type="ellipsoid" size=".110 .13 0.11" class="myolegs_coll" pos="-.08 -.03 0.07" euler="0.2 0 0" mass="2"/>
+        <geom name="pelvis_col_l" type="ellipsoid" size=".110 .13 0.11" class="myolegs_coll" pos="-.08 -.03 -.07" euler="-.2 0 0" mass="2"/>
         <geom mesh="r_pelvis" name="pelvis_r" type="mesh"/>
         <geom mesh="l_pelvis" name="pelvis_l" type="mesh"/>
-        <geom name="Gmax1_at_pelvis_wrap_r" pos="-0.077 -0.099 0.061" quat="0.931256 -0.288071 0.213142 -0.0659324" class="myoleg_wrap" size="0.04 0.075"/>
-        <geom name="Gmax2_at_pelvis_wrap_r" pos="-0.08 -0.083 0.068" quat="0.912872 -0.359331 0.180301 -0.0709714" class="myoleg_wrap" size="0.04 0.05"/>
-        <geom name="Gmax3_at_pelvis_wrap_r" pos="-0.083 -0.088 0.068" quat="0.99875 -0.0499792 0 0" class="myoleg_wrap" size="0.04 0.05"/>
-        <geom name="Gmax1_at_pelvis_wrap_l" pos="-0.077 -0.099 -0.061" quat="0.931256 0.288071 -0.213142 -0.0659324" class="myoleg_wrap" size="0.04 0.075"/>
-        <geom name="Gmax2_at_pelvis_wrap_l" pos="-0.08 -0.083 -0.068" quat="0.912872 0.359331 -0.180301 -0.0709714" class="myoleg_wrap" size="0.04 0.05"/>
-        <geom name="Gmax3_at_pelvis_wrap_l" pos="-0.083 -0.088 -0.068" quat="0.99875 0.0499792 0 0" class="myoleg_wrap" size="0.04 0.05"/>
-        <!-- <geom name="PS_at_brim_wrap_r" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="myoleg_wrap" size="0.05 0.1"/>
-        <geom name="PS_at_brim_wrap_l" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="myoleg_wrap" size="0.05 0.05"/>
-        <geom name="IL_at_brim_wrap_r" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="myoleg_wrap" size="0.0549 0.1"/>
-        <geom name="IL_at_brim_wrap_l" pos="-0.071 -0.065 -0.0756" quat="0.874257 0.193832 0.0376181 0.443495" class="myoleg_wrap" size="0.0549 0.05"/> -->
-        <geom name="PS_at_brim_wrap_r" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="myoleg_wrap" size="0.05" type="sphere"/>
-        <geom name="PS_at_brim_wrap_l" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="myoleg_wrap" size="0.05" type="sphere"/>
-        <geom name="IL_at_brim_wrap_r" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="myoleg_wrap" size="0.0549" type="sphere"/>
-        <geom name="IL_at_brim_wrap_l" pos="-0.071 -0.065 -0.0756" quat="0.874257 0.193832 0.0376181 0.443495" class="myoleg_wrap" size="0.0549" type="sphere"/>
+        <geom name="Gmax1_at_pelvis_wrap_r" pos="-0.077 -0.099 0.061" quat="0.931256 -0.288071 0.213142 -0.0659324" class="myolegs_wrap" size="0.04 0.075"/>
+        <geom name="Gmax2_at_pelvis_wrap_r" pos="-0.08 -0.083 0.068" quat="0.912872 -0.359331 0.180301 -0.0709714" class="myolegs_wrap" size="0.04 0.05"/>
+        <geom name="Gmax3_at_pelvis_wrap_r" pos="-0.083 -0.088 0.068" quat="0.99875 -0.0499792 0 0" class="myolegs_wrap" size="0.04 0.05"/>
+        <geom name="Gmax1_at_pelvis_wrap_l" pos="-0.077 -0.099 -0.061" quat="0.931256 0.288071 -0.213142 -0.0659324" class="myolegs_wrap" size="0.04 0.075"/>
+        <geom name="Gmax2_at_pelvis_wrap_l" pos="-0.08 -0.083 -0.068" quat="0.912872 0.359331 -0.180301 -0.0709714" class="myolegs_wrap" size="0.04 0.05"/>
+        <geom name="Gmax3_at_pelvis_wrap_l" pos="-0.083 -0.088 -0.068" quat="0.99875 0.0499792 0 0" class="myolegs_wrap" size="0.04 0.05"/>
+        <!-- <geom name="PS_at_brim_wrap_r" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="myolegs_wrap" size="0.05 0.1"/>
+        <geom name="PS_at_brim_wrap_l" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="myolegs_wrap" size="0.05 0.05"/>
+        <geom name="IL_at_brim_wrap_r" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="myolegs_wrap" size="0.0549 0.1"/>
+        <geom name="IL_at_brim_wrap_l" pos="-0.071 -0.065 -0.0756" quat="0.874257 0.193832 0.0376181 0.443495" class="myolegs_wrap" size="0.0549 0.05"/> -->
+        <geom name="PS_at_brim_wrap_r" pos="-0.074 -0.06 0.0656" quat="0.981103 -0.13006 -0.127199 0.0658971" class="myolegs_wrap" size="0.05" type="sphere"/>
+        <geom name="PS_at_brim_wrap_l" pos="-0.074 -0.06 -0.0656" quat="0.981103 0.13006 0.127199 0.0658971" class="myolegs_wrap" size="0.05" type="sphere"/>
+        <geom name="IL_at_brim_wrap_r" pos="-0.071 -0.065 0.0756" quat="0.874257 -0.193832 -0.0376181 0.443495" class="myolegs_wrap" size="0.0549" type="sphere"/>
+        <geom name="IL_at_brim_wrap_l" pos="-0.071 -0.065 -0.0756" quat="0.874257 0.193832 0.0376181 0.443495" class="myolegs_wrap" size="0.0549" type="sphere"/>
         <site name="addbrev-P1_r" pos="-0.0191 -0.094 0.0154"/>
         <site name="addlong-P1_r" pos="-0.0076 -0.0889 0.0189"/>
         <site name="addmagDist-P1_r" pos="-0.074 -0.1277 0.0398"/>
@@ -105,23 +105,23 @@
         <site name="IL_at_brim_site_iliacus_r" pos="-0.02526034 -0.0256276 0.0928915"/>
         <site name="IL_at_brim_site_iliacus_l" pos="-0.02526034 -0.0256276 -0.0928915"/>
         <body name="femur_r" pos="-0.056276 -0.07849 0.07726">
-            <site name="hip_r" class="myo_leg_marker"/>
+            <site name="hip_r" class="myolegs_marker"/>
             <inertial pos="0 -0.195 -0.0005" quat="0.708013 -0.7062 0 0" mass="8.4" diaginertia="0.1694 0.1694 0.0245269" />
             <joint axis="0 0 1" name="hip_flexion_r" pos="0 0 0" range="-0.523599 2.0944"/>
             <joint axis="1 0 0" name="hip_adduction_r" pos="0 0 0" range="-0.872665 0.523599"/>
             <joint axis="0 1 0" name="hip_rotation_r" pos="0 0 0" range="-0.698132 0.698132"/>
-            <geom name="femur1_col_r" size=".080" class="coll" fromto="0 0 .02 0 -0.2 .015" mass="4"/>
-            <geom name="femur2_col_r" size=".067" class="coll" fromto="0 -0.2 .015 0 -0.39 .005" mass="2"/>
+            <geom name="femur1_col_r" size=".080" class="myolegs_coll" fromto="0 0 .02 0 -0.2 .015" mass="4"/>
+            <geom name="femur2_col_r" size=".067" class="myolegs_coll" fromto="0 -0.2 .015 0 -0.39 .005" mass="2"/>
             <geom mesh="r_femur" name="femur_r" type="mesh"/>
-            <geom name="Gastroc_at_condyles_wrap_r" pos="0.005 -0.41 0" class="myoleg_wrap" size="0.025 0.05"/>
-            <geom name="KnExt_at_fem_wrap_r" pos="0.00358828 -0.402732 0.00209111" quat="0.999192 -0.0311532 0.025365 -0.00079084" class="myoleg_wrap" size="0.025 0.05"/>
-            <geom name="AB_at_femshaft_wrap_r" pos="0.0146434 -0.112595 0.023365" quat="0.671362 0.735248 0.0628354 0.0688147" class="myoleg_wrap" size="0.0165 0.035"/>
-            <geom name="AL_at_femshaft_wrap_r" pos="0.0307327 -0.231909 0.0151137" quat="0.629067 0.774355 0.0429971 0.0529276" class="myoleg_wrap" size="0.0201 0.05"/>
-            <geom name="AMprox_at_femshaft_wrap_r" pos="0.00518299 -0.0728948 0.025403" quat="0.689646 0.718132 0.0645174 0.0671823" class="myoleg_wrap" size="0.0211 0.035"/>
-            <geom name="AMmid_at_femshaft_wrap_r" pos="0.0230125 -0.160711 0.0205842" quat="0.690996 0.719631 0.0472547 0.0492129" class="myoleg_wrap" size="0.0214 0.06"/>
-            <geom name="AMdist_at_femshaft_wrap_r" pos="0.0316065 -0.260736 0.0093646" quat="0.652657 0.751902 0.061082 0.0703703" class="myoleg_wrap" size="0.0218 0.1"/>
-            <geom name="AMisch_at_condyles_wrap_r" pos="-0.0226511 -0.376831 -0.00315437" quat="0.638263 0.734777 -0.150578 -0.173347" class="myoleg_wrap" size="0.04 0.12"/>
-            <geom name="PECT_at_femshaft_wrap_r" pos="0.00608573 -0.0845029 0.0304405" quat="0.610649 0.779832 0.0849157 0.108442" class="myoleg_wrap" size="0.015 0.025"/>
+            <geom name="Gastroc_at_condyles_wrap_r" pos="0.005 -0.41 0" class="myolegs_wrap" size="0.025 0.05"/>
+            <geom name="KnExt_at_fem_wrap_r" pos="0.00358828 -0.402732 0.00209111" quat="0.999192 -0.0311532 0.025365 -0.00079084" class="myolegs_wrap" size="0.025 0.05"/>
+            <geom name="AB_at_femshaft_wrap_r" pos="0.0146434 -0.112595 0.023365" quat="0.671362 0.735248 0.0628354 0.0688147" class="myolegs_wrap" size="0.0165 0.035"/>
+            <geom name="AL_at_femshaft_wrap_r" pos="0.0307327 -0.231909 0.0151137" quat="0.629067 0.774355 0.0429971 0.0529276" class="myolegs_wrap" size="0.0201 0.05"/>
+            <geom name="AMprox_at_femshaft_wrap_r" pos="0.00518299 -0.0728948 0.025403" quat="0.689646 0.718132 0.0645174 0.0671823" class="myolegs_wrap" size="0.0211 0.035"/>
+            <geom name="AMmid_at_femshaft_wrap_r" pos="0.0230125 -0.160711 0.0205842" quat="0.690996 0.719631 0.0472547 0.0492129" class="myolegs_wrap" size="0.0214 0.06"/>
+            <geom name="AMdist_at_femshaft_wrap_r" pos="0.0316065 -0.260736 0.0093646" quat="0.652657 0.751902 0.061082 0.0703703" class="myolegs_wrap" size="0.0218 0.1"/>
+            <geom name="AMisch_at_condyles_wrap_r" pos="-0.0226511 -0.376831 -0.00315437" quat="0.638263 0.734777 -0.150578 -0.173347" class="myolegs_wrap" size="0.04 0.12"/>
+            <geom name="PECT_at_femshaft_wrap_r" pos="0.00608573 -0.0845029 0.0304405" quat="0.610649 0.779832 0.0849157 0.108442" class="myolegs_wrap" size="0.015 0.025"/>
             <site name="addbrev-P2_r" pos="-0.002 -0.118 0.0249"/>
             <site name="addlong-P2_r" pos="0.0113 -0.2394 0.0158"/>
             <site name="addmagDist-P2_r" pos="0.0112 -0.2625 0.0193"/>
@@ -174,23 +174,23 @@
             <site name="AMdist_at_femshaft_site_addmagDist_r" pos="0.0146959 -0.298529 0.0158276"/>
             <site name="AMisch_at_condyles_site_addmagIsch_r" pos="-0.0360341 -0.49032 -0.0446456"/>
             <body name="tibia_r" pos="-4.6e-07 -0.404425 -0.00126526">
-                <site name="knee_r" class="myo_leg_marker"/>
+                <site name="knee_r" class="myolegs_marker"/>
                 <inertial pos="-0.005 -0.175 0.0025" quat="0.70204 -0.711847 0.0203385 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
                 <joint axis="0.992246 0.123982 -0.00878916" name="knee_angle_translation2_r" pos="0 0 0" range="7.69254e-11 0.006792" type="slide"/>
                 <joint axis="-0.124293 0.989762 -0.0701648" name="knee_angle_translation1_r" pos="0 0 0" range="9.53733e-08 0.00159883" type="slide"/>
                 <joint axis="-3.98373e-10 -0.0707131 -0.997497" name="knee_angle_r" pos="0 0 0" range="0 2.0944"/>
                 <joint axis="0.992246 0.123982 -0.00878916" name="knee_angle_rotation2_r" pos="0 0 0" range="-0.00167821 0.0335354"/>
                 <joint axis="-0.124293 0.989762 -0.0701648" name="knee_angle_rotation3_r" pos="0 0 0" range="-0.262788 0.262788"/>
-                <geom name="tibia1_col_r" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 .0025" mass="3.8"/> <!-- 14cms -->
-                <geom name="tibia2_col_r" size=".048" class="coll" fromto="-0.01 -0.14 .0025 -0.01 -0.35 .005" mass="3.8"/>
+                <geom name="tibia1_col_r" size=".056" class="myolegs_coll" fromto="0 0 0 -0.01 -0.14 .0025" mass="3.8"/> <!-- 14cms -->
+                <geom name="tibia2_col_r" size=".048" class="myolegs_coll" fromto="-0.01 -0.14 .0025 -0.01 -0.35 .005" mass="3.8"/>
                 <geom mesh="r_tibia" name="tibia_r" type="mesh"/>
                 <geom mesh="r_fibula" name="fibula_r" type="mesh"/>
-                <geom name="GasLat_at_shank_wrap_r" pos="-0.0074 -0.074 -0.0033" quat="-0.0298211 0.737282 0.655511 -0.160722" class="myoleg_wrap" size="0.055 0.05"/>
-                <geom name="GasMed_at_shank_wrap_r" pos="-0.0074 -0.074 -0.0033" quat="0.073733 0.735403 0.67187 -0.048347" class="myoleg_wrap" size="0.055 0.05"/>
-                <geom name="GR_at_condyles_wrap_r" pos="-0.003 -0.02 0" quat="0.980067 0 -0.198669 0" class="myoleg_wrap" size="0.036 0.05"/>
-                <geom name="SM_at_condyles_wrap_r" pos="-0.001 -0.02 0" quat="0.99875 0 -0.0499792 0" class="myoleg_wrap" size="0.0352 0.05"/>
-                <geom name="ST_at_condyles_wrap_r" pos="-0.002 -0.0205 0" quat="0.995004 0 -0.0998334 0" class="myoleg_wrap" size="0.0425 0.05"/>
-                <geom name="BF_at_gastroc_wrap_r" pos="-0.058 -0.06 0" class="myoleg_wrap" size="0.03 0.075"/>
+                <geom name="GasLat_at_shank_wrap_r" pos="-0.0074 -0.074 -0.0033" quat="-0.0298211 0.737282 0.655511 -0.160722" class="myolegs_wrap" size="0.055 0.05"/>
+                <geom name="GasMed_at_shank_wrap_r" pos="-0.0074 -0.074 -0.0033" quat="0.073733 0.735403 0.67187 -0.048347" class="myolegs_wrap" size="0.055 0.05"/>
+                <geom name="GR_at_condyles_wrap_r" pos="-0.003 -0.02 0" quat="0.980067 0 -0.198669 0" class="myolegs_wrap" size="0.036 0.05"/>
+                <geom name="SM_at_condyles_wrap_r" pos="-0.001 -0.02 0" quat="0.99875 0 -0.0499792 0" class="myolegs_wrap" size="0.0352 0.05"/>
+                <geom name="ST_at_condyles_wrap_r" pos="-0.002 -0.0205 0" quat="0.995004 0 -0.0998334 0" class="myolegs_wrap" size="0.0425 0.05"/>
+                <geom name="BF_at_gastroc_wrap_r" pos="-0.058 -0.06 0" class="myolegs_wrap" size="0.03 0.075"/>
                 <site name="bflh-P2_r" pos="-0.0337 -0.035 0.0253"/>
                 <site name="bflh-P3_r" pos="-0.0287 -0.0455 0.0303"/>
                 <site name="bfsh-P2_r" pos="-0.0301 -0.0419 0.0318"/>
@@ -242,7 +242,7 @@
                 <site name="ST_at_condyles_site_semiten_r" pos="-0.0428471 -0.0468901 -0.0181631"/>
                 <site name="BF_at_gastroc_site_bfsh_r" pos="-0.0687049 -0.0256284 0.0426731"/>
                 <body name="talus_r" pos="-0.01 -0.4 0">
-                    <site name="ankle_r" class="myo_leg_marker"/>
+                    <site name="ankle_r" class="myolegs_marker"/>
                     <joint axis="-0.105014 -0.174022 0.979126" name="ankle_angle_r" pos="0 0 0" range="-0.698132 0.523599"/>
                     <geom mesh="r_talus" name="talus_r" type="mesh"/>
                     <site name="AJC_r" pos="0 0 0"/>
@@ -276,19 +276,19 @@
                         <site name="CAL_r" pos="-0.025 0.02 -0.005"/>
                         <site name="TOE_r" pos="0.205 0.0297 -0.03"/>
                         <site name="MT5_r" pos="0.145 0.0249 0.059"/>
-                        <geom name="foot_col1_r" size=".02" class="coll" fromto="0.175 0 -.03 0.010 0 -.01"/>
-                        <!-- <geom name="foot_col2_l" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
-                        <geom name="foot_col3_r" size=".02" class="coll" fromto="0.140 0 0.03 0.010 0 0.01"/>
-                        <geom name="foot_col4_r" type="ellipsoid" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
-                        <site name="foot_touch_r" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                        <geom name="foot_col1_r" size=".02" class="myolegs_coll" fromto="0.175 0 -.03 0.010 0 -.01"/>
+                        <!-- <geom name="foot_col2_l" size=".02" class="myolegs_coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
+                        <geom name="foot_col3_r" size=".02" class="myolegs_coll" fromto="0.140 0 0.03 0.010 0 0.01"/>
+                        <geom name="foot_col4_r" type="ellipsoid" size=".085 .035 0.04" class="myolegs_coll" pos="0.08 .02 0" euler="0 0 -.2"/>
+                        <site name="foot_touch_r" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myolegs_touch"/>
 
                         <body name="toes_r" pos="0.1788 -0.002 0.00108">
-                            <site name="toe_r" class="myo_leg_marker"/>
+                            <site name="toe_r" class="myolegs_marker"/>
                             <joint axis="0.580954 0 -0.813936" name="mtp_angle_r" pos="0 0 0" range="-0.523599 0.523599"/>
-                            <geom name="bofoot_col1_r" size=".0175 .045" class="coll" zaxis="0.880954 0 -0.813936" pos="0.04 0 .01"/>
-                            <geom name="bofoot_col2_r" size=".02 .040" class="coll" zaxis="0.580954 0 -0.813936" pos="0.01 0 0"/>
+                            <geom name="bofoot_col1_r" size=".0175 .045" class="myolegs_coll" zaxis="0.880954 0 -0.813936" pos="0.04 0 .01"/>
+                            <geom name="bofoot_col2_r" size=".02 .040" class="myolegs_coll" zaxis="0.580954 0 -0.813936" pos="0.01 0 0"/>
                             <geom mesh="r_bofoot" name="bofoot_r" type="mesh"/>
-                            <site name="toes_touch_r" type="box" pos="0.0275 -.01 0" size=".04 .01 .0675" euler="0 -.7 0" class="myo_leg_touch"/>
+                            <site name="toes_touch_r" type="box" pos="0.0275 -.01 0" size=".04 .01 .0675" euler="0 -.7 0" class="myolegs_touch"/>
                             <site name="edl-P5_r" pos="0.0003 0.0047 0.0153"/>
                             <site name="edl-P6_r" pos="0.0443 -0.0004 0.025"/>
                             <site name="ehl-P7_r" pos="0.0298 0.0041 -0.0245"/>
@@ -319,23 +319,23 @@
             </body>
         </body>
         <body name="femur_l" pos="-0.056276 -0.07849 -0.07726">
-            <site name="hip_l" class="myo_leg_marker"/>
+            <site name="hip_l" class="myolegs_marker"/>
             <inertial pos="0 -0.195 0.0005" quat="0.7062 -0.708013 0 0" mass="8.4" diaginertia="0.1694 0.1694 0.0245269" />
             <joint axis="0 0 1" name="hip_flexion_l" pos="0 0 0" range="-0.523599 2.0944"/>
             <joint axis="-1 0 0" name="hip_adduction_l" pos="0 0 0" range="-0.872665 0.523599"/>
             <joint axis="0 -1 0" name="hip_rotation_l" pos="0 0 0" range="-0.698132 0.698132"/>
-            <geom name="femur1_col_l" size=".080" class="coll" fromto="0 0 -.02 0 -0.2 -.015" mass="4"/>
-            <geom name="femur2_col_l" size=".067" class="coll" fromto="0 -0.2 -.015 0 -0.39 -.005" mass="2"/>
+            <geom name="femur1_col_l" size=".080" class="myolegs_coll" fromto="0 0 -.02 0 -0.2 -.015" mass="4"/>
+            <geom name="femur2_col_l" size=".067" class="myolegs_coll" fromto="0 -0.2 -.015 0 -0.39 -.005" mass="2"/>
             <geom mesh="l_femur" name="femur_l" type="mesh"/>
-            <geom name="Gastroc_at_condyles_wrap_l" pos="0.005 -0.41 0" class="myoleg_wrap" size="0.025 0.05"/>
-            <geom name="KnExt_at_fem_wrap_l" pos="0.00358828 -0.402732 -0.00209111" quat="0.999192 0.0311532 -0.025365 -0.00079084" class="myoleg_wrap" size="0.025 0.05"/>
-            <geom name="AB_at_femshaft_wrap_l" pos="0.0146434 -0.112595 -0.023365" quat="0.671362 -0.735248 -0.0628354 0.0688147" class="myoleg_wrap" size="0.0165 0.035"/>
-            <geom name="AL_at_femshaft_wrap_l" pos="0.0307327 -0.231909 -0.0151137" quat="0.629067 -0.774355 -0.0429971 0.0529276" class="myoleg_wrap" size="0.0201 0.05"/>
-            <geom name="AMprox_at_femshaft_wrap_l" pos="0.00518299 -0.0728948 -0.025403" quat="0.689646 -0.718132 -0.0645174 0.0671823" class="myoleg_wrap" size="0.0211 0.035"/>
-            <geom name="AMmid_at_femshaft_wrap_l" pos="0.0230125 -0.160711 -0.0205842" quat="0.690996 -0.719631 -0.0472547 0.0492129" class="myoleg_wrap" size="0.0214 0.06"/>
-            <geom name="AMdist_at_femshaft_wrap_l" pos="0.0316065 -0.260736 -0.0093646" quat="0.652657 -0.751902 -0.061082 0.0703703" class="myoleg_wrap" size="0.0218 0.1"/>
-            <geom name="AMisch_at_condyles_wrap_l" pos="-0.0226511 -0.376831 0.00315437" quat="0.638263 -0.734777 0.150578 -0.173347" class="myoleg_wrap" size="0.04 0.12"/>
-            <geom name="PECT_at_femshaft_wrap_l" pos="0.00608573 -0.0845029 -0.0304405" quat="0.610649 -0.779832 -0.0849157 0.108442" class="myoleg_wrap" size="0.015 0.025"/>
+            <geom name="Gastroc_at_condyles_wrap_l" pos="0.005 -0.41 0" class="myolegs_wrap" size="0.025 0.05"/>
+            <geom name="KnExt_at_fem_wrap_l" pos="0.00358828 -0.402732 -0.00209111" quat="0.999192 0.0311532 -0.025365 -0.00079084" class="myolegs_wrap" size="0.025 0.05"/>
+            <geom name="AB_at_femshaft_wrap_l" pos="0.0146434 -0.112595 -0.023365" quat="0.671362 -0.735248 -0.0628354 0.0688147" class="myolegs_wrap" size="0.0165 0.035"/>
+            <geom name="AL_at_femshaft_wrap_l" pos="0.0307327 -0.231909 -0.0151137" quat="0.629067 -0.774355 -0.0429971 0.0529276" class="myolegs_wrap" size="0.0201 0.05"/>
+            <geom name="AMprox_at_femshaft_wrap_l" pos="0.00518299 -0.0728948 -0.025403" quat="0.689646 -0.718132 -0.0645174 0.0671823" class="myolegs_wrap" size="0.0211 0.035"/>
+            <geom name="AMmid_at_femshaft_wrap_l" pos="0.0230125 -0.160711 -0.0205842" quat="0.690996 -0.719631 -0.0472547 0.0492129" class="myolegs_wrap" size="0.0214 0.06"/>
+            <geom name="AMdist_at_femshaft_wrap_l" pos="0.0316065 -0.260736 -0.0093646" quat="0.652657 -0.751902 -0.061082 0.0703703" class="myolegs_wrap" size="0.0218 0.1"/>
+            <geom name="AMisch_at_condyles_wrap_l" pos="-0.0226511 -0.376831 0.00315437" quat="0.638263 -0.734777 0.150578 -0.173347" class="myolegs_wrap" size="0.04 0.12"/>
+            <geom name="PECT_at_femshaft_wrap_l" pos="0.00608573 -0.0845029 -0.0304405" quat="0.610649 -0.779832 -0.0849157 0.108442" class="myolegs_wrap" size="0.015 0.025"/>
             <site name="addbrev-P2_l" pos="-0.002 -0.118 -0.0249"/>
             <site name="addlong-P2_l" pos="0.0113 -0.2394 -0.0158"/>
             <site name="addmagDist-P2_l" pos="0.0112 -0.2625 -0.0193"/>
@@ -388,23 +388,23 @@
             <site name="AMdist_at_femshaft_site_addmagDist_l" pos="0.0146959 -0.298529 -0.0158276"/>
             <site name="AMisch_at_condyles_site_addmagIsch_l" pos="-0.0360341 -0.49032 0.0446456"/>
             <body name="tibia_l" pos="-4.6e-07 -0.404425 0.00126526">
-                <site name="knee_l" class="myo_leg_marker"/>
+                <site name="knee_l" class="myolegs_marker"/>
                 <inertial pos="-0.005 -0.175 -0.0025" quat="0.712137 -0.701754 0.0200501 0" mass="3.8" diaginertia="0.0771589 0.0771589 0.00690387" />
                 <joint axis="0.992246 0.123982 0.00878916" name="knee_angle_translation2_l" pos="0 0 0" range="7.69254e-11 0.006792" type="slide"/>
                 <joint axis="-0.124293 0.989762 0.0701648" name="knee_angle_translation1_l" pos="0 0 0" range="9.53733e-08 0.00159883" type="slide"/>
                 <joint axis="3.98373e-10 0.0707131 -0.997497" name="knee_angle_l" pos="0 0 0" range="0 2.0944"/>
                 <joint axis="-0.992246 -0.123982 -0.00878916" name="knee_angle_rotation2_l" pos="0 0 0" range="-0.00167821 0.0335354"/>
                 <joint axis="0.124293 -0.989762 -0.0701648" name="knee_angle_rotation3_l" pos="0 0 0" range="-0.262788 0.262788"/>
-                <geom name="tibia1_col_l" size=".056" class="coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="3.8"/> <!-- 14cms -->
-                <geom name="tibia2_col_l" size=".048" class="coll" fromto="-0.01 -0.14 -.0025 -0.01 -0.35 -.005" mass="3.8"/>
+                <geom name="tibia1_col_l" size=".056" class="myolegs_coll" fromto="0 0 0 -0.01 -0.14 -.0025" mass="3.8"/> <!-- 14cms -->
+                <geom name="tibia2_col_l" size=".048" class="myolegs_coll" fromto="-0.01 -0.14 -.0025 -0.01 -0.35 -.005" mass="3.8"/>
                 <geom mesh="l_tibia" name="tibia_l" type="mesh"/>
                 <geom mesh="l_fibula" name="fibula_l" type="mesh"/>
-                <geom name="GasLat_at_shank_wrap_l" pos="-0.0074 -0.074 0.0033" quat="-0.0298211 -0.737282 -0.655511 -0.160722" class="myoleg_wrap" size="0.055 0.05"/>
-                <geom name="GasMed_at_shank_wrap_l" pos="-0.0074 -0.074 0.0033" quat="0.073733 -0.735403 -0.67187 -0.048347" class="myoleg_wrap" size="0.055 0.05"/>
-                <geom name="GR_at_condyles_wrap_l" pos="-0.003 -0.02 0" quat="0.980067 0 0.198669 0" class="myoleg_wrap" size="0.036 0.05"/>
-                <geom name="SM_at_condyles_wrap_l" pos="-0.001 -0.02 0" quat="0.99875 0 0.0499792 0" class="myoleg_wrap" size="0.0352 0.05"/>
-                <geom name="ST_at_condyles_wrap_l" pos="-0.002 -0.0205 0" quat="0.995004 0 0.0998334 0" class="myoleg_wrap" size="0.0425 0.05"/>
-                <geom name="BF_at_gastroc_wrap_l" pos="-0.058 -0.06 0" class="myoleg_wrap" size="0.03 0.075"/>
+                <geom name="GasLat_at_shank_wrap_l" pos="-0.0074 -0.074 0.0033" quat="-0.0298211 -0.737282 -0.655511 -0.160722" class="myolegs_wrap" size="0.055 0.05"/>
+                <geom name="GasMed_at_shank_wrap_l" pos="-0.0074 -0.074 0.0033" quat="0.073733 -0.735403 -0.67187 -0.048347" class="myolegs_wrap" size="0.055 0.05"/>
+                <geom name="GR_at_condyles_wrap_l" pos="-0.003 -0.02 0" quat="0.980067 0 0.198669 0" class="myolegs_wrap" size="0.036 0.05"/>
+                <geom name="SM_at_condyles_wrap_l" pos="-0.001 -0.02 0" quat="0.99875 0 0.0499792 0" class="myolegs_wrap" size="0.0352 0.05"/>
+                <geom name="ST_at_condyles_wrap_l" pos="-0.002 -0.0205 0" quat="0.995004 0 0.0998334 0" class="myolegs_wrap" size="0.0425 0.05"/>
+                <geom name="BF_at_gastroc_wrap_l" pos="-0.058 -0.06 0" class="myolegs_wrap" size="0.03 0.075"/>
                 <site name="bflh-P2_l" pos="-0.0337 -0.035 -0.0253"/>
                 <site name="bflh-P3_l" pos="-0.0287 -0.0455 -0.0303"/>
                 <site name="bfsh-P2_l" pos="-0.0301 -0.0419 -0.0318"/>
@@ -456,7 +456,7 @@
                 <site name="ST_at_condyles_site_semiten_l" pos="-0.0428471 -0.0468901 0.0181631"/>
                 <site name="BF_at_gastroc_site_bfsh_l" pos="-0.0687049 -0.0256284 -0.0426731"/>
                 <body name="talus_l" pos="-0.01 -0.4 0">
-                    <site name="ankle_l" class="myo_leg_marker"/>
+                    <site name="ankle_l" class="myolegs_marker"/>
                     <joint axis="0.105014 0.174022 0.979126" name="ankle_angle_l" pos="0 0 0" range="-0.698132 0.523599"/>
                     <geom mesh="l_talus" name="talus_l" type="mesh"/>
                     <site name="AJC_l" pos="0 0 0"/>
@@ -490,19 +490,19 @@
                         <site name="CAL_l" pos="-0.025 0.02 0.005"/>
                         <site name="TOE_l" pos="0.205 0.0297 0.03"/>
                         <site name="MT5_l" pos="0.145 0.0249 -0.059"/>
-                        <geom name="foot_col1_l" size=".02" class="coll" fromto="0.175 0 0.03 0.010 0 0.01"/>
-                        <!-- <geom name="foot_col2_l" size=".02" class="coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
-                        <geom name="foot_col3_l" size=".02" class="coll" fromto="0.140 0 -.03 0.010 0 -.01"/>
-                        <geom name="foot_col4_l" type="ellipsoid" size=".085 .035 0.04" class="coll" pos="0.08 .02 0" euler="0 0 -.2"/>
-                        <site name="foot_touch_l" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myo_leg_touch"/>
+                        <geom name="foot_col1_l" size=".02" class="myolegs_coll" fromto="0.175 0 0.03 0.010 0 0.01"/>
+                        <!-- <geom name="foot_col2_l" size=".02" class="myolegs_coll" fromto="0.155 0 0.00 0.010 0 0.00"/> -->
+                        <geom name="foot_col3_l" size=".02" class="myolegs_coll" fromto="0.140 0 -.03 0.010 0 -.01"/>
+                        <geom name="foot_col4_l" type="ellipsoid" size=".085 .035 0.04" class="myolegs_coll" pos="0.08 .02 0" euler="0 0 -.2"/>
+                        <site name="foot_touch_l" type="box" pos="0.09 -.01 0.0" size=".1 .01 .055" euler="0 0 0" class="myolegs_touch"/>
 
                         <body name="toes_l" pos="0.1788 -0.002 -0.00108">
-                            <site name="toe_l" class="myo_leg_marker"/>
+                            <site name="toe_l" class="myolegs_marker"/>
                             <joint axis="-0.580954 0 -0.813936" name="mtp_angle_l" pos="0 0 0" range="-0.523599 0.523599"/>
-                            <geom name="bofoot_col1_l" size=".0175 .045" class="coll" zaxis="-0.880954 0 -0.813936" pos="0.04 0 -.01"/>
-                            <geom name="bofoot_col2_l" size=".02 .040" class="coll" zaxis="-0.580954 0 -0.813936" pos="0.01 0 0"/>
+                            <geom name="bofoot_col1_l" size=".0175 .045" class="myolegs_coll" zaxis="-0.880954 0 -0.813936" pos="0.04 0 -.01"/>
+                            <geom name="bofoot_col2_l" size=".02 .040" class="myolegs_coll" zaxis="-0.580954 0 -0.813936" pos="0.01 0 0"/>
                             <geom mesh="l_bofoot" name="bofoot_l" type="mesh"/>
-                            <site name="toes_touch_l" type="box" pos="0.0275 -.01 -.000" size=".04 .01 .0675" euler="0 .7 0" class="myo_leg_touch"/>
+                            <site name="toes_touch_l" type="box" pos="0.0275 -.01 -.000" size=".04 .01 .0675" euler="0 .7 0" class="myolegs_touch"/>
                             <site name="edl-P5_l" pos="0.0003 0.0047 -0.0153"/>
                             <site name="edl-P6_l" pos="0.0443 -0.0004 -0.025"/>
                             <site name="ehl-P7_l" pos="0.0298 0.0041 0.0245"/>

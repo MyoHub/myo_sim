@@ -7,7 +7,7 @@
     License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ====================================================== -->
 
-    <body name="clavicle_r" pos="0 0 0" childclass="arm">
+    <body name="clavicle_r" pos="0 0 0" childclass="myoarm">
         <inertial diaginertia="0.001 0.001 0.001" mass="0.156" pos="-0.011096 0.0063723 0.054168" quat="0.906292 0.0334036 0.164622 -0.387838"/>
         <joint axis="0.0153 0.989299 -0.1451" name="sternoclavicular_r2_r" pos="0 0 0" range="-0.75 -0.0"/>
         <joint axis="-0.994473 0 -0.104997" name="sternoclavicular_r3_r" pos="0 0 0" range="0.0 0.318"/>
@@ -257,7 +257,7 @@
                                 <site class="myoarm_marker" name="Bicep_marker_r" pos="0.01591 -0.181 -0.00553"/>
                                 <site class="myoarm_marker" name="Elbow_Lateral_marker_r" pos="0.00509 -0.2806 0.02884"/>
                                 <site class="myoarm_marker" name="Elbow_Medial_marker_r" pos="-0.00407 -0.2844 -0.05408"/>
-                                <body name="ulna_r" pos="0.0061 -0.2904 -0.0123" childclass="elbow">
+                                <body name="ulna_r" pos="0.0061 -0.2904 -0.0123" childclass="myoarm_elbow">
                                     <inertial diaginertia="0.00543663 0.00523521 0.001" mass="1.1053" pos="0.00971783 -0.0959509 0.024286" quat="0.792048 0.609078 0.0156735 0.0379256"/>
                                     <joint axis="0.0494004 0.0366003 0.998108" name="elbow_flexion_r" pos="0 0 0" range="0 2.269"/>
                                     <geom mesh="ulna_r" name="ulna_r" type="mesh"/>
@@ -376,7 +376,7 @@
                                         <site class="myoarm_marker" name="Forearm_marker_r" pos="0.03828 -0.1133 0.0174"/>
                                         <site class="myoarm_marker" name="Radius_marker_r" pos="0.05749 -0.2272 0.02738"/>
 
-                                        <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="wrist">
+                                        <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="myoarm_wrist">
                                             <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.174533 0.436332" damping="0.25"/>
                                             <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-0.785398 0.785398" damping="0.25"/>
                                             <geom mesh="lunate_r" name="lunate_r" type="mesh"/>
@@ -433,7 +433,7 @@
                                                 <geom mesh="triquetrum_r" name="triquetrum_r" type="mesh"/>
                                                 <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                             </body>
-                                            <body name="capitate_r" pos="0.003992 -0.015054 0.002327" childclass="fingers">
+                                            <body name="capitate_r" pos="0.003992 -0.015054 0.002327" childclass="myoarm_fingers">
                                                 <geom mesh="capitate_r" name="capitate" type="mesh"/>
                                                 <site name="PL-P3_r" pos="0.0092 -0.019 -0.0175"/>
                                                 <site name="FDS5-P3_r" pos="-0.0024 -0.0139 -0.0138"/>
