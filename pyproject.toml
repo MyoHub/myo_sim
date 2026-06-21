@@ -1,0 +1,47 @@
+[project]
+name = "myo-sim"
+version = "0.2.0"
+description = "MuJoCo musculoskeletal model definitions for MyoSuite"
+requires-python = ">=3.10"
+dependencies = [
+    "mujoco>=3.0",
+    "numpy>=1.24",
+    "matplotlib>=3.7",
+    "scipy>=1.10",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-xdist>=3.0",
+    "ruff>=0.4",
+    "pre-commit>=3.0",
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["myo_sim*"]
+
+[tool.setuptools.package-data]
+myo_sim = [
+    "models/*",
+    "models/**/*",
+    "build/*",
+    "build/**/*",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.ruff]
+line-length = 128
+extend-exclude = ["sandbox", ".claude"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]

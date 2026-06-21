@@ -1,0 +1,86 @@
+<mujocoinclude model="MyoBodySkeletonDecor">
+<body name="skeleton_decor_root" pos="0 0 0" euler="1.57079632679 -1.57079632679 0">
+  <geom type="mesh" mesh="sacrum" contype="0" conaffinity="0" />
+  <body name="lumbar5" pos="-0.098 0.071 0">
+    <geom type="mesh" mesh="lumbar5" contype="0" conaffinity="0" pos="-0.01 -0.01 0" euler="0 0 -0.3" />
+    <body name="lumbar4" pos="0.009 0.0321 0">
+      <geom type="mesh" mesh="lumbar4" contype="0" conaffinity="0" pos="-0.009 -0.004 0" euler="0 0 -0.2" />
+      <body name="lumbar3" pos="0.0006 0.0332 0">
+        <geom type="mesh" mesh="lumbar3" contype="0" conaffinity="0" pos="-0.0040 -0.002 0" euler="0 0 -0.1" />
+        <body name="lumbar2" pos="-0.0067 0.0351 0">
+          <geom type="mesh" mesh="lumbar2" contype="0" conaffinity="0" euler="0 0 0.1" />
+          <body name="lumbar1" pos="-0.0114 0.0288 0">
+            <geom type="mesh" mesh="lumbar1" contype="0" conaffinity="0" euler="0 0 0.25" />
+            <body name="torso" pos="0.0025 -0.089 0">
+              <body name="head_attach" pos="-0.005 -0.01 0">
+                <body name="neck_decor" pos="0 0 0">
+                  <geom type="mesh" mesh="hat_cervical" contype="0" conaffinity="0" />
+                  <body name="head" pos="0 0.5 0">
+                    <geom type="mesh" mesh="hat_jaw" contype="0" conaffinity="0" pos="0 -.5 0" />
+                    <geom type="mesh" mesh="hat_skull" contype="0" conaffinity="0" pos="0 -.5 0" />
+                  </body>
+                </body>
+              </body>
+              <geom type="mesh" mesh="thoracic12_s" contype="0" conaffinity="0" pos="-0.016 0.119 0" quat="0.980067 0 0 0.198669" />
+              <geom type="mesh" mesh="thoracic11_s" contype="0" conaffinity="0" pos="-0.032 0.146 0" quat="0.995004 0 0 0.0998334" />
+              <geom type="mesh" mesh="thoracic10_s" contype="0" conaffinity="0" pos="-0.04 0.171 0" quat="0.997189 0 0 0.0749297" />
+              <geom type="mesh" mesh="thoracic9_s" contype="0" conaffinity="0" pos="-0.043 0.198 0" quat="0.99875 0 0 0.0499792" />
+              <geom type="mesh" mesh="thoracic8_s" contype="0" conaffinity="0" pos="-0.045 0.223 0" quat="0.9998 0 0 -0.0199987" />
+              <geom type="mesh" mesh="thoracic7_s" contype="0" conaffinity="0" pos="-0.044 0.249 0" quat="0.99955 0 0 -0.0299955" />
+              <geom type="mesh" mesh="thoracic6_s" contype="0" conaffinity="0" pos="-0.043 0.27 0" quat="0.99955 0 0 -0.0299955" />
+              <geom type="mesh" mesh="thoracic5_s" contype="0" conaffinity="0" pos="-0.041 0.292 0" quat="0.99875 0 0 -0.0499792" />
+              <geom type="mesh" mesh="thoracic4_s" contype="0" conaffinity="0" pos="-0.0395 0.314 0" quat="0.997189 0 0 -0.0749297" />
+              <geom type="mesh" mesh="thoracic3_s" contype="0" conaffinity="0" pos="-0.036 0.337 0" quat="0.995004 0 0 -0.0998334" />
+              <geom type="mesh" mesh="thoracic2_s" contype="0" conaffinity="0" pos="-0.032 0.358 0" quat="0.992198 0 0 -0.124675" />
+              <geom type="mesh" mesh="thoracic1_s" contype="0" conaffinity="0" pos="-0.028 0.375 0" quat="0.988771 0 0 -0.149438" />
+              <geom type="mesh" mesh="thorax" contype="0" conaffinity="0" pos="0.028 0.365 0" />
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </body>
+  <body name="pelvis_decor" pos="0 0 0">
+    <geom type="mesh" mesh="r_pelvis" contype="0" conaffinity="0" />
+    <geom type="mesh" mesh="l_pelvis" contype="0" conaffinity="0" />
+    <body name="femur_r" pos="-0.056276 -0.07849 0.07726">
+      <geom type="mesh" mesh="r_femur" contype="0" conaffinity="0" />
+      <body name="tibia_r" pos="-4.6e-07 -0.404425 -0.00126526">
+        <geom type="mesh" mesh="r_tibia" contype="0" conaffinity="0" />
+        <geom type="mesh" mesh="r_fibula" contype="0" conaffinity="0" />
+        <body name="talus_r" pos="-0.01 -0.4 0">
+          <geom type="mesh" mesh="r_talus" contype="0" conaffinity="0" />
+          <body name="calcn_r" pos="-0.04877 -0.04195 0.00792">
+            <geom type="mesh" mesh="r_foot" contype="0" conaffinity="0" />
+            <body name="toes_r" pos="0.1788 -0.002 0.00108">
+              <geom type="mesh" mesh="r_bofoot" contype="0" conaffinity="0" />
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="patella_r" pos="-0.00809 -0.40796 0">
+        <geom type="mesh" mesh="r_patella" contype="0" conaffinity="0" />
+      </body>
+    </body>
+    <body name="femur_l" pos="-0.056276 -0.07849 -0.07726">
+      <geom type="mesh" mesh="l_femur" contype="0" conaffinity="0" />
+      <body name="tibia_l" pos="-4.6e-07 -0.404425 0.00126526">
+        <geom type="mesh" mesh="l_tibia" contype="0" conaffinity="0" />
+        <geom type="mesh" mesh="l_fibula" contype="0" conaffinity="0" />
+        <body name="talus_l" pos="-0.01 -0.4 0">
+          <geom type="mesh" mesh="l_talus" contype="0" conaffinity="0" />
+          <body name="calcn_l" pos="-0.04877 -0.04195 -0.00792">
+            <geom type="mesh" mesh="l_foot" contype="0" conaffinity="0" />
+            <body name="toes_l" pos="0.1788 -0.002 -0.00108">
+              <geom type="mesh" mesh="l_bofoot" contype="0" conaffinity="0" />
+            </body>
+          </body>
+        </body>
+      </body>
+      <body name="patella_l" pos="-0.00809 -0.40796 0">
+        <geom type="mesh" mesh="l_patella" contype="0" conaffinity="0" />
+      </body>
+    </body>
+  </body>
+</body>
+</mujocoinclude>
