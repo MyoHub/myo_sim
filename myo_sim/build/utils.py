@@ -78,23 +78,64 @@ def format_floats(values: list[float]) -> str:
     return " ".join(f"{value:.12g}" for value in values)
 
 
+PAIR_ATTRIBUTE_PARSERS = (
+    ("condim", int),
+    ("solref", float_list),
+    ("solreffriction", float_list),
+    ("solimp", float_list),
+    ("margin", float),
+    ("gap", float),
+    ("friction", float_list),
+)
+
+
+def _existing_pair_names(spec: object) -> set[str]:
+    names = set()
+    for pair in getattr(spec, "pairs", []):
+        if isinstance(pair, dict):
+            name = pair.get("name")
+        else:
+            name = getattr(pair, "name", None)
+        if name:
+            names.add(name)
+    return names
+
+
+def _contact_pair_name(pair: ET.Element, index: int, existing_names: set[str]) -> str:
+    name = pair.get("name")
+    if name:
+        return name
+
+    base_name = f"{pair.get('geom1')}_{pair.get('geom2')}"
+    candidate = f"{base_name}_{index}"
+    while candidate in existing_names:
+        index += 1
+        candidate = f"{base_name}_{index}"
+    return candidate
+
+
+def _contact_pair_kwargs(pair: ET.Element, index: int, existing_names: set[str]) -> dict:
+    kwargs = {
+        "name": _contact_pair_name(pair, index, existing_names),
+        "geomname1": pair.get("geom1"),
+        "geomname2": pair.get("geom2"),
+    }
+    for attr_name, parser in PAIR_ATTRIBUTE_PARSERS:
+        value = pair.get(attr_name)
+        if value:
+            kwargs[attr_name] = parser(value)
+    return kwargs
+
+
 def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = None) -> None:
     """Add contact pairs from an MJCF include file."""
-    for pair in ET.parse(contacts_xml).getroot().iter("pair"):
+    existing_names = _existing_pair_names(spec)
+    for index, pair in enumerate(ET.parse(contacts_xml).getroot().iter("pair")):
         if include_pair is not None and not include_pair(pair):
             continue
-        spec.add_pair(
-            name=pair.get("name"),
-            geomname1=pair.get("geom1"),
-            geomname2=pair.get("geom2"),
-            condim=int(pair.get("condim")) if pair.get("condim") else None,
-            solref=float_list(pair.get("solref")) if pair.get("solref") else None,
-            solreffriction=(float_list(pair.get("solreffriction")) if pair.get("solreffriction") else None),
-            solimp=float_list(pair.get("solimp")) if pair.get("solimp") else None,
-            margin=float(pair.get("margin")) if pair.get("margin") else None,
-            gap=float(pair.get("gap")) if pair.get("gap") else None,
-            friction=float_list(pair.get("friction")) if pair.get("friction") else None,
-        )
+        kwargs = _contact_pair_kwargs(pair, index, existing_names)
+        spec.add_pair(**kwargs)
+        existing_names.add(kwargs["name"])
 
 
 def expand_component_element(element: ET.Element, base_path: Path) -> list[ET.Element]:

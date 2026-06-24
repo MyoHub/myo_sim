@@ -63,6 +63,7 @@ TORSO_MUSCLES_XML = ROOT / "torso" / "assets" / "myotorso_muscle.xml"
 TORSO_CHAIN_XML = ROOT / "torso" / "assets" / "myotorso_chain.xml"
 HEAD_SIMPLE_ASSETS_XML = ROOT / "head" / "assets" / "myohead_simple_assets.xml"
 SCENE_XML = ROOT / "scene" / "myosuite_scene.xml"
+MUSCLEMIMIC_SCENE_XML = ROOT / "scene" / "myosuite_scene_musclemimic.xml"
 TORSO_ABDOMEN_UNLOCKED_JOINTS = {"flex_extension", "lat_bending", "axial_rotation"}
 ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
 HAND_CONTACTS_XML = ROOT / "contacts" / "myohand_contacts.xml"
@@ -81,6 +82,9 @@ TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
 LEFT_ARM_ATTACH_SITE = "arm_attach_l"
 TORSO_ABDOMEN_ROOT_QUAT = (0.707388, 0, 0, -0.706825)
+# Debug compatibility offset for legacy MuscleMimic bimanual caches. This shifts
+# the passive myoarms scaffold in world coordinates without changing myofullbody.
+MYOARMS_MUSCLEMIMIC_ROOT_POS = (-0.02495578, 0.01589622, 0.51884794)
 
 LEFT_ARM_STRATEGY_MIRROR_RIGHT = "mirror_right_to_left"
 LEFT_ARM_STRATEGY_NONE = "none"
@@ -150,6 +154,7 @@ MODEL_REGISTRY = {
         left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
         description="Passive anatomical torso scaffold + mirrored arms",
         include_left_arm_contacts=True,
+        root_pos=MYOARMS_MUSCLEMIMIC_ROOT_POS,
     ),
     "myoarm_r": ModelRegistration(
         name="myoarm_r",
@@ -212,6 +217,7 @@ def pair_is_supported(pair: dict, include_left_arm_contacts: bool) -> bool:
 
 def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     """Build the single-torso model from component XMLs."""
+    scene_xml = MUSCLEMIMIC_SCENE_XML if registration.build_strategy == BuildStrategy.FULLBODY else SCENE_XML
     torso_xml = build_child_xml_from_components(
         model_name="myotorso_attach",
         compiler_meshdir=ROOT,
@@ -222,7 +228,7 @@ def load_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
         root_body_name=TORSO_ROOT_BODY,
         root_site_name="torso_root_attach",
         extra_assets_xmls=(HEAD_SIMPLE_ASSETS_XML,),
-        scene_xmls=(SCENE_XML,),
+        scene_xmls=(scene_xml,),
     )
     torso = mujoco.MjSpec.from_string(torso_xml)
     torso.compiler.balanceinertia = True
@@ -363,7 +369,6 @@ def build_arms_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
         suffix="",
         site=find_site(torso, LEFT_ARM_ATTACH_SITE),
     )
-    add_contact_pairs(torso, ARM_CONTACTS_XML)
 
     return torso
 

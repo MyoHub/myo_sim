@@ -142,6 +142,15 @@ def test_generated_xml_keeps_floor_collision_enabled(tmp_path):
         assert model.geom_conaffinity[floor_id] == 1, output_path
 
 
+def test_generated_myofullbody_uses_musclemimic_scene(tmp_path):
+    output_paths = compose.generate_xml_files(tmp_path)
+    myofullbody_xml = output_paths[list(compose.GENERATE_XML_TARGETS).index("myofullbody")]
+    source = myofullbody_xml.read_text()
+
+    assert 'material name="MatPlane"' in source
+    assert 'mesh name="meshscene"' not in source
+
+
 def test_generated_xml_preserves_geom_collision_flags(tmp_path):
     output_paths = compose.generate_xml_files(tmp_path)
 

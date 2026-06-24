@@ -2,6 +2,7 @@ from pathlib import Path
 import re
 
 import myo_sim
+from myo_sim.build.utils import add_contact_pairs
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -19,6 +20,47 @@ def test_build_contact_sources_are_centralized():
     assert 'assets" / "myohand_contacts.xml"' not in source
     assert 'assets" / "myolegs_contacts.xml"' not in source
     assert 'assets" / "myofullbody_contacts.xml"' not in source
+
+
+def test_add_contact_pairs_generates_name_for_unnamed_pairs(tmp_path):
+    contacts_xml = tmp_path / "contacts.xml"
+    contacts_xml.write_text('<mujoco><pair geom1="pelvis" geom2="floor" /></mujoco>\n')
+
+    class FakeSpec:
+        def __init__(self):
+            self.pairs = []
+
+        def add_pair(self, **kwargs):
+            if not isinstance(kwargs["name"], str):
+                raise ValueError("name should be a string")
+            self.pairs.append(kwargs)
+
+    spec = FakeSpec()
+
+    add_contact_pairs(spec, contacts_xml)
+
+    assert spec.pairs == [{"name": "pelvis_floor_0", "geomname1": "pelvis", "geomname2": "floor"}]
+
+
+def test_add_contact_pairs_generates_unique_names_across_calls(tmp_path):
+    contacts_xml = tmp_path / "contacts.xml"
+    contacts_xml.write_text('<mujoco><pair geom1="pelvis" geom2="floor" /></mujoco>\n')
+
+    class FakeSpec:
+        def __init__(self):
+            self.pairs = []
+
+        def add_pair(self, **kwargs):
+            if any(pair["name"] == kwargs["name"] for pair in self.pairs):
+                raise ValueError(f"repeated name {kwargs['name']!r} in pair")
+            self.pairs.append(kwargs)
+
+    spec = FakeSpec()
+
+    add_contact_pairs(spec, contacts_xml)
+    add_contact_pairs(spec, contacts_xml)
+
+    assert [pair["name"] for pair in spec.pairs] == ["pelvis_floor_0", "pelvis_floor_1"]
 
 
 def test_model_xml_paths_do_not_reference_old_repo_layout():
