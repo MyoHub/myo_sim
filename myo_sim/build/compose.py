@@ -82,9 +82,6 @@ TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
 LEFT_ARM_ATTACH_SITE = "arm_attach_l"
 TORSO_ABDOMEN_ROOT_QUAT = (0.707388, 0, 0, -0.706825)
-# Debug compatibility offset for legacy MuscleMimic bimanual caches. This shifts
-# the passive myoarms scaffold in world coordinates without changing myofullbody.
-MYOARMS_MUSCLEMIMIC_ROOT_POS = (-0.02495578, 0.01589622, 0.51884794)
 
 LEFT_ARM_STRATEGY_MIRROR_RIGHT = "mirror_right_to_left"
 LEFT_ARM_STRATEGY_NONE = "none"
@@ -154,7 +151,6 @@ MODEL_REGISTRY = {
         left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
         description="Passive anatomical torso scaffold + mirrored arms",
         include_left_arm_contacts=True,
-        root_pos=MYOARMS_MUSCLEMIMIC_ROOT_POS,
     ),
     "myoarm_r": ModelRegistration(
         name="myoarm_r",

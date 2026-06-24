@@ -34,6 +34,10 @@ def test_every_registered_model_has_build_strategy():
     assert {name: registration.build_strategy for name, registration in MODEL_REGISTRY.items()} == expected
 
 
+def test_myoarms_uses_default_root_position():
+    assert MODEL_REGISTRY["myoarms"].root_pos == (0, 0, 1)
+
+
 def test_every_registered_model_includes_scene_floor():
     for name in MODEL_REGISTRY:
         model = build_model(name)
