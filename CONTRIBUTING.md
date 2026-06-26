@@ -63,7 +63,7 @@ The issue tracker is at `docs/wiki/issue-tracker.md` and mirrored on GitHub at <
 For biomechanical bugs (wrong moment arm, wrong force, incorrect geometry), include:
 
 - The model name and the specific body part or muscle affected.
-- Your MuJoCo version (`python -c "import mujoco; print(mujoco.__version__)"`).
+- Your MuJoCo version (`uv run python -c "import mujoco; print(mujoco.__version__)"`).
 - A moment arm plot if you can generate one with `tests/muscle_analysis_utils.py`.
 - A reference paper or dataset that shows the expected behaviour.
 

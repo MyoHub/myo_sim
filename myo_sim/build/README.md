@@ -6,7 +6,7 @@ This folder contains prototype utilities for composing MuJoCo models with
 The main entry point is:
 
 ```bash
-python -m myo_sim.build.compose --model myotorso_arms --view
+uv run python -m myo_sim.build.compose --model myotorso_arms --view
 ```
 
 Available registered models:

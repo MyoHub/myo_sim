@@ -2,9 +2,9 @@
 
 Run from the repository root:
 
-    python -m myo_sim.build.compose
-    python -m myo_sim.build.compose --model myotorso_arm_r
-    python -m myo_sim.build.compose --view
+    uv run python -m myo_sim.build.compose
+    uv run python -m myo_sim.build.compose --model myotorso_arm_r
+    uv run python -m myo_sim.build.compose --view
 
 The model registry below controls how each composed model is built. The default
 `myotorso_arms` model loads the right arm and mirrors it in memory to create the
