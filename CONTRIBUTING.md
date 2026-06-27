@@ -12,7 +12,7 @@ uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py
 
 ## Branch and PR conventions
 
-Fork the repo and push branches to your fork, not to `MyoHub/myo_sim` directly. Open PRs against `mm_refactor_mjspec`, not `main`.
+Fork the repo and push branches to your fork, not to `MyoHub/myo_sim` directly. Open PRs against `dev`, not `main`.
 
 PR body should be plain prose — no structured section headers, no emojis. Describe the problem, what the change does, and any non-obvious tradeoffs. Bullet points are fine; heavy templates are not.
 

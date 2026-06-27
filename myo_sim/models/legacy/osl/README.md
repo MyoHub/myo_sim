@@ -4,7 +4,7 @@
 
 ## General:
 
-The MyoProsthesis model combineds both the 80-muscle [MyoLeg](https://github.com/MyoHub/myo_sim/tree/mm_refactor_mjspec/myo_sim/models/leg) model and [Open Source Leg](https://neurobionics.robotics.umich.edu/research/wearable-robotics/open-source-leg/), to simulate a trans-feromal amputation model.
+The MyoProsthesis model combineds both the 80-muscle [MyoLeg](https://github.com/MyoHub/myo_sim/tree/dev/myo_sim/models/leg) model and [Open Source Leg](https://neurobionics.robotics.umich.edu/research/wearable-robotics/open-source-leg/), to simulate a trans-feromal amputation model.
 
 ## Modifications:
 

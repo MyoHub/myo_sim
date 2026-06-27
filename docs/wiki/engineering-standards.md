@@ -35,6 +35,6 @@ These rules apply to every change in this repository.
 
 ## PRs and commits
 
-- Push to your fork; open PRs against `mm_refactor_mjspec`, not `main`.
+- Push to your fork; open PRs against `dev`, not `main`.
 - PR body: plain prose, no headers, no emojis. Describe the problem, the change, and non-obvious tradeoffs.
 - One logical change per commit. Amend before reviewers arrive; use new commits after.

@@ -1,6 +1,6 @@
 # MyoSim
 
-[![CI](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml/badge.svg?branch=mm_refactor_mjspec)](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml)
+[![CI](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-%3E%3D3.10-blue.svg)](pyproject.toml)
 
