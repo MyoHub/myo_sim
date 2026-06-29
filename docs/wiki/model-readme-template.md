@@ -125,7 +125,7 @@ git commit -m "docs: refresh README for <ModelName>"
 git push -u origin docs/readme-<part>
 gh pr create --title "docs: refresh README for <ModelName>" \
   --body "Refresh README for <ModelName> using the standard template." \
-  --base mm_refactor_mjspec
+  --base dev
 ```
 
 ---

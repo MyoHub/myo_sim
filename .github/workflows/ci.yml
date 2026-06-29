@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [main, mm_refactor_mjspec]
+    branches: [main, dev]
   pull_request:
-    branches: [main, mm_refactor_mjspec]
+    branches: [main, dev]
 
 jobs:
   lint:
