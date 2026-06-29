@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-06-29 — Restore full-body observation sensors
+Changed: `myo_sim/models/sensors/myofullbody_sensors.xml`, `myo_sim/build/compose.py`, `myo_sim/build/utils.py`, `docs/wiki/build-and-composition.md`
+Why: Added a separate sensor XML and MjSpec injection helper for the MuscleMimic full-body frame velocity sensors, restoring the 110-sensor / 322-value observation layout while keeping leg touch sensors in the leg assets.
+
 ## 2026-06-26 — Document uv compose commands
 Changed: `docs/wiki/agent-workflow.md`, `docs/wiki/build-and-composition.md`
 Why: Updated compose CLI examples to use `uv run python -m myo_sim.build.compose`, keeping agent and contributor instructions aligned with the repository's `uv run` standard.

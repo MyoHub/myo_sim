@@ -153,6 +153,10 @@ Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement. O
 
 Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<pair>` element into the `MjSpec` via `spec.add_pair()`. The optional `include_pair` callable receives the XML element and returns `False` to skip a pair (used to exclude left-arm pairs when `include_left_arm_contacts=False`).
 
+### `add_sensors(spec, sensors_xml)`
+
+Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported frame sensors into the `MjSpec` via `spec.add_sensor()`. `myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by adding body linear and angular velocity sensors before the leg touch sensors are attached.
+
 ### `find_body(spec, body_name)` and `find_site(spec, site_name)`
 
 API-version-safe lookups. They try `spec.find_body()`, then `spec.find()`, then `spec.body()` in order to accommodate MuJoCo Python API differences across versions. Do not replace these with direct attribute access — the API surface has changed between MuJoCo releases and these wrappers ensure forward compatibility.
@@ -168,6 +172,10 @@ Contacts are stored in separate XML files under `myo_sim/models/contacts/`:
 None of these files are referenced via `<include>` from any model XML. They are parsed and injected programmatically at build time by `load_torso_spec()`, which calls `add_contact_pairs()` based on flags in the `ModelRegistration`. This keeps contacts out of standalone XML models (which don't need them) while making them available in all composed models that do.
 
 The `test_contact_paths.py` test enforces this: it verifies that contact XML paths appear only via `ROOT / "contacts" / ...` in `compose.py`, never embedded in `assets/` XMLs.
+
+## Sensor Injection Pattern
+
+Full-body observation compatibility sensors live under `myo_sim/models/sensors/`. They are injected programmatically by `build_fullbody_spec()` after the torso and arms are attached, but before the legs are attached. This keeps the MuscleMimic frame velocity sensors first in `sensordata`, followed by the four leg touch sensors from `myolegs_assets.xml`.
 
 ## Known Limitations and Gotchas
 

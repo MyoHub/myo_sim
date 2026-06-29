@@ -30,6 +30,7 @@ try:
     from .utils import (
         MirrorRules,
         add_contact_pairs,
+        add_sensors,
         build_child_xml_from_components,
         build_mirrored_child_xml,
         find_body,
@@ -40,6 +41,7 @@ except ImportError:
     from utils import (
         MirrorRules,
         add_contact_pairs,
+        add_sensors,
         build_child_xml_from_components,
         build_mirrored_child_xml,
         find_body,
@@ -69,6 +71,7 @@ ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
 HAND_CONTACTS_XML = ROOT / "contacts" / "myohand_contacts.xml"
 LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
+FULLBODY_SENSORS_XML = ROOT / "sensors" / "myofullbody_sensors.xml"
 RIGHT_ARM_ASSETS_XML = ROOT / "arm" / "assets" / "myoarm_r_assets.xml"
 RIGHT_ARM_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_tendons.xml"
 RIGHT_ARM_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_muscles.xml"
@@ -440,6 +443,8 @@ def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     left_arm = load_left_arm_spec(registration)
     if left_arm is not None:
         torso.attach(left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
+
+    add_sensors(torso, FULLBODY_SENSORS_XML)
 
     full_body = find_body(torso, "Full Body")
     legs_frame = full_body.add_frame(name="legs_attach")

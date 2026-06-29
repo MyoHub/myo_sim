@@ -7,6 +7,8 @@ from pathlib import Path
 import copy
 import xml.etree.ElementTree as ET
 
+import mujoco
+
 
 NAME_REFERENCE_ATTRS = {
     "name",
@@ -88,6 +90,14 @@ PAIR_ATTRIBUTE_PARSERS = (
     ("friction", float_list),
 )
 
+SENSOR_TYPE_BY_TAG = {
+    "framelinvel": mujoco.mjtSensor.mjSENS_FRAMELINVEL,
+    "frameangvel": mujoco.mjtSensor.mjSENS_FRAMEANGVEL,
+}
+SENSOR_OBJTYPE_BY_NAME = {
+    "body": mujoco.mjtObj.mjOBJ_BODY,
+}
+
 
 def _existing_pair_names(spec: object) -> set[str]:
     names = set()
@@ -136,6 +146,19 @@ def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = N
         kwargs = _contact_pair_kwargs(pair, index, existing_names)
         spec.add_pair(**kwargs)
         existing_names.add(kwargs["name"])
+
+
+def add_sensors(spec: object, sensors_xml: Path) -> None:
+    """Add supported sensors from an MJCF include file."""
+    for sensor in ET.parse(sensors_xml).getroot().iter():
+        if sensor.tag not in SENSOR_TYPE_BY_TAG:
+            continue
+        spec.add_sensor(
+            name=sensor.get("name"),
+            type=SENSOR_TYPE_BY_TAG[sensor.tag],
+            objtype=SENSOR_OBJTYPE_BY_NAME[sensor.get("objtype", "")],
+            objname=sensor.get("objname"),
+        )
 
 
 def expand_component_element(element: ET.Element, base_path: Path) -> list[ET.Element]:

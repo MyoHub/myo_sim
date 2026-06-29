@@ -35,6 +35,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 
 ## Changelog
 
+**2026-06-29** — Compared MyoArm-derived full-body geoms against the previous MuscleMimic full-body model. The old reference contained non-collision wrap geoms `APL_torus_wrap_left` on `hamate_l`, `FCU_wrap_left` on `pisiform_l`, and `Trpzm_wrap_left` on `trapezium_l`; these are intentionally absent from the current MyoArm XML as they were never used. Removed `distph2_r_coll_2` from the required parity list because it duplicated the unnamed ellipsoid already present on `distph2_r`.
+
 **2026-06-05** — Moved chest ownership to myotorso; added unit tests.
 
 **2026-06-03** — Refactored model structure and enhanced asset management.

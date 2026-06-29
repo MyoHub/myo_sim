@@ -39,6 +39,8 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 
 SCREEN_POINTS = 5
 CURVE_POINTS = 100
+EXPECTED_GEOM_COUNT_DELTA = -4
+EXPECTED_COLLISION_GEOM_COUNT_DELTA = -2
 
 # ---------------------------------------------------------------------------
 # Name mappings: ref (musclemimic) -> tgt (myo_sim)
@@ -311,6 +313,43 @@ def pytest_generate_tests(metafunc):
 # ---------------------------------------------------------------------------
 # Tests
 # ---------------------------------------------------------------------------
+
+
+def _collision_geom_count(model: mujoco.MjModel) -> int:
+    return int(np.count_nonzero((model.geom_contype != 0) | (model.geom_conaffinity != 0)))
+
+
+def _sensor_and_pair_counts(model: mujoco.MjModel) -> dict[str, int]:
+    return {
+        "nsensor": model.nsensor,
+        "nsensordata": model.nsensordata,
+        "npair": model.npair,
+    }
+
+
+def _geom_counts(model: mujoco.MjModel) -> dict[str, int]:
+    return {
+        "ngeom": model.ngeom,
+        "collision_geoms": _collision_geom_count(model),
+    }
+
+
+def test_sensor_and_contact_pair_counts_match_reference(ref_model, tgt_model):
+    assert _sensor_and_pair_counts(tgt_model) == _sensor_and_pair_counts(ref_model)
+
+
+def test_geom_counts_match_reference_with_documented_removals(ref_model, tgt_model):
+    """The current XML intentionally omits duplicate/unused MuscleMimic geoms.
+
+    `distph2_r_coll_2` duplicated an unnamed ellipsoid on `distph2_r`, and the
+    old unnamed `distal_thumb_l` ellipsoid was also removed from required parity.
+    """
+    ref_counts = _geom_counts(ref_model)
+    expected_counts = {
+        "ngeom": ref_counts["ngeom"] + EXPECTED_GEOM_COUNT_DELTA,
+        "collision_geoms": ref_counts["collision_geoms"] + EXPECTED_COLLISION_GEOM_COUNT_DELTA,
+    }
+    assert _geom_counts(tgt_model) == expected_counts
 
 
 def _check_muscle_equivalence(
