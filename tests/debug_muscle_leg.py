@@ -3,8 +3,8 @@
 Naming convention: muscles and joints use _r/_l suffixes.
 """
 
-from pathlib import Path
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -12,14 +12,14 @@ if str(ROOT) not in sys.path:
 
 import mujoco  # noqa: E402
 import numpy as np  # noqa: E402
-import myo_sim  # noqa: E402
-
 from muscle_analysis_utils import (  # noqa: E402
-    compute_moment_arm_curve,
     compute_force_length_curve,
+    compute_moment_arm_curve,
     parse_model_joint_equalities,
     plot_pair,
 )
+
+import myo_sim  # noqa: E402
 
 OUT_DIR = Path(__file__).resolve().parent / "output" / "muscle_analysis"
 OUT_DIR.mkdir(parents=True, exist_ok=True)

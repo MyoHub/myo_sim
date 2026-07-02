@@ -1,9 +1,8 @@
-from pathlib import Path
 import re
+from pathlib import Path
 
 import myo_sim
 from myo_sim.build.utils import add_contact_pairs
-
 
 ROOT = Path(__file__).resolve().parents[1]
 MODELS_DIR = myo_sim.MODELS_DIR

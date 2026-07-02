@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-import myo_sim
 import mujoco
+
+import myo_sim
 
 
 def test_models_dir_exists():

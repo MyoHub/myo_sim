@@ -1,12 +1,12 @@
 """Utilities for analyzing muscle symmetry via moment arm and force-length curves."""
 
-from pathlib import Path
 import tempfile
 import xml.etree.ElementTree as ET
+from pathlib import Path
 
+import matplotlib.pyplot as plt
 import mujoco
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def parse_joint_equalities(expanded_xml_path, model):

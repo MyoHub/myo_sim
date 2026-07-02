@@ -1,9 +1,8 @@
 import pytest
-
-import myo_sim
 from muscle_analysis_utils import parse_model_joint_equalities
 from muscle_symmetry_checks import compare_muscle_pair, discover_shared_joint_pairs
 
+import myo_sim
 
 SKIP_JOINTS = {
     "lat_bending",

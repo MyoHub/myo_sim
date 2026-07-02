@@ -44,5 +44,8 @@ line-length = 128
 extend-exclude = ["sandbox", ".claude"]
 
 [tool.ruff.lint]
-select = ["E", "F", "W"]
+select = ["E", "F", "W", "I"]
 ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["myo_sim"]

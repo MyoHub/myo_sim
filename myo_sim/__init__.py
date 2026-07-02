@@ -1,7 +1,8 @@
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 
-from myo_sim.fragments import FragmentInfo as FragmentInfo, FragmentRegistry as FragmentRegistry
+from myo_sim.fragments import FragmentInfo as FragmentInfo
+from myo_sim.fragments import FragmentRegistry as FragmentRegistry
 
 try:
     __version__ = version("myo-sim")
@@ -46,25 +47,24 @@ def get_xml_path(name: str) -> Path:
     return MODELS_DIR / REGISTRY[name]
 
 
-# MjSpec-composed models: built via build_model() rather than a static XML path.
-_COMPOSED_MODELS: frozenset[str] = frozenset(
-    {
-        "hand",
-        "myohand",
-        "myohand_r",
-        "myohands",
-        "myoarm",
-        "myoarm_r",
-        "myoarms",
-        "myofullbody",
-        "myolegs",
-        "myolegs_abdomen",
-        "myotorso",
-        "myotorso_abdomen",
-        "myotorso_arm_r",
-        "myotorso_arms",
-    }
-)
+def _composed_models() -> frozenset[str]:
+    """Names loadable via the MjSpec compose pipeline (registry keys + aliases).
+
+    Derived from ``MODEL_REGISTRY`` and ``ALIASES`` so there is a single source
+    of truth; importing compose here (rather than at module top) keeps
+    ``import myo_sim`` free of a MuJoCo dependency.
+    """
+    from myo_sim.build.compose import ALIASES, MODEL_REGISTRY
+
+    return frozenset(MODEL_REGISTRY) | frozenset(ALIASES)
+
+
+def __getattr__(name: str):
+    # Preserve the historical ``myo_sim._COMPOSED_MODELS`` attribute while keeping
+    # its contents derived from the compose registry instead of a hand-kept copy.
+    if name == "_COMPOSED_MODELS":
+        return _composed_models()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 def _right_hand_spec():
@@ -101,16 +101,17 @@ def load(name: str) -> tuple:
     """
     import mujoco
 
-    if name in _COMPOSED_MODELS:
-        from myo_sim.build.compose import build_model
+    from myo_sim.build.compose import ALIASES, build_model
 
-        # Legacy aliases: myohand and hand resolve to the composed right-hand model.
-        composed_name = {"hand": "myohand_r", "myohand": "myohand_r", "myoarm": "myoarm_r"}.get(name, name)
+    composed_models = _composed_models()
+    if name in composed_models:
+        # Legacy aliases (e.g. hand, myohand, myoarm) resolve to a registry entry.
+        composed_name = ALIASES.get(name, name)
         model = build_model(composed_name)
         return model, mujoco.MjData(model)
 
     if name not in REGISTRY:
-        available = sorted(_COMPOSED_MODELS | frozenset(REGISTRY))
+        available = sorted(composed_models | frozenset(REGISTRY))
         raise ValueError(f"Unknown model {name!r}. Available: {available}")
 
     model = mujoco.MjModel.from_xml_path(str(get_xml_path(name)))
