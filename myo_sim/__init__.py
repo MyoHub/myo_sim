@@ -1,7 +1,11 @@
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from myo_sim.fragments import FragmentInfo as FragmentInfo, FragmentRegistry as FragmentRegistry
+
+if TYPE_CHECKING:
+    import mujoco
 
 try:
     __version__ = version("myo-sim")
@@ -58,6 +62,7 @@ _COMPOSED_MODELS: frozenset[str] = frozenset(
         "myoarms",
         "myofullbody",
         "myolegs",
+        "myolegs26",
         "myolegs_abdomen",
         "myotorso",
         "myotorso_abdomen",
@@ -79,16 +84,32 @@ def _left_hand_spec():
     return load_left_hand_from_arm_spec()
 
 
-# Maps fragment names to zero-arg callables returning MjSpec (hand-only, no torso
-# scaffold).  Used by downstream consumers (e.g. myosuite ModelBuilder) so that
-# attach_fragment("hand") transparently routes through the compose pipeline instead
-# of falling back to a bundled static XML.  Includes myohand_l (left hand only);
-# there is no myo_sim.load("myohand_l") alias — use this dict or myohands instead.
+def _legs_spec():
+    from myo_sim.build.compose import load_legs_spec
+
+    return load_legs_spec()
+
+
+def _legs26_spec():
+    from myo_sim.build.compose import load_legs26_spec
+
+    return load_legs26_spec()
+
+
+# Maps fragment names to zero-arg callables returning an editable (uncompiled)
+# MjSpec, with no torso scaffold.  Used by downstream consumers (e.g. myosuite
+# ModelBuilder, assist_sim) so that attaching a fragment routes through the compose
+# pipeline instead of falling back to a bundled static XML.  Includes myohand_l
+# (left hand only); there is no myo_sim.load("myohand_l") alias — use this dict or
+# myohands instead.  Note "myolegs" here is the bare legs fragment; myo_sim.load(
+# "myolegs") differs in that it attaches the legs to a passive torso scaffold.
 FRAGMENT_SPEC_BUILDERS: dict[str, object] = {
     "hand": _right_hand_spec,
     "myohand": _right_hand_spec,
     "myohand_r": _right_hand_spec,
     "myohand_l": _left_hand_spec,
+    "myolegs": _legs_spec,
+    "myolegs26": _legs26_spec,
 }
 
 
@@ -115,6 +136,19 @@ def load(name: str) -> tuple:
 
     model = mujoco.MjModel.from_xml_path(str(get_xml_path(name)))
     return model, mujoco.MjData(model)
+
+
+def build_spec(name: str) -> "mujoco.MjSpec":
+    """Return the uncompiled MjSpec for a composed model (mirror of load()).
+
+    Unlike load(), this stops at the editable MjSpec so downstream consumers
+    (e.g. assist_sim) can edit the model -- attach devices, delete bodies, add
+    actuators -- before compiling it themselves. Covers the generated composed
+    specs (myoarms, myotorso, myolegs, myolegs26, myofullbody).
+    """
+    from myo_sim.build.compose import build_generated_model_spec
+
+    return build_generated_model_spec(name)
 
 
 def get_path(rel: str) -> Path:

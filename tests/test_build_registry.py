@@ -27,6 +27,7 @@ def test_every_registered_model_has_build_strategy():
         "myohands": BuildStrategy.BOTH_HANDS,
         "myofullbody": BuildStrategy.FULLBODY,
         "myolegs": BuildStrategy.LEGS_BODY,
+        "myolegs26": BuildStrategy.LEGS26_BASE,
         "myotorso_abdomen": BuildStrategy.TORSO_ABDOMEN,
         "myolegs_abdomen": BuildStrategy.LEGS_ABDOMEN,
     }
