@@ -1,0 +1,241 @@
+<?xml version="1.0" ?>
+<mujocoinclude model="MyoLegs26_chain">
+<!-- =================================================
+    Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
+    Model   :: Myo Legs 26 (MuJoCoV3.3.3)
+    Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huawei Wang, (Charlie) Li, Cheryl Wang, Calder Robbins
+    source  :: https://github.com/vikashplus
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+
+<!-- Reduced legs-only gait model: 26 muscles (OpenSim gait2392 22-muscle base + EDL/FDL).
+     Original gait2392/gait9dof18 by Ajay Seth, based on Delp et al. (1990); muscle strengths
+     (Handsfield/Rajagopal) tuned by Carmichael Ong; planar knee (Yamaguchi & Zajac 1989);
+     patella removed with quadriceps insertions as moving points. License: CC-BY 3.0.
+     Adapted for MyoLeg by Chun Kwang Tan (sagittal-plane joints, ankle ROM, GRF foot sensors);
+     extended by Calder Robbins (toes + mtp joints, EDL/FDL muscles). -->
+
+  <body name="pelvis" pos="0 0 0" quat="0.707035 0.707179 0 0">
+    <site name="pelvis" size="0.02" group="4" />
+    <inertial diaginertia="0.1028 0.0871 0.0579" mass="11.777" pos="-0.0707 0 0" />
+    <geom mesh="pelvis_geom_1_sacrum" name="pelvis_geom_1" rgba="1 1 1 1" type="mesh" />
+    <geom mesh="pelvis_geom_2_pelvis" name="pelvis_geom_2" rgba="1 1 1 1" type="mesh" />
+    <geom mesh="pelvis_geom_3_l_pelvis" name="pelvis_geom_3" rgba="1 1 1 1" type="mesh" />
+    <site name="abd_r_glut_med2_r-P1" pos="-0.0855 0.0445 0.0766" />
+    <site name="add_r_add_mag1_r-P1" pos="-0.0732 -0.1174 0.0255" />
+    <site name="hamstrings_r_semimem_r-P1" pos="-0.1192 -0.09747 0.07151" />
+    <site name="glut_max_r_glut_max2_r-P1" pos="-0.1349 0.0176 0.0563" />
+    <site name="glut_max_r_glut_max2_r-P2" pos="-0.1376 -0.052 0.0914" />
+    <site name="iliopsoas_r_psoas_r-P1" pos="-0.0647 0.0887 0.0289" />
+    <site name="iliopsoas_r_psoas_r-P2" pos="-0.0238 -0.057 0.0759" />
+    <site name="rect_fem_r_rect_fem_r-P1" pos="-0.0295 -0.0311 0.0968" />
+    <site name="abd_l_glut_med2_l-P1" pos="-0.0855 0.0445 -0.0766" />
+    <site name="add_l_add_mag1_l-P1" pos="-0.0732 -0.1174 -0.0255" />
+    <site name="hamstrings_l_semimem_l-P1" pos="-0.1192 -0.09747 -0.07151" />
+    <site name="glut_max_l_glut_max2_l-P1" pos="-0.1349 0.0176 -0.0563" />
+    <site name="glut_max_l_glut_max2_l-P2" pos="-0.1376 -0.052 -0.0914" />
+    <site name="iliopsoas_l_psoas_l-P1" pos="-0.0647 0.0887 -0.0289" />
+    <site name="iliopsoas_l_psoas_l-P2" pos="-0.0238 -0.057 -0.0759" />
+    <site name="rect_fem_l_rect_fem_l-P1" pos="-0.0295 -0.0311 -0.0968" />
+    <body name="femur_r" pos="-0.0707 -0.0661 0.0835">
+      <inertial diaginertia="0.1412 0.145 0.0351" mass="9.3014" pos="0 -0.2 0" quat="0.5 0.5 -0.5 0.5" />
+      <joint axis="0 0 1" name="hip_flexion_r" pos="0 0 0" range="-0.349 2.356" />
+      <joint axis="1 0 0" name="hip_adduction_r" pos="0 0 0" range="-0.873 0.524" />
+      <joint axis="0 1 0" name="hip_rotation_r" pos="0 0 0" range="-0.698 0.698" />
+      <geom mesh="femur_r_geom_1_femur" name="femur_r_geom_1" rgba="1 1 1 1" type="mesh" />
+      <site name="abd_r_glut_med2_r-P2" pos="-0.0258 -0.0058 0.0527" />
+      <site name="add_r_add_mag1_r-P2" pos="-0.0045 -0.1211 0.0339" />
+      <site name="bifemsh_r_bifemsh_r-P1" pos="0.005 -0.2111 0.0234" />
+      <site name="glut_max_r_glut_max2_r-P3" pos="-0.0426 -0.053 0.0293" />
+      <site name="glut_max_r_glut_max2_r-P4" pos="-0.0156 -0.1016 0.0419" />
+      <site name="iliopsoas_r_psoas_r-P4" pos="0.0016 -0.0507 0.0038" />
+      <site name="iliopsoas_r_psoas_r-P5" pos="-0.0188 -0.0597 0.0104" />
+      <site name="vasti_r_vas_int_r-P1" pos="0.029 -0.1924 0.031" />
+      <site name="vasti_r_vas_int_r-P2" pos="0.0335 -0.2084 0.0285" />
+      <site name="vasti_r_vas_int_r-P3" pos="0.048 -0.35 0.0055" />
+      <site name="gastroc_r_med_gas_r-P1" pos="-0.019 -0.3929 -0.0235" />
+      <site name="rect_fem_r_rect_fem_r-P2" pos="0.048 -0.35 -0.0055" />
+      <body name="tibia_r" pos="0 0 0">
+        <inertial diaginertia="0.0511 0.0504 0.0051" mass="3.7075" pos="0 -0.1867 0" quat="0.5 0.5 -0.5 0.5" />
+        <joint axis="1 0 0" name="knee_r_translation1" pos="0 0 0" range="-0.005574 0.00411" type="slide" />
+        <joint axis="0 1 0" name="knee_r_translation2" pos="0 0 0" range="-0.4226 -0.3949" type="slide" />
+        <joint axis="0 0 1" name="knee_angle_r" pos="0 0 0" range="-2.531 0.0" />
+        <geom mesh="tibia_r_geom_1_tibia" name="tibia_r_geom_1" rgba="1 1 1 1" type="mesh" />
+        <geom mesh="tibia_r_geom_2_fibula" name="tibia_r_geom_2" rgba="1 1 1 1" type="mesh" />
+        <site name="hamstrings_r_semimem_r-P3" pos="-0.027 -0.04771 -0.01957" />
+        <site name="bifemsh_r_bifemsh_r-P2" pos="-0.0301 -0.036 0.02943" />
+        <site name="bifemsh_r_bifemsh_r-P3" pos="-0.0234 -0.0563 0.0343" />
+        <site name="soleus_r_soleus_r-P1" pos="-0.0024 -0.1533 0.0071" />
+        <site name="tib_ant_r_tib_ant_r-P1" pos="0.0179 -0.1624 0.0115" />
+        <site name="tib_ant_r_tib_ant_r-P2" pos="0.0329 -0.3951 -0.0177" />
+        <site name="edl_r-P1" pos="-0.016 -0.1157 0.0205" />
+        <site name="edl_r-P2" pos="0.0164 -0.376 0.0112" />
+        <site name="fdl_r-P1" pos="-0.0023 -0.1832 -0.0018" />
+        <site name="fdl_r-P2" pos="-0.0176 -0.3645 -0.0124" />
+        <body name="talus_r" pos="0 -0.40 0">
+          <inertial diaginertia="0.0001 0.0001 0.0001" mass="0.1" pos="0 0 0" />
+          <joint axis="0 0 1" name="ankle_angle_r" pos="0 0 0" range="-1.134 0.349" />
+          <geom mesh="talus_r_geom_1_talus" name="talus_r_geom_1" rgba="1 1 1 1" type="mesh" />
+          <body name="calcn_r" pos="-0.04877 -0.04195 0.00792">
+            <inertial diaginertia="0.00041 0.00039 0.00014" mass="1.25" pos="0.1 0.03 0" quat="0 0.707107 0 0.707107" />
+            <geom mesh="calcn_r_geom_1_foot" name="calcn_r_geom_1" rgba="1 1 1 1" type="mesh" />
+            <site name="gastroc_r_med_gas_r-P3" pos="0 0.031 -0.0053" />
+            <site name="soleus_r_soleus_r-P2" pos="0 0.031 -0.0053" />
+            <site name="tib_ant_r_tib_ant_r-P3" pos="0.1166 0.0178 -0.0305" />
+            <site name="edl_r-P3" pos="0.0919 0.036 0.0008" />
+            <site name="edl_r-P4" pos="0.1616 0.0055 0.013" />
+            <site name="fdl_r-P3" pos="0.0436 0.0315 -0.028" />
+            <site name="fdl_r-P4" pos="0.0708 0.0176 -0.0263" />
+            <site name="fdl_r-P5" pos="0.1658 -0.0081 0.0116" />
+            <site name="r_foot_touch" type="box" pos="0.01 -0.002 -0.01" size=".03 .02 .03" euler="0 0 0" class="myolegs26_touch" />
+            <site name="r_heel_btm" type="sphere" pos="0.01 -0.008 -0.01" size="0.01" group="3" rgba="0 1 0 0.4" />
+            <site name="r_toe_btm" type="sphere" pos="0.17 -0.003 -0.01" size="0.01" group="3" rgba="0 1 0 0.4" euler="0 0 0.1" />
+            <body name="toes_r" pos="0.1788 -0.002 0.00108">
+              <inertial diaginertia="0.0001 0.0001 0.0001" mass="0.2166" pos="0.0346 0.006 -0.0175" quat="0.707107 0 0 0.707107" />
+              <joint axis="0 0 1" name="mtp_angle_r" damping="0.5" pos="0 0 0" range="-0.523599 0.523599" />
+              <site name="edl_r-P5" pos="0.0003 0.0047 0.0153" />
+              <site name="edl_r-P6" pos="0.0443 -0.0004 0.025" />
+              <site name="fdl_r-P6" pos="-0.0019 -0.0078 0.0147" />
+              <site name="fdl_r-P7" pos="0.0285 -0.0071 0.0215" />
+              <site name="fdl_r-P8" pos="0.0441 -0.006 0.0242" />
+              <geom mesh="toes_r_geom_1_bofoot" name="toes_r_geom_1" rgba="1 1 1 1" type="mesh" />
+              <site name="r_toes_touch" type="box" pos="0.0 -0.002 0.01" size=".05 .025 .075" euler="0 1.5 0" class="myolegs26_touch" />
+            </body>
+          </body>
+        </body>
+        <body name="hamstrings_r_semimem_r-P2" pos="0 0 -0.01957">
+          <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 -0.01957" />
+          <joint axis="1 0 0" name="hamstrings_r_semimem_r-P2_x" pos="0 0 0" range="-0.0348 -0.027" type="slide" />
+          <joint axis="0 1 0" name="hamstrings_r_semimem_r-P2_y" pos="0 0 0" range="-0.04771 -0.03519" type="slide" />
+          <site name="hamstrings_r_semimem_r-P2" pos="0 0 0" />
+        </body>
+        <body name="rect_fem_r_rect_fem_r-P3" pos="0 0 0.001399">
+          <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.001399" />
+          <joint axis="1 0 0" name="rect_fem_r_rect_fem_r-P3_x" pos="0 0 0" range="0.01558 0.0733" type="slide" />
+          <joint axis="0 1 0" name="rect_fem_r_rect_fem_r-P3_y" pos="0 0 0" range="-0.06738 0.02531" type="slide" />
+          <site name="rect_fem_r_rect_fem_r-P3" pos="0 0 0" />
+        </body>
+        <body name="vasti_r_vas_int_r-P4" pos="0 0 0.001799">
+          <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.001799" />
+          <joint axis="1 0 0" name="vasti_r_vas_int_r-P4_x" pos="0 0 0" range="0.008273 0.06844" type="slide" />
+          <joint axis="0 1 0" name="vasti_r_vas_int_r-P4_y" pos="0 0 0" range="-0.06857 0.02752" type="slide" />
+          <site name="vasti_r_vas_int_r-P4" pos="0 0 0" />
+        </body>
+      </body>
+      <body name="gastroc_r_med_gas_r-P2" pos="0 0 0">
+        <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
+        <joint axis="1 0 0" name="gastroc_r_med_gas_r-P2_x" pos="0 0 0" range="-0.03 -0.019" type="slide" />
+        <joint axis="0 1 0" name="gastroc_r_med_gas_r-P2_y" pos="0 0 0" range="-0.4022 -0.3929" type="slide" />
+        <joint axis="0 0 1" name="gastroc_r_med_gas_r-P2_z" pos="0 0 0" range="-0.0258 -0.0235" type="slide" />
+        <site name="gastroc_r_med_gas_r-P2" pos="0 0 0" />
+      </body>
+    </body>
+    <body name="femur_l" pos="-0.0707 -0.0661 -0.0835">
+      <inertial diaginertia="0.1412 0.145 0.0351" mass="9.3014" pos="0 -0.2 0" quat="0.5 0.5 -0.5 0.5" />
+      <joint axis="0 0 1" name="hip_flexion_l" pos="0 0 0" range="-0.349 2.356" />
+      <joint axis="1 0 0" name="hip_adduction_l" pos="0 0 0" range="-0.873 0.524" />
+      <joint axis="0 1 0" name="hip_rotation_l" pos="0 0 0" range="-0.698 0.698" />
+      <geom mesh="femur_l_geom_1_l_femur" name="femur_l_geom_1" rgba="1 1 1 1" type="mesh" />
+      <site name="abd_l_glut_med2_l-P2" pos="-0.0258 -0.0058 -0.0527" />
+      <site name="add_l_add_mag1_l-P2" pos="-0.0045 -0.1211 -0.0339" />
+      <site name="bifemsh_l_bifemsh_l-P1" pos="0.005 -0.2111 -0.0234" />
+      <site name="glut_max_l_glut_max2_l-P3" pos="-0.0426 -0.053 -0.0293" />
+      <site name="glut_max_l_glut_max2_l-P4" pos="-0.0156 -0.1016 -0.0419" />
+      <site name="iliopsoas_l_psoas_l-P4" pos="0.0016 -0.0507 -0.0038" />
+      <site name="iliopsoas_l_psoas_l-P5" pos="-0.0188 -0.0597 -0.0104" />
+      <site name="vasti_l_vas_int_l-P1" pos="0.029 -0.1924 -0.031" />
+      <site name="vasti_l_vas_int_l-P2" pos="0.0335 -0.2084 -0.0285" />
+      <site name="vasti_l_vas_int_l-P3" pos="0.048 -0.35 -0.0055" />
+      <site name="gastroc_l_med_gas_l-P1" pos="-0.019 -0.3929 0.0235" />
+      <site name="rect_fem_l_rect_fem_l-P2" pos="0.048 -0.35 0.0055" />
+      <body name="tibia_l" pos="0 0 0">
+        <inertial diaginertia="0.0511 0.0504 0.0051" mass="3.7075" pos="0 -0.1867 0" quat="0.5 0.5 -0.5 0.5" />
+        <joint axis="1 0 0" name="knee_l_translation1" pos="0 0 0" range="-0.005574 0.00411" type="slide" />
+        <joint axis="0 1 0" name="knee_l_translation2" pos="0 0 0" range="-0.4226 -0.3949" type="slide" />
+        <joint axis="0 0 1" name="knee_angle_l" pos="0 0 0" range="-2.531 0.0" />
+        <geom mesh="tibia_l_geom_1_l_tibia" name="tibia_l_geom_1" rgba="1 1 1 1" type="mesh" />
+        <geom mesh="tibia_l_geom_2_l_fibula" name="tibia_l_geom_2" rgba="1 1 1 1" type="mesh" />
+        <site name="hamstrings_l_semimem_l-P3" pos="-0.027 -0.04771 0.01957" />
+        <site name="bifemsh_l_bifemsh_l-P2" pos="-0.0301 -0.036 -0.02943" />
+        <site name="bifemsh_l_bifemsh_l-P3" pos="-0.0234 -0.0563 -0.0343" />
+        <site name="soleus_l_soleus_l-P1" pos="-0.0024 -0.1533 -0.0071" />
+        <site name="tib_ant_l_tib_ant_l-P1" pos="0.0179 -0.1624 -0.0115" />
+        <site name="tib_ant_l_tib_ant_l-P2" pos="0.0329 -0.3951 0.0177" />
+        <site name="edl_l-P1" pos="-0.016 -0.1157 -0.0205" />
+        <site name="edl_l-P2" pos="0.0164 -0.376 -0.0112" />
+        <site name="fdl_l-P1" pos="-0.0023 -0.1832 0.0018" />
+        <site name="fdl_l-P2" pos="-0.0176 -0.3645 0.0124" />
+        <body name="talus_l" pos="0 -0.40 0">
+          <inertial diaginertia="0.0001 0.0001 0.0001" mass="0.1" pos="0 0 0" />
+          <joint axis="0 0 1" name="ankle_angle_l" pos="0 0 0" range="-1.134 0.349" />
+          <geom mesh="talus_l_geom_1_l_talus" name="talus_l_geom_1" rgba="1 1 1 1" type="mesh" />
+          <body name="calcn_l" pos="-0.04877 -0.04195 -0.00792">
+            <inertial diaginertia="0.00041 0.00039 0.00014" mass="1.25" pos="0.1 0.03 0" quat="0 0.707107 0 0.707107" />
+            <geom mesh="calcn_l_geom_1_l_foot" name="calcn_l_geom_1" rgba="1 1 1 1" type="mesh" />
+            <site name="gastroc_l_med_gas_l-P3" pos="0 0.031 0.0053" />
+            <site name="soleus_l_soleus_l-P2" pos="0 0.031 0.0053" />
+            <site name="tib_ant_l_tib_ant_l-P3" pos="0.1166 0.0178 0.0305" />
+            <site name="edl_l-P3" pos="0.0919 0.036 -0.0008" />
+            <site name="edl_l-P4" pos="0.1616 0.0055 -0.013" />
+            <site name="fdl_l-P3" pos="0.0436 0.0315 0.028" />
+            <site name="fdl_l-P4" pos="0.0708 0.0176 0.0263" />
+            <site name="fdl_l-P5" pos="0.1658 -0.0081 -0.0116" />
+            <site name="l_foot_touch" type="box" pos="0.01 -0.002 0.01" size=".03 .02 .03" euler="0 0 0" class="myolegs26_touch" />
+            <site name="l_heel_btm" type="sphere" pos="0.01 -0.008 0.01" size="0.01" group="3" rgba="0 1 0 0.4" />
+            <site name="l_toe_btm" type="sphere" pos="0.17 -0.003 0.01" size="0.01" group="3" rgba="0 1 0 0.4" />
+            <body name="toes_l" pos="0.1788 -0.002 -0.00108">
+              <inertial diaginertia="0.0001 0.0001 0.0001" mass="0.2166" pos="0.0346 0.006 -0.0175" quat="0 0.707107 0 0.707107" />
+              <joint axis="0 0 1" name="mtp_angle_l" damping="0.5" pos="0 0 0" range="-0.523599 0.523599" />
+              <geom mesh="toes_l_geom_1_l_bofoot" name="toes_l_geom_1" rgba="1 1 1 1" type="mesh" />
+              <site name="l_toes_touch" type="box" pos="0.0 -0.002 0.01" size=".05 .025 .075" euler="0 1.5 0" class="myolegs26_touch" />
+              <site name="edl_l-P5" pos="0.0003 0.0047 -0.0153" />
+              <site name="edl_l-P6" pos="0.0443 -0.0004 -0.025" />
+              <site name="fdl_l-P6" pos="-0.0019 -0.0078 -0.0147" />
+              <site name="fdl_l-P7" pos="0.0285 -0.0071 -0.0215" />
+              <site name="fdl_l-P8" pos="0.0441 -0.006 -0.0242" />
+            </body>
+          </body>
+        </body>
+        <body name="hamstrings_l_semimem_l-P2" pos="0 0 0.01891">
+          <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.01891" />
+          <joint axis="1 0 0" name="hamstrings_l_semimem_l-P2_x" pos="0 0 0" range="-0.0348 -0.027" type="slide" />
+          <joint axis="0 1 0" name="hamstrings_l_semimem_l-P2_y" pos="0 0 0" range="-0.04771 -0.03519" type="slide" />
+          <site name="hamstrings_l_semimem_l-P2" pos="0 0 0" />
+        </body>
+        <body name="rect_fem_l_rect_fem_l-P3" pos="0 0 -0.001401">
+          <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 -0.001401" />
+          <joint axis="1 0 0" name="rect_fem_l_rect_fem_l-P3_x" pos="0 0 0" range="0.01558 0.0733" type="slide" />
+          <joint axis="0 1 0" name="rect_fem_l_rect_fem_l-P3_y" pos="0 0 0" range="-0.06738 0.02531" type="slide" />
+          <site name="rect_fem_l_rect_fem_l-P3" pos="0 0 0" />
+        </body>
+        <body name="vasti_l_vas_int_l-P4" pos="0 0 0.001799">
+          <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.001799" />
+          <joint axis="1 0 0" name="vasti_l_vas_int_l-P4_x" pos="0 0 0" range="0.008273 0.06844" type="slide" />
+          <joint axis="0 1 0" name="vasti_l_vas_int_l-P4_y" pos="0 0 0" range="-0.06857 0.02752" type="slide" />
+          <site name="vasti_l_vas_int_l-P4" pos="0 0 0" />
+        </body>
+      </body>
+      <body name="gastroc_l_med_gas_l-P2" pos="0 0 0">
+        <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
+        <joint axis="1 0 0" name="gastroc_l_med_gas_l-P2_x" pos="0 0 0" range="-0.03 -0.019" type="slide" />
+        <joint axis="0 1 0" name="gastroc_l_med_gas_l-P2_y" pos="0 0 0" range="-0.4022 -0.3929" type="slide" />
+        <joint axis="0 0 1" name="gastroc_l_med_gas_l-P2_z" pos="0 0 0" range="0.0235 0.0258" type="slide" />
+        <site name="gastroc_l_med_gas_l-P2" pos="0 0 0" />
+      </body>
+    </body>
+    <body name="iliopsoas_r_psoas_r-P3" pos="0 0 0">
+      <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
+      <joint axis="1 0 0" name="iliopsoas_r_psoas_r-P3_x" pos="0 0 0" range="-0.0288 -0.0238" type="slide" />
+      <joint axis="0 1 0" name="iliopsoas_r_psoas_r-P3_y" pos="0 0 0" range="-0.0805 -0.057" type="slide" />
+      <joint axis="0 0 1" name="iliopsoas_r_psoas_r-P3_z" pos="0 0 0" range="0.0759 0.0816" type="slide" />
+      <site name="iliopsoas_r_psoas_r-P3" pos="0 0 0" />
+    </body>
+    <body name="iliopsoas_l_psoas_l-P3" pos="0 0 0">
+      <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
+      <joint axis="1 0 0" name="iliopsoas_l_psoas_l-P3_x" pos="0 0 0" range="-0.0288 -0.0238" type="slide" />
+      <joint axis="0 1 0" name="iliopsoas_l_psoas_l-P3_y" pos="0 0 0" range="-0.0805 -0.057" type="slide" />
+      <joint axis="0 0 1" name="iliopsoas_l_psoas_l-P3_z" pos="0 0 0" range="-0.0816 -0.0759" type="slide" />
+      <site name="iliopsoas_l_psoas_l-P3" pos="0 0 0" />
+    </body>
+  </body>
+</mujocoinclude>

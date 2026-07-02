@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<mujocoinclude model="MyoLegs26">
+<!-- =================================================
+    Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
+    Model   :: Myo Legs 26 (MuJoCoV3.3.3)
+    Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huawei Wang, (Charlie) Li, Cheryl Wang, Calder Robbins
+    source  :: https://github.com/vikashplus
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+
+<!-- Reduced legs-only gait model: 26 muscles (OpenSim gait2392 22-muscle base + EDL/FDL).
+     Original gait2392/gait9dof18 by Ajay Seth, based on Delp et al. (1990); muscle strengths
+     (Handsfield/Rajagopal) tuned by Carmichael Ong; planar knee (Yamaguchi & Zajac 1989);
+     patella removed with quadriceps insertions as moving points. License: CC-BY 3.0.
+     Adapted for MyoLeg by Chun Kwang Tan (sagittal-plane joints, ankle ROM, GRF foot sensors);
+     extended by Calder Robbins (toes + mtp joints, EDL/FDL muscles). -->
+
+  <default class="main">
+    <joint armature="1e-05" damping="0.05" limited="true" />
+    <geom margin="0.001" />
+    <site size="0.001 0.005 0.005" />
+    <tendon rgba="0.95 0.3 0.3 1" width="0.005" />
+    <default class="myolegs26_muscle">
+      <general biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biastype="muscle" ctrllimited="true" ctrlrange="0 1" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" dyntype="muscle" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" gaintype="muscle" />
+    </default>
+    <default class="myolegs26_touch">
+      <site type="box" group="3" rgba="0.8 0.2 .2 .4" />
+    </default>
+  </default>
+  <asset>
+    <mesh file="meshes/sacrum.stl" name="pelvis_geom_1_sacrum" />
+    <mesh file="meshes/r_pelvis.stl" name="pelvis_geom_2_pelvis" />
+    <mesh file="meshes/l_pelvis.stl" name="pelvis_geom_3_l_pelvis" />
+    <mesh file="meshes/r_femur.stl" name="femur_r_geom_1_femur" />
+    <mesh file="meshes/r_tibia.stl" name="tibia_r_geom_1_tibia" />
+    <mesh file="meshes/r_fibula.stl" name="tibia_r_geom_2_fibula" />
+    <mesh file="meshes/r_talus.stl" name="talus_r_geom_1_talus" />
+    <mesh file="meshes/r_foot.stl" name="calcn_r_geom_1_foot" />
+    <mesh file="meshes/r_bofoot.stl" name="toes_r_geom_1_bofoot" />
+    <mesh file="meshes/l_femur.stl" name="femur_l_geom_1_l_femur" />
+    <mesh file="meshes/l_tibia.stl" name="tibia_l_geom_1_l_tibia" />
+    <mesh file="meshes/l_fibula.stl" name="tibia_l_geom_2_l_fibula" />
+    <mesh file="meshes/l_talus.stl" name="talus_l_geom_1_l_talus" />
+    <mesh file="meshes/l_foot.stl" name="calcn_l_geom_1_l_foot" />
+    <mesh file="meshes/l_bofoot.stl" name="toes_l_geom_1_l_bofoot" />
+  </asset>
+  <equality>
+    <joint joint1="knee_r_translation1" joint2="knee_angle_r" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="knee_r_translation2" joint2="knee_angle_r" polycoef="-0.395 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="knee_l_translation1" joint2="knee_angle_l" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="knee_l_translation2" joint2="knee_angle_l" polycoef="-0.395 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_r_semimem_r-P2_x" joint2="knee_angle_r" polycoef="-0.03429 -0.005119 0.001791 0.001624 0.0002251" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_r_semimem_r-P2_y" joint2="knee_angle_r" polycoef="-0.03601 0.008217 -0.002875 -0.002607 -0.0003613" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_r_psoas_r-P3_x" joint2="hip_flexion_r" polycoef="-0.02855 0.001773 0.001122 -0.0001037 -0.0001111" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_r_psoas_r-P3_y" joint2="hip_flexion_r" polycoef="-0.07933 0.008332 0.005272 -0.0004875 -0.0005223" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_r_psoas_r-P3_z" joint2="hip_flexion_r" polycoef="0.08132 -0.002021 -0.001279 0.0001182 0.0001267" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_r_rect_fem_r-P3_x" joint2="knee_angle_r" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_r_rect_fem_r-P3_y" joint2="knee_angle_r" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_r_vas_int_r-P4_x" joint2="knee_angle_r" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_r_vas_int_r-P4_y" joint2="knee_angle_r" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_r_med_gas_r-P2_x" joint2="knee_angle_r" polycoef="-0.02607 0.00676 0.0009439 -0.001031 -6.818e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_r_med_gas_r-P2_y" joint2="knee_angle_r" polycoef="-0.3989 0.005715 0.000798 -0.000872 -5.764e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_r_med_gas_r-P2_z" joint2="knee_angle_r" polycoef="-0.02498 0.001413 0.0001974 -0.0002157 -1.426e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_l_semimem_l-P2_x" joint2="knee_angle_l" polycoef="-0.03429 -0.005119 0.001791 0.001624 0.0002251" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_l_semimem_l-P2_y" joint2="knee_angle_l" polycoef="-0.03601 0.008217 -0.002875 -0.002607 -0.0003613" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_l_psoas_l-P3_x" joint2="hip_flexion_l" polycoef="-0.02855 0.001773 0.001122 -0.0001037 -0.0001111" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_l_psoas_l-P3_y" joint2="hip_flexion_l" polycoef="-0.07933 0.008332 0.005272 -0.0004875 -0.0005223" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_l_psoas_l-P3_z" joint2="hip_flexion_l" polycoef="-0.08132 0.002021 0.001279 -0.0001182 -0.0001267" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_l_rect_fem_l-P3_x" joint2="knee_angle_l" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_l_rect_fem_l-P3_y" joint2="knee_angle_l" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_l_vas_int_l-P4_x" joint2="knee_angle_l" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_l_vas_int_l-P4_y" joint2="knee_angle_l" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_l_med_gas_l-P2_x" joint2="knee_angle_l" polycoef="-0.02607 0.00676 0.0009439 -0.001031 -6.818e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_l_med_gas_l-P2_y" joint2="knee_angle_l" polycoef="-0.3989 0.005715 0.000798 -0.000872 -5.764e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_l_med_gas_l-P2_z" joint2="knee_angle_l" polycoef="0.02498 -0.001413 -0.0001974 0.0002157 1.426e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+  </equality>
+  <sensor>
+    <touch name="r_foot" site="r_foot_touch" />
+    <touch name="r_toes" site="r_toes_touch" />
+    <touch name="l_foot" site="l_foot_touch" />
+    <touch name="l_toes" site="l_toes_touch" />
+    <jointlimitfrc name="r_knee_sensor" joint="knee_angle_r" />
+    <jointlimitfrc name="l_knee_sensor" joint="knee_angle_l" />
+    <jointlimitfrc name="r_hip_sensor" joint="hip_flexion_r" />
+    <jointlimitfrc name="l_hip_sensor" joint="hip_flexion_l" />
+    <jointlimitfrc name="r_ankle_sensor" joint="ankle_angle_r" />
+    <jointlimitfrc name="l_ankle_sensor" joint="ankle_angle_l" />
+    <jointlimitfrc name="r_mtp_sensor" joint="mtp_angle_r" />
+    <jointlimitfrc name="l_mtp_sensor" joint="mtp_angle_l" />
+  </sensor>
+  <contact>
+    <pair geom1="femur_r_geom_1" geom2="femur_l_geom_1" />
+    <pair geom1="femur_r_geom_1" geom2="tibia_l_geom_1" />
+    <pair geom1="femur_r_geom_1" geom2="tibia_l_geom_2" />
+    <pair geom1="femur_r_geom_1" geom2="talus_l_geom_1" />
+    <pair geom1="femur_r_geom_1" geom2="calcn_l_geom_1" />
+    <pair geom1="tibia_r_geom_1" geom2="femur_l_geom_1" />
+    <pair geom1="tibia_r_geom_1" geom2="tibia_l_geom_1" />
+    <pair geom1="tibia_r_geom_1" geom2="tibia_l_geom_2" />
+    <pair geom1="tibia_r_geom_1" geom2="talus_l_geom_1" />
+    <pair geom1="tibia_r_geom_1" geom2="calcn_l_geom_1" />
+    <pair geom1="tibia_r_geom_2" geom2="femur_l_geom_1" />
+    <pair geom1="tibia_r_geom_2" geom2="tibia_l_geom_1" />
+    <pair geom1="tibia_r_geom_2" geom2="tibia_l_geom_2" />
+    <pair geom1="tibia_r_geom_2" geom2="talus_l_geom_1" />
+    <pair geom1="tibia_r_geom_2" geom2="calcn_l_geom_1" />
+    <pair geom1="talus_r_geom_1" geom2="femur_l_geom_1" />
+    <pair geom1="talus_r_geom_1" geom2="tibia_l_geom_1" />
+    <pair geom1="talus_r_geom_1" geom2="tibia_l_geom_2" />
+    <pair geom1="talus_r_geom_1" geom2="talus_l_geom_1" />
+    <pair geom1="talus_r_geom_1" geom2="calcn_l_geom_1" />
+    <pair geom1="calcn_r_geom_1" geom2="femur_l_geom_1" />
+    <pair geom1="calcn_r_geom_1" geom2="tibia_l_geom_1" />
+    <pair geom1="calcn_r_geom_1" geom2="tibia_l_geom_2" />
+    <pair geom1="calcn_r_geom_1" geom2="talus_l_geom_1" />
+    <pair geom1="calcn_r_geom_1" geom2="calcn_l_geom_1" />
+  </contact>
+</mujocoinclude>
