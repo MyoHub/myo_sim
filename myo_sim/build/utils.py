@@ -161,6 +161,24 @@ def add_sensors(spec: object, sensors_xml: Path) -> None:
         )
 
 
+def add_keyframes(spec: object, keyframes_xml: Path) -> None:
+    """Add keyframes from an MJCF include file.
+
+    Kept as a spec-level step (not merged into the composed child XML) because a
+    keyframe's ``qpos`` is only valid once the model's DoFs are fixed -- e.g. for
+    a standalone base, after the free root joint has been added.
+    """
+    for key in ET.parse(keyframes_xml).getroot().iter("key"):
+        added = spec.add_key()
+        added.name = key.get("name")
+        if key.get("qpos"):
+            added.qpos = float_list(key.get("qpos"))
+        if key.get("qvel"):
+            added.qvel = float_list(key.get("qvel"))
+        if key.get("time"):
+            added.time = float(key.get("time"))
+
+
 def expand_component_element(element: ET.Element, base_path: Path) -> list[ET.Element]:
     """Expand local MJCF include elements inside a component tree."""
     if element.tag == "include":

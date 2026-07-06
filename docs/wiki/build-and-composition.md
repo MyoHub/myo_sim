@@ -57,6 +57,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `myohands` | `BOTH_HANDS` | Passive torso scaffold + right hand + mirrored left hand |
 | `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
 | `myolegs` | `LEGS_BODY` | Passive anatomical torso scaffold + legs |
+| `myolegs26` | `LEGS26_BASE` | Reduced 26-muscle, legs-only base; free-floating root + `stand` keyframe (see [MyoLeg26](../../myo_sim/models/leg/README.md#myoleg26-reduced-26-muscle-legs-only)) |
 | `myotorso_abdomen` | `TORSO_ABDOMEN` | Simple abdomen scaffold |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
 

@@ -30,6 +30,7 @@ try:
     from .utils import (
         MirrorRules,
         add_contact_pairs,
+        add_keyframes,
         add_sensors,
         build_child_xml_from_components,
         build_mirrored_child_xml,
@@ -41,6 +42,7 @@ except ImportError:
     from utils import (
         MirrorRules,
         add_contact_pairs,
+        add_keyframes,
         add_sensors,
         build_child_xml_from_components,
         build_mirrored_child_xml,
@@ -84,24 +86,7 @@ LEGS26_ASSETS_XML = ROOT / "leg" / "assets" / "myolegs26_assets.xml"
 LEGS26_TENDONS_XML = ROOT / "leg" / "assets" / "myolegs26_tendon.xml"
 LEGS26_MUSCLES_XML = ROOT / "leg" / "assets" / "myolegs26_muscle.xml"
 LEGS26_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs26_chain.xml"
-
-# Upright "stand" pose for the legs-only 26-muscle base, in the base model's qpos
-# layout. Main (independent) joints come from the reference myoLeg26 stand keyframe;
-# every coupled/dependent joint is set to its coupler equilibrium, and the free root
-# is raised so the feet rest on the pedestal -- together these give a zero-residual,
-# fully at-rest pose. Shipped as a keyframe because the couplers cannot be satisfied
-# at qpos0.
-# fmt: off
-LEGS26_STAND_QPOS = (
-    0, 0, 0.935868, 0.707107, 0, 0, -0.707107,  # free root: pos + (-90deg yaw)
-    0, 0, 0, -0.003639, -0.395, 0, -0.0143, 0, -0.03429,  # right leg: hip/knee/ankle + via-points
-    -0.03601, 0.06259, 0.02032, 0.05647, 0.02476, -0.02607, -0.3989, -0.02498,
-    0, 0, 0, -0.003639, -0.395, 0, -0.0143, 0, -0.03429,  # left leg
-    -0.03601, 0.06259, 0.02032, 0.05647, 0.02476, -0.02607, -0.3989, 0.02498,
-    -0.02855, -0.07933, 0.08132,  # iliopsoas_r via-point (x, y, z)
-    -0.02855, -0.07933, -0.08132,  # iliopsoas_l via-point (x, y, z)
-)
-# fmt: on
+LEGS26_KEYFRAMES_XML = ROOT / "leg" / "assets" / "myolegs26_keyframes.xml"
 
 TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
@@ -536,9 +521,9 @@ def build_legs26_base_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body = find_body(legs, "myolegs26_root")
     root_body.add_freejoint(name="root")
     root_body.quat = [0.70710678, 0.0, 0.0, -0.70710678]  # -90deg yaw about world z (qpos0 heading)
-    key = legs.add_key()
-    key.name = "stand"
-    key.qpos = list(LEGS26_STAND_QPOS)
+    # Keyframe(s) are applied after the free root exists so the qpos layout matches
+    # (the bare fragment from load_legs26_spec is intentionally keyframe-less).
+    add_keyframes(legs, LEGS26_KEYFRAMES_XML)
     return legs
 
 
