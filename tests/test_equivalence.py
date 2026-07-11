@@ -14,6 +14,7 @@ from pathlib import Path
 import mujoco
 import numpy as np
 import pytest
+
 from myo_sim.build.compose import build_model
 
 musclemimic_models = pytest.importorskip("musclemimic_models")

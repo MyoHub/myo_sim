@@ -1,4 +1,5 @@
 import pytest
+
 import myo_sim
 
 
@@ -83,6 +84,7 @@ def test_load_composed_models():
 def test_composed_hand_models_can_forward():
     """Hand-only builds must not retain static-static arm contact pairs."""
     import mujoco
+
     import myo_sim
 
     for name in ("myohand_r", "myohands"):
@@ -93,6 +95,7 @@ def test_composed_hand_models_can_forward():
 
 def test_composed_hand_models_default_to_raised_front_pose():
     import mujoco
+
     import myo_sim
 
     expected_body_names = {

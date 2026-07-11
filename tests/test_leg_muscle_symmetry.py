@@ -1,11 +1,11 @@
 import pytest
-
-import myo_sim
 from muscle_analysis_utils import parse_model_joint_equalities
 from muscle_symmetry_checks import (
     compare_muscle_pair,
     discover_bilateral_suffix_pairs,
 )
+
+import myo_sim
 
 
 @pytest.fixture(scope="module")

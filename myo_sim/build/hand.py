@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import numpy as np
 import mujoco
-
+import numpy as np
 
 HAND_PREVIEW_JOINT_POSE = {
     "elv_angle_r": 1.57,
@@ -193,5 +192,3 @@ def prune_arm_spec_to_hand(spec: object, side: str) -> None:
             spec.delete(joint)
     for joint in spec.joints:
         joint.name = add_side_suffix(joint.name, side)
-
-    return spec

@@ -1,14 +1,13 @@
-"""Utilities for prototype MuJoCo MjSpec model composition."""
+"""Utilities for MuJoCo MjSpec model composition."""
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from pathlib import Path
 import copy
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
+from pathlib import Path
 
 import mujoco
-
 
 NAME_REFERENCE_ATTRS = {
     "name",
@@ -39,34 +38,16 @@ class MirrorRules:
 
 
 def find_body(spec: object, body_name: str) -> object:
-    """Find a body across MuJoCo Python API variants."""
-    if hasattr(spec, "find_body"):
-        body = spec.find_body(body_name)
-    elif hasattr(spec, "find"):
-        body = spec.find("body", body_name)
-    else:
-        try:
-            body = spec.body(body_name)
-        except KeyError:
-            body = None
-
+    """Return the named body, raising ValueError if it is not present."""
+    body = spec.body(body_name)
     if body is None:
         raise ValueError(f"Body not found: {body_name!r}")
     return body
 
 
 def find_site(spec: object, site_name: str) -> object:
-    """Find a site across MuJoCo Python API variants."""
-    if hasattr(spec, "find_site"):
-        site = spec.find_site(site_name)
-    elif hasattr(spec, "find"):
-        site = spec.find("site", site_name)
-    else:
-        try:
-            site = spec.site(site_name)
-        except KeyError:
-            site = None
-
+    """Return the named site, raising ValueError if it is not present."""
+    site = spec.site(site_name)
     if site is None:
         raise ValueError(f"Site not found: {site_name!r}")
     return site

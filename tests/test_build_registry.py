@@ -4,7 +4,13 @@ from pathlib import Path
 import mujoco
 
 from myo_sim.build import compose
-from myo_sim.build.compose import BuildStrategy, MODEL_REGISTRY, ModelRegistration, build_model
+from myo_sim.build.compose import ALIASES, MODEL_REGISTRY, BuildStrategy, ModelRegistration, build_model
+
+
+def test_aliases_resolve_to_registered_models():
+    unknown = {target for target in ALIASES.values() if target not in MODEL_REGISTRY}
+
+    assert not unknown, f"ALIASES point at names missing from MODEL_REGISTRY: {sorted(unknown)}"
 
 
 def test_model_registration_uses_explicit_build_strategy():

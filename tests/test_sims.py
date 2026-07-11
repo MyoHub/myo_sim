@@ -2,6 +2,7 @@ import unittest
 from pathlib import Path
 
 import mujoco
+
 import myo_sim
 from myo_sim.build.compose import build_model
 

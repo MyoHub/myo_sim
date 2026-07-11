@@ -5,8 +5,8 @@ joints use _r/_l suffixes.
 """
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -14,10 +14,9 @@ if str(ROOT) not in sys.path:
 
 import mujoco  # noqa: E402
 import numpy as np  # noqa: E402
-
 from muscle_analysis_utils import (  # noqa: E402
-    compute_moment_arm_curve,
     compute_force_length_curve,
+    compute_moment_arm_curve,
     pair_discrepancy_summary,
     parse_model_joint_equalities,
     plot_pair,
