@@ -9,7 +9,7 @@ myo_sim/              # installable Python package
   __init__.py         # MODELS_DIR, load(), get_path(), composed-model aliases
   fragments.py        # FragmentInfo and _FragmentRegistry definitions
   models/             # all MJCF content — packaged into wheels
-    arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscles.xml, myoarm_r_tendons.xml, myoarm_r_assets.xml
+    arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscle.xml, myoarm_r_tendon.xml, myoarm_r_assets.xml
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
     torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
     head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml

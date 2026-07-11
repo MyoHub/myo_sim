@@ -1,10 +1,10 @@
 <mujocoinclude model="MyoTorsoAbdomen">
     <actuator>
-        <general biasprm="0.383733 1.14592 2481.1 1 0 1.8 10 1.47359 1.4 0" class="myoBack_muscle" gainprm="0.383733 1.14592 2481.1 1 0 1.8 10 1.47359 1.4 0" lengthrange="0.0572059 0.194745" name="ercspn_r" tendon="ercspn_r_tendon"/>
-        <general biasprm="0.377606 1.20706 2435.99 1 0 1.8 10 1.30439 1.4 0" class="myoBack_muscle" gainprm="0.377606 1.20706 2435.99 1 0 1.8 10 1.30439 1.4 0" lengthrange="0.0572059 0.194745" name="ercspn_l" tendon="ercspn_l_tendon"/>
-        <general biasprm="0.193313 1.6 1353.01 1 0 1.8 10 2 1.4 0" class="myoBack_muscle" gainprm="0.193313 1.6 1353.01 1 0 1.8 10 2 1.4 0" lengthrange="0.0454006 0.306151" name="intobl_r" tendon="intobl_r_tendon"/>
-        <general biasprm="0.226336 1.6 1255.29 1 0 1.8 10 1.84417 1.4 0" class="myoBack_muscle" gainprm="0.226336 1.6 1255.29 1 0 1.8 10 1.84417 1.4 0" lengthrange="0.0454006 0.306151" name="intobl_l" tendon="intobl_l_tendon"/>
-        <general biasprm="0.1 1.091 854.402 1 0 1.8 10 1.70026 1.4 0" class="myoBack_muscle" gainprm="0.1 1.091 854.402 1 0 1.8 10 1.70026 1.4 0" lengthrange="0.0444131 0.329629" name="extobl_r" tendon="extobl_r_tendon"/>
-        <general biasprm="0.105516 1.15228 852.951 1 0 1.8 10 1.33818 1.4 0" class="myoBack_muscle" gainprm="0.105516 1.15228 852.951 1 0 1.8 10 1.33818 1.4 0" lengthrange="0.0444131 0.329629" name="extobl_l" tendon="extobl_l_tendon"/>
+        <general biasprm="0.383733 1.14592 2481.1 1 0 1.8 10 1.47359 1.4 0" class="myotorso_muscle" gainprm="0.383733 1.14592 2481.1 1 0 1.8 10 1.47359 1.4 0" lengthrange="0.0572059 0.194745" name="ercspn_r" tendon="ercspn_r_tendon"/>
+        <general biasprm="0.377606 1.20706 2435.99 1 0 1.8 10 1.30439 1.4 0" class="myotorso_muscle" gainprm="0.377606 1.20706 2435.99 1 0 1.8 10 1.30439 1.4 0" lengthrange="0.0572059 0.194745" name="ercspn_l" tendon="ercspn_l_tendon"/>
+        <general biasprm="0.193313 1.6 1353.01 1 0 1.8 10 2 1.4 0" class="myotorso_muscle" gainprm="0.193313 1.6 1353.01 1 0 1.8 10 2 1.4 0" lengthrange="0.0454006 0.306151" name="intobl_r" tendon="intobl_r_tendon"/>
+        <general biasprm="0.226336 1.6 1255.29 1 0 1.8 10 1.84417 1.4 0" class="myotorso_muscle" gainprm="0.226336 1.6 1255.29 1 0 1.8 10 1.84417 1.4 0" lengthrange="0.0454006 0.306151" name="intobl_l" tendon="intobl_l_tendon"/>
+        <general biasprm="0.1 1.091 854.402 1 0 1.8 10 1.70026 1.4 0" class="myotorso_muscle" gainprm="0.1 1.091 854.402 1 0 1.8 10 1.70026 1.4 0" lengthrange="0.0444131 0.329629" name="extobl_r" tendon="extobl_r_tendon"/>
+        <general biasprm="0.105516 1.15228 852.951 1 0 1.8 10 1.33818 1.4 0" class="myotorso_muscle" gainprm="0.105516 1.15228 852.951 1 0 1.8 10 1.33818 1.4 0" lengthrange="0.0444131 0.329629" name="extobl_l" tendon="extobl_l_tendon"/>
     </actuator>
 </mujocoinclude>
