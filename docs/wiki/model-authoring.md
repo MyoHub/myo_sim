@@ -8,7 +8,7 @@ Every body part under `myo_sim/models/<part>/assets/` is defined by four file ty
 
 ### `*_chain.xml` — skeleton
 
-Contains `<body>`, `<joint>`, `<geom>` (collision and visual), and structural `<site>` elements. Sites here serve as attachment frames, anatomical landmarks, or tendon via-points — they are anchored to specific bodies and must live in the file that owns those bodies. This file defines what bodies exist and how they connect kinematically. Wrapping geoms (`class="wrap"`) also belong here on the body they geometrically attach to.
+Contains `<body>`, `<joint>`, `<geom>` (collision and visual), and structural `<site>` elements. Sites here serve as attachment frames, anatomical landmarks, or tendon via-points — they are anchored to specific bodies and must live in the file that owns those bodies. This file defines what bodies exist and how they connect kinematically. Wrapping geoms (part-specific wrap class, e.g. `class="myolegs_wrap"`) also belong here on the body they geometrically attach to.
 
 ### `*_muscle.xml` — actuators
 
@@ -41,7 +41,7 @@ Sites that serve as wrapping sidesiotes follow the naming pattern `<WrapObjectNa
 **Step 2.** Add the tendon definition in `*_tendon.xml`.
 
 ```xml
-<spatial name="newmuscle_r_tendon" springlength="0.05" class="myoleg_muscle">
+<spatial name="newmuscle_r_tendon" springlength="0.05" class="myolegs_muscle">
     <site site="newmuscle-P1_r"/>
     <!-- optional wrapping step: -->
     <geom geom="somewrap_r" sidesite="somewrap_site_newmuscle_r"/>
@@ -52,7 +52,7 @@ Sites that serve as wrapping sidesiotes follow the naming pattern `<WrapObjectNa
 **Step 3.** Add the actuator in `*_muscle.xml`.
 
 ```xml
-<general class="myoleg_muscle"
+<general class="myolegs_muscle"
          name="newmuscle_r"
          tendon="newmuscle_r_tendon"
          gainprm="0.5 1.4 800 1 0.05 3.0 10 1.5 1.4 0"
@@ -80,11 +80,11 @@ uv run pytest tests/test_leg_muscle_symmetry.py
 
 ## Adding a wrapping object
 
-Wrapping geoms live in `*_chain.xml` on the body they geometrically belong to. Use `class="wrap"` (or the part-specific wrap default class, e.g. `class="myoleg_wrap"`).
+Wrapping geoms live in `*_chain.xml` on the body they geometrically belong to. Use the part-specific wrap default class, e.g. `class="myolegs_wrap"`.
 
 ```xml
 <!-- in *_chain.xml, inside the appropriate body -->
-<geom class="wrap" name="NewMuscle_wrap_r" type="cylinder"
+<geom class="myolegs_wrap" name="NewMuscle_wrap_r" type="cylinder"
       pos="0.01 -0.10 0.0" quat="0.707 0.707 0 0" size="0.015 0.03"/>
 <site name="NewMuscle_wrap_sidesite_r" pos="0.01 -0.10 0.015"/>
 ```
@@ -101,11 +101,11 @@ Both the geom and sidesite must be on the same body (or a nearby body if the mus
 
 ## Adding a new body part entirely
 
-1. Create `myo_sim/models/<part>/assets/` directory with the four asset files following naming convention `myo<part>_assets.xml`, `myo<part>_r_chain.xml`, `myo<part>_tendon.xml`, `myo<part>_muscle.xml`.
+1. Create `myo_sim/models/<part>/assets/` directory with the four asset files. Follow the fragment naming rule in `docs/wiki/engineering-standards.md`: `myo<part>[_r]_<role>.xml` with a singular `<role>` (`chain`, `muscle`, `tendon`, `assets`), and the `_r` marker only for a right-only fragment that is mirrored at compose time. A right-only-and-mirrored part uses `myo<part>_r_chain.xml`; a bilateral part uses `myo<part>_chain.xml`.
 
 2. Follow the same file-role separation described above.
 
-3. If the part attaches to an existing part (e.g., a new arm segment attaches to the torso), add an attachment site in the parent's chain file — for example, in `myotorso_r_chain.xml` — named `<part>_attach_r`. Then add a new `BuildStrategy` entry and corresponding builder function in `myo_sim/build/compose.py`.
+3. If the part attaches to an existing part (e.g., a new arm segment attaches to the torso), add an attachment site in the parent's chain file — for example, in `myotorso_chain.xml` — named `<part>_attach_r`. Then add a new `BuildStrategy` entry and corresponding builder function in `myo_sim/build/compose.py`.
 
 4. Add contact pairs between this part and any parts it interacts with in `myo_sim/models/contacts/myo<part>_contacts.xml`. Do not embed cross-part contact pairs inside the part's own asset files.
 
