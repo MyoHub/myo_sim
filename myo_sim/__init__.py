@@ -122,11 +122,11 @@ def get_path(rel: str) -> Path:
     """Return the absolute Path to a model file by relative path within MODELS_DIR.
 
     This is a convenience wrapper for scripts and tutorials that prefer to
-    reference models by relative path (e.g. ``"arm/myoarm.xml"``) rather than
-    registry name.
+    reference models by relative path (e.g. ``"scene/myosuite_scene.xml"``)
+    rather than registry name.
 
     Args:
-        rel: Relative path inside MODELS_DIR, e.g. ``"arm/myoarm.xml"``.
+        rel: Relative path inside MODELS_DIR, e.g. ``"scene/myosuite_scene.xml"``.
 
     Returns:
         Absolute Path to the file.
