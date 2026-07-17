@@ -56,6 +56,7 @@ GENERATE_XML_TARGETS: dict[str, Path] = {
     "myoarms": Path("arm/myoarms.xml"),
     "myotorso": Path("torso/myotorso.xml"),
     "myolegs": Path("leg/myolegs.xml"),
+    "myolegs26": Path("leg/myolegs26.xml"),
     "myofullbody": Path("myofullbody.xml"),
 }
 
@@ -520,6 +521,7 @@ def build_legs26_base_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     legs = load_legs26_spec(include_scene=True)
     root_body = find_body(legs, "myolegs26_root")
     root_body.add_freejoint(name="root")
+    root_body.pos = [0.0, 0.0, 1.035868]
     root_body.quat = [0.70710678, 0.0, 0.0, -0.70710678]  # -90deg yaw about world z (qpos0 heading)
     # Keyframe(s) are applied after the free root exists so the qpos layout matches
     # (the bare fragment from load_legs26_spec is intentionally keyframe-less).

@@ -44,34 +44,34 @@
     <mesh file="meshes/l_bofoot.stl" name="toes_l_geom_1_l_bofoot" />
   </asset>
   <equality>
-    <joint joint1="knee_r_translation1" joint2="knee_angle_r" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="knee_r_translation2" joint2="knee_angle_r" polycoef="-0.395 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="knee_l_translation1" joint2="knee_angle_l" polycoef="-0.003639 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="knee_l_translation2" joint2="knee_angle_l" polycoef="-0.395 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="hamstrings_r_semimem_r-P2_x" joint2="knee_angle_r" polycoef="-0.03429 -0.005119 0.001791 0.001624 0.0002251" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="hamstrings_r_semimem_r-P2_y" joint2="knee_angle_r" polycoef="-0.03601 0.008217 -0.002875 -0.002607 -0.0003613" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="iliopsoas_r_psoas_r-P3_x" joint2="hip_flexion_r" polycoef="-0.02855 0.001773 0.001122 -0.0001037 -0.0001111" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="iliopsoas_r_psoas_r-P3_y" joint2="hip_flexion_r" polycoef="-0.07933 0.008332 0.005272 -0.0004875 -0.0005223" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="iliopsoas_r_psoas_r-P3_z" joint2="hip_flexion_r" polycoef="0.08132 -0.002021 -0.001279 0.0001182 0.0001267" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="rect_fem_r_rect_fem_r-P3_x" joint2="knee_angle_r" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="rect_fem_r_rect_fem_r-P3_y" joint2="knee_angle_r" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="vasti_r_vas_int_r-P4_x" joint2="knee_angle_r" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="vasti_r_vas_int_r-P4_y" joint2="knee_angle_r" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="gastroc_r_med_gas_r-P2_x" joint2="knee_angle_r" polycoef="-0.02607 0.00676 0.0009439 -0.001031 -6.818e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="gastroc_r_med_gas_r-P2_y" joint2="knee_angle_r" polycoef="-0.3989 0.005715 0.000798 -0.000872 -5.764e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="gastroc_r_med_gas_r-P2_z" joint2="knee_angle_r" polycoef="-0.02498 0.001413 0.0001974 -0.0002157 -1.426e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="hamstrings_l_semimem_l-P2_x" joint2="knee_angle_l" polycoef="-0.03429 -0.005119 0.001791 0.001624 0.0002251" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="hamstrings_l_semimem_l-P2_y" joint2="knee_angle_l" polycoef="-0.03601 0.008217 -0.002875 -0.002607 -0.0003613" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="iliopsoas_l_psoas_l-P3_x" joint2="hip_flexion_l" polycoef="-0.02855 0.001773 0.001122 -0.0001037 -0.0001111" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="iliopsoas_l_psoas_l-P3_y" joint2="hip_flexion_l" polycoef="-0.07933 0.008332 0.005272 -0.0004875 -0.0005223" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="iliopsoas_l_psoas_l-P3_z" joint2="hip_flexion_l" polycoef="-0.08132 0.002021 0.001279 -0.0001182 -0.0001267" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="rect_fem_l_rect_fem_l-P3_x" joint2="knee_angle_l" polycoef="0.06259 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="rect_fem_l_rect_fem_l-P3_y" joint2="knee_angle_l" polycoef="0.02032 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="vasti_l_vas_int_l-P4_x" joint2="knee_angle_l" polycoef="0.05647 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="vasti_l_vas_int_l-P4_y" joint2="knee_angle_l" polycoef="0.02476 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="gastroc_l_med_gas_l-P2_x" joint2="knee_angle_l" polycoef="-0.02607 0.00676 0.0009439 -0.001031 -6.818e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="gastroc_l_med_gas_l-P2_y" joint2="knee_angle_l" polycoef="-0.3989 0.005715 0.000798 -0.000872 -5.764e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
-    <joint joint1="gastroc_l_med_gas_l-P2_z" joint2="knee_angle_l" polycoef="0.02498 -0.001413 -0.0001974 0.0002157 1.426e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="knee_r_translation1" joint2="knee_angle_r" polycoef="0 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="knee_r_translation2" joint2="knee_angle_r" polycoef="0 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="knee_l_translation1" joint2="knee_angle_l" polycoef="0 -0.006267 0.002807 0.00134 -0.0006776" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="knee_l_translation2" joint2="knee_angle_l" polycoef="0 0.003413 -0.005587 0.0006697 0.0005674" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_r_semimem_r-P2_x" joint2="knee_angle_r" polycoef="0 -0.005119 0.001791 0.001624 0.0002251" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_r_semimem_r-P2_y" joint2="knee_angle_r" polycoef="0 0.008217 -0.002875 -0.002607 -0.0003613" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_r_psoas_r-P3_x" joint2="hip_flexion_r" polycoef="0 0.001773 0.001122 -0.0001037 -0.0001111" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_r_psoas_r-P3_y" joint2="hip_flexion_r" polycoef="0 0.008332 0.005272 -0.0004875 -0.0005223" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_r_psoas_r-P3_z" joint2="hip_flexion_r" polycoef="0 -0.002021 -0.001279 0.0001182 0.0001267" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_r_rect_fem_r-P3_x" joint2="knee_angle_r" polycoef="0 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_r_rect_fem_r-P3_y" joint2="knee_angle_r" polycoef="0 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_r_vas_int_r-P4_x" joint2="knee_angle_r" polycoef="0 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_r_vas_int_r-P4_y" joint2="knee_angle_r" polycoef="0 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_r_med_gas_r-P2_x" joint2="knee_angle_r" polycoef="0 0.00676 0.0009439 -0.001031 -6.818e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_r_med_gas_r-P2_y" joint2="knee_angle_r" polycoef="0 0.005715 0.000798 -0.000872 -5.764e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_r_med_gas_r-P2_z" joint2="knee_angle_r" polycoef="0 0.001413 0.0001974 -0.0002157 -1.426e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_l_semimem_l-P2_x" joint2="knee_angle_l" polycoef="0 -0.005119 0.001791 0.001624 0.0002251" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="hamstrings_l_semimem_l-P2_y" joint2="knee_angle_l" polycoef="0 0.008217 -0.002875 -0.002607 -0.0003613" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_l_psoas_l-P3_x" joint2="hip_flexion_l" polycoef="0 0.001773 0.001122 -0.0001037 -0.0001111" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_l_psoas_l-P3_y" joint2="hip_flexion_l" polycoef="0 0.008332 0.005272 -0.0004875 -0.0005223" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="iliopsoas_l_psoas_l-P3_z" joint2="hip_flexion_l" polycoef="0 0.002021 0.001279 -0.0001182 -0.0001267" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_l_rect_fem_l-P3_x" joint2="knee_angle_l" polycoef="0 0.04199 0.01152 -0.007248 -0.004008" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="rect_fem_l_rect_fem_l-P3_y" joint2="knee_angle_l" polycoef="0 -0.01159 -0.008624 -0.002308 -0.0002292" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_l_vas_int_l-P4_x" joint2="knee_angle_l" polycoef="0 0.04555 0.01393 -0.007247 -0.004235" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="vasti_l_vas_int_l-P4_y" joint2="knee_angle_l" polycoef="0 -0.006322 -0.00661 -0.003684 -0.0008973" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_l_med_gas_l-P2_x" joint2="knee_angle_l" polycoef="0 0.00676 0.0009439 -0.001031 -6.818e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_l_med_gas_l-P2_y" joint2="knee_angle_l" polycoef="0 0.005715 0.000798 -0.000872 -5.764e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
+    <joint joint1="gastroc_l_med_gas_l-P2_z" joint2="knee_angle_l" polycoef="0 -0.001413 -0.0001974 0.0002157 1.426e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
   </equality>
   <sensor>
     <touch name="r_foot" site="r_foot_touch" />

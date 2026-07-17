@@ -54,10 +54,10 @@
       <site name="vasti_r_vas_int_r-P3" pos="0.048 -0.35 0.0055" />
       <site name="gastroc_r_med_gas_r-P1" pos="-0.019 -0.3929 -0.0235" />
       <site name="rect_fem_r_rect_fem_r-P2" pos="0.048 -0.35 -0.0055" />
-      <body name="tibia_r" pos="0 0 0">
+      <body name="tibia_r" pos="-0.003639 -0.395 0">
         <inertial diaginertia="0.0511 0.0504 0.0051" mass="3.7075" pos="0 -0.1867 0" quat="0.5 0.5 -0.5 0.5" />
-        <joint axis="1 0 0" name="knee_r_translation1" pos="0 0 0" range="-0.005574 0.00411" type="slide" />
-        <joint axis="0 1 0" name="knee_r_translation2" pos="0 0 0" range="-0.4226 -0.3949" type="slide" />
+        <joint axis="1 0 0" name="knee_r_translation1" pos="0 0 0" range="-0.001935 0.007749" type="slide" />
+        <joint axis="0 1 0" name="knee_r_translation2" pos="0 0 0" range="-0.0276 0.0001" type="slide" />
         <joint axis="0 0 1" name="knee_angle_r" pos="0 0 0" range="-2.531 0.0" />
         <geom mesh="tibia_r_geom_1_tibia" name="tibia_r_geom_1" rgba="1 1 1 1" type="mesh" />
         <geom mesh="tibia_r_geom_2_fibula" name="tibia_r_geom_2" rgba="1 1 1 1" type="mesh" />
@@ -102,30 +102,30 @@
             </body>
           </body>
         </body>
-        <body name="hamstrings_r_semimem_r-P2" pos="0 0 -0.01957">
+        <body name="hamstrings_r_semimem_r-P2" pos="-0.03429 -0.03601 -0.01957">
           <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 -0.01957" />
-          <joint axis="1 0 0" name="hamstrings_r_semimem_r-P2_x" pos="0 0 0" range="-0.0348 -0.027" type="slide" />
-          <joint axis="0 1 0" name="hamstrings_r_semimem_r-P2_y" pos="0 0 0" range="-0.04771 -0.03519" type="slide" />
+          <joint axis="1 0 0" name="hamstrings_r_semimem_r-P2_x" pos="0 0 0" range="-0.00051 0.00729" type="slide" />
+          <joint axis="0 1 0" name="hamstrings_r_semimem_r-P2_y" pos="0 0 0" range="-0.0117 0.00082" type="slide" />
           <site name="hamstrings_r_semimem_r-P2" pos="0 0 0" />
         </body>
-        <body name="rect_fem_r_rect_fem_r-P3" pos="0 0 0.001399">
+        <body name="rect_fem_r_rect_fem_r-P3" pos="0.06259 0.02032 0.001399">
           <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.001399" />
-          <joint axis="1 0 0" name="rect_fem_r_rect_fem_r-P3_x" pos="0 0 0" range="0.01558 0.0733" type="slide" />
-          <joint axis="0 1 0" name="rect_fem_r_rect_fem_r-P3_y" pos="0 0 0" range="-0.06738 0.02531" type="slide" />
+          <joint axis="1 0 0" name="rect_fem_r_rect_fem_r-P3_x" pos="0 0 0" range="-0.04701 0.01071" type="slide" />
+          <joint axis="0 1 0" name="rect_fem_r_rect_fem_r-P3_y" pos="0 0 0" range="-0.0877 0.00499" type="slide" />
           <site name="rect_fem_r_rect_fem_r-P3" pos="0 0 0" />
         </body>
-        <body name="vasti_r_vas_int_r-P4" pos="0 0 0.001799">
+        <body name="vasti_r_vas_int_r-P4" pos="0.05647 0.02476 0.001799">
           <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.001799" />
-          <joint axis="1 0 0" name="vasti_r_vas_int_r-P4_x" pos="0 0 0" range="0.008273 0.06844" type="slide" />
-          <joint axis="0 1 0" name="vasti_r_vas_int_r-P4_y" pos="0 0 0" range="-0.06857 0.02752" type="slide" />
+          <joint axis="1 0 0" name="vasti_r_vas_int_r-P4_x" pos="0 0 0" range="-0.048197 0.01197" type="slide" />
+          <joint axis="0 1 0" name="vasti_r_vas_int_r-P4_y" pos="0 0 0" range="-0.09333 0.00276" type="slide" />
           <site name="vasti_r_vas_int_r-P4" pos="0 0 0" />
         </body>
       </body>
-      <body name="gastroc_r_med_gas_r-P2" pos="0 0 0">
+      <body name="gastroc_r_med_gas_r-P2" pos="-0.02607 -0.3989 -0.02498">
         <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
-        <joint axis="1 0 0" name="gastroc_r_med_gas_r-P2_x" pos="0 0 0" range="-0.03 -0.019" type="slide" />
-        <joint axis="0 1 0" name="gastroc_r_med_gas_r-P2_y" pos="0 0 0" range="-0.4022 -0.3929" type="slide" />
-        <joint axis="0 0 1" name="gastroc_r_med_gas_r-P2_z" pos="0 0 0" range="-0.0258 -0.0235" type="slide" />
+        <joint axis="1 0 0" name="gastroc_r_med_gas_r-P2_x" pos="0 0 0" range="-0.00393 0.00707" type="slide" />
+        <joint axis="0 1 0" name="gastroc_r_med_gas_r-P2_y" pos="0 0 0" range="-0.0033 0.006" type="slide" />
+        <joint axis="0 0 1" name="gastroc_r_med_gas_r-P2_z" pos="0 0 0" range="-0.00082 0.00148" type="slide" />
         <site name="gastroc_r_med_gas_r-P2" pos="0 0 0" />
       </body>
     </body>
@@ -147,10 +147,10 @@
       <site name="vasti_l_vas_int_l-P3" pos="0.048 -0.35 -0.0055" />
       <site name="gastroc_l_med_gas_l-P1" pos="-0.019 -0.3929 0.0235" />
       <site name="rect_fem_l_rect_fem_l-P2" pos="0.048 -0.35 0.0055" />
-      <body name="tibia_l" pos="0 0 0">
+      <body name="tibia_l" pos="-0.003639 -0.395 0">
         <inertial diaginertia="0.0511 0.0504 0.0051" mass="3.7075" pos="0 -0.1867 0" quat="0.5 0.5 -0.5 0.5" />
-        <joint axis="1 0 0" name="knee_l_translation1" pos="0 0 0" range="-0.005574 0.00411" type="slide" />
-        <joint axis="0 1 0" name="knee_l_translation2" pos="0 0 0" range="-0.4226 -0.3949" type="slide" />
+        <joint axis="1 0 0" name="knee_l_translation1" pos="0 0 0" range="-0.001935 0.007749" type="slide" />
+        <joint axis="0 1 0" name="knee_l_translation2" pos="0 0 0" range="-0.0276 0.0001" type="slide" />
         <joint axis="0 0 1" name="knee_angle_l" pos="0 0 0" range="-2.531 0.0" />
         <geom mesh="tibia_l_geom_1_l_tibia" name="tibia_l_geom_1" rgba="1 1 1 1" type="mesh" />
         <geom mesh="tibia_l_geom_2_l_fibula" name="tibia_l_geom_2" rgba="1 1 1 1" type="mesh" />
@@ -195,45 +195,45 @@
             </body>
           </body>
         </body>
-        <body name="hamstrings_l_semimem_l-P2" pos="0 0 0.01891">
+        <body name="hamstrings_l_semimem_l-P2" pos="-0.03429 -0.03601 0.01891">
           <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.01891" />
-          <joint axis="1 0 0" name="hamstrings_l_semimem_l-P2_x" pos="0 0 0" range="-0.0348 -0.027" type="slide" />
-          <joint axis="0 1 0" name="hamstrings_l_semimem_l-P2_y" pos="0 0 0" range="-0.04771 -0.03519" type="slide" />
+          <joint axis="1 0 0" name="hamstrings_l_semimem_l-P2_x" pos="0 0 0" range="-0.00051 0.00729" type="slide" />
+          <joint axis="0 1 0" name="hamstrings_l_semimem_l-P2_y" pos="0 0 0" range="-0.0117 0.00082" type="slide" />
           <site name="hamstrings_l_semimem_l-P2" pos="0 0 0" />
         </body>
-        <body name="rect_fem_l_rect_fem_l-P3" pos="0 0 -0.001401">
+        <body name="rect_fem_l_rect_fem_l-P3" pos="0.06259 0.02032 -0.001401">
           <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 -0.001401" />
-          <joint axis="1 0 0" name="rect_fem_l_rect_fem_l-P3_x" pos="0 0 0" range="0.01558 0.0733" type="slide" />
-          <joint axis="0 1 0" name="rect_fem_l_rect_fem_l-P3_y" pos="0 0 0" range="-0.06738 0.02531" type="slide" />
+          <joint axis="1 0 0" name="rect_fem_l_rect_fem_l-P3_x" pos="0 0 0" range="-0.04701 0.01071" type="slide" />
+          <joint axis="0 1 0" name="rect_fem_l_rect_fem_l-P3_y" pos="0 0 0" range="-0.0877 0.00499" type="slide" />
           <site name="rect_fem_l_rect_fem_l-P3" pos="0 0 0" />
         </body>
-        <body name="vasti_l_vas_int_l-P4" pos="0 0 0.001799">
+        <body name="vasti_l_vas_int_l-P4" pos="0.05647 0.02476 0.001799">
           <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0.001799" />
-          <joint axis="1 0 0" name="vasti_l_vas_int_l-P4_x" pos="0 0 0" range="0.008273 0.06844" type="slide" />
-          <joint axis="0 1 0" name="vasti_l_vas_int_l-P4_y" pos="0 0 0" range="-0.06857 0.02752" type="slide" />
+          <joint axis="1 0 0" name="vasti_l_vas_int_l-P4_x" pos="0 0 0" range="-0.048197 0.01197" type="slide" />
+          <joint axis="0 1 0" name="vasti_l_vas_int_l-P4_y" pos="0 0 0" range="-0.09333 0.00276" type="slide" />
           <site name="vasti_l_vas_int_l-P4" pos="0 0 0" />
         </body>
       </body>
-      <body name="gastroc_l_med_gas_l-P2" pos="0 0 0">
+      <body name="gastroc_l_med_gas_l-P2" pos="-0.02607 -0.3989 0.02498">
         <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
-        <joint axis="1 0 0" name="gastroc_l_med_gas_l-P2_x" pos="0 0 0" range="-0.03 -0.019" type="slide" />
-        <joint axis="0 1 0" name="gastroc_l_med_gas_l-P2_y" pos="0 0 0" range="-0.4022 -0.3929" type="slide" />
-        <joint axis="0 0 1" name="gastroc_l_med_gas_l-P2_z" pos="0 0 0" range="0.0235 0.0258" type="slide" />
+        <joint axis="1 0 0" name="gastroc_l_med_gas_l-P2_x" pos="0 0 0" range="-0.00393 0.00707" type="slide" />
+        <joint axis="0 1 0" name="gastroc_l_med_gas_l-P2_y" pos="0 0 0" range="-0.0033 0.006" type="slide" />
+        <joint axis="0 0 1" name="gastroc_l_med_gas_l-P2_z" pos="0 0 0" range="-0.00148 0.00082" type="slide" />
         <site name="gastroc_l_med_gas_l-P2" pos="0 0 0" />
       </body>
     </body>
-    <body name="iliopsoas_r_psoas_r-P3" pos="0 0 0">
+    <body name="iliopsoas_r_psoas_r-P3" pos="-0.02855 -0.07933 0.08132">
       <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
-      <joint axis="1 0 0" name="iliopsoas_r_psoas_r-P3_x" pos="0 0 0" range="-0.0288 -0.0238" type="slide" />
-      <joint axis="0 1 0" name="iliopsoas_r_psoas_r-P3_y" pos="0 0 0" range="-0.0805 -0.057" type="slide" />
-      <joint axis="0 0 1" name="iliopsoas_r_psoas_r-P3_z" pos="0 0 0" range="0.0759 0.0816" type="slide" />
+      <joint axis="1 0 0" name="iliopsoas_r_psoas_r-P3_x" pos="0 0 0" range="-0.00025 0.00475" type="slide" />
+      <joint axis="0 1 0" name="iliopsoas_r_psoas_r-P3_y" pos="0 0 0" range="-0.00117 0.02233" type="slide" />
+      <joint axis="0 0 1" name="iliopsoas_r_psoas_r-P3_z" pos="0 0 0" range="-0.00542 0.00028" type="slide" />
       <site name="iliopsoas_r_psoas_r-P3" pos="0 0 0" />
     </body>
-    <body name="iliopsoas_l_psoas_l-P3" pos="0 0 0">
+    <body name="iliopsoas_l_psoas_l-P3" pos="-0.02855 -0.07933 -0.08132">
       <inertial diaginertia="0.00000001 0.00000001 0.00000001" mass="0.001" pos="0 0 0" />
-      <joint axis="1 0 0" name="iliopsoas_l_psoas_l-P3_x" pos="0 0 0" range="-0.0288 -0.0238" type="slide" />
-      <joint axis="0 1 0" name="iliopsoas_l_psoas_l-P3_y" pos="0 0 0" range="-0.0805 -0.057" type="slide" />
-      <joint axis="0 0 1" name="iliopsoas_l_psoas_l-P3_z" pos="0 0 0" range="-0.0816 -0.0759" type="slide" />
+      <joint axis="1 0 0" name="iliopsoas_l_psoas_l-P3_x" pos="0 0 0" range="-0.00025 0.00475" type="slide" />
+      <joint axis="0 1 0" name="iliopsoas_l_psoas_l-P3_y" pos="0 0 0" range="-0.00117 0.02233" type="slide" />
+      <joint axis="0 0 1" name="iliopsoas_l_psoas_l-P3_z" pos="0 0 0" range="-0.00028 0.00542" type="slide" />
       <site name="iliopsoas_l_psoas_l-P3" pos="0 0 0" />
     </body>
   </body>
