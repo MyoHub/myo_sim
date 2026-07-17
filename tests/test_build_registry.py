@@ -1,7 +1,9 @@
 from dataclasses import fields
 from pathlib import Path
+import xml.etree.ElementTree as ET
 
 import mujoco
+import numpy as np
 
 from myo_sim.build import compose
 from myo_sim.build.compose import BuildStrategy, MODEL_REGISTRY, ModelRegistration, build_model
@@ -58,6 +60,7 @@ def test_generate_xml_files_writes_base_model_outputs(tmp_path, monkeypatch):
         "myoarms": Path("arm/myoarms.xml"),
         "myotorso": Path("torso/myotorso.xml"),
         "myolegs": Path("leg/myolegs.xml"),
+        "myolegs26": Path("leg/myolegs26.xml"),
         "myofullbody": Path("myofullbody.xml"),
     }
     spec_calls = []
@@ -145,6 +148,66 @@ def test_generated_xml_keeps_floor_collision_enabled(tmp_path):
         assert floor_id >= 0, output_path
         assert model.geom_contype[floor_id] == 1, output_path
         assert model.geom_conaffinity[floor_id] == 1, output_path
+
+
+def test_myolegs26_knee_reset_uses_baked_tibia_offsets():
+    model = build_model("myolegs26")
+    key_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_KEY, "stand")
+    knee_translation_joints = (
+        "knee_r_translation1",
+        "knee_r_translation2",
+        "knee_l_translation1",
+        "knee_l_translation2",
+    )
+
+    assert key_id >= 0
+    assert model.qpos0[2] == 1.035868
+    assert model.key_qpos[key_id, 2] == 1.035868
+    for joint_name in knee_translation_joints:
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, joint_name)
+        qpos_adr = model.jnt_qposadr[joint_id]
+
+        assert abs(model.qpos0[qpos_adr]) < 1e-12, joint_name
+        assert abs(model.key_qpos[key_id, qpos_adr]) < 1e-12, joint_name
+        assert model.jnt_range[joint_id][0] <= 0 <= model.jnt_range[joint_id][1], joint_name
+
+    equality_root = ET.parse(compose.LEGS26_ASSETS_XML).getroot().find("equality")
+    knee_polycoef_offsets = {
+        joint.get("joint1"): float(joint.get("polycoef", "").split()[0])
+        for joint in equality_root.iter("joint")
+        if joint.get("joint1") in knee_translation_joints
+    }
+
+    assert knee_polycoef_offsets == {joint_name: 0.0 for joint_name in knee_translation_joints}
+
+
+def test_myolegs26_reset_matches_stand_muscle_helper_geometry():
+    model = build_model("myolegs26")
+    key_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_KEY, "stand")
+    reset_data = mujoco.MjData(model)
+    stand_data = mujoco.MjData(model)
+    helper_sites = (
+        "hamstrings_r_semimem_r-P2",
+        "rect_fem_r_rect_fem_r-P3",
+        "vasti_r_vas_int_r-P4",
+        "gastroc_r_med_gas_r-P2",
+        "hamstrings_l_semimem_l-P2",
+        "rect_fem_l_rect_fem_l-P3",
+        "vasti_l_vas_int_l-P4",
+        "gastroc_l_med_gas_l-P2",
+        "iliopsoas_r_psoas_r-P3",
+        "iliopsoas_l_psoas_l-P3",
+    )
+
+    assert key_id >= 0
+    mujoco.mj_forward(model, reset_data)
+    stand_data.qpos[:] = model.key_qpos[key_id]
+    mujoco.mj_forward(model, stand_data)
+
+    for site_name in helper_sites:
+        site_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, site_name)
+
+        assert np.allclose(reset_data.site_xpos[site_id], stand_data.site_xpos[site_id]), site_name
 
 
 def test_generated_myofullbody_uses_musclemimic_scene(tmp_path):
