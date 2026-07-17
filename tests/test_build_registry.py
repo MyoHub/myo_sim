@@ -1,6 +1,6 @@
+import xml.etree.ElementTree as ET
 from dataclasses import fields
 from pathlib import Path
-import xml.etree.ElementTree as ET
 
 import mujoco
 
