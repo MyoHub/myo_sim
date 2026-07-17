@@ -27,6 +27,8 @@
     </default>
   </default>
   <asset>
+    <texture name="myolegs_tex" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127" />
+    <material name="myolegs_mat" texture="myolegs_tex" texuniform="true" />
     <mesh file="meshes/sacrum.stl" name="pelvis_geom_1_sacrum" />
     <mesh file="meshes/r_pelvis.stl" name="pelvis_geom_2_pelvis" />
     <mesh file="meshes/l_pelvis.stl" name="pelvis_geom_3_l_pelvis" />

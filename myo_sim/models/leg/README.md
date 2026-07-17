@@ -53,11 +53,10 @@ Example fidelity check (glmax1 left/right moment-arm and force-length plot) for 
 
 **myoleg_v0.51 (mj120)** — Added new keyposes to mark convenient poses.
 
-## MyoLeg26 (reduced 26-muscle, legs-only)
+## MyoLeg26 (reduced 26-muscle legs + passive torso)
 
-`myolegs26` is a reduced, lower-limb model (no HAT, torso, arms, or head). It is meant as a compact
-base for work where the full 80-muscle anatomy
-isn't needed.
+`myolegs26` pairs the passive anatomical torso scaffold (no arms, no torso muscles) with a reduced
+26-muscle leg chain. It is structurally identical to `myolegs` apart from the muscle count and kinematic simplifications (e.g., planar joints).
 
 ### Anatomical scope
 
@@ -65,24 +64,8 @@ isn't needed.
 |---|---|
 | Degrees of freedom | 18 (46 incl. equality-coupled moving-via-point DoFs) |
 | Actuators (muscles) | 26 |
-| Body segments | calcn_l, calcn_r, femur_l, femur_r, pelvis, talus_l, talus_r, tibia_l, tibia_r, toes_l, toes_r |
+| Body segments | pelvis + legs (calcn / femur / talus / tibia / toes, L+R) + passive torso scaffold (spine, ribs, head; no arms) |
 | Primary joints | hip_flexion, hip_adduction, hip_rotation, knee_angle, ankle_angle, mtp_angle (bilateral) |
-
-
-### Build
-
-Composed at runtime (there is no static `myolegs26.xml`), from
-`myo_sim/build/compose.py`:
-
-- **Standalone base** — `build_legs26_base_spec`, exposed via `build_model("myolegs26")`, `build_spec("myolegs26")`, and `load("myolegs26")`. It assembles the component files, adds a **free root joint** (myosuite heading), layers the standard myosuite **scene** (floor + lights), and applies the **`stand` keyframe** loaded from `myolegs26_keyframes.xml`. The stand pose is shipped as a keyframe (not `qpos0`) because the joint couplers cannot be satisfied at `qpos0`; it is fully at-rest (coupler residual ≈ 0, feet on the pedestal).
-- **Bare fragment** — `FRAGMENT_SPEC_BUILDERS["myolegs26"]` returns just the chain + muscles/tendons/assets, with **no** free root, scene, or keyframe, for composing into larger models or for downstream consumers (e.g. `assist_sim`) that supply their own root/ground and poses.
-
-```python
-import myo_sim
-
-model, data = myo_sim.load("myolegs26")   # compiled MjModel + MjData (standalone base)
-spec = myo_sim.build_spec("myolegs26")     # editable MjSpec of the standalone base
-```
 
 ### Reference & credits
 

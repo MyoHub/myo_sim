@@ -36,7 +36,7 @@ The following registered models can be compiled with `myo_sim.build.compose.buil
 - `myohand_r` — passive anatomical torso scaffold with the right hand derived from the pruned right arm.
 - `myohands` — passive anatomical torso scaffold with right and mirrored-left hands derived from pruned arms.
 - `myolegs` — passive anatomical torso scaffold with legs.
-- `myolegs26` — reduced 26-muscle legs-only base with a free root, scene, and `stand` keyframe.
+- `myolegs26` — passive anatomical torso scaffold with reduced-muscle legs and simplified kinematic chain.
 - `myolegs_abdomen` — simple abdomen scaffold with legs.
 - `myofullbody` — full body with torso, mirrored arms, and legs.
 

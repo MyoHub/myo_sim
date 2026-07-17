@@ -30,7 +30,6 @@ try:
     from .utils import (
         MirrorRules,
         add_contact_pairs,
-        add_keyframes,
         add_sensors,
         build_child_xml_from_components,
         build_mirrored_child_xml,
@@ -42,7 +41,6 @@ except ImportError:
     from utils import (
         MirrorRules,
         add_contact_pairs,
-        add_keyframes,
         add_sensors,
         build_child_xml_from_components,
         build_mirrored_child_xml,
@@ -87,7 +85,6 @@ LEGS26_ASSETS_XML = ROOT / "leg" / "assets" / "myolegs26_assets.xml"
 LEGS26_TENDONS_XML = ROOT / "leg" / "assets" / "myolegs26_tendon.xml"
 LEGS26_MUSCLES_XML = ROOT / "leg" / "assets" / "myolegs26_muscle.xml"
 LEGS26_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs26_chain.xml"
-LEGS26_KEYFRAMES_XML = ROOT / "leg" / "assets" / "myolegs26_keyframes.xml"
 
 TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
@@ -107,7 +104,7 @@ class BuildStrategy(str, Enum):
     BOTH_HANDS = "both_hands"
     FULLBODY = "fullbody"
     LEGS_BODY = "legs_body"
-    LEGS26_BASE = "legs26_base"
+    LEGS26_BODY = "legs26_body"
     TORSO_ABDOMEN = "torso_abdomen"
     LEGS_ABDOMEN = "legs_abdomen"
 
@@ -198,12 +195,12 @@ MODEL_REGISTRY = {
     ),
     "myolegs26": ModelRegistration(
         name="myolegs26",
-        build_strategy=BuildStrategy.LEGS26_BASE,
+        build_strategy=BuildStrategy.LEGS26_BODY,
         left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
-        description="Reduced 26-muscle legs-only base (free root, no torso)",
+        description="Passive anatomical torso scaffold + 26-muscle legs",
         include_left_arm_contacts=False,
         include_arm_contacts=False,
-        include_legs=True,
+        include_legs=False,
     ),
     "myolegs_abdomen": ModelRegistration(
         name="myolegs_abdomen",
@@ -349,13 +346,7 @@ def load_legs_spec() -> mujoco.MjSpec:
     return legs
 
 
-def load_legs26_spec(include_scene: bool = False) -> mujoco.MjSpec:
-    """Load the reduced 26-muscle, legs-only chain (no torso scaffold).
-
-    include_scene attaches the standard myosuite scene (floor + lights) for the
-    standalone base; the bare fragment leaves it off so the chain can be attached
-    or merged without a stray floor.
-    """
+def load_legs26_spec() -> mujoco.MjSpec:
     legs_xml = build_child_xml_from_components(
         model_name="myolegs26_attach",
         compiler_meshdir=ROOT,
@@ -365,7 +356,6 @@ def load_legs26_spec(include_scene: bool = False) -> mujoco.MjSpec:
         chain_xml=LEGS26_CHAIN_XML,
         root_body_name="myolegs26_root",
         root_site_name="legs26_root_attach",
-        scene_xmls=(SCENE_XML,) if include_scene else (),
     )
     legs = mujoco.MjSpec.from_string(legs_xml)
     legs.compiler.balanceinertia = True
@@ -512,25 +502,17 @@ def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     return build_legs_body_spec(registration).compile()
 
 
-def build_legs26_base_spec(registration: ModelRegistration) -> mujoco.MjSpec:
-    """Standalone legs-only 26-muscle base: the chain with a free root joint and the
-    standard scene (floor + lights), no torso. Ships a ``stand`` keyframe (upright on the
-    pedestal, facing the myo_sim heading) because the joint couplers cannot be satisfied
-    at qpos0. Downstream consumers that supply their own ground (e.g. assist_sim) are
-    expected to strip the scene."""
-    legs = load_legs26_spec(include_scene=True)
-    root_body = find_body(legs, "myolegs26_root")
+def build_legs26_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
+    torso = load_passive_torso_spec(registration)
+    root_body = find_body(torso, "Full Body")
     root_body.add_freejoint(name="root")
-    root_body.pos = [0.0, 0.0, 1.035868]
-    root_body.quat = [0.70710678, 0.0, 0.0, -0.70710678]  # -90deg yaw about world z (qpos0 heading)
-    # Keyframe(s) are applied after the free root exists so the qpos layout matches
-    # (the bare fragment from load_legs26_spec is intentionally keyframe-less).
-    add_keyframes(legs, LEGS26_KEYFRAMES_XML)
-    return legs
+    legs_frame = root_body.add_frame(name="legs_attach")
+    torso.attach(load_legs26_spec(), prefix="", suffix="", frame=legs_frame)
+    return torso
 
 
-def build_legs26_base_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_legs26_base_spec(registration).compile()
+def build_legs26_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_legs26_body_spec(registration).compile()
 
 
 def build_torso_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
@@ -563,7 +545,7 @@ BUILDERS = {
     BuildStrategy.BOTH_HANDS: build_both_hands_from_arm_model,
     BuildStrategy.FULLBODY: build_fullbody_model,
     BuildStrategy.LEGS_BODY: build_legs_body_model,
-    BuildStrategy.LEGS26_BASE: build_legs26_base_model,
+    BuildStrategy.LEGS26_BODY: build_legs26_body_model,
     BuildStrategy.TORSO_ABDOMEN: build_torso_abdomen_model,
     BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_model,
 }
@@ -572,7 +554,7 @@ GENERATE_SPEC_BUILDERS = {
     "myoarms": build_arms_body_spec,
     "myotorso": build_torso_body_spec,
     "myolegs": build_legs_body_spec,
-    "myolegs26": build_legs26_base_spec,
+    "myolegs26": build_legs26_body_spec,
     "myofullbody": build_fullbody_spec,
 }
 
