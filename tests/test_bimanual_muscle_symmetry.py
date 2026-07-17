@@ -1,12 +1,12 @@
 import mujoco
 import pytest
-
-from myo_sim.build.compose import build_model
 from muscle_analysis_utils import parse_model_joint_equalities
 from muscle_symmetry_checks import (
     compare_muscle_pair,
     discover_bilateral_suffix_pairs,
 )
+
+from myo_sim.build.compose import build_model
 
 
 @pytest.fixture(scope="module")

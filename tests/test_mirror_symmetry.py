@@ -4,7 +4,6 @@ import pytest
 
 from myo_sim.build.compose import build_model
 
-
 ARM_BODY_PAIRS = (
     "clavicle",
     "scapula",

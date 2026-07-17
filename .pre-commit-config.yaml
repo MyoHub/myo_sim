@@ -1,0 +1,26 @@
+# Pre-commit hooks for myo_sim. Install with `uv run pre-commit install`.
+# ruff versions are pinned to match the dev environment and CI.
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.15.17
+    hooks:
+      # Lint (with autofix) then format — the same checks CI enforces.
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-merge-conflict
+      - id: check-yaml
+      - id: check-toml
+      - id: check-added-large-files
+        # Above the largest tracked mesh (~6 MB); catches accidental huge assets.
+        args: [--maxkb=8192]
+      # Whitespace fixers skip the model tree: XML integrity and numeric
+      # formatting are preserved deliberately, and meshes/textures are binary.
+      - id: end-of-file-fixer
+        exclude: ^myo_sim/models/
+      - id: trailing-whitespace
+        exclude: ^myo_sim/models/

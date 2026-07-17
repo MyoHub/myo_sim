@@ -45,8 +45,8 @@
         <camera name="front_view" pos="0 -3 2.25" xyaxes="1 0 0 0 1 2" mode="trackcom"/>
 
 
-        <geom name="floor" pos="0 0 -.4" size="7 7 .1" conaffinity="1" contype="1" type="plane" material="matfloor" condim="3"/>
-        <geom type="mesh" mesh="meshscene" material="matscene" pos="0 0 -.41326" euler="0 0 0"  conaffinity="0" contype="0"/>
+        <geom name="floor" pos="0 0 -.4" size="7 7 .1" conaffinity="1" contype="1" type="plane" material="matfloor" condim="3" group="1"/>
+        <geom type="mesh" mesh="meshscene" material="matscene" pos="0 0 -.41326" euler="0 0 0"  conaffinity="0" contype="0" group="1"/>
         <geom type="cylinder" pos="0 0 -.190" size="1.05 .205" contype="1" conaffinity="1" group="4"/>
         <geom type="mesh" mesh="logo" material="matlogo" group="1" conaffinity="0" contype="0" euler="1.57 0 0" pos="0 6.95 2.1"/>
 

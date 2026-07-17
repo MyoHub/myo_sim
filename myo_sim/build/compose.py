@@ -1,4 +1,7 @@
-"""MjSpec.attach() prototype for composing torso + arm models.
+"""MjSpec.attach()-based composition of the myo_sim musculoskeletal models.
+
+This is the production build pipeline: ``build_model(name)`` is the public entry
+point and every composed model in ``MODEL_REGISTRY`` is compiled through it.
 
 Run from the repository root:
 
@@ -13,16 +16,17 @@ left arm before attaching both specs to the torso.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from enum import Enum
-from pathlib import Path
 import argparse
 import os
 import sys
 import time
 import xml.etree.ElementTree as ET
+from dataclasses import dataclass
+from enum import Enum
+from pathlib import Path
 
 import mujoco
+
 from myo_sim import MODELS_DIR
 
 try:
@@ -74,8 +78,8 @@ LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
 FULLBODY_SENSORS_XML = ROOT / "sensors" / "myofullbody_sensors.xml"
 RIGHT_ARM_ASSETS_XML = ROOT / "arm" / "assets" / "myoarm_r_assets.xml"
-RIGHT_ARM_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_tendons.xml"
-RIGHT_ARM_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_muscles.xml"
+RIGHT_ARM_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_tendon.xml"
+RIGHT_ARM_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_muscle.xml"
 RIGHT_ARM_CHAIN_XML = ROOT / "arm" / "assets" / "myoarm_r_chain.xml"
 LEGS_ASSETS_XML = ROOT / "leg" / "assets" / "myolegs_assets.xml"
 LEGS_TENDONS_XML = ROOT / "leg" / "assets" / "myolegs_tendon.xml"
@@ -222,6 +226,14 @@ MODEL_REGISTRY = {
     ),
 }
 
+# Legacy names that resolve to a MODEL_REGISTRY entry. This is the single source
+# of truth for load()-level aliases; every value must be a key of MODEL_REGISTRY.
+ALIASES: dict[str, str] = {
+    "hand": "myohand_r",
+    "myohand": "myohand_r",
+    "myoarm": "myoarm_r",
+}
+
 
 def pair_is_supported(pair: dict, include_left_arm_contacts: bool) -> bool:
     if include_left_arm_contacts:
@@ -284,7 +296,6 @@ def make_torso_passive(torso: mujoco.MjSpec) -> None:
         torso.delete(tendon)
     for joint in list(torso.joints):
         torso.delete(joint)
-    return torso
 
 
 def load_passive_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:

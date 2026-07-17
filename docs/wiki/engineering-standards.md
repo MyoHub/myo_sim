@@ -4,10 +4,24 @@ These rules apply to every change in this repository.
 
 ## XML / MJCF
 
+### Fragment file naming
+
+Fragment files follow `myo<part>[_r]_<role>.xml`:
+
+- `<part>` — the part stem (`arm`, `torso`, `legs`, `head`). Use the plural stem only when the fragment is inherently bilateral in a single file (`legs`).
+- `_r` — present **only** for right-only fragments that are mirrored to the left at compose time (e.g. `myoarm_r_chain.xml`). Parts authored bilaterally in one file (`myolegs_*`) or on the midline (`myotorso_*`) omit it.
+- `<role>` — always **singular**: `chain`, `muscle`, `tendon`, `assets`. Never pluralize (`_muscles`, `_tendons`).
+
+The four roles:
+
 - `*_chain.xml` — skeleton for one body part: bodies, joints, geoms, structural sites.
 - `*_muscle.xml` — actuators only (`<general>` or `<muscle>`). No sites, bodies, or tendons.
 - `*_tendon.xml` — spatial tendon routing. Sites referenced here must be defined in `*_chain.xml`.
 - `*_assets.xml` — mesh, material, texture, and default declarations.
+
+### Default class and material naming
+
+Every nested default class and every material name must be scoped to the part with a `myo<part>_<role>` prefix (e.g. `myotorso_muscle`, `myotorso_wrap`, `myolegs_matskin`). Never use a generic name (`motor`, `sidesite`, `wrap`, `marker`, `coll`), an alternate stem (`myoBack_*` in a `myotorso` file, singular `myoleg_*` in a `myolegs` file), or `main` except for the required top-level default. Region-qualified roles are allowed when a part needs several variants of the same role (`myoarm_forearm_muscle`, `myotorso_back_wrap`).
 
 **Site ownership.** Sites belong to the file that owns their parent body. Never declare a site in a different file from its parent body.
 

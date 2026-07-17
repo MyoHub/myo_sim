@@ -6,8 +6,6 @@ requires-python = ">=3.10"
 dependencies = [
     "mujoco>=3.0",
     "numpy>=1.24",
-    "matplotlib>=3.7",
-    "scipy>=1.10",
 ]
 
 [dependency-groups]
@@ -16,6 +14,9 @@ dev = [
     "pytest-xdist>=3.0",
     "ruff>=0.4",
     "pre-commit>=3.0",
+    # Used only by the muscle-analysis / symmetry scripts under tests/.
+    "matplotlib>=3.7",
+    "scipy>=1.10",
 ]
 
 [build-system]
@@ -44,5 +45,8 @@ line-length = 128
 extend-exclude = ["sandbox", ".claude"]
 
 [tool.ruff.lint]
-select = ["E", "F", "W"]
+select = ["E", "F", "W", "I"]
 ignore = ["E501"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["myo_sim"]

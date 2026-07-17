@@ -23,4 +23,3 @@ Available registered models:
 
 `utils.py` contains shared XML and mirroring helpers. `hand.py` contains the
 hand-specific pruning logic used to derive hand-only specs from arm specs.
-
