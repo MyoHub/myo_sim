@@ -4,7 +4,39 @@ on:
   workflow_dispatch:
 
 jobs:
+  pre-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install system dependencies for MuJoCo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libglib2.0-0 libosmesa6
+
+      - name: Install package
+        run: uv sync --dev
+
+      - name: Upgrade to the latest MuJoCo release
+        run: uv pip install --upgrade mujoco
+
+      - name: Default test suite
+        run: >
+          uv run pytest tests/ -x -n auto -q
+          --ignore=tests/test_equivalence.py
+          --ignore=tests/test_bimanual_muscle_symmetry.py
+          --ignore=tests/test_muscle_length_params.py
+
+      - name: Pre-release muscle length / FL-bound audit
+        run: uv run pytest tests/test_muscle_length_params.py -v --tb=short
+
   build:
+    needs: pre-release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
