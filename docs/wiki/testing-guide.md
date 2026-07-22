@@ -18,11 +18,11 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
-| `test_muscle_length_params.py` | `lengthrange` / operating range / FL `lmin`/`lmax` consistency | Pre-release only (`publish.yml`); use `tests/recalc_from_fl_bounds.py` to propose fixes |
+| `test_muscle_length_params.py` | `lengthrange` / operating range / FL `lmin`/`lmax` consistency | Manual only; use `tests/recalc_from_fl_bounds.py` to propose fixes |
 
 ## Fast Gate (Run Before Every PR)
 
-Run this before opening or updating a PR. It skips manual and pre-release audits:
+Run this before opening or updating a PR. It skips manual audits:
 
 ```bash
 uv run pytest tests/ -x -n auto \

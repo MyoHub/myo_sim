@@ -55,7 +55,7 @@ uv run pytest tests/ -x -n auto \
   --ignore=tests/test_bimanual_muscle_symmetry.py \
   --ignore=tests/test_muscle_length_params.py
 
-# Pre-release muscle length / FL-bound audit (also run by publish.yml)
+# Manual muscle length / FL-bound audit
 uv run pytest tests/test_muscle_length_params.py -v
 
 # Muscle symmetry analysis (standalone scripts, not pytest)

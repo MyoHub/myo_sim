@@ -60,7 +60,7 @@ jobs:
         run: uv run python -c "import sys, mujoco; print('python', sys.version); print('mujoco', mujoco.__version__)"
 
       - name: Run tests
-        # Skip manual / pre-release audits (equivalence, bimanual, muscle FL bounds).
+        # Skip manual audits (equivalence, bimanual, muscle FL bounds).
         run: >
           uv run pytest tests/ -x -n auto -q
           --ignore=tests/test_equivalence.py
