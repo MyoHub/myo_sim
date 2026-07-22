@@ -1,0 +1,8 @@
+<mujocoinclude>
+  <sensor>
+    <touch name="r_foot" site="foot_touch_r"/>
+    <touch name="r_toes" site="toes_touch_r"/>
+    <touch name="l_foot" site="foot_touch_l"/>
+    <touch name="l_toes" site="toes_touch_l"/>
+  </sensor>
+</mujocoinclude>

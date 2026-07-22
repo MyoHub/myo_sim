@@ -74,9 +74,11 @@ PAIR_ATTRIBUTE_PARSERS = (
 SENSOR_TYPE_BY_TAG = {
     "framelinvel": mujoco.mjtSensor.mjSENS_FRAMELINVEL,
     "frameangvel": mujoco.mjtSensor.mjSENS_FRAMEANGVEL,
+    "touch": mujoco.mjtSensor.mjSENS_TOUCH,
 }
 SENSOR_OBJTYPE_BY_NAME = {
     "body": mujoco.mjtObj.mjOBJ_BODY,
+    "site": mujoco.mjtObj.mjOBJ_SITE,
 }
 
 
@@ -134,11 +136,13 @@ def add_sensors(spec: object, sensors_xml: Path) -> None:
     for sensor in ET.parse(sensors_xml).getroot().iter():
         if sensor.tag not in SENSOR_TYPE_BY_TAG:
             continue
+        objtype_name = sensor.get("objtype", "site" if sensor.tag == "touch" else "")
+        objname = sensor.get("objname", sensor.get("site"))
         spec.add_sensor(
             name=sensor.get("name"),
             type=SENSOR_TYPE_BY_TAG[sensor.tag],
-            objtype=SENSOR_OBJTYPE_BY_NAME[sensor.get("objtype", "")],
-            objname=sensor.get("objname"),
+            objtype=SENSOR_OBJTYPE_BY_NAME[objtype_name],
+            objname=objname,
         )
 
 
