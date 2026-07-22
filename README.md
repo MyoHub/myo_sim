@@ -87,7 +87,10 @@ print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")
 git clone https://github.com/MyoHub/myo_sim.git
 cd myo_sim
 uv sync --dev
-uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py
+uv run pytest tests/ -x -n auto \
+  --ignore=tests/test_equivalence.py \
+  --ignore=tests/test_bimanual_muscle_symmetry.py \
+  --ignore=tests/test_muscle_length_params.py
 ```
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.

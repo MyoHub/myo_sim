@@ -7,8 +7,8 @@ These tests document calibration consistency problems in the shipped models:
 * ``gainprm[0]``/``[1]`` (operating range) can fall outside ``[lmin, lmax]``.
 * Measured musculotendon path can fall outside declared ``lengthrange``.
 
-They are **excluded** from the default CI pytest invocation and run only from the
-``muscle-params`` workflow job when model XML (or these files) change.
+**Not part of the default PR CI gate.** Run manually or via the pre-release job in
+``.github/workflows/publish.yml`` before cutting a release.
 
 Recalculation helper: ``tests/recalc_from_fl_bounds.py``.
 """
