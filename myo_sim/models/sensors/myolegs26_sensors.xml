@@ -1,0 +1,16 @@
+<mujocoinclude>
+  <sensor>
+    <touch name="r_foot" site="r_foot_touch" />
+    <touch name="r_toes" site="r_toes_touch" />
+    <touch name="l_foot" site="l_foot_touch" />
+    <touch name="l_toes" site="l_toes_touch" />
+    <jointlimitfrc name="r_knee_sensor" joint="knee_angle_r" />
+    <jointlimitfrc name="l_knee_sensor" joint="knee_angle_l" />
+    <jointlimitfrc name="r_hip_sensor" joint="hip_flexion_r" />
+    <jointlimitfrc name="l_hip_sensor" joint="hip_flexion_l" />
+    <jointlimitfrc name="r_ankle_sensor" joint="ankle_angle_r" />
+    <jointlimitfrc name="l_ankle_sensor" joint="ankle_angle_l" />
+    <jointlimitfrc name="r_mtp_sensor" joint="mtp_angle_r" />
+    <jointlimitfrc name="l_mtp_sensor" joint="mtp_angle_l" />
+  </sensor>
+</mujocoinclude>

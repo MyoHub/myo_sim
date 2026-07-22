@@ -75,45 +75,4 @@
     <joint joint1="gastroc_l_med_gas_l-P2_y" joint2="knee_angle_l" polycoef="0 0.005715 0.000798 -0.000872 -5.764e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
     <joint joint1="gastroc_l_med_gas_l-P2_z" joint2="knee_angle_l" polycoef="0 -0.001413 -0.0001974 0.0002157 1.426e-05" solimp="0.9999 0.9999 0.001 0.5 2" />
   </equality>
-  <sensor>
-    <touch name="r_foot" site="r_foot_touch" />
-    <touch name="r_toes" site="r_toes_touch" />
-    <touch name="l_foot" site="l_foot_touch" />
-    <touch name="l_toes" site="l_toes_touch" />
-    <jointlimitfrc name="r_knee_sensor" joint="knee_angle_r" />
-    <jointlimitfrc name="l_knee_sensor" joint="knee_angle_l" />
-    <jointlimitfrc name="r_hip_sensor" joint="hip_flexion_r" />
-    <jointlimitfrc name="l_hip_sensor" joint="hip_flexion_l" />
-    <jointlimitfrc name="r_ankle_sensor" joint="ankle_angle_r" />
-    <jointlimitfrc name="l_ankle_sensor" joint="ankle_angle_l" />
-    <jointlimitfrc name="r_mtp_sensor" joint="mtp_angle_r" />
-    <jointlimitfrc name="l_mtp_sensor" joint="mtp_angle_l" />
-  </sensor>
-  <contact>
-    <pair geom1="femur_r_geom_1" geom2="femur_l_geom_1" />
-    <pair geom1="femur_r_geom_1" geom2="tibia_l_geom_1" />
-    <pair geom1="femur_r_geom_1" geom2="tibia_l_geom_2" />
-    <pair geom1="femur_r_geom_1" geom2="talus_l_geom_1" />
-    <pair geom1="femur_r_geom_1" geom2="calcn_l_geom_1" />
-    <pair geom1="tibia_r_geom_1" geom2="femur_l_geom_1" />
-    <pair geom1="tibia_r_geom_1" geom2="tibia_l_geom_1" />
-    <pair geom1="tibia_r_geom_1" geom2="tibia_l_geom_2" />
-    <pair geom1="tibia_r_geom_1" geom2="talus_l_geom_1" />
-    <pair geom1="tibia_r_geom_1" geom2="calcn_l_geom_1" />
-    <pair geom1="tibia_r_geom_2" geom2="femur_l_geom_1" />
-    <pair geom1="tibia_r_geom_2" geom2="tibia_l_geom_1" />
-    <pair geom1="tibia_r_geom_2" geom2="tibia_l_geom_2" />
-    <pair geom1="tibia_r_geom_2" geom2="talus_l_geom_1" />
-    <pair geom1="tibia_r_geom_2" geom2="calcn_l_geom_1" />
-    <pair geom1="talus_r_geom_1" geom2="femur_l_geom_1" />
-    <pair geom1="talus_r_geom_1" geom2="tibia_l_geom_1" />
-    <pair geom1="talus_r_geom_1" geom2="tibia_l_geom_2" />
-    <pair geom1="talus_r_geom_1" geom2="talus_l_geom_1" />
-    <pair geom1="talus_r_geom_1" geom2="calcn_l_geom_1" />
-    <pair geom1="calcn_r_geom_1" geom2="femur_l_geom_1" />
-    <pair geom1="calcn_r_geom_1" geom2="tibia_l_geom_1" />
-    <pair geom1="calcn_r_geom_1" geom2="tibia_l_geom_2" />
-    <pair geom1="calcn_r_geom_1" geom2="talus_l_geom_1" />
-    <pair geom1="calcn_r_geom_1" geom2="calcn_l_geom_1" />
-  </contact>
 </mujocoinclude>

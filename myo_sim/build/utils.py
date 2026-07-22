@@ -75,11 +75,16 @@ SENSOR_TYPE_BY_TAG = {
     "framelinvel": mujoco.mjtSensor.mjSENS_FRAMELINVEL,
     "frameangvel": mujoco.mjtSensor.mjSENS_FRAMEANGVEL,
     "touch": mujoco.mjtSensor.mjSENS_TOUCH,
+    "jointlimitfrc": mujoco.mjtSensor.mjSENS_JOINTLIMITFRC,
 }
 SENSOR_OBJTYPE_BY_NAME = {
     "body": mujoco.mjtObj.mjOBJ_BODY,
     "site": mujoco.mjtObj.mjOBJ_SITE,
+    "joint": mujoco.mjtObj.mjOBJ_JOINT,
 }
+# Default (objtype, source-attribute) per tag when objtype/objname are omitted:
+# touch references a <site>, jointlimitfrc references a <joint>.
+_SENSOR_DEFAULT_OBJ = {"touch": ("site", "site"), "jointlimitfrc": ("joint", "joint")}
 
 
 def _existing_pair_names(spec: object) -> set[str]:
@@ -136,8 +141,9 @@ def add_sensors(spec: object, sensors_xml: Path) -> None:
     for sensor in ET.parse(sensors_xml).getroot().iter():
         if sensor.tag not in SENSOR_TYPE_BY_TAG:
             continue
-        objtype_name = sensor.get("objtype", "site" if sensor.tag == "touch" else "")
-        objname = sensor.get("objname", sensor.get("site"))
+        default_objtype, default_attr = _SENSOR_DEFAULT_OBJ.get(sensor.tag, ("", None))
+        objtype_name = sensor.get("objtype", default_objtype)
+        objname = sensor.get("objname") or (sensor.get(default_attr) if default_attr else None)
         spec.add_sensor(
             name=sensor.get("name"),
             type=SENSOR_TYPE_BY_TAG[sensor.tag],

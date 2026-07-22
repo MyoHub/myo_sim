@@ -78,6 +78,8 @@ LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
 FULLBODY_SENSORS_XML = ROOT / "sensors" / "myofullbody_sensors.xml"
 LEGS_SENSORS_XML = ROOT / "sensors" / "myolegs_sensors.xml"
+LEGS26_CONTACTS_XML = ROOT / "contacts" / "myolegs26_contacts.xml"
+LEGS26_SENSORS_XML = ROOT / "sensors" / "myolegs26_sensors.xml"
 RIGHT_ARM_ASSETS_XML = ROOT / "arm" / "assets" / "myoarm_r_assets.xml"
 RIGHT_ARM_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_tendon.xml"
 RIGHT_ARM_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_muscle.xml"
@@ -372,6 +374,8 @@ def load_legs26_spec() -> mujoco.MjSpec:
     )
     legs = mujoco.MjSpec.from_string(legs_xml)
     legs.compiler.balanceinertia = True
+    add_contact_pairs(legs, LEGS26_CONTACTS_XML)
+    add_sensors(legs, LEGS26_SENSORS_XML)
     return legs
 
 

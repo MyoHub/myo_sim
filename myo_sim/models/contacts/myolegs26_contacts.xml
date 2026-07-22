@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<mujocoinclude>
+    <contact>
+        <pair geom1="femur_r_geom_1" geom2="femur_l_geom_1" />
+        <pair geom1="femur_r_geom_1" geom2="tibia_l_geom_1" />
+        <pair geom1="femur_r_geom_1" geom2="tibia_l_geom_2" />
+        <pair geom1="femur_r_geom_1" geom2="talus_l_geom_1" />
+        <pair geom1="femur_r_geom_1" geom2="calcn_l_geom_1" />
+        <pair geom1="tibia_r_geom_1" geom2="femur_l_geom_1" />
+        <pair geom1="tibia_r_geom_1" geom2="tibia_l_geom_1" />
+        <pair geom1="tibia_r_geom_1" geom2="tibia_l_geom_2" />
+        <pair geom1="tibia_r_geom_1" geom2="talus_l_geom_1" />
+        <pair geom1="tibia_r_geom_1" geom2="calcn_l_geom_1" />
+        <pair geom1="tibia_r_geom_2" geom2="femur_l_geom_1" />
+        <pair geom1="tibia_r_geom_2" geom2="tibia_l_geom_1" />
+        <pair geom1="tibia_r_geom_2" geom2="tibia_l_geom_2" />
+        <pair geom1="tibia_r_geom_2" geom2="talus_l_geom_1" />
+        <pair geom1="tibia_r_geom_2" geom2="calcn_l_geom_1" />
+        <pair geom1="talus_r_geom_1" geom2="femur_l_geom_1" />
+        <pair geom1="talus_r_geom_1" geom2="tibia_l_geom_1" />
+        <pair geom1="talus_r_geom_1" geom2="tibia_l_geom_2" />
+        <pair geom1="talus_r_geom_1" geom2="talus_l_geom_1" />
+        <pair geom1="talus_r_geom_1" geom2="calcn_l_geom_1" />
+        <pair geom1="calcn_r_geom_1" geom2="femur_l_geom_1" />
+        <pair geom1="calcn_r_geom_1" geom2="tibia_l_geom_1" />
+        <pair geom1="calcn_r_geom_1" geom2="tibia_l_geom_2" />
+        <pair geom1="calcn_r_geom_1" geom2="talus_l_geom_1" />
+        <pair geom1="calcn_r_geom_1" geom2="calcn_l_geom_1" />
+    </contact>
+</mujocoinclude>
