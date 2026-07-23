@@ -15,6 +15,7 @@ Available registered models:
 - `myoarm_r`: passive anatomical torso scaffold plus right arm only.
 - `myotorso_arm_r`: full torso plus right arm only.
 - `myofullbody`: torso, mirrored arms, and legs.
+- `myolegs26`: passive anatomical torso scaffold with reduced 26-muscle legs.
 - `myolegs_abdomen`: simple abdomen scaffold plus legs.
 - `myoarms`: passive anatomical torso scaffold plus mirrored arms.
 - `myohand_r`: passive anatomical torso scaffold plus a right hand derived by pruning `myoarm_r`.

@@ -53,6 +53,29 @@ Example fidelity check (glmax1 left/right moment-arm and force-length plot) for 
 
 **myoleg_v0.51 (mj120)** — Added new keyposes to mark convenient poses.
 
+## MyoLeg26 (reduced 26-muscle legs + passive torso)
+
+`myolegs26` pairs the passive anatomical torso scaffold (no arms, no torso muscles) with a reduced
+26-muscle leg chain. It is structurally identical to `myolegs` apart from the muscle count and kinematic simplifications (e.g., planar joints).
+
+### Anatomical scope
+
+| Property | Value |
+|---|---|
+| Degrees of freedom | 18 (46 incl. equality-coupled moving-via-point DoFs) |
+| Actuators (muscles) | 26 |
+| Body segments | pelvis + legs (calcn / femur / talus / tibia / toes, L+R) + passive torso scaffold (spine, ribs, head; no arms) |
+| Primary joints | hip_flexion, hip_adduction, hip_rotation, knee_angle, ankle_angle, mtp_angle (bilateral) |
+
+### Reference & credits
+
+Reduced from the OpenSim gait2392 / gait9dof18 lineage (Ajay Seth, based on
+Delp et al. 1990; muscle strengths after Handsfield/Rajagopal, tuned by
+Carmichael Ong; planar knee after Yamaguchi & Zajac 1989). Adapted for MyoLeg
+by Chun Kwang Tan (sagittal-plane joints, ankle ROM, GRF foot sensors) and
+extended by Calder Robbins (toes + mtp joints, EDL/FDL muscles). License:
+CC-BY 3.0.
+
 ## Citation
 
 See repository README.

@@ -17,6 +17,7 @@ plus a Python package for loading and composing them.
 | [**MyoTorso**](myo_sim/models/torso/README.md) (MyoBack) | 18 | 210 | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="160"> | stable |
 | [**MyoHand**](myo_sim/models/arm/README.md) | 23 | 39 | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="160"> | stable |
 | [**MyoFullBody**](docs/wiki/build-and-composition.md) | 123 | 416 | <img src="https://github.com/user-attachments/assets/37976636-1952-48a6-83c4-506722db4c82" width="160"/> | stable |
+| [**MyoLeg26**](myo_sim/models/leg/README.md) | 18 | 26 |  |beta |
 | [**MyoFinger**](myo_sim/models/legacy/README.md) | 4 | 5 | <img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="160"> | legacy |
 | [**MyoElbow**](myo_sim/models/legacy/README.md) | 2 | 6 | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="160"> | legacy |
 
@@ -35,6 +36,7 @@ The following registered models can be compiled with `myo_sim.build.compose.buil
 - `myohand_r` — passive anatomical torso scaffold with the right hand derived from the pruned right arm.
 - `myohands` — passive anatomical torso scaffold with right and mirrored-left hands derived from pruned arms.
 - `myolegs` — passive anatomical torso scaffold with legs.
+- `myolegs26` — passive anatomical torso scaffold with reduced-muscle legs and simplified kinematic chain.
 - `myolegs_abdomen` — simple abdomen scaffold with legs.
 - `myofullbody` — full body with torso, mirrored arms, and legs.
 
@@ -44,7 +46,7 @@ To generate compiled MuJoCo XML files for the primary composed assemblies, run:
 uv run python -m myo_sim.build.compose --generate
 ```
 
-This writes loadable XML files for `myoarms`, `myotorso`, `myolegs`, and `myofullbody` under `myo_sim/models/`. Treat these as generated snapshots for GUI viewing and compatibility; for source edits, update the component XML files and `myo_sim/build/compose.py`, then regenerate. Those downstream XMLs are not actively maintained.
+This writes loadable XML files for `myoarms`, `myotorso`, `myolegs`, `myolegs26`, and `myofullbody` under `myo_sim/models/`. Treat these as generated snapshots for GUI viewing and compatibility; for source edits, update the component XML files and `myo_sim/build/compose.py`, then regenerate. Those downstream XMLs are not actively maintained.
 
 ## Install
 

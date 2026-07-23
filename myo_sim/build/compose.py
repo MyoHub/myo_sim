@@ -58,6 +58,7 @@ GENERATE_XML_TARGETS: dict[str, Path] = {
     "myoarms": Path("arm/myoarms.xml"),
     "myotorso": Path("torso/myotorso.xml"),
     "myolegs": Path("leg/myolegs.xml"),
+    "myolegs26": Path("leg/myolegs26.xml"),
     "myofullbody": Path("myofullbody.xml"),
 }
 
@@ -76,6 +77,9 @@ HAND_CONTACTS_XML = ROOT / "contacts" / "myohand_contacts.xml"
 LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
 FULLBODY_SENSORS_XML = ROOT / "sensors" / "myofullbody_sensors.xml"
+LEGS_SENSORS_XML = ROOT / "sensors" / "myolegs_sensors.xml"
+LEGS26_CONTACTS_XML = ROOT / "contacts" / "myolegs26_contacts.xml"
+LEGS26_SENSORS_XML = ROOT / "sensors" / "myolegs26_sensors.xml"
 RIGHT_ARM_ASSETS_XML = ROOT / "arm" / "assets" / "myoarm_r_assets.xml"
 RIGHT_ARM_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_tendon.xml"
 RIGHT_ARM_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_muscle.xml"
@@ -84,6 +88,10 @@ LEGS_ASSETS_XML = ROOT / "leg" / "assets" / "myolegs_assets.xml"
 LEGS_TENDONS_XML = ROOT / "leg" / "assets" / "myolegs_tendon.xml"
 LEGS_MUSCLES_XML = ROOT / "leg" / "assets" / "myolegs_muscle.xml"
 LEGS_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs_chain.xml"
+LEGS26_ASSETS_XML = ROOT / "leg" / "assets" / "myolegs26_assets.xml"
+LEGS26_TENDONS_XML = ROOT / "leg" / "assets" / "myolegs26_tendon.xml"
+LEGS26_MUSCLES_XML = ROOT / "leg" / "assets" / "myolegs26_muscle.xml"
+LEGS26_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs26_chain.xml"
 
 TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
@@ -103,6 +111,7 @@ class BuildStrategy(str, Enum):
     BOTH_HANDS = "both_hands"
     FULLBODY = "fullbody"
     LEGS_BODY = "legs_body"
+    LEGS26_BODY = "legs26_body"
     TORSO_ABDOMEN = "torso_abdomen"
     LEGS_ABDOMEN = "legs_abdomen"
 
@@ -190,6 +199,15 @@ MODEL_REGISTRY = {
         include_left_arm_contacts=False,
         include_arm_contacts=False,
         include_legs=True,
+    ),
+    "myolegs26": ModelRegistration(
+        name="myolegs26",
+        build_strategy=BuildStrategy.LEGS26_BODY,
+        left_arm_strategy=LEFT_ARM_STRATEGY_NONE,
+        description="Passive anatomical torso scaffold + 26-muscle legs",
+        include_left_arm_contacts=False,
+        include_arm_contacts=False,
+        include_legs=False,
     ),
     "myolegs_abdomen": ModelRegistration(
         name="myolegs_abdomen",
@@ -339,6 +357,25 @@ def load_legs_spec() -> mujoco.MjSpec:
     )
     legs = mujoco.MjSpec.from_string(legs_xml)
     legs.compiler.balanceinertia = True
+    add_sensors(legs, LEGS_SENSORS_XML)
+    return legs
+
+
+def load_legs26_spec() -> mujoco.MjSpec:
+    legs_xml = build_child_xml_from_components(
+        model_name="myolegs26_attach",
+        compiler_meshdir=ROOT,
+        assets_xml=LEGS26_ASSETS_XML,
+        tendons_xml=LEGS26_TENDONS_XML,
+        muscles_xml=LEGS26_MUSCLES_XML,
+        chain_xml=LEGS26_CHAIN_XML,
+        root_body_name="myolegs26_root",
+        root_site_name="legs26_root_attach",
+    )
+    legs = mujoco.MjSpec.from_string(legs_xml)
+    legs.compiler.balanceinertia = True
+    add_contact_pairs(legs, LEGS26_CONTACTS_XML)
+    add_sensors(legs, LEGS26_SENSORS_XML)
     return legs
 
 
@@ -482,6 +519,19 @@ def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
     return build_legs_body_spec(registration).compile()
 
 
+def build_legs26_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
+    torso = load_passive_torso_spec(registration)
+    root_body = find_body(torso, "Full Body")
+    root_body.add_freejoint(name="root")
+    legs_frame = root_body.add_frame(name="legs_attach")
+    torso.attach(load_legs26_spec(), prefix="", suffix="", frame=legs_frame)
+    return torso
+
+
+def build_legs26_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+    return build_legs26_body_spec(registration).compile()
+
+
 def build_torso_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
     abdomen = load_torso_abdomen_spec()
     root_body = find_body(abdomen, "root")
@@ -512,6 +562,7 @@ BUILDERS = {
     BuildStrategy.BOTH_HANDS: build_both_hands_from_arm_model,
     BuildStrategy.FULLBODY: build_fullbody_model,
     BuildStrategy.LEGS_BODY: build_legs_body_model,
+    BuildStrategy.LEGS26_BODY: build_legs26_body_model,
     BuildStrategy.TORSO_ABDOMEN: build_torso_abdomen_model,
     BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_model,
 }
@@ -520,6 +571,7 @@ GENERATE_SPEC_BUILDERS = {
     "myoarms": build_arms_body_spec,
     "myotorso": build_torso_body_spec,
     "myolegs": build_legs_body_spec,
+    "myolegs26": build_legs26_body_spec,
     "myofullbody": build_fullbody_spec,
 }
 

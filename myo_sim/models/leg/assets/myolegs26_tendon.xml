@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<mujocoinclude model="MyoLegs26_tendon">
+<!-- =================================================
+    Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
+    Model   :: Myo Legs 26 (MuJoCoV3.3.3)
+    Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huawei Wang, (Charlie) Li, Cheryl Wang, Calder Robbins
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+
+<!-- Reduced legs-only gait model: 26 muscles (OpenSim gait2392 22-muscle base + EDL/FDL).
+     Original gait2392/gait9dof18 by Ajay Seth, based on Delp et al. (1990); muscle strengths
+     (Handsfield/Rajagopal) tuned by Carmichael Ong; planar knee (Yamaguchi & Zajac 1989);
+     patella removed with quadriceps insertions as moving points. License: CC-BY 3.0.
+     Adapted for MyoLeg by Chun Kwang Tan (sagittal-plane joints, ankle ROM, GRF foot sensors);
+     extended by Calder Robbins (toes + mtp joints, EDL/FDL muscles). -->
+
+  <tendon>
+    <spatial name="abd_r_tendon">
+      <site site="abd_r_glut_med2_r-P1" />
+      <site site="abd_r_glut_med2_r-P2" />
+    </spatial>
+    <spatial name="add_r_tendon">
+      <site site="add_r_add_mag1_r-P1" />
+      <site site="add_r_add_mag1_r-P2" />
+    </spatial>
+    <spatial name="hamstrings_r_tendon">
+      <site site="hamstrings_r_semimem_r-P1" />
+      <site site="hamstrings_r_semimem_r-P2" />
+      <site site="hamstrings_r_semimem_r-P3" />
+    </spatial>
+    <spatial name="bifemsh_r_tendon">
+      <site site="bifemsh_r_bifemsh_r-P1" />
+      <site site="bifemsh_r_bifemsh_r-P2" />
+      <site site="bifemsh_r_bifemsh_r-P3" />
+    </spatial>
+    <spatial name="glut_max_r_tendon">
+      <site site="glut_max_r_glut_max2_r-P1" />
+      <site site="glut_max_r_glut_max2_r-P2" />
+      <site site="glut_max_r_glut_max2_r-P3" />
+      <site site="glut_max_r_glut_max2_r-P4" />
+    </spatial>
+    <spatial name="iliopsoas_r_tendon">
+      <site site="iliopsoas_r_psoas_r-P1" />
+      <site site="iliopsoas_r_psoas_r-P2" />
+      <site site="iliopsoas_r_psoas_r-P3" />
+      <site site="iliopsoas_r_psoas_r-P4" />
+      <site site="iliopsoas_r_psoas_r-P5" />
+    </spatial>
+    <spatial name="rect_fem_r_tendon">
+      <site site="rect_fem_r_rect_fem_r-P1" />
+      <site site="rect_fem_r_rect_fem_r-P2" />
+      <site site="rect_fem_r_rect_fem_r-P3" />
+    </spatial>
+    <spatial name="vasti_r_tendon">
+      <site site="vasti_r_vas_int_r-P1" />
+      <site site="vasti_r_vas_int_r-P2" />
+      <site site="vasti_r_vas_int_r-P3" />
+      <site site="vasti_r_vas_int_r-P4" />
+    </spatial>
+    <spatial name="gastroc_r_tendon">
+      <site site="gastroc_r_med_gas_r-P1" />
+      <site site="gastroc_r_med_gas_r-P2" />
+      <site site="gastroc_r_med_gas_r-P3" />
+    </spatial>
+    <spatial name="soleus_r_tendon">
+      <site site="soleus_r_soleus_r-P1" />
+      <site site="soleus_r_soleus_r-P2" />
+    </spatial>
+    <spatial name="tib_ant_r_tendon">
+      <site site="tib_ant_r_tib_ant_r-P1" />
+      <site site="tib_ant_r_tib_ant_r-P2" />
+      <site site="tib_ant_r_tib_ant_r-P3" />
+    </spatial>
+    <spatial name="abd_l_tendon">
+      <site site="abd_l_glut_med2_l-P1" />
+      <site site="abd_l_glut_med2_l-P2" />
+    </spatial>
+    <spatial name="add_l_tendon">
+      <site site="add_l_add_mag1_l-P1" />
+      <site site="add_l_add_mag1_l-P2" />
+    </spatial>
+    <spatial name="hamstrings_l_tendon">
+      <site site="hamstrings_l_semimem_l-P1" />
+      <site site="hamstrings_l_semimem_l-P2" />
+      <site site="hamstrings_l_semimem_l-P3" />
+    </spatial>
+    <spatial name="bifemsh_l_tendon">
+      <site site="bifemsh_l_bifemsh_l-P1" />
+      <site site="bifemsh_l_bifemsh_l-P2" />
+      <site site="bifemsh_l_bifemsh_l-P3" />
+    </spatial>
+    <spatial name="glut_max_l_tendon">
+      <site site="glut_max_l_glut_max2_l-P1" />
+      <site site="glut_max_l_glut_max2_l-P2" />
+      <site site="glut_max_l_glut_max2_l-P3" />
+      <site site="glut_max_l_glut_max2_l-P4" />
+    </spatial>
+    <spatial name="iliopsoas_l_tendon">
+      <site site="iliopsoas_l_psoas_l-P1" />
+      <site site="iliopsoas_l_psoas_l-P2" />
+      <site site="iliopsoas_l_psoas_l-P3" />
+      <site site="iliopsoas_l_psoas_l-P4" />
+      <site site="iliopsoas_l_psoas_l-P5" />
+    </spatial>
+    <spatial name="rect_fem_l_tendon">
+      <site site="rect_fem_l_rect_fem_l-P1" />
+      <site site="rect_fem_l_rect_fem_l-P2" />
+      <site site="rect_fem_l_rect_fem_l-P3" />
+    </spatial>
+    <spatial name="vasti_l_tendon">
+      <site site="vasti_l_vas_int_l-P1" />
+      <site site="vasti_l_vas_int_l-P2" />
+      <site site="vasti_l_vas_int_l-P3" />
+      <site site="vasti_l_vas_int_l-P4" />
+    </spatial>
+    <spatial name="gastroc_l_tendon">
+      <site site="gastroc_l_med_gas_l-P1" />
+      <site site="gastroc_l_med_gas_l-P2" />
+      <site site="gastroc_l_med_gas_l-P3" />
+    </spatial>
+    <spatial name="soleus_l_tendon">
+      <site site="soleus_l_soleus_l-P1" />
+      <site site="soleus_l_soleus_l-P2" />
+    </spatial>
+    <spatial name="tib_ant_l_tendon">
+      <site site="tib_ant_l_tib_ant_l-P1" />
+      <site site="tib_ant_l_tib_ant_l-P2" />
+      <site site="tib_ant_l_tib_ant_l-P3" />
+    </spatial>
+    <spatial name="edl_r_tendon" springlength="0.368875">
+      <site site="edl_r-P1" />
+      <site site="edl_r-P2" />
+      <site site="edl_r-P3" />
+      <site site="edl_r-P4" />
+      <site site="edl_r-P5" />
+      <site site="edl_r-P6" />
+    </spatial>
+    <spatial name="fdl_r_tendon" springlength="0.378773">
+      <site site="fdl_r-P1" />
+      <site site="fdl_r-P2" />
+      <site site="fdl_r-P3" />
+      <site site="fdl_r-P4" />
+      <site site="fdl_r-P5" />
+      <site site="fdl_r-P6" />
+      <site site="fdl_r-P7" />
+      <site site="fdl_r-P8" />
+    </spatial>
+    <spatial name="edl_l_tendon" springlength="0.368875">
+      <site site="edl_l-P1" />
+      <site site="edl_l-P2" />
+      <site site="edl_l-P3" />
+      <site site="edl_l-P4" />
+      <site site="edl_l-P5" />
+      <site site="edl_l-P6" />
+    </spatial>
+    <spatial name="fdl_l_tendon" springlength="0.378773">
+      <site site="fdl_l-P1" />
+      <site site="fdl_l-P2" />
+      <site site="fdl_l-P3" />
+      <site site="fdl_l-P4" />
+      <site site="fdl_l-P5" />
+      <site site="fdl_l-P6" />
+      <site site="fdl_l-P7" />
+      <site site="fdl_l-P8" />
+    </spatial>
+  </tendon>
+</mujocoinclude>

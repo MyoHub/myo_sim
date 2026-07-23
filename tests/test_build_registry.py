@@ -1,3 +1,4 @@
+import xml.etree.ElementTree as ET
 from dataclasses import fields
 from pathlib import Path
 
@@ -33,6 +34,7 @@ def test_every_registered_model_has_build_strategy():
         "myohands": BuildStrategy.BOTH_HANDS,
         "myofullbody": BuildStrategy.FULLBODY,
         "myolegs": BuildStrategy.LEGS_BODY,
+        "myolegs26": BuildStrategy.LEGS26_BODY,
         "myotorso_abdomen": BuildStrategy.TORSO_ABDOMEN,
         "myolegs_abdomen": BuildStrategy.LEGS_ABDOMEN,
     }
@@ -63,6 +65,7 @@ def test_generate_xml_files_writes_base_model_outputs(tmp_path, monkeypatch):
         "myoarms": Path("arm/myoarms.xml"),
         "myotorso": Path("torso/myotorso.xml"),
         "myolegs": Path("leg/myolegs.xml"),
+        "myolegs26": Path("leg/myolegs26.xml"),
         "myofullbody": Path("myofullbody.xml"),
     }
     spec_calls = []
@@ -150,6 +153,45 @@ def test_generated_xml_keeps_floor_collision_enabled(tmp_path):
         assert floor_id >= 0, output_path
         assert model.geom_contype[floor_id] == 1, output_path
         assert model.geom_conaffinity[floor_id] == 1, output_path
+
+
+def test_myolegs26_knee_reset_uses_baked_tibia_offsets():
+    model = build_model("myolegs26")
+    knee_translation_joints = (
+        "knee_r_translation1",
+        "knee_r_translation2",
+        "knee_l_translation1",
+        "knee_l_translation2",
+    )
+
+    for joint_name in knee_translation_joints:
+        joint_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, joint_name)
+        qpos_adr = model.jnt_qposadr[joint_id]
+
+        assert abs(model.qpos0[qpos_adr]) < 1e-12, joint_name
+        assert model.jnt_range[joint_id][0] <= 0 <= model.jnt_range[joint_id][1], joint_name
+
+    equality_root = ET.parse(compose.LEGS26_ASSETS_XML).getroot().find("equality")
+    knee_polycoef_offsets = {
+        joint.get("joint1"): float(joint.get("polycoef", "").split()[0])
+        for joint in equality_root.iter("joint")
+        if joint.get("joint1") in knee_translation_joints
+    }
+
+    assert knee_polycoef_offsets == {joint_name: 0.0 for joint_name in knee_translation_joints}
+
+
+def test_myolegs26_loads_assembled_at_qpos0():
+    model = build_model("myolegs26")
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+
+    eq_residual = max(
+        (abs(data.efc_pos[i]) for i in range(data.nefc) if data.efc_type[i] == mujoco.mjtConstraint.mjCNSTR_EQUALITY),
+        default=0.0,
+    )
+
+    assert eq_residual < 1e-6
 
 
 def test_generated_myofullbody_uses_musclemimic_scene(tmp_path):
