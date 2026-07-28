@@ -711,7 +711,7 @@ def main() -> None:
             print(f"generated: {output_path}")
         return
 
-    model = build_model(args.model)
+    model = build_spec(args.model).compile()
     registration = MODEL_REGISTRY[args.model]
     print(f"compiled {args.model}: nbody={model.nbody}, njnt={model.njnt}, nu={model.nu}")
     print(f"description: {registration.description}")

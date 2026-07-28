@@ -9,6 +9,7 @@ from myo_sim.build.compose import ALIASES, MODEL_REGISTRY, BuildStrategy, ModelR
 from myo_sim import load_model
 import myo_sim
 
+
 def test_aliases_resolve_to_registered_models():
     unknown = {target for target in ALIASES.values() if target not in MODEL_REGISTRY}
 

@@ -12,6 +12,7 @@ import pytest
 from myo_sim.build.compose import MODEL_REGISTRY
 from myo_sim import load_model
 
+
 STEPS = 50
 
 
