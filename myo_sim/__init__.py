@@ -122,8 +122,10 @@ def load(name: str) -> tuple:
     left-hand-only MjSpec builder, use FRAGMENT_SPEC_BUILDERS["myohand_l"].
     """
     import mujoco
+
     model = load_model(name)
     return model, mujoco.MjData(model)
+
 
 def load_model(name: str) -> tuple:
     spec = load_spec(name)

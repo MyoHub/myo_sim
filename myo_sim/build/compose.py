@@ -497,7 +497,6 @@ def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
-
 def build_legs_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     root_body = find_body(torso, "Full Body")
@@ -506,7 +505,6 @@ def build_legs_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
     return torso
-
 
 
 def build_legs26_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
