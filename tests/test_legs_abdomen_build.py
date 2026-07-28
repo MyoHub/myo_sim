@@ -2,7 +2,7 @@ from pathlib import Path
 
 import mujoco
 
-from myo_sim.build.compose import build_model
+from myo_sim import load_model
 
 ROOT = Path(__file__).resolve().parents[1]
 TORSO_ASSETS = ROOT / "myo_sim" / "models" / "torso" / "assets"
@@ -17,7 +17,7 @@ def joint_names(model) -> set[str]:
 
 
 def test_myotorso_abdomen_builds_from_registered_spec():
-    model = build_model("myotorso_abdomen")
+    model = load_model("myotorso_abdomen")
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_BODY, "sacrum") >= 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_BODY, "lumbar5") >= 0
@@ -27,13 +27,13 @@ def test_myotorso_abdomen_builds_from_registered_spec():
 
 
 def test_myotorso_abdomen_locks_all_but_base_lumbar5_joints():
-    model = build_model("myotorso_abdomen")
+    model = load_model("myotorso_abdomen")
 
     assert joint_names(model) == {"flex_extension", "lat_bending", "axial_rotation"}
 
 
 def test_myotorso_chain_contains_simple_abdomen_compatibility_points():
-    model = build_model("myotorso_abdomen")
+    model = load_model("myotorso_abdomen")
     required_sites = (
         "ercspn_r_ercspn_r-P1",
         "ercspn_l_ercspn_l-P1",
@@ -72,7 +72,7 @@ def test_myotorso_abdomen_uses_full_torso_assets_and_chain():
 
 
 def test_myolegs_builds_with_passive_torso_scaffold():
-    model = build_model("myolegs")
+    model = load_model("myolegs")
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_BODY, "Full Body") >= 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_BODY, "pelvis") >= 0
@@ -83,7 +83,7 @@ def test_myolegs_builds_with_passive_torso_scaffold():
 
 
 def test_myolegs_abdomen_builds_from_registered_spec():
-    model = build_model("myolegs_abdomen")
+    model = load_model("myolegs_abdomen")
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_BODY, "pelvis") >= 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_BODY, "sacrum") >= 0

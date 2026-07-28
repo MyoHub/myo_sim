@@ -333,7 +333,9 @@ def build_mirrored_child_xml(
     root_site_name: str,
     rules: MirrorRules | None = None,
 ) -> str:
-    """Build a mirrored MJCF child XML from right-side arm component files."""
+    """
+    TODO: Mirroring is feasible to do via MjSpec. Let's avoid editing xmls unless absolutely necessary.
+    Build a mirrored MJCF child XML from right-side arm component files."""
     if rules is None:
         rules = MirrorRules()
     root = ET.Element("mujoco", {"model": model_name})

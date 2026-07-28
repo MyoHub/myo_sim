@@ -95,6 +95,8 @@ def _legs26_spec():
     return load_legs26_spec()
 
 
+# TODO: there should be a myohand_l alias, which should work with load. Also a given name (myolegs) should refer to the
+#       same model consistently.
 # Maps fragment names to zero-arg callables returning an editable (uncompiled)
 # MjSpec, with no torso scaffold.  Used by downstream consumers (e.g. myosuite
 # ModelBuilder, assist_sim) so that attaching a fragment routes through the compose
@@ -120,35 +122,39 @@ def load(name: str) -> tuple:
     left-hand-only MjSpec builder, use FRAGMENT_SPEC_BUILDERS["myohand_l"].
     """
     import mujoco
+    model = load_model(name)
+    return model, mujoco.MjData(model)
 
-    from myo_sim.build.compose import ALIASES, build_model
+def load_model(name: str) -> tuple:
+    spec = load_spec(name)
+    model = spec.compile()
+    return model
+
+
+def load_spec(name: str) -> "mujoco.MjSpec":
+    """Build and return the uncompiled MjSpec for a named model.
+
+    Unlike load(), this stops at the editable MjSpec so downstream consumers
+    (e.g. assist_sim) can edit the model -- attach devices, delete bodies, add
+    actuators -- before compiling it themselves.
+    """
+    import mujoco
+
+    from myo_sim.build.compose import ALIASES, build_spec
 
     composed_models = _composed_models()
     if name in composed_models:
         # Legacy aliases (e.g. hand, myohand, myoarm) resolve to a registry entry.
         composed_name = ALIASES.get(name, name)
-        model = build_model(composed_name)
-        return model, mujoco.MjData(model)
+        spec = build_spec(composed_name)
+        return spec
 
     if name not in REGISTRY:
         available = sorted(composed_models | frozenset(REGISTRY))
         raise ValueError(f"Unknown model {name!r}. Available: {available}")
 
-    model = mujoco.MjModel.from_xml_path(str(get_xml_path(name)))
-    return model, mujoco.MjData(model)
-
-
-def build_spec(name: str) -> "mujoco.MjSpec":
-    """Return the uncompiled MjSpec for a composed model (mirror of load()).
-
-    Unlike load(), this stops at the editable MjSpec so downstream consumers
-    (e.g. assist_sim) can edit the model -- attach devices, delete bodies, add
-    actuators -- before compiling it themselves. Covers the generated composed
-    specs (myoarms, myotorso, myolegs, myolegs26, myofullbody).
-    """
-    from myo_sim.build.compose import build_generated_model_spec
-
-    return build_generated_model_spec(name)
+    spec = mujoco.MjSpec.from_file(str(get_xml_path(name)))
+    return spec
 
 
 def get_path(rel: str) -> Path:

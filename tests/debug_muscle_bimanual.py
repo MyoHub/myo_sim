@@ -35,9 +35,9 @@ JOINT_SUFFIX = {"right": "_r", "left": "_l"}
 
 
 def load_model(model_name: str):
-    from myo_sim.build.compose import build_model
+    from myo_sim import load_model
 
-    return build_model(model_name)
+    return load_model(model_name)
 
 
 def load_equality_map(model, model_name: str):

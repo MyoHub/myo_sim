@@ -1,6 +1,6 @@
 """MjSpec.attach()-based composition of the myo_sim musculoskeletal models.
 
-This is the production build pipeline: ``build_model(name)`` is the public entry
+This is the production build pipeline: ``build_spec(name)`` is the public entry
 point and every composed model in ``MODEL_REGISTRY`` is compiled through it.
 
 Run from the repository root:
@@ -118,6 +118,10 @@ class BuildStrategy(str, Enum):
 
 @dataclass(frozen=True)
 class ModelRegistration:
+    # TODO: too specific fields. The concept of a left arm is not always relevant, and should be handled
+    #       by the builder of the relevant subspec. Similarly, not all models should  have fields associated with
+    #       contacts specific to the arm, or the body. Each subspec/submodel should have a relevant and specific config,
+    #       with generalist fields, and perhaps some specific ones from a childclass of ModelRegistration.
     name: str
     build_strategy: BuildStrategy
     left_arm_strategy: str
@@ -285,10 +289,6 @@ def build_torso_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return load_torso_spec(registration)
 
 
-def build_torso_body_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_torso_body_spec(registration).compile()
-
-
 def make_torso_passive(torso: mujoco.MjSpec) -> None:
     """Remove torso dynamics so the anatomical torso acts as a fixed scaffold."""
     for equality in list(torso.equalities):
@@ -420,15 +420,11 @@ def build_arms_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
-def build_arms_body_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_arms_body_spec(registration).compile()
-
-
-def build_right_arm_body_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_right_arm_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
 
-    return torso.compile()
+    return torso
 
 
 def load_right_hand_from_arm_spec() -> mujoco.MjSpec:
@@ -446,7 +442,7 @@ def load_left_hand_from_arm_spec() -> mujoco.MjSpec:
     return hand
 
 
-def build_right_hand_from_arm_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_right_hand_from_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     torso.attach(load_right_hand_from_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     add_contact_pairs(
@@ -454,15 +450,15 @@ def build_right_hand_from_arm_model(registration: ModelRegistration) -> mujoco.M
         HAND_CONTACTS_XML,
         include_pair=lambda pair: pair_is_supported(pair, include_left_arm_contacts=False),
     )
-    return torso.compile()
+    return torso
 
 
-def build_both_hands_from_arm_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_both_hands_from_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
     torso.attach(load_right_hand_from_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     torso.attach(load_left_hand_from_arm_spec(), prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
     add_contact_pairs(torso, HAND_CONTACTS_XML)
-    return torso.compile()
+    return torso
 
 
 def load_left_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec | None:
@@ -473,7 +469,7 @@ def load_left_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec | None:
     raise ValueError(f"Unknown left arm strategy for {registration.name}: {registration.left_arm_strategy}")
 
 
-def build_torso_arms_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_torso_arms_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_torso_spec(registration)
     right_arm = load_right_arm_spec()
     left_arm = load_left_arm_spec(registration)
@@ -482,7 +478,7 @@ def build_torso_arms_model(registration: ModelRegistration) -> mujoco.MjModel:
     if left_arm is not None:
         torso.attach(left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
 
-    return torso.compile()
+    return torso
 
 
 def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
@@ -501,9 +497,6 @@ def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
-def build_fullbody_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_fullbody_spec(registration).compile()
-
 
 def build_legs_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
@@ -515,9 +508,6 @@ def build_legs_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
-def build_legs_body_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_legs_body_spec(registration).compile()
-
 
 def build_legs26_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = load_passive_torso_spec(registration)
@@ -528,19 +518,15 @@ def build_legs26_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
-def build_legs26_body_model(registration: ModelRegistration) -> mujoco.MjModel:
-    return build_legs26_body_spec(registration).compile()
-
-
-def build_torso_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_torso_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     abdomen = load_torso_abdomen_spec()
     root_body = find_body(abdomen, "root")
     root_body.pos = registration.root_pos
     root_body.quat = TORSO_ABDOMEN_ROOT_QUAT
-    return abdomen.compile()
+    return abdomen
 
 
-def build_legs_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
+def build_legs_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     abdomen = load_torso_abdomen_spec()
 
     root_body = find_body(abdomen, "root")
@@ -550,49 +536,31 @@ def build_legs_abdomen_model(registration: ModelRegistration) -> mujoco.MjModel:
     legs_frame = root_body.add_frame(name="legs_attach")
     abdomen.attach(load_legs_spec(), prefix="", suffix="", frame=legs_frame)
 
-    return abdomen.compile()
+    return abdomen
 
 
-BUILDERS = {
-    BuildStrategy.TORSO_BODY: build_torso_body_model,
-    BuildStrategy.TORSO_ARMS: build_torso_arms_model,
-    BuildStrategy.ARMS_BODY: build_arms_body_model,
-    BuildStrategy.RIGHT_ARM_BODY: build_right_arm_body_model,
-    BuildStrategy.RIGHT_HAND: build_right_hand_from_arm_model,
-    BuildStrategy.BOTH_HANDS: build_both_hands_from_arm_model,
-    BuildStrategy.FULLBODY: build_fullbody_model,
-    BuildStrategy.LEGS_BODY: build_legs_body_model,
-    BuildStrategy.LEGS26_BODY: build_legs26_body_model,
-    BuildStrategy.TORSO_ABDOMEN: build_torso_abdomen_model,
-    BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_model,
-}
-
-GENERATE_SPEC_BUILDERS = {
-    "myoarms": build_arms_body_spec,
-    "myotorso": build_torso_body_spec,
-    "myolegs": build_legs_body_spec,
-    "myolegs26": build_legs26_body_spec,
-    "myofullbody": build_fullbody_spec,
+SPEC_BUILDERS = {
+    BuildStrategy.TORSO_BODY: build_torso_body_spec,
+    BuildStrategy.TORSO_ARMS: build_torso_arms_spec,
+    BuildStrategy.ARMS_BODY: build_arms_body_spec,
+    BuildStrategy.RIGHT_ARM_BODY: build_right_arm_body_spec,
+    BuildStrategy.RIGHT_HAND: build_right_hand_from_arm_spec,
+    BuildStrategy.BOTH_HANDS: build_both_hands_from_arm_spec,
+    BuildStrategy.FULLBODY: build_fullbody_spec,
+    BuildStrategy.LEGS_BODY: build_legs_body_spec,
+    BuildStrategy.LEGS26_BODY: build_legs26_body_spec,
+    BuildStrategy.TORSO_ABDOMEN: build_torso_abdomen_spec,
+    BuildStrategy.LEGS_ABDOMEN: build_legs_abdomen_spec,
 }
 
 
-def build_model(model_name: str) -> mujoco.MjModel:
+def build_spec(model_name: str) -> mujoco.MjSpec:
     try:
         registration = MODEL_REGISTRY[model_name]
     except KeyError as exc:
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
-    return BUILDERS[registration.build_strategy](registration)
-
-
-def build_generated_model_spec(model_name: str) -> mujoco.MjSpec:
-    try:
-        registration = MODEL_REGISTRY[model_name]
-        builder = GENERATE_SPEC_BUILDERS[model_name]
-    except KeyError as exc:
-        available = ", ".join(GENERATE_XML_TARGETS)
-        raise ValueError(f"Cannot generate XML for model selection: {model_name}. Available: {available}") from exc
-    return builder(registration)
+    return SPEC_BUILDERS[registration.build_strategy](registration)
 
 
 def unwrap_nested_classless_defaults(element: ET.Element) -> None:
@@ -695,7 +663,7 @@ def generate_xml_files(output_root: Path = ROOT) -> list[Path]:
     output_paths: list[Path] = []
     for model_name, rel_path in GENERATE_XML_TARGETS.items():
         output_path = output_root / rel_path
-        spec = build_generated_model_spec(model_name)
+        spec = build_spec(model_name)
         write_spec_xml(spec, output_path)
         output_paths.append(output_path)
     return output_paths
