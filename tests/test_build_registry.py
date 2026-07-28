@@ -4,10 +4,10 @@ from pathlib import Path
 
 import mujoco
 
+import myo_sim
+from myo_sim import load_model
 from myo_sim.build import compose
 from myo_sim.build.compose import ALIASES, MODEL_REGISTRY, BuildStrategy, ModelRegistration
-from myo_sim import load_model
-import myo_sim
 
 
 def test_aliases_resolve_to_registered_models():

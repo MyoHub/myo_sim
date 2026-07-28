@@ -9,9 +9,8 @@ import mujoco
 import numpy as np
 import pytest
 
-from myo_sim.build.compose import MODEL_REGISTRY
 from myo_sim import load_model
-
+from myo_sim.build.compose import MODEL_REGISTRY
 
 STEPS = 50
 
