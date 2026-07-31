@@ -4,7 +4,7 @@ from pathlib import Path
 import mujoco
 
 import myo_sim
-from myo_sim.build.compose import build_model
+from myo_sim import load_model
 
 model_paths = [
     "scene/myosuite_scene_noPedestal.xml",
@@ -59,7 +59,7 @@ class TestMuscleMimicFullBody(unittest.TestCase):
 
     def _load(self, rel_path):
         if rel_path == "myofullbody":
-            return build_model("myofullbody")
+            return load_model("myofullbody")
         return mujoco.MjModel.from_xml_path(str(myo_sim.MODELS_DIR / rel_path))
 
     def test_myofullbody_joints(self):
@@ -101,7 +101,7 @@ class TestMuscleMimicFullBody(unittest.TestCase):
         for path, name in parts:
             fullpath = myo_sim.MODELS_DIR / path
             if path in {"myofullbody", "myotorso_arm_r", "myotorso"}:
-                m = build_model(path)
+                m = load_model(path)
                 print(f"  {name:30s}  njnt={m.njnt:4d}  nu={m.nu:4d}")
             elif fullpath.exists():
                 m = mujoco.MjModel.from_xml_path(str(fullpath))

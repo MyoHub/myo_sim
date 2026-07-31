@@ -1,6 +1,6 @@
 import mujoco
 
-from myo_sim.build.compose import build_model
+from myo_sim import load_model
 
 
 def id_for(model, object_type, name: str) -> int:
@@ -8,7 +8,7 @@ def id_for(model, object_type, name: str) -> int:
 
 
 def test_myoarms_uses_passive_anatomical_torso_with_arm_controls_only():
-    model = build_model("myoarms")
+    model = load_model("myoarms")
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_GEOM, "torso_geom_13") >= 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_GEOM, "Chest_ellipsoid_r") >= 0
@@ -21,7 +21,7 @@ def test_myoarms_uses_passive_anatomical_torso_with_arm_controls_only():
 
 
 def test_myoarm_r_uses_passive_anatomical_torso_with_right_arm_only():
-    model = build_model("myoarm_r")
+    model = load_model("myoarm_r")
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_GEOM, "torso_geom_13") >= 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "DELT1") >= 0

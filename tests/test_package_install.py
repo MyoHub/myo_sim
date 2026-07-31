@@ -28,5 +28,5 @@ def test_load_myolegs():
     assert mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "floor") >= 0
 
 
-def test_build_compose_import():
-    from myo_sim.build.compose import build_model  # noqa: F401
+def test_load_import():
+    from myo_sim import load  # noqa: F401

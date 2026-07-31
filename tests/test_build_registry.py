@@ -4,8 +4,10 @@ from pathlib import Path
 
 import mujoco
 
+import myo_sim
+from myo_sim import load_model
 from myo_sim.build import compose
-from myo_sim.build.compose import ALIASES, MODEL_REGISTRY, BuildStrategy, ModelRegistration, build_model
+from myo_sim.build.compose import ALIASES, MODEL_REGISTRY, BuildStrategy, ModelRegistration
 
 
 def test_aliases_resolve_to_registered_models():
@@ -48,7 +50,7 @@ def test_myoarms_uses_default_root_position():
 
 def test_every_registered_model_includes_scene_floor():
     for name in MODEL_REGISTRY:
-        model = build_model(name)
+        model = load_model(name)
 
         assert mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, "floor") >= 0, name
 
@@ -92,14 +94,14 @@ def test_generate_xml_files_writes_base_model_outputs(tmp_path, monkeypatch):
         spec_calls.append(model_name)
         return FakeSpec(model_name)
 
-    def fail_build_model(model_name):
+    def fail_load_model(model_name):
         raise AssertionError(f"generate_xml_files should build specs directly, not compiled models: {model_name}")
 
     def fail_save_last_xml(path, model):
         raise AssertionError("generate_xml_files should use MjSpec.to_xml(), not mj_saveLastXML()")
 
-    monkeypatch.setattr(compose, "build_generated_model_spec", fake_build_generated_model_spec, raising=False)
-    monkeypatch.setattr(compose, "build_model", fail_build_model)
+    monkeypatch.setattr(compose, "build_spec", fake_build_generated_model_spec, raising=False)
+    monkeypatch.setattr(myo_sim, "load_model", fail_load_model)
     monkeypatch.setattr(compose.mujoco, "mj_saveLastXML", fail_save_last_xml)
 
     output_paths = compose.generate_xml_files(tmp_path)
@@ -156,7 +158,7 @@ def test_generated_xml_keeps_floor_collision_enabled(tmp_path):
 
 
 def test_myolegs26_knee_reset_uses_baked_tibia_offsets():
-    model = build_model("myolegs26")
+    model = load_model("myolegs26")
     knee_translation_joints = (
         "knee_r_translation1",
         "knee_r_translation2",
@@ -182,7 +184,7 @@ def test_myolegs26_knee_reset_uses_baked_tibia_offsets():
 
 
 def test_myolegs26_loads_assembled_at_qpos0():
-    model = build_model("myolegs26")
+    model = load_model("myolegs26")
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
 
@@ -207,7 +209,7 @@ def test_generated_xml_preserves_geom_collision_flags(tmp_path):
     output_paths = compose.generate_xml_files(tmp_path)
 
     for model_name, output_path in zip(compose.GENERATE_XML_TARGETS, output_paths):
-        built_model = build_model(model_name)
+        built_model = load_model(model_name)
         generated_model = mujoco.MjModel.from_xml_path(str(output_path))
 
         assert list(generated_model.geom_contype) == list(built_model.geom_contype), output_path

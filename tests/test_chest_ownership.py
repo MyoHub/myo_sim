@@ -4,7 +4,7 @@ import mujoco
 import pytest
 
 import myo_sim
-from myo_sim.build.compose import build_model
+from myo_sim import load_spec
 
 
 def body_id(model, name: str) -> int:
@@ -27,7 +27,7 @@ def test_chest_scaffold_is_torso_owned_not_arm_owned():
 
 @pytest.mark.parametrize("model_name", ("myoarms", "myotorso_arms", "myofullbody"))
 def test_composed_arm_models_do_not_mirror_torso_chest(model_name):
-    model = build_model(model_name)
+    model = load_spec(model_name).compile()
 
     assert body_id(model, "chest_r") >= 0
     assert body_id(model, "cervical_spine") >= 0

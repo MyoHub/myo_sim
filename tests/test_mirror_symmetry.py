@@ -2,7 +2,7 @@ import mujoco
 import numpy as np
 import pytest
 
-from myo_sim.build.compose import build_model
+from myo_sim import load_model
 
 ARM_BODY_PAIRS = (
     "clavicle",
@@ -48,7 +48,7 @@ def mirror_plane_x(model, data):
 
 @pytest.mark.parametrize("model_name", ("myoarms", "myofullbody"))
 def test_mirrored_arm_body_centers_reflect_across_sagittal_plane(model_name):
-    model = build_model(model_name)
+    model = load_model(model_name)
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
     plane_x = mirror_plane_x(model, data)
@@ -70,7 +70,7 @@ def test_mirrored_arm_body_centers_reflect_across_sagittal_plane(model_name):
 
 @pytest.mark.parametrize("model_name", ("myoarms", "myofullbody"))
 def test_mirrored_arm_joint_axes_reflect_across_sagittal_plane(model_name):
-    model = build_model(model_name)
+    model = load_model(model_name)
 
     for base_name in ARM_JOINT_PAIRS:
         right = joint_id(model, f"{base_name}_r")

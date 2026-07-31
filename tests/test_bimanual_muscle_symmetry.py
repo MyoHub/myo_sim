@@ -6,12 +6,12 @@ from muscle_symmetry_checks import (
     discover_bilateral_suffix_pairs,
 )
 
-from myo_sim.build.compose import build_model
+from myo_sim import load_model
 
 
 @pytest.fixture(scope="module")
 def bimanual_model_context():
-    model = build_model("myoarms")
+    model = load_model("myoarms")
     data = mujoco.MjData(model)
     eq_map = parse_model_joint_equalities(model)
     return model, data, eq_map

@@ -9,14 +9,15 @@ import mujoco
 import numpy as np
 import pytest
 
-from myo_sim.build.compose import MODEL_REGISTRY, build_model
+from myo_sim import load_model
+from myo_sim.build.compose import MODEL_REGISTRY
 
 STEPS = 50
 
 
 @pytest.mark.parametrize("name", sorted(MODEL_REGISTRY))
 def test_model_steps_without_going_nonfinite(name):
-    model = build_model(name)
+    model = load_model(name)
     data = mujoco.MjData(model)
 
     for _ in range(STEPS):
