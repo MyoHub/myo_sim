@@ -54,7 +54,11 @@ def test_path_within_lengthrange(model_name: str):
 @pytest.mark.parametrize(
     "model_name,min_unique",
     [
-        # Arm/torso currently share one or two FL defaults — fail to surface the issue.
+        # Arm/torso have historically shared one or two FL defaults across most
+        # actuators; #123 individually calibrates the worst-inflated subset (still
+        # leaves many muscles on the shared default). This threshold is a
+        # regression guard against collapsing back to a single shared default,
+        # not a claim about full per-muscle calibration.
         ("myoarm_r", 5),
         ("myotorso", 5),
         # Legs already vary; require at least a handful of distinct pairs.
