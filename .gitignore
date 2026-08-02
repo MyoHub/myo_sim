@@ -33,6 +33,7 @@ tests/output/
 .vscode/
 .claude/
 
-
 # Generated models
 myo_sim/models/
+
+sandbox/

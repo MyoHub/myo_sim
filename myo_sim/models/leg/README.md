@@ -28,7 +28,7 @@ Example fidelity check (glmax1 left/right moment-arm and force-length plot) for 
 - [ ] #64 — `myoleg` naming used inconsistently across the repository
 - [ ] Endpoints (markers) below the knee joints have approximately 1 cm position differences between the converted MuJoCo and OpenSim model. This may be due to the polynomial approximation of the OpenSim lookup table for knee translation degrees of freedom.
 - [ ] Vastus muscle moment arms at the knee joint have relatively large differences (same sign, a few cm). This may be caused by the dependent joint constraints at the knee and also affects knee extensor muscle force.
-- [ ] Muscle forces are not identical between the converted MuJoCo and OpenSim models due to differences in muscle model definitions (stiff vs. elastic tendons). Elastic tendon support in MuJoCo is not yet implemented for this model.
+- [ ] Muscle forces are not identical between the converted MuJoCo and OpenSim models due to differences in muscle model definitions (stiff vs. elastic tendons). Opt-in series-elastic tendon support is available via `myo_sim.build.elastic` (see `docs/wiki/build-and-composition.md`) for the Achilles group (soleus/gasmed/gaslat); validated against the OpenSim/Millard analytic reference and against published in-vivo human tendon strain data (Finni et al. 2003; Farris et al. 2013; Obst et al. 2014/2016; Magnusson et al. 2003) — see `sandbox/elastic_tendon/` for the validation study. Not wired into the default `myolegs` model.
 - [ ] Muscle moment arms in the reference OpenSim model contain sudden changes (wrapping path jumps), which required the manual adjustments described below.
 
 ## Manual adjustments
@@ -40,6 +40,8 @@ Example fidelity check (glmax1 left/right moment-arm and force-length plot) for 
 - Contact geometries based on the [Yeadon measurement method](https://yeadon.readthedocs.io/en/latest/measurements.html#measurements), slightly adjusted to fit the MuJoCo MSK model. Contact properties were optimized for contact-rich behaviors.
 
 ## Changelog
+
+**2026-08-02** — Restored anatomical optimal fiber length (`L0`), tendon slack length (`LT`), and peak isometric force (`Fmax`) from Rajagopal2016.osim for 6 of the 10 muscles whose `L0` was inflated >1.2x due to an oversized `lengthrange` (`bflh_r/_l`, `gasmed_r/_l`, `tfl_r/_l`, `glmin3_r/_l`, `piri_r/_l`, `semimem_r/_l`), after remeasuring `lengthrange` over a physiological gait-ROM sample (`sandbox/elastic_tendon/leg_param_audit.py`). `recfem_r/_l`, `vasint_r/_l`, `vaslat_r/_l`, and `glmax3_r/_l` were deliberately left unchanged — cross-checking against the OpenSim Millard force prediction showed anatomical retuning *increases* their force error (`sandbox/elastic_tendon/refit_experiment.py`), so the current values are kept despite their `L0` mismatch. Also added opt-in Achilles elastic-tendon support (see the limitations note above). Verified against `myoLegStandRandom-v0`/`myoLegWalk-v0` in myosuite4 (random-action rollout, no NaN/instability). See `docs/wiki/log.md` (2026-08-02 entries) for full detail.
 
 **2026-06-04** — Refactored model loading to use updated leg model XML; added muscle symmetry checks and contact assertion tests.
 
