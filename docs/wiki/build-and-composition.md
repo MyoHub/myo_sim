@@ -184,6 +184,24 @@ The `test_contact_paths.py` test enforces this: it verifies that contact XML pat
 
 Full-body observation compatibility sensors live under `myo_sim/models/sensors/`. They are injected programmatically by `build_fullbody_spec()` after the torso and arms are attached, but before the legs are attached. This keeps the MuscleMimic frame velocity sensors first in `sensordata`, followed by the four leg touch sensors from `myolegs_assets.xml`.
 
+## Optional Elastic Tendons
+
+`myo_sim/build/elastic.py` adds series-elastic (SEE) tendon compliance to individual muscles, opt-in, without touching the shipped rigid XML. It mutates an `MjSpec` obtained from `myo_sim.load_spec(name)`: for each requested muscle it inserts a small virtual body + slide joint between the tendon's last waypoint and the insertion, sets joint stiffness from the requested tendon compliance (`Fmax / (e0 * LT)`), and retargets the spatial tendon to the new site.
+
+```python
+import myo_sim
+from myo_sim.build.elastic import build_elastic_spec, DEFAULT_ACHILLES
+
+spec, meta = build_elastic_spec(lambda: myo_sim.load_spec("myolegs"), muscles=list(DEFAULT_ACHILLES.values()))
+model = spec.compile()
+```
+
+Calling with `muscles=[]` (or omitting `muscles`) is a no-op — the compiled model is identical to `myo_sim.load(name)`. Nothing is wired into `MODEL_REGISTRY` or any default composed model; every muscle is explicitly opted in by the caller.
+
+`DEFAULT_ACHILLES` (soleus/gasmed/gaslat, myolegs right side) is the only bundled parameter set validated against both the OpenSim/Millard analytic reference and published in-vivo human strain data — see `sandbox/elastic_tendon/` for the validation study and its 3-tier evidence framework (real experimental data / OpenSim analytic reference / anatomical-parameter sanity only).
+
+**Before trusting any new muscle's SEE output, call `verify_see_kinematics(model, muscle_name)`.** It perturbs the SEE joint directly and checks the tendon path length responds with `dL/dq ≈ -1`, the kinematic identity every correctly-attached SEE DOF must satisfy. A wrong attachment site (not the tendon's actual last path waypoint — several myo_sim tendons have more waypoints than a quick read of the first few `<site>` lines suggests) gives a silently, wildly wrong `dL/dq` (e.g. +0.82 or +1.0 instead of about -1) rather than an error at build time. This is not a hypothetical: an earlier version of the patellar-tendon/tibialis-anterior extension in `sandbox/elastic_tendon/` shipped with exactly this bug, caught only by this check.
+
 ## Known Limitations and Gotchas
 
 **Mirror axis convention.** `mirror_element` negates the z-component of `pos`/`scale`/`ipos` (treating z as the sagittal mirror axis) and negates x/y components of `axis` vectors. Quaternion mirroring negates the i and j components. If a new body uses `euler` orientation, mirroring is only applied for non-`body` elements (the `euler` branch skips bodies). Verify any new body using `euler` visually with `--view` before committing.
