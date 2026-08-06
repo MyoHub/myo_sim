@@ -699,7 +699,7 @@ def main() -> None:
     parser.add_argument(
         "--generate",
         action="store_true",
-        help="Generate compiled XML files for myoarms, myotorso, myolegs, and myofullbody",
+        help="Generate compiled XML files for myoarms, myotorso, myolegs, myolegs26, and myofullbody",
     )
     parser.add_argument("--view", action="store_true", help="Open MuJoCo viewer")
     args = parser.parse_args()
