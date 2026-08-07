@@ -4,11 +4,13 @@ Reference for agents editing the MjSpec composition pipeline in `myo_sim/build/c
 
 ## Overview
 
-`build_model(name: str)` is the single public entry point. It:
+`build_spec(name: str)` is the core entry point; `build_model(name: str)` is a thin convenience wrapper (`build_spec(name).compile()`) for callers who just want a compiled `MjModel`. Both:
 
-1. Looks up `name` in `MODEL_REGISTRY` to get a `ModelRegistration`.
-2. Dispatches to the matching builder function via `BUILDERS[registration.build_strategy]`.
-3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, injects contact pairs, and calls `spec.compile()` to return an `MjModel`.
+1. Look up `name` in `MODEL_REGISTRY` to get a `ModelRegistration`.
+2. Dispatch to the matching builder function via `SPEC_BUILDERS[registration.build_strategy]`.
+3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, and injects contact pairs / sensors as needed. Every builder returns an editable `MjSpec` (not a compiled `MjModel`) — `build_spec()` stops there so callers can edit further before compiling; `build_model()` compiles it for you.
+
+`myo_sim.load_spec(name)` / `myo_sim.load_model(name)` / `myo_sim.load(name)` (in `myo_sim/__init__.py`) are the package-level entry points most consumers should use instead of calling `compose.py` directly — they also resolve packaged legacy static XMLs and legacy aliases (`hand`, `myoarm`, ...), which `build_spec`/`build_model` do not.
 
 All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/models/` directory). The `compiler_meshdir` for child XMLs is always set to `MODELS_DIR` (the repo root of the models tree) so that relative mesh paths inside the XML resolve correctly.
 
@@ -25,41 +27,45 @@ This generates:
 - `myo_sim/models/arm/myoarms.xml`
 - `myo_sim/models/torso/myotorso.xml`
 - `myo_sim/models/leg/myolegs.xml`
+- `myo_sim/models/leg/myolegs26.xml`
 - `myo_sim/models/myofullbody.xml`
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
 ## MODEL_REGISTRY and BuildStrategy
 
-`BuildStrategy` is a `str` enum. Each value maps to one builder function in `BUILDERS`.
+`BuildStrategy` is a `str` enum. Each value maps to one builder function in `SPEC_BUILDERS`. Every builder returns an `MjSpec`.
 
 | BuildStrategy | Builder function |
 |---|---|
-| `TORSO_ARMS` | `build_torso_arms_model` |
-| `ARMS_BODY` | `build_arms_body_model` |
-| `RIGHT_ARM_BODY` | `build_right_arm_body_model` |
-| `RIGHT_HAND` | `build_right_hand_from_arm_model` |
-| `BOTH_HANDS` | `build_both_hands_from_arm_model` |
-| `FULLBODY` | `build_fullbody_model` |
-| `LEGS_BODY` | `build_legs_body_model` |
-| `TORSO_ABDOMEN` | `build_torso_abdomen_model` |
-| `LEGS_ABDOMEN` | `build_legs_abdomen_model` |
+| `TORSO_BODY` | `build_torso_body_spec` |
+| `TORSO_ARMS` | `build_torso_arms_spec` |
+| `ARMS_BODY` | `build_arms_body_spec` |
+| `RIGHT_ARM_BODY` | `build_right_arm_body_spec` |
+| `RIGHT_HAND` | `build_right_hand_from_arm_spec` |
+| `BOTH_HANDS` | `build_both_hands_from_arm_spec` |
+| `FULLBODY` | `build_fullbody_spec` |
+| `LEGS_BODY` | `build_legs_body_spec` |
+| `LEGS26_BODY` | `build_legs26_body_spec` |
+| `TORSO_ABDOMEN` | `build_torso_abdomen_spec` |
+| `LEGS_ABDOMEN` | `build_legs_abdomen_spec` |
 
 ### Registered models
 
 | Name | BuildStrategy | Description |
 |---|---|---|
+| `myotorso` | `TORSO_BODY` | Torso scaffold with torso muscles |
+| `myotorso_abdomen` | `TORSO_ABDOMEN` | Simple abdomen scaffold |
 | `myotorso_arms` | `TORSO_ARMS` | Torso with active muscles + right arm + mirrored left arm |
 | `myotorso_arm_r` | `TORSO_ARMS` | Torso with active muscles + right arm only |
 | `myoarms` | `ARMS_BODY` | Passive anatomical torso scaffold + mirrored arms |
 | `myoarm_r` | `RIGHT_ARM_BODY` | Passive anatomical torso scaffold + right arm |
 | `myohand_r` | `RIGHT_HAND` | Passive torso scaffold + right hand (pruned from right arm) |
 | `myohands` | `BOTH_HANDS` | Passive torso scaffold + right hand + mirrored left hand |
-| `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
 | `myolegs` | `LEGS_BODY` | Passive anatomical torso scaffold + legs |
-| `myolegs26` | `LEGS26_BASE` | Reduced 26-muscle, legs-only base; free-floating root + `stand` keyframe (see [MyoLeg26](../../myo_sim/models/leg/README.md#myoleg26-reduced-26-muscle-legs-only)) |
-| `myotorso_abdomen` | `TORSO_ABDOMEN` | Simple abdomen scaffold |
+| `myolegs26` | `LEGS26_BODY` | Passive anatomical torso scaffold + reduced 26-muscle legs (see [MyoLeg26](../../myo_sim/models/leg/README.md#myoleg26-reduced-26-muscle-legs-only)) |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
+| `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
 
 `ModelRegistration` fields that control composition:
 
@@ -80,20 +86,20 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
        MY_NEW_MODEL = "my_new_model"
    ```
 
-2. **Write a builder function** following the existing pattern. It receives a `ModelRegistration` and must return an `MjModel`:
+2. **Write a builder function** following the existing pattern. It receives a `ModelRegistration` and must return an editable `MjSpec` (not a compiled `MjModel` — compilation happens later, in `build_model()` or by the caller):
    ```python
-   def build_my_new_model(registration: ModelRegistration):
+   def build_my_new_spec(registration: ModelRegistration) -> mujoco.MjSpec:
        torso = load_torso_spec(registration)  # or load_passive_torso_spec
        torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
        # ... additional attachments ...
-       return torso.compile()
+       return torso
    ```
 
-3. **Register it in `BUILDERS`**:
+3. **Register it in `SPEC_BUILDERS`**:
    ```python
-   BUILDERS = {
+   SPEC_BUILDERS = {
        ...
-       BuildStrategy.MY_NEW_MODEL: build_my_new_model,
+       BuildStrategy.MY_NEW_MODEL: build_my_new_spec,
    }
    ```
 
@@ -160,7 +166,7 @@ Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported
 
 ### `find_body(spec, body_name)` and `find_site(spec, site_name)`
 
-API-version-safe lookups. They try `spec.find_body()`, then `spec.find()`, then `spec.body()` in order to accommodate MuJoCo Python API differences across versions. Do not replace these with direct attribute access — the API surface has changed between MuJoCo releases and these wrappers ensure forward compatibility.
+Thin wrappers around `spec.body(name)` / `spec.site(name)` that raise a clear `ValueError` instead of silently propagating `None` when the name is missing (e.g. a typo'd attachment site). Prefer these over calling `spec.body()`/`spec.site()` directly when a missing name should fail loudly at build time.
 
 ## Contact Injection Pattern
 
@@ -184,6 +190,6 @@ Full-body observation compatibility sensors live under `myo_sim/models/sensors/`
 
 **`compiler_meshdir` must point to `MODELS_DIR`.** When building child XMLs from components, the `compiler_meshdir` and `texturedir` must be set to `ROOT` (which equals `MODELS_DIR`). If this is set incorrectly, MuJoCo will fail to resolve relative mesh paths after `MjSpec.from_string()`.
 
-**`find_body` / `find_site` fallback logic.** Do not replace these with direct `spec.body(name)` or `spec.find("body", name)` calls. The fallback chain is needed for MuJoCo API version portability.
+**`find_body` / `find_site` error on missing names.** Prefer these over direct `spec.body(name)` / `spec.site(name)` calls so a typo'd attachment site fails with a clear `ValueError` at build time instead of a confusing `None`-attribute error deeper in `MjSpec.attach()`.
 
 **`balanceinertia = True` on all specs.** Every loaded spec sets `compiler.balanceinertia = True` to prevent inertia-validation errors in OpenSim-converted bodies. Do not omit this when adding new component specs.

@@ -561,6 +561,11 @@ def build_spec(model_name: str) -> mujoco.MjSpec:
     return SPEC_BUILDERS[registration.build_strategy](registration)
 
 
+def build_model(model_name: str) -> mujoco.MjModel:
+    """Build and compile a registered model by name. Compiles the MjSpec from build_spec()."""
+    return build_spec(model_name).compile()
+
+
 def unwrap_nested_classless_defaults(element: ET.Element) -> None:
     for child in list(element):
         unwrap_nested_classless_defaults(child)
