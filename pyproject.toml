@@ -10,7 +10,7 @@ authors = [
     { name = "Huiyi Wang", email = "huiyi.wang@mail.mcgill.ca" },
 ]
 dependencies = [
-    "mujoco>=3.0",
+    "mujoco>=3.4",
     "numpy>=1.24",
 ]
 
