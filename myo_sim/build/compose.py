@@ -552,13 +552,55 @@ SPEC_BUILDERS = {
 }
 
 
-def build_spec(model_name: str) -> mujoco.MjSpec:
+def apply_site_pos_overrides(spec: mujoco.MjSpec, site_pos_overrides: dict[str, tuple[float, float, float]]) -> None:
+    """Override the local ``pos`` of named sites on an already-composed spec.
+
+    Lets downstream consumers reposition specific attachment/wrap sites (e.g.
+    a project-specific pelvis-attachment convention) without forking the
+    whole chain XML just to shift a handful of coordinates. Fails loudly on
+    unknown names rather than silently no-op, so stale overrides surface as
+    an error instead of a silent divergence.
+
+    Args:
+        spec: A composed (uncompiled) MjSpec, as returned by build_spec().
+        site_pos_overrides: Mapping of site name to a new local (x, y, z) pos.
+
+    Raises:
+        KeyError: If any named site is not present in the spec.
+    """
+    missing = [name for name in site_pos_overrides if spec.site(name) is None]
+    if missing:
+        raise KeyError(f"site_pos_overrides: site(s) not found in composed spec: {sorted(missing)}")
+    for name, pos in site_pos_overrides.items():
+        spec.site(name).pos = pos
+
+
+def build_spec(
+    model_name: str,
+    site_pos_overrides: dict[str, tuple[float, float, float]] | None = None,
+) -> mujoco.MjSpec:
+    """Build and return the composed, uncompiled MjSpec for a registered model.
+
+    Args:
+        model_name: Key into MODEL_REGISTRY (e.g. "myotorso_arms").
+        site_pos_overrides: Optional mapping of site name to a new local
+            (x, y, z) pos, applied after composition. Lets a downstream
+            consumer adjust a handful of attachment sites (e.g. pelvis
+            positioning for a project-specific skeleton) without needing a
+            forked copy of the underlying chain XML.
+
+    Returns:
+        The composed MjSpec, ready for further edits or spec.compile().
+    """
     try:
         registration = MODEL_REGISTRY[model_name]
     except KeyError as exc:
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
-    return SPEC_BUILDERS[registration.build_strategy](registration)
+    spec = SPEC_BUILDERS[registration.build_strategy](registration)
+    if site_pos_overrides:
+        apply_site_pos_overrides(spec, site_pos_overrides)
+    return spec
 
 
 def build_model(model_name: str) -> mujoco.MjModel:

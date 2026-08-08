@@ -133,12 +133,21 @@ def load_model(name: str) -> tuple:
     return model
 
 
-def load_spec(name: str) -> "mujoco.MjSpec":
+def load_spec(name: str, site_pos_overrides: dict[str, tuple[float, float, float]] | None = None) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
     Unlike load(), this stops at the editable MjSpec so downstream consumers
     (e.g. assist_sim) can edit the model -- attach devices, delete bodies, add
     actuators -- before compiling it themselves.
+
+    Args:
+        name: Registry name or legacy alias (e.g. "myotorso_arms", "hand").
+        site_pos_overrides: Optional mapping of site name to a new local
+            (x, y, z) pos, applied after composition. Only supported for
+            MjSpec-composed models (see ``_composed_models()``); ignored for
+            packaged static-XML fragments. Lets a downstream consumer adjust
+            a handful of attachment sites (e.g. project-specific pelvis
+            positioning) without forking the underlying chain XML.
     """
     import mujoco
 
@@ -148,7 +157,7 @@ def load_spec(name: str) -> "mujoco.MjSpec":
     if name in composed_models:
         # Legacy aliases (e.g. hand, myohand, myoarm) resolve to a registry entry.
         composed_name = ALIASES.get(name, name)
-        spec = build_spec(composed_name)
+        spec = build_spec(composed_name, site_pos_overrides=site_pos_overrides)
         return spec
 
     if name not in REGISTRY:
