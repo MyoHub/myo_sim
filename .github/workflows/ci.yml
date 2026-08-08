@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install dev dependencies
+        run: uv sync --dev
+
+      - name: Lint with ruff
+        run: uv run ruff check .
+
+      - name: Check formatting with ruff
+        run: uv run ruff format --check .
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        # Test the supported floor and the newest Python so compatibility with
+        # the maximum version is always verified.
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          python-version: "${{ matrix.python-version }}"
+
+      - name: Install system dependencies for MuJoCo
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libglib2.0-0 libosmesa6
+
+      - name: Install package
+        run: uv sync --dev
+
+      - name: Upgrade to the latest MuJoCo release
+        # The lockfile pins MuJoCo for reproducible local dev; CI always tests
+        # against the newest release so upstream breakage is caught early.
+        run: uv pip install --upgrade mujoco
+
+      - name: Report versions under test
+        run: uv run python -c "import sys, mujoco; print('python', sys.version); print('mujoco', mujoco.__version__)"
+
+      - name: Run tests
+        run: uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py -q

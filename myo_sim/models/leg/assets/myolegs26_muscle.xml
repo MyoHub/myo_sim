@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<mujocoinclude model="MyoLegs26_muscle">
+<!-- =================================================
+    Copyright 2020 Vikash Kumar, Vittorio Caggiano, Huawei Wang
+    Model   :: Myo Legs 26 (MuJoCoV3.3.3)
+    Author  :: Vikash Kumar (vikashplus@gmail.com), Vittorio Caggiano, Huawei Wang, (Charlie) Li, Cheryl Wang, Calder Robbins
+    License :: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+====================================================== -->
+
+<!-- Reduced legs-only gait model: 26 muscles (OpenSim gait2392 22-muscle base + EDL/FDL).
+     Original gait2392/gait9dof18 by Ajay Seth, based on Delp et al. (1990); muscle strengths
+     (Handsfield/Rajagopal) tuned by Carmichael Ong; planar knee (Yamaguchi & Zajac 1989);
+     patella removed with quadriceps insertions as moving points. License: CC-BY 3.0.
+     Adapted for MyoLeg by Chun Kwang Tan (sagittal-plane joints, ankle ROM, GRF foot sensors);
+     extended by Calder Robbins (toes + mtp joints, EDL/FDL muscles). -->
+
+  <actuator>
+    <general biasprm="0.169813 1.23281 4323.26 1 0 1.8 10 0.672684 1.4 0" class="myolegs26_muscle" gainprm="0.169813 1.23281 4323.26 1 0 1.8 10 0.672684 1.4 0" lengthrange="0.053712 0.169892" name="abd_r" tendon="abd_r_tendon" />
+    <general biasprm="0.160259 1.33948 3871.82 1 0 1.8 10 1.31477 1.4 0" class="myolegs26_muscle" gainprm="0.160259 1.33948 3871.82 1 0 1.8 10 1.31477 1.4 0" lengthrange="0.0502179 0.203072" name="add_r" tendon="add_r_tendon" />
+    <general biasprm="0.105801 1.56953 3948.49 1 0 1.8 10 1.35553 1.4 0" class="myolegs26_muscle" gainprm="0.105801 1.56953 3948.49 1 0 1.8 10 1.35553 1.4 0" lengthrange="0.321987 0.509548" name="hamstrings_r" tendon="hamstrings_r_tendon" />
+    <general biasprm="0.677513 1.24807 509.424 1 0 1.8 10 0.93595 1.4 0" class="myolegs26_muscle" gainprm="0.677513 1.24807 509.424 1 0 1.8 10 0.93595 1.4 0" lengthrange="0.191264 0.249268" name="bifemsh_r" tendon="bifemsh_r_tendon" />
+    <general biasprm="0.620259 1.40474 553.241 1 0.319949 3.12081 10 1.35486 1.4 0" class="myolegs26_muscle" gainprm="0.620259 1.40474 553.241 1 0.319949 3.12081 10 1.35486 1.4 0" lengthrange="0.411859 0.466224" name="edl_r" tendon="edl_r_tendon" />
+    <general biasprm="0.598501 1.22918 332.13 1 0.357129 3.24643 10 1.8954 1.4 0" class="myolegs26_muscle" gainprm="0.598501 1.22918 332.13 1 0.357129 3.24643 10 1.8954 1.4 0" lengthrange="0.405466 0.433594" name="fdl_r" tendon="fdl_r_tendon" />
+    <general biasprm="0.620098 1.41881 3276.04 1 0 1.8 10 0.78169 1.4 0" class="myolegs26_muscle" gainprm="0.620098 1.41881 3276.04 1 0 1.8 10 0.78169 1.4 0" lengthrange="0.143998 0.277296" name="glutmax_r" tendon="glut_max_r_tendon" />
+    <general biasprm="0.537695 1.29267 2585.58 1 0 1.8 10 0.767706 1.4 0" class="myolegs26_muscle" gainprm="0.537695 1.29267 2585.58 1 0 1.8 10 0.767706 1.4 0" lengthrange="0.191629 0.297306" name="iliopsoas_r" tendon="iliopsoas_r_tendon" />
+    <general biasprm="0.112356 1.37774 1800.5 1 0 1.8 10 0.394414 1.4 0" class="myolegs26_muscle" gainprm="0.112356 1.37774 1800.5 1 0 1.8 10 0.394414 1.4 0" lengthrange="0.32136 0.510234" name="rectfem_r" tendon="rect_fem_r_tendon" />
+    <general biasprm="0.689617 1.52507 9500.94 1 0 1.8 10 0.440576 1.4 0" class="myolegs26_muscle" gainprm="0.689617 1.52507 9500.94 1 0 1.8 10 0.440576 1.4 0" lengthrange="0.174556 0.258507" name="vasti_r" tendon="vasti_r_tendon" />
+    <general biasprm="0.111359 1.10082 3820.44 1 0 1.8 10 1.28141 1.4 0" class="myolegs26_muscle" gainprm="0.111359 1.10082 3820.44 1 0 1.8 10 1.28141 1.4 0" lengthrange="0.362049 0.489534" name="gastroc_r" tendon="gastroc_r_tendon" />
+    <general biasprm="0.123627 1.18435 6090 1 0 1.8 10 1.44603 1.4 0" class="myolegs26_muscle" gainprm="0.123627 1.18435 6090 1 0 1.8 10 1.44603 1.4 0" lengthrange="0.228134 0.326673" name="soleus_r" tendon="soleus_r_tendon" />
+    <general biasprm="0.34957 1.29783 2042.4 1 0 1.8 10 0.972121 1.4 0" class="myolegs26_muscle" gainprm="0.34957 1.29783 2042.4 1 0 1.8 10 0.972121 1.4 0" lengthrange="0.259564 0.352614" name="tibant_r" tendon="tib_ant_r_tendon" />
+    <general biasprm="0.169813 1.23281 4323.26 1 0 1.8 10 0.672684 1.4 0" class="myolegs26_muscle" gainprm="0.169813 1.23281 4323.26 1 0 1.8 10 0.672684 1.4 0" lengthrange="0.053712 0.169892" name="abd_l" tendon="abd_l_tendon" />
+    <general biasprm="0.160259 1.33948 3871.82 1 0 1.8 10 1.31477 1.4 0" class="myolegs26_muscle" gainprm="0.160259 1.33948 3871.82 1 0 1.8 10 1.31477 1.4 0" lengthrange="0.0502179 0.203072" name="add_l" tendon="add_l_tendon" />
+    <general biasprm="0.105801 1.56953 3948.49 1 0 1.8 10 1.35553 1.4 0" class="myolegs26_muscle" gainprm="0.105801 1.56953 3948.49 1 0 1.8 10 1.35553 1.4 0" lengthrange="0.321987 0.509548" name="hamstrings_l" tendon="hamstrings_l_tendon" />
+    <general biasprm="0.677513 1.24807 509.424 1 0 1.8 10 0.93595 1.4 0" class="myolegs26_muscle" gainprm="0.677513 1.24807 509.424 1 0 1.8 10 0.93595 1.4 0" lengthrange="0.191264 0.249268" name="bifemsh_l" tendon="bifemsh_l_tendon" />
+    <general biasprm="0.620259 1.40474 553.241 1 0.319949 3.12081 10 1.35486 1.4 0" class="myolegs26_muscle" gainprm="0.620259 1.40474 553.241 1 0.319949 3.12081 10 1.35486 1.4 0" lengthrange="0.411859 0.466224" name="edl_l" tendon="edl_l_tendon" />
+    <general biasprm="0.598501 1.22918 332.13 1 0.357129 3.24643 10 1.8954 1.4 0" class="myolegs26_muscle" gainprm="0.598501 1.22918 332.13 1 0.357129 3.24643 10 1.8954 1.4 0" lengthrange="0.405466 0.433594" name="fdl_l" tendon="fdl_l_tendon" />
+    <general biasprm="0.620098 1.41881 3276.04 1 0 1.8 10 0.78169 1.4 0" class="myolegs26_muscle" gainprm="0.620098 1.41881 3276.04 1 0 1.8 10 0.78169 1.4 0" lengthrange="0.143998 0.277296" name="glutmax_l" tendon="glut_max_l_tendon" />
+    <general biasprm="0.537695 1.29267 2585.58 1 0 1.8 10 0.767706 1.4 0" class="myolegs26_muscle" gainprm="0.537695 1.29267 2585.58 1 0 1.8 10 0.767706 1.4 0" lengthrange="0.191629 0.297306" name="iliopsoas_l" tendon="iliopsoas_l_tendon" />
+    <general biasprm="0.112356 1.37774 1800.5 1 0 1.8 10 0.394414 1.4 0" class="myolegs26_muscle" gainprm="0.112356 1.37774 1800.5 1 0 1.8 10 0.394414 1.4 0" lengthrange="0.32136 0.510234" name="rectfem_l" tendon="rect_fem_l_tendon" />
+    <general biasprm="0.689617 1.52507 9500.94 1 0 1.8 10 0.440576 1.4 0" class="myolegs26_muscle" gainprm="0.689617 1.52507 9500.94 1 0 1.8 10 0.440576 1.4 0" lengthrange="0.174556 0.258507" name="vasti_l" tendon="vasti_l_tendon" />
+    <general biasprm="0.111359 1.10082 3820.44 1 0 1.8 10 1.28141 1.4 0" class="myolegs26_muscle" gainprm="0.111359 1.10082 3820.44 1 0 1.8 10 1.28141 1.4 0" lengthrange="0.362049 0.489534" name="gastroc_l" tendon="gastroc_l_tendon" />
+    <general biasprm="0.123627 1.18435 6090 1 0 1.8 10 1.44603 1.4 0" class="myolegs26_muscle" gainprm="0.123627 1.18435 6090 1 0 1.8 10 1.44603 1.4 0" lengthrange="0.228134 0.326673" name="soleus_l" tendon="soleus_l_tendon" />
+    <general biasprm="0.34957 1.29783 2042.4 1 0 1.8 10 0.972121 1.4 0" class="myolegs26_muscle" gainprm="0.34957 1.29783 2042.4 1 0 1.8 10 0.972121 1.4 0" lengthrange="0.259564 0.352614" name="tibant_l" tendon="tib_ant_l_tendon" />
+  </actuator>
+</mujocoinclude>

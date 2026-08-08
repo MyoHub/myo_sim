@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<mujocoinclude>
+    <contact>
+        <pair geom1="humerus_coll_r" geom2="thorax_coll1" condim="3" />
+        <pair geom1="radius_coll_r" geom2="thorax_coll1" condim="3" />
+        <pair geom1="radius_coll_r" geom2="thorax_coll2" condim="3" />
+        <pair geom1="radius_coll_r" geom2="thorax_coll3" condim="3" />
+
+        <pair geom1="humerus_coll_l" geom2="thorax_coll1" condim="3" />
+        <pair geom1="radius_coll_l" geom2="thorax_coll1" condim="3" />
+        <pair geom1="radius_coll_l" geom2="thorax_coll2" condim="3" />
+        <pair geom1="radius_coll_l" geom2="thorax_coll3" condim="3" />
+
+        <pair geom1="humerus_coll_r" geom2="humerus_coll_l" condim="3" />
+        <pair geom1="humerus_coll_r" geom2="ulna_coll_l" condim="3" />
+        <pair geom1="humerus_coll_r" geom2="radius_coll_l" condim="3" />
+        <pair geom1="humerus_coll_r" geom2="radius_coll_2_l" condim="3" />
+        <pair geom1="humerus_coll_r" geom2="radius_coll_3_l" condim="3" />
+
+        <pair geom1="ulna_coll_r" geom2="humerus_coll_l" condim="3" />
+        <pair geom1="ulna_coll_r" geom2="ulna_coll_l" condim="3" />
+        <pair geom1="ulna_coll_r" geom2="radius_coll_l" condim="3" />
+        <pair geom1="ulna_coll_r" geom2="radius_coll_2_l" condim="3" />
+        <pair geom1="ulna_coll_r" geom2="radius_coll_3_l" condim="3" />
+
+        <pair geom1="radius_coll_r" geom2="humerus_coll_l" condim="3" />
+        <pair geom1="radius_coll_r" geom2="ulna_coll_l" condim="3" />
+        <pair geom1="radius_coll_r" geom2="radius_coll_l" condim="3" />
+        <pair geom1="radius_coll_r" geom2="radius_coll_2_l" condim="3" />
+        <pair geom1="radius_coll_r" geom2="radius_coll_3_l" condim="3" />
+
+        <pair geom1="radius_coll_2_r" geom2="humerus_coll_l" condim="3" />
+        <pair geom1="radius_coll_2_r" geom2="ulna_coll_l" condim="3" />
+        <pair geom1="radius_coll_2_r" geom2="radius_coll_l" condim="3" />
+        <pair geom1="radius_coll_2_r" geom2="radius_coll_2_l" condim="3" />
+        <pair geom1="radius_coll_2_r" geom2="radius_coll_3_l" condim="3" />
+
+        <pair geom1="radius_coll_3_r" geom2="humerus_coll_l" condim="3" />
+        <pair geom1="radius_coll_3_r" geom2="ulna_coll_l" condim="3" />
+        <pair geom1="radius_coll_3_r" geom2="radius_coll_l" condim="3" />
+        <pair geom1="radius_coll_3_r" geom2="radius_coll_2_l" condim="3" />
+        <pair geom1="radius_coll_3_r" geom2="radius_coll_3_l" condim="3" />
+    </contact>
+</mujocoinclude>

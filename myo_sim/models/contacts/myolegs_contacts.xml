@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<mujocoinclude>
+    <contact>
+        <pair geom1="femur1_col_r" geom2="femur1_col_l" condim="1"/>
+        <pair geom1="femur2_col_r" geom2="femur2_col_l" condim="1"/>
+        <pair geom1="tibia1_col_r" geom2="tibia1_col_l" condim="1"/>
+        <pair geom1="tibia2_col_r" geom2="tibia2_col_l" condim="1"/>
+
+        <pair geom1="femur1_col_r" geom2="tibia1_col_l" condim="1"/>
+        <pair geom1="femur1_col_l" geom2="tibia1_col_r" condim="1"/>
+
+        <pair geom1="femur2_col_r" geom2="tibia1_col_l" condim="1"/>
+        <pair geom1="femur2_col_l" geom2="tibia1_col_r" condim="1"/>
+
+        <pair geom1="femur1_col_r" geom2="tibia2_col_l" condim="1"/>
+        <pair geom1="femur1_col_l" geom2="tibia2_col_r" condim="1"/>
+
+        <pair geom1="femur2_col_r" geom2="tibia2_col_l" condim="1"/>
+        <pair geom1="femur2_col_l" geom2="tibia2_col_r" condim="1"/>
+
+        <pair geom1="bofoot_col1_r" geom2="foot_col4_l" condim="1"/>
+        <pair geom1="bofoot_col2_r" geom2="foot_col4_l" condim="1"/>
+        <pair geom1="bofoot_col1_r" geom2="foot_col3_l" condim="1"/>
+        <pair geom1="bofoot_col2_r" geom2="foot_col3_l" condim="1"/>
+        <pair geom1="bofoot_col1_r" geom2="foot_col1_l" condim="1"/>
+        <pair geom1="bofoot_col2_r" geom2="foot_col1_l" condim="1"/>
+        <pair geom1="bofoot_col1_l" geom2="foot_col4_r" condim="1"/>
+        <pair geom1="bofoot_col2_l" geom2="foot_col4_r" condim="1"/>
+        <pair geom1="bofoot_col1_l" geom2="foot_col3_r" condim="1"/>
+        <pair geom1="bofoot_col2_l" geom2="foot_col3_r" condim="1"/>
+        <pair geom1="bofoot_col1_l" geom2="foot_col1_r" condim="1"/>
+        <pair geom1="bofoot_col2_l" geom2="foot_col1_r" condim="1"/>
+        <pair geom1="foot_col1_r" geom2="foot_col1_l" condim="1"/>
+        <pair geom1="foot_col4_r" geom2="foot_col4_l" condim="1"/>
+    </contact>
+</mujocoinclude>
