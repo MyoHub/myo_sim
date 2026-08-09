@@ -24,6 +24,7 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+from typing import Literal
 
 import mujoco
 
@@ -575,9 +576,82 @@ def apply_site_pos_overrides(spec: mujoco.MjSpec, site_pos_overrides: dict[str, 
         spec.site(name).pos = pos
 
 
+# Base names (side suffix stripped) of the per-bone forearm/finger/thumb
+# collision geoms introduced in #111. These are the geoms that
+# collision_mode="coarse" disables, restoring the pre-#111 convention where
+# only the palm/metacarpal skin geoms (*mcskin*) are collidable and the
+# forearm/fingers/thumb are pass-through. See
+# https://github.com/MyoHub/myo_sim/issues/127.
+COARSE_COLLISION_DISABLED_GEOM_BASENAMES: tuple[str, ...] = (
+    "humerus_coll",
+    "ulna_coll",
+    "radius_coll",
+    "radius_coll_2",
+    "radius_coll_3",
+    "proximal_thumb_coll",
+    "distal_thumb_coll",
+    "distal_thumb_coll_2",
+    "proxph2_coll",
+    "midph2_coll",
+    "distph2_coll",
+    "proxph3_coll",
+    "midph3_coll",
+    "distph3_coll",
+    "distph3_coll_2",
+    "proxph4_coll",
+    "midph4_coll",
+    "distph4_coll",
+    "distph4_coll_2",
+    "5proxph_coll",
+    "5midph_coll",
+    "5distph_coll",
+    "5distph_coll_2",
+)
+_ARM_SIDE_SUFFIXES: tuple[str, ...] = ("_r", "_l")
+
+CollisionMode = Literal["full", "coarse"]
+
+
+def disable_finger_collision(spec: mujoco.MjSpec) -> mujoco.MjSpec:
+    """Disable per-bone collision on the forearm/finger/thumb chain, in place.
+
+    myo_sim#111 ("Refactor model composition to mjspec-based fragment
+    system") introduced full per-bone collision capsules on every finger
+    segment plus the forearm bones (radius/ulna/humerus) -- a more
+    anatomically faithful contact model, but a physics-breaking change for
+    anything built against the older, coarser convention where only the
+    palm/metacarpal skin geoms (``*mcskin*``) were collidable and the
+    fingers/forearm were pass-through (e.g. myosuite's baoding-balls tasks,
+    which rely on balls resting across fingertips without catching on
+    capsule edges between adjacent phalanx segments). See
+    https://github.com/MyoHub/myo_sim/issues/127.
+
+    Sets ``contype = conaffinity = 0`` on every geom in
+    ``COARSE_COLLISION_DISABLED_GEOM_BASENAMES`` (right and/or left,
+    whichever are present in ``spec``), leaving every other geom --
+    including the palm/metacarpal skin geoms -- untouched. Geoms absent from
+    ``spec`` (e.g. a right-only fragment has no ``_l`` geoms) are silently
+    skipped.
+
+    Args:
+        spec: A composed (uncompiled) MjSpec, as returned by build_spec().
+
+    Returns:
+        The same spec, mutated in place, for convenient chaining.
+    """
+    for base_name in COARSE_COLLISION_DISABLED_GEOM_BASENAMES:
+        for suffix in _ARM_SIDE_SUFFIXES:
+            geom = spec.geom(base_name + suffix)
+            if geom is not None:
+                geom.contype = 0
+                geom.conaffinity = 0
+    return spec
+
+
 def build_spec(
     model_name: str,
     site_pos_overrides: dict[str, tuple[float, float, float]] | None = None,
+    collision_mode: CollisionMode = "full",
 ) -> mujoco.MjSpec:
     """Build and return the composed, uncompiled MjSpec for a registered model.
 
@@ -588,6 +662,12 @@ def build_spec(
             consumer adjust a handful of attachment sites (e.g. pelvis
             positioning for a project-specific skeleton) without needing a
             forked copy of the underlying chain XML.
+        collision_mode: "full" (default, unchanged behavior) keeps every
+            collision geom from the #111 refactor enabled. "coarse" disables
+            collision on the forearm/finger/thumb bone geoms, restoring the
+            pre-#111 palm-only collision convention via
+            disable_finger_collision(). See
+            https://github.com/MyoHub/myo_sim/issues/127.
 
     Returns:
         The composed MjSpec, ready for further edits or spec.compile().
@@ -600,6 +680,10 @@ def build_spec(
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
     if site_pos_overrides:
         apply_site_pos_overrides(spec, site_pos_overrides)
+    if collision_mode == "coarse":
+        disable_finger_collision(spec)
+    elif collision_mode != "full":
+        raise ValueError(f"Unknown collision_mode: {collision_mode!r}. Expected 'full' or 'coarse'.")
     return spec
 
 
