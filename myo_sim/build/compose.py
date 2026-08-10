@@ -652,6 +652,7 @@ def build_spec(
     model_name: str,
     site_pos_overrides: dict[str, tuple[float, float, float]] | None = None,
     collision_mode: CollisionMode = "full",
+    inertia_floor: float | None = None,
 ) -> mujoco.MjSpec:
     """Build and return the composed, uncompiled MjSpec for a registered model.
 
@@ -668,6 +669,20 @@ def build_spec(
             pre-#111 palm-only collision convention via
             disable_finger_collision(). See
             https://github.com/MyoHub/myo_sim/issues/127.
+        inertia_floor: Optional numerical-conditioning floor for
+            auto/mesh-derived body inertia, applied via the compiler's
+            ``boundinertia`` attribute (MuJoCo clamps a body's principal
+            inertia up to this value, kg*m^2). When set, ``boundmass`` is
+            also set to 0.001 kg, matching the paired value used by the
+            legacy static-XML convention. None (default, unchanged behavior)
+            leaves the compiler defaults (0, i.e. no floor). Several small
+            wrist/finger bones in the right-hand fragment have true
+            auto-computed inertia as low as ~3e-8 kg*m^2, which
+            ``myoarm_r_assets.xml``'s legacy convention floored to 1e-4 via
+            ``compiler boundinertia=".0001" boundmass="0.001"`` for
+            numerical conditioning of the mass matrix; pass
+            ``inertia_floor=0.0001`` to restore that convention. See
+            https://github.com/MyoHub/myo_sim/issues/128.
 
     Returns:
         The composed MjSpec, ready for further edits or spec.compile().
@@ -684,6 +699,43 @@ def build_spec(
         disable_finger_collision(spec)
     elif collision_mode != "full":
         raise ValueError(f"Unknown collision_mode: {collision_mode!r}. Expected 'full' or 'coarse'.")
+    if inertia_floor is not None:
+        apply_inertia_floor(spec, inertia_floor)
+    return spec
+
+
+def apply_inertia_floor(spec: mujoco.MjSpec, inertia_floor: float) -> mujoco.MjSpec:
+    """Set a ``boundinertia``/``boundmass`` compiler floor on every body, in place.
+
+    Composed fragments are built by attaching child MjSpecs (e.g. the
+    right-arm fragment) into a parent spec via ``MjSpec.attach()``. Each
+    attached body retains its originating sub-spec's own ``compiler``
+    settings at compile time, so setting ``spec.compiler.boundinertia`` only
+    on the top-level composed spec has no effect on bodies that came from an
+    attached child fragment -- only on bodies native to the top-level spec
+    (e.g. torso). To reliably apply the floor everywhere, this sets the
+    per-body compiler override on every body in the tree, not just the
+    top-level spec.
+
+    Args:
+        spec: A composed (uncompiled) MjSpec, as returned by build_spec().
+        inertia_floor: Floor value (kg*m^2) for ``boundinertia``.
+            ``boundmass`` is set to 0.001 kg, matching the paired value used
+            by the legacy static-XML convention.
+
+    Returns:
+        The same spec, mutated in place, for convenient chaining.
+    """
+    spec.compiler.boundinertia = inertia_floor
+    spec.compiler.boundmass = 0.001
+
+    def _set_recursive(body: mujoco.MjsBody) -> None:
+        body.compiler.boundinertia = inertia_floor
+        body.compiler.boundmass = 0.001
+        for child in body.bodies:
+            _set_recursive(child)
+
+    _set_recursive(spec.worldbody)
     return spec
 
 

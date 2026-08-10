@@ -139,6 +139,7 @@ def load_spec(
     name: str,
     site_pos_overrides: dict[str, tuple[float, float, float]] | None = None,
     collision_mode: "CollisionMode" = "full",
+    inertia_floor: float | None = None,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
@@ -163,6 +164,17 @@ def load_spec(
             https://github.com/MyoHub/myo_sim/issues/127. Only supported for
             MjSpec-composed models; ignored for packaged static-XML
             fragments.
+        inertia_floor: Optional numerical-conditioning floor for
+            auto/mesh-derived body inertia (sets the compiler's
+            ``boundinertia``/``boundmass``). None (default, unchanged
+            behavior) applies no floor. Pass ``0.0001`` to restore the
+            legacy static-XML convention that several small wrist/finger
+            bones in the right-hand fragment relied on for a
+            well-conditioned mass matrix -- see
+            myo_sim.build.compose.build_spec() and
+            https://github.com/MyoHub/myo_sim/issues/128. Only supported for
+            MjSpec-composed models; ignored for packaged static-XML
+            fragments.
     """
     import mujoco
 
@@ -172,7 +184,12 @@ def load_spec(
     if name in composed_models:
         # Legacy aliases (e.g. hand, myohand, myoarm) resolve to a registry entry.
         composed_name = ALIASES.get(name, name)
-        spec = build_spec(composed_name, site_pos_overrides=site_pos_overrides, collision_mode=collision_mode)
+        spec = build_spec(
+            composed_name,
+            site_pos_overrides=site_pos_overrides,
+            collision_mode=collision_mode,
+            inertia_floor=inertia_floor,
+        )
         return spec
 
     if name not in REGISTRY:
