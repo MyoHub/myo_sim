@@ -35,6 +35,9 @@ jobs:
         # Test the supported floor and the newest Python so compatibility with
         # the maximum version is always verified.
         python-version: ["3.10", "3.13"]
+        # Test the minimum supported MuJoCo release (pinned in pyproject.toml)
+        # and the newest release so both floor and upstream breakage are caught.
+        mujoco-version: ["3.4", "latest"]
     steps:
       - uses: actions/checkout@v4
 
@@ -51,10 +54,15 @@ jobs:
       - name: Install package
         run: uv sync --dev
 
-      - name: Upgrade to the latest MuJoCo release
-        # The lockfile pins MuJoCo for reproducible local dev; CI always tests
-        # against the newest release so upstream breakage is caught early.
-        run: uv pip install --upgrade mujoco
+      - name: Install MuJoCo under test
+        # The lockfile pins MuJoCo for reproducible local dev; CI overrides it
+        # to test both the minimum supported release and the newest one.
+        run: |
+          if [ "${{ matrix.mujoco-version }}" = "latest" ]; then
+            uv pip install --upgrade mujoco
+          else
+            uv pip install "mujoco==${{ matrix.mujoco-version }}.0"
+          fi
 
       - name: Report versions under test
         run: uv run python -c "import sys, mujoco; print('python', sys.version); print('mujoco', mujoco.__version__)"
