@@ -650,7 +650,6 @@ def disable_finger_collision(spec: mujoco.MjSpec) -> mujoco.MjSpec:
 
 def build_spec(
     model_name: str,
-    site_pos_overrides: dict[str, tuple[float, float, float]] | None = None,
     collision_mode: CollisionMode = "full",
     inertia_floor: float | None = None,
 ) -> mujoco.MjSpec:
@@ -658,11 +657,6 @@ def build_spec(
 
     Args:
         model_name: Key into MODEL_REGISTRY (e.g. "myotorso_arms").
-        site_pos_overrides: Optional mapping of site name to a new local
-            (x, y, z) pos, applied after composition. Lets a downstream
-            consumer adjust a handful of attachment sites (e.g. pelvis
-            positioning for a project-specific skeleton) without needing a
-            forked copy of the underlying chain XML.
         collision_mode: "full" (default, unchanged behavior) keeps every
             collision geom from the #111 refactor enabled. "coarse" disables
             collision on the forearm/finger/thumb bone geoms, restoring the
@@ -693,8 +687,6 @@ def build_spec(
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
-    if site_pos_overrides:
-        apply_site_pos_overrides(spec, site_pos_overrides)
     if collision_mode == "coarse":
         disable_finger_collision(spec)
     elif collision_mode != "full":
@@ -704,7 +696,7 @@ def build_spec(
     return spec
 
 
-def apply_inertia_floor(spec: mujoco.MjSpec, inertia_floor: float) -> mujoco.MjSpec:
+def apply_inertia_floor(spec: mujoco.MjSpec, inertia_floor: float, mass_floor=0.001) -> mujoco.MjSpec:
     """Set a ``boundinertia``/``boundmass`` compiler floor on every body, in place.
 
     Composed fragments are built by attaching child MjSpecs (e.g. the
@@ -718,20 +710,21 @@ def apply_inertia_floor(spec: mujoco.MjSpec, inertia_floor: float) -> mujoco.MjS
     top-level spec.
 
     Args:
-        spec: A composed (uncompiled) MjSpec, as returned by build_spec().
-        inertia_floor: Floor value (kg*m^2) for ``boundinertia``.
-            ``boundmass`` is set to 0.001 kg, matching the paired value used
-            by the legacy static-XML convention.
+      spec: A composed (uncompiled) MjSpec, as returned by build_spec().
+      inertia_floor: Floor value (kg*m^2) for ``boundinertia``.
+          ``boundmass``.
+      mass_floor: Floor value (kg) for ``boundmass``. Default value matches
+          old myo_sim models.
 
     Returns:
-        The same spec, mutated in place, for convenient chaining.
+      The same spec, mutated in place, for convenient chaining.
     """
     spec.compiler.boundinertia = inertia_floor
-    spec.compiler.boundmass = 0.001
+    spec.compiler.boundmass = mass_floor
 
     def _set_recursive(body: mujoco.MjsBody) -> None:
         body.compiler.boundinertia = inertia_floor
-        body.compiler.boundmass = 0.001
+        body.compiler.boundmass = mass_floor
         for child in body.bodies:
             _set_recursive(child)
 

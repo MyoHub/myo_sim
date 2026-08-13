@@ -137,7 +137,6 @@ def load_model(name: str) -> tuple:
 
 def load_spec(
     name: str,
-    site_pos_overrides: dict[str, tuple[float, float, float]] | None = None,
     collision_mode: "CollisionMode" = "full",
     inertia_floor: float | None = None,
 ) -> "mujoco.MjSpec":
@@ -149,12 +148,6 @@ def load_spec(
 
     Args:
         name: Registry name or legacy alias (e.g. "myotorso_arms", "hand").
-        site_pos_overrides: Optional mapping of site name to a new local
-            (x, y, z) pos, applied after composition. Only supported for
-            MjSpec-composed models (see ``_composed_models()``); ignored for
-            packaged static-XML fragments. Lets a downstream consumer adjust
-            a handful of attachment sites (e.g. project-specific pelvis
-            positioning) without forking the underlying chain XML.
         collision_mode: "full" (default, unchanged behavior) keeps every
             per-bone collision geom from the #111 mjspec refactor enabled.
             "coarse" disables collision on the forearm/finger/thumb bone
@@ -186,7 +179,6 @@ def load_spec(
         composed_name = ALIASES.get(name, name)
         spec = build_spec(
             composed_name,
-            site_pos_overrides=site_pos_overrides,
             collision_mode=collision_mode,
             inertia_floor=inertia_floor,
         )
