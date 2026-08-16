@@ -8,6 +8,8 @@ from myo_sim.fragments import FragmentRegistry as FragmentRegistry
 if TYPE_CHECKING:
     import mujoco
 
+    from myo_sim.build.compose import CollisionMode
+
 try:
     __version__ = version("myo-sim")
 except PackageNotFoundError:
@@ -133,12 +135,39 @@ def load_model(name: str) -> tuple:
     return model
 
 
-def load_spec(name: str) -> "mujoco.MjSpec":
+def load_spec(
+    name: str,
+    collision_mode: "CollisionMode" = "full",
+    inertia_floor: float | None = None,
+) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
     Unlike load(), this stops at the editable MjSpec so downstream consumers
     (e.g. assist_sim) can edit the model -- attach devices, delete bodies, add
     actuators -- before compiling it themselves.
+
+    Args:
+        name: Registry name or legacy alias (e.g. "myotorso_arms", "hand").
+        collision_mode: "full" (default, unchanged behavior) keeps every
+            per-bone collision geom from the #111 mjspec refactor enabled.
+            "coarse" disables collision on the forearm/finger/thumb bone
+            geoms, restoring the pre-#111 convention where only the
+            palm/metacarpal skin geoms are collidable -- see
+            myo_sim.build.compose.disable_finger_collision() and
+            https://github.com/MyoHub/myo_sim/issues/127. Only supported for
+            MjSpec-composed models; ignored for packaged static-XML
+            fragments.
+        inertia_floor: Optional numerical-conditioning floor for
+            auto/mesh-derived body inertia (sets the compiler's
+            ``boundinertia``/``boundmass``). None (default, unchanged
+            behavior) applies no floor. Pass ``0.0001`` to restore the
+            legacy static-XML convention that several small wrist/finger
+            bones in the right-hand fragment relied on for a
+            well-conditioned mass matrix -- see
+            myo_sim.build.compose.build_spec() and
+            https://github.com/MyoHub/myo_sim/issues/128. Only supported for
+            MjSpec-composed models; ignored for packaged static-XML
+            fragments.
     """
     import mujoco
 
@@ -148,7 +177,11 @@ def load_spec(name: str) -> "mujoco.MjSpec":
     if name in composed_models:
         # Legacy aliases (e.g. hand, myohand, myoarm) resolve to a registry entry.
         composed_name = ALIASES.get(name, name)
-        spec = build_spec(composed_name)
+        spec = build_spec(
+            composed_name,
+            collision_mode=collision_mode,
+            inertia_floor=inertia_floor,
+        )
         return spec
 
     if name not in REGISTRY:

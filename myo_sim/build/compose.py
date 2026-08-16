@@ -24,6 +24,7 @@ import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
+from typing import Literal
 
 import mujoco
 
@@ -552,13 +553,183 @@ SPEC_BUILDERS = {
 }
 
 
-def build_spec(model_name: str) -> mujoco.MjSpec:
+def apply_site_pos_overrides(spec: mujoco.MjSpec, site_pos_overrides: dict[str, tuple[float, float, float]]) -> None:
+    """Override the local ``pos`` of named sites on an already-composed spec.
+
+    Lets downstream consumers reposition specific attachment/wrap sites (e.g.
+    a project-specific pelvis-attachment convention) without forking the
+    whole chain XML just to shift a handful of coordinates. Fails loudly on
+    unknown names rather than silently no-op, so stale overrides surface as
+    an error instead of a silent divergence.
+
+    Args:
+        spec: A composed (uncompiled) MjSpec, as returned by build_spec().
+        site_pos_overrides: Mapping of site name to a new local (x, y, z) pos.
+
+    Raises:
+        KeyError: If any named site is not present in the spec.
+    """
+    missing = [name for name in site_pos_overrides if spec.site(name) is None]
+    if missing:
+        raise KeyError(f"site_pos_overrides: site(s) not found in composed spec: {sorted(missing)}")
+    for name, pos in site_pos_overrides.items():
+        spec.site(name).pos = pos
+
+
+# Base names (side suffix stripped) of the per-bone forearm/finger/thumb
+# collision geoms introduced in #111. These are the geoms that
+# collision_mode="coarse" disables, restoring the pre-#111 convention where
+# only the palm/metacarpal skin geoms (*mcskin*) are collidable and the
+# forearm/fingers/thumb are pass-through. See
+# https://github.com/MyoHub/myo_sim/issues/127.
+COARSE_COLLISION_DISABLED_GEOM_BASENAMES: tuple[str, ...] = (
+    "humerus_coll",
+    "ulna_coll",
+    "radius_coll",
+    "radius_coll_2",
+    "radius_coll_3",
+    "proximal_thumb_coll",
+    "distal_thumb_coll",
+    "distal_thumb_coll_2",
+    "proxph2_coll",
+    "midph2_coll",
+    "distph2_coll",
+    "proxph3_coll",
+    "midph3_coll",
+    "distph3_coll",
+    "distph3_coll_2",
+    "proxph4_coll",
+    "midph4_coll",
+    "distph4_coll",
+    "distph4_coll_2",
+    "5proxph_coll",
+    "5midph_coll",
+    "5distph_coll",
+    "5distph_coll_2",
+)
+_ARM_SIDE_SUFFIXES: tuple[str, ...] = ("_r", "_l")
+
+CollisionMode = Literal["full", "coarse"]
+
+
+def disable_finger_collision(spec: mujoco.MjSpec) -> mujoco.MjSpec:
+    """Disable per-bone collision on the forearm/finger/thumb chain, in place.
+
+    myo_sim#111 ("Refactor model composition to mjspec-based fragment
+    system") introduced full per-bone collision capsules on every finger
+    segment plus the forearm bones (radius/ulna/humerus) -- a more
+    anatomically faithful contact model, but a physics-breaking change for
+    anything built against the older, coarser convention where only the
+    palm/metacarpal skin geoms (``*mcskin*``) were collidable and the
+    fingers/forearm were pass-through (e.g. myosuite's baoding-balls tasks,
+    which rely on balls resting across fingertips without catching on
+    capsule edges between adjacent phalanx segments). See
+    https://github.com/MyoHub/myo_sim/issues/127.
+
+    Sets ``contype = conaffinity = 0`` on every geom in
+    ``COARSE_COLLISION_DISABLED_GEOM_BASENAMES`` (right and/or left,
+    whichever are present in ``spec``), leaving every other geom --
+    including the palm/metacarpal skin geoms -- untouched. Geoms absent from
+    ``spec`` (e.g. a right-only fragment has no ``_l`` geoms) are silently
+    skipped.
+
+    Args:
+        spec: A composed (uncompiled) MjSpec, as returned by build_spec().
+
+    Returns:
+        The same spec, mutated in place, for convenient chaining.
+    """
+    for base_name in COARSE_COLLISION_DISABLED_GEOM_BASENAMES:
+        for suffix in _ARM_SIDE_SUFFIXES:
+            geom = spec.geom(base_name + suffix)
+            if geom is not None:
+                geom.contype = 0
+                geom.conaffinity = 0
+    return spec
+
+
+def build_spec(
+    model_name: str,
+    collision_mode: CollisionMode = "full",
+    inertia_floor: float | None = None,
+) -> mujoco.MjSpec:
+    """Build and return the composed, uncompiled MjSpec for a registered model.
+
+    Args:
+        model_name: Key into MODEL_REGISTRY (e.g. "myotorso_arms").
+        collision_mode: "full" (default, unchanged behavior) keeps every
+            collision geom from the #111 refactor enabled. "coarse" disables
+            collision on the forearm/finger/thumb bone geoms, restoring the
+            pre-#111 palm-only collision convention via
+            disable_finger_collision(). See
+            https://github.com/MyoHub/myo_sim/issues/127.
+        inertia_floor: Optional numerical-conditioning floor for
+            auto/mesh-derived body inertia, applied via the compiler's
+            ``boundinertia`` attribute (MuJoCo clamps a body's principal
+            inertia up to this value, kg*m^2). When set, ``boundmass`` is
+            also set to 0.001 kg, matching the paired value used by the
+            legacy static-XML convention. None (default, unchanged behavior)
+            leaves the compiler defaults (0, i.e. no floor). Several small
+            wrist/finger bones in the right-hand fragment have true
+            auto-computed inertia as low as ~3e-8 kg*m^2, which
+            ``myoarm_r_assets.xml``'s legacy convention floored to 1e-4 via
+            ``compiler boundinertia=".0001" boundmass="0.001"`` for
+            numerical conditioning of the mass matrix; pass
+            ``inertia_floor=0.0001`` to restore that convention. See
+            https://github.com/MyoHub/myo_sim/issues/128.
+
+    Returns:
+        The composed MjSpec, ready for further edits or spec.compile().
+    """
     try:
         registration = MODEL_REGISTRY[model_name]
     except KeyError as exc:
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
-    return SPEC_BUILDERS[registration.build_strategy](registration)
+    spec = SPEC_BUILDERS[registration.build_strategy](registration)
+    if collision_mode == "coarse":
+        disable_finger_collision(spec)
+    elif collision_mode != "full":
+        raise ValueError(f"Unknown collision_mode: {collision_mode!r}. Expected 'full' or 'coarse'.")
+    if inertia_floor is not None:
+        apply_inertia_floor(spec, inertia_floor)
+    return spec
+
+
+def apply_inertia_floor(spec: mujoco.MjSpec, inertia_floor: float, mass_floor=0.001) -> mujoco.MjSpec:
+    """Set a ``boundinertia``/``boundmass`` compiler floor on every body, in place.
+
+    Composed fragments are built by attaching child MjSpecs (e.g. the
+    right-arm fragment) into a parent spec via ``MjSpec.attach()``. Each
+    attached body retains its originating sub-spec's own ``compiler``
+    settings at compile time, so setting ``spec.compiler.boundinertia`` only
+    on the top-level composed spec has no effect on bodies that came from an
+    attached child fragment -- only on bodies native to the top-level spec
+    (e.g. torso). To reliably apply the floor everywhere, this sets the
+    per-body compiler override on every body in the tree, not just the
+    top-level spec.
+
+    Args:
+      spec: A composed (uncompiled) MjSpec, as returned by build_spec().
+      inertia_floor: Floor value (kg*m^2) for ``boundinertia``.
+          ``boundmass``.
+      mass_floor: Floor value (kg) for ``boundmass``. Default value matches
+          old myo_sim models.
+
+    Returns:
+      The same spec, mutated in place, for convenient chaining.
+    """
+    spec.compiler.boundinertia = inertia_floor
+    spec.compiler.boundmass = mass_floor
+
+    def _set_recursive(body: mujoco.MjsBody) -> None:
+        body.compiler.boundinertia = inertia_floor
+        body.compiler.boundmass = mass_floor
+        for child in body.bodies:
+            _set_recursive(child)
+
+    _set_recursive(spec.worldbody)
+    return spec
 
 
 def build_model(model_name: str) -> mujoco.MjModel:
