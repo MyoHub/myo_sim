@@ -1,10 +1,16 @@
 [project]
 name = "myo-sim"
-version = "0.2.0"
+version = "0.2.2"
 description = "MuJoCo musculoskeletal model definitions for MyoSuite"
+readme = "README.md"
 requires-python = ">=3.10"
+license = { text = "Apache 2.0" }
+authors = [
+    { name = "Vittorio Caggiano", email = "caggiano@gmail.com" },
+    { name = "Huiyi Wang", email = "huiyi.wang@mail.mcgill.ca" },
+]
 dependencies = [
-    "mujoco>=3.0",
+    "mujoco>=3.4",
     "numpy>=1.24",
 ]
 

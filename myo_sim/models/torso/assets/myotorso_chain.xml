@@ -524,6 +524,7 @@
                   <geom name="torso_geom_13" pos="0.028 0.365 0" type="mesh"  mesh="torso_geom_13_ribcage_s"/>
                   <body name="Arm_attachment" pos="0.02 0.37 0" euler="-1.57079632679 0 1.57079632679">
                     <body name="chest_r" pos="0 0 0" euler="1.57079632679 -1.57079632679 0">
+                      <inertial pos="0 0 0" mass="0.001" diaginertia="1e-6 1e-6 1e-6"/>
                       <geom class="myotorso_wrap" name="Thorax_ellipsoid" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08"/>
                       <geom class="myotorso_wrap" name="thorax_ellipsoid_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08"/>
                       <geom class="myotorso_wrap" name="Thorax_ellipsoid_PECM2" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>

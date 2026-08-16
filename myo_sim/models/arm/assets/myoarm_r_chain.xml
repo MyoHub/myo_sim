@@ -88,7 +88,7 @@
                                 <geom name="humerus_r" mesh="humerus_r" type="mesh"/>
                                 <geom name="humerus_coll_r" type="capsule" class="myoarm_coll" size="0.042 0.140" pos="0 -.13 0" euler="1.57079632679 0 0"/>
                                 <geom name="Elbow_PT_ECRL_wrap" type="sphere" size="0.027" pos="-0.005 -0.3 0.005" class="myoarm_wrap"/>
-                                <geom name="Elbow_PT_FCU_wrap" type="sphere" size="0.015" pos="-0.005 -0.29 -0.053" class="myoarm_wrap"/>
+                                <geom name="Elbow_PT_FCU_wrap" type="sphere" size="0.015" pos="-0.005 -0.29 -0.033" class="myoarm_wrap"/>
                                 <site name="Elbow_PT_ECRL_site_ECRL_side_r" pos="0.03 -0.2872 0.04"/>
                                 <site name="Elbow_PT_FCU_site_FCU_side_r" pos="0.03 -0.2872 -0.04"/>
 
@@ -384,8 +384,8 @@
                                             <geom name="WristFlexor_wrap" pos="0 -0.01 -0.004" quat="0.807649 -0.0333177 0.588355 0.0207694" class="myoarm_wrap" size="0.007 0.02" type="cylinder"/>
                                             <geom name="ExtensorEllipse_ellipsoid_wrap" pos="-0.00145969 -0.0120017 -0.00892632" quat="0.977473 -0.106567 0.15459 0.0963907" class="myoarm_wrap" size="0.0237409"/>
                                             <!-- <geom name="PL_ellipsoid_wrap" pos="0.0170362 -0.0128706 0.0101738" quat="0.998158 -0.0141897 0.050277 0.0308429" class="myoarm_wrap" size="0.0272385"/> -->
-                                            <geom name="FDS_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="0.0012 -0.0057 0.0123" euler="0.00837758 1.48 -0.0171042" class="myoarm_wrap"/>
-                                            <geom name="FDP_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0182" euler="-1.46747 1.37 0.121824" class="myoarm_wrap"/>
+                                            <geom name="FDS_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="0.0012 -0.0057 -0.0003" euler="0.00837758 1.48 -0.0171042" class="myoarm_wrap"/>
+                                            <geom name="FDP_ellipsoid_wrap" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0032" euler="-1.46747 1.37 0.121824" class="myoarm_wrap"/>
                                             <geom name="EDM_ellipsoid_wrap" type="cylinder" size="0.014 0.018" pos="-0.0167 -0.0022 0.0048" euler="2.9627 1.73 0.117984" class="myoarm_wrap"/>
                                             <geom name="FPL_ellipsoid_wrap" type="sphere" size="0.015" pos="0.02 -0.025 -0.0033" class="myoarm_wrap"/>
                                             <geom name="ECRL_torus_wrap" pos="0.0222 -0.0096 0.0208" quat="0.637339 0.675155 -0.168467 0.331034" class="myoarm_wrap" size="0.008"/>
@@ -395,7 +395,7 @@
                                             <geom name="EDCL_torus_wrap" pos="-0.0128 -0.0133 0.0148" quat="0.386237 0.907673 0.159784 0.037683" class="myoarm_wrap" size="0.004"/>
                                             <geom name="EDCR_torus_wrap" pos="-0.0098 -0.0137 0.0166" quat="0.516906 0.814718 -0.18962 0.1819" class="myoarm_wrap" size="0.003"/>
                                             <geom name="EDCM_torus_wrap" pos="-0.0007 -0.0117 0.0191" quat="0.516192 0.831214 -0.100219 0.180516" class="myoarm_wrap" size="0.0035"/>
-                                            <geom name="EDCI_torus_wrap" pos="0.009 -0.0149 0.0215" quat="0.660055 0.749868 0.0267535 0.0361877" class="myoarm_wrap" size="0.0035"/>
+                                            <geom name="EDCI_torus_wrap" pos="0.009 -0.0149 0.0211" quat="0.660055 0.749868 0.0267535 0.0361877" class="myoarm_wrap" size="0.0035"/>
                                             <site name="ExtensorEllipse_ellipsoid_site_EIP_side_r" pos="-0.0195105 -0.00430577 0.0636576"/>
                                             <site name="PL_ellipsoid_site_PL_side_r" pos="-0.0286005 -0.023546 -0.0168168"/>
 
@@ -490,7 +490,7 @@
                                                             <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion_r" pos="0 0 0" range="-0.785398 0.698132"/>
                                                             <geom name="proximal_thumb_coll_r" class="myohand_coll" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
                                                             <geom mesh="thumbprox_r" name="thumbprox" type="mesh"/>
-                                                            <geom name="IPthumb_wrap" type="cylinder" size="0.00450000 0.005" pos="0.0121 -0.0232 -0.0096" euler="0.30473449 0.01291544 0.08796459" class="myoarm_wrap"/>
+                                                            <geom name="IPthumb_wrap" type="cylinder" size="0.00450000 0.005" pos="0.0121 -0.0302 -0.0096" euler="0.30473449 0.01291544 0.08796459" class="myoarm_wrap"/>
                                                             <inertial pos="0.0096 -0.0163 -0.0063" mass="0.0079" fullinertia="2.6e-07 7.1e-07 2.9e-07 1e-07 4e-08 -6e-08"/>
                                                             <site name="EPL-P10_r" pos="0.0115 -0.0036 0.0016"/>
                                                             <site name="EPL-P11_r" pos="0.0192 -0.0265 -0.0104"/>
@@ -527,7 +527,7 @@
                                                 <body name="secondmc_r" pos="0.014685 -0.03762 0.005032">
                                                     <geom name="2mcskin_coll_r" class="myohand_coll" size="0.010 0.028" euler="1.42 0.15 -.1"/>
                                                     <geom mesh="2mc_r" name="2mc_r" type="mesh"/>
-                                                    <geom name="2ndmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="0.0058 -0.0314 0.0007" euler="0.84927721 -1.33552594 1.33814394" class="myoarm_wrap"/>
+                                                    <geom name="2ndmcp_ellipsoid_wrap" type="cylinder" size="0.0065 0.005" pos="0.0058 -0.0294 0.0007" euler="0.84927721 -1.33552594 1.33814394" class="myoarm_wrap"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                     <site name="ECRL-P4_r" pos="0.0025 0.0164 0.0008"/>
                                                     <site name="FCR-P3_r" pos="-0.0034 0.0192 -0.0092"/>
@@ -613,7 +613,7 @@
                                                                 <site name="EDC2-P9_r" pos="0 -0.0056 0.0034"/>
                                                                 <site name="EIP-P10_r" pos="0.001 -0.004 0.003"/>
                                                                 <site name="EIP-P11_r" pos="0.0026 -0.0123 0.0027"/>
-                                                                <geom class="myohand_coll" type="ellipsoid" size=".005 .008 .002" pos=".003 -.018 0.0055" euler="0.2 0.1 0.15" rgba="1 1 1 .8"/>
+                                                                <geom name="distph2_coll_2_r" class="myohand_coll" type="ellipsoid" size=".005 .008 .002" pos=".003 -.018 0.0055" euler="0.2 0.1 0.15" rgba="1 1 1 .8"/>
                                                                 <site name="IFtip_r" size="0.005" pos=".002 -.018 -.00" rgba="0 0.8 0 1"/>
                                                             </body>
                                                         </body>

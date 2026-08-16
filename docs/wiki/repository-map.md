@@ -18,7 +18,7 @@ myo_sim/              # installable Python package
     scene/            # scene wrapper XMLs for rendering
     textures/         # shared textures
   build/
-    compose.py        # MODEL_REGISTRY, BuildStrategy, build_model(), all builder functions
+    compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec()/build_model(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
 tests/
@@ -44,7 +44,7 @@ docs/wiki/            # canonical wiki location
 |---|---|
 | Edit a muscle path or via-point | `myo_sim/models/<part>/assets/*_muscle.xml` and `*_tendon.xml` |
 | Edit skeleton geometry | `myo_sim/models/<part>/assets/*_chain.xml` |
-| Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `BUILDERS` and `MODEL_REGISTRY` entries |
+| Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |

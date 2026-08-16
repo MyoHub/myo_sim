@@ -76,6 +76,24 @@ RIGHT_HAND_REMOVED_JOINTS = frozenset(
     }
 )
 
+# Phantom/scaffold bodies that use the "tiny mass (1g) + huge [1,1,1] kg*m^2
+# inertia" idiom -- a deliberate MuJoCo trick that makes a body's absurd
+# rotational inertia harmless as long as the body's own joints fully
+# constrain its configuration (it never actually rotates freely under real
+# dynamics). Each of these bodies' only joints are in
+# RIGHT_HAND_REMOVED_JOINTS, so prune_arm_spec_to_hand() leaves them
+# jointless -- welded fixed to their parent. Once jointless, MuJoCo fuses a
+# fixed body's inertia into its parent's composite inertia at compile time,
+# turning the idiom's [1,1,1] into a real (and wildly wrong) contribution to
+# the mass matrix instead of a harmless joint-local value. See
+# https://github.com/MyoHub/myo_sim/issues/128.
+PHANTOM_SCAFFOLD_BODIES = frozenset({"clavphant", "scapphant", "humphant", "humphant1"})
+
+# Physically sane inertia floor substituted for PHANTOM_SCAFFOLD_BODIES once
+# jointless, matching the legacy static-XML numerical-conditioning
+# convention (see myo_sim.build.compose.build_spec(inertia_floor=...)).
+PHANTOM_SCAFFOLD_INERTIA_FLOOR = 0.0001
+
 
 def add_side_suffix(name: str, side: str) -> str:
     suffix = f"_{side}"
@@ -156,6 +174,29 @@ def bake_hand_preview_pose(spec: object, side: str) -> None:
     bake_current_body_poses(spec, model, data)
 
 
+def fix_up_welded_phantom_inertia(spec: object, side: str) -> None:
+    """Replace idiom-style inertia on phantom bodies left jointless by pruning.
+
+    PHANTOM_SCAFFOLD_BODIES rely on their own joints to make a nonphysical
+    [1,1,1] kg*m^2 inertia harmless. If pruning removed every joint on one
+    of these bodies (see RIGHT_HAND_REMOVED_JOINTS), it is now welded fixed
+    to its parent and that inertia would otherwise be fused directly into
+    the parent's composite inertia at compile time. Replace it with
+    PHANTOM_SCAFFOLD_INERTIA_FLOOR (matching the legacy numerical-
+    conditioning convention) on any such now-jointless body. Bodies that
+    still have a joint of their own (e.g. an unpruned full-arm spec) are
+    left untouched, since the idiom is safe there.
+
+    Args:
+        spec: A composed MjSpec being pruned, mutated in place.
+        side: "r" or "l" -- resolves each base name to its sided body name.
+    """
+    for base_name in PHANTOM_SCAFFOLD_BODIES:
+        body = spec.body(add_side_suffix(base_name, side))
+        if body is not None and len(body.joints) == 0:
+            body.inertia = [PHANTOM_SCAFFOLD_INERTIA_FLOOR] * 3
+
+
 def prune_arm_spec_to_hand(spec: object, side: str) -> None:
     """Remove proximal arm dynamics from an arm spec, leaving wrist/hand controls."""
     removed_joints = {side_name(name, side) for name in RIGHT_HAND_REMOVED_JOINTS}
@@ -190,5 +231,8 @@ def prune_arm_spec_to_hand(spec: object, side: str) -> None:
         joint = spec.joint(joint_name)
         if joint is not None:
             spec.delete(joint)
+
+    fix_up_welded_phantom_inertia(spec, side)
+
     for joint in spec.joints:
         joint.name = add_side_suffix(joint.name, side)

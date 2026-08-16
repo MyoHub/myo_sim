@@ -711,7 +711,7 @@ wheels = [
 
 [[package]]
 name = "myo-sim"
-version = "0.2.0"
+version = "0.2.2"
 source = { editable = "." }
 dependencies = [
     { name = "mujoco" },
@@ -733,7 +733,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "mujoco", specifier = ">=3.0" },
+    { name = "mujoco", specifier = ">=3.4" },
     { name = "numpy", specifier = ">=1.24" },
 ]
 
