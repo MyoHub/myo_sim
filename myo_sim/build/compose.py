@@ -594,6 +594,7 @@ COARSE_COLLISION_DISABLED_GEOM_BASENAMES: tuple[str, ...] = (
     "proxph2_coll",
     "midph2_coll",
     "distph2_coll",
+    "distph2_coll_2",
     "proxph3_coll",
     "midph3_coll",
     "distph3_coll",
@@ -633,18 +634,29 @@ def disable_finger_collision(spec: mujoco.MjSpec) -> mujoco.MjSpec:
     ``spec`` (e.g. a right-only fragment has no ``_l`` geoms) are silently
     skipped.
 
+    Also removes any explicit ``<pair>`` contact referencing a disabled geom:
+    explicit pairs (e.g. the humerus/radius/ulna cross-arm and torso pairs in
+    myoarm_contacts.xml/myohand_contacts.xml) bypass contype/conaffinity
+    filtering entirely, so they would otherwise stay active even though the
+    geom itself is marked non-collidable.
+
     Args:
         spec: A composed (uncompiled) MjSpec, as returned by build_spec().
 
     Returns:
         The same spec, mutated in place, for convenient chaining.
     """
-    for base_name in COARSE_COLLISION_DISABLED_GEOM_BASENAMES:
-        for suffix in _ARM_SIDE_SUFFIXES:
-            geom = spec.geom(base_name + suffix)
-            if geom is not None:
-                geom.contype = 0
-                geom.conaffinity = 0
+    disabled_names = {
+        base_name + suffix for base_name in COARSE_COLLISION_DISABLED_GEOM_BASENAMES for suffix in _ARM_SIDE_SUFFIXES
+    }
+    for name in disabled_names:
+        geom = spec.geom(name)
+        if geom is not None:
+            geom.contype = 0
+            geom.conaffinity = 0
+    for pair in list(spec.pairs):
+        if pair.geomname1 in disabled_names or pair.geomname2 in disabled_names:
+            spec.delete(pair)
     return spec
 
 
