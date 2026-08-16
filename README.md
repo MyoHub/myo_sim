@@ -3,6 +3,7 @@
 [![CI](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml/badge.svg?branch=dev)](https://github.com/MyoHub/myo_sim/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-%3E%3D3.10-blue.svg)](pyproject.toml)
+[![PyPI](https://img.shields.io/pypi/v/myo-sim)](https://pypi.org/project/myo-sim/)
 
 MyoSim is the MuJoCo musculoskeletal model library used by [MyoSuite](https://github.com/facebookresearch/myoSuite).
 It provides anatomically detailed XML models of the human arm, leg, torso, and hand,
@@ -51,11 +52,8 @@ This writes loadable XML files for `myoarms`, `myotorso`, `myolegs`, `myolegs26`
 ## Install
 
 ```bash
-pip install git+https://github.com/MyoHub/myo_sim.git@dev
+pip install myo-sim
 ```
-
-Note: the PyPI package `myo-sim` currently points to an older incompatible version.
-Use the git install above until a new release is published.
 
 ## Quickstart
 
