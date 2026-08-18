@@ -1,6 +1,6 @@
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Optional
 
 from myo_sim.fragments import FragmentInfo as FragmentInfo
 from myo_sim.fragments import FragmentRegistry as FragmentRegistry
@@ -8,7 +8,7 @@ from myo_sim.fragments import FragmentRegistry as FragmentRegistry
 if TYPE_CHECKING:
     import mujoco
 
-    from myo_sim.build.compose import CollisionMode
+    from myo_sim.build.compose import CollisionMode as CollisionMode
 
 try:
     __version__ = version("myo-sim")
@@ -74,27 +74,27 @@ def __getattr__(name: str):
 
 
 def _right_hand_spec():
-    from myo_sim.build.compose import load_right_hand_from_arm_spec
+    from myo_sim.build.compose import build_right_hand_from_arm_spec
 
-    return load_right_hand_from_arm_spec()
+    return build_right_hand_from_arm_spec()
 
 
 def _left_hand_spec():
-    from myo_sim.build.compose import load_left_hand_from_arm_spec
+    from myo_sim.build.compose import build_left_hand_from_arm_spec
 
-    return load_left_hand_from_arm_spec()
+    return build_left_hand_from_arm_spec()
 
 
 def _legs_spec():
-    from myo_sim.build.compose import load_legs_spec
+    from myo_sim.build.compose import build_legs_spec
 
-    return load_legs_spec()
+    return build_legs_spec()
 
 
 def _legs26_spec():
-    from myo_sim.build.compose import load_legs26_spec
+    from myo_sim.build.compose import build_legs26_spec
 
-    return load_legs26_spec()
+    return build_legs26_spec()
 
 
 # TODO: there should be a myohand_l alias, which should work with load. Also a given name (myolegs) should refer to the
@@ -137,7 +137,7 @@ def load_model(name: str) -> tuple:
 
 def load_spec(
     name: str,
-    collision_mode: "CollisionMode" = "full",
+    build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
@@ -148,15 +148,8 @@ def load_spec(
 
     Args:
         name: Registry name or legacy alias (e.g. "myotorso_arms", "hand").
-        collision_mode: "full" (default, unchanged behavior) keeps every
-            per-bone collision geom from the #111 mjspec refactor enabled.
-            "coarse" disables collision on the forearm/finger/thumb bone
-            geoms, restoring the pre-#111 convention where only the
-            palm/metacarpal skin geoms are collidable -- see
-            myo_sim.build.compose.disable_finger_collision() and
-            https://github.com/MyoHub/myo_sim/issues/127. Only supported for
-            MjSpec-composed models; ignored for packaged static-XML
-            fragments.
+        build_kwargs: Passed along to builder function.
+                      TODO: Raise error on unused kwarg.
         inertia_floor: Optional numerical-conditioning floor for
             auto/mesh-derived body inertia (sets the compiler's
             ``boundinertia``/``boundmass``). None (default, unchanged
@@ -173,14 +166,15 @@ def load_spec(
 
     from myo_sim.build.compose import ALIASES, build_spec
 
+    build_kwargs = build_kwargs or {}
     composed_models = _composed_models()
     if name in composed_models:
         # Legacy aliases (e.g. hand, myohand, myoarm) resolve to a registry entry.
         composed_name = ALIASES.get(name, name)
         spec = build_spec(
             composed_name,
-            collision_mode=collision_mode,
             inertia_floor=inertia_floor,
+            build_kwargs=build_kwargs,
         )
         return spec
 
