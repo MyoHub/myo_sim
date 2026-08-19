@@ -22,11 +22,15 @@
         <geom name="terrain" type="hfield" hfield="terrain" pos="0 0 -1" conaffinity="1" contype="1" rgba="1 1 1 0"/>
         <site name="pelvis_target" size="0.02" pos="0 0 .92" group="4"/>
 
-        <body name="root" pos="0 0 1" euler="0 0 -1.57">
+        <body name="root" pos="0 0 1">
             <!-- myotorso_rigid_chain.xml's root body now self-corrects with its own
-                 -90deg yaw (myo_sim#131); this frame cancels that against root's own
-                 -90deg yaw below so torso attaches with zero net rotation, exactly as
-                 it did before that fix, keeping every stored keyframe below valid. -->
+                 -90deg yaw (myo_sim#131). The legs pelvis below needs no compensating
+                 rotation of its own, so this frame's +90deg cancels torso's yaw
+                 directly against an unrotated root -- the only rotation this file
+                 needs. root itself used to carry a matching -90deg yaw, but a
+                 body's own euler/quat only ever seeds qpos0 (the unloaded default
+                 pose); every keyframe below stores its own absolute orientation and
+                 ignores it entirely, so it was redundant once this frame existed. -->
             <frame euler="0 0 1.57">
                 <include file="../torso/assets/myotorso_rigid_chain.xml"/>
             </frame>
