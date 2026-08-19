@@ -23,9 +23,13 @@
         <site name="pelvis_target" size="0.02" pos="0 0 .92" group="4"/>
 
         <body name="root" pos="0 0 1" euler="0 0 -1.57">
-            <body name="torso_unyaw" euler="0 0 1.57">
+            <!-- myotorso_rigid_chain.xml's root body now self-corrects with its own
+                 -90deg yaw (myo_sim#131); this frame cancels that against root's own
+                 -90deg yaw below so torso attaches with zero net rotation, exactly as
+                 it did before that fix, keeping every stored keyframe below valid. -->
+            <frame euler="0 0 1.57">
                 <include file="../torso/assets/myotorso_rigid_chain.xml"/>
-            </body>
+            </frame>
             <include file="assets/myolegs_osl_chain.xml"/>
             <freejoint name="root"/>
         </body>
