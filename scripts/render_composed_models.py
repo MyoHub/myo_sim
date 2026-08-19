@@ -16,10 +16,18 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+import myo_sim  # noqa: E402
 from myo_sim.build.compose import MODEL_REGISTRY, build_spec  # noqa: E402
 
 OUT_DIR = ROOT / "docs" / "images" / "models"
 WIDTH, HEIGHT = 900, 900
+
+# Legacy static-XML models outside MODEL_REGISTRY/build_spec: (output name, path, keyframe).
+# These typically define no lights of their own (they're meant to be embedded in a scene
+# that provides one), so they also get a brighter headlight than the registry sweep below.
+STATIC_XML_TARGETS: dict[str, tuple[Path, str | None]] = {
+    "myolegs_osl": (myo_sim.MODELS_DIR / "legacy" / "osl" / "myolegs_osl.xml", "stand"),
+}
 
 
 def _character_bounds(model: mujoco.MjModel, data: mujoco.MjData) -> tuple[np.ndarray, float]:
@@ -55,8 +63,12 @@ def _character_forward_azimuth(model: mujoco.MjModel, data: mujoco.MjData) -> fl
     return float(np.degrees(np.arctan2(forward[1], forward[0])))
 
 
-def render_model(model: mujoco.MjModel, out_path: Path) -> None:
+def render_model(model: mujoco.MjModel, out_path: Path, key_name: str | None = None) -> None:
     data = mujoco.MjData(model)
+    if key_name is not None:
+        key_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_KEY, key_name)
+        if key_id >= 0:
+            mujoco.mj_resetDataKeyframe(model, data, key_id)
     mujoco.mj_forward(model, data)
 
     center, extent = _character_bounds(model, data)
@@ -93,6 +105,21 @@ def main() -> None:
             continue
         out_path = OUT_DIR / f"{name}.png"
         render_model(model, out_path)
+        print(f"wrote {out_path}")
+
+    for name, (xml_path, key_name) in sorted(STATIC_XML_TARGETS.items()):
+        try:
+            spec = mujoco.MjSpec.from_file(str(xml_path))
+            spec.visual.global_.offwidth = WIDTH
+            spec.visual.global_.offheight = HEIGHT
+            spec.visual.headlight.ambient = [0.4, 0.4, 0.4]
+            spec.visual.headlight.diffuse = [0.7, 0.7, 0.7]
+            model = spec.compile()
+        except Exception as exc:  # noqa: BLE001
+            print(f"SKIP {name}: {exc}")
+            continue
+        out_path = OUT_DIR / f"{name}.png"
+        render_model(model, out_path, key_name=key_name)
         print(f"wrote {out_path}")
 
 
