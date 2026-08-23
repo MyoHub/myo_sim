@@ -82,6 +82,7 @@ def render_model(model: mujoco.MjModel, out_path: Path, key_name: str | None = N
 
     opt = mujoco.MjvOption()
     opt.flags[mujoco.mjtVisFlag.mjVIS_TRANSPARENT] = False
+    opt.sitegroup[:] = False  # hide muscle wrap-point/attachment sites -- clutter for a gallery snapshot
 
     with mujoco.Renderer(model, height=HEIGHT, width=WIDTH) as renderer:
         renderer.update_scene(data, camera=cam, scene_option=opt)
