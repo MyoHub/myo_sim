@@ -43,7 +43,7 @@ def test_chest_scaffold_carries_no_phantom_mass(model_name):
     """
     model = load_spec(model_name).compile()
 
-    assert model.body_mass[body_id(model, "chest_r")] < 0.01
+    assert model.body_mass[body_id(model, "chest_r")] <= 0.001
 
 
 def test_fullbody_total_mass_is_anthropometrically_consistent():
