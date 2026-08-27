@@ -125,3 +125,16 @@ The MyoLeg model was modified as follows:
 
 
 ## ChangeLog
+
+**2026-08-19** — Fixed a 90-degree waist twist between the torso and legs
+([#131](https://github.com/MyoHub/myo_sim/issues/131)): `legacy/torso/assets/myotorso_rigid_chain.xml`'s
+root body now self-corrects with its own `-90deg` yaw so it matches an
+OpenSim-framed pelvis out of the box. Since this file's legs pelvis needs no
+compensating rotation of its own, `root`'s `torso` include is now wrapped in a
+`<frame euler="0 0 1.57">` that cancels torso's self-yaw against an unrotated
+`root`. `root` itself used to carry a matching `-90deg` yaw of its own, but a
+body's own `euler`/`quat` only ever seeds `qpos0` (the pose before any
+keyframe is loaded) -- every keyframe below stores its own absolute
+orientation and ignores it entirely -- so that yaw was redundant once the
+frame existed and was removed. Verified bit-for-bit identical torso/pelvis
+world orientation across the default pose and every keyframe.

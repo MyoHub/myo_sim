@@ -17,7 +17,7 @@ import numpy as np
 import pytest
 
 import myo_sim
-from myo_sim.build.compose import load_right_hand_from_arm_spec
+from myo_sim.build.compose import build_right_hand_from_arm_spec
 
 
 def _joint_names(m: mujoco.MjModel) -> list[str]:
@@ -31,7 +31,7 @@ def _actuator_names(m: mujoco.MjModel) -> list[str]:
 @pytest.fixture(scope="module")
 def hand_only() -> mujoco.MjModel:
     """Compiled hand-only spec — the model myosuite's hand_standard recipe builds."""
-    return load_right_hand_from_arm_spec().compile()
+    return build_right_hand_from_arm_spec().compile()
 
 
 @pytest.fixture(scope="module")
