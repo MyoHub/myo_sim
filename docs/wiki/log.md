@@ -4,6 +4,37 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-08-02 — Widen force-length curve bounds for muscles whose refit operating range outgrew them
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `myo_sim/models/torso/assets/myotorso_muscle.xml`
+Why: Restoring anatomical fiber length for 26 muscles (see the anatomical-parameter entries below) shifted their normalized operating range partly outside the shared default force-length curve bounds (`lmin`/`lmax`); widened bounds per muscle to contain the new range, respecting MuJoCo's `lmin < 1 < lmax` requirement.
+
+## 2026-08-02 — Add inter-finger self-collision pairs to the hand
+Changed: `myo_sim/models/contacts/myohand_contacts.xml`
+Why: No finger-to-finger contact pairs existed at all (only forearm-torso and left/right-forearm pairs), so fingers could pass through each other; added adjacent-digit pairs at each phalanx level plus thumb-opposition pairs, verified on both single-hand and bilateral builds.
+
+## 2026-08-02 — Widen wrist deviation and shoulder rotation ranges
+Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml`
+Why: Real motion-capture data (throwing, catching, tennis) required wrist deviation and shoulder rotation angles beyond the shipped joint limits; widened both to cover the observed range plus a literature-consistent margin.
+
+## 2026-08-02 — Correct lumbar axial rotation and wrist flexion joint ranges
+Changed: `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/models/arm/assets/myoarm_r_chain.xml`
+Why: `L4_L5_AR` was ~18x wider than published per-segment lumbar ROM and wrist `flexion_r` was roughly half the typical clinical range; corrected both to match standard normative values.
+
+## 2026-08-02 — Restore anatomical muscle parameters for hand extrinsics
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`
+Why: All 24 flagged finger/wrist flexor-extensor muscles had never received individual calibration and were compiling against MuJoCo's raw default fiber-length range; fit each to its OpenSim/MoBL-ARMS anatomical optimal fiber length, tendon slack length, and peak force.
+
+## 2026-08-02 — Restore anatomical muscle parameters for shoulder muscles
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`
+Why: 7 of 8 shoulder muscles flagged with inflated optimal fiber length were refit to their anatomical values; the 8th (`CORB`) was left unchanged after its excursion pattern matched the profile of muscles where refitting measurably hurts force accuracy.
+
+## 2026-08-02 — Restore anatomical muscle parameters for the leg
+Changed: `myo_sim/models/leg/assets/myolegs_muscle.xml`
+Why: 6 of 10 flagged leg muscles were refit to anatomical optimal fiber length/tendon slack/peak force after remeasuring their physiological length range; the other 4 were deliberately left unchanged because refitting was cross-validated to increase force error against the OpenSim reference, not reduce it.
+
+## 2026-08-02 — Restore anatomical muscle parameters for the torso
+Changed: `myo_sim/models/torso/assets/myotorso_muscle.xml`
+Why: 25 torso muscles had optimal fiber length inflated 5-30x versus the anatomical reference (a conversion artifact, not a real path-length problem); refit each to match, remeasuring the physiological joint range for the two muscles whose fit initially came out physically invalid.
 ## 2026-08-12 — Remove 12.87 kg of phantom mass from the `chest_r` wrap scaffold
 Changed: `myo_sim/models/torso/assets/myotorso_assets.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `tests/test_chest_ownership.py`, `docs/wiki/testing-guide.md`
 Why: `chest_r` contains only muscle-wrap ellipsoids and had no `<inertial>`, and the `myotorso_wrap` default class set no mass or density, so MuJoCo meshed its six r=0.08 m spheres at the default 1000 kg/m^3 — 6 x (4/3)pi(0.08)^3 x 1000 = 12.868 kg of parasitic mass welded into the torso. `build_model("myofullbody")` totalled 97.132 kg against the MuscleMimic reference's 84.270 kg, with `chest_r` the only body that differed; MuscleMimic sets its equivalent `thorax` body to 0.001 kg, and Winter's anthropometric segment fractions applied to the thigh, shank, foot and forearm masses all imply an 81-84 kg subject. Added `mass="0"` to the `myotorso_wrap` default class so no wrap geom can ever contribute mass again, plus an explicit `mass="0.001"` inertial on `chest_r` (required — with every geom massless and no inertial, MuJoCo rejects the body with "mass and inertia must be larger than mjMINVAL"). The only other `myotorso_wrap` geom, `pelvis_wrap` in `lumbar5`, sits in a body with its own explicit 1.824 kg inertial and is unaffected. Total is now 84.265 kg and `chest_r` is the sole body whose mass changed. The explicit inertial survives `spec.to_xml()` round-tripping, so the `explicitinertial` workaround in `myo_sim/build/elastic.py` is not needed here.
