@@ -66,34 +66,34 @@
           <!--joint name="r_shoulder_elev" type="hinge" pos="0 0 0" axis="-0.058898 0.0023 0.998261" limited="true" range="-1.5708 3.14159" ref="0"></joint-->
           <body name="r_ulna_radius_hand" pos="0.0061 -0.2904 -0.0123" quat="1.0 0.0 0.0 0.0">
             <geom name="arm_r_ulna" type="mesh" mesh="arm_r_ulna"></geom>
-            <geom name="arm_r_radius" type="mesh" mesh="arm_r_radius"></geom>
-            <geom name="arm_r_lunate" type="mesh" mesh="arm_r_lunate"></geom>
-            <geom name="arm_r_scaphoid" type="mesh" mesh="arm_r_scaphoid"></geom>
-            <geom name="arm_r_pisiform" type="mesh" mesh="arm_r_pisiform"></geom>
-            <geom name="arm_r_triquetrum" type="mesh" mesh="arm_r_triquetrum"></geom>
-            <geom name="arm_r_capitate" type="mesh" mesh="arm_r_capitate"></geom>
-            <geom name="arm_r_trapezium" type="mesh" mesh="arm_r_trapezium"></geom>
-            <geom name="arm_r_trapezoid" type="mesh" mesh="arm_r_trapezoid"></geom>
-            <geom name="arm_r_hamate" type="mesh" mesh="arm_r_hamate"></geom>
-            <geom name="arm_r_1mc" type="mesh" mesh="arm_r_1mc"></geom>
-            <geom name="arm_r_2mc" type="mesh" mesh="arm_r_2mc"></geom>
-            <geom name="arm_r_3mc" type="mesh" mesh="arm_r_3mc"></geom>
-            <geom name="arm_r_4mc" type="mesh" mesh="arm_r_4mc"></geom>
-            <geom name="arm_r_5mc" type="mesh" mesh="arm_r_5mc"></geom>
-            <geom name="arm_r_thumbprox" type="mesh" mesh="arm_r_thumbprox"></geom>
-            <geom name="arm_r_thumbdist" type="mesh" mesh="arm_r_thumbdist"></geom>
-            <geom name="arm_r_2proxph" type="mesh" mesh="arm_r_2proxph"></geom>
-            <geom name="arm_r_2midph" type="mesh" mesh="arm_r_2midph"></geom>
-            <geom name="arm_r_2distph" type="mesh" mesh="arm_r_2distph"></geom>
-            <geom name="arm_r_3proxph" type="mesh" mesh="arm_r_3proxph"></geom>
-            <geom name="arm_r_3midph" type="mesh" mesh="arm_r_3midph"></geom>
-            <geom name="arm_r_3distph" type="mesh" mesh="arm_r_3distph"></geom>
-            <geom name="arm_r_4proxph" type="mesh" mesh="arm_r_4proxph"></geom>
-            <geom name="arm_r_4midph" type="mesh" mesh="arm_r_4midph"></geom>
-            <geom name="arm_r_4distph" type="mesh" mesh="arm_r_4distph"></geom>
-            <geom name="arm_r_5proxph" type="mesh" mesh="arm_r_5proxph"></geom>
-            <geom name="arm_r_5midph" type="mesh" mesh="arm_r_5midph"></geom>
-            <geom name="arm_r_5distph" type="mesh" mesh="arm_r_5distph"></geom>
+            <geom name="arm_r_radius" type="mesh" mesh="arm_r_radius" pos="0.000400 -0.011500 0.020000"></geom>
+            <geom name="arm_r_lunate" type="mesh" mesh="arm_r_lunate" pos="0.018400 -0.253500 0.045000"></geom>
+            <geom name="arm_r_scaphoid" type="mesh" mesh="arm_r_scaphoid" pos="0.030745 -0.257964 0.043746"></geom>
+            <geom name="arm_r_pisiform" type="mesh" mesh="arm_r_pisiform" pos="0.005012 -0.263386 0.034407"></geom>
+            <geom name="arm_r_triquetrum" type="mesh" mesh="arm_r_triquetrum" pos="0.007616 -0.260999 0.043711"></geom>
+            <geom name="arm_r_capitate" type="mesh" mesh="arm_r_capitate" pos="0.022392 -0.268554 0.047327"></geom>
+            <geom name="arm_r_trapezium" type="mesh" mesh="arm_r_trapezium" pos="0.037685 -0.273123 0.037019"></geom>
+            <geom name="arm_r_trapezoid" type="mesh" mesh="arm_r_trapezoid" pos="0.031535 -0.272616 0.044863"></geom>
+            <geom name="arm_r_hamate" type="mesh" mesh="arm_r_hamate" pos="0.011423 -0.271049 0.046577"></geom>
+            <geom name="arm_r_1mc" type="mesh" mesh="arm_r_1mc" pos="0.044885 -0.278523 0.034519"></geom>
+            <geom name="arm_r_2mc" type="mesh" mesh="arm_r_2mc" pos="0.037077 -0.306174 0.052359"></geom>
+            <geom name="arm_r_3mc" type="mesh" mesh="arm_r_3mc" pos="0.022869 -0.307793 0.054704"></geom>
+            <geom name="arm_r_4mc" type="mesh" mesh="arm_r_4mc" pos="0.010346 -0.309073 0.050840"></geom>
+            <geom name="arm_r_5mc" type="mesh" mesh="arm_r_5mc" pos="0.000496 -0.303237 0.043109"></geom>
+            <geom name="arm_r_thumbprox" type="mesh" mesh="arm_r_thumbprox" pos="0.061385 -0.307723 0.021819"></geom>
+            <geom name="arm_r_thumbdist" type="mesh" mesh="arm_r_thumbdist" pos="0.075385 -0.333623 0.011719"></geom>
+            <geom name="arm_r_2proxph" type="mesh" mesh="arm_r_2proxph" pos="0.040578 -0.334417 0.055979"></geom>
+            <geom name="arm_r_2midph" type="mesh" mesh="arm_r_2midph" pos="0.048088 -0.375690 0.063305"></geom>
+            <geom name="arm_r_2distph" type="mesh" mesh="arm_r_2distph" pos="0.051421 -0.400578 0.064525"></geom>
+            <geom name="arm_r_3proxph" type="mesh" mesh="arm_r_3proxph" pos="0.023109 -0.334083 0.056482"></geom>
+            <geom name="arm_r_3midph" type="mesh" mesh="arm_r_3midph" pos="0.024759 -0.378294 0.062712"></geom>
+            <geom name="arm_r_3distph" type="mesh" mesh="arm_r_3distph" pos="0.026124 -0.407341 0.064666"></geom>
+            <geom name="arm_r_4proxph" type="mesh" mesh="arm_r_4proxph" pos="0.008516 -0.332762 0.050667"></geom>
+            <geom name="arm_r_4midph" type="mesh" mesh="arm_r_4midph" pos="0.004988 -0.373017 0.052012"></geom>
+            <geom name="arm_r_4distph" type="mesh" mesh="arm_r_4distph" pos="0.002671 -0.397806 0.052575"></geom>
+            <geom name="arm_r_5proxph" type="mesh" mesh="arm_r_5proxph" pos="-0.001101 -0.324668 0.041613"></geom>
+            <geom name="arm_r_5midph" type="mesh" mesh="arm_r_5midph" pos="-0.006380 -0.360231 0.038734"></geom>
+            <geom name="arm_r_5distph" type="mesh" mesh="arm_r_5distph" pos="-0.009251 -0.380908 0.036491"></geom>
             <inertial pos="0 -0.181479 0" mass="1.534315" fullinertia="0.019281 0.001571 0.020062 0 0 0"></inertial>
             <site name="TRIlong-P5" pos="-0.0219 0.0105 -0.0008"></site>
             <site name="TRIlat-P5" pos="-0.0219 0.0105 -0.0008"></site>
