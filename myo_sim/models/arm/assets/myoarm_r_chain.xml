@@ -137,7 +137,7 @@
                                 <geom class="myoarm_wrap" name="LIGhh_mi_ellipsoid_m_glenohum" pos="-0.001 0.004 0.001" quat="0.923956 -0.382499 0 0" size="0.019"/>
                                 <geom class="myoarm_wrap" name="LIGhh_mi_ellipsoid_i_glenohum" pos="-0.001 0.004 0.001" quat="0.923956 -0.382499 0 0" size="0.019"/>
                                 <geom class="myoarm_wrap" name="LIGhh_s_ellipsoid_coracohum" pos="-0.001 0.003 0.003" quat="0.923956 -0.382499 0 0" size="0.02"/>
-                                <geom class="myoarm_wrap" name="DELT1hh_ellipsoid_DELT1" pos="-0.0179974 -0.0075035 -0.0580664" quat="0.83666 0.160028 0.454758 0.259973" size="0.029726" rgba="1 0 0 0"/>
+                                <geom class="myoarm_wrap" name="DELT1hh_ellipsoid_DELT1" pos="-0.0279974 -0.0075035 -0.0080664" quat="0.83666 0.160028 0.454758 0.259973" size="0.029726" rgba="1 0 0 0"/>
                                 <geom class="myoarm_wrap" name="delt3hum_ellipsoid_DELT3" pos="0.0044 -0.0624 0.00443794" quat="0.156827 0.126209 0.749421 -0.630749" size="0.0125"/>
                                 <geom class="myoarm_wrap" name="SUPSP_ellipsoid_SUPSP" pos="0.00110546 0.00820496 0.00197985" quat="0.793859 0.0125049 0.0149602 -0.607789" size="0.0202151"/>
                                 <geom class="myoarm_wrap" name="SUBSCAP_ellipsoid_SUBSC" pos="0.0028089 -0.00313613 -0.00633073" quat="0.881836 -0.408886 0.210176 0.104899" size="0.0171729"/>
@@ -392,9 +392,9 @@
                                             <geom name="ECRB_torus_wrap" pos="0.0126 -0.0095 0.0186" quat="0.78744 0.610837 -0.011177 -0.0818018" class="myoarm_wrap" size="0.002"/>
                                             <geom name="FCR_torus_wrap" pos="0.0032 -0.0045 -0.019" quat="0.71204 -0.696183 -0.0894345 0.0181554" class="myoarm_wrap" size="0.0015"/>
 
-                                            <geom name="EDCL_torus_wrap" pos="-0.0128 -0.0133 0.0148" quat="0.386237 0.907673 0.159784 0.037683" class="myoarm_wrap" size="0.004"/>
+                                            <geom name="EDCL_torus_wrap" pos="-0.0098 -0.0133 0.0148" quat="0.386237 0.907673 0.159784 0.037683" class="myoarm_wrap" size="0.004"/>
                                             <geom name="EDCR_torus_wrap" pos="-0.0098 -0.0137 0.0166" quat="0.516906 0.814718 -0.18962 0.1819" class="myoarm_wrap" size="0.003"/>
-                                            <geom name="EDCM_torus_wrap" pos="-0.0007 -0.0117 0.0191" quat="0.516192 0.831214 -0.100219 0.180516" class="myoarm_wrap" size="0.0035"/>
+                                            <geom name="EDCM_torus_wrap" pos="-0.0097 -0.0117 0.0191" quat="0.516192 0.831214 -0.100219 0.180516" class="myoarm_wrap" size="0.0035"/>
                                             <geom name="EDCI_torus_wrap" pos="0.009 -0.0149 0.0211" quat="0.660055 0.749868 0.0267535 0.0361877" class="myoarm_wrap" size="0.0035"/>
                                             <site name="ExtensorEllipse_ellipsoid_site_EIP_side_r" pos="-0.0195105 -0.00430577 0.0636576"/>
                                             <site name="PL_ellipsoid_site_PL_side_r" pos="-0.0286005 -0.023546 -0.0168168"/>
