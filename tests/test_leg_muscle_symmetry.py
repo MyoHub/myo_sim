@@ -37,9 +37,6 @@ def test_discovered_leg_muscle_pairs_have_symmetric_curves(leg_model_context, di
     failures = []
     checked_pairs = []
     for pair in discovered_leg_pairs:
-        # The current non-abdomen leg model has known left/right knee-angle curve differences.
-        if pair.right_joint == "knee_angle_r" or pair.left_joint == "knee_angle_l":
-            continue
         checked_pairs.append(pair)
         summary = compare_muscle_pair(model, data, eq_map, pair)
         if not summary["ok"]:
