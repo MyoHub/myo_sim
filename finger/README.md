@@ -6,6 +6,8 @@ The myoFinger mujoco musculoskeletal (MSK) model was created based on a biomimet
 
 It is a simplified and intuitive model of a 4 Degree of Freedom (DoF) finger (MyoFinger, Figure 4A), which is actuated through a series of 5 simplified antagonistic muscle-tendon units.
 
+The motor finger is a variant of the same model that uses direct force actuators (no muscle dynamics), while still using the same spatial tendon routing. It is intended for educational and testing purposes. It has not been optimized to best reproduce the muscle finger's capability directly, but roughly approximated.
+
 ## Maunal adjustment:
 - Adjustments post conversion to optimize for kitnematic and dynamic behaviors
 - Inertial properties
