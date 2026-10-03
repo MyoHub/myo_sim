@@ -1,5 +1,5 @@
 <mujocoinclude>
-    <!-- Derived from MIT-licensed HYOID / Neck6D; see ../validation/README.md and ../validation/LICENSE.Neck6D. -->
+    <!-- Derived from MIT-licensed HYOID / Neck6D; see ../README.md and ../LICENSE.Neck6D. -->
     <tendon>
         <spatial name="myohead_digastric_post_tendon_r" class="myohead_articulated">
             <site site="myohead_digastric_post_digastricpost-P1_r" />

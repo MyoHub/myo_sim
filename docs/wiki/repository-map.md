@@ -36,6 +36,7 @@ tests/
   muscle_analysis_utils.py / muscle_symmetry_checks.py
   debug_muscle_leg.py / debug_muscle_torso.py / debug_muscle_bimanual.py
 docs/wiki/            # canonical wiki location
+docs/validation/      # concise literature validation reports and figures; not packaged
 ```
 
 ## Where to make each kind of change

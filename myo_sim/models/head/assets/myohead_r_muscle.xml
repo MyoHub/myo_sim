@@ -1,5 +1,5 @@
 <mujocoinclude>
-    <!-- Derived from MIT-licensed HYOID / Neck6D; see ../validation/README.md and ../validation/LICENSE.Neck6D. -->
+    <!-- Derived from MIT-licensed HYOID / Neck6D; see ../README.md and ../LICENSE.Neck6D. -->
     <actuator>
         <general name="myohead_digastric_post_r" class="myohead_muscle" tendon="myohead_digastric_post_tendon_r" lengthrange="0.0326346 0.0878346" gainprm="0.149902 1.59872 94.5938 1 0 2 10 2.10261 1.4 0" biasprm="0.149902 1.59872 94.5938 1 0 2 10 2.10261 1.4 0" />
         <general name="myohead_digastric_ant_r" class="myohead_muscle" tendon="myohead_digastric_ant_tendon_r" lengthrange="0.00871147 0.0279411" gainprm="0.154826 1.49709 105.351 1 0 2 10 0.872241 1.4 0" biasprm="0.154826 1.49709 105.351 1 0 2 10 0.872241 1.4 0" />

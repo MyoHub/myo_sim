@@ -17,7 +17,7 @@ Use `myo_sim.load("myohead")` for the fixed standalone neck or
 
 ## Reference model
 
-- **Source:** [Scaled HYOID / Neck6D](https://simtk.org/projects/neckdynamics), via the [pinned MyoConverter distribution](https://github.com/MyoHub/myoconverter/tree/cadf38059367a51239e6dc28c9fbe8b8fbd5149f/models/osim/Neck6D). The model's MIT notice is preserved in `validation/LICENSE.Neck6D`.
+- **Source:** [Scaled HYOID / Neck6D](https://simtk.org/projects/neckdynamics), via the [pinned MyoConverter distribution](https://github.com/MyoHub/myoconverter/tree/cadf38059367a51239e6dc28c9fbe8b8fbd5149f/models/osim/Neck6D). The model's MIT notice is preserved in `LICENSE.Neck6D`.
 - **Paper:** Mortensen, Vasavada and Merryweather, 2018 ([DOI](https://doi.org/10.1371/journal.pone.0199912)).
 
 ## Fidelity
@@ -27,7 +27,7 @@ The right muscle paths are mirrored at compose time using the repository's
 mirroring utility. HAT skull/jaw and segmented cervical meshes retain their
 neutral placement. The existing default full-body model is unchanged.
 
-See [the measured validation report and reproduction instructions](validation/README.md)
+See [the validation summary](../../../docs/validation/neck/README.md)
 for source agreement, neutral experimental strength, dynamic release comparisons, intentional differences
 and the precise scope of acceptance. <!-- TODO: review fidelity against measured report -->
 
@@ -47,7 +47,7 @@ and the precise scope of acceptance. <!-- TODO: review fidelity against measured
 
 ## Changelog
 
-**2026-10-03** — Restore source passive mechanics and anatomical fiber estimation; add graded feedback with a single calibrated gain, participant-separated evaluation, before/after curves and torque diagnostics. Add opt-in source-backed neck composition and reproducible source/neutral-strength acceptance checks; retain default full-body behavior.
+**2026-10-03** — Restore source passive mechanics and anatomical fiber estimation; add graded feedback with a single calibrated gain, participant-separated evaluation, before/after curves and torque diagnostics. Add opt-in source-backed neck composition and documented source/neutral-strength comparisons; retain default full-body behavior.
 **2026-06-03** — Refactor model structure and enhance asset management.
 **2026-05-26** — Documentation pass; deprecated arm/elbow files removed from sibling directories.
 **2025-05-27** — Initial addition of head model alongside body and arm models.

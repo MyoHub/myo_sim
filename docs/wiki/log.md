@@ -1,3 +1,7 @@
+## 2026-10-03 — Keep validation outside the installable package
+Changed: docs/validation/neck/, myo_sim/models/head/, tests/test_head_build.py, scripts/, docs/wiki/testing-guide.md, docs/wiki/repository-map.md, docs/wiki/build-and-composition.md
+Why: Retain a concise literature report and comparison figure in documentation, remove reproducibility archives/tooling, and keep only model assets, required licensing and runtime composition tests in the package changes.
+
 ## 2026-10-03 — Correct the prone neck-release benchmark
 Changed: scripts/import_neck_source.py, scripts/validate_neck_dynamics.py, tests/test_neck_dynamics.py, myo_sim/models/head/assets/myohead_chain.xml, myo_sim/models/head/validation/, myo_sim/models/head/README.md, docs/images/validation/, docs/wiki/testing-guide.md
 Why: Restore source passive mechanics, use anatomical fiber estimates and the published neck muscle correspondence, then calibrate graded feedback on nine participants and evaluate eight separately; keep measurements and acceptance bounds fixed.

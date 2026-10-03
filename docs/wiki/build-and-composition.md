@@ -88,7 +88,7 @@ The existing `neck`, `head` and head collision names are preserved at build time
 The canonical articulated source and the legacy rigid compatibility scaffold
 use separate body names in their fragments; they are never composed together.
 The default `myofullbody` and generated snapshot targets remain unchanged.
-See `myo_sim/models/head/validation/README.md` for source and acceptance scope.
+See `docs/validation/neck/README.md` for source and acceptance scope.
 
 ## How to Add a New Composed Model
 
