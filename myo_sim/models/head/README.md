@@ -2,6 +2,10 @@
 
 Head-and-neck geometry from the existing HAT segment, with an opt-in muscular cervical chain derived from the scaled HYOID OpenSim model.
 
+| Muscular neck (`myohead`) | Full body with muscular neck (`myofullbody_neck`) |
+|---|---|
+| ![Neck muscles](../../../docs/images/models/myohead.png) | ![Full body with neck muscles](../../../docs/images/models/myofullbody_neck.png) |
+
 ## Anatomical scope
 
 | Property | Value |
@@ -14,6 +18,11 @@ Head-and-neck geometry from the existing HAT segment, with an opt-in muscular ce
 Use `myo_sim.load("myohead")` for the fixed standalone neck or
 `myo_sim.load("myofullbody_neck")` for the opt-in full-body assembly.
 `myo_sim.load("myofullbody")` retains the rigid scaffold and 416 actuators.
+
+Both variants also build through `myo_sim.build.compose.build_model`: use
+`"myofullbody"` for the existing 123-joint model, or `"myofullbody_neck"` for
+147 joints and 488 actuators. The muscular-neck variant requires its own
+controller/checkpoint because its action and observation dimensions differ.
 
 ## Reference model
 
@@ -47,6 +56,7 @@ and the precise scope of acceptance. <!-- TODO: review fidelity against measured
 
 ## Changelog
 
+**2026-10-03** — Match neck tendon rendering width to the torso (0.005 m) and refresh standalone/full-body neck previews; preserve the default rigid-neck build.
 **2026-10-03** — Restore source passive mechanics and anatomical fiber estimation; add graded feedback with a single calibrated gain, participant-separated evaluation, before/after curves and torque diagnostics. Add opt-in source-backed neck composition and documented source/neutral-strength comparisons; retain default full-body behavior.
 **2026-06-03** — Refactor model structure and enhance asset management.
 **2026-05-26** — Documentation pass; deprecated arm/elbow files removed from sibling directories.

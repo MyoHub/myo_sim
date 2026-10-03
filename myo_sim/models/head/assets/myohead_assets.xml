@@ -14,7 +14,7 @@
             <joint limited="true" armature="1e-5" damping=".05" />
             <geom margin=".001" material="mat_myohead" rgba=".8 .8 .8 1" contype="0" conaffinity="0" mass="0" />
             <site size=".001" group="3" />
-            <tendon width=".001" rgba=".95 .3 .3 1" />
+            <tendon width=".005" rgba=".95 .3 .3 1" />
         </default>
         <default class="myohead_muscle">
             <general ctrllimited="true" ctrlrange="0 1" dyntype="muscle" gaintype="muscle" biastype="muscle" dynprm="0.01 0.04 0 0 0 0 0 0 0 0" gainprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" biasprm="0.75 1.05 -1 200 0.5 1.6 1.5 1.3 1.2 0" />

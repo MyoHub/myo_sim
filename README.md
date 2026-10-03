@@ -6,7 +6,7 @@
 [![PyPI](https://img.shields.io/pypi/v/myo-sim)](https://pypi.org/project/myo-sim/)
 
 MyoSim is the MuJoCo musculoskeletal model library used by [MyoSuite](https://github.com/facebookresearch/myoSuite).
-It provides anatomically detailed XML models of the human arm, leg, torso, and hand,
+It provides anatomically detailed XML models of the human arm, leg, torso, hand, and neck,
 plus a Python package for loading and composing them.
 
 ## Models
@@ -18,6 +18,8 @@ plus a Python package for loading and composing them.
 | [**MyoTorso**](myo_sim/models/torso/README.md) (MyoBack) | 18 | 210 | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="160"> | stable |
 | [**MyoHand**](myo_sim/models/arm/README.md) | 23 | 39 | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="160"> | stable |
 | [**MyoFullBody**](docs/wiki/build-and-composition.md) | 123 | 416 | <img src="https://github.com/user-attachments/assets/37976636-1952-48a6-83c4-506722db4c82" width="160"/> | stable |
+| [**MyoHead**](myo_sim/models/head/README.md) | 24 hinges / 6 independent | 72 | <img src="docs/images/models/myohead.png" alt="Muscular neck and head" width="160"/> | opt-in |
+| [**MyoFullBody with neck**](myo_sim/models/head/README.md) | 147 joints | 488 | <img src="docs/images/models/myofullbody_neck.png" alt="Full body with muscular neck" width="160"/> | opt-in |
 | [**MyoLeg26**](myo_sim/models/leg/README.md) | 18 | 26 | <img width="160" alt="Screenshot 2026-08-07 at 8 56 17 AM" src="https://github.com/user-attachments/assets/26b733d5-e47f-4d70-b2cc-b9e6f0fd1e7c" /> |beta |
 | [**MyoFinger**](myo_sim/models/legacy/README.md) | 4 | 5 | <img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="160"> | legacy |
 | [**MyoElbow**](myo_sim/models/legacy/README.md) | 2 | 6 | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="160"> | legacy |
@@ -39,7 +41,9 @@ The following registered models can be compiled with `myo_sim.build.compose.buil
 - `myolegs` — passive anatomical torso scaffold with legs.
 - `myolegs26` — passive anatomical torso scaffold with reduced-muscle legs and simplified kinematic chain.
 - `myolegs_abdomen` — simple abdomen scaffold with legs.
-- `myofullbody` — full body with torso, mirrored arms, and legs.
+- `myofullbody` — full body with torso, mirrored arms, and legs; retains the rigid neck and existing action/observation layout.
+- `myohead` — standalone muscular neck and head with six independent cervical coordinates and 72 muscles.
+- `myofullbody_neck` — full body with the optional muscular neck, 147 joints and 488 muscles.
 
 To generate compiled MuJoCo XML files for the primary composed assemblies, run:
 
@@ -77,6 +81,10 @@ model, data = myo_sim.load("myoelbow")
 from myo_sim.build.compose import build_model
 model = build_model("myofullbody")
 print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")
+
+# Opt in to the muscular neck; the default above stays backward compatible.
+model_with_neck = build_model("myofullbody_neck")
+print(f"With neck — joints: {model_with_neck.njnt}, muscles: {model_with_neck.nu}")
 ```
 
 ## Development

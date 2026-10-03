@@ -1,3 +1,7 @@
+## 2026-10-03 — Show the muscular neck in the model gallery
+Changed: README.md, myo_sim/models/head/README.md, myo_sim/models/head/assets/myohead_assets.xml, docs/images/models/myohead.png, docs/images/models/myofullbody_neck.png
+Why: Match the torso's tendon rendering width, document both full-body build variants and display the optional neck muscles without changing default full-body behavior.
+
 ## 2026-10-03 — Keep validation outside the installable package
 Changed: docs/validation/neck/, myo_sim/models/head/, tests/test_head_build.py, scripts/, docs/wiki/testing-guide.md, docs/wiki/repository-map.md, docs/wiki/build-and-composition.md
 Why: Retain a concise literature report and comparison figure in documentation, remove reproducibility archives/tooling, and keep only model assets, required licensing and runtime composition tests in the package changes.
