@@ -1,3 +1,7 @@
+## 2026-10-03 — Remove neck-preview scene backgrounds
+Changed: scripts/render_composed_models.py, docs/images/models/myohead.png, docs/images/models/myofullbody_neck.png
+Why: Render the two neck previews with transparent backgrounds and hide scene props/reflections without changing model assets.
+
 ## 2026-10-03 — Show the muscular neck in the model gallery
 Changed: README.md, myo_sim/models/head/README.md, myo_sim/models/head/assets/myohead_assets.xml, docs/images/models/myohead.png, docs/images/models/myofullbody_neck.png
 Why: Match the torso's tendon rendering width, document both full-body build variants and display the optional neck muscles without changing default full-body behavior.
