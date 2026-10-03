@@ -1,0 +1,98 @@
+{
+  "mujoco_version": "3.9.0",
+  "source_comparison": {
+    "myohead": {
+      "poses": 729,
+      "muscles": 72,
+      "max_length_error_m": 5.892999110204689e-06,
+      "length_tolerance_m": 0.001,
+      "max_signed_moment_arm_error_m": 4.253587607006004e-05,
+      "moment_arm_tolerance_m": 0.001,
+      "reference_mapping": "OpenSim right muscles; left is their sagittal reflection at the reflected pose",
+      "original_asymmetric_left_max_moment_arm_difference_m": 0.002661296592372793,
+      "pass": true
+    },
+    "myofullbody_neck": {
+      "poses": 729,
+      "muscles": 72,
+      "max_length_error_m": 5.892999110038155e-06,
+      "length_tolerance_m": 0.001,
+      "max_signed_moment_arm_error_m": 4.253587607150333e-05,
+      "moment_arm_tolerance_m": 0.001,
+      "reference_mapping": "OpenSim right muscles; left is their sagittal reflection at the reflected pose",
+      "original_asymmetric_left_max_moment_arm_difference_m": 0.0026612965923726584,
+      "pass": true
+    }
+  },
+  "neutral_experimental_strength": {
+    "myohead": [
+      {
+        "direction": "flexion",
+        "model_Nm": 29.39915043981795,
+        "experiment_mean_Nm": 30.0,
+        "experiment_sd_Nm": 5.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 8.082003576695067e-14
+      },
+      {
+        "direction": "extension",
+        "model_Nm": 44.31019028529152,
+        "experiment_mean_Nm": 52.0,
+        "experiment_sd_Nm": 11.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 7.549936610027137e-14
+      },
+      {
+        "direction": "lateral_bending",
+        "model_Nm": 37.91243971720312,
+        "experiment_mean_Nm": 36.0,
+        "experiment_sd_Nm": 8.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 0.0
+      },
+      {
+        "direction": "axial_rotation",
+        "model_Nm": 12.832052276475777,
+        "experiment_mean_Nm": 15.0,
+        "experiment_sd_Nm": 4.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 0.0
+      }
+    ],
+    "myofullbody_neck": [
+      {
+        "direction": "flexion",
+        "model_Nm": 29.399150439783217,
+        "experiment_mean_Nm": 30.0,
+        "experiment_sd_Nm": 5.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 1.4106498450320642e-14
+      },
+      {
+        "direction": "extension",
+        "model_Nm": 44.31019028533121,
+        "experiment_mean_Nm": 52.0,
+        "experiment_sd_Nm": 11.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 3.232460587927959e-14
+      },
+      {
+        "direction": "lateral_bending",
+        "model_Nm": 37.912439717198374,
+        "experiment_mean_Nm": 36.0,
+        "experiment_sd_Nm": 8.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 0.0
+      },
+      {
+        "direction": "axial_rotation",
+        "model_Nm": 12.832052276473329,
+        "experiment_mean_Nm": 15.0,
+        "experiment_sd_Nm": 4.0,
+        "within_one_sd": true,
+        "equilibrium_residual_Nm": 0.0
+      }
+    ]
+  },
+  "pass": true
+}

@@ -7,6 +7,8 @@ Map of the test suite for agents working in `myo_sim`.
 | File | What it tests | When to run |
 |---|---|---|
 | `test_sims.py` | Static XML models load without error via `mujoco.MjModel.from_xml_path` | Always before PR |
+| `test_neck_validation.py` | Source paths, neutral strength, symmetry and full-body neck integration | After neck assets or composition changes |
+| `test_neck_dynamics.py` | Measured fixture, reflex hysteresis, timestep convergence and fixed-torso composition | After neck or benchmark changes; experimental agreement is a separate CLI result |
 | `test_build_registry.py` | `BuildStrategy` enum fields, `MODEL_REGISTRY` completeness | After `compose.py` changes |
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
@@ -60,3 +62,11 @@ Output goes to `tests/output/muscle_analysis/`. The scripts use helpers from `mu
 - `compute_moment_arm_curve` / `compute_force_length_curve` — sweep joint angles and record muscle properties.
 - `parse_model_joint_equalities` / `apply_eq_constraints` — resolve MuJoCo joint equality constraints before computing forward kinematics.
 - `plot_pair` — compare left/right muscle pairs visually.
+
+The independent neck-release benchmark is `uv run --frozen python scripts/validate_neck_dynamics.py`.
+It writes measured agreement scores and returns nonzero when the model fails the
+experimental criterion. The calibrated controller now passes both directions and participant-separated
+evaluation. Earlier full-cohort inspection makes this exploratory validation;
+see the head validation README. Pytest tests numerical correctness rather than
+asserting biological acceptance. After changing benchmark inputs, use
+`--calibrate` to reproduce the training-only gain selection.

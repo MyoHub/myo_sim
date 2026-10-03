@@ -1,0 +1,5 @@
+direction,mean_Nm,sd_Nm,source,location,cohort,protocol
+flexion,30,5,10.1371/journal.pone.0199912,Table 3 Vasavada et al. 2001,male,neutral maximum voluntary isometric neck moment about C7-T1
+extension,52,11,10.1371/journal.pone.0199912,Table 3 Vasavada et al. 2001,male,neutral maximum voluntary isometric neck moment about C7-T1
+lateral_bending,36,8,10.1371/journal.pone.0199912,Table 3 Vasavada et al. 2001,male,neutral maximum voluntary isometric neck moment about C7-T1
+axial_rotation,15,4,10.1371/journal.pone.0199912,Table 3 Vasavada et al. 2001,male,neutral maximum voluntary isometric neck moment about C7-T1

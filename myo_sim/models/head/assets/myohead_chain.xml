@@ -1,0 +1,158 @@
+<mujocoinclude>
+    <!-- Derived from MIT-licensed HYOID / Neck6D; see ../validation/README.md and ../validation/LICENSE.Neck6D. -->
+    <body name="myohead_base" pos="0.032693 0.01516 0" childclass="myohead_articulated">
+        <body name="myohead_cerv7" pos="-0.05434 0.366955 0">
+            <inertial pos="-0.0002 0.0071 0" quat="0.707107 0 0 0.707107" mass="0.584085" diaginertia="0.04 0.04 0.04" />
+            <joint name="myohead_pitch2" pos="0.0068399999999999997 -0.0056550000000000003 0" axis="0 0 1" range="-0.05702 0.08294" stiffness="27.5" damping="2.75" springref="0" />
+            <joint name="myohead_roll2" pos="0.0068399999999999997 -0.0056550000000000003 0" axis="1 0 0" range="-0.04492 0.04492" stiffness="27.5" damping="2.75" springref="0" />
+            <joint name="myohead_yaw2" pos="0.0068399999999999997 -0.0056550000000000003 0" axis="0 1 0" range="-0.02969 0.02969" stiffness="13.75" damping="1.375" springref="0" />
+            <site name="myohead_long_col_c1thx_long_col_c1thx-P2_r" pos="0.0232 0.0011 0.004" />
+            <site name="myohead_long_col_c5thx_long_col_c5thx-P6_r" pos="0.01111 0.00731 0.01979" />
+            <site name="myohead_trap_acr_trap_acr-P2_r" pos="-0.0477 0.019 0.00305" />
+            <body name="myohead_cerv6" pos="0.003837 0.016445 0">
+                <inertial pos="0.0002 0.0064 0" quat="0.707107 0 0 0.707107" mass="0.507749" diaginertia="0.04 0.04 0.04" />
+                <joint name="myohead_aux7jnt_r3" pos="0.0094190000000000003 -0.004065 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
+                <joint name="myohead_aux7jnt_r1" pos="0.0094190000000000003 -0.004065 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
+                <joint name="myohead_aux7jnt_r2" pos="0.0094190000000000003 -0.004065 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="13.75" damping="1.375" springref="0" />
+                <site name="myohead_long_col_c1thx_long_col_c1thx-P3_r" pos="0.02314 0.00231 0.00402" />
+                <site name="myohead_long_col_c5thx_long_col_c5thx-P7_r" pos="0.00961 0.00713 0.02216" />
+                <site name="myohead_splen_cap_sklc6_splen_cap_sklc6-P1_r" pos="-0.0486 0.01647 0.00305" />
+                <site name="myohead_longissi_cap_sklc6_longissi_cap_sklc6-P1_r" pos="-0.00817 0.01515 0.02759" />
+                <body name="myohead_cerv5" pos="0.00418 0.0179 0">
+                    <inertial pos="0.0001 0.0063 0" quat="0.707107 0 0 0.707107" mass="0.4291" diaginertia="0.04 0.04 0.04" />
+                    <joint name="myohead_aux6jnt_r3" pos="0.0056699999999999997 -0.0081499999999999993 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
+                    <joint name="myohead_aux6jnt_r1" pos="0.0056699999999999997 -0.0081499999999999993 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
+                    <joint name="myohead_aux6jnt_r2" pos="0.0056699999999999997 -0.0081499999999999993 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="13.75" damping="1.375" springref="0" />
+                    <site name="myohead_scalenus_post_scalenus_post-P2_r" pos="-0.0032 0.01371 0.0257" />
+                    <site name="myohead_long_col_c1thx_long_col_c1thx-P4_r" pos="0.02228 0.00228 0.0039" />
+                    <site name="myohead_long_col_c1c5_long_col_c1c5-P1_r" pos="0.00669 0.00889 0.0238" />
+                    <site name="myohead_long_col_c5thx_long_col_c5thx-P8_r" pos="0.00669 0.00889 0.0238" />
+                    <site name="myohead_semi_cap_sklc5_semi_cap_sklc5-P1_r" pos="-0.00931 0.01154 0.0235" />
+                    <site name="myohead_iliocost_cerv_c5rib_iliocost_cerv_c5rib-P3_r" pos="-0.0094 0.01258 0.026" />
+                    <body name="myohead_cerv4" pos="0.00341 0.01917 0">
+                        <inertial pos="-0.0003 0.0067 0" quat="0.707107 0 0 0.707107" mass="0.423317" diaginertia="0.04 0.04 0.04" />
+                        <joint name="myohead_aux5jnt_r3" pos="0.0050200000000000002 -0.01172 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
+                        <joint name="myohead_aux5jnt_r1" pos="0.0050200000000000002 -0.01172 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
+                        <joint name="myohead_aux5jnt_r2" pos="0.0050200000000000002 -0.01172 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="11.6" damping="1.16" springref="0" />
+                        <site name="myohead_scalenus_ant_scalenus_ant-P2_r" pos="0.00713 0.0079 0.02323" />
+                        <site name="myohead_long_cap_sklc4_long_cap_sklc4-P1_r" pos="0.00652 0.01164 0.0242" />
+                        <site name="myohead_long_col_c1thx_long_col_c1thx-P5_r" pos="0.02205 0.00331 0.00379" />
+                        <site name="myohead_long_col_c1c5_long_col_c1c5-P2_r" pos="0.01121 0.00749 0.0207" />
+                        <site name="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P5_r" pos="-0.00709 0.01157 0.0261" />
+                        <body name="myohead_cerv3" pos="0.00261 0.0154 0">
+                            <inertial pos="-0.0008 0.0071 0" quat="0.707107 0 0 0.707107" mass="0.419847" diaginertia="0.04 0.04 0.04" />
+                            <joint name="myohead_aux4jnt_r3" pos="0.0047099999999999998 -0.0090200000000000002 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
+                            <joint name="myohead_aux4jnt_r1" pos="0.0047099999999999998 -0.0090200000000000002 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
+                            <joint name="myohead_aux4jnt_r2" pos="0.0047099999999999998 -0.0090200000000000002 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="11.6" damping="1.16" springref="0" />
+                            <site name="myohead_digastric_post_digastricpost-P2_r" pos="0.02321 0.00597 0.0287" />
+                            <site name="myohead_Sterno_hyoid_stern_mast-P1_r" pos="0.05742 -0.02314 0.00629" />
+                            <site name="myohead_SternoThyroid_stern_mast-P1_r" pos="0.0404201 -0.04316 0.0133" />
+                            <site name="myohead_Omo_hyoid_stern_mast-P1_r" pos="0.05212 -0.0139 0.0132" />
+                            <site name="myohead_scalenus_med_scalenus_med-P2_r" pos="-0.00902 0.00981 0.02119" />
+                            <site name="myohead_long_cap_sklc4_long_cap_sklc4-P2_r" pos="0.01197 0.01009 0.01897" />
+                            <site name="myohead_long_col_c1thx_long_col_c1thx-P6_r" pos="0.02212 0.00603 0.00368" />
+                            <site name="myohead_splen_cerv_c3thx_splen_cerv_c3thx-P2_r" pos="-0.00787 0.01005 0.02365" />
+                            <site name="myohead_semi_cerv_c3thx_semi_cerv_c3thx-P2_r" pos="-0.04064 -0.00322 0.0024" />
+                            <body name="myohead_cerv2" pos="-0.00018 0.01629 0">
+                                <inertial pos="-0.001 0.0059 0" quat="0.707107 0 0 0.707107" mass="0.587554" diaginertia="0.04 0.04 0.04" />
+                                <joint name="myohead_aux3jnt_r3" pos="0.0054299999999999999 -0.01123 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="7.8" damping="0.78" springref="0" />
+                                <joint name="myohead_aux3jnt_r1" pos="0.0054299999999999999 -0.01123 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="7.8" damping="0.78" springref="0" />
+                                <joint name="myohead_aux3jnt_r2" pos="0.0054299999999999999 -0.01123 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="3.9" damping="0.39" springref="0" />
+                                <site name="myohead_long_cap_sklc4_long_cap_sklc4-P3_r" pos="0.0172 0.00829 0.01477" />
+                                <site name="myohead_long_col_c1thx_long_col_c1thx-P7_r" pos="0.02122 0.00973 0.00356" />
+                                <site name="myohead_long_col_c1c5_long_col_c1c5-P3_r" pos="0.01739 0.00159 0.01365" />
+                                <site name="myohead_levator_scap_levator_scap-P2_r" pos="-0.01186 0.00725 0.02121" />
+                                <site name="myohead_rectcap_post_maj_rectcap_post_maj-P1_r" pos="-0.03637 -0.00647 0.0024" />
+                                <site name="myohead_obl_cap_inf_obl_cap_inf-P1_r" pos="-0.03637 -0.00647 0.00547" />
+                                <body name="myohead_cerv1" pos="-0.03556 0.01776 0">
+                                    <inertial pos="0.0312 0.0019 0" quat="0.707107 0 0 0.707107" mass="0.467268" diaginertia="0.04 0.04 0.04" />
+                                    <joint name="myohead_pitch1" pos="0.042450000000000002 0.0035200000000000001 0" axis="0 0 1" range="-0.124 0.186" stiffness="7.8" damping="0.78" springref="0" />
+                                    <joint name="myohead_roll1" pos="0.042450000000000002 0.0035200000000000001 0" axis="1 0 0" range="-0.05236 0.05236" stiffness="7.8" damping="0.78" springref="0" />
+                                    <joint name="myohead_yaw1" pos="0.042450000000000002 0.0035200000000000001 0" axis="0 1 0" range="-0.5896 0.5896" stiffness="3.9" damping="0.39" springref="0" />
+                                    <site name="myohead_digastric_ant_digastricpost-P2_r" pos="0.07289 -0.05758 0.0057" />
+                                    <site name="myohead_Geniohyoid_digastricpost-P1_r" pos="0.0717298 -0.0537906 0.00509443" />
+                                    <site name="myohead_Mylohyoid_Post_digastricpost-P1_r" pos="0.07525 -0.05588 0.0031" />
+                                    <site name="myohead_Mylohyoid_Ant_digastricpost-P1_r" pos="0.09725 -0.05668 -0.0031" />
+                                    <site name="myohead_Stylohyoid_Lat_digastricpost-P2_r" pos="0.0643381 -0.0496832 0.01544" />
+                                    <site name="myohead_Stylohyoid_Med_digastricpost-P2_r" pos="0.0632661 -0.0450538 0.0162521" />
+                                    <site name="myohead_long_cap_sklc4_long_cap_sklc4-P4_r" pos="0.05818 0.00309 0.01159" />
+                                    <site name="myohead_long_col_c1thx_long_col_c1thx-P8_r" pos="0.05825 0.00482 0.0031" />
+                                    <site name="myohead_long_col_c1c5_long_col_c1c5-P4_r" pos="0.05725 0.00482 0.0062" />
+                                    <site name="myohead_rectcap_post_min_rectcap_post_min-P1_r" pos="7e-05 0.0009 0.0061" />
+                                    <site name="myohead_obl_cap_sup_obl_cap_sup-P1_r" pos="0.03505 0.00385 0.042" />
+                                    <site name="myohead_obl_cap_inf_obl_cap_inf-P2_r" pos="0.02996 0.00349 0.03791" />
+                                    <body name="myohead_skull" pos="0.04335 0.01492 0">
+                                        <inertial pos="0.0173 0.063 0" quat="0.5 0.5 -0.5 0.5" mass="4.3" diaginertia="0.022605 0.02073 0.015" />
+                                        <joint name="myohead_aux1jnt_r3" pos="0 0 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="7.8" damping="0.78" springref="0" />
+                                        <joint name="myohead_aux1jnt_r1" pos="0 0 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="7.8" damping="0.78" springref="0" />
+                                        <joint name="myohead_aux1jnt_r2" pos="0 0 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="3.9" damping="0.39" springref="0" />
+                                        <site name="myohead_digastric_post_digastricpost-P1_r" pos="-0.0061 0.0034 0.0477" />
+                                        <site name="myohead_digastric_ant_digastricpost-P1_r" pos="0.0303 -0.0643 0.0173" />
+                                        <site name="myohead_Geniohyoid_digastricpost-P2_r" pos="0.0691 -0.0673 0.0016" />
+                                        <site name="myohead_Mylohyoid_Post_digastricpost-P2_r" pos="0.0413 -0.0389 0.0291" />
+                                        <site name="myohead_Mylohyoid_Ant_digastricpost-P2_r" pos="0.0579 -0.0596 0.0158" />
+                                        <site name="myohead_Stylohyoid_Lat_digastricpost-P1_r" pos="0.0113 -0.0008 0.0376" />
+                                        <site name="myohead_Stylohyoid_Med_digastricpost-P1_r" pos="0.0118 -0.002 0.0376" />
+                                        <site name="myohead_stern_mast_stern_mast-P2_r" pos="-0.0051 0.00693 0.0643" />
+                                        <site name="myohead_cleid_mast_cleid_mast-P2_r" pos="-0.0051 0.00693 0.0643" />
+                                        <site name="myohead_cleid_occ_cleid_occ-P2_r" pos="-0.035 0.023 0.0664" />
+                                        <site name="myohead_long_cap_sklc4_long_cap_sklc4-P5_r" pos="0.0098 0.01596 0.0036" />
+                                        <site name="myohead_trap_cl_trap_cl-P2_r" pos="-0.08031 0.02604 0.01324" />
+                                        <site name="myohead_splen_cap_sklc6_splen_cap_sklc6-P2_r" pos="-0.06164 0.01918 0.044" />
+                                        <site name="myohead_splen_cap_sklthx_splen_cap_sklthx-P2_r" pos="-0.04016 0.011 0.05423" />
+                                        <site name="myohead_semi_cap_sklc5_semi_cap_sklc5-P2_r" pos="-0.07441 0.02 0.018" />
+                                        <site name="myohead_semi_cap_sklthx_semi_cap_sklthx-P2_r" pos="-0.07671 0.02 0.0111" />
+                                        <site name="myohead_longissi_cap_sklc6_longissi_cap_sklc6-P2_r" pos="-0.0344 0.0051 0.055" />
+                                        <site name="myohead_rectcap_post_maj_rectcap_post_maj-P2_r" pos="-0.0604 0.009 0.023" />
+                                        <site name="myohead_rectcap_post_min_rectcap_post_min-P2_r" pos="-0.0667 0.009 0.0145" />
+                                        <site name="myohead_obl_cap_sup_obl_cap_sup-P2_r" pos="-0.04758 0.00931 0.03818" />
+                                        <geom mesh="hat_jaw" name="hat_jaw" type="mesh" pos="0 -.5 0" />
+                                        <geom class="myohead_coll" name="hat_jaw_coll2" type="ellipsoid" size="0.07 0.12 0.065" pos=".025 .045 0" euler="0 0 .7" />
+                                        <geom mesh="hat_skull" name="hat_skull" type="mesh" pos="0 -.5 0" />
+                                        <geom class="myohead_coll" name="hat_skull_coll" type="ellipsoid" size="0.1 0.1 0.075" pos="0 .075 0" />
+                                    </body>
+                                    <geom name="myohead_cerv1_visual" type="mesh" mesh="myohead_cerv1" pos="0.04335 0.0170412994091 0" />
+                                </body>
+                                <geom name="myohead_cerv2_visual" type="mesh" mesh="myohead_cerv2" pos="0.00779 0.0236978927843 0" />
+                            </body>
+                            <geom name="myohead_cerv3_visual" type="mesh" mesh="myohead_cerv3" pos="0.00761 0.025901243859 0" />
+                        </body>
+                        <geom name="myohead_cerv4_visual" type="mesh" mesh="myohead_cerv4" pos="0.01022 0.0285376942507 0" />
+                    </body>
+                    <geom name="myohead_cerv5_visual" type="mesh" mesh="myohead_cerv5" pos="0.01363 0.0331516959993 0" />
+                </body>
+                <geom name="myohead_cerv6_visual" type="mesh" mesh="myohead_cerv6" pos="0.01781 0.0358167045411 0" />
+            </body>
+            <geom name="myohead_cerv7_visual" type="mesh" mesh="myohead_cerv7" pos="0.021647 0.035136390528 0" />
+        </body>
+        <site name="myohead_long_col_c1thx_long_col_c1thx-P1_r" pos="-0.04888 0.30334 0.0037" />
+        <site name="myohead_long_col_c5thx_long_col_c5thx-P1_r" pos="-0.04981 0.30296 0.0068" />
+        <site name="myohead_long_col_c5thx_long_col_c5thx-P2_r" pos="-0.04825 0.32027 0.01022" />
+        <site name="myohead_long_col_c5thx_long_col_c5thx-P3_r" pos="-0.04566 0.33463 0.01337" />
+        <site name="myohead_long_col_c5thx_long_col_c5thx-P4_r" pos="-0.04466 0.3436 0.01508" />
+        <site name="myohead_long_col_c5thx_long_col_c5thx-P5_r" pos="-0.04239 0.35783 0.01778" />
+        <site name="myohead_splen_cap_sklthx_splen_cap_sklthx-P1_r" pos="-0.10384 0.33902 0.003" />
+        <site name="myohead_splen_cerv_c3thx_splen_cerv_c3thx-P1_r" pos="-0.12848 0.26222 0.0041" />
+        <site name="myohead_semi_cap_sklthx_semi_cap_sklthx-P1_r" pos="-0.08539 0.37732 0.0347" />
+        <site name="myohead_semi_cerv_c3thx_semi_cerv_c3thx-P1_r" pos="-0.08896 0.34997 0.02607" />
+        <site name="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P1_r" pos="-0.10994 0.27586 0.03215" />
+        <site name="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P2_r" pos="-0.10918 0.30238 0.03041" />
+        <site name="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P3_r" pos="-0.09978 0.32692 0.02919" />
+        <site name="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P4_r" pos="-0.0813 0.373 0.0279" />
+        <site name="myohead_iliocost_cerv_c5rib_iliocost_cerv_c5rib-P1_r" pos="-0.10349 0.32797 0.0533" />
+        <site name="myohead_iliocost_cerv_c5rib_iliocost_cerv_c5rib-P2_r" pos="-0.08374 0.37638 0.04035" />
+        <site name="myohead_trap_acr_trap_acr-P1_r" pos="-0.0583740572473 0.359975630262 0.16871577375" />
+        <site name="myohead_levator_scap_levator_scap-P1_r" pos="-0.110615317339 0.362538674259 0.0742694506373" />
+        <site name="myohead_cleid_mast_cleid_mast-P1_r" pos="-0.00305977326554 0.34072 0.0563176752801" />
+        <site name="myohead_cleid_occ_cleid_occ-P1_r" pos="-0.00305977326554 0.34072 0.0563176752801" />
+        <site name="myohead_trap_cl_trap_cl-P1_r" pos="-0.0288221200206 0.3585 0.11214553472" />
+        <site name="myohead_Sterno_hyoid_default_r" pos="-0.014033 0.31252 0.01984" />
+        <site name="myohead_SternoThyroid_default_r" pos="-0.014643 0.30575 0.0153" />
+        <site name="myohead_Omo_hyoid_default_r" pos="-0.021033 0.37083 0.03774" />
+        <site name="myohead_stern_mast_stern_mast-P1_r" pos="-0.0007 0.3269 0.0096" />
+        <site name="myohead_scalenus_ant_scalenus_ant-P1_r" pos="-0.02139 0.33246 0.0529" />
+        <site name="myohead_scalenus_med_scalenus_med-P1_r" pos="-0.03398 0.34333 0.0627" />
+        <site name="myohead_scalenus_post_scalenus_post-P1_r" pos="-0.03638 0.3127 0.1062" />
+        <geom class="myohead_coll" name="hat_cervical_coll" type="capsule" size="0.05 0.04" pos="-0.052693 0.43484 0" euler="1.57 -.2 0" />
+    </body>
+</mujocoinclude>

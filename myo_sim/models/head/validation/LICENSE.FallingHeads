@@ -1,0 +1,18 @@
+Experimental marker trajectory data: Isabell Wochner, Lennart V. Nölle,
+Oleksandr V. Martynenko and Syn Schmitt, 2022.
+DARUS-1132, version 1.1: https://doi.org/10.18419/DARUS-1132
+Paper: https://doi.org/10.1186/s12938-022-00994-9
+
+Distributed under Creative Commons Attribution 4.0 International (CC BY 4.0):
+https://creativecommons.org/licenses/by/4.0/
+Legal code: https://creativecommons.org/licenses/by/4.0/legalcode
+
+falling_heads.npz repackages the supplied time and marker 1/2 coordinates without
+altering their numerical values. The benchmark derives displacement/rotation
+relative to release frame 17 and averages trial repeats before participants.
+No endorsement by the original authors is implied.
+
+The controller muscle-family correspondence also derives from the authors'
+CC BY 4.0 neck parameter dataset, DARUS-1145 v1.1:
+https://doi.org/10.18419/DARUS-1145
+Source anatomical fiber/tendon fixtures retain the separate HYOID MIT notice.

@@ -45,6 +45,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `RIGHT_HAND` | `build_right_hand_from_arm_spec` |
 | `BOTH_HANDS` | `build_both_hands_from_arm_spec` |
 | `FULLBODY` | `build_fullbody_spec` |
+| `HEAD` | `build_standalone_head_spec` |
 | `LEGS_BODY` | `build_legs_body_spec` |
 | `LEGS26_BODY` | `build_legs26_body_spec` |
 | `TORSO_ABDOMEN` | `build_torso_abdomen_spec` |
@@ -66,6 +67,8 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `myolegs26` | `LEGS26_BODY` | Passive anatomical torso scaffold + reduced 26-muscle legs (see [MyoLeg26](../../myo_sim/models/leg/README.md#myoleg26-reduced-26-muscle-legs-only)) |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
 | `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
+| `myohead` | `HEAD` | Fixed HYOID cervical chain; six independent coordinates and 72 muscles |
+| `myofullbody_neck` | `FULLBODY` | Opt-in full body with HYOID neck replacing the rigid scaffold |
 
 `ModelRegistration` fields that control composition:
 
@@ -76,6 +79,16 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 - `add_root_freejoint`: adds a free joint to the root body (needed for locomotion models).
 - `root_pos`: initial position of the root body in world space.
 - `mirror_rules`: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
+
+The neck variant sets `build_kwargs["include_neck"]`. It replaces the rigid
+head subtree before contacts are injected and attaches `build/head.py`'s spec
+to the existing `head_attach` frame. The midline skeleton is authored once;
+only right muscle sites, tendons and actuators are mirrored with `MirrorRules`.
+The existing `neck`, `head` and head collision names are preserved at build time.
+The canonical articulated source and the legacy rigid compatibility scaffold
+use separate body names in their fragments; they are never composed together.
+The default `myofullbody` and generated snapshot targets remain unchanged.
+See `myo_sim/models/head/validation/README.md` for source and acceptance scope.
 
 ## How to Add a New Composed Model
 

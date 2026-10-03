@@ -32,6 +32,7 @@ from myo_sim import MODELS_DIR
 
 try:
     from .hand import prune_arm_spec_to_hand
+    from .head import build_head_spec
     from .utils import (
         MirrorRules,
         add_contact_pairs,
@@ -43,6 +44,7 @@ try:
     )
 except ImportError:
     from hand import prune_arm_spec_to_hand
+    from head import build_head_spec
     from utils import (
         MirrorRules,
         add_contact_pairs,
@@ -111,6 +113,7 @@ class BuildStrategy(str, Enum):
     RIGHT_ARM_BODY = "right_arm_body"
     RIGHT_HAND = "right_hand"
     BOTH_HANDS = "both_hands"
+    HEAD = "head"
     FULLBODY = "fullbody"
     LEGS_BODY = "legs_body"
     LEGS26_BODY = "legs26_body"
@@ -213,6 +216,20 @@ MODEL_REGISTRY = {
     ),
 }
 
+# The neck is opt-in: keep the established full-body observation/action layout.
+MODEL_REGISTRY["myohead"] = ModelRegistration(
+    name="myohead",
+    description="HYOID cervical chain with mirrored neck muscles",
+    build_strategy=BuildStrategy.HEAD,
+    build_kwargs={},
+)
+MODEL_REGISTRY["myofullbody_neck"] = ModelRegistration(
+    name="myofullbody_neck",
+    description="Full body with the source-validated HYOID neck",
+    build_strategy=BuildStrategy.FULLBODY,
+    build_kwargs={**MODEL_REGISTRY["myofullbody"].build_kwargs, "include_neck": True},
+)
+
 # Legacy names that resolve to a MODEL_REGISTRY entry. This is the single source
 # of truth for load()-level aliases; every value must be a key of MODEL_REGISTRY.
 ALIASES: dict[str, str] = {
@@ -251,6 +268,11 @@ def build_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body.pos = registration.build_kwargs.get("root_pos", ROOT_POS)
     if registration.build_kwargs.get("add_root_freejoint", False):
         root_body.add_freejoint(name="root")
+
+    if registration.build_kwargs.get("include_neck", False):
+        torso.delete(find_body(torso, "neck"))
+        head_frame = find_body(torso, "head_attach").add_frame(name="myohead_attach")
+        torso.attach(build_head_spec(), prefix="", suffix="", frame=head_frame)
 
     if registration.build_kwargs.get("include_arm_contacts", True):
         add_contact_pairs(
@@ -525,7 +547,12 @@ def build_legs_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return abdomen
 
 
+def build_standalone_head_spec(registration: ModelRegistration) -> mujoco.MjSpec:
+    return build_head_spec(standalone=True)
+
+
 SPEC_BUILDERS = {
+    BuildStrategy.HEAD: build_standalone_head_spec,
     BuildStrategy.TORSO_BODY: build_torso_body_spec,
     BuildStrategy.TORSO_ARMS: build_torso_arms_spec,
     BuildStrategy.ARMS_BODY: build_arms_body_spec,
