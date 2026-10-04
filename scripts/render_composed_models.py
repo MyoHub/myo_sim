@@ -63,7 +63,14 @@ def _character_forward_azimuth(model: mujoco.MjModel, data: mujoco.MjData) -> fl
     return float(np.degrees(np.arctan2(forward[1], forward[0])))
 
 
-def render_model(model: mujoco.MjModel, out_path: Path, key_name: str | None = None, *, transparent: bool = False) -> None:
+def render_model(
+    model: mujoco.MjModel,
+    out_path: Path,
+    key_name: str | None = None,
+    *,
+    transparent: bool = False,
+    crop: bool = False,
+) -> None:
     data = mujoco.MjData(model)
     if key_name is not None:
         key_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_KEY, key_name)
@@ -100,9 +107,17 @@ def render_model(model: mujoco.MjModel, out_path: Path, key_name: str | None = N
                 depth = renderer.render()
                 alpha = (depth < model.vis.map.zfar * model.stat.extent * 0.99).astype(np.uint8) * 255
                 pixels = np.dstack((pixels, alpha))
-                pixels[alpha == 0, :3] = 255
+                pixels[alpha == 0, :3] = 0  # black under transparency
         finally:
             model.geom_group[:] = groups
+
+    if crop and pixels.ndim == 3 and pixels.shape[2] == 4:
+        ys, xs = np.where(pixels[:, :, 3] > 0)
+        if len(xs):
+            pad = 28
+            x0, x1 = max(0, xs.min() - pad), min(pixels.shape[1], xs.max() + 1 + pad)
+            y0, y1 = max(0, ys.min() - pad), min(pixels.shape[0], ys.max() + 1 + pad)
+            pixels = pixels[y0:y1, x0:x1]
 
     from PIL import Image
 
@@ -121,7 +136,8 @@ def main() -> None:
             print(f"SKIP {name}: {exc}")
             continue
         out_path = OUT_DIR / f"{name}.png"
-        render_model(model, out_path, transparent=name in {"myohead", "myofullbody_neck"})
+        plate = name in {"myohead", "myofullbody_neck"}
+        render_model(model, out_path, transparent=plate, crop=name == "myofullbody_neck")
         print(f"wrote {out_path}")
 
     for name, (xml_path, key_name) in sorted(STATIC_XML_TARGETS.items()):
