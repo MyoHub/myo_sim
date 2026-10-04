@@ -20,8 +20,10 @@ The assets restore source joint-center offsets and rotational stiffness/damping;
 joint springs are exact for sagittal motion and approximate the source XYZ Euler
 bushings to first order for combined motion. The 36 right muscle paths are
 mirrored into 72 actuators. Geniohyoid's negative-slack conversion fit is replaced
-with source physical lengths and force. The chain has 24 hinges, 18 couplings and
-six independent coordinates. Other converted muscle parameters remain unchanged.
+with source physical lengths and force. The chain has six independent coordinates
+(`pitch/roll/yaw` at two cervical levels); MuJoCo realizes them as 24 hinges with
+18 equality couplings on the auxiliaries. Other converted muscle parameters remain
+unchanged.
 
 OpenSim 4.6 reference measurements at 729 poses gave maximum canonical-right and
 mirrored-left discrepancies of **0.0059 mm in length** and **0.0426 mm in signed

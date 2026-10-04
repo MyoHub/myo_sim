@@ -1,3 +1,7 @@
+## 2026-10-04 — Align myohead muscle naming with other body parts
+Changed: myo_sim/models/head/assets/, tests/test_head_build.py, myo_sim/models/head/README.md, docs/validation/neck/README.md, docs/wiki/repository-map.md
+Why: Drop the `myohead_` actuator prefix, use `{muscle}_r_tendon` and `{muscle}-Pn_r` site names, scope materials as `myohead_matskin`, and clarify that 24 hinges are the coupled realization of 6 independent cervical DoFs.
+
 ## 2026-10-03 — Remove neck-preview scene backgrounds
 Changed: scripts/render_composed_models.py, docs/images/models/myohead.png, docs/images/models/myofullbody_neck.png
 Why: Render the two neck previews with transparent backgrounds and hide scene props/reflections without changing model assets.

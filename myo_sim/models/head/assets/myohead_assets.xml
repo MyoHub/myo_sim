@@ -12,7 +12,7 @@
     <default>
         <default class="myohead_articulated">
             <joint limited="true" armature="1e-5" damping=".05" />
-            <geom margin=".001" material="mat_myohead" rgba=".8 .8 .8 1" contype="0" conaffinity="0" mass="0" />
+            <geom margin=".001" material="myohead_matskin" rgba=".8 .8 .8 1" contype="0" conaffinity="0" mass="0" />
             <site size=".001" group="3" />
             <tendon width=".005" rgba=".95 .3 .3 1" />
         </default>

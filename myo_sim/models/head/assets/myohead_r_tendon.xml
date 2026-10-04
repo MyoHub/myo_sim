@@ -1,170 +1,170 @@
 <mujocoinclude>
     <!-- Derived from MIT-licensed HYOID / Neck6D; see ../README.md and ../LICENSE.Neck6D. -->
     <tendon>
-        <spatial name="myohead_digastric_post_tendon_r" class="myohead_articulated">
-            <site site="myohead_digastric_post_digastricpost-P1_r" />
-            <site site="myohead_digastric_post_digastricpost-P2_r" />
+        <spatial name="digastric_post_r_tendon" class="myohead_articulated">
+            <site site="digastric_post-P1_r" />
+            <site site="digastric_post-P2_r" />
         </spatial>
-        <spatial name="myohead_digastric_ant_tendon_r" class="myohead_articulated">
-            <site site="myohead_digastric_ant_digastricpost-P1_r" />
-            <site site="myohead_digastric_ant_digastricpost-P2_r" />
+        <spatial name="digastric_ant_r_tendon" class="myohead_articulated">
+            <site site="digastric_ant-P1_r" />
+            <site site="digastric_ant-P2_r" />
         </spatial>
-        <spatial name="myohead_Geniohyoid_tendon_r" class="myohead_articulated">
-            <site site="myohead_Geniohyoid_digastricpost-P1_r" />
-            <site site="myohead_Geniohyoid_digastricpost-P2_r" />
+        <spatial name="geniohyoid_r_tendon" class="myohead_articulated">
+            <site site="geniohyoid-P1_r" />
+            <site site="geniohyoid-P2_r" />
         </spatial>
-        <spatial name="myohead_Mylohyoid_Post_tendon_r" class="myohead_articulated">
-            <site site="myohead_Mylohyoid_Post_digastricpost-P1_r" />
-            <site site="myohead_Mylohyoid_Post_digastricpost-P2_r" />
+        <spatial name="mylohyoid_post_r_tendon" class="myohead_articulated">
+            <site site="mylohyoid_post-P1_r" />
+            <site site="mylohyoid_post-P2_r" />
         </spatial>
-        <spatial name="myohead_Mylohyoid_Ant_tendon_r" class="myohead_articulated">
-            <site site="myohead_Mylohyoid_Ant_digastricpost-P1_r" />
-            <site site="myohead_Mylohyoid_Ant_digastricpost-P2_r" />
+        <spatial name="mylohyoid_ant_r_tendon" class="myohead_articulated">
+            <site site="mylohyoid_ant-P1_r" />
+            <site site="mylohyoid_ant-P2_r" />
         </spatial>
-        <spatial name="myohead_Stylohyoid_Lat_tendon_r" class="myohead_articulated">
-            <site site="myohead_Stylohyoid_Lat_digastricpost-P1_r" />
-            <site site="myohead_Stylohyoid_Lat_digastricpost-P2_r" />
+        <spatial name="stylohyoid_lat_r_tendon" class="myohead_articulated">
+            <site site="stylohyoid_lat-P1_r" />
+            <site site="stylohyoid_lat-P2_r" />
         </spatial>
-        <spatial name="myohead_Stylohyoid_Med_tendon_r" class="myohead_articulated">
-            <site site="myohead_Stylohyoid_Med_digastricpost-P1_r" />
-            <site site="myohead_Stylohyoid_Med_digastricpost-P2_r" />
+        <spatial name="stylohyoid_med_r_tendon" class="myohead_articulated">
+            <site site="stylohyoid_med-P1_r" />
+            <site site="stylohyoid_med-P2_r" />
         </spatial>
-        <spatial name="myohead_Sterno_hyoid_tendon_r" class="myohead_articulated">
-            <site site="myohead_Sterno_hyoid_stern_mast-P1_r" />
-            <site site="myohead_Sterno_hyoid_default_r" />
+        <spatial name="sterno_hyoid_r_tendon" class="myohead_articulated">
+            <site site="sterno_hyoid-P1_r" />
+            <site site="sterno_hyoid-P2_r" />
         </spatial>
-        <spatial name="myohead_SternoThyroid_tendon_r" class="myohead_articulated">
-            <site site="myohead_SternoThyroid_stern_mast-P1_r" />
-            <site site="myohead_SternoThyroid_default_r" />
+        <spatial name="sternothyroid_r_tendon" class="myohead_articulated">
+            <site site="sternothyroid-P1_r" />
+            <site site="sternothyroid-P2_r" />
         </spatial>
-        <spatial name="myohead_Omo_hyoid_tendon_r" class="myohead_articulated">
-            <site site="myohead_Omo_hyoid_stern_mast-P1_r" />
-            <site site="myohead_Omo_hyoid_default_r" />
+        <spatial name="omo_hyoid_r_tendon" class="myohead_articulated">
+            <site site="omo_hyoid-P1_r" />
+            <site site="omo_hyoid-P2_r" />
         </spatial>
-        <spatial name="myohead_stern_mast_tendon_r" class="myohead_articulated">
-            <site site="myohead_stern_mast_stern_mast-P1_r" />
-            <site site="myohead_stern_mast_stern_mast-P2_r" />
+        <spatial name="stern_mast_r_tendon" class="myohead_articulated">
+            <site site="stern_mast-P1_r" />
+            <site site="stern_mast-P2_r" />
         </spatial>
-        <spatial name="myohead_cleid_mast_tendon_r" class="myohead_articulated">
-            <site site="myohead_cleid_mast_cleid_mast-P1_r" />
-            <site site="myohead_cleid_mast_cleid_mast-P2_r" />
+        <spatial name="cleid_mast_r_tendon" class="myohead_articulated">
+            <site site="cleid_mast-P1_r" />
+            <site site="cleid_mast-P2_r" />
         </spatial>
-        <spatial name="myohead_cleid_occ_tendon_r" class="myohead_articulated">
-            <site site="myohead_cleid_occ_cleid_occ-P1_r" />
-            <site site="myohead_cleid_occ_cleid_occ-P2_r" />
+        <spatial name="cleid_occ_r_tendon" class="myohead_articulated">
+            <site site="cleid_occ-P1_r" />
+            <site site="cleid_occ-P2_r" />
         </spatial>
-        <spatial name="myohead_scalenus_ant_tendon_r" class="myohead_articulated">
-            <site site="myohead_scalenus_ant_scalenus_ant-P1_r" />
-            <site site="myohead_scalenus_ant_scalenus_ant-P2_r" />
+        <spatial name="scalenus_ant_r_tendon" class="myohead_articulated">
+            <site site="scalenus_ant-P1_r" />
+            <site site="scalenus_ant-P2_r" />
         </spatial>
-        <spatial name="myohead_scalenus_med_tendon_r" class="myohead_articulated">
-            <site site="myohead_scalenus_med_scalenus_med-P1_r" />
-            <site site="myohead_scalenus_med_scalenus_med-P2_r" />
+        <spatial name="scalenus_med_r_tendon" class="myohead_articulated">
+            <site site="scalenus_med-P1_r" />
+            <site site="scalenus_med-P2_r" />
         </spatial>
-        <spatial name="myohead_scalenus_post_tendon_r" class="myohead_articulated">
-            <site site="myohead_scalenus_post_scalenus_post-P1_r" />
-            <site site="myohead_scalenus_post_scalenus_post-P2_r" />
+        <spatial name="scalenus_post_r_tendon" class="myohead_articulated">
+            <site site="scalenus_post-P1_r" />
+            <site site="scalenus_post-P2_r" />
         </spatial>
-        <spatial name="myohead_long_cap_sklc4_tendon_r" class="myohead_articulated">
-            <site site="myohead_long_cap_sklc4_long_cap_sklc4-P1_r" />
-            <site site="myohead_long_cap_sklc4_long_cap_sklc4-P2_r" />
-            <site site="myohead_long_cap_sklc4_long_cap_sklc4-P3_r" />
-            <site site="myohead_long_cap_sklc4_long_cap_sklc4-P4_r" />
-            <site site="myohead_long_cap_sklc4_long_cap_sklc4-P5_r" />
+        <spatial name="long_cap_sklc4_r_tendon" class="myohead_articulated">
+            <site site="long_cap_sklc4-P1_r" />
+            <site site="long_cap_sklc4-P2_r" />
+            <site site="long_cap_sklc4-P3_r" />
+            <site site="long_cap_sklc4-P4_r" />
+            <site site="long_cap_sklc4-P5_r" />
         </spatial>
-        <spatial name="myohead_long_col_c1thx_tendon_r" class="myohead_articulated">
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P1_r" />
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P2_r" />
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P3_r" />
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P4_r" />
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P5_r" />
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P6_r" />
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P7_r" />
-            <site site="myohead_long_col_c1thx_long_col_c1thx-P8_r" />
+        <spatial name="long_col_c1thx_r_tendon" class="myohead_articulated">
+            <site site="long_col_c1thx-P1_r" />
+            <site site="long_col_c1thx-P2_r" />
+            <site site="long_col_c1thx-P3_r" />
+            <site site="long_col_c1thx-P4_r" />
+            <site site="long_col_c1thx-P5_r" />
+            <site site="long_col_c1thx-P6_r" />
+            <site site="long_col_c1thx-P7_r" />
+            <site site="long_col_c1thx-P8_r" />
         </spatial>
-        <spatial name="myohead_long_col_c1c5_tendon_r" class="myohead_articulated">
-            <site site="myohead_long_col_c1c5_long_col_c1c5-P1_r" />
-            <site site="myohead_long_col_c1c5_long_col_c1c5-P2_r" />
-            <site site="myohead_long_col_c1c5_long_col_c1c5-P3_r" />
-            <site site="myohead_long_col_c1c5_long_col_c1c5-P4_r" />
+        <spatial name="long_col_c1c5_r_tendon" class="myohead_articulated">
+            <site site="long_col_c1c5-P1_r" />
+            <site site="long_col_c1c5-P2_r" />
+            <site site="long_col_c1c5-P3_r" />
+            <site site="long_col_c1c5-P4_r" />
         </spatial>
-        <spatial name="myohead_long_col_c5thx_tendon_r" class="myohead_articulated">
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P1_r" />
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P2_r" />
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P3_r" />
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P4_r" />
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P5_r" />
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P6_r" />
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P7_r" />
-            <site site="myohead_long_col_c5thx_long_col_c5thx-P8_r" />
+        <spatial name="long_col_c5thx_r_tendon" class="myohead_articulated">
+            <site site="long_col_c5thx-P1_r" />
+            <site site="long_col_c5thx-P2_r" />
+            <site site="long_col_c5thx-P3_r" />
+            <site site="long_col_c5thx-P4_r" />
+            <site site="long_col_c5thx-P5_r" />
+            <site site="long_col_c5thx-P6_r" />
+            <site site="long_col_c5thx-P7_r" />
+            <site site="long_col_c5thx-P8_r" />
         </spatial>
-        <spatial name="myohead_trap_cl_tendon_r" class="myohead_articulated">
-            <site site="myohead_trap_cl_trap_cl-P1_r" />
-            <site site="myohead_trap_cl_trap_cl-P2_r" />
+        <spatial name="trap_cl_r_tendon" class="myohead_articulated">
+            <site site="trap_cl-P1_r" />
+            <site site="trap_cl-P2_r" />
         </spatial>
-        <spatial name="myohead_trap_acr_tendon_r" class="myohead_articulated">
-            <site site="myohead_trap_acr_trap_acr-P1_r" />
-            <site site="myohead_trap_acr_trap_acr-P2_r" />
+        <spatial name="trap_acr_r_tendon" class="myohead_articulated">
+            <site site="trap_acr-P1_r" />
+            <site site="trap_acr-P2_r" />
         </spatial>
-        <spatial name="myohead_splen_cap_sklc6_tendon_r" class="myohead_articulated">
-            <site site="myohead_splen_cap_sklc6_splen_cap_sklc6-P1_r" />
-            <site site="myohead_splen_cap_sklc6_splen_cap_sklc6-P2_r" />
+        <spatial name="splen_cap_sklc6_r_tendon" class="myohead_articulated">
+            <site site="splen_cap_sklc6-P1_r" />
+            <site site="splen_cap_sklc6-P2_r" />
         </spatial>
-        <spatial name="myohead_splen_cap_sklthx_tendon_r" class="myohead_articulated">
-            <site site="myohead_splen_cap_sklthx_splen_cap_sklthx-P1_r" />
-            <site site="myohead_splen_cap_sklthx_splen_cap_sklthx-P2_r" />
+        <spatial name="splen_cap_sklthx_r_tendon" class="myohead_articulated">
+            <site site="splen_cap_sklthx-P1_r" />
+            <site site="splen_cap_sklthx-P2_r" />
         </spatial>
-        <spatial name="myohead_splen_cerv_c3thx_tendon_r" class="myohead_articulated">
-            <site site="myohead_splen_cerv_c3thx_splen_cerv_c3thx-P1_r" />
-            <site site="myohead_splen_cerv_c3thx_splen_cerv_c3thx-P2_r" />
+        <spatial name="splen_cerv_c3thx_r_tendon" class="myohead_articulated">
+            <site site="splen_cerv_c3thx-P1_r" />
+            <site site="splen_cerv_c3thx-P2_r" />
         </spatial>
-        <spatial name="myohead_semi_cap_sklc5_tendon_r" class="myohead_articulated">
-            <site site="myohead_semi_cap_sklc5_semi_cap_sklc5-P1_r" />
-            <site site="myohead_semi_cap_sklc5_semi_cap_sklc5-P2_r" />
+        <spatial name="semi_cap_sklc5_r_tendon" class="myohead_articulated">
+            <site site="semi_cap_sklc5-P1_r" />
+            <site site="semi_cap_sklc5-P2_r" />
         </spatial>
-        <spatial name="myohead_semi_cap_sklthx_tendon_r" class="myohead_articulated">
-            <site site="myohead_semi_cap_sklthx_semi_cap_sklthx-P1_r" />
-            <site site="myohead_semi_cap_sklthx_semi_cap_sklthx-P2_r" />
+        <spatial name="semi_cap_sklthx_r_tendon" class="myohead_articulated">
+            <site site="semi_cap_sklthx-P1_r" />
+            <site site="semi_cap_sklthx-P2_r" />
         </spatial>
-        <spatial name="myohead_semi_cerv_c3thx_tendon_r" class="myohead_articulated">
-            <site site="myohead_semi_cerv_c3thx_semi_cerv_c3thx-P1_r" />
-            <site site="myohead_semi_cerv_c3thx_semi_cerv_c3thx-P2_r" />
+        <spatial name="semi_cerv_c3thx_r_tendon" class="myohead_articulated">
+            <site site="semi_cerv_c3thx-P1_r" />
+            <site site="semi_cerv_c3thx-P2_r" />
         </spatial>
-        <spatial name="myohead_levator_scap_tendon_r" class="myohead_articulated">
-            <site site="myohead_levator_scap_levator_scap-P1_r" />
-            <site site="myohead_levator_scap_levator_scap-P2_r" />
+        <spatial name="levator_scap_r_tendon" class="myohead_articulated">
+            <site site="levator_scap-P1_r" />
+            <site site="levator_scap-P2_r" />
         </spatial>
-        <spatial name="myohead_longissi_cap_sklc6_tendon_r" class="myohead_articulated">
-            <site site="myohead_longissi_cap_sklc6_longissi_cap_sklc6-P1_r" />
-            <site site="myohead_longissi_cap_sklc6_longissi_cap_sklc6-P2_r" />
+        <spatial name="longissi_cap_sklc6_r_tendon" class="myohead_articulated">
+            <site site="longissi_cap_sklc6-P1_r" />
+            <site site="longissi_cap_sklc6-P2_r" />
         </spatial>
-        <spatial name="myohead_longissi_cerv_c4thx_tendon_r" class="myohead_articulated">
-            <site site="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P1_r" />
-            <site site="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P2_r" />
-            <site site="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P3_r" />
-            <site site="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P4_r" />
-            <site site="myohead_longissi_cerv_c4thx_longissi_cerv_c4thx-P5_r" />
+        <spatial name="longissi_cerv_c4thx_r_tendon" class="myohead_articulated">
+            <site site="longissi_cerv_c4thx-P1_r" />
+            <site site="longissi_cerv_c4thx-P2_r" />
+            <site site="longissi_cerv_c4thx-P3_r" />
+            <site site="longissi_cerv_c4thx-P4_r" />
+            <site site="longissi_cerv_c4thx-P5_r" />
         </spatial>
-        <spatial name="myohead_iliocost_cerv_c5rib_tendon_r" class="myohead_articulated">
-            <site site="myohead_iliocost_cerv_c5rib_iliocost_cerv_c5rib-P1_r" />
-            <site site="myohead_iliocost_cerv_c5rib_iliocost_cerv_c5rib-P2_r" />
-            <site site="myohead_iliocost_cerv_c5rib_iliocost_cerv_c5rib-P3_r" />
+        <spatial name="iliocost_cerv_c5rib_r_tendon" class="myohead_articulated">
+            <site site="iliocost_cerv_c5rib-P1_r" />
+            <site site="iliocost_cerv_c5rib-P2_r" />
+            <site site="iliocost_cerv_c5rib-P3_r" />
         </spatial>
-        <spatial name="myohead_rectcap_post_maj_tendon_r" class="myohead_articulated">
-            <site site="myohead_rectcap_post_maj_rectcap_post_maj-P1_r" />
-            <site site="myohead_rectcap_post_maj_rectcap_post_maj-P2_r" />
+        <spatial name="rectcap_post_maj_r_tendon" class="myohead_articulated">
+            <site site="rectcap_post_maj-P1_r" />
+            <site site="rectcap_post_maj-P2_r" />
         </spatial>
-        <spatial name="myohead_rectcap_post_min_tendon_r" class="myohead_articulated">
-            <site site="myohead_rectcap_post_min_rectcap_post_min-P1_r" />
-            <site site="myohead_rectcap_post_min_rectcap_post_min-P2_r" />
+        <spatial name="rectcap_post_min_r_tendon" class="myohead_articulated">
+            <site site="rectcap_post_min-P1_r" />
+            <site site="rectcap_post_min-P2_r" />
         </spatial>
-        <spatial name="myohead_obl_cap_sup_tendon_r" class="myohead_articulated">
-            <site site="myohead_obl_cap_sup_obl_cap_sup-P1_r" />
-            <site site="myohead_obl_cap_sup_obl_cap_sup-P2_r" />
+        <spatial name="obl_cap_sup_r_tendon" class="myohead_articulated">
+            <site site="obl_cap_sup-P1_r" />
+            <site site="obl_cap_sup-P2_r" />
         </spatial>
-        <spatial name="myohead_obl_cap_inf_tendon_r" class="myohead_articulated">
-            <site site="myohead_obl_cap_inf_obl_cap_inf-P1_r" />
-            <site site="myohead_obl_cap_inf_obl_cap_inf-P2_r" />
+        <spatial name="obl_cap_inf_r_tendon" class="myohead_articulated">
+            <site site="obl_cap_inf-P1_r" />
+            <site site="obl_cap_inf-P2_r" />
         </spatial>
     </tendon>
 </mujocoinclude>

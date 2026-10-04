@@ -7,6 +7,14 @@ import pytest
 from myo_sim import load_model
 
 
+def _right_neck_actuator_ids(model: mujoco.MjModel, name: str) -> list[int]:
+    if name == "myohead":
+        return [i for i in range(model.nu) if model.actuator(i).name.endswith("_r")]
+    base = load_model("myofullbody")
+    base_names = {base.actuator(i).name for i in range(base.nu)}
+    return [i for i in range(model.nu) if model.actuator(i).name.endswith("_r") and model.actuator(i).name not in base_names]
+
+
 @pytest.mark.parametrize("name", ["myohead", "myofullbody_neck"])
 def test_neck_passive_mechanics_and_muscle_parameters(name: str) -> None:
     model = load_model(name)
@@ -23,9 +31,7 @@ def test_neck_passive_mechanics_and_muscle_parameters(name: str) -> None:
     data.qvel[dofs] = 0.1
     mujoco.mj_forward(model, data)
     assert data.qvel[dofs] @ (data.qfrc_passive - restoring)[dofs] < 0
-    right = [
-        i for i in range(model.nu) if model.actuator(i).name.startswith("myohead_") and model.actuator(i).name.endswith("_r")
-    ]
+    right = _right_neck_actuator_ids(model, name)
     assert len(right) == 36
     left = [model.actuator(model.actuator(i).name[:-2] + "_l").id for i in right]
     np.testing.assert_array_equal(model.actuator_gainprm[right], model.actuator_gainprm[left])

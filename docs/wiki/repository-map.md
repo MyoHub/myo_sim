@@ -12,7 +12,7 @@ myo_sim/              # installable Python package
     arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscle.xml, myoarm_r_tendon.xml, myoarm_r_assets.xml
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
     torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
-    head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml
+    head/assets/      # myohead_chain.xml, myohead_r_muscle.xml, myohead_r_tendon.xml, myohead_assets.xml, myohead_simple_assets.xml, myohead_rigid_chain.xml
     meshes/           # 127 shared STL files
     contacts/         # myoarm_contacts.xml, myolegs_contacts.xml, myofullbody_contacts.xml
     scene/            # scene wrapper XMLs for rendering
