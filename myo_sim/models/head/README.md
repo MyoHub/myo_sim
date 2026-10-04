@@ -10,8 +10,8 @@ Head-and-neck geometry from the existing HAT segment, with an opt-in muscular ce
 
 | Property | Value |
 |---|---|
-| Degrees of freedom | Rigid scaffold: 0 active; `myohead`: 6 independent cervical DoFs (`pitch/roll/yaw` × 2 levels), implemented as 24 hinges with 18 equality couplings on the auxiliaries |
-| Actuators (muscles) | Rigid scaffold: 0; `myohead`: 72 (36 right sources + mirrored left) |
+| Degrees of freedom | Rigid scaffold: 0; `myohead`: 24 |
+| Actuators (muscles) | Rigid scaffold: 0; `myohead`: 72 |
 | Body segments | Existing rigid neck/head; optional C7–C1 and skull, with welded jaw |
 | Primary joints | myohead_pitch1, myohead_roll1, myohead_yaw1, myohead_pitch2, myohead_roll2, myohead_yaw2 |
 
@@ -56,7 +56,7 @@ and the precise scope of acceptance. <!-- TODO: review fidelity against measured
 
 ## Changelog
 
-**2026-10-04** — Align muscle/tendon/site naming with other body parts (`digastric_post_r`, `digastric_post_r_tendon`, `digastric_post-P1_r`); scope materials as `myohead_matskin`; clarify 6 independent DoFs vs 24 coupled hinges.
+**2026-10-04** — Align muscle/tendon/site naming with other body parts (`digastric_post_r`, `digastric_post_r_tendon`, `digastric_post-P1_r`); scope materials as `myohead_matskin`.
 **2026-10-03** — Match neck tendon rendering width to the torso (0.005 m) and refresh standalone/full-body neck previews; preserve the default rigid-neck build.
 **2026-10-03** — Restore source passive mechanics and anatomical fiber estimation; add graded feedback with a single calibrated gain, participant-separated evaluation, before/after curves and torque diagnostics. Add opt-in source-backed neck composition and documented source/neutral-strength comparisons; retain default full-body behavior.
 **2026-06-03** — Refactor model structure and enhance asset management.
