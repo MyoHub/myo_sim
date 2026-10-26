@@ -1,6 +1,6 @@
 {
   "format": "myo_sim.passive_joint_moments/1",
-  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source.",
+  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation.",
   "sources": {
     "formica2012": {
       "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
@@ -78,7 +78,7 @@
         -0.2967,
         0.2967
       ],
-      "notes": "Linear slope over the central range of motion (about +-17 deg from neutral); beyond it the real moment stiffens and this underestimates it."
+      "notes": "Linear slope over the central range (about +-17 deg from neutral), applied from neutral over the whole range: neutral-centred stiffness, not an end-range moment; beyond valid_range the real moment stiffens and this underestimates it. MyoHand's muscles add <= 0.0002 Nm/rad here at act = 0 (two-arm MyoHand model, elbow 90 deg), so no double counting."
     },
     {
       "joint": "wrist_deviation",
@@ -114,7 +114,7 @@
         -0.2967,
         0.2967
       ],
-      "notes": "Linear slope over the central range of motion (about +-17 deg from neutral); beyond it the real moment stiffens and this underestimates it."
+      "notes": "Linear slope over the central range (about +-17 deg from neutral), applied from neutral over the whole range: neutral-centred stiffness, not an end-range moment; beyond valid_range the real moment stiffens and this underestimates it. MyoHand's muscles add <= 0.0002 Nm/rad here at act = 0 (two-arm MyoHand model, elbow 90 deg), so no double counting."
     },
     {
       "joint": "forearm_pronation",
@@ -122,32 +122,34 @@
         "r": "pro_sup_r",
         "l": "pro_sup_l"
       },
-      "status": "measured",
+      "status": "covered_by_muscles",
       "source": "formica2012",
       "where": "Table 2 (1-D protocol), mean of 10 healthy right-handed adults",
       "dof": "forearm pronation/supination (positive = pronation: shortens PT and PQ)",
-      "positive": {
-        "direction": "pronation",
-        "onset": 0.0,
-        "stiffness": [
-          0.24,
-          0.0,
-          0.0
-        ],
-        "sd": 0.135
-      },
-      "negative": {
-        "direction": "supination",
-        "onset": 0.0,
-        "stiffness": [
-          0.186,
-          0.0,
-          0.0
-        ],
-        "sd": 0.101
-      },
       "valid_range": null,
-      "notes": "Measured about the neutral forearm; assumes pro_sup = 0 is neutral (thumb up), as in MoBL-ARMS. Linear slope; end-range stiffening not represented."
+      "notes": "Not added. MyoHand's forearm muscles already supply most of Formica's value through their passive force-length curves, and that contribution depends on posture: 0.22 Nm/rad about pro_sup = 0 in a two-arm MyoHand model at elbow 90 deg (act = ctrl = 0), 0.056 Nm/rad in myoarm_r / myofullbody (myo_personalise measurement). Adding Formica on top would double-count; a pose-independent subtraction would be wrong. Revisit with an end-range source.",
+      "reference": {
+        "positive": {
+          "direction": "pronation",
+          "onset": 0.0,
+          "stiffness": [
+            0.24,
+            0.0,
+            0.0
+          ],
+          "sd": 0.135
+        },
+        "negative": {
+          "direction": "supination",
+          "onset": 0.0,
+          "stiffness": [
+            0.186,
+            0.0,
+            0.0
+          ],
+          "sd": 0.101
+        }
+      }
     },
     {
       "joint": "thumb_cmc_flexion",

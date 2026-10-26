@@ -47,12 +47,15 @@ def test_table_rows_are_sourced() -> None:
     rows = measured_rows(table)
     assert rows, "at least one measured row"
     for row in table["joints"]:
-        assert row["status"] in ("measured", "gap")
+        assert row["status"] in ("measured", "gap", "covered_by_muscles")
         if row["status"] == "measured":
             assert row["source"] in table["sources"] and table["sources"][row["source"]]["doi"]
-        else:  # a gap adds nothing and says where values could come from
+        else:  # nothing is added; a gap says where values could come from
             assert "positive" not in row and "negative" not in row
-            assert all(src in table["sources"] for src in row["candidate_sources"])
+            if row["status"] == "gap":
+                assert all(src in table["sources"] for src in row["candidate_sources"])
+            else:  # covered by muscles: the source is kept for reference only
+                assert row["source"] in table["sources"] and "reference" in row
     for muscle in load_thenar_table()["muscles"]:
         assert muscle["source"] in load_thenar_table()["sources"]
 
