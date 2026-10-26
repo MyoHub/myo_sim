@@ -139,6 +139,7 @@ def load_spec(
     name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
+    head_mass_correction: bool = False,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
@@ -161,6 +162,8 @@ def load_spec(
             https://github.com/MyoHub/myo_sim/issues/128. Only supported for
             MjSpec-composed models; ignored for packaged static-XML
             fragments.
+        head_mass_correction: If True, move head-and-neck mass from the trunk into the
+            head (about 6.9 % of body mass); see myo_sim.build.mass. Default False.
     """
     import mujoco
 
@@ -175,6 +178,7 @@ def load_spec(
             composed_name,
             inertia_floor=inertia_floor,
             build_kwargs=build_kwargs,
+            head_mass_correction=head_mass_correction,
         )
         return spec
 

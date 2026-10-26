@@ -651,6 +651,7 @@ def build_spec(
     model_name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
+    head_mass_correction: bool = False,
 ) -> mujoco.MjSpec:
     """Build and return the composed, uncompiled MjSpec for a registered model.
 
@@ -672,6 +673,9 @@ def build_spec(
             numerical conditioning of the mass matrix; pass
             ``inertia_floor=0.0001`` to restore that convention. See
             https://github.com/MyoHub/myo_sim/issues/128.
+        head_mass_correction: If True, move head-and-neck mass from the trunk into the head
+            (see ``myo_sim.build.mass.apply_head_mass_correction``). Default False keeps the
+            published masses.
 
     Returns:
         The composed MjSpec, ready for further edits or spec.compile().
@@ -688,6 +692,10 @@ def build_spec(
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
+    if head_mass_correction:
+        from myo_sim.build.mass import apply_head_mass_correction
+
+        apply_head_mass_correction(spec)
     return spec
 
 

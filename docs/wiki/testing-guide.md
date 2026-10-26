@@ -11,6 +11,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
 | `test_chest_ownership.py` | `chest_r` in torso chain, not arm chain; no `chest_l` in bilateral models; `chest_r` stays massless and `myofullbody` totals ~84.3 kg | After chain XML changes |
+| `test_mass_convention.py` | `myofullbody` total mass and inertia sanity, only attachment frames massless, opt-in `head_mass_correction` keeps the total and puts the head at about 6.9 % | After mass, inertia or head/torso changes |
 | `test_fragment_registry.py` | FragmentRegistry legacy entries and all composed `myo_sim.load()` names build and forward | After `__init__.py` changes |
 | `test_passive_torso_build.py` | Passive torso scaffold builds without error | After torso XML or compose changes |
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |
