@@ -139,6 +139,8 @@ def load_spec(
     name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
+    passive_moments: bool = False,
+    thenar_muscles: bool = False,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
@@ -161,6 +163,12 @@ def load_spec(
             https://github.com/MyoHub/myo_sim/issues/128. Only supported for
             MjSpec-composed models; ignored for packaged static-XML
             fragments.
+        passive_moments: Add the cited passive joint moments of
+            ``build/data/passive_joint_moments.json`` (see
+            myo_sim.build.passive). Off by default (unchanged model).
+        thenar_muscles: Add adductor pollicis, flexor and abductor pollicis
+            brevis to every hand (see myo_sim.build.thenar). Off by default.
+            Both are only supported for MjSpec-composed models.
     """
     import mujoco
 
@@ -175,6 +183,8 @@ def load_spec(
             composed_name,
             inertia_floor=inertia_floor,
             build_kwargs=build_kwargs,
+            passive_moments=passive_moments,
+            thenar_muscles=thenar_muscles,
         )
         return spec
 
@@ -182,6 +192,8 @@ def load_spec(
         available = sorted(composed_models | frozenset(REGISTRY))
         raise ValueError(f"Unknown model {name!r}. Available: {available}")
 
+    if passive_moments or thenar_muscles:
+        raise ValueError(f"passive_moments / thenar_muscles need a composed model, not {name!r}")
     spec = mujoco.MjSpec.from_file(str(get_xml_path(name)))
     return spec
 

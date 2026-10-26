@@ -1,0 +1,422 @@
+{
+  "format": "myo_sim.passive_joint_moments/1",
+  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source.",
+  "sources": {
+    "formica2012": {
+      "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
+      "doi": "10.1152/jn.01014.2011",
+      "access": "open (PMC3424077)"
+    },
+    "knutson2000": {
+      "citation": "Knutson JS, Kilgore KL, Mansour JM, Crago PE. Intrinsic and extrinsic contributions to the passive moment at the metacarpophalangeal joint. J Biomech 33(12):1675-1681, 2000.",
+      "doi": "10.1016/S0021-9290(00)00159-7",
+      "access": "closed; coefficients not verified"
+    },
+    "kamper2002": {
+      "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002.",
+      "doi": "10.1016/S0021-9290(02)00229-4",
+      "access": "closed; coefficients not verified"
+    },
+    "li2006": {
+      "citation": "Li ZM, Davis G, Gustafson NP, Goitz RJ. A robot-assisted study of intrinsic muscle regulation on proximal interphalangeal joint stiffness by varying metacarpophalangeal joint position. J Orthop Res 24(3):407-415, 2006.",
+      "doi": "10.1002/jor.20046",
+      "access": "closed; not verified"
+    },
+    "domalain2010": {
+      "citation": "Domalain M, Vigouroux L, Berton E. Determination of passive moment-angle relationships at the trapeziometacarpal joint. J Biomech Eng 132(7):071009, 2010.",
+      "doi": "10.1115/1.4001397",
+      "access": "closed; coefficients not verified"
+    },
+    "barry2018": {
+      "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
+      "doi": "10.1016/j.jbiomech.2018.06.017",
+      "access": "paper closed; OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)"
+    },
+    "mcfarland2023": {
+      "citation": "McFarland DC, Binder-Markey BI, Nichols JA, Wohlman SJ, de Bruin M, Murray WM. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
+      "doi": "10.1109/TBME.2022.3217722",
+      "access": "paper open (bioRxiv 10.1101/2021.12.28.474357, PMC10650739); passive parameters in supplement S7 and the ARMS model (simtk.org/projects/arms_hand_model: BSD-3 for non-commercial use only, login required)"
+    },
+    "binder_markey2021": {
+      "citation": "Binder-Markey BI, Murray WM, Dewald JPA. Passive properties of the wrist and fingers following chronic hemiparetic stroke: interlimb comparisons in persons with and without a clinical treatment history that includes botulinum neurotoxin. Front Neurol 12:687624, 2021.",
+      "doi": "10.3389/fneur.2021.687624",
+      "access": "open (CC BY); raw torques at doi:10.21985/n2-esnx-yp12 (Northwestern Arch, blocks automated download)"
+    }
+  },
+  "joints": [
+    {
+      "joint": "wrist_flexion",
+      "names": {
+        "r": "flexion_r",
+        "l": "flexion_l"
+      },
+      "status": "measured",
+      "source": "formica2012",
+      "where": "Table 2 (1-D protocol), mean of 10 healthy right-handed adults",
+      "dof": "wrist flexion/extension (positive = flexion: shortens FCR and FCU)",
+      "positive": {
+        "direction": "flexion",
+        "onset": 0.0,
+        "stiffness": [
+          0.554,
+          0.0,
+          0.0
+        ],
+        "sd": 0.17
+      },
+      "negative": {
+        "direction": "extension",
+        "onset": 0.0,
+        "stiffness": [
+          1.021,
+          0.0,
+          0.0
+        ],
+        "sd": 0.379
+      },
+      "valid_range": [
+        -0.2967,
+        0.2967
+      ],
+      "notes": "Linear slope over the central range of motion (about +-17 deg from neutral); beyond it the real moment stiffens and this underestimates it."
+    },
+    {
+      "joint": "wrist_deviation",
+      "names": {
+        "r": "deviation_r",
+        "l": "deviation_l"
+      },
+      "status": "measured",
+      "source": "formica2012",
+      "where": "Table 2 (1-D protocol), mean of 10 healthy right-handed adults",
+      "dof": "wrist radial/ulnar deviation (positive = radial: shortens ECRL, lengthens ECU and FCU)",
+      "positive": {
+        "direction": "radial",
+        "onset": 0.0,
+        "stiffness": [
+          1.71,
+          0.0,
+          0.0
+        ],
+        "sd": 0.573
+      },
+      "negative": {
+        "direction": "ulnar",
+        "onset": 0.0,
+        "stiffness": [
+          1.245,
+          0.0,
+          0.0
+        ],
+        "sd": 0.448
+      },
+      "valid_range": [
+        -0.2967,
+        0.2967
+      ],
+      "notes": "Linear slope over the central range of motion (about +-17 deg from neutral); beyond it the real moment stiffens and this underestimates it."
+    },
+    {
+      "joint": "forearm_pronation",
+      "names": {
+        "r": "pro_sup_r",
+        "l": "pro_sup_l"
+      },
+      "status": "measured",
+      "source": "formica2012",
+      "where": "Table 2 (1-D protocol), mean of 10 healthy right-handed adults",
+      "dof": "forearm pronation/supination (positive = pronation: shortens PT and PQ)",
+      "positive": {
+        "direction": "pronation",
+        "onset": 0.0,
+        "stiffness": [
+          0.24,
+          0.0,
+          0.0
+        ],
+        "sd": 0.135
+      },
+      "negative": {
+        "direction": "supination",
+        "onset": 0.0,
+        "stiffness": [
+          0.186,
+          0.0,
+          0.0
+        ],
+        "sd": 0.101
+      },
+      "valid_range": null,
+      "notes": "Measured about the neutral forearm; assumes pro_sup = 0 is neutral (thumb up), as in MoBL-ARMS. Linear slope; end-range stiffening not represented."
+    },
+    {
+      "joint": "thumb_cmc_flexion",
+      "names": {
+        "r": "cmc_flexion",
+        "l": "cmc_flexion_l"
+      },
+      "status": "gap",
+      "dof": "thumb CMC flexion/extension",
+      "candidate_sources": [
+        "barry2018",
+        "mcfarland2023",
+        "domalain2010"
+      ],
+      "notes": "Domalain 2010 fitted an exponential model to in vivo CMC moments; closed access, coefficients not verified here."
+    },
+    {
+      "joint": "thumb_cmc_abduction",
+      "names": {
+        "r": "cmc_abduction",
+        "l": "cmc_abduction_l"
+      },
+      "status": "gap",
+      "dof": "thumb CMC abduction/adduction",
+      "candidate_sources": [
+        "barry2018",
+        "mcfarland2023",
+        "domalain2010"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "thumb_mp_flexion",
+      "names": {
+        "r": "mp_flexion_r",
+        "l": "mp_flexion_l"
+      },
+      "status": "gap",
+      "dof": "thumb MP flexion/extension",
+      "candidate_sources": [
+        "barry2018",
+        "mcfarland2023"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "thumb_ip_flexion",
+      "names": {
+        "r": "ip_flexion_r",
+        "l": "ip_flexion_l"
+      },
+      "status": "gap",
+      "dof": "thumb IP flexion/extension",
+      "candidate_sources": [
+        "barry2018",
+        "mcfarland2023"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit2_mcp_flexion",
+      "names": {
+        "r": "mcp2_flexion_r",
+        "l": "mcp2_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 2 MCP flexion/extension",
+      "candidate_sources": [
+        "knutson2000",
+        "kamper2002",
+        "barry2018",
+        "mcfarland2023"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit2_mcp_abduction",
+      "names": {
+        "r": "mcp2_abduction_r",
+        "l": "mcp2_abduction_l"
+      },
+      "status": "gap",
+      "dof": "digit 2 MCP abduction/adduction",
+      "candidate_sources": [
+        "barry2018"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit2_pip_flexion",
+      "names": {
+        "r": "pm2_flexion_r",
+        "l": "pm2_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 2 PIP flexion/extension",
+      "candidate_sources": [
+        "kamper2002",
+        "li2006",
+        "barry2018"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit2_dip_flexion",
+      "names": {
+        "r": "md2_flexion_r",
+        "l": "md2_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 2 DIP flexion/extension",
+      "candidate_sources": [
+        "kamper2002",
+        "barry2018"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit3_mcp_flexion",
+      "names": {
+        "r": "mcp3_flexion_r",
+        "l": "mcp3_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 3 MCP flexion/extension",
+      "candidate_sources": [
+        "binder_markey2021",
+        "mcfarland2023"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit3_mcp_abduction",
+      "names": {
+        "r": "mcp3_abduction_r",
+        "l": "mcp3_abduction_l"
+      },
+      "status": "gap",
+      "dof": "digit 3 MCP abduction/adduction",
+      "candidate_sources": [],
+      "notes": "No measured passive MCP abduction moments found for this digit."
+    },
+    {
+      "joint": "digit3_pip_flexion",
+      "names": {
+        "r": "pm3_flexion_r",
+        "l": "pm3_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 3 PIP flexion/extension",
+      "candidate_sources": [
+        "mcfarland2023"
+      ],
+      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+    },
+    {
+      "joint": "digit3_dip_flexion",
+      "names": {
+        "r": "md3_flexion",
+        "l": "md3_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 3 DIP flexion/extension",
+      "candidate_sources": [
+        "mcfarland2023"
+      ],
+      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+    },
+    {
+      "joint": "digit4_mcp_flexion",
+      "names": {
+        "r": "mcp4_flexion_r",
+        "l": "mcp4_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 4 MCP flexion/extension",
+      "candidate_sources": [
+        "binder_markey2021",
+        "mcfarland2023"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit4_mcp_abduction",
+      "names": {
+        "r": "mcp4_abduction_r",
+        "l": "mcp4_abduction_l"
+      },
+      "status": "gap",
+      "dof": "digit 4 MCP abduction/adduction",
+      "candidate_sources": [],
+      "notes": "No measured passive MCP abduction moments found for this digit."
+    },
+    {
+      "joint": "digit4_pip_flexion",
+      "names": {
+        "r": "pm4_flexion",
+        "l": "pm4_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 4 PIP flexion/extension",
+      "candidate_sources": [
+        "mcfarland2023"
+      ],
+      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+    },
+    {
+      "joint": "digit4_dip_flexion",
+      "names": {
+        "r": "md4_flexion_r",
+        "l": "md4_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 4 DIP flexion/extension",
+      "candidate_sources": [
+        "mcfarland2023"
+      ],
+      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+    },
+    {
+      "joint": "digit5_mcp_flexion",
+      "names": {
+        "r": "mcp5_flexion_r",
+        "l": "mcp5_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 5 MCP flexion/extension",
+      "candidate_sources": [
+        "binder_markey2021",
+        "mcfarland2023"
+      ],
+      "notes": ""
+    },
+    {
+      "joint": "digit5_mcp_abduction",
+      "names": {
+        "r": "mcp5_abduction_r",
+        "l": "mcp5_abduction_l"
+      },
+      "status": "gap",
+      "dof": "digit 5 MCP abduction/adduction",
+      "candidate_sources": [],
+      "notes": "No measured passive MCP abduction moments found for this digit."
+    },
+    {
+      "joint": "digit5_pip_flexion",
+      "names": {
+        "r": "pm5_flexion_r",
+        "l": "pm5_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 5 PIP flexion/extension",
+      "candidate_sources": [
+        "mcfarland2023"
+      ],
+      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+    },
+    {
+      "joint": "digit5_dip_flexion",
+      "names": {
+        "r": "md5_flexion_r",
+        "l": "md5_flexion_l"
+      },
+      "status": "gap",
+      "dof": "digit 5 DIP flexion/extension",
+      "candidate_sources": [
+        "mcfarland2023"
+      ],
+      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+    }
+  ]
+}

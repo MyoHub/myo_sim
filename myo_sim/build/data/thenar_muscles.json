@@ -1,0 +1,132 @@
+{
+  "format": "myo_sim.thenar_muscles/1",
+  "description": "Thenar muscles missing from MyoHand, added on its bodies. Site positions are in the right-hand body frames (the left hand mirrors z, as myo_sim mirrors the arm); peak forces as in MUSIC. Other muscle parameters are copied from the template muscle (OP), as MUSIC does. Length ranges are computed by MuJoCo from the joint range, like every other MyoHand muscle; MUSIC's fixed values (source_lengthrange) do not cover its own tendon lengths: APB and FPB stay mostly below them, so with them these muscles never reach their optimal length.",
+  "sources": {
+    "music2026": {
+      "citation": "Xu P, Ye Y, Sun S, Ding Y, Schumann E, Liu CK. MUSIC: Learning muscle-driven dexterous hand control. ACM Trans Graph 45(4), 2026 (arXiv:2604.23886).",
+      "doi": "10.1145/3811402",
+      "code": "github.com/xupei0610/music (MIT licence), commit d92783b, right_hand_body.xml / right_hand_tendons.xml / right_hand_muscles.xml",
+      "provenance": "MUSIC Appendix A: peak force and optimal fibre length from prior literature (Holzbaur et al. 2005; Del Santo et al. 2007), scaled as the other MyoHand muscles; attachments from anatomical atlases (Rohen et al. 2006; Standring et al. 2005); straight-line paths with via points."
+    },
+    "holzbaur2005": {
+      "citation": "Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005.",
+      "doi": "10.1007/s10439-005-3320-7",
+      "note": "Origin of the MyoHand thumb kinematics and extrinsic thumb muscles; it has no intrinsic hand muscles, so thumb and index moments were not expected to be accurate."
+    },
+    "barry2018": {
+      "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
+      "doi": "10.1016/j.jbiomech.2018.06.017",
+      "access": "paper closed; OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)"
+    },
+    "mcfarland2023": {
+      "citation": "McFarland DC, Binder-Markey BI, Nichols JA, Wohlman SJ, de Bruin M, Murray WM. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
+      "doi": "10.1109/TBME.2022.3217722",
+      "access": "paper open (bioRxiv 10.1101/2021.12.28.474357, PMC10650739); passive parameters in supplement S7 and the ARMS model (simtk.org/projects/arms_hand_model: BSD-3 for non-commercial use only, login required)"
+    }
+  },
+  "preferred_replacement": "Barry et al. 2018 (MIT model) or McFarland et al. 2023 (ARMS) once their model files are available: both include AdP, APB and FPB.",
+  "template_muscle": "OP",
+  "muscles": [
+    {
+      "name": "AdP",
+      "anatomy": "adductor pollicis",
+      "force": 100.0,
+      "source": "music2026",
+      "sites": [
+        [
+          "thirdmc",
+          [
+            0.004,
+            0.012,
+            -0.009
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            0.0,
+            -0.012,
+            0.0
+          ]
+        ]
+      ],
+      "source_lengthrange": [
+        0.04,
+        0.06
+      ]
+    },
+    {
+      "name": "FPB",
+      "anatomy": "flexor pollicis brevis",
+      "force": 80.0,
+      "source": "music2026",
+      "sites": [
+        [
+          "trapezium",
+          [
+            0.0,
+            0.0,
+            -0.006
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            -0.008,
+            0.0,
+            -0.007
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            0.002,
+            -0.011,
+            -0.007
+          ]
+        ]
+      ],
+      "source_lengthrange": [
+        0.06,
+        0.08
+      ]
+    },
+    {
+      "name": "APB",
+      "anatomy": "abductor pollicis brevis",
+      "force": 42.7,
+      "source": "music2026",
+      "sites": [
+        [
+          "trapezium",
+          [
+            0.0,
+            0.0,
+            -0.006
+          ]
+        ],
+        [
+          "firstmc",
+          [
+            0.015,
+            -0.022,
+            -0.02
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            0.004,
+            -0.002,
+            -0.006
+          ]
+        ]
+      ],
+      "source_lengthrange": [
+        0.055,
+        0.075
+      ]
+    }
+  ],
+  "joint_name_note": "MUSIC's thumb CMC joints have the same axes as MyoHand's but swapped names: MUSIC cmc_flexion = myo_sim cmc_abduction and vice versa. Sites are body-relative, so the geometry transfers unchanged (lengths and moment arms match MUSIC to 1e-11 m with the names mapped)."
+}

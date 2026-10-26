@@ -651,6 +651,8 @@ def build_spec(
     model_name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
+    passive_moments: bool = False,
+    thenar_muscles: bool = False,
 ) -> mujoco.MjSpec:
     """Build and return the composed, uncompiled MjSpec for a registered model.
 
@@ -672,6 +674,10 @@ def build_spec(
             numerical conditioning of the mass matrix; pass
             ``inertia_floor=0.0001`` to restore that convention. See
             https://github.com/MyoHub/myo_sim/issues/128.
+        passive_moments: Add the cited passive joint moments
+            (myo_sim.build.passive). Off by default.
+        thenar_muscles: Add the thenar muscles to every hand
+            (myo_sim.build.thenar). Off by default.
 
     Returns:
         The composed MjSpec, ready for further edits or spec.compile().
@@ -688,6 +694,14 @@ def build_spec(
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
+    if thenar_muscles:
+        from myo_sim.build.thenar import add_thenar_muscles
+
+        add_thenar_muscles(spec)
+    if passive_moments:
+        from myo_sim.build.passive import add_passive_joint_moments
+
+        add_passive_joint_moments(spec)
     return spec
 
 
