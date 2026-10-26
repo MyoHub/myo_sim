@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 
 import myo_sim
-from myo_sim.build.passive import load_passive_moment_table, measured_rows, passive_moment
+from myo_sim.build.passive import APPLIED, load_passive_moment_table, measured_rows, passive_moment
 from myo_sim.build.thenar import load_thenar_table
 
 MODELS = ("myotorso_arms", "myohands", "myoarm_r")
@@ -47,27 +47,30 @@ def test_table_rows_are_sourced() -> None:
     rows = measured_rows(table)
     assert rows, "at least one measured row"
     for row in table["joints"]:
-        assert row["status"] in ("measured", "gap", "covered_by_muscles")
-        if row["status"] == "measured":
+        assert row["status"] in ("measured", "assumed", "gap", "covered_by_muscles", "validation_only")
+        if row["status"] in ("measured", "assumed"):
             assert row["source"] in table["sources"] and table["sources"][row["source"]]["doi"]
+            assert "positive" in row or "negative" in row
+            if row["status"] == "assumed":  # a transfer between joints says so
+                assert "Assumption" in row["notes"]
         else:  # nothing is added; a gap says where values could come from
             assert "positive" not in row and "negative" not in row
             if row["status"] == "gap":
                 assert all(src in table["sources"] for src in row["candidate_sources"])
-            else:  # covered by muscles: the source is kept for reference only
+            else:  # covered by muscles / validation only: the source is kept for reference
                 assert row["source"] in table["sources"] and "reference" in row
     for muscle in load_thenar_table()["muscles"]:
         assert muscle["source"] in load_thenar_table()["sources"]
 
 
 def test_passive_moments_match_the_table() -> None:
-    model = myo_sim.load_spec("myotorso_arms", passive_moments=True).compile()
+    model = myo_sim.load_spec("myotorso_arms", passive_moments="assumed").compile()
     data = mujoco.MjData(model)
-    rows = measured_rows(load_passive_moment_table())
+    rows = measured_rows(load_passive_moment_table(), APPLIED["assumed"])
     for row in rows:
         for side in ("r", "l"):
             joint = model.joint(row["names"][side])
-            for q in np.linspace(-0.6, 0.6, 9):
+            for q in np.linspace(*model.jnt_range[joint.id], 11):
                 data.qpos[:] = model.qpos0
                 data.qvel[:] = 0.0
                 data.qpos[model.jnt_qposadr[joint.id]] = q
@@ -79,7 +82,10 @@ def test_passive_moments_match_the_table() -> None:
 
 
 def test_one_sided_springs_restore_toward_neutral_with_polynomial_terms() -> None:
-    row = {"positive": {"onset": 0.1, "stiffness": [1.0, 2.0, 3.0]}, "negative": {"onset": 0.2, "stiffness": [0.5, 4.0, 1.0]}}
+    row = {
+        "positive": [{"onset": 0.1, "stiffness": [1.0, 2.0, 3.0]}, {"onset": 0.5, "stiffness": [2.0, 0.0, 0.0]}],
+        "negative": {"onset": -0.2, "stiffness": [0.5, 4.0, 1.0]},
+    }
     spec = mujoco.MjSpec.from_string(
         '<mujoco><worldbody><body><joint name="j" range="-2 2"/><geom size=".1"/></body></worldbody></mujoco>'
     )
@@ -159,3 +165,36 @@ def test_thenar_moment_arms_act_as_named() -> None:
     assert arm["AdP"][1] < 0 and arm["AdP"][2] < 0
     assert arm["APB"][1] > 0
     assert arm["FPB"][2] < 0
+
+
+def test_assumed_rows_only_on_request() -> None:
+    table = load_passive_moment_table()
+    measured = myo_sim.load_spec("myoarm_r", passive_moments=True).compile()
+    assumed = myo_sim.load_spec("myoarm_r", passive_moments="assumed").compile()
+    names = lambda m: {m.tendon(i).name for i in range(m.ntendon) if m.tendon(i).name.startswith("passive_")}  # noqa: E731
+    extra = names(assumed) - names(measured)
+    assert extra and names(measured) < names(assumed)
+    assumed_joints = {r["names"]["r"] for r in table["joints"] if r["status"] == "assumed"}
+    assert all(any(t.startswith(f"passive_{j}_") for j in assumed_joints) for t in extra)
+
+
+def test_fitted_rows_reproduce_from_their_source_curves() -> None:
+    """The stored springs are what scripts/fit_passive_moments.py fits from each row's source curve."""
+    import copy
+    import importlib.util
+    from pathlib import Path
+
+    pytest.importorskip("scipy")
+    path = Path(__file__).parents[1] / "scripts" / "fit_passive_moments.py"
+    spec = importlib.util.spec_from_file_location("fit_passive_moments", path)
+    fit = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fit)
+    model = myo_sim.load_spec("myoarm_r").compile()
+    for row in load_passive_moment_table()["joints"]:
+        if "source_curve" not in row:
+            continue
+        refit = copy.deepcopy(row)
+        fit.fit_row(refit, model.jnt_range[model.joint(row["names"]["r"]).id])
+        q = np.linspace(*model.jnt_range[model.joint(row["names"]["r"]).id], 50)
+        np.testing.assert_allclose(passive_moment(refit, q), passive_moment(row, q), atol=1e-9, err_msg=row["joint"])
+        assert row["fit"]["max_abs_err_Nm"] <= 0.12 * row["fit"]["source_peak_Nm"], row["joint"]

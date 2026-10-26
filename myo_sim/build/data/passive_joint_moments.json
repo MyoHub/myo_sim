@@ -1,6 +1,6 @@
 {
   "format": "myo_sim.passive_joint_moments/1",
-  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation.",
+  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation. Fitted rows (source_curve) are cubic springs fitted per side of the source curve's equilibrium by non-negative least squares over fit.range_rad (scripts/fit_passive_moments.py); onsets are absolute joint angles.",
   "sources": {
     "formica2012": {
       "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
@@ -10,7 +10,7 @@
     "knutson2000": {
       "citation": "Knutson JS, Kilgore KL, Mansour JM, Crago PE. Intrinsic and extrinsic contributions to the passive moment at the metacarpophalangeal joint. J Biomech 33(12):1675-1681, 2000.",
       "doi": "10.1016/S0021-9290(00)00159-7",
-      "access": "closed; coefficients not verified"
+      "access": "closed; equations (1)-(4) and Table 1 verified from the PDF"
     },
     "kamper2002": {
       "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002.",
@@ -20,17 +20,17 @@
     "li2006": {
       "citation": "Li ZM, Davis G, Gustafson NP, Goitz RJ. A robot-assisted study of intrinsic muscle regulation on proximal interphalangeal joint stiffness by varying metacarpophalangeal joint position. J Orthop Res 24(3):407-415, 2006.",
       "doi": "10.1002/jor.20046",
-      "access": "closed; not verified"
+      "access": "closed; Table 3 verified from the PDF"
     },
     "domalain2010": {
       "citation": "Domalain M, Vigouroux L, Berton E. Determination of passive moment-angle relationships at the trapeziometacarpal joint. J Biomech Eng 132(7):071009, 2010.",
       "doi": "10.1115/1.4001397",
-      "access": "closed; coefficients not verified"
+      "access": "closed; equations (2)-(3), Table 1 and Sec. 3.1 verified from the PDF"
     },
     "barry2018": {
       "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
       "doi": "10.1016/j.jbiomech.2018.06.017",
-      "access": "paper closed; OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)"
+      "access": "paper verified from the PDF (Sec. 2.1: thumb MCP/IP passive set equal to index MCP/PIP; Domalain 2010 used for thumb CMC abduction); model file behind a simtk login"
     },
     "mcfarland2023": {
       "citation": "McFarland DC, Binder-Markey BI, Nichols JA, Wohlman SJ, de Bruin M, Murray WM. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
@@ -40,7 +40,7 @@
     "binder_markey2021": {
       "citation": "Binder-Markey BI, Murray WM, Dewald JPA. Passive properties of the wrist and fingers following chronic hemiparetic stroke: interlimb comparisons in persons with and without a clinical treatment history that includes botulinum neurotoxin. Front Neurol 12:687624, 2021.",
       "doi": "10.3389/fneur.2021.687624",
-      "access": "open (CC BY); raw torques at doi:10.21985/n2-esnx-yp12 (Northwestern Arch, blocks automated download)"
+      "access": "open (CC BY); the shared spreadsheet Finger_ROM_data.xlsx holds passive MCP range-of-motion limits per wrist angle (15 deg steps), no torques: validation only"
     }
   },
   "joints": [
@@ -157,14 +157,64 @@
         "r": "cmc_flexion",
         "l": "cmc_flexion_l"
       },
-      "status": "gap",
+      "status": "measured",
       "dof": "thumb CMC flexion/extension",
-      "candidate_sources": [
-        "barry2018",
-        "mcfarland2023",
-        "domalain2010"
-      ],
-      "notes": "Domalain 2010 fitted an exponential model to in vivo CMC moments; closed access, coefficients not verified here."
+      "notes": "The abduction term c*exp(d(theta - theta_max)) is left out: with the averaged coefficients (c = -2.94 +- 8.2, d = -0.18) it gives about -11 N m at the resting adduction, against at most -1.9 N m measured, so the averaged pair is not usable. Flexion beyond rest was not measured, so the row only resists extension. MyoHand's muscles give <= 2.1 N cm passive moment here (at 30-40 deg extension), against up to 150 N cm in the source: no double counting worth subtracting.",
+      "source": "domalain2010",
+      "where": "Table 1 means (n=10), Eq. (2) first term; Sec. 3.1 ranges",
+      "source_curve": {
+        "model": "domalain2010_fe",
+        "params": {
+          "a": -149.9,
+          "b": -0.14
+        },
+        "joint_sign": -1.0,
+        "fit_range_deg": [
+          -14.799999999999997,
+          40.1
+        ],
+        "mapping": "Domalain's Mp is the external moment (negative = extension) in Chao et al. TMC coordinates with angles relative to each subject's maxima; the internal moment is -Mp. phi_max (maximal extension, -43.2 +- 16.0 deg) is aligned with MyoHand's cmc_flexion extension limit (+0.70 rad; +q = extension), as the paper prescribes relative-to-maximum use; fit over the measured range of motion (54.9 deg) from that limit.",
+        "segments": 3
+      },
+      "fit": {
+        "range_rad": [
+          -0.25830872929516074,
+          0.6998770300497261
+        ],
+        "measured_range_rad": [
+          -0.25830872929516074,
+          0.6998770300497261
+        ],
+        "rmse_Nm": 0.029465184508063586,
+        "max_abs_err_Nm": 0.07562904207835924,
+        "source_peak_Nm": 1.4975221269702834
+      },
+      "positive": [
+        {
+          "onset": 0.12592616167020737,
+          "stiffness": [
+            0.0,
+            0.0,
+            6.886645818078417
+          ]
+        },
+        {
+          "onset": 0.6446432644734543,
+          "stiffness": [
+            2.206611514863123,
+            17.90932183795111,
+            112.63654588144472
+          ]
+        },
+        {
+          "onset": 0.6686579451587897,
+          "stiffness": [
+            0.00018677070660835047,
+            0.0,
+            0.0
+          ]
+        }
+      ]
     },
     {
       "joint": "thumb_cmc_abduction",
@@ -172,14 +222,82 @@
         "r": "cmc_abduction",
         "l": "cmc_abduction_l"
       },
-      "status": "gap",
+      "status": "measured",
       "dof": "thumb CMC abduction/adduction",
-      "candidate_sources": [
-        "barry2018",
-        "mcfarland2023",
-        "domalain2010"
+      "notes": "Barry et al. 2018 likewise used Domalain 2010 for thumb CMC abduction. The flexion term e*exp(f(phi - phi_max)) (e = -71.89, f = -0.55) is left out (single-joint springs): it is below 5 N cm unless the CMC is within ~5 deg of maximal extension. MyoHand's muscles give no passive CMC abduction moment (|M| < 0.1 N cm), so nothing double-counts.",
+      "source": "domalain2010",
+      "where": "Table 1 means (n=10), Eq. (3) without the flexion term; Sec. 3.1 ranges",
+      "source_curve": {
+        "model": "domalain2010_aa",
+        "params": {
+          "g": 31.91,
+          "h": -4.49,
+          "i": -0.07,
+          "j": -110.6,
+          "k": 0.39
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          -2.5999999999999943,
+          44.7
+        ],
+        "mapping": "theta_max (maximal abduction, 7.4 +- 8.5 deg) aligned with MyoHand's cmc_abduction abduction limit (+0.78 rad); fit over the measured abduction-adduction span (7.4 - (-39.9) = 47.3 deg). MyoHand's range reaches 26 deg further into adduction, where the fitted cubic is extrapolated. The adduction side is a single linear spring: a cubic fitted inside the measured span extrapolates to 5.5-6.8 N m at MyoHand's adduction limit (the source exponential to 7.3 N m), the linear one to 1.8 N m, near Domalain's largest measured moment (141.7 +- 43.9 N cm at the subjects' maximal adduction).",
+        "segments": {
+          "positive": 3,
+          "negative": 1
+        },
+        "order": {
+          "positive": 3,
+          "negative": 1
+        }
+      },
+      "fit": {
+        "range_rad": [
+          -0.04537856055185247,
+          0.7801621756414654
+        ],
+        "measured_range_rad": [
+          -0.04537856055185247,
+          0.7801621756414654
+        ],
+        "rmse_Nm": 0.069374280710234,
+        "max_abs_err_Nm": 0.15433819229565549,
+        "source_peak_Nm": 1.3842444687865565
+      },
+      "positive": [
+        {
+          "onset": 0.2910262996133018,
+          "stiffness": [
+            0.2430676492035952,
+            0.0,
+            7.0387913940307945
+          ]
+        },
+        {
+          "onset": 0.7449887608161863,
+          "stiffness": [
+            7.880616767908168,
+            56.57909555065592,
+            2182.5807971138133
+          ]
+        },
+        {
+          "onset": 0.7615409560280824,
+          "stiffness": [
+            0.004503589605159981,
+            0.0,
+            0.0
+          ]
+        }
       ],
-      "notes": ""
+      "negative": {
+        "onset": 0.2910262996133018,
+        "stiffness": [
+          2.2490276249500267,
+          0.0,
+          0.0
+        ]
+      }
     },
     {
       "joint": "thumb_mp_flexion",
@@ -187,13 +305,67 @@
         "r": "mp_flexion_r",
         "l": "mp_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "thumb MP flexion/extension",
       "candidate_sources": [
         "barry2018",
         "mcfarland2023"
       ],
-      "notes": ""
+      "notes": "Assumption from Barry et al. 2018 (no thumb MCP data exist): Knutson's index-MCP intrinsic curve with MyoHand's thumb sign (+q = extension). MyoHand's thumb muscles add no passive MP moment (|M| < 0.1 N cm over the range), so nothing double-counts.",
+      "source": "barry2018",
+      "where": "Barry et al. 2018 Sec. 2.1: thumb MCP passive set equal to index MCP",
+      "source_curve": {
+        "model": "knutson2000_intrinsic",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4
+        },
+        "joint_sign": -1.0,
+        "segments": 3
+      },
+      "fit": {
+        "range_rad": [
+          -0.785398,
+          0.698132
+        ],
+        "measured_range_rad": [
+          -0.785398,
+          0.698132
+        ],
+        "rmse_Nm": 0.0025366818969606328,
+        "max_abs_err_Nm": 0.004897750235329592,
+        "source_peak_Nm": 0.06449297520765794
+      },
+      "positive": [
+        {
+          "onset": -0.785398,
+          "stiffness": [
+            0.0,
+            0.0,
+            0.0156994684289931
+          ]
+        },
+        {
+          "onset": 0.5568434285714285,
+          "stiffness": [
+            0.05962088652944653,
+            0.1474555171196189,
+            0.6659995963386296
+          ]
+        },
+        {
+          "onset": 0.6200514736842104,
+          "stiffness": [
+            1.9185264529248207e-05,
+            0.0,
+            0.0
+          ]
+        }
+      ]
     },
     {
       "joint": "thumb_ip_flexion",
@@ -205,9 +377,10 @@
       "dof": "thumb IP flexion/extension",
       "candidate_sources": [
         "barry2018",
-        "mcfarland2023"
+        "li2006",
+        "kamper2002"
       ],
-      "notes": ""
+      "notes": "Barry et al. 2018 set the thumb IP equal to the index PIP, but Li 2006 gives only near-equilibrium stiffness about an index-specific equilibrium (52.5-77.9 deg), which does not transfer to the thumb IP; Kamper et al. 2002 PIP curves are needed."
     },
     {
       "joint": "digit2_mcp_flexion",
@@ -215,15 +388,65 @@
         "r": "mcp2_flexion_r",
         "l": "mcp2_flexion_l"
       },
-      "status": "gap",
+      "status": "measured",
       "dof": "digit 2 MCP flexion/extension",
-      "candidate_sources": [
-        "knutson2000",
-        "kamper2002",
-        "barry2018",
-        "mcfarland2023"
-      ],
-      "notes": ""
+      "notes": "Intrinsic component only (Knutson Eq. 2, Table 1 medians of 8 healthy subjects; units N cm, 1/deg, deg; theta = MCP flexion). The extrinsic component (Eq. 3, wrist dependent) belongs to the extrinsic muscle-tendon units and is not added. Validation: MyoHand's extrinsic index muscles (FDS2, FDP2, EDC2, EIP) give at most 1.2 N cm passive MCP moment over MCP 0-90 deg and wrist -60..60 deg, against Knutson's extrinsic fit of up to 30 N cm (e.g. -30 N cm at MCP 90 deg, wrist flexed 60 deg): the model lacks the extrinsic passive tension (tenodesis), so with the intrinsic curve alone the relaxed MCP settles near its intrinsic equilibrium (~55 deg flexion) instead of ~27 deg (intrinsic + extrinsic at wrist 0). The intrinsic muscles (RI2, LU_RB2, UI_UB2) add no passive moment except an RI2 path discontinuity: its normalised length jumps from 1.19 to 0.98 between MCP 10 and 15 deg and gives -5..-9 N cm (extension) at MCP 0-10 deg, a MyoHand path artefact.",
+      "source": "knutson2000",
+      "where": "Table 1 medians, intrinsic component (Eq. 2)",
+      "source_curve": {
+        "model": "knutson2000_intrinsic",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4
+        },
+        "joint_sign": 1.0
+      },
+      "validation": {
+        "knutson2000_extrinsic": {
+          "A3": 1.2,
+          "k3": 0.042,
+          "B3": -0.8,
+          "phi3": 10.9,
+          "A4": 0.8,
+          "k4": 0.054,
+          "B4": -0.3,
+          "phi4": 40.9,
+          "units": "N cm, 1/deg, deg; theta_j = B_j * wrist_angle + phi_j (wrist flexion positive)"
+        }
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5708
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5708
+        ],
+        "rmse_Nm": 0.00033910963198118416,
+        "max_abs_err_Nm": 0.0013534043008732385,
+        "source_peak_Nm": 0.04041893114856969
+      },
+      "positive": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.010721321304825629,
+          0.0,
+          0.17626734541498787
+        ]
+      },
+      "negative": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.004830927701106348,
+          0.0,
+          0.00055798249815317
+        ]
+      }
     },
     {
       "joint": "digit2_mcp_abduction",
@@ -244,14 +467,30 @@
         "r": "pm2_flexion_r",
         "l": "pm2_flexion_l"
       },
-      "status": "gap",
+      "status": "validation_only",
       "dof": "digit 2 PIP flexion/extension",
-      "candidate_sources": [
-        "kamper2002",
-        "li2006",
-        "barry2018"
-      ],
-      "notes": ""
+      "notes": "Not added: Li reports total moments (muscles included) as equilibria and 20-deg stiffness only, and the equilibrium moves ~20 deg with MCP posture (intrinsic-muscle regulation, the paper's finding), which a joint spring cannot represent. Validation: MyoHand's muscles already give ~0.55 N mm/deg at PIP 60-80 deg with MCP 0 (Li: 0.71-0.76) and ~0 with MCP 60 (Li: 0.43-0.49), and no equilibrium in 30-90 deg (passive moment extends throughout: -0.3 at 40, -3.5 N cm at 90 deg), against Li's 52.5-77.9 deg. Kamper et al. 2002 (curves for MCP/PIP/DIP) is needed for a PIP row.",
+      "source": "li2006",
+      "where": "Table 3, healthy, MCP at 0 and 60 deg",
+      "reference": {
+        "mcp0": {
+          "flexion_equilibrium_deg": 52.5,
+          "extension_equilibrium_deg": 77.9,
+          "flexion_stiffness_Nmm_per_deg": 0.712,
+          "extension_stiffness_Nmm_per_deg": 0.759
+        },
+        "mcp60": {
+          "flexion_equilibrium_deg": 29.6,
+          "extension_equilibrium_deg": 63.9,
+          "flexion_stiffness_Nmm_per_deg": 0.431,
+          "extension_stiffness_Nmm_per_deg": 0.494
+        },
+        "range_tested_deg": [
+          0,
+          90
+        ],
+        "stiffness_window_deg": 20
+      }
     },
     {
       "joint": "digit2_dip_flexion",
@@ -273,13 +512,56 @@
         "r": "mcp3_flexion_r",
         "l": "mcp3_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 3 MCP flexion/extension",
       "candidate_sources": [
         "binder_markey2021",
         "mcfarland2023"
       ],
-      "notes": ""
+      "notes": "Assumption: no measured intrinsic MCP moments for this digit; the index values are used (as McFarland et al. 2023 did for PIP/DIP). McFarland used Binder-Markey et al. 2021 torques for MCP 3-5; the shared data hold range-of-motion limits only.",
+      "source": "knutson2000",
+      "where": "index-finger intrinsic curve (Table 1 medians) transferred",
+      "source_curve": {
+        "model": "knutson2000_intrinsic",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4
+        },
+        "joint_sign": 1.0
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5708
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5708
+        ],
+        "rmse_Nm": 0.00033910963198118416,
+        "max_abs_err_Nm": 0.0013534043008732385,
+        "source_peak_Nm": 0.04041893114856969
+      },
+      "positive": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.010721321304825629,
+          0.0,
+          0.17626734541498787
+        ]
+      },
+      "negative": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.004830927701106348,
+          0.0,
+          0.00055798249815317
+        ]
+      }
     },
     {
       "joint": "digit3_mcp_abduction",
@@ -324,13 +606,56 @@
         "r": "mcp4_flexion_r",
         "l": "mcp4_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 4 MCP flexion/extension",
       "candidate_sources": [
         "binder_markey2021",
         "mcfarland2023"
       ],
-      "notes": ""
+      "notes": "Assumption: no measured intrinsic MCP moments for this digit; the index values are used (as McFarland et al. 2023 did for PIP/DIP). McFarland used Binder-Markey et al. 2021 torques for MCP 3-5; the shared data hold range-of-motion limits only.",
+      "source": "knutson2000",
+      "where": "index-finger intrinsic curve (Table 1 medians) transferred",
+      "source_curve": {
+        "model": "knutson2000_intrinsic",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4
+        },
+        "joint_sign": 1.0
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5708
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5708
+        ],
+        "rmse_Nm": 0.00033910963198118416,
+        "max_abs_err_Nm": 0.0013534043008732385,
+        "source_peak_Nm": 0.04041893114856969
+      },
+      "positive": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.010721321304825629,
+          0.0,
+          0.17626734541498787
+        ]
+      },
+      "negative": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.004830927701106348,
+          0.0,
+          0.00055798249815317
+        ]
+      }
     },
     {
       "joint": "digit4_mcp_abduction",
@@ -375,13 +700,56 @@
         "r": "mcp5_flexion_r",
         "l": "mcp5_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 5 MCP flexion/extension",
       "candidate_sources": [
         "binder_markey2021",
         "mcfarland2023"
       ],
-      "notes": ""
+      "notes": "Assumption: no measured intrinsic MCP moments for this digit; the index values are used (as McFarland et al. 2023 did for PIP/DIP). McFarland used Binder-Markey et al. 2021 torques for MCP 3-5; the shared data hold range-of-motion limits only.",
+      "source": "knutson2000",
+      "where": "index-finger intrinsic curve (Table 1 medians) transferred",
+      "source_curve": {
+        "model": "knutson2000_intrinsic",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4
+        },
+        "joint_sign": 1.0
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5708
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5708
+        ],
+        "rmse_Nm": 0.00033910963198118416,
+        "max_abs_err_Nm": 0.0013534043008732385,
+        "source_peak_Nm": 0.04041893114856969
+      },
+      "positive": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.010721321304825629,
+          0.0,
+          0.17626734541498787
+        ]
+      },
+      "negative": {
+        "onset": 0.9991015049004027,
+        "stiffness": [
+          0.004830927701106348,
+          0.0,
+          0.00055798249815317
+        ]
+      }
     },
     {
       "joint": "digit5_mcp_abduction",

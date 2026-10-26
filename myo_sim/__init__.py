@@ -139,7 +139,7 @@ def load_spec(
     name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
-    passive_moments: bool = False,
+    passive_moments: bool | str = False,
     thenar_muscles: bool = False,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
@@ -165,7 +165,9 @@ def load_spec(
             fragments.
         passive_moments: Add the cited passive joint moments of
             ``build/data/passive_joint_moments.json`` (see
-            myo_sim.build.passive). Off by default (unchanged model).
+            myo_sim.build.passive): ``True`` the measured rows, ``"assumed"``
+            also the documented transfers between joints. Off by default
+            (unchanged model).
         thenar_muscles: Add adductor pollicis, flexor and abductor pollicis
             brevis to every hand (see myo_sim.build.thenar). Off by default.
             Both are only supported for MjSpec-composed models.
