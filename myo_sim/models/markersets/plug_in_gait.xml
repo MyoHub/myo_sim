@@ -1,0 +1,100 @@
+<mujoco model="markerset_plug_in_gait">
+  <!-- Vicon Plug-in Gait full-body set (39 markers) with wand markers on thigh, shank, upper arm and forearm.
+       Sources:
+         Vicon Plug-in Gait: https://vicon-help.atlassian.net/wiki/spaces/Nexus215/pages/11377280/Upper+body+modeling+with+Plug-in+Gait
+         Plug-in Gait marker table: https://www.jssm.org/tablejssm-15-92.xml/table002.xml
+       Optional overlay: myo_sim.markersets.add_markerset(spec, "plug_in_gait") adds these sites to the bodies of the same
+       name. Positions are in body frames (x anterior, y up, z right). The class gives the confidence of the position:
+       anatomical (on a model landmark site), reference (from a published model with the same body frames),
+       fitted (fitted to recorded data), nominal (from the written placement description). -->
+  <default>
+    <default class="myomarker">
+      <site type="sphere" size="0.008" group="4"/>
+      <default class="myomarker_anatomical"><site rgba="0.2 0.6 1 1"/></default>
+      <default class="myomarker_reference"><site rgba="0.2 0.8 0.4 1"/></default>
+      <default class="myomarker_fitted"><site rgba="1 0.7 0.1 1"/></default>
+      <default class="myomarker_nominal"><site rgba="0.9 0.3 0.3 1"/></default>
+    </default>
+  </default>
+  <worldbody>
+    <body name="torso">
+      <site name="T10" class="myomarker_nominal" pos="-0.018 0.194 0"/>  <!-- anatomical; spinous process of T10 -->
+      <site name="CLAV" class="myomarker_nominal" pos="0.084 0.381 0"/>  <!-- anatomical; jugular notch -->
+      <site name="STRN" class="myomarker_nominal" pos="0.084 0.181 0"/>  <!-- anatomical; xiphoid process -->
+      <site name="RBAK" class="myomarker_nominal" pos="-0.048 0.234 0.09"/>  <!-- technical; right scapula (labelling marker) -->
+    </body>
+    <body name="head">
+      <site name="RFHD" class="myomarker_nominal" pos="0.0539 0.1092 0.0577"/>  <!-- technical; front of head (temple), right -->
+      <site name="LFHD" class="myomarker_nominal" pos="0.0539 0.1092 -0.0577"/>  <!-- technical; front of head (temple), left -->
+      <site name="RBHD" class="myomarker_nominal" pos="-0.0539 0.1092 0.0577"/>  <!-- technical; back of head, same height as the front markers, right -->
+      <site name="LBHD" class="myomarker_nominal" pos="-0.0539 0.1092 -0.0577"/>  <!-- technical; back of head, same height as the front markers, left -->
+    </body>
+    <body name="chest_r">
+      <site name="C7" class="myomarker_anatomical" pos="-0.0561 0.0553 -0.0015"/>  <!-- anatomical; spinous process of C7; on site C7_marker_r -->
+    </body>
+    <body name="scapula_r">
+      <site name="RSHO" class="myomarker_anatomical" pos="0.0014 -0.0015 0.0137"/>  <!-- anatomical; acromioclavicular joint, right; on site Shoulder_marker_r -->
+    </body>
+    <body name="humerus_r">
+      <site name="RUPA" class="myomarker_nominal" pos="0.0051 -0.1706 0.0288"/>  <!-- cluster; upper lateral arm (wand marker), right -->
+      <site name="RELB" class="myomarker_anatomical" pos="0.0051 -0.2806 0.0288"/>  <!-- anatomical; lateral epicondyle of the humerus, right; on site Elbow_Lateral_marker_r -->
+    </body>
+    <body name="ulna_r">
+      <site name="RWRB" class="myomarker_nominal" pos="-0.0167 -0.2416 0.0478"/>  <!-- technical; wrist bar, little-finger side, right -->
+    </body>
+    <body name="radius_r">
+      <site name="RFRM" class="myomarker_nominal" pos="0.0575 -0.1772 0.0274"/>  <!-- cluster; lower lateral forearm (wand marker), right -->
+      <site name="RWRA" class="myomarker_nominal" pos="0.0575 -0.2272 0.0274"/>  <!-- technical; wrist bar, thumb side, right -->
+    </body>
+    <body name="thirdmc_r">
+      <site name="RFIN" class="myomarker_nominal" pos="0.0015 -0.025 0.002"/>  <!-- technical; back of the hand at the middle-finger knuckle, right -->
+    </body>
+    <body name="scapula_l">
+      <site name="LSHO" class="myomarker_anatomical" pos="0.0014 -0.0015 -0.0137"/>  <!-- anatomical; acromioclavicular joint, left; on site Shoulder_marker_l -->
+    </body>
+    <body name="humerus_l">
+      <site name="LUPA" class="myomarker_nominal" pos="0.0051 -0.1706 -0.0288"/>  <!-- cluster; upper lateral arm (wand marker), left -->
+      <site name="LELB" class="myomarker_anatomical" pos="0.0051 -0.2806 -0.0288"/>  <!-- anatomical; lateral epicondyle of the humerus, left; on site Elbow_Lateral_marker_l -->
+    </body>
+    <body name="ulna_l">
+      <site name="LWRB" class="myomarker_nominal" pos="-0.0167 -0.2416 -0.0478"/>  <!-- technical; wrist bar, little-finger side, left -->
+    </body>
+    <body name="radius_l">
+      <site name="LFRM" class="myomarker_nominal" pos="0.0575 -0.1772 -0.0274"/>  <!-- cluster; lower lateral forearm (wand marker), left -->
+      <site name="LWRA" class="myomarker_nominal" pos="0.0575 -0.2272 -0.0274"/>  <!-- technical; wrist bar, thumb side, left -->
+    </body>
+    <body name="thirdmc_l">
+      <site name="LFIN" class="myomarker_nominal" pos="0.0015 -0.025 -0.002"/>  <!-- technical; back of the hand at the middle-finger knuckle, left -->
+    </body>
+    <body name="pelvis">
+      <site name="RASI" class="myomarker_anatomical" pos="0.0095 0.0181 0.1285"/>  <!-- anatomical; anterior superior iliac spine, right; on site ASI_r -->
+      <site name="LASI" class="myomarker_anatomical" pos="0.0095 0.0181 -0.1285"/>  <!-- anatomical; anterior superior iliac spine, left; on site ASI_l -->
+      <site name="RPSI" class="myomarker_anatomical" pos="-0.155 0.035 0.045"/>  <!-- anatomical; posterior superior iliac spine, right; on site PSI_r -->
+      <site name="LPSI" class="myomarker_anatomical" pos="-0.155 0.035 -0.045"/>  <!-- anatomical; posterior superior iliac spine, left; on site PSI_l -->
+    </body>
+    <body name="femur_r">
+      <site name="RTHI" class="myomarker_nominal" pos="0 -0.202 0.065"/>  <!-- cluster; lateral mid-thigh (wand marker), right -->
+      <site name="RKNE" class="myomarker_anatomical" pos="0 -0.404 0.05"/>  <!-- anatomical; lateral femoral epicondyle (knee axis), right; on site LFC_r -->
+    </body>
+    <body name="tibia_r">
+      <site name="RTIB" class="myomarker_nominal" pos="-0.0017 -0.1956 0.0622"/>  <!-- cluster; lateral shank (wand marker), right -->
+      <site name="RANK" class="myomarker_anatomical" pos="-0.005 -0.3888 0.053"/>  <!-- anatomical; lateral malleolus, right; on site LMAL_r -->
+    </body>
+    <body name="calcn_r">
+      <site name="RHEE" class="myomarker_anatomical" pos="-0.025 0.02 -0.005"/>  <!-- anatomical; calcaneus, right; on site CAL_r -->
+      <site name="RTOE" class="myomarker_nominal" pos="0.155 0.0249 0.014"/>  <!-- anatomical; head of the second metatarsal, right -->
+    </body>
+    <body name="femur_l">
+      <site name="LTHI" class="myomarker_nominal" pos="0 -0.202 -0.065"/>  <!-- cluster; lateral mid-thigh (wand marker), left -->
+      <site name="LKNE" class="myomarker_anatomical" pos="0 -0.404 -0.05"/>  <!-- anatomical; lateral femoral epicondyle (knee axis), left; on site LFC_l -->
+    </body>
+    <body name="tibia_l">
+      <site name="LTIB" class="myomarker_nominal" pos="-0.0017 -0.1956 -0.0622"/>  <!-- cluster; lateral shank (wand marker), left -->
+      <site name="LANK" class="myomarker_anatomical" pos="-0.005 -0.3888 -0.053"/>  <!-- anatomical; lateral malleolus, left; on site LMAL_l -->
+    </body>
+    <body name="calcn_l">
+      <site name="LHEE" class="myomarker_anatomical" pos="-0.025 0.02 0.005"/>  <!-- anatomical; calcaneus, left; on site CAL_l -->
+      <site name="LTOE" class="myomarker_nominal" pos="0.155 0.0249 -0.014"/>  <!-- anatomical; head of the second metatarsal, left -->
+    </body>
+  </worldbody>
+</mujoco>

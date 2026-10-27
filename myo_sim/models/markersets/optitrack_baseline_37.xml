@@ -1,0 +1,98 @@
+<mujoco model="markerset_optitrack_baseline_37">
+  <!-- OptiTrack Motive Baseline full-body set (37 markers).
+       Sources:
+         OptiTrack Baseline markersets: https://docs.optitrack.com/markersets/full-body/baseline-41.md
+         OptiTrack Baseline (37), v1.1 docs: https://docs.optitrack.com/v1.1/skeleton-markersets/baseline-markerset.md
+       Optional overlay: myo_sim.markersets.add_markerset(spec, "optitrack_baseline_37") adds these sites to the bodies of the same
+       name. Positions are in body frames (x anterior, y up, z right). The class gives the confidence of the position:
+       anatomical (on a model landmark site), reference (from a published model with the same body frames),
+       fitted (fitted to recorded data), nominal (from the written placement description). -->
+  <default>
+    <default class="myomarker">
+      <site type="sphere" size="0.008" group="4"/>
+      <default class="myomarker_anatomical"><site rgba="0.2 0.6 1 1"/></default>
+      <default class="myomarker_reference"><site rgba="0.2 0.8 0.4 1"/></default>
+      <default class="myomarker_fitted"><site rgba="1 0.7 0.1 1"/></default>
+      <default class="myomarker_nominal"><site rgba="0.9 0.3 0.3 1"/></default>
+    </default>
+  </default>
+  <worldbody>
+    <body name="torso">
+      <site name="Chest" class="myomarker_nominal" pos="0.084 0.331 0"/>  <!-- technical; centre of the sternum, about 5 cm below the neck -->
+      <site name="BackRight" class="myomarker_nominal" pos="-0.018 0.174 0.07"/>  <!-- technical; right back, below the shoulder blade -->
+      <site name="BackLeft" class="myomarker_nominal" pos="-0.018 0.174 -0.07"/>  <!-- technical; left back, below the shoulder blade -->
+    </body>
+    <body name="head">
+      <site name="HeadTop" class="myomarker_nominal" pos="0 0.175 0"/>  <!-- technical; top of the head -->
+      <site name="HeadFront" class="myomarker_nominal" pos="0.0966 0.1009 0"/>  <!-- technical; centre of the forehead -->
+      <site name="HeadSide" class="myomarker_nominal" pos="0 0.1009 0.0724"/>  <!-- technical; side of the head above the ear, right -->
+    </body>
+    <body name="chest_r">
+      <site name="BackTop" class="myomarker_nominal" pos="-0.0561 0.0253 -0.0015"/>  <!-- technical; spine just below the neck -->
+    </body>
+    <body name="scapula_r">
+      <site name="RShoulderBack" class="myomarker_nominal" pos="-0.0486 -0.0215 0.0137"/>  <!-- technical; back of the glenohumeral joint, right -->
+      <site name="RShoulderTop" class="myomarker_anatomical" pos="0.0014 -0.0015 0.0137"/>  <!-- anatomical; acromion, right; on site Shoulder_marker_r -->
+    </body>
+    <body name="humerus_r">
+      <site name="RElbowOut" class="myomarker_anatomical" pos="0.0051 -0.2806 0.0288"/>  <!-- anatomical; lateral elbow, right; on site Elbow_Lateral_marker_r -->
+      <site name="RUArmHigh" class="myomarker_nominal" pos="-0.0241 -0.151 -0.0055"/>  <!-- technical; back of the upper arm near the triceps groove, right -->
+    </body>
+    <body name="ulna_r">
+      <site name="RWristIn" class="myomarker_nominal" pos="-0.0167 -0.2416 0.0478"/>  <!-- technical; medial wrist, ulnar side, right -->
+    </body>
+    <body name="radius_r">
+      <site name="RWristOut" class="myomarker_nominal" pos="0.0575 -0.2272 0.0274"/>  <!-- technical; lateral wrist, radial side, right -->
+    </body>
+    <body name="fifthmc_r">
+      <site name="RHandOut" class="myomarker_nominal" pos="0.0079 -0.023 -0.0116"/>  <!-- technical; below the little-finger knuckle, right -->
+    </body>
+    <body name="scapula_l">
+      <site name="LShoulderBack" class="myomarker_nominal" pos="-0.0486 -0.0215 -0.0137"/>  <!-- technical; back of the glenohumeral joint, left -->
+      <site name="LShoulderTop" class="myomarker_anatomical" pos="0.0014 -0.0015 -0.0137"/>  <!-- anatomical; acromion, left; on site Shoulder_marker_l -->
+    </body>
+    <body name="humerus_l">
+      <site name="LElbowOut" class="myomarker_anatomical" pos="0.0051 -0.2806 -0.0288"/>  <!-- anatomical; lateral elbow, left; on site Elbow_Lateral_marker_l -->
+      <site name="LUArmHigh" class="myomarker_nominal" pos="-0.0241 -0.151 0.0055"/>  <!-- technical; back of the upper arm near the triceps groove, left -->
+    </body>
+    <body name="ulna_l">
+      <site name="LWristIn" class="myomarker_nominal" pos="-0.0167 -0.2416 -0.0478"/>  <!-- technical; medial wrist, ulnar side, left -->
+    </body>
+    <body name="radius_l">
+      <site name="LWristOut" class="myomarker_nominal" pos="0.0575 -0.2272 -0.0274"/>  <!-- technical; lateral wrist, radial side, left -->
+    </body>
+    <body name="fifthmc_l">
+      <site name="LHandOut" class="myomarker_nominal" pos="0.0079 -0.023 0.0116"/>  <!-- technical; below the little-finger knuckle, left -->
+    </body>
+    <body name="pelvis">
+      <site name="WaistRFront" class="myomarker_anatomical" pos="0.0095 0.0181 0.1285"/>  <!-- anatomical; anterior superior iliac spine, right; on site ASI_r -->
+      <site name="WaistLFront" class="myomarker_anatomical" pos="0.0095 0.0181 -0.1285"/>  <!-- anatomical; anterior superior iliac spine, left; on site ASI_l -->
+      <site name="WaistRBack" class="myomarker_nominal" pos="-0.155 0.035 0.045"/>  <!-- technical; back of the pelvis about 10 cm above the hip joint, right -->
+      <site name="WaistLBack" class="myomarker_nominal" pos="-0.155 0.035 -0.045"/>  <!-- technical; back of the pelvis about 10 cm above the hip joint, left -->
+    </body>
+    <body name="femur_r">
+      <site name="RThighFront" class="myomarker_nominal" pos="0.07 -0.202 0.025"/>  <!-- technical; front of the thigh, right -->
+      <site name="RKneeOut" class="myomarker_anatomical" pos="0 -0.404 0.05"/>  <!-- anatomical; lateral knee, right; on site LFC_r -->
+    </body>
+    <body name="tibia_r">
+      <site name="RShin" class="myomarker_nominal" pos="0.0384 -0.1956 0.0222"/>  <!-- technical; front of the shank, right -->
+      <site name="RAnkleOut" class="myomarker_anatomical" pos="-0.005 -0.3888 0.053"/>  <!-- anatomical; lateral malleolus, right; on site LMAL_r -->
+    </body>
+    <body name="calcn_r">
+      <site name="RToeOut" class="myomarker_anatomical" pos="0.145 0.0249 0.059"/>  <!-- anatomical; fifth metatarsal head, right; on site MT5_r -->
+      <site name="RToeIn" class="myomarker_nominal" pos="0.145 0.0249 -0.021"/>  <!-- technical; first metatarsal head, right -->
+    </body>
+    <body name="femur_l">
+      <site name="LThighFront" class="myomarker_nominal" pos="0.07 -0.202 -0.025"/>  <!-- technical; front of the thigh, left -->
+      <site name="LKneeOut" class="myomarker_anatomical" pos="0 -0.404 -0.05"/>  <!-- anatomical; lateral knee, left; on site LFC_l -->
+    </body>
+    <body name="tibia_l">
+      <site name="LShin" class="myomarker_nominal" pos="0.0384 -0.1956 -0.0222"/>  <!-- technical; front of the shank, left -->
+      <site name="LAnkleOut" class="myomarker_anatomical" pos="-0.005 -0.3888 -0.053"/>  <!-- anatomical; lateral malleolus, left; on site LMAL_l -->
+    </body>
+    <body name="calcn_l">
+      <site name="LToeOut" class="myomarker_anatomical" pos="0.145 0.0249 -0.059"/>  <!-- anatomical; fifth metatarsal head, left; on site MT5_l -->
+      <site name="LToeIn" class="myomarker_nominal" pos="0.145 0.0249 0.021"/>  <!-- technical; first metatarsal head, left -->
+    </body>
+  </worldbody>
+</mujoco>

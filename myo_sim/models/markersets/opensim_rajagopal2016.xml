@@ -1,0 +1,114 @@
+<mujoco model="markerset_opensim_rajagopal2016">
+  <!-- Scaling marker set of the OpenSim Rajagopal 2016 full-body model (walking pipeline), copied in the model's body frames, which equal myo_sim's for the pelvis, legs, torso and arm bones. Includes the virtual joint-centre and ground-projection markers.
+       Sources:
+         OpenSim models, Rajagopal pipeline: https://github.com/opensim-org/opensim-models/blob/master/Pipelines/Rajagopal/Scale/markerset_walk_preScale.xml
+         Rajagopal A et al. (2016) Full-body musculoskeletal model for muscle-driven simulation of human gait. IEEE Trans Biomed Eng 63:2068-2079
+       Optional overlay: myo_sim.markersets.add_markerset(spec, "opensim_rajagopal2016") adds these sites to the bodies of the same
+       name. Positions are in body frames (x anterior, y up, z right). The class gives the confidence of the position:
+       anatomical (on a model landmark site), reference (from a published model with the same body frames),
+       fitted (fitted to recorded data), nominal (from the written placement description). -->
+  <default>
+    <default class="myomarker">
+      <site type="sphere" size="0.008" group="4"/>
+      <default class="myomarker_anatomical"><site rgba="0.2 0.6 1 1"/></default>
+      <default class="myomarker_reference"><site rgba="0.2 0.8 0.4 1"/></default>
+      <default class="myomarker_fitted"><site rgba="1 0.7 0.1 1"/></default>
+      <default class="myomarker_nominal"><site rgba="0.9 0.3 0.3 1"/></default>
+    </default>
+  </default>
+  <worldbody>
+    <body name="torso">
+      <site name="Head" class="myomarker_reference" pos="0 0.67 0"/>  <!-- technical; top of the head -->
+      <site name="R.Shoulder" class="myomarker_reference" pos="0 0.418 0.142"/>  <!-- anatomical; acromion, right -->
+      <site name="L.Shoulder" class="myomarker_reference" pos="0 0.418 -0.142"/>  <!-- anatomical; acromion, left -->
+      <site name="R.Clavicle" class="myomarker_reference" pos="0.046 0.385 0.025"/>  <!-- technical; clavicle near the jugular notch, right -->
+      <site name="L.Clavicle" class="myomarker_reference" pos="0.046 0.385 -0.025"/>  <!-- technical; clavicle near the jugular notch, left -->
+      <site name="MidClavicle" class="myomarker_reference" pos="0.046 0.385 0"/>  <!-- virtual; model-derived point MidClavicle -->
+    </body>
+    <body name="humerus_r">
+      <site name="R.Biceps" class="myomarker_reference" pos="0.04 -0.15 0"/>  <!-- technical; upper arm over the biceps, right -->
+      <site name="R.Elbow" class="myomarker_reference" pos="0.01 -0.281 0.035"/>  <!-- anatomical; lateral humeral epicondyle, right -->
+      <site name="R.MElbow" class="myomarker_reference" pos="0 -0.281 -0.042"/>  <!-- anatomical; medial humeral epicondyle, right -->
+    </body>
+    <body name="ulna_r">
+      <site name="R.Forearm" class="myomarker_reference" pos="0 -0.15 0"/>  <!-- technical; forearm, right -->
+    </body>
+    <body name="radius_r">
+      <site name="R.Wrist" class="myomarker_reference" pos="-0.03 -0.24 0.006"/>  <!-- anatomical; radial styloid, right -->
+    </body>
+    <body name="humerus_l">
+      <site name="L.Biceps" class="myomarker_reference" pos="0.04 -0.15 0"/>  <!-- technical; upper arm over the biceps, left -->
+      <site name="L.Elbow" class="myomarker_reference" pos="0.01 -0.281 -0.035"/>  <!-- anatomical; lateral humeral epicondyle, left -->
+      <site name="L.MElbow" class="myomarker_reference" pos="0 -0.281 0.042"/>  <!-- anatomical; medial humeral epicondyle, left -->
+    </body>
+    <body name="ulna_l">
+      <site name="L.Forearm" class="myomarker_reference" pos="0 -0.15 0"/>  <!-- technical; forearm, left -->
+    </body>
+    <body name="radius_l">
+      <site name="L.Wrist" class="myomarker_reference" pos="-0.03 -0.24 -0.006"/>  <!-- anatomical; radial styloid, left -->
+    </body>
+    <body name="pelvis">
+      <site name="R.ASIS" class="myomarker_reference" pos="0.013 0.03 0.128"/>  <!-- anatomical; anterior superior iliac spine, right -->
+      <site name="L.ASIS" class="myomarker_reference" pos="0.013 0.03 -0.128"/>  <!-- anatomical; anterior superior iliac spine, left -->
+      <site name="S2" class="myomarker_reference" pos="-0.18 0.025 0"/>  <!-- anatomical; second sacral vertebra -->
+      <site name="R.PSIS" class="myomarker_reference" pos="-0.154 0.038 0.055"/>  <!-- anatomical; posterior superior iliac spine, right -->
+      <site name="L.PSIS" class="myomarker_reference" pos="-0.154 0.038 -0.055"/>  <!-- anatomical; posterior superior iliac spine, left -->
+      <site name="MidPSIS" class="myomarker_reference" pos="-0.154 0.038 0"/>  <!-- virtual; model-derived point MidPSIS -->
+      <site name="MidASIS" class="myomarker_reference" pos="0.013 0.03 0"/>  <!-- virtual; model-derived point MidASIS -->
+    </body>
+    <body name="femur_r">
+      <site name="R_HJC" class="myomarker_reference" pos="0 0 0"/>  <!-- virtual; model-derived point R_HJC, right -->
+      <site name="R.TH1" class="myomarker_reference" pos="0.012 -0.2 0.11"/>  <!-- cluster; thigh technical marker TH1, right -->
+      <site name="R.TH2" class="myomarker_reference" pos="0.012 -0.18 0.11"/>  <!-- cluster; thigh technical marker TH2, right -->
+      <site name="R.TH3" class="myomarker_reference" pos="0.012 -0.16 0.11"/>  <!-- cluster; thigh technical marker TH3, right -->
+      <site name="R.Knee" class="myomarker_reference" pos="0 -0.404 0.047"/>  <!-- anatomical; lateral femoral epicondyle, right -->
+      <site name="R.MKnee" class="myomarker_reference" pos="0.005 -0.401 -0.05"/>  <!-- anatomical; medial femoral epicondyle, right -->
+      <site name="R.KneeJoint" class="myomarker_reference" pos="0.0025 -0.4025 -0.0015"/>  <!-- virtual; model-derived point R.KneeJoint, right -->
+    </body>
+    <body name="tibia_r">
+      <site name="R.SH1" class="myomarker_reference" pos="0.012 -0.25 0.08"/>  <!-- cluster; shank technical marker SH1, right -->
+      <site name="R.SH2" class="myomarker_reference" pos="0.012 -0.23 0.08"/>  <!-- cluster; shank technical marker SH2, right -->
+      <site name="R.SH3" class="myomarker_reference" pos="0.012 -0.21 0.08"/>  <!-- cluster; shank technical marker SH3, right -->
+      <site name="R.SH4" class="myomarker_reference" pos="0.012 -0.19 0.08"/>  <!-- cluster; shank technical marker SH4, right -->
+      <site name="R.Ankle" class="myomarker_reference" pos="-0.005 -0.3788 0.053"/>  <!-- anatomical; lateral malleolus, right -->
+      <site name="R.MAnkle" class="myomarker_reference" pos="0.006 -0.3788 -0.038"/>  <!-- anatomical; medial malleolus, right -->
+      <site name="R.AnkleJoint" class="myomarker_reference" pos="0.0005 -0.3788 0.0075"/>  <!-- virtual; model-derived point R.AnkleJoint, right -->
+      <site name="R.AnkleJointGround" class="myomarker_reference" pos="0.0005 -0.447 0.0075"/>  <!-- virtual; model-derived point R.AnkleJointGround, right -->
+    </body>
+    <body name="calcn_r">
+      <site name="R.Toe" class="myomarker_reference" pos="0.23 0.037 -0.016"/>  <!-- technical; toe (second metatarsal head region), right -->
+      <site name="R.MT5" class="myomarker_reference" pos="0.16 0.02 0.05"/>  <!-- anatomical; fifth metatarsal head, right -->
+      <site name="R.Heel" class="myomarker_reference" pos="-0.02 0.02 -0.01"/>  <!-- anatomical; calcaneus, right -->
+      <site name="R.HeelGround" class="myomarker_reference" pos="-0.02 -0.005 -0.01"/>  <!-- virtual; model-derived point R.HeelGround, right -->
+      <site name="R.MT5Ground" class="myomarker_reference" pos="0.16 -0.005 0.05"/>  <!-- virtual; model-derived point R.MT5Ground, right -->
+      <site name="R.ToeGround" class="myomarker_reference" pos="0.23 -0.005 -0.016"/>  <!-- virtual; model-derived point R.ToeGround, right -->
+    </body>
+    <body name="femur_l">
+      <site name="L_HJC" class="myomarker_reference" pos="0 0 0"/>  <!-- virtual; model-derived point L_HJC, left -->
+      <site name="L.TH1" class="myomarker_reference" pos="0.012 -0.2 -0.11"/>  <!-- cluster; thigh technical marker TH1, left -->
+      <site name="L.TH2" class="myomarker_reference" pos="0.012 -0.18 -0.11"/>  <!-- cluster; thigh technical marker TH2, left -->
+      <site name="L.TH3" class="myomarker_reference" pos="0.012 -0.16 -0.11"/>  <!-- cluster; thigh technical marker TH3, left -->
+      <site name="L.TH4" class="myomarker_reference" pos="0.012 -0.14 -0.11"/>  <!-- cluster; thigh technical marker TH4, left -->
+      <site name="L.Knee" class="myomarker_reference" pos="0 -0.404 -0.047"/>  <!-- anatomical; lateral femoral epicondyle, left -->
+      <site name="L.MKnee" class="myomarker_reference" pos="0.005 -0.401 0.05"/>  <!-- anatomical; medial femoral epicondyle, left -->
+      <site name="L.KneeJoint" class="myomarker_reference" pos="0.0025 -0.4025 0.0015"/>  <!-- virtual; model-derived point L.KneeJoint, left -->
+    </body>
+    <body name="tibia_l">
+      <site name="L.SH1" class="myomarker_reference" pos="0.012 -0.25 -0.08"/>  <!-- cluster; shank technical marker SH1, left -->
+      <site name="L.SH2" class="myomarker_reference" pos="0.012 -0.23 -0.08"/>  <!-- cluster; shank technical marker SH2, left -->
+      <site name="L.SH3" class="myomarker_reference" pos="0.012 -0.21 -0.08"/>  <!-- cluster; shank technical marker SH3, left -->
+      <site name="L.Ankle" class="myomarker_reference" pos="-0.005 -0.3788 -0.053"/>  <!-- anatomical; lateral malleolus, left -->
+      <site name="L.MAnkle" class="myomarker_reference" pos="0.006 -0.3788 0.038"/>  <!-- anatomical; medial malleolus, left -->
+      <site name="L.AnkleJoint" class="myomarker_reference" pos="0.0005 -0.3788 -0.0075"/>  <!-- virtual; model-derived point L.AnkleJoint, left -->
+      <site name="L.AnkleJointGround" class="myomarker_reference" pos="0.0005 -0.447 -0.0075"/>  <!-- virtual; model-derived point L.AnkleJointGround, left -->
+    </body>
+    <body name="calcn_l">
+      <site name="L.Toe" class="myomarker_reference" pos="0.23 0.037 0.016"/>  <!-- technical; toe (second metatarsal head region), left -->
+      <site name="L.Heel" class="myomarker_reference" pos="-0.02 0.02 0.01"/>  <!-- anatomical; calcaneus, left -->
+      <site name="L.MT5" class="myomarker_reference" pos="0.16 0.02 -0.05"/>  <!-- anatomical; fifth metatarsal head, left -->
+      <site name="L.HeelGround" class="myomarker_reference" pos="-0.02 -0.005 0.01"/>  <!-- virtual; model-derived point L.HeelGround, left -->
+      <site name="L.MT5Ground" class="myomarker_reference" pos="0.16 -0.005 -0.05"/>  <!-- virtual; model-derived point L.MT5Ground, left -->
+      <site name="L.ToeGround" class="myomarker_reference" pos="0.23 -0.005 0.016"/>  <!-- virtual; model-derived point L.ToeGround, left -->
+    </body>
+  </worldbody>
+</mujoco>
