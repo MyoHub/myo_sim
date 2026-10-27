@@ -664,8 +664,6 @@ def build_spec(
     model_name: str,
     collision_mode: CollisionMode = "full",
     inertia_floor: float | None = None,
-    passive_muscles: bool = False,
-    subject_scale: dict[str, float] | None = None,
 ) -> mujoco.MjSpec:
     """Build and return the composed, uncompiled MjSpec for a registered model.
 
@@ -691,11 +689,6 @@ def build_spec(
             numerical conditioning of the mass matrix; pass
             ``inertia_floor=0.0001`` to restore that convention. See
             https://github.com/MyoHub/myo_sim/issues/128.
-        passive_muscles: Set the tendon slack lengths of the index extrinsic
-            muscles fitted to measured passive moments, restoring their passive
-            tension and tenodesis (myo_sim.build.muscle_passive). Off by default.
-        subject_scale: Subject factors for the opt-in steps, keyed by data row
-            (``{"FDS2.slack": f, ...}``); empty by default.
 
     Returns:
         The composed MjSpec, ready for further edits or spec.compile().
@@ -712,10 +705,6 @@ def build_spec(
         raise ValueError(f"Unknown collision_mode: {collision_mode!r}. Expected 'full' or 'coarse'.")
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
-    if passive_muscles:
-        from myo_sim.build.muscle_passive import add_muscle_passive_tension
-
-        add_muscle_passive_tension(spec, scale=subject_scale)
     return spec
 
 

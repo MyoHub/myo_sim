@@ -6,24 +6,33 @@ Knutson's MCP passive moment over wrist and MCP angles. MyoHand muscles have
 rigid tendons: the normalised fibre length is ``range[0] + (L - lr[0]) / L0``
 with ``L0 = (lr[1] - lr[0]) / (range[1] - range[0])``, so a slack-length change
 is a shift of ``actuator_lengthrange`` at constant ``L0``. This script fits one
-shift per muscle with MuJoCo's own passive force-length curve, MyoHand's
-muscle-tendon lengths and moment arms, and Binder-Markey's penalty on relative
-change, then writes the absolute slack lengths (and the reference values they
-change) to ``build/data/muscle_passive.json``.
+shift per muscle, starting from each row's ``reference_value_m``, with MuJoCo's own
+passive force-length curve, MyoHand's muscle-tendon lengths and moment arms, and
+Binder-Markey's penalty on relative change. It writes the absolute slack lengths
+(and the reference values they change) to ``build/data/muscle_passive.json`` and
+the shifted ``lengthrange`` of each muscle to ``myoarm_r_muscle.xml``, the model's
+source of truth (the left arm is mirrored from it).
 
-Run: ``python scripts/fit_muscle_passive.py``.
+Run: ``uv run python scripts/fit_muscle_passive.py`` (refits, rewrites the JSON and
+the four ``lengthrange`` attributes); ``--xml-only`` only writes the JSON slack
+lengths into the XML.
 """
 
 from __future__ import annotations
 
+import argparse
 import json
+import re
+from pathlib import Path
+from typing import Any
 
 import mujoco
 import numpy as np
-from scipy.optimize import minimize
 
 import myo_sim
-from myo_sim.build.muscle_passive import DATA_PATH
+
+DATA_PATH = Path(__file__).parents[1] / "myo_sim" / "build" / "data" / "muscle_passive.json"
+MUSCLE_XML = myo_sim.MODELS_DIR / "arm" / "assets" / "myoarm_r_muscle.xml"
 
 KNUTSON_EXTRINSIC = {"A3": 1.2, "k3": 4.2e-2, "B3": -0.8, "phi3": 10.9, "A4": 0.8, "k4": 5.4e-2, "B4": -0.3, "phi4": 40.9}
 MUSCLES = ("FDS2", "FDP2", "EDC2", "EIP")
@@ -92,8 +101,48 @@ def implied_slack(model: mujoco.MjModel, name: str) -> float:
     return float(lr[0] - g[0] * (lr[1] - lr[0]) / (g[1] - g[0]))
 
 
+def load_table() -> dict[str, Any]:
+    """The passive-tension table (``build/data/muscle_passive.json``)."""
+    return json.loads(DATA_PATH.read_text())
+
+
+def fitted_lengthranges(model: mujoco.MjModel, table: dict[str, Any]) -> dict[str, list[float]]:
+    """``lengthrange`` of each tabled muscle shifted so its implied slack length is the tabled one."""
+    ranges = {}
+    for row in table["muscles"]:
+        name = row["names"]["r"]
+        shift = row["tendon_slack_m"]["value"] - implied_slack(model, name)
+        lr = model.actuator_lengthrange[model.actuator(name).id]
+        ranges[name] = [float(v) for v in lr] if abs(shift) < 1e-12 else [float(v + shift) for v in lr]
+    return ranges
+
+
+def write_lengthranges(ranges: dict[str, list[float]], path: Path = MUSCLE_XML) -> None:
+    """Replace the ``lengthrange`` attribute of each named muscle in *path*, leaving the rest of the file as is."""
+    text = path.read_text()
+    for name, (lo, hi) in ranges.items():
+        pattern = re.compile(rf'(<muscle name="{re.escape(name)}"[^>]*?lengthrange=")[^"]*(")')
+        text, count = pattern.subn(rf"\g<1>{lo!r} {hi!r}\g<2>", text)
+        if count != 1:
+            raise ValueError(f"{path.name}: expected one lengthrange for {name}, found {count}")
+    path.write_text(text)
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--xml-only", action="store_true", help="only write the JSON slack lengths into the XML")
+    args = parser.parse_args()
     model = myo_sim.load_spec("myoarm_r").compile()
+    table = load_table()
+    if args.xml_only:
+        write_lengthranges(fitted_lengthranges(model, table))
+        return
+    from scipy.optimize import minimize
+
+    # Fit from the reference slack lengths, whatever the XML currently holds.
+    reference = {r["names"]["r"]: r["tendon_slack_m"]["reference_value_m"] for r in table["muscles"]}
+    for name in MUSCLES:
+        model.actuator_lengthrange[model.actuator(name).id] += reference[name] - implied_slack(model, name)
     lengths, arms = geometry(model)
     target = knutson_extrinsic(MCP_DEG[None, :], WRIST_DEG[:, None])
     slack = np.array([implied_slack(model, n) for n in MUSCLES])
@@ -110,7 +159,6 @@ def main() -> None:
     shift = best.x
     before = target - model_torque(model, lengths, arms, np.zeros(4))
     after = target - model_torque(model, lengths, arms, shift)
-    table = json.loads(DATA_PATH.read_text())
     for k, name in enumerate(MUSCLES):
         row = next(r for r in table["muscles"] if r["names"]["r"] == name)
         row.pop("lengthrange_shift_m", None)
@@ -129,7 +177,11 @@ def main() -> None:
         "target_peak_Ncm": float(np.max(np.abs(target))),
     }
     DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
+    ranges = fitted_lengthranges(model, table)
+    write_lengthranges(ranges)
     print(json.dumps(table["fit"], indent=1), {n: round(1000 * s, 2) for n, s in zip(MUSCLES, shift)}, "mm")
+    for name, (lo, hi) in ranges.items():
+        print(f"{name}: lengthrange {lo!r} {hi!r}")
 
 
 if __name__ == "__main__":

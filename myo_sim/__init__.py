@@ -139,8 +139,6 @@ def load_spec(
     name: str,
     collision_mode: "CollisionMode" = "full",
     inertia_floor: float | None = None,
-    passive_muscles: bool = False,
-    subject_scale: dict[str, float] | None = None,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
@@ -170,12 +168,6 @@ def load_spec(
             https://github.com/MyoHub/myo_sim/issues/128. Only supported for
             MjSpec-composed models; ignored for packaged static-XML
             fragments.
-        passive_muscles: Set the tendon slack lengths of the index extrinsic
-            muscles fitted to measured passive moments (tenodesis; see
-            myo_sim.build.muscle_passive). Off by default. Only supported for
-            MjSpec-composed models.
-        subject_scale: Subject factors for the opt-in steps, keyed by data row
-            (see myo_sim.build.compose.build_spec). Empty by default.
     """
     import mujoco
 
@@ -189,8 +181,6 @@ def load_spec(
             composed_name,
             collision_mode=collision_mode,
             inertia_floor=inertia_floor,
-            passive_muscles=passive_muscles,
-            subject_scale=subject_scale,
         )
         return spec
 
@@ -198,8 +188,6 @@ def load_spec(
         available = sorted(composed_models | frozenset(REGISTRY))
         raise ValueError(f"Unknown model {name!r}. Available: {available}")
 
-    if passive_muscles:
-        raise ValueError(f"passive_muscles needs a composed model, not {name!r}")
     spec = mujoco.MjSpec.from_file(str(get_xml_path(name)))
     return spec
 

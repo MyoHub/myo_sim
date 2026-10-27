@@ -36,17 +36,18 @@
         <muscle name="FDS5" force = "75.3000" lmin="0.267000" lmax="1.708000" range="0.316816 1.658097" class="myoarm_forearm_muscle" tendon="FDS5_tendon" lengthrange="0.354916 0.423992"/>
         <muscle name="FDS4" force = "171.2000" lmin="0.950000" lmax="2.118000" range="1.278370 2.068179" class="myoarm_forearm_muscle" tendon="FDS4_tendon" lengthrange="0.422088 0.480218"/>
         <muscle name="FDS3" force = "258.8000" lmin="0.397000" lmax="1.326000" range="0.447116 1.276222" class="myoarm_forearm_muscle" tendon="FDS3_tendon" lengthrange="0.328489 0.390589"/>
-        <muscle name="FDS2" force = "162.5000" range="0.660467 1.405162" class="myoarm_forearm_muscle" tendon="FDS2_tendon" lengthrange="0.330149 0.392331"/>
+        <!-- FDS2, FDP2, EDC2, EIP lengthrange: tendon slack lengths fitted to the extrinsic index MCP passive moment of Knutson et al. 2000 (method of Binder-Markey and Murray 2017); written by scripts/fit_muscle_passive.py from build/data/muscle_passive.json -->
+        <muscle name="FDS2" force = "162.5000" range="0.660467 1.405162" class="myoarm_forearm_muscle" tendon="FDS2_tendon" lengthrange="0.35659496567588067 0.41877696567588063"/>
         <muscle name="FDP5" force = "236.8000" lmin="0.950000" lmax="2.304000" range="1.406195 2.254272" class="myoarm_forearm_muscle" tendon="FDP5_tendon" lengthrange="0.387224 0.450745"/>
         <muscle name="FDP4" force = "172.9000" range="0.710075 1.584912" class="myoarm_forearm_muscle" tendon="FDP4_tendon" lengthrange="0.348164 0.417976"/>
         <muscle name="FDP3" force = "212.4000" lmin="0.346000" lmax="1.196000" range="0.396144 1.145772" class="myoarm_forearm_muscle" tendon="FDP3_tendon" lengthrange="0.336078 0.398672"/>
-        <muscle name="FDP2" force = "197.3000" lmin="0.423000" lmax="1.400000" range="0.473338 1.349933" class="myoarm_forearm_muscle" tendon="FDP2_tendon" lengthrange="0.336953 0.40261"/>
+        <muscle name="FDP2" force = "197.3000" lmin="0.423000" lmax="1.400000" range="0.473338 1.349933" class="myoarm_forearm_muscle" tendon="FDP2_tendon" lengthrange="0.35230903482908305 0.41796603482908307"/>
         <muscle name="EDC5" force = "39.4000" range="0.718600 1.409108" class="myoarm_forearm_muscle" tendon="EDC5_tendon" lengthrange="0.381709 0.426592"/>
         <muscle name="EDC4" force = "109.2000" lmin="0.377000" lmax="1.506000" range="0.426613 1.456134" class="myoarm_forearm_muscle" tendon="EDC4_tendon" lengthrange="0.391706 0.456154"/>
         <muscle name="EDC3" force = "94.4000" lmin="0.430000" lmax="1.317000" range="0.480539 1.267058" class="myoarm_forearm_muscle" tendon="EDC3_tendon" lengthrange="0.399791 0.456735"/>
-        <muscle name="EDC2" force = "48.8000" lmin="0.392000" lmax="1.343000" range="0.441629 1.292500" class="myoarm_forearm_muscle" tendon="EDC2_tendon" lengthrange="0.395914 0.455475"/>
+        <muscle name="EDC2" force = "48.8000" lmin="0.392000" lmax="1.343000" range="0.441629 1.292500" class="myoarm_forearm_muscle" tendon="EDC2_tendon" lengthrange="0.3945950455709502 0.45415604557095024"/>
         <muscle name="EDM"  force = "72.4000" range="0.623259 1.222948" class="myoarm_forearm_muscle" tendon="EDM_tendon" lengthrange="0.37707 0.417549"/>
-        <muscle name="EIP"  force = "47.3000" range="0.607963 1.375993" class="myoarm_forearm_muscle" tendon="EIP_tendon" lengthrange="0.245809 0.291046"/>
+        <muscle name="EIP"  force = "47.3000" range="0.607963 1.375993" class="myoarm_forearm_muscle" tendon="EIP_tendon" lengthrange="0.24121304682238978 0.28645004682238984"/>
         <muscle name="EPL"  force = "88.3000" lmin="0.369000" lmax="1.846000" range="0.419389 1.795889" class="myoarm_forearm_muscle" tendon="EPL_tendon" lengthrange="0.253147 0.327478"/>
         <muscle name="EPB"  force = "46.0000" lmin="0.406000" lmax="1.291000" range="0.456178 1.241126" class="myoarm_forearm_muscle" tendon="EPB_tendon" lengthrange="0.146292 0.199276"/>
         <muscle name="FPL"  force = "201.0000" lmin="0.419000" lmax="1.548000" range="0.468659 1.497645" class="myoarm_forearm_muscle" tendon="FPL_tendon" lengthrange="0.22287 0.27967"/>

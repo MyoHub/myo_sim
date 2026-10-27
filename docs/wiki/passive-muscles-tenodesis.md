@@ -1,10 +1,12 @@
-# Passive muscle tension and tenodesis (opt-in)
+# Passive muscle tension and tenodesis
 
-`load_spec(name, passive_muscles=True)` sets the tendon slack lengths of the index
-finger's extrinsic muscles (FDS2, FDP2, EDC2, EI) to values fitted to measured passive
-moments, so the finger flexes when the wrist extends and opens when it flexes
-(tenodesis). Off by default (the model is unchanged). Works on every composed model with
-an index finger (`myofullbody`, `myotorso_arms`, `myohands`, `myoarm_r`), both arms.
+The tendon slack lengths of the index finger's extrinsic muscles (FDS2, FDP2, EDC2, EI)
+are fitted to measured passive moments, so the finger flexes when the wrist extends and
+opens when it flexes (tenodesis). The fitted values are the `lengthrange` of these four
+muscles in `myoarm_r_muscle.xml`, so every composed model with an index finger
+(`myofullbody`, `myotorso_arms`, `myoarms`, `myohands`, `myoarm_r`, ...) has them on both
+arms (the left arm is mirrored). The previous slack lengths (`reference_value_m` in the
+table) are those of the previous release.
 
 ## Method
 
@@ -37,17 +39,21 @@ flexor changes are larger because MyoHand's tendons are rigid.
 
 Tenodesis on `myofullbody` (no gravity, no excitation, wrist held): with the wrist
 extended 60 deg the index MCP / PIP / DIP settle at about 17 / 16 / 10 deg flexion; at
-neutral and with the wrist flexed they extend to their limits. Without the step, the same
-test runs the MCP into its 90 deg flexion limit with the wrist extended. Combine with
-`passive_moments=True` (joint springs) for intermediate rest postures.
+neutral and with the wrist flexed they extend to their limits. With the reference slack
+lengths, the same test runs the MCP into its 90 deg flexion limit with the wrist
+extended. Passive joint springs (if present) give intermediate rest postures.
 
 Active force: the slack changes move the operating range on the force-length curve (FDS2
 and FDP2 operate at shorter normalised fibre lengths, by 0.32 and 0.20 L0 at a fixed
 posture).
 
-## Data and subject scaling
+## Data
 
-`build/data/muscle_passive.json` stores absolute slack lengths (m) with the value they
-change (`reference_value_m`) and the percent change, tagged `scales_with: length`
-(reference segment: forearm). `subject_scale={"FDS2.slack": f}` multiplies a row.
-Index finger only: no extrinsic passive data exist for the other digits.
+`build/data/muscle_passive.json` is the provenance and fitting input: absolute slack
+lengths (m) with the value they change (`reference_value_m`) and the percent change,
+tagged `scales_with: length` (reference segment: forearm) for personalisation pipelines.
+`scripts/fit_muscle_passive.py` refits from the reference values, rewrites the table and
+writes the four `lengthrange` attributes into `myoarm_r_muscle.xml`; `--xml-only` writes
+the tabled slack lengths without refitting. `tests/test_muscle_passive.py` checks that the
+XML holds the tabled values. Index finger only: no extrinsic passive data exist for the
+other digits.

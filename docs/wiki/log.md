@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-27 — Fitted index extrinsic slack lengths written into the arm muscle XML
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `scripts/fit_muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `myo_sim/build/compose.py`, `myo_sim/__init__.py`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`
+Why: Review: muscle parameters belong in the part's XML, not in a build step. The fitted `lengthrange` of FDS2/FDP2/EDC2/EIP is now in `myoarm_r_muscle.xml` (written by the fit script; the JSON stays as provenance), so tenodesis is in every model; the unreleased `passive_muscles` flag, `build/muscle_passive.py` and its `subject_scale` slack factor are removed.
+
 ## 2026-10-27 — Add opt-in passive muscle tension of the index extrinsic muscles (tenodesis)
 Changed: `myo_sim/build/muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `scripts/fit_muscle_passive.py`, `myo_sim/build/compose.py`, `myo_sim/__init__.py`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`
 Why: With the anatomical slack lengths and rigid tendons, FDS2/FDP2/EDC2/EI give up to 327 N cm of passive index MCP moment against at most 30 N cm measured (Knutson et al. 2000); `passive_muscles=True` sets slack lengths fitted per Binder-Markey & Murray 2017 (RMSE 98.4 -> 3.0 N cm) and gives tenodesis on both hands. Off by default, so models and checkpoints are unchanged. The other digits and the thumb show the same excess but have no extrinsic passive data.
