@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-27 — Fit the slack lengths of the other extrinsic finger, thumb and wrist muscles
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `scripts/fit_muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`
+Why: On the anatomical parameters FDP4, FPL, FDP5, FDS3/FDP3 and ECU gave passive moments up to 25 times the measured totals (wrist, MCP/PIP/DIP 3-5, thumb MP/IP), so their slack lengths are now fitted per Binder-Markey to those totals with a one-sided loss (changes 0-10 %).
+
 ## 2026-10-27 — Fitted index extrinsic slack lengths written into the arm muscle XML
 Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `scripts/fit_muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `myo_sim/build/compose.py`, `myo_sim/__init__.py`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`
 Why: Review: muscle parameters belong in the part's XML, not in a build step. The fitted `lengthrange` of FDS2/FDP2/EDC2/EIP is now in `myoarm_r_muscle.xml` (written by the fit script; the JSON stays as provenance), so tenodesis is in every model; the unreleased `passive_muscles` flag, `build/muscle_passive.py` and its `subject_scale` slack factor are removed.

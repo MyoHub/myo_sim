@@ -1,6 +1,6 @@
 {
-  "format": "myo_sim.muscle_passive/2",
-  "description": "Tendon slack lengths (absolute, m) of the index extrinsic muscles, fitted per Binder-Markey & Murray 2017 (Eqs. 2-3: least squares on the extrinsic MCP moment of Knutson et al. 2000 over wrist -60..60 deg, plus (1/100) x sum of relative slack changes) with MuJoCo's passive force-length curve, MyoHand's muscle-tendon lengths and moment arms (scripts/fit_muscle_passive.py). reference_value_m is the slack length the fit started from (myo_sim with fix/anatomical-muscle-parameters, i.e. the MoBL-ARMS / Saul et al. 2015 values, also Binder-Markey's initial values). MyoHand's MCP has no hyperextension, so the fit covers MCP 0..90 deg (Knutson and Binder-Markey: -45..90 deg). Index finger only: no extrinsic passive data exist for the other digits. The model itself is myoarm_r_muscle.xml: scripts/fit_muscle_passive.py writes the shifted lengthrange of each muscle there (left arm mirrored).",
+  "format": "myo_sim.muscle_passive/3",
+  "description": "Tendon slack lengths (absolute, m) of the extrinsic hand muscles, fitted per Binder-Markey & Murray 2017 (Eqs. 2-3: least squares on passive joint moments plus (1/100) x sum of relative slack changes) with MuJoCo's passive force-length curve, MyoHand's muscle-tendon lengths and moment arms (scripts/fit_muscle_passive.py). reference_value_m is the slack length the fit started from (myo_sim with fix/anatomical-muscle-parameters, i.e. the MoBL-ARMS / Saul et al. 2015 values, also Binder-Markey's initial values). Index (FDS2, FDP2, EDC2, EIP): Knutson et al. 2000's extrinsic MCP moment over MCP 0..90 deg (MyoHand's MCP has no hyperextension; Knutson and Binder-Markey: -45..90 deg) and wrist -60..60 deg, as Binder-Markey did. Other extrinsic finger, thumb and wrist muscles (joint_fit.muscles): no extrinsic-only data exist, so the target is the total passive moment of each joint_targets row and the loss is one-sided: a muscle moment beyond the total, or against its sign, costs joint_fit.excess_weight times a deficit, because joint springs can supply a deficit but only a cancelling element could remove an excess. Changes are bounded by joint_fit.max_change (Binder-Markey's changes were within about 10 %). Status 'transferred target' marks a muscle constrained by a curve measured on another digit. The model itself is myoarm_r_muscle.xml: scripts/fit_muscle_passive.py writes the shifted lengthrange of each muscle there (left arm mirrored).",
   "sources": {
     "binder_markey2017": {
       "citation": "Binder-Markey BI, Murray WM. Incorporating the length-dependent passive-force generating muscle properties of the extrinsic finger muscles into a wrist and finger biomechanical musculoskeletal model. J Biomech 61:250-257, 2017.",
@@ -10,7 +10,22 @@
     "knutson2000": {
       "citation": "Knutson JS, Kilgore KL, Mansour JM, Crago PE. Intrinsic and extrinsic contributions to the passive moment at the metacarpophalangeal joint. J Biomech 33(12):1675-1681, 2000.",
       "doi": "10.1016/S0021-9290(00)00159-7",
-      "access": "closed; Eqs. (3)-(4) and Table 1 extrinsic medians verified from the PDF"
+      "access": "closed; equations (1)-(4) and Table 1 verified from the PDF"
+    },
+    "formica2012": {
+      "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
+      "doi": "10.1152/jn.01014.2011",
+      "access": "open (PMC3424077); Table 2 and the posture (hand closed around the robot handle and bound shut, elbow flexed about 60 deg) verified from the paper"
+    },
+    "kamper2002": {
+      "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002.",
+      "doi": "10.1016/S0021-9290(02)00229-4",
+      "access": "closed; Table 2 (tau_s, K, B) and Eq. (1) verified from the PDF"
+    },
+    "barry2018": {
+      "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
+      "doi": "10.1016/j.jbiomech.2018.06.017",
+      "access": "paper verified from the PDF (Sec. 2.1: thumb MCP/IP passive set equal to index MCP/PIP; Domalain 2010 used for thumb CMC abduction); model file behind a simtk login"
     }
   },
   "muscles": [
@@ -89,6 +104,390 @@
         "scales_with": "length",
         "reference_segment": "forearm"
       }
+    },
+    {
+      "muscle": "FDS3",
+      "names": {
+        "r": "FDS3",
+        "l": "FDS3_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit3_mcp_flexion",
+        "digit3_pip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.305394,
+        "reference_value_m": 0.295,
+        "change_percent": 3.523,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "FDS4",
+      "names": {
+        "r": "FDS4",
+        "l": "FDS4_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit4_mcp_flexion",
+        "digit4_pip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.34623,
+        "reference_value_m": 0.328,
+        "change_percent": 5.558,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "FDS5",
+      "names": {
+        "r": "FDS5",
+        "l": "FDS5_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit5_mcp_flexion",
+        "digit5_pip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.360983,
+        "reference_value_m": 0.3386,
+        "change_percent": 6.61,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "FDP3",
+      "names": {
+        "r": "FDP3",
+        "l": "FDP3_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit3_mcp_flexion",
+        "digit3_pip_flexion",
+        "digit3_dip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.312551,
+        "reference_value_m": 0.303,
+        "change_percent": 3.152,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "FDP4",
+      "names": {
+        "r": "FDP4",
+        "l": "FDP4_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit4_mcp_flexion",
+        "digit4_pip_flexion",
+        "digit4_dip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.32065,
+        "reference_value_m": 0.2915,
+        "change_percent": 10.0,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": true
+    },
+    {
+      "muscle": "FDP5",
+      "names": {
+        "r": "FDP5",
+        "l": "FDP5_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit5_mcp_flexion",
+        "digit5_pip_flexion",
+        "digit5_dip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.303355,
+        "reference_value_m": 0.2819,
+        "change_percent": 7.611,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "EDC3",
+      "names": {
+        "r": "EDC3",
+        "l": "EDC3_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit3_mcp_flexion",
+        "digit3_pip_flexion",
+        "digit3_dip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.369395,
+        "reference_value_m": 0.365,
+        "change_percent": 1.204,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "EDC4",
+      "names": {
+        "r": "EDC4",
+        "l": "EDC4_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit4_mcp_flexion",
+        "digit4_pip_flexion",
+        "digit4_dip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.374677,
+        "reference_value_m": 0.365,
+        "change_percent": 2.651,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "EDC5",
+      "names": {
+        "r": "EDC5",
+        "l": "EDC5_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit5_mcp_flexion",
+        "digit5_pip_flexion",
+        "digit5_dip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.349251,
+        "reference_value_m": 0.335,
+        "change_percent": 4.254,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "EDM",
+      "names": {
+        "r": "EDM",
+        "l": "EDM_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "digit5_mcp_flexion",
+        "digit5_pip_flexion",
+        "digit5_dip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.33912,
+        "reference_value_m": 0.335,
+        "change_percent": 1.23,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "FPL",
+      "names": {
+        "r": "FPL",
+        "l": "FPL_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "thumb_mp_flexion",
+        "thumb_ip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.20992,
+        "reference_value_m": 0.197,
+        "change_percent": 6.558,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "EPL",
+      "names": {
+        "r": "EPL",
+        "l": "EPL_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "thumb_mp_flexion",
+        "thumb_ip_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.246143,
+        "reference_value_m": 0.2305,
+        "change_percent": 6.787,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "EPB",
+      "names": {
+        "r": "EPB",
+        "l": "EPB_l"
+      },
+      "status": "transferred target",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation",
+        "thumb_mp_flexion"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.117019,
+        "reference_value_m": 0.1155,
+        "change_percent": 1.315,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "APL",
+      "names": {
+        "r": "APL",
+        "l": "APL_l"
+      },
+      "status": "measured",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.145686,
+        "reference_value_m": 0.145686,
+        "change_percent": -0.0,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "ECRB",
+      "names": {
+        "r": "ECRB",
+        "l": "ECRB_l"
+      },
+      "status": "measured",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.227566,
+        "reference_value_m": 0.2223,
+        "change_percent": 2.369,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
+    },
+    {
+      "muscle": "ECU",
+      "names": {
+        "r": "ECU",
+        "l": "ECU_l"
+      },
+      "status": "measured",
+      "source": "joint_targets",
+      "targets": [
+        "wrist_flexion",
+        "wrist_deviation"
+      ],
+      "method": "binder_markey2017_one_sided",
+      "tendon_slack_m": {
+        "value": 0.23598,
+        "reference_value_m": 0.2285,
+        "change_percent": 3.274,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      },
+      "at_bound": false
     }
   ],
   "fit": {
@@ -104,9 +503,9 @@
         10.0
       ]
     },
-    "rmse_Ncm_before": 98.39725098435576,
-    "rmse_Ncm_after": 2.999144641716304,
-    "max_abs_err_Ncm_after": 9.460614493044734,
+    "rmse_Ncm_before": 98.39708346194024,
+    "rmse_Ncm_after": 2.9991446417163075,
+    "max_abs_err_Ncm_after": 9.460614469550947,
     "target_peak_Ncm": 30.36601987360585
   },
   "binder_markey2017_table2": {
@@ -123,5 +522,498 @@
       "EIP": 0.1911
     },
     "note": "OpenSim compliant tendons; for comparison only (MyoHand tendons are rigid)."
+  },
+  "joint_targets": {
+    "description": "Total passive joint moments the joint fit targets, one row per joint: the source curve (params, model, joint_sign: +1 when +q is the source's flexion), the swept angles (grid_deg, deg in MyoHand coordinates; wrist_deg sweeps the wrist too) and the posture of the other joints (postures_deg). The curves are those of the passive-moment table of the joint-spring work (Formica 2012, Knutson 2000, Kamper 2002 and their Barry 2018 / McFarland 2023 transfers). fit holds the error of all muscles at act = 0 before and after.",
+    "postures_deg": {
+      "formica2012_grip": {
+        "elbow_flexion_r": 60.0,
+        "mcp2_flexion_r": 45.0,
+        "pm2_flexion_r": 60.0,
+        "md2_flexion_r": 30.0,
+        "mcp3_flexion_r": 45.0,
+        "pm3_flexion_r": 60.0,
+        "md3_flexion": 30.0,
+        "mcp4_flexion_r": 45.0,
+        "pm4_flexion": 60.0,
+        "md4_flexion_r": 30.0,
+        "mcp5_flexion_r": 45.0,
+        "pm5_flexion_r": 60.0,
+        "md5_flexion_r": 30.0,
+        "mp_flexion_r": -20.0,
+        "ip_flexion_r": -20.0
+      },
+      "knutson2000": {},
+      "neutral": {}
+    },
+    "postures_note": {
+      "formica2012_grip": "Formica 2012: hand closed around the robot handle and bound shut, elbow flexed about 60 deg. The finger and thumb angles of the grip are not reported; MCP 45, PIP 60, DIP 30 deg and thumb MP / IP 20 deg flexion are assumed (a cylindrical grasp).",
+      "knutson2000": "Interphalangeal joints braced in extension; the wrist is swept (wrist_deg).",
+      "neutral": "Kamper 2002: wrist and the other joints of the finger at neutral."
+    },
+    "rows": [
+      {
+        "row": "wrist_flexion",
+        "joint": "flexion_r",
+        "status": "measured",
+        "source": "formica2012",
+        "model": "linear_two_sided",
+        "params": {
+          "k_positive": 0.554,
+          "k_negative": 1.021
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          -17.0,
+          17.0,
+          1.0
+        ],
+        "posture": "formica2012_grip",
+        "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
+        "fit": {
+          "rmse_Nm_before": 0.4378950621253186,
+          "rmse_Nm_after": 0.1590736527255573,
+          "max_excess_Nm_before": 0.8946344270670146,
+          "max_excess_Nm_after": 0.08078034064057787,
+          "target_peak_Nm": 0.30293679826865577
+        }
+      },
+      {
+        "row": "wrist_deviation",
+        "joint": "deviation_r",
+        "status": "measured",
+        "source": "formica2012",
+        "model": "linear_two_sided",
+        "params": {
+          "k_positive": 1.71,
+          "k_negative": 1.245
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          -17.0,
+          17.0,
+          1.0
+        ],
+        "posture": "formica2012_grip",
+        "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
+        "fit": {
+          "rmse_Nm_before": 1.1750593112939152,
+          "rmse_Nm_after": 0.12891610433885328,
+          "max_excess_Nm_before": 2.552249826388547,
+          "max_excess_Nm_after": 0.02249920360450064,
+          "target_peak_Nm": 0.5073672135547517
+        }
+      },
+      {
+        "row": "digit3_mcp_flexion",
+        "joint": "mcp3_flexion_r",
+        "status": "transferred target",
+        "source": "knutson2000",
+        "model": "knutson2000_total",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4,
+          "A3": 1.2,
+          "k3": 0.042,
+          "B3": -0.8,
+          "phi3": 10.9,
+          "A4": 0.8,
+          "k4": 0.054,
+          "B4": -0.3,
+          "phi4": 40.9
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "wrist_deg": [
+          -60.0,
+          60.0,
+          10.0
+        ],
+        "posture": "knutson2000",
+        "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
+        "fit": {
+          "rmse_Nm_before": 0.642444923531789,
+          "rmse_Nm_after": 0.0688803818454869,
+          "max_excess_Nm_before": 3.502029680343489,
+          "max_excess_Nm_after": 0.0013944973477938716,
+          "target_peak_Nm": 0.3440783082622245
+        }
+      },
+      {
+        "row": "digit4_mcp_flexion",
+        "joint": "mcp4_flexion_r",
+        "status": "transferred target",
+        "source": "knutson2000",
+        "model": "knutson2000_total",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4,
+          "A3": 1.2,
+          "k3": 0.042,
+          "B3": -0.8,
+          "phi3": 10.9,
+          "A4": 0.8,
+          "k4": 0.054,
+          "B4": -0.3,
+          "phi4": 40.9
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "wrist_deg": [
+          -60.0,
+          60.0,
+          10.0
+        ],
+        "posture": "knutson2000",
+        "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
+        "fit": {
+          "rmse_Nm_before": 1.0980221214431338,
+          "rmse_Nm_after": 0.06729778659325533,
+          "max_excess_Nm_before": 2.0052199710939886,
+          "max_excess_Nm_after": 0.0081173744606605,
+          "target_peak_Nm": 0.3440783082622245
+        }
+      },
+      {
+        "row": "digit5_mcp_flexion",
+        "joint": "mcp5_flexion_r",
+        "status": "transferred target",
+        "source": "knutson2000",
+        "model": "knutson2000_total",
+        "params": {
+          "A1": 1.4,
+          "k1": 0.068,
+          "theta1": -18.0,
+          "A2": 1.6,
+          "k2": 0.092,
+          "theta2": 79.4,
+          "A3": 1.2,
+          "k3": 0.042,
+          "B3": -0.8,
+          "phi3": 10.9,
+          "A4": 0.8,
+          "k4": 0.054,
+          "B4": -0.3,
+          "phi4": 40.9
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "wrist_deg": [
+          -60.0,
+          60.0,
+          10.0
+        ],
+        "posture": "knutson2000",
+        "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
+        "fit": {
+          "rmse_Nm_before": 0.5548626000673534,
+          "rmse_Nm_after": 0.0675677460661103,
+          "max_excess_Nm_before": 1.1999515474984985,
+          "max_excess_Nm_after": 0.0018203198599859999,
+          "target_peak_Nm": 0.3440783082622245
+        }
+      },
+      {
+        "row": "digit3_pip_flexion",
+        "joint": "pm3_flexion_r",
+        "status": "transferred target",
+        "source": "kamper2002",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
+        "fit": {
+          "rmse_Nm_before": 0.04203937830330583,
+          "rmse_Nm_after": 0.038715676993822,
+          "max_excess_Nm_before": 0.058163107419498164,
+          "max_excess_Nm_after": 0.0,
+          "target_peak_Nm": 0.05167246107211147
+        }
+      },
+      {
+        "row": "digit3_dip_flexion",
+        "joint": "md3_flexion",
+        "status": "transferred target",
+        "source": "kamper2002",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.103,
+          "c2": 0.102,
+          "c1": -0.052,
+          "c0": -0.019,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
+        "fit": {
+          "rmse_Nm_before": 0.05751314970008402,
+          "rmse_Nm_after": 0.05730823702300347,
+          "max_excess_Nm_before": 0.005047634380714653,
+          "max_excess_Nm_after": 0.0,
+          "target_peak_Nm": 0.07988195974879853
+        }
+      },
+      {
+        "row": "digit4_pip_flexion",
+        "joint": "pm4_flexion",
+        "status": "transferred target",
+        "source": "kamper2002",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
+        "fit": {
+          "rmse_Nm_before": 0.9904433972980188,
+          "rmse_Nm_after": 0.03870596536332715,
+          "max_excess_Nm_before": 1.248728580251991,
+          "max_excess_Nm_after": 0.0,
+          "target_peak_Nm": 0.05167246107211147
+        }
+      },
+      {
+        "row": "digit4_dip_flexion",
+        "joint": "md4_flexion_r",
+        "status": "transferred target",
+        "source": "kamper2002",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.103,
+          "c2": 0.102,
+          "c1": -0.052,
+          "c0": -0.019,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
+        "fit": {
+          "rmse_Nm_before": 0.655813983317492,
+          "rmse_Nm_after": 0.05731270234146662,
+          "max_excess_Nm_before": 0.6822867196412903,
+          "max_excess_Nm_after": 0.00015619253591633714,
+          "target_peak_Nm": 0.07988195974879853
+        }
+      },
+      {
+        "row": "digit5_pip_flexion",
+        "joint": "pm5_flexion_r",
+        "status": "transferred target",
+        "source": "kamper2002",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
+        "fit": {
+          "rmse_Nm_before": 0.3358769710165621,
+          "rmse_Nm_after": 0.046089349258455176,
+          "max_excess_Nm_before": 0.40205529863447986,
+          "max_excess_Nm_after": 0.1248316185705383,
+          "target_peak_Nm": 0.05167246107211147
+        }
+      },
+      {
+        "row": "digit5_dip_flexion",
+        "joint": "md5_flexion_r",
+        "status": "transferred target",
+        "source": "kamper2002",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.103,
+          "c2": 0.102,
+          "c1": -0.052,
+          "c0": -0.019,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "grid_deg": [
+          0.0,
+          90.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
+        "fit": {
+          "rmse_Nm_before": 0.1666050747732392,
+          "rmse_Nm_after": 0.05733838591103746,
+          "max_excess_Nm_before": 0.12911673464166823,
+          "max_excess_Nm_after": 0.0005151404560556487,
+          "target_peak_Nm": 0.07988195974879853
+        }
+      },
+      {
+        "row": "thumb_mp_flexion",
+        "joint": "mp_flexion_r",
+        "status": "transferred target",
+        "source": "barry2018",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.071,
+          "c2": 0.145,
+          "c1": -0.154,
+          "c0": 0.029,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": -1.0,
+        "grid_deg": [
+          -45.0,
+          40.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Barry et al. 2018 Sec. 2.1: thumb MCP passive moment set equal to the index MCP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
+        "fit": {
+          "rmse_Nm_before": 0.6201637851941335,
+          "rmse_Nm_after": 0.031572386456970684,
+          "max_excess_Nm_before": 0.9775516199674353,
+          "max_excess_Nm_after": 1.3877787807814457e-17,
+          "target_peak_Nm": 0.0606725000299487
+        }
+      },
+      {
+        "row": "thumb_ip_flexion",
+        "joint": "ip_flexion_r",
+        "status": "transferred target",
+        "source": "barry2018",
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": -1.0,
+        "grid_deg": [
+          -75.0,
+          25.0,
+          5.0
+        ],
+        "posture": "neutral",
+        "where": "Barry et al. 2018 Sec. 2.1: thumb IP passive moment set equal to the index PIP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
+        "fit": {
+          "rmse_Nm_before": 0.5676229345486696,
+          "rmse_Nm_after": 0.03553426494330421,
+          "max_excess_Nm_before": 1.178942177723188,
+          "max_excess_Nm_after": 0.0016708512714114498,
+          "target_peak_Nm": 0.05167246107211147
+        }
+      }
+    ]
+  },
+  "joint_fit": {
+    "muscles": [
+      "FDS3",
+      "FDS4",
+      "FDS5",
+      "FDP3",
+      "FDP4",
+      "FDP5",
+      "EDC3",
+      "EDC4",
+      "EDC5",
+      "EDM",
+      "FPL",
+      "EPL",
+      "EPB",
+      "APL",
+      "ECRB",
+      "ECU"
+    ],
+    "excess_weight": 100.0,
+    "max_change": 0.1,
+    "cost": "sum over rows of mean(excess_weight * excess^2 + deficit^2) (N cm^2) + (1/100) sum |slack change / slack|",
+    "cost_before": 5543472.856748682,
+    "cost_after": 5869.050493252301
   }
 }
