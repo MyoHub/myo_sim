@@ -41,6 +41,9 @@ RIGHT_HAND_ACTUATORS = frozenset(
         "FPL",
         "APL",
         "OP",
+        "AdP",
+        "FPB",
+        "APB",
         "RI2",
         "LU_RB2",
         "UI_UB2",
@@ -121,6 +124,60 @@ def tendon_wrap_geom_names(spec: object) -> set[str]:
             if target is not None and target.__class__.__name__ == "MjsGeom":
                 geom_names.add(target.name)
     return geom_names
+
+
+def is_joint_tendon_on(tendon: object, joints: set[str]) -> bool:
+    """Whether *tendon* is a fixed tendon whose joints are all in *joints*."""
+    targets = [tendon.path[index].target for index in range(len(tendon.path))]
+    return bool(targets) and all(
+        target is not None and target.__class__.__name__ == "MjsJoint" and target.name in joints for target in targets
+    )
+
+
+# Settable MjsTendon attributes copied when a joint tendon is re-created.
+TENDON_ATTRIBUTES = (
+    "actfrclimited",
+    "actfrcrange",
+    "armature",
+    "damping",
+    "frictionloss",
+    "group",
+    "info",
+    "limited",
+    "margin",
+    "material",
+    "range",
+    "rgba",
+    "solimp_friction",
+    "solimp_limit",
+    "solref_friction",
+    "solref_limit",
+    "springlength",
+    "stiffness",
+    "userdata",
+    "width",
+)
+
+
+def rename_joint_tendon_references(spec: object, renamed: dict[str, str]) -> None:
+    """Point the fixed tendons of *spec* at renamed joints, in place.
+
+    MjSpec keeps a wrap's joint by name and neither updates it on rename nor
+    lets it be reassigned, so each fixed tendon is re-created (same name,
+    attributes and coefficients, in the same relative order) with the new
+    joint names.
+    """
+    tendons = [tendon for tendon in spec.tendons if is_joint_tendon_on(tendon, set(renamed))]
+    for tendon in tendons:
+        wraps = [(tendon.path[index].target.name, tendon.path[index].coef) for index in range(len(tendon.path))]
+        attributes = {name: getattr(tendon, name) for name in TENDON_ATTRIBUTES}
+        name = tendon.name
+        spec.delete(tendon)
+        recreated = spec.add_tendon(name=name)
+        for attribute, value in attributes.items():
+            setattr(recreated, attribute, value)
+        for joint, coef in wraps:
+            recreated.wrap_joint(renamed.get(joint, joint), coef)
 
 
 def quaternion_inverse(quaternion: np.ndarray) -> np.ndarray:
@@ -206,7 +263,10 @@ def prune_arm_spec_to_hand(spec: object, side: str) -> None:
             spec.delete(actuator)
 
     tendon_name_map = {actuator.target: add_side_suffix(actuator.target, side) for actuator in spec.actuators}
+    kept_joints = {joint.name for joint in spec.joints if joint.name not in removed_joints}
     for tendon in list(spec.tendons):
+        if is_joint_tendon_on(tendon, kept_joints):
+            continue  # passive joint springs of the hand stay
         if tendon.name not in tendon_name_map:
             spec.delete(tendon)
         else:
@@ -234,5 +294,7 @@ def prune_arm_spec_to_hand(spec: object, side: str) -> None:
 
     fix_up_welded_phantom_inertia(spec, side)
 
+    renamed = {joint.name: add_side_suffix(joint.name, side) for joint in spec.joints}
+    rename_joint_tendon_references(spec, renamed)
     for joint in spec.joints:
-        joint.name = add_side_suffix(joint.name, side)
+        joint.name = renamed[joint.name]

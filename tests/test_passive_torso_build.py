@@ -17,7 +17,8 @@ def test_myoarms_uses_passive_anatomical_torso_with_arm_controls_only():
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "flex_extension") < 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "L4_L5_FE") < 0
-    assert model.nu == 126
+    assert model.nu == 132  # 126 + 3 thenar muscles per hand
+    assert load_model("myoarms", thenar_muscles=False).nu == 126
 
 
 def test_myoarm_r_uses_passive_anatomical_torso_with_right_arm_only():
@@ -29,4 +30,5 @@ def test_myoarm_r_uses_passive_anatomical_torso_with_right_arm_only():
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "flex_extension") < 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "L4_L5_FE") < 0
-    assert model.nu == 63
+    assert model.nu == 66  # 63 + 3 thenar muscles
+    assert load_model("myoarm_r", thenar_muscles=False).nu == 63

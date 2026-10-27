@@ -116,21 +116,23 @@ FRAGMENT_SPEC_BUILDERS: dict[str, object] = {
 }
 
 
-def load(name: str) -> tuple:
+def load(name: str, **kwargs: Any) -> tuple:
     """Load a MuJoCo model by registry name. Returns (MjModel, MjData).
 
     Supports MjSpec-composed models such as myohand_r, myohands, myoarms,
     myofullbody, and myolegs, plus packaged legacy static XMLs. For a
     left-hand-only MjSpec builder, use FRAGMENT_SPEC_BUILDERS["myohand_l"].
+    Keyword arguments (e.g. ``thenar_muscles=False``) go to load_spec().
     """
     import mujoco
 
-    model = load_model(name)
+    model = load_model(name, **kwargs)
     return model, mujoco.MjData(model)
 
 
-def load_model(name: str) -> tuple:
-    spec = load_spec(name)
+def load_model(name: str, **kwargs: Any) -> "mujoco.MjModel":
+    """Build and compile a named model; keyword arguments go to load_spec()."""
+    spec = load_spec(name, **kwargs)
     model = spec.compile()
     return model
 
@@ -139,8 +141,8 @@ def load_spec(
     name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
-    passive_moments: bool | str = False,
-    thenar_muscles: bool = False,
+    passive_moments: bool | str = True,
+    thenar_muscles: bool = True,
     subject_scale: Optional[dict[str, float]] = None,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
@@ -164,15 +166,16 @@ def load_spec(
             https://github.com/MyoHub/myo_sim/issues/128. Only supported for
             MjSpec-composed models; ignored for packaged static-XML
             fragments.
-        passive_moments: Add the cited passive joint moments of
-            ``build/data/passive_joint_moments.json`` (see
-            myo_sim.build.passive): ``True`` the measured rows, ``"assumed"``
-            also the documented transfers between joints. Off by default
-            (unchanged model).
-        thenar_muscles: Add adductor pollicis, flexor and abductor pollicis
-            brevis to every hand (see myo_sim.build.thenar). Off by default.
-            Both are only supported for MjSpec-composed models.
-        subject_scale: Subject factors for the opt-in steps, keyed by data row
+        passive_moments: Passive joint-moment tendons of every arm (fixed
+            tendons from ``myoarm_r_passive_tendon.xml``): ``True`` (default)
+            the measured rows, ``"assumed"`` also the documented transfers
+            between joints, ``False`` none.
+        thenar_muscles: Adductor pollicis, flexor and abductor pollicis brevis
+            on every hand (``myoarm_r_thenar_*.xml``; default True). ``False``
+            keeps the previous action space (3 fewer actuators per hand).
+            Both flags only apply to MjSpec-composed models; packaged
+            static-XML fragments ignore them.
+        subject_scale: Subject factors keyed by data row
             (see myo_sim.build.compose.build_spec). Empty by default.
     """
     import mujoco
@@ -198,8 +201,6 @@ def load_spec(
         available = sorted(composed_models | frozenset(REGISTRY))
         raise ValueError(f"Unknown model {name!r}. Available: {available}")
 
-    if passive_moments or thenar_muscles:
-        raise ValueError(f"passive_moments / thenar_muscles need a composed model, not {name!r}")
     spec = mujoco.MjSpec.from_file(str(get_xml_path(name)))
     return spec
 

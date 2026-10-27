@@ -332,10 +332,15 @@ def build_mirrored_child_xml(
     root_body_name: str,
     root_site_name: str,
     rules: MirrorRules | None = None,
+    source_extra_tendons_xmls: tuple[Path, ...] = (),
+    source_extra_muscles_xmls: tuple[Path, ...] = (),
 ) -> str:
     """
     TODO: Mirroring is feasible to do via MjSpec. Let's avoid editing xmls unless absolutely necessary.
-    Build a mirrored MJCF child XML from right-side arm component files."""
+    Build a mirrored MJCF child XML from right-side arm component files.
+
+    Optional right-side tendon/muscle fragments (``source_extra_*``) are mirrored
+    and appended after the main tendon/muscle files, in order."""
     if rules is None:
         rules = MirrorRules()
     root = ET.Element("mujoco", {"model": model_name})
@@ -357,7 +362,7 @@ def build_mirrored_child_xml(
                     mirrored.remove(asset_child)
         root.append(mirrored)
 
-    for xml_path in (source_tendons_xml, source_muscles_xml):
+    for xml_path in (source_tendons_xml, *source_extra_tendons_xmls, source_muscles_xml, *source_extra_muscles_xmls):
         if xml_path is None:
             continue
         for child in component_children(xml_path):
@@ -384,8 +389,13 @@ def build_child_xml_from_components(
     root_site_name: str,
     extra_assets_xmls: tuple[Path, ...] = (),
     scene_xmls: tuple[Path, ...] = (),
+    extra_tendons_xmls: tuple[Path, ...] = (),
+    extra_muscles_xmls: tuple[Path, ...] = (),
 ) -> str:
-    """Build a standalone child XML from asset/tendon/muscle/chain includes."""
+    """Build a standalone child XML from asset/tendon/muscle/chain includes.
+
+    Optional tendon/muscle fragments (``extra_tendons_xmls``, ``extra_muscles_xmls``)
+    are appended after the main tendon/muscle files, in order."""
     root = ET.Element("mujoco", {"model": model_name})
     ET.SubElement(
         root,
@@ -401,7 +411,7 @@ def build_child_xml_from_components(
                 continue
             root.append(child)
 
-    for xml_path in (tendons_xml, muscles_xml):
+    for xml_path in (tendons_xml, *extra_tendons_xmls, muscles_xml, *extra_muscles_xmls):
         if xml_path is None:
             continue
         for child in component_children(xml_path):

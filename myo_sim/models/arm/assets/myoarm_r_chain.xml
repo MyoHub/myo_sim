@@ -458,6 +458,9 @@
                                                     <site name="Trpzm_site_FPL_side_r" pos="0.0125474 -0.0222585 0.00136571"/>
                                                     <site name="Trpzm_site_OP_side_r" pos="0.0125474 -0.0222585 0.00136571"/>
                                                     <site name="S_grasp_r" pos="-0.011 -0.06 -0.03" size=".01" group="3"/>
+                                                    <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
+                                                    <site name="FPB-P1_r" pos="0 0 -0.006"/>
+                                                    <site name="APB-P1_r" pos="0 0 -0.006"/>
                                                     <camera name="plam_lookat" pos="-0.011 -0.06 -0.5" euler="0 3.14 0"/>
 
                                                     <!-- THUMB FINGER -->
@@ -486,6 +489,8 @@
                                                         <!-- <site name="MPthumb_site_EPL_side_r" pos="0.0233473 -0.0173314 -0.02"/> -->
                                                         <site name="MPthumb_site_EPB_side_r" pos="0.0252901 -0.0179637 -0.00935966"/>
                                                         <site name="MPthumb_site_FPL_side_r" pos="0.0177 -0.0305 -0.0143"/>
+                                                        <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
+                                                        <site name="APB-P2_r" pos="0.015 -0.022 -0.02"/>
                                                         <body name="proximal_thumb_r" pos="0.0165 -0.0292 -0.0127">
                                                             <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion_r" pos="0 0 0" range="-0.785398 0.698132"/>
                                                             <geom name="proximal_thumb_coll_r" class="myohand_coll" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
@@ -500,6 +505,11 @@
                                                             <site name="FPL-P10_r" pos="0.0059 -0.026 -0.0111"/>
                                                             <site name="IPthumb_site_EPL_side_r" pos="0.0167862 -0.030399 -0.0079041"/>
                                                             <site name="IPthumb_site_FPL_side_r" pos="0.00820158 -0.028993 -0.00586527"/>
+                                                            <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
+                                                            <site name="AdP-P2_r" pos="0 -0.012 0"/>
+                                                            <site name="FPB-P2_r" pos="-0.008 0 -0.007"/>
+                                                            <site name="FPB-P3_r" pos="0.002 -0.011 -0.007"/>
+                                                            <site name="APB-P3_r" pos="0.004 -0.002 -0.006"/>
 
                                                             <body name="distal_thumb_r" pos="0.014 -0.0259 -0.0101">
                                                                 <geom name="distal_thumb_coll_r" class="myohand_coll" size="0.0065" fromto="0 0 0 0.010 -0.018 -0.007"/>
@@ -653,6 +663,8 @@
                                                     <site name="3rdmcp_ellipsoid_site_FDP3_side_r" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_EDC3_side_r" pos="0.0016 -0.0291 0.0081"/>
                                                     <site name="3rdmcp_ellipsoid_site_LU_RB3_side_r" pos="0 0 0"/>
+                                                    <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
+                                                    <site name="AdP-P1_r" pos="0.004 0.012 -0.009"/>
                                                     <body name="3proxph_r" pos="0.00024 -0.02629 0.001778">
                                                         <geom name="proxph3_coll_r" class="myohand_coll" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
                                                         <joint axis="0.980067 0 0.198669" name="mcp3_flexion_r" pos="0 0 0" range="0 1.5708"/>

@@ -46,9 +46,10 @@ def test_njnt_equals_23(hand_only, hand_with_torso):
     assert hand_with_torso.njnt == 23
 
 
-def test_nu_equals_39(hand_only, hand_with_torso):
-    assert hand_only.nu == 39
-    assert hand_with_torso.nu == 39
+def test_nu_equals_42(hand_only, hand_with_torso):
+    # 39 actuators of the static myohand from main plus the 3 thenar muscles.
+    assert hand_only.nu == 42
+    assert hand_with_torso.nu == 42
 
 
 def test_joint_names_match(hand_only, hand_with_torso):

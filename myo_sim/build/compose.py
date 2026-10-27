@@ -21,7 +21,7 @@ import os
 import sys
 import time
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from pathlib import Path
 from typing import Any, Literal, Optional
@@ -32,6 +32,7 @@ from myo_sim import MODELS_DIR
 
 try:
     from .hand import prune_arm_spec_to_hand
+    from .hand_data import apply_subject_scale
     from .utils import (
         MirrorRules,
         add_contact_pairs,
@@ -43,6 +44,7 @@ try:
     )
 except ImportError:
     from hand import prune_arm_spec_to_hand
+    from hand_data import apply_subject_scale
     from utils import (
         MirrorRules,
         add_contact_pairs,
@@ -85,6 +87,11 @@ RIGHT_ARM_ASSETS_XML = ROOT / "arm" / "assets" / "myoarm_r_assets.xml"
 RIGHT_ARM_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_tendon.xml"
 RIGHT_ARM_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_muscle.xml"
 RIGHT_ARM_CHAIN_XML = ROOT / "arm" / "assets" / "myoarm_r_chain.xml"
+RIGHT_ARM_THENAR_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_thenar_tendon.xml"
+RIGHT_ARM_THENAR_MUSCLES_XML = ROOT / "arm" / "assets" / "myoarm_r_thenar_muscle.xml"
+RIGHT_ARM_PASSIVE_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_passive_tendon.xml"
+RIGHT_ARM_PASSIVE_ASSUMED_TENDONS_XML = ROOT / "arm" / "assets" / "myoarm_r_passive_assumed_tendon.xml"
+PASSIVE_MOMENT_OPTIONS = (True, False, "assumed")
 LEGS_ASSETS_XML = ROOT / "leg" / "assets" / "myolegs_assets.xml"
 LEGS_TENDONS_XML = ROOT / "leg" / "assets" / "myolegs_tendon.xml"
 LEGS_MUSCLES_XML = ROOT / "leg" / "assets" / "myolegs_muscle.xml"
@@ -289,7 +296,31 @@ def build_passive_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
+def right_arm_optional_fragments(
+    registration: Optional[ModelRegistration] = None,
+) -> tuple[tuple[Path, ...], tuple[Path, ...]]:
+    """Optional right-arm (tendon, muscle) fragments selected by the build kwargs.
+
+    ``thenar_muscles`` (default True) adds the thenar tendon and muscle
+    fragments; ``passive_moments`` (default True) the measured passive-moment
+    tendons, ``"assumed"`` also the assumed-transfer ones. The mirrored left arm
+    uses the same fragments.
+    """
+    kwargs = registration.build_kwargs if registration else {}
+    passive = kwargs.get("passive_moments", True)
+    tendons, muscles = [], []
+    if kwargs.get("thenar_muscles", True):
+        tendons.append(RIGHT_ARM_THENAR_TENDONS_XML)
+        muscles.append(RIGHT_ARM_THENAR_MUSCLES_XML)
+    if passive:
+        tendons.append(RIGHT_ARM_PASSIVE_TENDONS_XML)
+    if passive == "assumed":
+        tendons.append(RIGHT_ARM_PASSIVE_ASSUMED_TENDONS_XML)
+    return tuple(tendons), tuple(muscles)
+
+
 def build_right_arm_spec(registration: Optional[ModelRegistration] = None) -> mujoco.MjSpec:
+    extra_tendons, extra_muscles = right_arm_optional_fragments(registration)
     right_arm_xml = build_child_xml_from_components(
         model_name="myoarm_r_attach",
         compiler_meshdir=ROOT,
@@ -299,6 +330,8 @@ def build_right_arm_spec(registration: Optional[ModelRegistration] = None) -> mu
         chain_xml=RIGHT_ARM_CHAIN_XML,
         root_body_name="myoarm_r_root",
         root_site_name="arm_root_attach_r",
+        extra_tendons_xmls=extra_tendons,
+        extra_muscles_xmls=extra_muscles,
     )
     right_arm = mujoco.MjSpec.from_string(right_arm_xml)
     right_arm.compiler.balanceinertia = True
@@ -310,6 +343,7 @@ def build_right_arm_spec(registration: Optional[ModelRegistration] = None) -> mu
 
 
 def build_mirrored_left_arm_spec(registration: Optional[ModelRegistration] = None) -> mujoco.MjSpec:
+    extra_tendons, extra_muscles = right_arm_optional_fragments(registration)
     left_arm_xml = build_mirrored_child_xml(
         model_name="myoarm_l_mirrored_from_r",
         compiler_meshdir=ROOT,
@@ -320,6 +354,8 @@ def build_mirrored_left_arm_spec(registration: Optional[ModelRegistration] = Non
         root_body_name="myoarm_l_root",
         root_site_name="arm_root_attach_l",
         rules=registration.mirror_rules if registration else MirrorRules(),
+        source_extra_tendons_xmls=extra_tendons,
+        source_extra_muscles_xmls=extra_muscles,
     )
     left_arm = mujoco.MjSpec.from_string(left_arm_xml)
     left_arm.compiler.balanceinertia = True
@@ -651,8 +687,8 @@ def build_spec(
     model_name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
-    passive_moments: bool | str = False,
-    thenar_muscles: bool = False,
+    passive_moments: bool | str = True,
+    thenar_muscles: bool = True,
     subject_scale: dict[str, float] | None = None,
 ) -> mujoco.MjSpec:
     """Build and return the composed, uncompiled MjSpec for a registered model.
@@ -675,14 +711,18 @@ def build_spec(
             numerical conditioning of the mass matrix; pass
             ``inertia_floor=0.0001`` to restore that convention. See
             https://github.com/MyoHub/myo_sim/issues/128.
-        passive_moments: Add the cited passive joint moments
-            (myo_sim.build.passive): ``True`` the measured rows, ``"assumed"``
-            also the documented transfers between joints. Off by default.
-        thenar_muscles: Add the thenar muscles to every hand
-            (myo_sim.build.thenar). Off by default.
-        subject_scale: Subject factors for the opt-in steps, keyed by data
-            row (``{"digit2_pip_flexion": f, "AdP.force": g, ...}``); empty by
-            default, so the data files apply as published.
+        passive_moments: Merge the passive joint-moment tendon fragments
+            into every arm: ``True`` (default) the measured rows
+            (``myoarm_r_passive_tendon.xml``), ``"assumed"`` also the
+            documented transfers between joints
+            (``myoarm_r_passive_assumed_tendon.xml``), ``False`` none.
+        thenar_muscles: Merge the thenar tendon and muscle fragments
+            (``myoarm_r_thenar_*.xml``) into every arm (default True);
+            ``False`` keeps the previous action space.
+        subject_scale: Subject factors keyed by data row
+            (``{"digit2_pip_flexion": f, "AdP.force": g, ...}``), applied to
+            the built spec by myo_sim.build.hand_data.apply_subject_scale;
+            empty by default, so the fragments apply as published.
 
     Returns:
         The composed MjSpec, ready for further edits or spec.compile().
@@ -693,22 +733,24 @@ def build_spec(
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
 
-    build_kwargs = build_kwargs or {}
-    registration.build_kwargs.update(build_kwargs)
+    if passive_moments not in PASSIVE_MOMENT_OPTIONS:
+        raise ValueError(f"passive_moments must be one of {PASSIVE_MOMENT_OPTIONS}, got {passive_moments!r}")
+    # Per-call copy: build kwargs and fragment flags must not leak into MODEL_REGISTRY.
+    registration = replace(
+        registration,
+        build_kwargs={
+            **registration.build_kwargs,
+            **(build_kwargs or {}),
+            "thenar_muscles": thenar_muscles,
+            "passive_moments": passive_moments,
+        },
+    )
 
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
-    if thenar_muscles:
-        from myo_sim.build.thenar import add_thenar_muscles
-
-        add_thenar_muscles(spec, scale=subject_scale)
-    if passive_moments:
-        from myo_sim.build.passive import APPLIED, add_passive_joint_moments
-
-        add_passive_joint_moments(
-            spec, statuses=APPLIED["assumed" if passive_moments == "assumed" else "measured"], scale=subject_scale
-        )
+    if subject_scale:
+        apply_subject_scale(spec, subject_scale)
     return spec
 
 
