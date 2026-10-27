@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-27 — Add opt-in passive muscle tension of the index extrinsic muscles (tenodesis)
+Changed: `myo_sim/build/muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `scripts/fit_muscle_passive.py`, `myo_sim/build/compose.py`, `myo_sim/__init__.py`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`
+Why: With the anatomical slack lengths and rigid tendons, FDS2/FDP2/EDC2/EI give up to 327 N cm of passive index MCP moment against at most 30 N cm measured (Knutson et al. 2000); `passive_muscles=True` sets slack lengths fitted per Binder-Markey & Murray 2017 (RMSE 98.4 -> 3.0 N cm) and gives tenodesis on both hands. Off by default, so models and checkpoints are unchanged. The other digits and the thumb show the same excess but have no extrinsic passive data.
+
 ## 2026-08-02 — Widen force-length curve bounds for muscles whose refit operating range outgrew them
 Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `myo_sim/models/torso/assets/myotorso_muscle.xml`
 Why: Restoring anatomical fiber length for 26 muscles (see the anatomical-parameter entries below) shifted their normalized operating range partly outside the shared default force-length curve bounds (`lmin`/`lmax`); widened bounds per muscle to contain the new range, respecting MuJoCo's `lmin < 1 < lmax` requirement.
