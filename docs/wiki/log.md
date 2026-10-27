@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-27 — Fit fpmax with the slack lengths, under an active force-length constraint
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `scripts/fit_muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`, `docs/wiki/testing-guide.md`
+Why: Lengthening the slack lengths alone left the finger flexors with almost no active force in a fist, so each extrinsic muscle now also gets its own passive-force scale (`fpmax`) and the fit keeps the flexors' active factor at least 0.5 in a full fist and the extensors' in full extension.
+
 ## 2026-10-27 — Fit the slack lengths of the other extrinsic finger, thumb and wrist muscles
 Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `scripts/fit_muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`
 Why: On the anatomical parameters FDP4, FPL, FDP5, FDS3/FDP3 and ECU gave passive moments up to 25 times the measured totals (wrist, MCP/PIP/DIP 3-5, thumb MP/IP), so their slack lengths are now fitted per Binder-Markey to those totals with a one-sided loss (changes 0-10 %).

@@ -1,29 +1,36 @@
-"""Fit tendon-slack (length-range) shifts of the extrinsic hand muscles to measured passive moments.
+"""Fit tendon slack lengths and passive-force scales of the extrinsic hand muscles to measured passive moments.
 
 Binder-Markey & Murray (2017) optimised the tendon slack lengths of FDSI, FDPI,
 EDCI and EIP so that their passive force reproduced the extrinsic component of
 Knutson's MCP passive moment over wrist and MCP angles. MyoHand muscles have
 rigid tendons: the normalised fibre length is ``range[0] + (L - lr[0]) / L0``
 with ``L0 = (lr[1] - lr[0]) / (range[1] - range[0])``, so a slack-length change
-is a shift of ``actuator_lengthrange`` at constant ``L0``.
+is a shift of ``actuator_lengthrange`` at constant ``L0``. MuJoCo's passive
+force-length curve is much stiffer than the one Binder-Markey used, so each
+muscle also gets its own ``fpmax`` (the passive-force scale; it leaves the active
+force unchanged).
 
-Two fits, each from the rows' ``reference_value_m``, with MuJoCo's own passive
-force-length curve, MyoHand's muscle-tendon lengths and moment arms and
-Binder-Markey's penalty on relative change:
+Two fits, each from the rows' reference values, with MuJoCo's passive curve,
+MyoHand's muscle-tendon lengths and moment arms, Binder-Markey's penalty on the
+relative slack change and a mild penalty on ``|ln(fpmax / reference)|``:
 
 - index (FDS2, FDP2, EDC2, EIP): least squares on Knutson's extrinsic MCP moment;
 - the other extrinsic finger, thumb and wrist muscles (``joint_targets``): the
   total measured or transferred joint moments, with a one-sided loss (a moment
   beyond the total, or opposite to it, costs ``EXCESS_WEIGHT`` times a deficit).
 
-It writes the absolute slack lengths (and the reference values they change) to
-``build/data/muscle_passive.json`` and the shifted ``lengthrange`` of each muscle
-to ``myoarm_r_muscle.xml``, the model's source of truth (the left arm is mirrored
-from it).
+Both are subject to ``active_constraint``: the active force-length factor of the
+finger and thumb flexors in a full fist, and of the extensors in full extension,
+stays at least ``min_fl``. On MuJoCo's curve that is a window on each slack length;
+a slack length is shortened only as far as that window forces it.
+
+It writes the values (and the references they change) to
+``build/data/muscle_passive.json`` and the ``lengthrange`` and ``fpmax`` of each
+muscle to ``myoarm_r_muscle.xml``, the model's source of truth (the left arm is
+mirrored from it).
 
 Run: ``uv run python scripts/fit_muscle_passive.py`` (refits, rewrites the JSON and
-the ``lengthrange`` attributes); ``--xml-only`` only writes the JSON slack lengths
-into the XML.
+the XML attributes); ``--xml-only`` only writes the JSON values into the XML.
 """
 
 from __future__ import annotations
@@ -53,6 +60,9 @@ WRIST_DEG = np.arange(-60.0, 60.1, 10.0)
 DEG = np.pi / 180.0
 EXCESS_WEIGHT = 100.0
 MAX_CHANGE = 0.10  # bound on |slack change| / slack
+FPMAX_BOUNDS = (0.002, 2.6)
+FPMAX_REFERENCE = 1.3  # MuJoCo's default, used by every fitted muscle before the fit
+FPMAX_PENALTY = 1.0  # N cm^2 per unit |ln(fpmax / reference)|: mild, but it settles otherwise flat directions
 
 
 def knutson_extrinsic(theta: np.ndarray, wrist: np.ndarray, p: dict[str, float] = KNUTSON_EXTRINSIC) -> np.ndarray:
@@ -88,15 +98,44 @@ def passive_fl(norm_len: np.ndarray, lmax: float, fpmax: float) -> np.ndarray:
     return np.where(norm_len <= 1.0, 0.0, np.where(norm_len <= b, fpmax * 0.5 * x1 * x1, fpmax * (0.5 + x2)))
 
 
-def passive_force(model: mujoco.MjModel, names: tuple[str, ...], lengths: np.ndarray, shift: np.ndarray) -> np.ndarray:
-    """Passive force (N, negative: muscles pull) at muscle-tendon *lengths* (..., k), length ranges shifted by *shift*."""
+def active_fl(norm_len: np.ndarray, lmin: float, lmax: float) -> np.ndarray:
+    """MuJoCo's active force-length factor (``mju_muscleGain`` at zero velocity)."""
+    x = np.asarray(norm_len, dtype=float)
+    a, b = 0.5 * (lmin + 1.0), 0.5 * (1.0 + lmax)
+    out = np.select(
+        [x <= lmin, x <= a, x <= 1.0, x <= b, x < lmax],
+        [
+            0.0,
+            0.5 * ((x - lmin) / (a - lmin)) ** 2,
+            1.0 - 0.5 * ((1.0 - x) / (1.0 - a)) ** 2,
+            1.0 - 0.5 * ((x - 1.0) / (b - 1.0)) ** 2,
+            0.5 * ((lmax - x) / (lmax - b)) ** 2,
+        ],
+        0.0,
+    )
+    return out
+
+
+def normalised_length(model: mujoco.MjModel, name: str, length: np.ndarray, shift: float = 0.0) -> np.ndarray:
+    """Normalised fibre length of muscle *name* at muscle-tendon *length*, length range shifted by *shift*."""
+    a = model.actuator(name).id
+    g = model.actuator_gainprm[a]
+    lr = model.actuator_lengthrange[a] + shift
+    return g[0] + (np.asarray(length) - lr[0]) * (g[1] - g[0]) / (lr[1] - lr[0])
+
+
+def passive_force(
+    model: mujoco.MjModel, names: tuple[str, ...], lengths: np.ndarray, shift: np.ndarray, fpmax: np.ndarray | None = None
+) -> np.ndarray:
+    """Passive force (N, negative: muscles pull) at muscle-tendon *lengths* (..., k), length ranges shifted by *shift*.
+
+    *fpmax* (per muscle) replaces the model's passive-force scale when given.
+    """
     force = np.zeros_like(lengths)
     for k, name in enumerate(names):
-        a = model.actuator(name).id
-        g = model.actuator_gainprm[a]
-        lr = model.actuator_lengthrange[a] + shift[k]
-        L0 = (lr[1] - lr[0]) / (g[1] - g[0])
-        force[..., k] = -g[2] * passive_fl(g[0] + (lengths[..., k] - lr[0]) / L0, g[5], g[7])
+        g = model.actuator_gainprm[model.actuator(name).id]
+        scale = g[7] if fpmax is None else fpmax[k]
+        force[..., k] = -g[2] * passive_fl(normalised_length(model, name, lengths[..., k], shift[k]), g[5], scale)
     return force
 
 
@@ -124,9 +163,11 @@ def geometry(model: mujoco.MjModel) -> tuple[np.ndarray, np.ndarray]:
     return lengths, arms
 
 
-def model_torque(model: mujoco.MjModel, lengths: np.ndarray, arms: np.ndarray, shift: np.ndarray) -> np.ndarray:
-    """Passive MCP moment (N cm, +flexion) of the four index muscles with length ranges shifted by *shift* (m)."""
-    return 100.0 * np.sum(arms * passive_force(model, MUSCLES, lengths, shift), axis=-1)
+def model_torque(
+    model: mujoco.MjModel, lengths: np.ndarray, arms: np.ndarray, shift: np.ndarray, fpmax: np.ndarray | None = None
+) -> np.ndarray:
+    """Passive MCP moment (N cm, +flexion) of the four index muscles, length ranges shifted by *shift* (m)."""
+    return 100.0 * np.sum(arms * passive_force(model, MUSCLES, lengths, shift, fpmax), axis=-1)
 
 
 def row_points(table: dict[str, Any], row: dict[str, Any]) -> tuple[list[dict[str, float]], np.ndarray]:
@@ -143,6 +184,16 @@ def row_points(table: dict[str, Any], row: dict[str, Any]) -> tuple[list[dict[st
     return postures, np.array(target)
 
 
+def _forward(model: mujoco.MjModel, data: mujoco.MjData, posture: dict[str, float]) -> None:
+    data.qpos[:] = model.qpos0
+    for name, deg in posture.items():
+        data.qpos[model.joint(name).qposadr[0]] = deg * DEG
+    data.qvel[:] = 0.0
+    data.act[:] = 0.0
+    data.ctrl[:] = 0.0
+    mujoco.mj_forward(model, data)
+
+
 def row_geometry(
     model: mujoco.MjModel, postures: list[dict[str, float]], joint: str, names: tuple[str, ...]
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
@@ -153,13 +204,7 @@ def row_geometry(
     moment = np.zeros((model.nu, model.nv))
     lengths, arms, rest = np.zeros((len(postures), len(names))), np.zeros((len(postures), len(names))), np.zeros(len(postures))
     for i, posture in enumerate(postures):
-        data.qpos[:] = model.qpos0
-        for name, deg in posture.items():
-            data.qpos[model.joint(name).qposadr[0]] = deg * DEG
-        data.qvel[:] = 0.0
-        data.act[:] = 0.0
-        data.ctrl[:] = 0.0
-        mujoco.mj_forward(model, data)
+        _forward(model, data, posture)
         mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
         lengths[i] = data.actuator_length[ids]
         arms[i] = moment[ids, dof]
@@ -171,6 +216,60 @@ def excess_and_deficit(moment: np.ndarray, target: np.ndarray) -> tuple[np.ndarr
     """Moment beyond the target or against its sign (excess), and the shortfall inside ``[0, target]`` (deficit)."""
     inside = np.clip(moment, np.minimum(target, 0.0), np.maximum(target, 0.0))
     return moment - inside, target - inside
+
+
+def constraint_lengths(model: mujoco.MjModel, table: dict[str, Any]) -> dict[str, dict[str, float]]:
+    """Muscle-tendon length (m) of each constrained muscle in each ``active_constraint`` posture."""
+    spec = table["active_constraint"]
+    data = mujoco.MjData(model)
+    out: dict[str, dict[str, float]] = {}
+    for posture, names in spec["muscles"].items():
+        _forward(model, data, spec["postures_deg"][posture])
+        for name in names:
+            out.setdefault(name, {})[posture] = float(data.actuator_length[model.actuator(name).id])
+    return out
+
+
+def active_fl_at_constraints(model: mujoco.MjModel, table: dict[str, Any]) -> dict[str, dict[str, float]]:
+    """Active force-length factor of each constrained muscle in each ``active_constraint`` posture (model as is)."""
+    out = {}
+    for name, lengths in constraint_lengths(model, table).items():
+        g = model.actuator_gainprm[model.actuator(name).id]
+        out[name] = {p: float(active_fl(normalised_length(model, name, L), g[4], g[5])) for p, L in lengths.items()}
+    return out
+
+
+def slack_window(model: mujoco.MjModel, table: dict[str, Any], name: str) -> tuple[float, float]:
+    """Length-range shifts (m) allowed by ``MAX_CHANGE`` and the active constraint.
+
+    The active factor is at least ``min_fl`` between the two lengths where it
+    equals it, so each constrained posture bounds the shift from both sides.
+    Raises ``ValueError`` when no shift satisfies every posture.
+    """
+    a = model.actuator(name).id
+    g = model.actuator_gainprm[a]
+    slack = implied_slack(model, name)
+    lo, hi = -MAX_CHANGE * slack, MAX_CHANGE * slack
+    min_fl = table["active_constraint"]["min_fl"]
+    L0 = (model.actuator_lengthrange[a][1] - model.actuator_lengthrange[a][0]) / (g[1] - g[0])
+    # Points of the FL curve where it equals min_fl: one on each limb.
+    a_pt, b_pt = 0.5 * (g[4] + 1.0), 0.5 * (1.0 + g[5])
+    up = (
+        a_pt + (1.0 - a_pt) * (1.0 - np.sqrt(2.0 * (1.0 - min_fl)))
+        if min_fl >= 0.5
+        else g[4] + (a_pt - g[4]) * np.sqrt(2.0 * min_fl)
+    )
+    down = (
+        b_pt - (b_pt - 1.0) * (1.0 - np.sqrt(2.0 * (1.0 - min_fl)))
+        if min_fl >= 0.5
+        else g[5] - (g[5] - b_pt) * np.sqrt(2.0 * min_fl)
+    )
+    for length in constraint_lengths(model, table).get(name, {}).values():
+        norm = float(normalised_length(model, name, length))
+        lo, hi = max(lo, L0 * (norm - down)), min(hi, L0 * (norm - up))
+    if lo > hi:
+        raise ValueError(f"{name}: no slack length within {MAX_CHANGE:.0%} keeps the active factor at {min_fl}")
+    return lo, hi
 
 
 def implied_slack(model: mujoco.MjModel, name: str) -> float:
@@ -189,63 +288,122 @@ def fitted_lengthranges(model: mujoco.MjModel, table: dict[str, Any]) -> dict[st
     """``lengthrange`` of each tabled muscle shifted so its implied slack length is the tabled one."""
     ranges = {}
     for row in table["muscles"]:
-        name = row["names"]["r"]
-        shift = row["tendon_slack_m"]["value"] - implied_slack(model, name)
+        name, slack = row["names"]["r"], row["tendon_slack_m"]
+        shift = slack["value"] - implied_slack(model, name)
         lr = model.actuator_lengthrange[model.actuator(name).id]
-        ranges[name] = [float(v) for v in lr] if abs(shift) < 1e-12 else [float(v + shift) for v in lr]
+        unchanged = slack["value"] == slack["reference_value_m"]  # keep the XML value, not its 1 um rounding
+        ranges[name] = [float(v) for v in lr] if unchanged or abs(shift) < 1e-12 else [float(v + shift) for v in lr]
     return ranges
 
 
-def write_lengthranges(ranges: dict[str, list[float]], path: Path = MUSCLE_XML) -> None:
-    """Replace the ``lengthrange`` attribute of each named muscle in *path*, leaving the rest of the file as is."""
+def fitted_fpmax(table: dict[str, Any]) -> dict[str, float]:
+    """Tabled ``fpmax`` of each muscle."""
+    return {row["names"]["r"]: row["fpmax"]["value"] for row in table["muscles"]}
+
+
+def write_muscle_xml(ranges: dict[str, list[float]], fpmax: dict[str, float], path: Path = MUSCLE_XML) -> None:
+    """Set ``lengthrange`` and ``fpmax`` of each named muscle in *path* (no ``fpmax`` at the default), rest unchanged."""
     text = path.read_text()
     for name, (lo, hi) in ranges.items():
-        pattern = re.compile(rf'(<muscle name="{re.escape(name)}"[^>]*?lengthrange=")[^"]*(")')
-        text, count = pattern.subn(rf"\g<1>{lo!r} {hi!r}\g<2>", text)
-        if count != 1:
-            raise ValueError(f"{path.name}: expected one lengthrange for {name}, found {count}")
+        pattern = re.compile(rf'<muscle name="{re.escape(name)}"[^>]*?/>')
+        tags = pattern.findall(text)
+        if len(tags) != 1:
+            raise ValueError(f"{path.name}: expected one muscle {name}, found {len(tags)}")
+        tag = re.sub(r'lengthrange="[^"]*"', f'lengthrange="{lo!r} {hi!r}"', tags[0])
+        tag = re.sub(r' fpmax="[^"]*"', "", tag)
+        if abs(fpmax[name] - FPMAX_REFERENCE) > 1e-12:
+            tag = tag.replace(' class="', f' fpmax="{fpmax[name]!r}" class="', 1)
+        text = text.replace(tags[0], tag)
     path.write_text(text)
 
 
-def _minimize(
-    cost: Callable[[np.ndarray], float], starts: list[np.ndarray], bounds: list[tuple[float, float]] | None = None
-) -> np.ndarray:
-    """Best of Powell runs from *starts*."""
+def _minimize(cost: Callable[[np.ndarray], float], starts: list[np.ndarray], bounds: list[tuple[float, float]]) -> np.ndarray:
+    """Best of bounded Powell runs from *starts*."""
     from scipy.optimize import minimize
 
     runs = [
-        minimize(cost, s, method="Powell", bounds=bounds, options={"xtol": 1e-7, "ftol": 1e-10, "maxiter": 40000})
+        minimize(cost, s, method="Powell", bounds=bounds, options={"xtol": 1e-8, "ftol": 1e-12, "maxiter": 200000})
         for s in starts
     ]
     return min(runs, key=lambda r: r.fun).x
 
 
-def _slack_entry(slack: float, shift: float) -> dict[str, Any]:
+def _penalty(shift: np.ndarray, slack: np.ndarray, log_fpmax: np.ndarray) -> float:
+    """Binder-Markey's (1/100) sum |slack change / slack|, plus ``FPMAX_PENALTY`` sum |ln(fpmax / reference)|."""
+    return float(np.sum(np.abs(shift / slack))) / 100.0 + FPMAX_PENALTY * float(np.sum(np.abs(log_fpmax)))
+
+
+def _fit(
+    model: mujoco.MjModel, table: dict[str, Any], names: tuple[str, ...], error: Callable[[np.ndarray, np.ndarray], float]
+) -> tuple[np.ndarray, np.ndarray]:
+    """Shifts (m) and ``fpmax`` of *names* minimising ``error(shift, fpmax)`` plus the penalty, inside the windows."""
+    slack = np.array([implied_slack(model, n) for n in names])
+    # Shorten a slack length only as far as the active constraint forces it: shortening merely
+    # fills deficits the joint springs supply, and with fpmax free it is a flat direction.
+    windows = []
+    for name in names:
+        lo, hi = slack_window(model, table, name)
+        if hi < 0.0:  # the constraint forces a shorter slack: as little as it allows (2 um room for rounding)
+            windows.append((hi - 3e-6, hi - 2e-6))
+        else:
+            windows.append((lo + 2e-6 if lo > 0.0 else 0.0, hi - 2e-6))
+    log_bounds = [tuple(np.log(np.array(FPMAX_BOUNDS) / FPMAX_REFERENCE))] * len(names)
+    k = len(names)
+
+    def cost(x: np.ndarray) -> float:
+        return error(x[:k], FPMAX_REFERENCE * np.exp(x[k:])) + _penalty(x[:k], slack, x[k:])
+
+    nearest = np.array([np.clip(0.0, lo, hi) for lo, hi in windows])
+    middle = np.array([0.5 * (lo + hi) for lo, hi in windows])
+    starts = [np.concatenate([s, np.full(k, f)]) for s, f in ((nearest, 0.0), (middle, 0.0), (middle, -1.0), (nearest, -2.0))]
+    x = _minimize(cost, starts, [*windows, *log_bounds])
+    # Round as stored: slack to 1 um, fpmax to 4 decimals; stay inside the window.
+    shift = np.array([np.clip(round(s0 + s, 6) - s0, lo, hi) for s0, s, (lo, hi) in zip(slack, x[:k], windows)])
+    fpmax = np.round(FPMAX_REFERENCE * np.exp(x[k:]), 4)
+    fpmax[np.abs(fpmax - FPMAX_REFERENCE) < 1e-3] = FPMAX_REFERENCE
+    return shift, fpmax
+
+
+def _parameter_entries(slack: float, shift: float, fpmax: float, window: tuple[float, float]) -> dict[str, Any]:
     return {
-        "value": round(slack + shift, 6),
-        "reference_value_m": round(slack, 6),
-        "change_percent": round(100.0 * shift / slack, 3),
-        "scales_with": "length",
-        "reference_segment": "forearm",
+        "tendon_slack_m": {
+            "value": round(slack + shift, 6),
+            "reference_value_m": round(slack, 6),
+            "change_percent": round(100.0 * shift / slack, 3),
+            "active_window_percent": [round(100.0 * w / slack, 3) for w in window],
+            "scales_with": "length",
+            "reference_segment": "forearm",
+        },
+        "fpmax": {
+            "value": float(fpmax),
+            "reference_value": FPMAX_REFERENCE,
+            "change_percent": round(100.0 * (fpmax / FPMAX_REFERENCE - 1.0), 3),
+            "at_bound": bool(min(abs(fpmax - b) for b in FPMAX_BOUNDS) < 1e-3),
+        },
     }
 
 
-def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> np.ndarray:
-    """Binder-Markey's fit of the four index slack lengths to Knutson's extrinsic MCP moment; updates *table*, returns the shifts."""
+def _apply(model: mujoco.MjModel, names: tuple[str, ...], shift: np.ndarray, fpmax: np.ndarray) -> None:
+    for k, name in enumerate(names):
+        a = model.actuator(name).id
+        model.actuator_lengthrange[a] += shift[k]
+        model.actuator_gainprm[a][7] = model.actuator_biasprm[a][7] = fpmax[k]
+
+
+def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray, np.ndarray]:
+    """Binder-Markey's fit of the four index muscles to Knutson's extrinsic MCP moment; updates *table*."""
     lengths, arms = geometry(model)
     target = knutson_extrinsic(MCP_DEG[None, :], WRIST_DEG[:, None])
-    slack = np.array([implied_slack(model, n) for n in MUSCLES])
 
-    def cost(shift: np.ndarray) -> float:
-        err = target - model_torque(model, lengths, arms, shift)
-        return float(np.sum(err**2) + np.sum(np.abs(shift / slack)) / 100.0)  # Binder-Markey Eqs. (2)-(3), N cm
+    def error(shift: np.ndarray, fpmax: np.ndarray) -> float:
+        return float(np.sum((target - model_torque(model, lengths, arms, shift, fpmax)) ** 2))  # Binder-Markey Eq. (2), N cm
 
-    shift = _minimize(cost, [np.full(len(MUSCLES), s) for s in (0.0, -0.01, -0.02)])
+    shift, fpmax = _fit(model, table, MUSCLES, error)
     before = target - model_torque(model, lengths, arms, np.zeros(len(MUSCLES)))
-    after = target - model_torque(model, lengths, arms, shift)
+    after = target - model_torque(model, lengths, arms, shift, fpmax)
     for k, name in enumerate(MUSCLES):
         row = next(r for r in table["muscles"] if r["names"]["r"] == name)
-        row["tendon_slack_m"] = _slack_entry(float(slack[k]), float(shift[k]))
+        row.update(_parameter_entries(implied_slack(model, name), shift[k], fpmax[k], slack_window(model, table, name)))
     table["fit"] = {
         "grid": {"mcp_deg": [float(MCP_DEG[0]), float(MCP_DEG[-1]), 5.0], "wrist_deg": [-60.0, 60.0, 10.0]},
         "rmse_Ncm_before": float(np.sqrt(np.mean(before**2))),
@@ -253,7 +411,7 @@ def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> np.ndarray:
         "max_abs_err_Ncm_after": float(np.max(np.abs(after))),
         "target_peak_Ncm": float(np.max(np.abs(target))),
     }
-    return shift
+    return shift, fpmax
 
 
 def joint_fit_terms(model: mujoco.MjModel, table: dict[str, Any]) -> list[dict[str, Any]]:
@@ -266,27 +424,26 @@ def joint_fit_terms(model: mujoco.MjModel, table: dict[str, Any]) -> list[dict[s
     return terms
 
 
-def joint_moment(model: mujoco.MjModel, term: dict[str, Any], shift: np.ndarray) -> np.ndarray:
+def joint_moment(model: mujoco.MjModel, term: dict[str, Any], shift: np.ndarray, fpmax: np.ndarray | None = None) -> np.ndarray:
     """Passive moment (N m) of every muscle at the points of one fit term, ``JOINT_MUSCLES`` shifted by *shift*."""
-    return term["rest"] + np.sum(term["arms"] * passive_force(model, JOINT_MUSCLES, term["lengths"], shift), axis=-1)
+    return term["rest"] + np.sum(term["arms"] * passive_force(model, JOINT_MUSCLES, term["lengths"], shift, fpmax), axis=-1)
 
 
-def joint_cost(model: mujoco.MjModel, terms: list[dict[str, Any]], shift: np.ndarray, slack: np.ndarray) -> float:
-    """Sum over rows of the mean one-sided squared error (N cm^2) plus Binder-Markey's change penalty."""
+def joint_error(
+    model: mujoco.MjModel, terms: list[dict[str, Any]], shift: np.ndarray, fpmax: np.ndarray | None = None
+) -> float:
+    """Sum over rows of the mean one-sided squared error (N cm^2)."""
     total = 0.0
     for term in terms:
-        excess, deficit = excess_and_deficit(100.0 * joint_moment(model, term, shift), 100.0 * term["target"])
+        excess, deficit = excess_and_deficit(100.0 * joint_moment(model, term, shift, fpmax), 100.0 * term["target"])
         total += float(np.mean(EXCESS_WEIGHT * excess**2 + deficit**2))
-    return total + float(np.sum(np.abs(shift / slack)) / 100.0)
+    return total
 
 
 def fit_joints(model: mujoco.MjModel, table: dict[str, Any]) -> None:
-    """Fit the ``JOINT_MUSCLES`` slack lengths to the total moments of ``joint_targets``; updates *table*."""
+    """Fit ``JOINT_MUSCLES`` to the total moments of ``joint_targets``; updates *table*."""
     terms = joint_fit_terms(model, table)
-    slack = np.array([implied_slack(model, n) for n in JOINT_MUSCLES])
-    bounds = [(-MAX_CHANGE * s, MAX_CHANGE * s) for s in slack]
-    starts = [f * slack for f in (0.0, 0.05, 0.1)]
-    shift = _minimize(lambda s: joint_cost(model, terms, s, slack), starts, bounds)
+    shift, fpmax = _fit(model, table, JOINT_MUSCLES, lambda s, f: joint_error(model, terms, s, f))
     rows = {r["names"]["r"]: r for r in table["muscles"]}
     for k, name in enumerate(JOINT_MUSCLES):
         crossed = [t for t in terms if np.any(np.abs(t["arms"][:, k]) > 1e-4)]
@@ -297,12 +454,12 @@ def fit_joints(model: mujoco.MjModel, table: dict[str, Any]) -> None:
             "source": "joint_targets",
             "targets": [t["row"]["row"] for t in crossed],
             "method": "binder_markey2017_one_sided",
-            "tendon_slack_m": _slack_entry(float(slack[k]), float(shift[k])),
-            "at_bound": bool(abs(shift[k]) > 0.999 * MAX_CHANGE * slack[k]),
+            **_parameter_entries(implied_slack(model, name), shift[k], fpmax[k], slack_window(model, table, name)),
         }
     table["muscles"] = [rows[n] for n in (*MUSCLES, *JOINT_MUSCLES)]
+    zero = np.zeros(len(JOINT_MUSCLES))
     for term in terms:
-        before, after = joint_moment(model, term, np.zeros(len(JOINT_MUSCLES))), joint_moment(model, term, shift)
+        before, after = joint_moment(model, term, zero), joint_moment(model, term, shift, fpmax)
         t = term["target"]
         term["row"]["fit"] = {
             "rmse_Nm_before": float(np.sqrt(np.mean((before - t) ** 2))),
@@ -315,38 +472,45 @@ def fit_joints(model: mujoco.MjModel, table: dict[str, Any]) -> None:
         "muscles": list(JOINT_MUSCLES),
         "excess_weight": EXCESS_WEIGHT,
         "max_change": MAX_CHANGE,
-        "cost": "sum over rows of mean(excess_weight * excess^2 + deficit^2) (N cm^2) + (1/100) sum |slack change / slack|",
-        "cost_before": joint_cost(model, terms, np.zeros(len(JOINT_MUSCLES)), slack),
-        "cost_after": joint_cost(model, terms, shift, slack),
+        "fpmax_bounds": list(FPMAX_BOUNDS),
+        "fpmax_penalty": FPMAX_PENALTY,
+        "cost": (
+            "sum over rows of mean(excess_weight * excess^2 + deficit^2) (N cm^2) "
+            "+ (1/100) sum |slack change / slack| + fpmax_penalty sum |ln(fpmax / reference)|"
+        ),
+        "error_before": joint_error(model, terms, zero),
+        "error_after": joint_error(model, terms, shift, fpmax),
     }
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--xml-only", action="store_true", help="only write the JSON slack lengths into the XML")
+    parser.add_argument("--xml-only", action="store_true", help="only write the JSON values into the XML")
     args = parser.parse_args()
     model = myo_sim.load_spec("myoarm_r").compile()
     table = load_table()
     if args.xml_only:
-        write_lengthranges(fitted_lengthranges(model, table))
+        write_muscle_xml(fitted_lengthranges(model, table), fitted_fpmax(table))
         return
-    # Fit from the reference slack lengths, whatever the XML currently holds.
+    # Fit from the reference values, whatever the XML currently holds.
     for row in table["muscles"]:
         name = row["names"]["r"]
-        model.actuator_lengthrange[model.actuator(name).id] += row["tendon_slack_m"]["reference_value_m"] - implied_slack(
-            model, name
-        )
-    shift = fit_index(model, table)
-    for k, name in enumerate(MUSCLES):  # the joint fit sees the fitted index muscles
-        model.actuator_lengthrange[model.actuator(name).id] += shift[k]
+        a = model.actuator(name).id
+        model.actuator_lengthrange[a] += row["tendon_slack_m"]["reference_value_m"] - implied_slack(model, name)
+        model.actuator_gainprm[a][7] = model.actuator_biasprm[a][7] = FPMAX_REFERENCE
+    shift, fpmax = fit_index(model, table)
+    _apply(model, MUSCLES, shift, fpmax)  # the joint fit sees the fitted index muscles
     fit_joints(model, table)
     DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
     model = myo_sim.load_spec("myoarm_r").compile()
-    write_lengthranges(fitted_lengthranges(model, table))
+    write_muscle_xml(fitted_lengthranges(model, table), fitted_fpmax(table))
     print(json.dumps(table["fit"], indent=1))
     for row in table["muscles"]:
-        s = row["tendon_slack_m"]
-        print(f"{row['muscle']:5s} {s['reference_value_m']:.4f} -> {s['value']:.4f} m ({s['change_percent']:+.2f} %)")
+        s, f = row["tendon_slack_m"], row["fpmax"]
+        print(
+            f"{row['muscle']:5s} slack {s['change_percent']:+7.2f} % (window {s['active_window_percent'][0]:+.1f}.."
+            f"{s['active_window_percent'][1]:+.1f} %), fpmax {f['value']:.4f}{' (bound)' if f['at_bound'] else ''}"
+        )
     for row in table["joint_targets"]["rows"]:
         f = row["fit"]
         print(

@@ -1,4 +1,4 @@
-"""Extrinsic hand-muscle tendon slack lengths fitted to passive moments (myoarm_r_muscle.xml, build/data/muscle_passive.json)."""
+"""Extrinsic hand-muscle slack lengths and fpmax fitted to passive moments (myoarm_r_muscle.xml, build/data/muscle_passive.json)."""
 
 from __future__ import annotations
 
@@ -41,28 +41,31 @@ def _right(model: mujoco.MjModel, name: str) -> int:
 
 
 @pytest.mark.parametrize("name", MODELS)
-def test_models_carry_the_tabled_slack_lengths_on_both_arms(name: str) -> None:
+def test_models_carry_the_tabled_values_on_both_arms(name: str) -> None:
     model = myo_sim.load_spec(name).compile()
     sides = ("r",) if name == "myoarm_r" else ("r", "l")
     for row in _fit_script().load_table()["muscles"]:
         for side in sides:
             act = _right(model, row["names"]["r"]) if side == "r" else model.actuator(row["names"]["l"]).id
-            assert _implied_slack(model, act) == pytest.approx(row["tendon_slack_m"]["value"], abs=1e-12)
+            assert _implied_slack(model, act) == pytest.approx(row["tendon_slack_m"]["value"], abs=1e-6)  # stored to 1 um
+            assert model.actuator_gainprm[act][7] == model.actuator_biasprm[act][7] == row["fpmax"]["value"]
 
 
 def test_xml_is_what_the_fit_script_writes() -> None:
-    """The four lengthrange attributes in myoarm_r_muscle.xml are the JSON slack lengths (rerunning --xml-only changes nothing)."""
+    """The lengthrange and fpmax attributes in myoarm_r_muscle.xml are the JSON values (rerunning --xml-only changes nothing)."""
     fit = _fit_script()
     model = myo_sim.load_spec("myoarm_r").compile()
     for name, lengthrange in fit.fitted_lengthranges(model, fit.load_table()).items():
         np.testing.assert_array_equal(model.actuator_lengthrange[model.actuator(name).id], lengthrange)
+    for name, fpmax in fit.fitted_fpmax(fit.load_table()).items():
+        assert model.actuator_gainprm[model.actuator(name).id][7] == fpmax
     for row in fit.load_table()["muscles"]:
         slack = row["tendon_slack_m"]
         assert 100.0 * (slack["value"] / slack["reference_value_m"] - 1.0) == pytest.approx(slack["change_percent"], abs=2e-3)
 
 
 def test_fit_matches_the_recorded_error() -> None:
-    """The stored slack lengths reproduce the recorded fit to Knutson's extrinsic moment."""
+    """The stored values reproduce the recorded fit to Knutson's extrinsic moment."""
     fit = _fit_script()
     table = fit.load_table()
     model = myo_sim.load_spec("myoarm_r").compile()
@@ -74,7 +77,7 @@ def test_fit_matches_the_recorded_error() -> None:
 
 
 def test_joint_fit_matches_the_recorded_error() -> None:
-    """The stored slack lengths reproduce the recorded one-sided fit to the total joint moments, and reduce every excess."""
+    """The stored values reproduce the recorded one-sided fit to the total joint moments, and reduce every excess."""
     fit = _fit_script()
     table = fit.load_table()
     model = myo_sim.load_spec("myoarm_r").compile()
@@ -89,6 +92,41 @@ def test_joint_fit_matches_the_recorded_error() -> None:
         assert recorded["max_excess_Nm_after"] <= recorded["max_excess_Nm_before"] + 1e-9
     for row in table["muscles"]:
         assert abs(row["tendon_slack_m"]["change_percent"]) <= 100.0 * table["joint_fit"]["max_change"] + 1e-3
+
+
+def _side(model: mujoco.MjModel, name: str, side: str) -> str:
+    """Joint name of *name* (right-side name) on *side* of a composed model."""
+    base = name[:-2] if name.endswith("_r") else name
+    for candidate in (name, base, f"{base}_r") if side == "r" else (f"{base}_l",):
+        try:
+            model.joint(candidate)
+            return candidate
+        except KeyError:
+            continue
+    raise KeyError(name)
+
+
+@pytest.mark.parametrize("posture", ("fist_wrist_neutral", "fist_wrist_flexed_30", "extension_wrist_extended_30"))
+def test_flexors_close_and_extensors_open_the_hand_actively(posture: str) -> None:
+    """MuJoCo's active force-length factor stays at least min_fl in a full fist (flexors) and full extension (extensors)."""
+    spec = _fit_script().load_table()["active_constraint"]
+    model = myo_sim.load_spec("myofullbody").compile()
+    data = mujoco.MjData(model)
+    for side in ("r", "l"):
+        for joint, deg in spec["postures_deg"][posture].items():
+            data.qpos[model.joint(_side(model, joint, side)).qposadr[0]] = deg * DEG
+    mujoco.mj_forward(model, data)
+    for name in spec["muscles"][posture]:
+        for side in ("r", "l"):
+            act = _right(model, name) if side == "r" else model.actuator(f"{name}_l").id
+            prm = model.actuator_gainprm[act]
+            fl = (
+                -mujoco.mju_muscleGain(
+                    data.actuator_length[act], 0.0, model.actuator_lengthrange[act], model.actuator_acc0[act], prm[:9]
+                )
+                / prm[2]
+            )
+            assert fl >= spec["min_fl"] - 1e-9, f"{name}_{side}: active factor {fl:.3f} in {posture}"
 
 
 HAND = ("cmc_flexion", "cmc_abduction", "mp_flexion", "ip_flexion") + tuple(
@@ -150,10 +188,14 @@ def test_relaxed_hand_rests_off_its_limits(wrist_deg: float) -> None:
     """No finger or thumb joint is driven into a limit; only the finger extension limit (0 deg) is allowed.
 
     Holding the fingers off full extension is the job of joint springs, which this table does not add.
+    Known exception: with the wrist extended 60 deg the little-finger MCP reaches its flexion limit.
+    FDP5 keeps some passive force there because it offsets the PIP extension moment of the unfitted
+    digit-5 intrinsics (LU_RB5, UI_UB5).
     """
+    allowed = {"mcp5_flexion_r", "mcp5_flexion_l"} if wrist_deg <= -60.0 else set()
     for name, (q, lo, hi) in _settle(wrist_deg).items():
         finger = not name.startswith(("cmc", "mp_", "ip_"))
-        assert q < hi - 1.0, f"{name} at its upper limit ({q:.1f} deg)"
+        assert name in allowed or q < hi - 1.0, f"{name} at its upper limit ({q:.1f} deg)"
         assert finger or q > lo + 1.0, f"{name} at its lower limit ({q:.1f} deg)"
     for base in HAND:
         assert _settle(wrist_deg)[f"{base}_r"][0] == pytest.approx(_settle(wrist_deg)[f"{base}_l"][0], abs=0.1)

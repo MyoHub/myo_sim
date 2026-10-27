@@ -18,7 +18,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
-| `test_muscle_passive.py` | Extrinsic hand-muscle slack lengths: XML holds the tabled values on both arms of every model, recorded fit errors (Knutson 2000 index fit, one-sided joint fit), tenodesis and relaxed-hand rest off the joint limits on myofullbody | After hand muscle, `build/data/muscle_passive.json` or `scripts/fit_muscle_passive.py` changes |
+| `test_muscle_passive.py` | Extrinsic hand-muscle slack lengths and fpmax: XML holds the tabled values on both arms of every model, recorded fit errors (Knutson 2000 index fit, one-sided joint fit), active force-length factor >= 0.5 of the flexors in a full fist and the extensors in full extension, tenodesis and relaxed-hand rest off the joint limits on myofullbody | After hand muscle, `build/data/muscle_passive.json` or `scripts/fit_muscle_passive.py` changes |
 
 ## Fast Gate (Run Before Every PR)
 

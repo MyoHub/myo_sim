@@ -1,6 +1,6 @@
 {
-  "format": "myo_sim.muscle_passive/3",
-  "description": "Tendon slack lengths (absolute, m) of the extrinsic hand muscles, fitted per Binder-Markey & Murray 2017 (Eqs. 2-3: least squares on passive joint moments plus (1/100) x sum of relative slack changes) with MuJoCo's passive force-length curve, MyoHand's muscle-tendon lengths and moment arms (scripts/fit_muscle_passive.py). reference_value_m is the slack length the fit started from (myo_sim with fix/anatomical-muscle-parameters, i.e. the MoBL-ARMS / Saul et al. 2015 values, also Binder-Markey's initial values). Index (FDS2, FDP2, EDC2, EIP): Knutson et al. 2000's extrinsic MCP moment over MCP 0..90 deg (MyoHand's MCP has no hyperextension; Knutson and Binder-Markey: -45..90 deg) and wrist -60..60 deg, as Binder-Markey did. Other extrinsic finger, thumb and wrist muscles (joint_fit.muscles): no extrinsic-only data exist, so the target is the total passive moment of each joint_targets row and the loss is one-sided: a muscle moment beyond the total, or against its sign, costs joint_fit.excess_weight times a deficit, because joint springs can supply a deficit but only a cancelling element could remove an excess. Changes are bounded by joint_fit.max_change (Binder-Markey's changes were within about 10 %). Status 'transferred target' marks a muscle constrained by a curve measured on another digit. The model itself is myoarm_r_muscle.xml: scripts/fit_muscle_passive.py writes the shifted lengthrange of each muscle there (left arm mirrored).",
+  "format": "myo_sim.muscle_passive/4",
+  "description": "Tendon slack lengths (absolute, m) and passive-force scales (fpmax) of the extrinsic hand muscles, fitted per Binder-Markey & Murray 2017 (Eqs. 2-3: least squares on passive joint moments plus (1/100) x sum of relative slack changes) with MuJoCo's passive force-length curve, MyoHand's muscle-tendon lengths and moment arms (scripts/fit_muscle_passive.py). MuJoCo's passive curve is far stiffer than the one Binder-Markey used and MyoHand's tendons are rigid, so each muscle also gets its own fpmax (passive force only; the active force is unchanged), with a mild penalty (joint_fit.fpmax_penalty) on |ln(fpmax / 1.3)|. reference_value_m / reference_value are the values the fit started from (myo_sim with fix/anatomical-muscle-parameters, i.e. the MoBL-ARMS / Saul et al. 2015 slack lengths, also Binder-Markey's initial values, and MuJoCo's default fpmax 1.3). Hard constraint (active_constraint): the active force-length factor of the finger and thumb flexors in a full fist (wrist neutral and flexed 30 deg) and of the extensors in full extension (wrist extended 30 deg) stays at least 0.5; on MuJoCo's curve this is a window on each slack length (tendon_slack_m.active_window_percent), and a slack length is shortened only as far as that window forces it. Index (FDS2, FDP2, EDC2, EIP): Knutson et al. 2000's extrinsic MCP moment over MCP 0..90 deg (MyoHand's MCP has no hyperextension) and wrist -60..60 deg. Other extrinsic finger, thumb and wrist muscles (joint_fit.muscles): no extrinsic-only data exist, so the target is the total passive moment of each joint_targets row and the loss is one-sided: a muscle moment beyond the total, or against its sign, costs joint_fit.excess_weight times a deficit, because joint springs can supply a deficit but only a cancelling element could remove an excess. Slack changes are bounded by joint_fit.max_change, fpmax by joint_fit.fpmax_bounds. Status 'transferred target' marks a muscle constrained by a curve measured on another digit. The model itself is myoarm_r_muscle.xml: scripts/fit_muscle_passive.py writes the lengthrange and fpmax of each muscle there (left arm mirrored).",
   "sources": {
     "binder_markey2017": {
       "citation": "Binder-Markey BI, Murray WM. Incorporating the length-dependent passive-force generating muscle properties of the extrinsic finger muscles into a wrist and finger biomechanical musculoskeletal model. J Biomech 61:250-257, 2017.",
@@ -38,14 +38,22 @@
       "status": "measured",
       "source": "knutson2000",
       "method": "binder_markey2017",
-      "implied_slack_m": 0.27500003432411935,
-      "slack_change_percent": 9.616596270807959,
       "tendon_slack_m": {
-        "value": 0.301446,
+        "value": 0.273096,
         "reference_value_m": 0.275,
-        "change_percent": 9.617,
+        "change_percent": -0.693,
+        "active_window_percent": [
+          -10.0,
+          -0.692
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
+      },
+      "fpmax": {
+        "value": 0.0305,
+        "reference_value": 1.3,
+        "change_percent": -97.654,
+        "at_bound": false
       }
     },
     {
@@ -57,14 +65,22 @@
       "status": "measured",
       "source": "knutson2000",
       "method": "binder_markey2017",
-      "implied_slack_m": 0.301499965170917,
-      "slack_change_percent": 5.093320777319362,
       "tendon_slack_m": {
-        "value": 0.316856,
+        "value": 0.285296,
         "reference_value_m": 0.3015,
-        "change_percent": 5.093,
+        "change_percent": -5.374,
+        "active_window_percent": [
+          -10.0,
+          -5.374
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
+      },
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
       }
     },
     {
@@ -76,14 +92,22 @@
       "status": "measured",
       "source": "knutson2000",
       "method": "binder_markey2017",
-      "implied_slack_m": 0.36499995442904976,
-      "slack_change_percent": -0.3613095176399516,
       "tendon_slack_m": {
-        "value": 0.363681,
+        "value": 0.357038,
         "reference_value_m": 0.365,
-        "change_percent": -0.361,
+        "change_percent": -2.181,
+        "active_window_percent": [
+          -10.0,
+          -2.18
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
+      },
+      "fpmax": {
+        "value": 0.5183,
+        "reference_value": 1.3,
+        "change_percent": -60.131,
+        "at_bound": false
       }
     },
     {
@@ -95,14 +119,22 @@
       "status": "measured",
       "source": "knutson2000",
       "method": "binder_markey2017",
-      "implied_slack_m": 0.20999995317761022,
-      "slack_change_percent": -2.1887576437837293,
       "tendon_slack_m": {
-        "value": 0.205404,
+        "value": 0.206812,
         "reference_value_m": 0.21,
-        "change_percent": -2.189,
+        "change_percent": -1.518,
+        "active_window_percent": [
+          -10.0,
+          -1.517
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
+      },
+      "fpmax": {
+        "value": 0.9891,
+        "reference_value": 1.3,
+        "change_percent": -23.915,
+        "at_bound": false
       }
     },
     {
@@ -121,13 +153,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.305394,
+        "value": 0.273096,
         "reference_value_m": 0.295,
-        "change_percent": 3.523,
+        "change_percent": -7.425,
+        "active_window_percent": [
+          -10.0,
+          -7.424
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "FDS4",
@@ -145,13 +186,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.34623,
+        "value": 0.305548,
         "reference_value_m": 0.328,
-        "change_percent": 5.558,
+        "change_percent": -6.845,
+        "active_window_percent": [
+          -10.0,
+          -6.844
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.0393,
+        "reference_value": 1.3,
+        "change_percent": -96.977,
+        "at_bound": false
+      }
     },
     {
       "muscle": "FDS5",
@@ -169,13 +219,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.360983,
+        "value": 0.337629,
         "reference_value_m": 0.3386,
-        "change_percent": 6.61,
+        "change_percent": -0.287,
+        "active_window_percent": [
+          -8.184,
+          -0.286
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "FDP3",
@@ -194,13 +253,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.312551,
+        "value": 0.279915,
         "reference_value_m": 0.303,
-        "change_percent": 3.152,
+        "change_percent": -7.619,
+        "active_window_percent": [
+          -10.0,
+          -7.618
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "FDP4",
@@ -219,13 +287,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.32065,
+        "value": 0.2915,
         "reference_value_m": 0.2915,
-        "change_percent": 10.0,
+        "change_percent": 0.0,
+        "active_window_percent": [
+          -10.0,
+          1.911
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": true
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "FDP5",
@@ -244,13 +321,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.303355,
+        "value": 0.266357,
         "reference_value_m": 0.2819,
-        "change_percent": 7.611,
+        "change_percent": -5.513,
+        "active_window_percent": [
+          -10.0,
+          -5.512
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.0679,
+        "reference_value": 1.3,
+        "change_percent": -94.777,
+        "at_bound": false
+      }
     },
     {
       "muscle": "EDC3",
@@ -269,13 +355,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.369395,
+        "value": 0.355122,
         "reference_value_m": 0.365,
-        "change_percent": 1.204,
+        "change_percent": -2.706,
+        "active_window_percent": [
+          -10.0,
+          -2.706
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "EDC4",
@@ -294,13 +389,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.374677,
+        "value": 0.360004,
         "reference_value_m": 0.365,
-        "change_percent": 2.651,
+        "change_percent": -1.369,
+        "active_window_percent": [
+          -10.0,
+          -1.368
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "EDC5",
@@ -319,13 +423,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.349251,
+        "value": 0.34026,
         "reference_value_m": 0.335,
-        "change_percent": 4.254,
+        "change_percent": 1.57,
+        "active_window_percent": [
+          -9.101,
+          1.571
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "EDM",
@@ -344,13 +457,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.33912,
+        "value": 0.333702,
         "reference_value_m": 0.335,
-        "change_percent": 1.23,
+        "change_percent": -0.387,
+        "active_window_percent": [
+          -10.0,
+          -0.387
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "FPL",
@@ -368,13 +490,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.20992,
+        "value": 0.197,
         "reference_value_m": 0.197,
-        "change_percent": 6.558,
+        "change_percent": 0.0,
+        "active_window_percent": [
+          -10.0,
+          1.201
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.0626,
+        "reference_value": 1.3,
+        "change_percent": -95.185,
+        "at_bound": false
+      }
     },
     {
       "muscle": "EPL",
@@ -392,13 +523,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.246143,
+        "value": 0.23012,
         "reference_value_m": 0.2305,
-        "change_percent": 6.787,
+        "change_percent": -0.165,
+        "active_window_percent": [
+          -10.0,
+          -0.164
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.002,
+        "reference_value": 1.3,
+        "change_percent": -99.846,
+        "at_bound": true
+      }
     },
     {
       "muscle": "EPB",
@@ -415,13 +555,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.117019,
+        "value": 0.113462,
         "reference_value_m": 0.1155,
-        "change_percent": 1.315,
+        "change_percent": -1.764,
+        "active_window_percent": [
+          -10.0,
+          -1.762
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 0.405,
+        "reference_value": 1.3,
+        "change_percent": -68.846,
+        "at_bound": false
+      }
     },
     {
       "muscle": "APL",
@@ -437,13 +586,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.145686,
+        "value": 0.145218,
         "reference_value_m": 0.145686,
-        "change_percent": -0.0,
+        "change_percent": -0.321,
+        "active_window_percent": [
+          -10.0,
+          -0.32
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "change_percent": 0.0,
+        "at_bound": false
+      }
     },
     {
       "muscle": "ECRB",
@@ -462,10 +620,19 @@
         "value": 0.227566,
         "reference_value_m": 0.2223,
         "change_percent": 2.369,
+        "active_window_percent": [
+          -10.0,
+          10.0
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "change_percent": 0.0,
+        "at_bound": false
+      }
     },
     {
       "muscle": "ECU",
@@ -481,13 +648,22 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.23598,
+        "value": 0.236158,
         "reference_value_m": 0.2285,
-        "change_percent": 3.274,
+        "change_percent": 3.351,
+        "active_window_percent": [
+          -10.0,
+          10.0
+        ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
-      "at_bound": false
+      "fpmax": {
+        "value": 1.7661,
+        "reference_value": 1.3,
+        "change_percent": 35.854,
+        "at_bound": false
+      }
     }
   ],
   "fit": {
@@ -503,9 +679,9 @@
         10.0
       ]
     },
-    "rmse_Ncm_before": 98.39708346194024,
-    "rmse_Ncm_after": 2.9991446417163075,
-    "max_abs_err_Ncm_after": 9.460614469550947,
+    "rmse_Ncm_before": 98.39708346194018,
+    "rmse_Ncm_after": 3.395928440496856,
+    "max_abs_err_Ncm_after": 10.779376445172932,
     "target_peak_Ncm": 30.36601987360585
   },
   "binder_markey2017_table2": {
@@ -571,10 +747,10 @@
         "posture": "formica2012_grip",
         "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
         "fit": {
-          "rmse_Nm_before": 0.4378950621253186,
-          "rmse_Nm_after": 0.1590736527255573,
-          "max_excess_Nm_before": 0.8946344270670146,
-          "max_excess_Nm_after": 0.08078034064057787,
+          "rmse_Nm_before": 0.45294973257142157,
+          "rmse_Nm_after": 0.1323271417386486,
+          "max_excess_Nm_before": 0.9241417784945833,
+          "max_excess_Nm_after": 0.07972777064270102,
           "target_peak_Nm": 0.30293679826865577
         }
       },
@@ -597,10 +773,10 @@
         "posture": "formica2012_grip",
         "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
         "fit": {
-          "rmse_Nm_before": 1.1750593112939152,
-          "rmse_Nm_after": 0.12891610433885328,
-          "max_excess_Nm_before": 2.552249826388547,
-          "max_excess_Nm_after": 0.02249920360450064,
+          "rmse_Nm_before": 1.1775272241062404,
+          "rmse_Nm_after": 0.0977902579783674,
+          "max_excess_Nm_before": 2.5635519989406896,
+          "max_excess_Nm_after": 0.030176753241127185,
           "target_peak_Nm": 0.5073672135547517
         }
       },
@@ -640,10 +816,10 @@
         "posture": "knutson2000",
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
-          "rmse_Nm_before": 0.642444923531789,
-          "rmse_Nm_after": 0.0688803818454869,
-          "max_excess_Nm_before": 3.502029680343489,
-          "max_excess_Nm_after": 0.0013944973477938716,
+          "rmse_Nm_before": 0.6424449235317885,
+          "rmse_Nm_after": 0.0704260762078133,
+          "max_excess_Nm_before": 3.5020296803434836,
+          "max_excess_Nm_after": 0.02279043411426737,
           "target_peak_Nm": 0.3440783082622245
         }
       },
@@ -683,10 +859,10 @@
         "posture": "knutson2000",
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
-          "rmse_Nm_before": 1.0980221214431338,
-          "rmse_Nm_after": 0.06729778659325533,
+          "rmse_Nm_before": 1.098022121443134,
+          "rmse_Nm_after": 0.07167831463072459,
           "max_excess_Nm_before": 2.0052199710939886,
-          "max_excess_Nm_after": 0.0081173744606605,
+          "max_excess_Nm_after": 0.02653492531581469,
           "target_peak_Nm": 0.3440783082622245
         }
       },
@@ -727,9 +903,9 @@
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
           "rmse_Nm_before": 0.5548626000673534,
-          "rmse_Nm_after": 0.0675677460661103,
-          "max_excess_Nm_before": 1.1999515474984985,
-          "max_excess_Nm_after": 0.0018203198599859999,
+          "rmse_Nm_after": 0.08060738466737469,
+          "max_excess_Nm_before": 1.199951547498499,
+          "max_excess_Nm_after": 0.052167931303806536,
           "target_peak_Nm": 0.3440783082622245
         }
       },
@@ -758,10 +934,10 @@
         "posture": "neutral",
         "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
-          "rmse_Nm_before": 0.04203937830330583,
-          "rmse_Nm_after": 0.038715676993822,
+          "rmse_Nm_before": 0.0420393783033058,
+          "rmse_Nm_after": 0.04795862192370955,
           "max_excess_Nm_before": 0.058163107419498164,
-          "max_excess_Nm_after": 0.0,
+          "max_excess_Nm_after": 0.014338011014730813,
           "target_peak_Nm": 0.05167246107211147
         }
       },
@@ -791,9 +967,9 @@
         "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.05751314970008402,
-          "rmse_Nm_after": 0.05730823702300347,
+          "rmse_Nm_after": 0.0604519122859118,
           "max_excess_Nm_before": 0.005047634380714653,
-          "max_excess_Nm_after": 0.0,
+          "max_excess_Nm_after": 0.0037641044802590416,
           "target_peak_Nm": 0.07988195974879853
         }
       },
@@ -823,9 +999,9 @@
         "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.9904433972980188,
-          "rmse_Nm_after": 0.03870596536332715,
+          "rmse_Nm_after": 0.04614380647626128,
           "max_excess_Nm_before": 1.248728580251991,
-          "max_excess_Nm_after": 0.0,
+          "max_excess_Nm_after": 0.009333229935554169,
           "target_peak_Nm": 0.05167246107211147
         }
       },
@@ -854,10 +1030,10 @@
         "posture": "neutral",
         "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
-          "rmse_Nm_before": 0.655813983317492,
-          "rmse_Nm_after": 0.05731270234146662,
+          "rmse_Nm_before": 0.6558139833174922,
+          "rmse_Nm_after": 0.05817684194890375,
           "max_excess_Nm_before": 0.6822867196412903,
-          "max_excess_Nm_after": 0.00015619253591633714,
+          "max_excess_Nm_after": 0.001049671876371216,
           "target_peak_Nm": 0.07988195974879853
         }
       },
@@ -887,9 +1063,9 @@
         "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.3358769710165621,
-          "rmse_Nm_after": 0.046089349258455176,
+          "rmse_Nm_after": 0.053485844245319096,
           "max_excess_Nm_before": 0.40205529863447986,
-          "max_excess_Nm_after": 0.1248316185705383,
+          "max_excess_Nm_after": 0.10720168648663957,
           "target_peak_Nm": 0.05167246107211147
         }
       },
@@ -918,10 +1094,10 @@
         "posture": "neutral",
         "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
-          "rmse_Nm_before": 0.1666050747732392,
-          "rmse_Nm_after": 0.05733838591103746,
+          "rmse_Nm_before": 0.16660507477323916,
+          "rmse_Nm_after": 0.07517291558275034,
           "max_excess_Nm_before": 0.12911673464166823,
-          "max_excess_Nm_after": 0.0005151404560556487,
+          "max_excess_Nm_after": 0.02115182163925813,
           "target_peak_Nm": 0.07988195974879853
         }
       },
@@ -950,10 +1126,10 @@
         "posture": "neutral",
         "where": "Barry et al. 2018 Sec. 2.1: thumb MCP passive moment set equal to the index MCP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
         "fit": {
-          "rmse_Nm_before": 0.6201637851941335,
-          "rmse_Nm_after": 0.031572386456970684,
-          "max_excess_Nm_before": 0.9775516199674353,
-          "max_excess_Nm_after": 1.3877787807814457e-17,
+          "rmse_Nm_before": 0.6201637851941334,
+          "rmse_Nm_after": 0.02032682293007598,
+          "max_excess_Nm_before": 0.9775516199674338,
+          "max_excess_Nm_after": 0.0178224385723623,
           "target_peak_Nm": 0.0606725000299487
         }
       },
@@ -982,10 +1158,10 @@
         "posture": "neutral",
         "where": "Barry et al. 2018 Sec. 2.1: thumb IP passive moment set equal to the index PIP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
         "fit": {
-          "rmse_Nm_before": 0.5676229345486696,
-          "rmse_Nm_after": 0.03553426494330421,
+          "rmse_Nm_before": 0.5676229345486695,
+          "rmse_Nm_after": 0.04088829033890661,
           "max_excess_Nm_before": 1.178942177723188,
-          "max_excess_Nm_after": 0.0016708512714114498,
+          "max_excess_Nm_after": 0.026478942746335724,
           "target_peak_Nm": 0.05167246107211147
         }
       }
@@ -1012,8 +1188,108 @@
     ],
     "excess_weight": 100.0,
     "max_change": 0.1,
-    "cost": "sum over rows of mean(excess_weight * excess^2 + deficit^2) (N cm^2) + (1/100) sum |slack change / slack|",
-    "cost_before": 5543472.856748682,
-    "cost_after": 5869.050493252301
+    "fpmax_bounds": [
+      0.002,
+      2.6
+    ],
+    "fpmax_penalty": 1.0,
+    "cost": "sum over rows of mean(excess_weight * excess^2 + deficit^2) (N cm^2) + (1/100) sum |slack change / slack| + fpmax_penalty sum |ln(fpmax / reference)|",
+    "error_before": 5562733.677783318,
+    "error_after": 7178.398380126078
+  },
+  "active_constraint": {
+    "description": "Hard constraint on the fit: MuJoCo's active force-length factor (mju_muscleGain at zero velocity) of each listed muscle is at least min_fl in each posture, so the hand can still close and open actively. 0.5 is half the isometric force; on MuJoCo's curve it is reached at (lmin + 1) / 2 and (1 + lmax) / 2, so the constraint is a window on each slack length. Full fist: every finger and thumb joint at its MyoHand flexion limit (thumb CMC abduction neutral); full extension: the same joints at their extension limits.",
+    "min_fl": 0.5,
+    "postures_deg": {
+      "fist_wrist_neutral": {
+        "mcp2_flexion_r": 90.0,
+        "pm2_flexion_r": 90.0,
+        "md2_flexion_r": 90.0,
+        "mcp3_flexion_r": 90.0,
+        "pm3_flexion_r": 90.0,
+        "md3_flexion": 90.0,
+        "mcp4_flexion_r": 90.0,
+        "pm4_flexion": 90.0,
+        "md4_flexion_r": 90.0,
+        "mcp5_flexion_r": 90.0,
+        "pm5_flexion_r": 90.0,
+        "md5_flexion_r": 90.0,
+        "cmc_flexion": -44.69,
+        "mp_flexion_r": -45.0,
+        "ip_flexion_r": -75.0,
+        "flexion_r": 0.0
+      },
+      "fist_wrist_flexed_30": {
+        "mcp2_flexion_r": 90.0,
+        "pm2_flexion_r": 90.0,
+        "md2_flexion_r": 90.0,
+        "mcp3_flexion_r": 90.0,
+        "pm3_flexion_r": 90.0,
+        "md3_flexion": 90.0,
+        "mcp4_flexion_r": 90.0,
+        "pm4_flexion": 90.0,
+        "md4_flexion_r": 90.0,
+        "mcp5_flexion_r": 90.0,
+        "pm5_flexion_r": 90.0,
+        "md5_flexion_r": 90.0,
+        "cmc_flexion": -44.69,
+        "mp_flexion_r": -45.0,
+        "ip_flexion_r": -75.0,
+        "flexion_r": 30.0
+      },
+      "extension_wrist_extended_30": {
+        "mcp2_flexion_r": 0.0,
+        "pm2_flexion_r": 0.0,
+        "md2_flexion_r": 0.0,
+        "mcp3_flexion_r": 0.0,
+        "pm3_flexion_r": 0.0,
+        "md3_flexion": 0.0,
+        "mcp4_flexion_r": 0.0,
+        "pm4_flexion": 0.0,
+        "md4_flexion_r": 0.0,
+        "mcp5_flexion_r": 0.0,
+        "pm5_flexion_r": 0.0,
+        "md5_flexion_r": 0.0,
+        "cmc_flexion": 40.11,
+        "mp_flexion_r": 40.0,
+        "ip_flexion_r": 25.0,
+        "flexion_r": -30.0
+      }
+    },
+    "muscles": {
+      "fist_wrist_neutral": [
+        "FDS2",
+        "FDS3",
+        "FDS4",
+        "FDS5",
+        "FDP2",
+        "FDP3",
+        "FDP4",
+        "FDP5",
+        "FPL"
+      ],
+      "fist_wrist_flexed_30": [
+        "FDS2",
+        "FDS3",
+        "FDS4",
+        "FDS5",
+        "FDP2",
+        "FDP3",
+        "FDP4",
+        "FDP5",
+        "FPL"
+      ],
+      "extension_wrist_extended_30": [
+        "EDC2",
+        "EDC3",
+        "EDC4",
+        "EDC5",
+        "EDM",
+        "EIP",
+        "EPL",
+        "EPB",
+        "APL"
+      ]
+    }
   }
 }
