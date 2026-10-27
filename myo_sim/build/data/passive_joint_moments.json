@@ -1,6 +1,6 @@
 {
   "format": "myo_sim.passive_joint_moments/1",
-  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation. Fitted rows (source_curve) are cubic springs fitted per side of the source curve's equilibrium by non-negative least squares over fit.range_rad (scripts/fit_passive_moments.py); onsets are absolute joint angles.",
+  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation. Fitted rows (source_curve) are cubic springs fitted per side of the source curve's equilibrium by non-negative least squares over fit.range_rad (scripts/fit_passive_moments.py); onsets are absolute joint angles. Every row is scales_with 'none' (measured stiffness is kept unless a subject measurement exists); factors per row via add_passive_joint_moments(scale={row: factor}) or load_spec(subject_scale=...).",
   "sources": {
     "formica2012": {
       "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
@@ -15,7 +15,7 @@
     "kamper2002": {
       "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002.",
       "doi": "10.1016/S0021-9290(02)00229-4",
-      "access": "closed; coefficients not verified"
+      "access": "closed; Table 2 (tau_s, K, B) and Eq. (1) verified from the PDF"
     },
     "li2006": {
       "citation": "Li ZM, Davis G, Gustafson NP, Goitz RJ. A robot-assisted study of intrinsic muscle regulation on proximal interphalangeal joint stiffness by varying metacarpophalangeal joint position. J Orthop Res 24(3):407-415, 2006.",
@@ -35,12 +35,18 @@
     "mcfarland2023": {
       "citation": "McFarland DC, Binder-Markey BI, Nichols JA, Wohlman SJ, de Bruin M, Murray WM. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
       "doi": "10.1109/TBME.2022.3217722",
-      "access": "paper open (bioRxiv 10.1101/2021.12.28.474357, PMC10650739); passive parameters in supplement S7 and the ARMS model (simtk.org/projects/arms_hand_model: BSD-3 for non-commercial use only, login required)"
+      "access": "paper open (bioRxiv 10.1101/2021.12.28.474357, PMC10650739); passive parameters in supplement S7 and the ARMS model (simtk.org/projects/arms_hand_model: BSD-3 for non-commercial use only, login required)",
+      "note": "Scaled the index PIP/DIP passive curves for digits 3-5 (no measurements exist)."
     },
     "binder_markey2021": {
       "citation": "Binder-Markey BI, Murray WM, Dewald JPA. Passive properties of the wrist and fingers following chronic hemiparetic stroke: interlimb comparisons in persons with and without a clinical treatment history that includes botulinum neurotoxin. Front Neurol 12:687624, 2021.",
       "doi": "10.3389/fneur.2021.687624",
       "access": "open (CC BY); the shared spreadsheet Finger_ROM_data.xlsx holds passive MCP range-of-motion limits per wrist angle (15 deg steps), no torques: validation only"
+    },
+    "hollister1992": {
+      "citation": "Hollister A, Buford WL, Myers LM, Giurintano DJ, Novick A. The axes of rotation of the thumb carpometacarpal joint. J Orthop Res 10(3):454-460, 1992.",
+      "doi": "10.1002/jor.1100100319",
+      "access": "closed; verified from the PDF"
     }
   },
   "joints": [
@@ -78,7 +84,8 @@
         -0.2967,
         0.2967
       ],
-      "notes": "Linear slope over the central range (about +-17 deg from neutral), applied from neutral over the whole range: neutral-centred stiffness, not an end-range moment; beyond valid_range the real moment stiffens and this underestimates it. MyoHand's muscles add <= 0.0002 Nm/rad here at act = 0 (two-arm MyoHand model, elbow 90 deg), so no double counting."
+      "notes": "Linear slope over the central range (about +-17 deg from neutral), applied from neutral over the whole range: neutral-centred stiffness, not an end-range moment; beyond valid_range the real moment stiffens and this underestimates it. MyoHand's muscles add <= 0.0002 Nm/rad here at act = 0 (two-arm MyoHand model, elbow 90 deg), so no double counting.",
+      "scales_with": "none"
     },
     {
       "joint": "wrist_deviation",
@@ -114,7 +121,8 @@
         -0.2967,
         0.2967
       ],
-      "notes": "Linear slope over the central range (about +-17 deg from neutral), applied from neutral over the whole range: neutral-centred stiffness, not an end-range moment; beyond valid_range the real moment stiffens and this underestimates it. MyoHand's muscles add <= 0.0002 Nm/rad here at act = 0 (two-arm MyoHand model, elbow 90 deg), so no double counting."
+      "notes": "Linear slope over the central range (about +-17 deg from neutral), applied from neutral over the whole range: neutral-centred stiffness, not an end-range moment; beyond valid_range the real moment stiffens and this underestimates it. MyoHand's muscles add <= 0.0002 Nm/rad here at act = 0 (two-arm MyoHand model, elbow 90 deg), so no double counting.",
+      "scales_with": "none"
     },
     {
       "joint": "forearm_pronation",
@@ -149,7 +157,8 @@
           ],
           "sd": 0.101
         }
-      }
+      },
+      "scales_with": "none"
     },
     {
       "joint": "thumb_cmc_flexion",
@@ -189,6 +198,8 @@
         "max_abs_err_Nm": 0.07562904207835924,
         "source_peak_Nm": 1.4975221269702834
       },
+      "axes_note": "Hollister et al. 1992: the CMC flexion-extension axis lies in the trapezium and the abduction-adduction axis in the metacarpal base, 72.7 +- 8.4 deg apart and not intersecting. MyoHand's two CMC axes are 80.9 deg apart and intersect (both on firstmc). Domalain used Chao et al. Euler angles, so the mapping is by joint limits, not by axes.",
+      "scales_with": "none",
       "positive": [
         {
           "onset": 0.12592616167020737,
@@ -260,40 +271,42 @@
           -0.04537856055185247,
           0.7801621756414654
         ],
-        "rmse_Nm": 0.069374280710234,
-        "max_abs_err_Nm": 0.15433819229565549,
+        "rmse_Nm": 0.06937428071023401,
+        "max_abs_err_Nm": 0.15433819229565526,
         "source_peak_Nm": 1.3842444687865565
       },
+      "axes_note": "Hollister et al. 1992: the CMC flexion-extension axis lies in the trapezium and the abduction-adduction axis in the metacarpal base, 72.7 +- 8.4 deg apart and not intersecting. MyoHand's two CMC axes are 80.9 deg apart and intersect (both on firstmc). Domalain used Chao et al. Euler angles, so the mapping is by joint limits, not by axes.",
+      "scales_with": "none",
       "positive": [
         {
-          "onset": 0.2910262996133018,
+          "onset": 0.29102629961330173,
           "stiffness": [
-            0.2430676492035952,
+            0.24306764920359536,
             0.0,
-            7.0387913940307945
+            7.038791394030794
           ]
         },
         {
           "onset": 0.7449887608161863,
           "stiffness": [
-            7.880616767908168,
-            56.57909555065592,
-            2182.5807971138133
+            7.880616767908112,
+            56.57909555065887,
+            2182.5807971137674
           ]
         },
         {
           "onset": 0.7615409560280824,
           "stiffness": [
-            0.004503589605159981,
+            0.004503589605164124,
             0.0,
             0.0
           ]
         }
       ],
       "negative": {
-        "onset": 0.2910262996133018,
+        "onset": 0.29102629961330173,
         "stiffness": [
-          2.2490276249500267,
+          2.249027624950028,
           0.0,
           0.0
         ]
@@ -311,61 +324,283 @@
         "barry2018",
         "mcfarland2023"
       ],
-      "notes": "Assumption from Barry et al. 2018 (no thumb MCP data exist): Knutson's index-MCP intrinsic curve with MyoHand's thumb sign (+q = extension). MyoHand's thumb muscles add no passive MP moment (|M| < 0.1 N cm over the range), so nothing double-counts.",
+      "notes": "Assumption from Barry et al. 2018 (no thumb MCP data exist): the index MCP's total static torque (Kamper 2002, wrist and IP neutral) with MyoHand's thumb sign (+q = extension), minus the thumb muscles' own passive moment (thenar on). The total, not Knutson's intrinsic part, because the thumb has no extrinsic finger tenodesis to supply the rest; Knutson's intrinsic equilibrium (57 deg) lies outside the thumb MP range (45 deg flexion) and drove the thumb into its flexion limit. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
       "source": "barry2018",
-      "where": "Barry et al. 2018 Sec. 2.1: thumb MCP passive set equal to index MCP",
+      "where": "Barry et al. 2018 Sec. 2.1 (thumb MCP = index MCP), with Kamper 2002 Table 2 index MCP tau_s",
       "source_curve": {
-        "model": "knutson2000_intrinsic",
+        "model": "kamper2002_static",
         "params": {
-          "A1": 1.4,
-          "k1": 0.068,
-          "theta1": -18.0,
-          "A2": 1.6,
-          "k2": 0.092,
-          "theta2": 79.4
+          "c3": -0.071,
+          "c2": 0.145,
+          "c1": -0.154,
+          "c0": 0.029,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
         },
         "joint_sign": -1.0,
-        "segments": 3
+        "fit_range_deg": [
+          -45.0,
+          40.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {
+            "thenar_muscles": true
+          },
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              -0.785398,
+              0.698132,
+              200
+            ],
+            "moment": [
+              -1.4e-05,
+              -1.4e-05,
+              -1.4e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.6e-05,
+              -1.6e-05,
+              -1.6e-05,
+              -1.6e-05,
+              -1.6e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.5e-05,
+              -1.4e-05,
+              -1.4e-05,
+              -1.4e-05,
+              -1.3e-05,
+              -1.3e-05,
+              -1.2e-05,
+              -1.2e-05,
+              -1.1e-05,
+              -1.1e-05,
+              -1e-05,
+              -1e-05,
+              -9e-06,
+              -8e-06,
+              -8e-06,
+              -7e-06,
+              -7e-06,
+              -6e-06,
+              -5e-06,
+              -4e-06,
+              -4e-06,
+              -3e-06,
+              -2e-06,
+              -2e-06,
+              -1e-06,
+              -0.0,
+              1e-06,
+              1e-06,
+              2e-06,
+              3e-06,
+              4e-06,
+              4e-06,
+              5e-06,
+              6e-06,
+              6e-06,
+              7e-06,
+              8e-06,
+              8e-06,
+              9e-06,
+              9e-06,
+              1e-05,
+              1.1e-05,
+              1.1e-05,
+              1.2e-05,
+              1.2e-05,
+              1.3e-05,
+              1.3e-05,
+              1.3e-05,
+              1.4e-05,
+              1.4e-05,
+              1.4e-05,
+              1.5e-05,
+              1.5e-05,
+              1.5e-05,
+              1.5e-05,
+              1.5e-05,
+              1.6e-05,
+              1.6e-05,
+              1.6e-05,
+              1.6e-05,
+              1.6e-05,
+              1.6e-05,
+              1.5e-05,
+              1.5e-05,
+              1.5e-05,
+              1.5e-05,
+              1.5e-05,
+              1.4e-05,
+              1.4e-05,
+              1.4e-05,
+              1.3e-05,
+              1.3e-05,
+              1.3e-05,
+              1.2e-05,
+              1.2e-05,
+              1.1e-05,
+              1.1e-05,
+              1e-05,
+              1e-05,
+              9e-06,
+              8e-06,
+              8e-06,
+              7e-06,
+              5e-06,
+              -1e-05,
+              -3.9e-05,
+              -8.3e-05,
+              -0.000142,
+              -0.000217,
+              -0.000306,
+              -0.000411,
+              -0.000531,
+              -0.000667,
+              -0.000818,
+              -0.000985,
+              -0.001168,
+              -0.001367,
+              -0.001582,
+              -0.001813,
+              -0.002059,
+              -0.002322,
+              -0.002601,
+              -0.002896,
+              -0.003208,
+              -0.003535,
+              -0.00388,
+              -0.004265,
+              -0.004705,
+              -0.005199,
+              -0.005746,
+              -0.006342,
+              -0.006988,
+              -0.007682,
+              -0.008421,
+              -0.009204,
+              -0.01003,
+              -0.010898,
+              -0.011804,
+              -0.012749,
+              -0.013731,
+              -0.014747,
+              -0.015797,
+              -0.016879,
+              -0.017992,
+              -0.019133,
+              -0.020302,
+              -0.021498,
+              -0.022717,
+              -0.023961,
+              -0.025226,
+              -0.026511,
+              -0.027816,
+              -0.029139,
+              -0.030477,
+              -0.031831,
+              -0.033199,
+              -0.034579,
+              -0.03597,
+              -0.037371,
+              -0.038781,
+              -0.040198,
+              -0.041621,
+              -0.043049,
+              -0.044481,
+              -0.045916,
+              -0.047353,
+              -0.048789,
+              -0.050225,
+              -0.051659,
+              -0.053091,
+              -0.054518,
+              -0.055941,
+              -0.057358,
+              -0.058768,
+              -0.06017,
+              -0.061563,
+              -0.062947,
+              -0.06432,
+              -0.065682,
+              -0.067031,
+              -0.068368,
+              -0.06969,
+              -0.070998,
+              -0.072291,
+              -0.073567,
+              -0.074826,
+              -0.076068,
+              -0.077292,
+              -0.078496,
+              -0.079681,
+              -0.080846,
+              -0.081991,
+              -0.083114,
+              -0.084215,
+              -0.085294,
+              -0.08635,
+              -0.087383,
+              -0.088392,
+              -0.089377,
+              -0.090337,
+              -0.091273
+            ]
+          },
+          "model_excess_max_Nm": 0.030600016616856754
+        },
+        "signed": false,
+        "signed_fallback": "the signed fit was not restoring everywhere; non-negative coefficients used"
       },
       "fit": {
         "range_rad": [
-          -0.785398,
-          0.698132
+          -0.7853981633974483,
+          0.6981317007977318
         ],
         "measured_range_rad": [
-          -0.785398,
-          0.698132
+          -0.7853981633974483,
+          0.6981317007977318
         ],
-        "rmse_Nm": 0.0025366818969606328,
-        "max_abs_err_Nm": 0.004897750235329592,
-        "source_peak_Nm": 0.06449297520765794
+        "rmse_Nm": 0.01869499972812551,
+        "max_abs_err_Nm": 0.04217220269755435,
+        "source_peak_Nm": 0.05438462071987718
       },
-      "positive": [
-        {
-          "onset": -0.785398,
-          "stiffness": [
-            0.0,
-            0.0,
-            0.0156994684289931
-          ]
-        },
-        {
-          "onset": 0.5568434285714285,
-          "stiffness": [
-            0.05962088652944653,
-            0.1474555171196189,
-            0.6659995963386296
-          ]
-        },
-        {
-          "onset": 0.6200514736842104,
-          "stiffness": [
-            1.9185264529248207e-05,
-            0.0,
-            0.0
-          ]
-        }
-      ]
+      "damping_reference": {
+        "kamper2002_B_Nms_per_rad": 0.0142,
+        "myohand_dof_damping": 0.05,
+        "note": "not applied"
+      },
+      "scales_with": "none",
+      "positive": {
+        "onset": -0.23393767253996847,
+        "stiffness": [
+          0.029946015289842382,
+          0.0,
+          0.0
+        ]
+      },
+      "negative": {
+        "onset": -0.23393767253996847,
+        "stiffness": [
+          0.07138734338016775,
+          0.0,
+          0.0
+        ]
+      }
     },
     {
       "joint": "thumb_ip_flexion",
@@ -373,14 +608,336 @@
         "r": "ip_flexion_r",
         "l": "ip_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "thumb IP flexion/extension",
-      "candidate_sources": [
-        "barry2018",
-        "li2006",
-        "kamper2002"
+      "notes": "Assumption from Barry et al. 2018 (no thumb IP data exist): the index PIP's total static torque (Kamper 2002) with MyoHand's thumb sign (+q = extension), minus the thumb muscles' own passive moment (thenar on). Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "barry2018",
+      "where": "Barry et al. 2018 Sec. 2.1 (thumb IP = index PIP), with Kamper 2002 Table 2 index PIP tau_s",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": -1.0,
+        "fit_range_deg": [
+          -75.0,
+          25.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {
+            "thenar_muscles": true
+          },
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              -1.309,
+              0.436332,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "damping_reference": {
+        "kamper2002_B_Nms_per_rad": 0.0105,
+        "myohand_dof_damping": 0.05,
+        "note": "not applied"
+      },
+      "fit": {
+        "range_rad": [
+          -1.3089969389957472,
+          0.4363323129985824
+        ],
+        "measured_range_rad": [
+          -1.3089969389957472,
+          0.4363323129985824
+        ],
+        "rmse_Nm": 0.0006517068688364845,
+        "max_abs_err_Nm": 0.0018635755408935029,
+        "source_peak_Nm": 0.0516899556646699
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": -0.11592625705491853,
+          "stiffness": [
+            0.14740985387308111,
+            -0.03662922749972819,
+            -0.20773679361709596
+          ]
+        },
+        {
+          "onset": 0.09514012839818697,
+          "stiffness": [
+            0.07312546435327999,
+            -0.7142689821820047,
+            1.5628619589872692
+          ]
+        },
+        {
+          "onset": -0.1104500341174357,
+          "stiffness": [
+            -0.014260925266532828,
+            0.07255020221257016,
+            -0.0880640675207713
+          ]
+        },
+        {
+          "onset": 0.20887085659831883,
+          "stiffness": [
+            -0.035013091661813094,
+            0.43803420595313436,
+            -1.2826661852771575
+          ]
+        }
       ],
-      "notes": "Barry et al. 2018 set the thumb IP equal to the index PIP, but Li 2006 gives only near-equilibrium stiffness about an index-specific equilibrium (52.5-77.9 deg), which does not transfer to the thumb IP; Kamper et al. 2002 PIP curves are needed."
+      "negative": [
+        {
+          "onset": -0.11592625705491853,
+          "stiffness": [
+            0.15556275359370805,
+            -0.14592114799416822,
+            0.03471712238264282
+          ]
+        },
+        {
+          "onset": -0.5872442408026034,
+          "stiffness": [
+            0.049042785564331066,
+            -0.23104701818232198,
+            0.24216530993174507
+          ]
+        },
+        {
+          "onset": -0.13232132800207652,
+          "stiffness": [
+            -0.009070521638483554,
+            0.022159140933835704,
+            -0.012796257340970058
+          ]
+        },
+        {
+          "onset": -0.9721790131722801,
+          "stiffness": [
+            -0.05456392771131218,
+            0.4847954002267203,
+            -0.9891857207058214
+          ]
+        }
+      ]
     },
     {
       "joint": "digit2_mcp_flexion",
@@ -427,24 +984,25 @@
           0.0,
           1.5708
         ],
-        "rmse_Nm": 0.00033910963198118416,
-        "max_abs_err_Nm": 0.0013534043008732385,
+        "rmse_Nm": 0.00033910963198118595,
+        "max_abs_err_Nm": 0.0013534043008732524,
         "source_peak_Nm": 0.04041893114856969
       },
+      "scales_with": "none",
       "positive": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.010721321304825629,
+          0.010721321304825423,
           0.0,
-          0.17626734541498787
+          0.176267345414987
         ]
       },
       "negative": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.004830927701106348,
+          0.004830927701106365,
           0.0,
-          0.00055798249815317
+          0.0005579824981531611
         ]
       }
     },
@@ -459,7 +1017,8 @@
       "candidate_sources": [
         "barry2018"
       ],
-      "notes": ""
+      "notes": "",
+      "scales_with": "none"
     },
     {
       "joint": "digit2_pip_flexion",
@@ -467,30 +1026,355 @@
         "r": "pm2_flexion_r",
         "l": "pm2_flexion_l"
       },
-      "status": "validation_only",
+      "status": "measured",
       "dof": "digit 2 PIP flexion/extension",
-      "notes": "Not added: Li reports total moments (muscles included) as equilibria and 20-deg stiffness only, and the equilibrium moves ~20 deg with MCP posture (intrinsic-muscle regulation, the paper's finding), which a joint spring cannot represent. Validation: MyoHand's muscles already give ~0.55 N mm/deg at PIP 60-80 deg with MCP 0 (Li: 0.71-0.76) and ~0 with MCP 60 (Li: 0.43-0.49), and no equilibrium in 30-90 deg (passive moment extends throughout: -0.3 at 40, -3.5 N cm at 90 deg), against Li's 52.5-77.9 deg. Kamper et al. 2002 (curves for MCP/PIP/DIP) is needed for a PIP row.",
-      "source": "li2006",
-      "where": "Table 3, healthy, MCP at 0 and 60 deg",
-      "reference": {
-        "mcp0": {
-          "flexion_equilibrium_deg": 52.5,
-          "extension_equilibrium_deg": 77.9,
-          "flexion_stiffness_Nmm_per_deg": 0.712,
-          "extension_stiffness_Nmm_per_deg": 0.759
+      "notes": "Total measured passive torque minus the model's own muscle contribution at the measured posture; Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
         },
-        "mcp60": {
-          "flexion_equilibrium_deg": 29.6,
-          "extension_equilibrium_deg": 63.9,
-          "flexion_stiffness_Nmm_per_deg": 0.431,
-          "extension_stiffness_Nmm_per_deg": 0.494
-        },
-        "range_tested_deg": [
-          0,
-          90
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
         ],
-        "stiffness_window_deg": 20
-      }
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              -1e-06,
+              -4e-06,
+              -8e-06,
+              -1.5e-05,
+              -2.4e-05,
+              -3.5e-05,
+              -4.7e-05,
+              -6.2e-05,
+              -7.9e-05,
+              -9.7e-05,
+              -0.000118,
+              -0.00014,
+              -0.000165,
+              -0.000192,
+              -0.00022,
+              -0.00025,
+              -0.000283,
+              -0.000317,
+              -0.000353,
+              -0.000392,
+              -0.000432,
+              -0.000474,
+              -0.000518,
+              -0.000564,
+              -0.000613,
+              -0.000663,
+              -0.000715,
+              -0.000769,
+              -0.000825,
+              -0.000883,
+              -0.000942,
+              -0.001004,
+              -0.001068,
+              -0.001134,
+              -0.001202,
+              -0.001272,
+              -0.001344,
+              -0.001418,
+              -0.001494,
+              -0.001572,
+              -0.001652,
+              -0.001734,
+              -0.001818,
+              -0.001904,
+              -0.001992,
+              -0.002083,
+              -0.002175,
+              -0.00227,
+              -0.002366,
+              -0.002465,
+              -0.002566,
+              -0.002669,
+              -0.002774,
+              -0.002881,
+              -0.00299,
+              -0.003102,
+              -0.003216,
+              -0.003332,
+              -0.00345,
+              -0.00357,
+              -0.003693,
+              -0.003818,
+              -0.003945,
+              -0.004075,
+              -0.004206,
+              -0.00434,
+              -0.004477,
+              -0.004616,
+              -0.004757,
+              -0.0049,
+              -0.005046,
+              -0.005194,
+              -0.005345,
+              -0.005498,
+              -0.005654,
+              -0.005812,
+              -0.005973,
+              -0.006136,
+              -0.006302,
+              -0.00647,
+              -0.006641,
+              -0.006815,
+              -0.006991,
+              -0.00717,
+              -0.007351,
+              -0.007535,
+              -0.007722,
+              -0.007912,
+              -0.008105,
+              -0.0083,
+              -0.008498,
+              -0.008699,
+              -0.008903,
+              -0.009109,
+              -0.009319,
+              -0.009532,
+              -0.009747,
+              -0.009966,
+              -0.010187,
+              -0.010412,
+              -0.01064,
+              -0.010871,
+              -0.011105,
+              -0.011342,
+              -0.011582,
+              -0.011826,
+              -0.012073,
+              -0.012323,
+              -0.012577,
+              -0.012834,
+              -0.013094,
+              -0.013358,
+              -0.013625,
+              -0.013896,
+              -0.01417,
+              -0.014448,
+              -0.014729,
+              -0.015014,
+              -0.015303,
+              -0.015596,
+              -0.015892,
+              -0.016192,
+              -0.016496,
+              -0.016803,
+              -0.017115,
+              -0.01743,
+              -0.017749,
+              -0.018073,
+              -0.0184,
+              -0.018732,
+              -0.019067,
+              -0.019407,
+              -0.019751,
+              -0.020099,
+              -0.020451,
+              -0.020808,
+              -0.021169,
+              -0.021534,
+              -0.021904,
+              -0.022279,
+              -0.022658,
+              -0.023041,
+              -0.023429,
+              -0.023821,
+              -0.024219,
+              -0.024621,
+              -0.025027,
+              -0.025439,
+              -0.025855,
+              -0.026277,
+              -0.026703,
+              -0.027134,
+              -0.02757,
+              -0.028011,
+              -0.028458,
+              -0.028909,
+              -0.029366,
+              -0.029827,
+              -0.030295,
+              -0.030767,
+              -0.031245,
+              -0.031728,
+              -0.032217,
+              -0.032711,
+              -0.03321,
+              -0.033715,
+              -0.034226,
+              -0.034743
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "damping_reference": {
+        "kamper2002_B_Nms_per_rad": 0.0105,
+        "myohand_dof_damping": 0.05,
+        "note": "not applied"
+      },
+      "validation": {
+        "li2006": {
+          "mcp0": {
+            "flexion_equilibrium_deg": 52.5,
+            "extension_equilibrium_deg": 77.9,
+            "flexion_stiffness_Nmm_per_deg": 0.712,
+            "extension_stiffness_Nmm_per_deg": 0.759
+          },
+          "mcp60": {
+            "flexion_equilibrium_deg": 29.6,
+            "extension_equilibrium_deg": 63.9,
+            "flexion_stiffness_Nmm_per_deg": 0.431,
+            "extension_stiffness_Nmm_per_deg": 0.494
+          },
+          "range_tested_deg": [
+            0,
+            90
+          ],
+          "stiffness_window_deg": 20
+        }
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.0011326547065280634,
+        "max_abs_err_Nm": 0.002314701069069336,
+        "source_peak_Nm": 0.04731278707622661
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": 0.1159262570554155,
+          "stiffness": [
+            0.16804183594630295,
+            -0.18933416579709417,
+            0.052933466232931985
+          ]
+        },
+        {
+          "onset": 0.4921041124044162,
+          "stiffness": [
+            0.022698038736837584,
+            -0.06784062732337774,
+            0.04608546685281502
+          ]
+        },
+        {
+          "onset": 0.9369662300180085,
+          "stiffness": [
+            -0.04410241498706114,
+            0.23025236928867904,
+            -0.27039960864310403
+          ]
+        },
+        {
+          "onset": 0.12204181987629523,
+          "stiffness": [
+            -0.009073627110705746,
+            0.019535873641275875,
+            -0.00962899870809161
+          ]
+        }
+      ],
+      "negative": [
+        {
+          "onset": 0.1159262570554155,
+          "stiffness": [
+            0.12603262506222979,
+            0.03547561124340783,
+            -0.056000000287938737
+          ]
+        },
+        {
+          "onset": 0.09054715668241259,
+          "stiffness": [
+            1.062240306089556e-12,
+            -3.6983498321882854e-11,
+            2.930359179326598e-10
+          ]
+        },
+        {
+          "onset": 0.10235765538011857,
+          "stiffness": [
+            -5.542659515607558e-14,
+            1.5801856803247925e-12,
+            -1.0544703972808154e-11
+          ]
+        },
+        {
+          "onset": 0.09448398958164791,
+          "stiffness": [
+            6.343759792666896e-14,
+            -2.015895131100519e-12,
+            1.484369336539679e-11
+          ]
+        }
+      ]
     },
     {
       "joint": "digit2_dip_flexion",
@@ -498,13 +1382,300 @@
         "r": "md2_flexion_r",
         "l": "md2_flexion_l"
       },
-      "status": "gap",
+      "status": "measured",
       "dof": "digit 2 DIP flexion/extension",
-      "candidate_sources": [
-        "kamper2002",
-        "barry2018"
-      ],
-      "notes": ""
+      "notes": "Total measured passive torque minus the model's own muscle contribution at the measured posture; Kamper's DIP polynomial is negative over 0..60 deg (-0.019 N m at 0) and crosses zero near -14 deg, although the paper states 7 deg as the measured zero-torque DIP angle; used as published. In Kamper's own simulation (Eq. 1) tau_s takes the angle relative to the proximal joint; it was measured with that joint fixed at neutral, the posture used here. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.103,
+          "c2": 0.102,
+          "c1": -0.052,
+          "c0": -0.019,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "damping_reference": {
+        "kamper2002_B_Nms_per_rad": 0.0081,
+        "myohand_dof_damping": 0.05,
+        "note": "not applied"
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.003057854098861028,
+        "max_abs_err_Nm": 0.009047126570034862,
+        "source_peak_Nm": 0.07988195974879853
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": -0.23337500495857044,
+          "stiffness": [
+            0.036599750332873625,
+            0.029165449348291295,
+            -0.012873329863103388
+          ]
+        },
+        {
+          "onset": 0.36612545962888565,
+          "stiffness": [
+            -0.06840184047866459,
+            0.18654871050479166,
+            -0.11481389957957638
+          ]
+        },
+        {
+          "onset": 0.9172820655218319,
+          "stiffness": [
+            0.08646453478236037,
+            -0.44008386220180457,
+            0.5028528151387495
+          ]
+        },
+        {
+          "onset": 0.00393683289923533,
+          "stiffness": [
+            0.014317274349146541,
+            -0.029096291348909863,
+            0.013415470405629583
+          ]
+        }
+      ]
     },
     {
       "joint": "digit3_mcp_flexion",
@@ -542,24 +1713,25 @@
           0.0,
           1.5708
         ],
-        "rmse_Nm": 0.00033910963198118416,
-        "max_abs_err_Nm": 0.0013534043008732385,
+        "rmse_Nm": 0.00033910963198118595,
+        "max_abs_err_Nm": 0.0013534043008732524,
         "source_peak_Nm": 0.04041893114856969
       },
+      "scales_with": "none",
       "positive": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.010721321304825629,
+          0.010721321304825423,
           0.0,
-          0.17626734541498787
+          0.176267345414987
         ]
       },
       "negative": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.004830927701106348,
+          0.004830927701106365,
           0.0,
-          0.00055798249815317
+          0.0005579824981531611
         ]
       }
     },
@@ -572,7 +1744,8 @@
       "status": "gap",
       "dof": "digit 3 MCP abduction/adduction",
       "candidate_sources": [],
-      "notes": "No measured passive MCP abduction moments found for this digit."
+      "notes": "No measured passive MCP abduction moments found for this digit.",
+      "scales_with": "none"
     },
     {
       "joint": "digit3_pip_flexion",
@@ -580,12 +1753,329 @@
         "r": "pm3_flexion_r",
         "l": "pm3_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 3 PIP flexion/extension",
-      "candidate_sources": [
-        "mcfarland2023"
+      "notes": "Assumption: no measurements exist for this digit; the index curve is transferred unscaled (McFarland et al. 2023 used scaled index curves; their scale factors are not available here), minus this digit's own model muscle moment. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "index-finger Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.0011424585880567422,
+        "max_abs_err_Nm": 0.0023221995694413036,
+        "source_peak_Nm": 0.051689929612220034
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": 0.1159262570554155,
+          "stiffness": [
+            0.16716314946056182,
+            -0.18229344684505988,
+            0.0597174372539613
+          ]
+        },
+        {
+          "onset": 0.49604094530365156,
+          "stiffness": [
+            0.02371992022259637,
+            -0.07120935667790199,
+            0.048574285535595826
+          ]
+        },
+        {
+          "onset": 0.9369662300180085,
+          "stiffness": [
+            -0.04349751268522621,
+            0.22689249296329683,
+            -0.2663099476045866
+          ]
+        },
+        {
+          "onset": 0.12204181987629523,
+          "stiffness": [
+            -0.009378611892041906,
+            0.020121173211516675,
+            -0.009896995608775785
+          ]
+        }
       ],
-      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+      "negative": [
+        {
+          "onset": 0.1159262570554155,
+          "stiffness": [
+            0.12603262506222979,
+            0.03547561124340783,
+            -0.056000000287938737
+          ]
+        },
+        {
+          "onset": 0.09054715668241259,
+          "stiffness": [
+            1.062240306089556e-12,
+            -3.6983498321882854e-11,
+            2.930359179326598e-10
+          ]
+        },
+        {
+          "onset": 0.10235765538011857,
+          "stiffness": [
+            -5.542659515607558e-14,
+            1.5801856803247925e-12,
+            -1.0544703972808154e-11
+          ]
+        },
+        {
+          "onset": 0.09448398958164791,
+          "stiffness": [
+            6.343759792666896e-14,
+            -2.015895131100519e-12,
+            1.484369336539679e-11
+          ]
+        }
+      ]
     },
     {
       "joint": "digit3_dip_flexion",
@@ -593,12 +2083,295 @@
         "r": "md3_flexion",
         "l": "md3_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 3 DIP flexion/extension",
-      "candidate_sources": [
-        "mcfarland2023"
-      ],
-      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+      "notes": "Assumption: no measurements exist for this digit; the index curve is transferred unscaled (McFarland et al. 2023 used scaled index curves; their scale factors are not available here), minus this digit's own model muscle moment. Kamper's DIP polynomial is negative over 0..60 deg (-0.019 N m at 0) and crosses zero near -14 deg, although the paper states 7 deg as the measured zero-torque DIP angle; used as published. In Kamper's own simulation (Eq. 1) tau_s takes the angle relative to the proximal joint; it was measured with that joint fixed at neutral, the posture used here. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "index-finger Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.103,
+          "c2": 0.102,
+          "c1": -0.052,
+          "c0": -0.019,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.003057854098861028,
+        "max_abs_err_Nm": 0.009047126570034862,
+        "source_peak_Nm": 0.07988195974879853
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": -0.23337500495857044,
+          "stiffness": [
+            0.036599750332873625,
+            0.029165449348291295,
+            -0.012873329863103388
+          ]
+        },
+        {
+          "onset": 0.36612545962888565,
+          "stiffness": [
+            -0.06840184047866459,
+            0.18654871050479166,
+            -0.11481389957957638
+          ]
+        },
+        {
+          "onset": 0.9172820655218319,
+          "stiffness": [
+            0.08646453478236037,
+            -0.44008386220180457,
+            0.5028528151387495
+          ]
+        },
+        {
+          "onset": 0.00393683289923533,
+          "stiffness": [
+            0.014317274349146541,
+            -0.029096291348909863,
+            0.013415470405629583
+          ]
+        }
+      ]
     },
     {
       "joint": "digit4_mcp_flexion",
@@ -636,24 +2409,25 @@
           0.0,
           1.5708
         ],
-        "rmse_Nm": 0.00033910963198118416,
-        "max_abs_err_Nm": 0.0013534043008732385,
+        "rmse_Nm": 0.00033910963198118595,
+        "max_abs_err_Nm": 0.0013534043008732524,
         "source_peak_Nm": 0.04041893114856969
       },
+      "scales_with": "none",
       "positive": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.010721321304825629,
+          0.010721321304825423,
           0.0,
-          0.17626734541498787
+          0.176267345414987
         ]
       },
       "negative": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.004830927701106348,
+          0.004830927701106365,
           0.0,
-          0.00055798249815317
+          0.0005579824981531611
         ]
       }
     },
@@ -666,7 +2440,8 @@
       "status": "gap",
       "dof": "digit 4 MCP abduction/adduction",
       "candidate_sources": [],
-      "notes": "No measured passive MCP abduction moments found for this digit."
+      "notes": "No measured passive MCP abduction moments found for this digit.",
+      "scales_with": "none"
     },
     {
       "joint": "digit4_pip_flexion",
@@ -674,12 +2449,329 @@
         "r": "pm4_flexion",
         "l": "pm4_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 4 PIP flexion/extension",
-      "candidate_sources": [
-        "mcfarland2023"
+      "notes": "Assumption: no measurements exist for this digit; the index curve is transferred unscaled (McFarland et al. 2023 used scaled index curves; their scale factors are not available here), minus this digit's own model muscle moment. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "index-finger Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.0011424585880567422,
+        "max_abs_err_Nm": 0.0023221995694413036,
+        "source_peak_Nm": 0.051689929612220034
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": 0.1159262570554155,
+          "stiffness": [
+            0.16716314946056182,
+            -0.18229344684505988,
+            0.0597174372539613
+          ]
+        },
+        {
+          "onset": 0.49604094530365156,
+          "stiffness": [
+            0.02371992022259637,
+            -0.07120935667790199,
+            0.048574285535595826
+          ]
+        },
+        {
+          "onset": 0.9369662300180085,
+          "stiffness": [
+            -0.04349751268522621,
+            0.22689249296329683,
+            -0.2663099476045866
+          ]
+        },
+        {
+          "onset": 0.12204181987629523,
+          "stiffness": [
+            -0.009378611892041906,
+            0.020121173211516675,
+            -0.009896995608775785
+          ]
+        }
       ],
-      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+      "negative": [
+        {
+          "onset": 0.1159262570554155,
+          "stiffness": [
+            0.12603262506222979,
+            0.03547561124340783,
+            -0.056000000287938737
+          ]
+        },
+        {
+          "onset": 0.09054715668241259,
+          "stiffness": [
+            1.062240306089556e-12,
+            -3.6983498321882854e-11,
+            2.930359179326598e-10
+          ]
+        },
+        {
+          "onset": 0.10235765538011857,
+          "stiffness": [
+            -5.542659515607558e-14,
+            1.5801856803247925e-12,
+            -1.0544703972808154e-11
+          ]
+        },
+        {
+          "onset": 0.09448398958164791,
+          "stiffness": [
+            6.343759792666896e-14,
+            -2.015895131100519e-12,
+            1.484369336539679e-11
+          ]
+        }
+      ]
     },
     {
       "joint": "digit4_dip_flexion",
@@ -687,12 +2779,295 @@
         "r": "md4_flexion_r",
         "l": "md4_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 4 DIP flexion/extension",
-      "candidate_sources": [
-        "mcfarland2023"
-      ],
-      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+      "notes": "Assumption: no measurements exist for this digit; the index curve is transferred unscaled (McFarland et al. 2023 used scaled index curves; their scale factors are not available here), minus this digit's own model muscle moment. Kamper's DIP polynomial is negative over 0..60 deg (-0.019 N m at 0) and crosses zero near -14 deg, although the paper states 7 deg as the measured zero-torque DIP angle; used as published. In Kamper's own simulation (Eq. 1) tau_s takes the angle relative to the proximal joint; it was measured with that joint fixed at neutral, the posture used here. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "index-finger Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.103,
+          "c2": 0.102,
+          "c1": -0.052,
+          "c0": -0.019,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.003057854098861028,
+        "max_abs_err_Nm": 0.009047126570034862,
+        "source_peak_Nm": 0.07988195974879853
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": -0.23337500495857044,
+          "stiffness": [
+            0.036599750332873625,
+            0.029165449348291295,
+            -0.012873329863103388
+          ]
+        },
+        {
+          "onset": 0.36612545962888565,
+          "stiffness": [
+            -0.06840184047866459,
+            0.18654871050479166,
+            -0.11481389957957638
+          ]
+        },
+        {
+          "onset": 0.9172820655218319,
+          "stiffness": [
+            0.08646453478236037,
+            -0.44008386220180457,
+            0.5028528151387495
+          ]
+        },
+        {
+          "onset": 0.00393683289923533,
+          "stiffness": [
+            0.014317274349146541,
+            -0.029096291348909863,
+            0.013415470405629583
+          ]
+        }
+      ]
     },
     {
       "joint": "digit5_mcp_flexion",
@@ -730,24 +3105,25 @@
           0.0,
           1.5708
         ],
-        "rmse_Nm": 0.00033910963198118416,
-        "max_abs_err_Nm": 0.0013534043008732385,
+        "rmse_Nm": 0.00033910963198118595,
+        "max_abs_err_Nm": 0.0013534043008732524,
         "source_peak_Nm": 0.04041893114856969
       },
+      "scales_with": "none",
       "positive": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.010721321304825629,
+          0.010721321304825423,
           0.0,
-          0.17626734541498787
+          0.176267345414987
         ]
       },
       "negative": {
-        "onset": 0.9991015049004027,
+        "onset": 0.9991015049004013,
         "stiffness": [
-          0.004830927701106348,
+          0.004830927701106365,
           0.0,
-          0.00055798249815317
+          0.0005579824981531611
         ]
       }
     },
@@ -760,7 +3136,8 @@
       "status": "gap",
       "dof": "digit 5 MCP abduction/adduction",
       "candidate_sources": [],
-      "notes": "No measured passive MCP abduction moments found for this digit."
+      "notes": "No measured passive MCP abduction moments found for this digit.",
+      "scales_with": "none"
     },
     {
       "joint": "digit5_pip_flexion",
@@ -768,12 +3145,278 @@
         "r": "pm5_flexion_r",
         "l": "pm5_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 5 PIP flexion/extension",
-      "candidate_sources": [
-        "mcfarland2023"
-      ],
-      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+      "notes": "Assumption: no measurements exist for this digit; the index curve is transferred unscaled (McFarland et al. 2023 used scaled index curves; their scale factors are not available here), minus this digit's own model muscle moment. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "index-finger Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": 0.056,
+          "c2": 0.016,
+          "c1": -0.132,
+          "c0": 0.015,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              -0.00021,
+              -0.000239,
+              -0.000271,
+              -0.000304,
+              -0.00034,
+              -0.000377,
+              -0.000416,
+              -0.000457,
+              -0.0005,
+              -0.000545,
+              -0.000592,
+              -0.00064,
+              -0.000691,
+              -0.000743,
+              -0.000797,
+              -0.000853,
+              -0.00091,
+              -0.000969,
+              -0.00103,
+              -0.001092,
+              -0.001156,
+              -0.001222,
+              -0.001289,
+              -0.001358,
+              -0.001429,
+              -0.0015,
+              -0.001574,
+              -0.001649,
+              -0.001725,
+              -0.001802,
+              -0.001881,
+              -0.001961,
+              -0.002043,
+              -0.002125,
+              -0.002209,
+              -0.002294,
+              -0.00238,
+              -0.002467,
+              -0.002556,
+              -0.002645,
+              -0.002735,
+              -0.002826,
+              -0.002918,
+              -0.003011,
+              -0.003104,
+              -0.003199,
+              -0.003294,
+              -0.003389,
+              -0.003486,
+              -0.003582,
+              -0.00368,
+              -0.003778,
+              -0.003876,
+              -0.003974,
+              -0.004073,
+              -0.004173,
+              -0.004272,
+              -0.004372,
+              -0.004472,
+              -0.004572,
+              -0.004672,
+              -0.004772,
+              -0.004872,
+              -0.004971,
+              -0.005071,
+              -0.005171,
+              -0.00527,
+              -0.005369,
+              -0.005468,
+              -0.005566,
+              -0.005664,
+              -0.005761,
+              -0.005858,
+              -0.005955,
+              -0.00605,
+              -0.006147,
+              -0.006257,
+              -0.006384,
+              -0.006527,
+              -0.006687,
+              -0.006864,
+              -0.007055,
+              -0.007263,
+              -0.007485,
+              -0.007722,
+              -0.007974,
+              -0.008239,
+              -0.008518,
+              -0.008811,
+              -0.009116,
+              -0.009435,
+              -0.009765,
+              -0.010107,
+              -0.010461,
+              -0.010825,
+              -0.011201,
+              -0.011587,
+              -0.011982,
+              -0.012387,
+              -0.012802,
+              -0.013225,
+              -0.013656,
+              -0.014095,
+              -0.014542,
+              -0.014996,
+              -0.015456,
+              -0.015923,
+              -0.016395,
+              -0.016873,
+              -0.017356,
+              -0.017843,
+              -0.018335,
+              -0.018831,
+              -0.019341,
+              -0.019937,
+              -0.020572,
+              -0.021263,
+              -0.021972,
+              -0.022698,
+              -0.023443,
+              -0.024206,
+              -0.024987,
+              -0.025787,
+              -0.026606,
+              -0.027444,
+              -0.028301,
+              -0.029178,
+              -0.030075,
+              -0.030992,
+              -0.03193,
+              -0.032887,
+              -0.033866,
+              -0.034866,
+              -0.035887,
+              -0.03693,
+              -0.037994,
+              -0.039081,
+              -0.04019,
+              -0.041322,
+              -0.042477,
+              -0.043655,
+              -0.044856,
+              -0.046082,
+              -0.047331,
+              -0.048605,
+              -0.049903,
+              -0.051227,
+              -0.052576,
+              -0.05395,
+              -0.05535,
+              -0.056777,
+              -0.05823,
+              -0.059709,
+              -0.061216,
+              -0.062751,
+              -0.064313,
+              -0.065904,
+              -0.067523,
+              -0.069171,
+              -0.070848,
+              -0.072555,
+              -0.074292,
+              -0.076058,
+              -0.077856,
+              -0.079685,
+              -0.081545,
+              -0.083436,
+              -0.08536,
+              -0.087317,
+              -0.089306,
+              -0.091329,
+              -0.093385,
+              -0.095475,
+              -0.0976,
+              -0.09976,
+              -0.101955,
+              -0.104185,
+              -0.106452,
+              -0.108756,
+              -0.111096,
+              -0.113474,
+              -0.11589,
+              -0.118344,
+              -0.120836,
+              -0.123368,
+              -0.125939,
+              -0.128551,
+              -0.131203,
+              -0.133896,
+              -0.13663,
+              -0.139407,
+              -0.142225,
+              -0.145087,
+              -0.147992,
+              -0.150941,
+              -0.153934,
+              -0.156964,
+              -0.16002,
+              -0.163101,
+              -0.166208
+            ]
+          },
+          "model_excess_max_Nm": 0.12483162457141093
+        },
+        "signed": false,
+        "signed_fallback": "the signed fit was not restoring everywhere; non-negative coefficients used"
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.020500337278330765,
+        "max_abs_err_Nm": 0.03447041617029377,
+        "source_peak_Nm": 0.04147728015352627
+      },
+      "scales_with": "none",
+      "positive": {
+        "onset": 0.1159262570554155,
+        "stiffness": [
+          0.012828128405889382,
+          0.0,
+          0.0
+        ]
+      },
+      "negative": {
+        "onset": 0.1159262570554155,
+        "stiffness": [
+          0.13352316242480838,
+          0.0,
+          0.0
+        ]
+      }
     },
     {
       "joint": "digit5_dip_flexion",
@@ -781,12 +3424,295 @@
         "r": "md5_flexion_r",
         "l": "md5_flexion_l"
       },
-      "status": "gap",
+      "status": "assumed",
       "dof": "digit 5 DIP flexion/extension",
-      "candidate_sources": [
-        "mcfarland2023"
-      ],
-      "notes": "McFarland 2023 scaled the index-finger curves: no measurements exist for this digit."
+      "notes": "Assumption: no measurements exist for this digit; the index curve is transferred unscaled (McFarland et al. 2023 used scaled index curves; their scale factors are not available here), minus this digit's own model muscle moment. Kamper's DIP polynomial is negative over 0..60 deg (-0.019 N m at 0) and crosses zero near -14 deg, although the paper states 7 deg as the measured zero-torque DIP angle; used as published. In Kamper's own simulation (Eq. 1) tau_s takes the angle relative to the proximal joint; it was measured with that joint fixed at neutral, the posture used here. Outside Kamper's operating points (-10..60 deg flexion) the torque is held at its edge values rather than extrapolated: the PIP cubic turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic falls to -0.25 N m at 90 deg, and the MCP cubic reaches 0.23 N m at 40 deg hyperextension.",
+      "source": "kamper2002",
+      "where": "index-finger Table 2 static torque tau_s (N m, theta in rad, +flexion), wrist neutral, other joints of the finger fixed; operating points -10..60 deg",
+      "source_curve": {
+        "model": "kamper2002_static",
+        "params": {
+          "c3": -0.103,
+          "c2": 0.102,
+          "c1": -0.052,
+          "c0": -0.019,
+          "hold_range_deg": [
+            -10.0,
+            60.0
+          ]
+        },
+        "joint_sign": 1.0,
+        "fit_range_deg": [
+          0.0,
+          90.0
+        ],
+        "segments": 4,
+        "subtract_model_muscles": {
+          "model": "myoarm_r",
+          "load_spec": {},
+          "posture_deg": {},
+          "note": "Model muscles' passive moment at Kamper's posture (wrist and the other finger joints at 0): subtracted so the total matches Kamper.",
+          "baseline_Nm": {
+            "q_rad": [
+              0.0,
+              1.5708,
+              200
+            ],
+            "moment": [
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "model_excess_max_Nm": 0.0
+        },
+        "signed": true
+      },
+      "fit": {
+        "range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "measured_range_rad": [
+          0.0,
+          1.5707963267948966
+        ],
+        "rmse_Nm": 0.003057854098861028,
+        "max_abs_err_Nm": 0.009047126570034862,
+        "source_peak_Nm": 0.07988195974879853
+      },
+      "scales_with": "none",
+      "positive": [
+        {
+          "onset": -0.23337500495857044,
+          "stiffness": [
+            0.036599750332873625,
+            0.029165449348291295,
+            -0.012873329863103388
+          ]
+        },
+        {
+          "onset": 0.36612545962888565,
+          "stiffness": [
+            -0.06840184047866459,
+            0.18654871050479166,
+            -0.11481389957957638
+          ]
+        },
+        {
+          "onset": 0.9172820655218319,
+          "stiffness": [
+            0.08646453478236037,
+            -0.44008386220180457,
+            0.5028528151387495
+          ]
+        },
+        {
+          "onset": 0.00393683289923533,
+          "stiffness": [
+            0.014317274349146541,
+            -0.029096291348909863,
+            0.013415470405629583
+          ]
+        }
+      ]
     }
   ]
 }

@@ -3,9 +3,22 @@
 MyoHand's thumb comes from the Holzbaur et al. (2005) arm model, which has no
 intrinsic hand muscles: nothing pulls the thumb into the palm plane against the
 extrinsic extensors and abductor. These muscles are added on MyoHand's own
-bodies from ``data/thenar_muscles.json`` (sites and forces per cited source);
-every other muscle parameter is copied from a template muscle, and the length
-range is computed by MuJoCo from the joint range like every MyoHand muscle.
+bodies from ``data/thenar_muscles.json``: attachment sites from MUSIC (Xu et
+al. 2026, MIT licence), architecture (PCSA, optimal fibre length, pennation)
+from Jacobson et al. (1992). Activation dynamics and force-length shape are
+copied from a template muscle (OP).
+
+Length ranges (``lengthrange=``):
+
+* ``"architecture"`` (default): rigid tendon of slack length
+  ``(L_MT(q = 0) - L_fo cos(alpha)) / 1.033`` (Barry et al. 2018, Eq. 1), so the
+  normalised fibre length ``range`` 0.75-1.05 spans ``[0.75, 1.05] L_fo``.
+* ``"computed"``: MuJoCo maps the joint-range excursion onto ``range``, the
+  convention of the other MyoHand muscles.
+* ``"source"``: MUSIC's fixed values.
+
+Subject scaling: ``scale={"<muscle>.force": f, "<muscle>.length": g}`` multiplies
+the peak force and the optimal fibre length (see ``scales_with`` in the data).
 """
 
 from __future__ import annotations
@@ -35,11 +48,29 @@ def _template(spec: mujoco.MjSpec, base: str, side: str) -> mujoco.MjsActuator |
     return None
 
 
+def _architecture_lengthranges(spec: mujoco.MjSpec, rows: list[tuple[str, dict[str, Any], float]]) -> None:
+    """Set ``[L_ts + 0.75 L_fo, L_ts + 1.05 L_fo]`` from the muscle-tendon lengths at q = 0."""
+    model = spec.compile()
+    data = mujoco.MjData(model)
+    data.qpos[:] = 0.0
+    mujoco.mj_kinematics(model, data)
+    mujoco.mj_comPos(model, data)
+    mujoco.mj_tendon(model, data)
+    mujoco.mj_transmission(model, data)
+    for name, muscle, l_fo in rows:
+        act = spec.actuator(name)
+        lo_hi = act.gainprm[:2]
+        l_mt0 = float(data.actuator_length[model.actuator(name).id])
+        l_ts = (l_mt0 - l_fo * np.cos(np.radians(muscle["pennation_deg"]["value"]))) / 1.033
+        act.lengthrange = [l_ts + lo_hi[0] * l_fo, l_ts + lo_hi[1] * l_fo]
+
+
 def add_thenar_muscles(
     spec: mujoco.MjSpec,
     table: dict[str, Any] | None = None,
     sides: tuple[str, ...] = ("r", "l"),
-    lengthrange: str = "computed",
+    lengthrange: str = "architecture",
+    scale: dict[str, float] | None = None,
 ) -> list[str]:
     """Add the thenar muscles of *table* to every hand of *spec*, in place.
 
@@ -50,16 +81,17 @@ def add_thenar_muscles(
         spec: Model spec to edit.
         table: Thenar-muscle table (default: :func:`load_thenar_table`).
         sides: Hands to edit (``"r"``, ``"l"``).
-        lengthrange: ``"computed"`` (MuJoCo computes it at compile time, as for
-            the other MyoHand muscles) or ``"source"`` (the source's fixed
-            ``source_lengthrange``).
+        lengthrange: ``"architecture"``, ``"computed"`` or ``"source"`` (see
+            the module docstring).
+        scale: Subject factors, ``{"<muscle>.force": f, "<muscle>.length": g}``.
 
     Returns:
         Names of the added actuators.
     """
     table = table or load_thenar_table()
+    scale = scale or {}
     base = table["template_muscle"]
-    added = []
+    added, architecture = [], []
     for side in sides:
         template = _template(spec, base, side)
         if template is None:
@@ -96,7 +128,16 @@ def add_thenar_muscles(
                 "group",
             ):
                 setattr(act, attr, getattr(template, attr))
-            act.gainprm[2] = act.biasprm[2] = muscle["force"]
-            act.lengthrange = muscle["source_lengthrange"] if lengthrange == "source" else [0.0, 0.0]
+            force = muscle["force_N"]["value"] * scale.get(f"{muscle['name']}.force", 1.0)
+            act.gainprm[2] = act.biasprm[2] = force
+            if lengthrange == "source":
+                act.lengthrange = muscle["source_lengthrange_m"]
+            else:
+                act.lengthrange = [0.0, 0.0]  # computed at compile time unless set below
+                if lengthrange == "architecture":
+                    l_fo = muscle["optimal_fiber_length_m"]["value"] * scale.get(f"{muscle['name']}.length", 1.0)
+                    architecture.append((name, muscle, l_fo))
             added.append(name)
+    if architecture:
+        _architecture_lengthranges(spec, architecture)
     return added

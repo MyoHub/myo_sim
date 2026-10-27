@@ -653,6 +653,7 @@ def build_spec(
     inertia_floor: float | None = None,
     passive_moments: bool | str = False,
     thenar_muscles: bool = False,
+    subject_scale: dict[str, float] | None = None,
 ) -> mujoco.MjSpec:
     """Build and return the composed, uncompiled MjSpec for a registered model.
 
@@ -679,6 +680,9 @@ def build_spec(
             also the documented transfers between joints. Off by default.
         thenar_muscles: Add the thenar muscles to every hand
             (myo_sim.build.thenar). Off by default.
+        subject_scale: Subject factors for the opt-in steps, keyed by data
+            row (``{"digit2_pip_flexion": f, "AdP.force": g, ...}``); empty by
+            default, so the data files apply as published.
 
     Returns:
         The composed MjSpec, ready for further edits or spec.compile().
@@ -698,11 +702,13 @@ def build_spec(
     if thenar_muscles:
         from myo_sim.build.thenar import add_thenar_muscles
 
-        add_thenar_muscles(spec)
+        add_thenar_muscles(spec, scale=subject_scale)
     if passive_moments:
         from myo_sim.build.passive import APPLIED, add_passive_joint_moments
 
-        add_passive_joint_moments(spec, statuses=APPLIED["assumed" if passive_moments == "assumed" else "measured"])
+        add_passive_joint_moments(
+            spec, statuses=APPLIED["assumed" if passive_moments == "assumed" else "measured"], scale=subject_scale
+        )
     return spec
 
 

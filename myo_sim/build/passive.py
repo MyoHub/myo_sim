@@ -47,6 +47,15 @@ def _segments(row: dict[str, Any], direction: str) -> list[dict[str, Any]]:
     return part if isinstance(part, list) else [part]
 
 
+def _joint_name(row: dict[str, Any], side: str, joints: set[str]) -> str | None:
+    """The row's joint on *side*; right-hand joints unsuffixed in some models (``cmc_flexion``) are ``_r`` in others."""
+    name = row["names"].get(side)
+    for candidate in (name, f"{name}_r") if side == "r" and name and not name.endswith("_r") else (name,):
+        if candidate in joints:
+            return candidate
+    return None
+
+
 def _spring(direction: str, onset: float, stiffness: list[float]) -> tuple[list[float], list[float]]:
     """``(springlength, stiffness)`` of a one-sided tendon for *direction*."""
     k0, k1, k2 = stiffness
@@ -61,6 +70,7 @@ def add_passive_joint_moments(
     table: dict[str, Any] | None = None,
     sides: tuple[str, ...] = ("r", "l"),
     statuses: tuple[str, ...] = APPLIED["measured"],
+    scale: dict[str, float] | None = None,
 ) -> list[str]:
     """Add the passive joint moments of *table* to *spec*, in place.
 
@@ -72,21 +82,26 @@ def add_passive_joint_moments(
         sides: Sides whose joint names (``row["names"][side]``) are used.
         statuses: Row statuses to apply; ``APPLIED["assumed"]`` adds the
             documented transfers between joints.
+        scale: Subject factors ``{row_name: factor}`` multiplying a row's
+            stiffness (rows are ``scales_with: none`` unless measured on the
+            subject).
 
     Returns:
         Names of the added tendons.
     """
     table = table or load_passive_moment_table()
+    scale = scale or {}
     joints = {j.name for j in spec.joints}
     added = []
     for row in measured_rows(table, statuses):
         for side in sides:
-            joint = row["names"].get(side)
-            if joint not in joints:
+            joint = _joint_name(row, side, joints)
+            if joint is None:
                 continue
             for direction in ("positive", "negative"):
                 for i, part in enumerate(_segments(row, direction)):
-                    springlength, stiffness = _spring(direction, part["onset"], part["stiffness"])
+                    factor = scale.get(row.get("joint", ""), 1.0)
+                    springlength, stiffness = _spring(direction, part["onset"], [k * factor for k in part["stiffness"]])
                     name = f"{TENDON_PREFIX}{joint}_{direction[:3]}" + (str(i) if i else "")
                     tendon = spec.add_tendon(name=name, springlength=springlength, stiffness=stiffness)
                     tendon.wrap_joint(joint, 1.0)

@@ -141,6 +141,7 @@ def load_spec(
     inertia_floor: float | None = None,
     passive_moments: bool | str = False,
     thenar_muscles: bool = False,
+    subject_scale: Optional[dict[str, float]] = None,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
@@ -171,6 +172,8 @@ def load_spec(
         thenar_muscles: Add adductor pollicis, flexor and abductor pollicis
             brevis to every hand (see myo_sim.build.thenar). Off by default.
             Both are only supported for MjSpec-composed models.
+        subject_scale: Subject factors for the opt-in steps, keyed by data row
+            (see myo_sim.build.compose.build_spec). Empty by default.
     """
     import mujoco
 
@@ -187,6 +190,7 @@ def load_spec(
             build_kwargs=build_kwargs,
             passive_moments=passive_moments,
             thenar_muscles=thenar_muscles,
+            subject_scale=subject_scale,
         )
         return spec
 
