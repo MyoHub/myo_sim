@@ -10,6 +10,7 @@ myo_sim/              # installable Python package
   fragments.py        # FragmentInfo and _FragmentRegistry definitions
   models/             # all MJCF content — packaged into wheels
     arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscle.xml, myoarm_r_tendon.xml, myoarm_r_assets.xml
+                      # + optional fragments: myoarm_r_thenar_{tendon,muscle}.xml, myoarm_r_passive[_assumed]_tendon.xml
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
     torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
     head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml
@@ -21,6 +22,11 @@ myo_sim/              # installable Python package
     compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec()/build_model(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
+    hand_data.py      # thenar / passive-moment tables, passive tendon names, apply_subject_scale()
+    data/             # JSON provenance and fitting input of the thenar and passive-moment fragments
+scripts/
+  fit_passive_moments.py       # refits passive springs, writes myoarm_r_passive*_tendon.xml
+  generate_thenar_fragments.py # writes myoarm_r_thenar_{tendon,muscle}.xml
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -43,6 +49,8 @@ docs/wiki/            # canonical wiki location
 | Task | Location |
 |---|---|
 | Edit a muscle path or via-point | `myo_sim/models/<part>/assets/*_muscle.xml` and `*_tendon.xml` |
+| Add an optional muscle or tendon set | new `myo<part>[_r]_<set>_{tendon,muscle}.xml` fragments, selected by a build flag in `build/compose.py` (see `model-authoring.md`) |
+| Change thenar muscles or passive joint moments | `myo_sim/build/data/*.json`, then rerun `scripts/generate_thenar_fragments.py` / `scripts/fit_passive_moments.py` |
 | Edit skeleton geometry | `myo_sim/models/<part>/assets/*_chain.xml` |
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |

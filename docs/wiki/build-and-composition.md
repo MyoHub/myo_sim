@@ -134,11 +134,11 @@ Assembles a standalone MJCF XML string from four separate component files (asset
 - Appends tendon and muscle XML children.
 - Wraps the chain XML inside a root `<body>` with an attachment site.
 
-Use this for right-arm and legs, where the component files are already right-side files.
+Use this for right-arm and legs, where the component files are already right-side files. Optional fragments (`extra_tendons_xmls`, `extra_muscles_xmls`) are appended after the main tendon and muscle files.
 
 ### `build_mirrored_child_xml(...)`
 
-Same as `build_child_xml_from_components` but applies `mirror_element()` to every element before appending. Use this to produce the left-arm XML from the right-arm source files. All name references, positions, axes, and quaternions are transformed according to the provided `MirrorRules`.
+Same as `build_child_xml_from_components` but applies `mirror_element()` to every element before appending. Use this to produce the left-arm XML from the right-arm source files; optional right-side fragments go in `source_extra_tendons_xmls` / `source_extra_muscles_xmls`. All name references, positions, axes, and quaternions are transformed according to the provided `MirrorRules`.
 
 ### `MirrorRules`
 
@@ -167,6 +167,22 @@ Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported
 ### `find_body(spec, body_name)` and `find_site(spec, site_name)`
 
 Thin wrappers around `spec.body(name)` / `spec.site(name)` that raise a clear `ValueError` instead of silently propagating `None` when the name is missing (e.g. a typo'd attachment site). Prefer these over calling `spec.body()`/`spec.site()` directly when a missing name should fail loudly at build time.
+
+## Optional Arm Fragments
+
+`build_spec()` (and `myo_sim.load_spec()` / `load_model()` / `load()`) take
+`thenar_muscles: bool = True` and `passive_moments: bool | str = True`. They are copied
+into a per-call `ModelRegistration.build_kwargs` (the global `MODEL_REGISTRY` is not
+mutated), and `right_arm_optional_fragments()` turns them into the extra tendon/muscle
+fragments of the right arm and the mirrored left arm: the thenar tendon and muscle
+fragments, `myoarm_r_passive_tendon.xml`, and with `passive_moments="assumed"` also
+`myoarm_r_passive_assumed_tendon.xml`. Hand models get them through the arm and keep them
+through `prune_arm_spec_to_hand()` (the thenar muscles are in `RIGHT_HAND_ACTUATORS`;
+fixed tendons on kept joints stay and are re-created with the `_r`-suffixed joint names,
+since MjSpec does not update wrap references on rename). `subject_scale` is applied last,
+on the built spec, by `hand_data.apply_subject_scale()`. Fragment builders without a
+registration (`FRAGMENT_SPEC_BUILDERS`) use the defaults. See
+`passive-moments-and-thenar.md`.
 
 ## Contact Injection Pattern
 

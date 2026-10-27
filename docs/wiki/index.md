@@ -16,7 +16,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/model-authoring.md` — how to add or edit a model part
 - `docs/wiki/model-readme-template.md` — agentic workflow for writing model READMEs
 - `docs/wiki/build-and-composition.md` — MjSpec compose.py reference
-- `docs/wiki/passive-moments-and-thenar.md` — opt-in passive joint moments and thenar muscles: row statuses, sources, assumptions
+- `docs/wiki/passive-moments-and-thenar.md` — passive joint moments and thenar muscles (default-on arm fragments, opt-out flags): row statuses, sources, assumptions
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
 - `docs/wiki/log.md` — append-only wiki maintenance log
 
