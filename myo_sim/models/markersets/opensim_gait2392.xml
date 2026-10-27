@@ -1,0 +1,76 @@
+<mujoco model="markerset_opensim_gait2392">
+  <!-- Scaling marker set of the OpenSim gait2392 model, copied in the model's body frames (gait2392 and Rajagopal share the Delp lower-limb frames; the torso frame differs slightly, so torso markers are approximate).
+       Sources:
+         OpenSim models, gait2392 pipeline: https://github.com/opensim-org/opensim-models/blob/master/Pipelines/Gait2392_Simbody/gait2392_Scale_MarkerSet.xml
+         Delp SL et al. (1990) An interactive graphics-based model of the lower extremity. IEEE Trans Biomed Eng 37:757-767 (gait2392 model credits: CC BY 3.0)
+       Optional overlay: myo_sim.markersets.add_markerset(spec, "opensim_gait2392") adds these sites to the bodies of the same
+       name. Positions are in body frames (x anterior, y up, z right). The class gives the confidence of the position:
+       anatomical (on a model landmark site), reference (from a published model with the same body frames),
+       fitted (fitted to recorded data), nominal (from the written placement description). -->
+  <default>
+    <default class="myomarker">
+      <site type="sphere" size="0.008" group="4"/>
+      <default class="myomarker_anatomical"><site rgba="0.2 0.6 1 1"/></default>
+      <default class="myomarker_reference"><site rgba="0.2 0.8 0.4 1"/></default>
+      <default class="myomarker_fitted"><site rgba="1 0.7 0.1 1"/></default>
+      <default class="myomarker_nominal"><site rgba="0.9 0.3 0.3 1"/></default>
+    </default>
+  </default>
+  <worldbody>
+    <body name="torso">
+      <site name="Sternum" class="myomarker_reference" pos="0.07 0.3 0"/>  <!-- anatomical; sternum -->
+      <site name="R.Acromium" class="myomarker_reference" pos="-0.03 0.44 0.15"/>  <!-- anatomical; acromion, right -->
+      <site name="L.Acromium" class="myomarker_reference" pos="-0.03 0.44 -0.15"/>  <!-- anatomical; acromion, left -->
+      <site name="Top.Head" class="myomarker_reference" pos="0.0008 0.657 0"/>  <!-- technical; top of the head -->
+    </body>
+    <body name="pelvis">
+      <site name="R.ASIS" class="myomarker_reference" pos="0.02 0.03 0.128"/>  <!-- anatomical; anterior superior iliac spine, right -->
+      <site name="L.ASIS" class="myomarker_reference" pos="0.02 0.03 -0.128"/>  <!-- anatomical; anterior superior iliac spine, left -->
+      <site name="V.Sacral" class="myomarker_reference" pos="-0.16 0.04 0"/>  <!-- anatomical; sacrum -->
+    </body>
+    <body name="femur_r">
+      <site name="R.Thigh.Upper" class="myomarker_reference" pos="0.018 -0.2 0.064"/>  <!-- cluster; thigh technical marker Thigh.Upper, right -->
+      <site name="R.Thigh.Front" class="myomarker_reference" pos="0.08 -0.25 0.0047"/>  <!-- cluster; thigh technical marker Thigh.Front, right -->
+      <site name="R.Thigh.Rear" class="myomarker_reference" pos="0.01 -0.3 0.06"/>  <!-- cluster; thigh technical marker Thigh.Rear, right -->
+      <site name="R.Knee.Lat" class="myomarker_reference" pos="0 -0.404 0.05"/>  <!-- anatomical; lateral femoral epicondyle, right -->
+      <site name="R.Knee.Med" class="myomarker_reference" pos="0 -0.404 -0.05"/>  <!-- anatomical; medial femoral epicondyle, right -->
+    </body>
+    <body name="tibia_r">
+      <site name="R.Shank.Upper" class="myomarker_reference" pos="0.005 -0.065 0.05"/>  <!-- cluster; shank technical marker Shank.Upper, right -->
+      <site name="R.Shank.Front" class="myomarker_reference" pos="0.05 -0.08 0"/>  <!-- cluster; shank technical marker Shank.Front, right -->
+      <site name="R.Shank.Rear" class="myomarker_reference" pos="0.02 -0.13 0.05"/>  <!-- cluster; shank technical marker Shank.Rear, right -->
+      <site name="R.Ankle.Lat" class="myomarker_reference" pos="-0.005 -0.41 0.053"/>  <!-- anatomical; lateral malleolus, right -->
+      <site name="R.Ankle.Med" class="myomarker_reference" pos="0.006 -0.3888 -0.038"/>  <!-- anatomical; medial malleolus, right -->
+    </body>
+    <body name="calcn_r">
+      <site name="R.Heel" class="myomarker_reference" pos="-0.02 0.02 0"/>  <!-- anatomical; calcaneus, right -->
+      <site name="R.Midfoot.Sup" class="myomarker_reference" pos="0.13 0.03 -0.03"/>  <!-- technical; dorsal midfoot, right -->
+      <site name="R.Midfoot.Lat" class="myomarker_reference" pos="0.1 0.02 0.04"/>  <!-- technical; lateral midfoot, right -->
+      <site name="R.Toe.Lat" class="myomarker_reference" pos="0.19 0 0.065"/>  <!-- anatomical; fifth metatarsal head, right -->
+      <site name="R.Toe.Med" class="myomarker_reference" pos="0.19 0.005 -0.04"/>  <!-- anatomical; first metatarsal head, right -->
+      <site name="R.Toe.Tip" class="myomarker_reference" pos="0.26 0.005 0"/>  <!-- technical; tip of the toes, right -->
+    </body>
+    <body name="femur_l">
+      <site name="L.Thigh.Upper" class="myomarker_reference" pos="0.018 -0.2 -0.064"/>  <!-- cluster; thigh technical marker Thigh.Upper, left -->
+      <site name="L.Thigh.Front" class="myomarker_reference" pos="0.08 -0.25 -0.0047"/>  <!-- cluster; thigh technical marker Thigh.Front, left -->
+      <site name="L.Thigh.Rear" class="myomarker_reference" pos="0.01 -0.3 -0.06"/>  <!-- cluster; thigh technical marker Thigh.Rear, left -->
+      <site name="L.Knee.Lat" class="myomarker_reference" pos="0 -0.404 -0.05"/>  <!-- anatomical; lateral femoral epicondyle, left -->
+      <site name="L.Knee.Med" class="myomarker_reference" pos="0 -0.404 0.05"/>  <!-- anatomical; medial femoral epicondyle, left -->
+    </body>
+    <body name="tibia_l">
+      <site name="L.Shank.Upper" class="myomarker_reference" pos="0.005 -0.065 -0.05"/>  <!-- cluster; shank technical marker Shank.Upper, left -->
+      <site name="L.Shank.Front" class="myomarker_reference" pos="0.05 -0.08 0"/>  <!-- cluster; shank technical marker Shank.Front, left -->
+      <site name="L.Shank.Rear" class="myomarker_reference" pos="-0.02 -0.13 -0.05"/>  <!-- cluster; shank technical marker Shank.Rear, left -->
+      <site name="L.Ankle.Lat" class="myomarker_reference" pos="-0.005 -0.41 -0.053"/>  <!-- anatomical; lateral malleolus, left -->
+      <site name="L.Ankle.Med" class="myomarker_reference" pos="0.006 -0.3888 0.038"/>  <!-- anatomical; medial malleolus, left -->
+    </body>
+    <body name="calcn_l">
+      <site name="L.Heel" class="myomarker_reference" pos="-0.02 0.02 0"/>  <!-- anatomical; calcaneus, left -->
+      <site name="L.Midfoot.Sup" class="myomarker_reference" pos="0.13 0.03 0.03"/>  <!-- technical; dorsal midfoot, left -->
+      <site name="L.Midfoot.Lat" class="myomarker_reference" pos="0.1 0.02 -0.04"/>  <!-- technical; lateral midfoot, left -->
+      <site name="L.Toe.Lat" class="myomarker_reference" pos="0.19 0 -0.065"/>  <!-- anatomical; fifth metatarsal head, left -->
+      <site name="L.Toe.Med" class="myomarker_reference" pos="0.19 0.005 0.04"/>  <!-- anatomical; first metatarsal head, left -->
+      <site name="L.Toe.Tip" class="myomarker_reference" pos="0.26 0.005 0"/>  <!-- technical; tip of the toes, left -->
+    </body>
+  </worldbody>
+</mujoco>

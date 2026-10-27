@@ -1,0 +1,124 @@
+<mujoco model="markerset_bath_running">
+  <!-- Marker set of the University of Bath running dataset (dynamic and static-trial markers; treadmill corner markers omitted). Positions of cluster, foot and static-only markers are medians over the 50 static trials (both sides), mapped into the model by per-segment similarity fits on the epicondyle, malleolus, calcaneus and fifth-metatarsal markers.
+       Sources:
+         Bath running dataset marker set (MarkerSet_Info.docx): https://researchdata.bath.ac.uk/1341/
+       Optional overlay: myo_sim.markersets.add_markerset(spec, "bath_running") adds these sites to the bodies of the same
+       name. Positions are in body frames (x anterior, y up, z right). The class gives the confidence of the position:
+       anatomical (on a model landmark site), reference (from a published model with the same body frames),
+       fitted (fitted to recorded data), nominal (from the written placement description). -->
+  <default>
+    <default class="myomarker">
+      <site type="sphere" size="0.008" group="4"/>
+      <default class="myomarker_anatomical"><site rgba="0.2 0.6 1 1"/></default>
+      <default class="myomarker_reference"><site rgba="0.2 0.8 0.4 1"/></default>
+      <default class="myomarker_fitted"><site rgba="1 0.7 0.1 1"/></default>
+      <default class="myomarker_nominal"><site rgba="0.9 0.3 0.3 1"/></default>
+    </default>
+  </default>
+  <worldbody>
+    <body name="torso">
+      <site name="SJN" class="myomarker_nominal" pos="0.084 0.381 0"/>  <!-- anatomical; sternum jugular notch -->
+    </body>
+    <body name="chest_r">
+      <site name="CV7" class="myomarker_anatomical" pos="-0.0561 0.0553 -0.0015"/>  <!-- anatomical; cervical vertebra 7; on site C7_marker_r -->
+    </body>
+    <body name="scapula_r">
+      <site name="RSAJ" class="myomarker_anatomical" pos="0.0014 -0.0015 0.0137"/>  <!-- anatomical; scapula acromioclavicular joint, right; on site Shoulder_marker_r -->
+    </body>
+    <body name="humerus_r">
+      <site name="RHLE" class="myomarker_anatomical" pos="0.0051 -0.2806 0.0288"/>  <!-- anatomical; lateral epicondyle of the humerus, right; on site Elbow_Lateral_marker_r -->
+    </body>
+    <body name="ulna_r">
+      <site name="RUSP" class="myomarker_nominal" pos="-0.0167 -0.2416 0.0478"/>  <!-- anatomical; ulnar styloid process, right -->
+    </body>
+    <body name="radius_r">
+      <site name="RRSP" class="myomarker_nominal" pos="0.0575 -0.2272 0.0274"/>  <!-- anatomical; radial styloid process, right -->
+    </body>
+    <body name="scapula_l">
+      <site name="LSAJ" class="myomarker_anatomical" pos="0.0014 -0.0015 -0.0137"/>  <!-- anatomical; scapula acromioclavicular joint, left; on site Shoulder_marker_l -->
+    </body>
+    <body name="humerus_l">
+      <site name="LHLE" class="myomarker_anatomical" pos="0.0051 -0.2806 -0.0288"/>  <!-- anatomical; lateral epicondyle of the humerus, left; on site Elbow_Lateral_marker_l -->
+    </body>
+    <body name="ulna_l">
+      <site name="LUSP" class="myomarker_nominal" pos="-0.0167 -0.2416 -0.0478"/>  <!-- anatomical; ulnar styloid process, left -->
+    </body>
+    <body name="radius_l">
+      <site name="LRSP" class="myomarker_nominal" pos="0.0575 -0.2272 -0.0274"/>  <!-- anatomical; radial styloid process, left -->
+    </body>
+    <body name="pelvis">
+      <site name="RASIS" class="myomarker_anatomical" pos="0.0095 0.0181 0.1285"/>  <!-- anatomical; anterior superior iliac spine, right; on site ASI_r -->
+      <site name="LASIS" class="myomarker_anatomical" pos="0.0095 0.0181 -0.1285"/>  <!-- anatomical; anterior superior iliac spine, left; on site ASI_l -->
+      <site name="RPSIS" class="myomarker_anatomical" pos="-0.155 0.035 0.045"/>  <!-- anatomical; posterior superior iliac spine, right; on site PSI_r -->
+      <site name="LPSIS" class="myomarker_anatomical" pos="-0.155 0.035 -0.045"/>  <!-- anatomical; posterior superior iliac spine, left; on site PSI_l -->
+    </body>
+    <body name="femur_r">
+      <site name="RTH1" class="myomarker_fitted" pos="0.0036 -0.1614 0.083"/>  <!-- cluster; thigh cluster marker 1, right -->
+      <site name="RTH2" class="myomarker_fitted" pos="0.0042 -0.1624 0.0831"/>  <!-- cluster; thigh cluster marker 2, right -->
+      <site name="RTH3" class="myomarker_fitted" pos="0.0076 -0.2631 0.0681"/>  <!-- cluster; thigh cluster marker 3, right -->
+      <site name="RTH4" class="myomarker_fitted" pos="0.0088 -0.2656 0.0694"/>  <!-- cluster; thigh cluster marker 4, right -->
+      <site name="RFLE" class="myomarker_anatomical" pos="0 -0.404 0.05"/>  <!-- anatomical; femoral lateral epicondyle, right; on site LFC_r -->
+      <site name="RFME" class="myomarker_anatomical" pos="0 -0.404 -0.05"/>  <!-- anatomical; femoral medial epicondyle, right (static trial); on site MFC_r -->
+      <site name="RFT" class="myomarker_fitted" pos="-0.0558 -0.0069 0.084"/>  <!-- anatomical; greater trochanter of the femur, right (static trial) -->
+    </body>
+    <body name="tibia_r">
+      <site name="RSK1" class="myomarker_fitted" pos="-0.0108 -0.1387 0.0718"/>  <!-- cluster; shank cluster marker 1, right -->
+      <site name="RSK2" class="myomarker_fitted" pos="-0.0122 -0.1355 0.0705"/>  <!-- cluster; shank cluster marker 2, right -->
+      <site name="RSK3" class="myomarker_fitted" pos="-0.0116 -0.2234 0.064"/>  <!-- cluster; shank cluster marker 3, right -->
+      <site name="RSK4" class="myomarker_fitted" pos="-0.0111 -0.2198 0.0626"/>  <!-- cluster; shank cluster marker 4, right -->
+      <site name="RFAL" class="myomarker_anatomical" pos="-0.005 -0.3888 0.053"/>  <!-- anatomical; apex of the lateral malleolus (fibula), right; on site LMAL_r -->
+      <site name="RTAM" class="myomarker_anatomical" pos="0.006 -0.3888 -0.038"/>  <!-- anatomical; apex of the medial malleolus (tibia), right (static trial); on site MMAL_r -->
+    </body>
+    <body name="talus_r">
+      <site name="RST" class="myomarker_fitted" pos="0.0056 -0.036 -0.0303"/>  <!-- anatomical; subtalar joint, right (static trial) -->
+    </body>
+    <body name="calcn_r">
+      <site name="RHAL" class="myomarker_fitted" pos="0.2185 0.0299 -0.0022"/>  <!-- anatomical; hallux, right -->
+      <site name="RCAL" class="myomarker_anatomical" pos="-0.025 0.02 -0.005"/>  <!-- anatomical; calcaneus, right; on site CAL_r -->
+      <site name="R5MTP" class="myomarker_anatomical" pos="0.145 0.0249 0.059"/>  <!-- anatomical; fifth metatarsophalangeal joint, right; on site MT5_r -->
+      <site name="RB5MTP" class="myomarker_fitted" pos="0.0884 0.0148 0.0525"/>  <!-- anatomical; base of the fifth metatarsal, right -->
+      <site name="RPT" class="myomarker_fitted" pos="0.0444 0.0318 0.0615"/>  <!-- anatomical; peroneal tubercle, right -->
+      <site name="RFT1" class="myomarker_fitted" pos="0.1978 0.0326 0.0255"/>  <!-- technical; foot tracking marker 1 (toe box or midfoot), right -->
+      <site name="RFT2" class="myomarker_fitted" pos="0.1867 0.0319 -0.0054"/>  <!-- technical; foot tracking marker 2 (toe box or midfoot), right -->
+      <site name="RFT3" class="myomarker_fitted" pos="0.1537 0.0423 0.0173"/>  <!-- technical; foot tracking marker 3 (toe box or midfoot), right -->
+      <site name="RFT4" class="myomarker_fitted" pos="0.1312 0.0518 -0.0096"/>  <!-- technical; foot tracking marker 4 (toe box or midfoot), right -->
+      <site name="RFT5" class="myomarker_fitted" pos="0.0074 0.0186 0.0303"/>  <!-- technical; foot tracking marker 5, between heel and peroneal tubercle, right -->
+      <site name="R1MTP" class="myomarker_fitted" pos="0.1665 0.0073 -0.0348"/>  <!-- anatomical; first metatarsophalangeal joint, right (static trial) -->
+      <site name="RB1MTP" class="myomarker_fitted" pos="0.0984 -0.0017 -0.0322"/>  <!-- anatomical; base of the first metatarsal, right (static trial) -->
+    </body>
+    <body name="femur_l">
+      <site name="LTH1" class="myomarker_fitted" pos="0.0038 -0.1614 -0.084"/>  <!-- cluster; thigh cluster marker 1, left -->
+      <site name="LTH2" class="myomarker_fitted" pos="0.0043 -0.1624 -0.0841"/>  <!-- cluster; thigh cluster marker 2, left -->
+      <site name="LTH3" class="myomarker_fitted" pos="0.0078 -0.2631 -0.0691"/>  <!-- cluster; thigh cluster marker 3, left -->
+      <site name="LTH4" class="myomarker_fitted" pos="0.0091 -0.2656 -0.0705"/>  <!-- cluster; thigh cluster marker 4, left -->
+      <site name="LFLE" class="myomarker_anatomical" pos="0 -0.404 -0.05"/>  <!-- anatomical; femoral lateral epicondyle, left; on site LFC_l -->
+      <site name="LFME" class="myomarker_anatomical" pos="0 -0.404 0.05"/>  <!-- anatomical; femoral medial epicondyle, left (static trial); on site MFC_l -->
+      <site name="LFT" class="myomarker_fitted" pos="-0.0556 -0.0069 -0.0851"/>  <!-- anatomical; greater trochanter of the femur, left (static trial) -->
+    </body>
+    <body name="tibia_l">
+      <site name="LSK1" class="myomarker_fitted" pos="-0.0106 -0.1387 -0.0729"/>  <!-- cluster; shank cluster marker 1, left -->
+      <site name="LSK2" class="myomarker_fitted" pos="-0.0121 -0.1355 -0.0715"/>  <!-- cluster; shank cluster marker 2, left -->
+      <site name="LSK3" class="myomarker_fitted" pos="-0.0114 -0.2234 -0.065"/>  <!-- cluster; shank cluster marker 3, left -->
+      <site name="LSK4" class="myomarker_fitted" pos="-0.0109 -0.2198 -0.0637"/>  <!-- cluster; shank cluster marker 4, left -->
+      <site name="LFAL" class="myomarker_anatomical" pos="-0.005 -0.3888 -0.053"/>  <!-- anatomical; apex of the lateral malleolus (fibula), left; on site LMAL_l -->
+      <site name="LTAM" class="myomarker_anatomical" pos="0.006 -0.3888 0.038"/>  <!-- anatomical; apex of the medial malleolus (tibia), left (static trial); on site MMAL_l -->
+    </body>
+    <body name="talus_l">
+      <site name="LST" class="myomarker_fitted" pos="0.0057 -0.036 0.0292"/>  <!-- anatomical; subtalar joint, left (static trial) -->
+    </body>
+    <body name="calcn_l">
+      <site name="LHAL" class="myomarker_fitted" pos="0.2185 0.0299 0.0013"/>  <!-- anatomical; hallux, left -->
+      <site name="LCAL" class="myomarker_anatomical" pos="-0.025 0.02 0.005"/>  <!-- anatomical; calcaneus, left; on site CAL_l -->
+      <site name="L5MTP" class="myomarker_anatomical" pos="0.145 0.0249 -0.059"/>  <!-- anatomical; fifth metatarsophalangeal joint, left; on site MT5_l -->
+      <site name="LB5MTP" class="myomarker_fitted" pos="0.0886 0.0148 -0.0536"/>  <!-- anatomical; base of the fifth metatarsal, left -->
+      <site name="LPT" class="myomarker_fitted" pos="0.0446 0.0318 -0.0626"/>  <!-- anatomical; peroneal tubercle, left -->
+      <site name="LFT1" class="myomarker_fitted" pos="0.198 0.0326 -0.0264"/>  <!-- technical; foot tracking marker 1 (toe box or midfoot), left -->
+      <site name="LFT2" class="myomarker_fitted" pos="0.1868 0.0319 0.0045"/>  <!-- technical; foot tracking marker 2 (toe box or midfoot), left -->
+      <site name="LFT3" class="myomarker_fitted" pos="0.1539 0.0423 -0.0184"/>  <!-- technical; foot tracking marker 3 (toe box or midfoot), left -->
+      <site name="LFT4" class="myomarker_fitted" pos="0.1314 0.0518 0.0085"/>  <!-- technical; foot tracking marker 4 (toe box or midfoot), left -->
+      <site name="LFT5" class="myomarker_fitted" pos="0.0076 0.0186 -0.0314"/>  <!-- technical; foot tracking marker 5, between heel and peroneal tubercle, left -->
+      <site name="L1MTP" class="myomarker_fitted" pos="0.1667 0.0073 0.0339"/>  <!-- anatomical; first metatarsophalangeal joint, left (static trial) -->
+      <site name="LB1MTP" class="myomarker_fitted" pos="0.0985 -0.0017 0.0312"/>  <!-- anatomical; base of the first metatarsal, left (static trial) -->
+    </body>
+  </worldbody>
+</mujoco>
