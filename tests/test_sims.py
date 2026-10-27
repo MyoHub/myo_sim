@@ -48,13 +48,11 @@ class TestSims(unittest.TestCase):
             self.get_sim(model_path)
 
 
+# The musclemimic layout (416 actuators) plus the thenar muscles (3 per hand).
 MUSCLEMIMIC_FULLBODY_SPEC = {
     "njnt": 123,
-    "nu": 416,
+    "nu": 422,
 }
-# The musclemimic layout predates the thenar muscles: compare with them opted out.
-MUSCLEMIMIC_LOAD_KWARGS = {"thenar_muscles": False}
-THENAR_ACTUATORS = 6
 
 
 class TestMuscleMimicFullBody(unittest.TestCase):
@@ -62,7 +60,7 @@ class TestMuscleMimicFullBody(unittest.TestCase):
 
     def _load(self, rel_path):
         if rel_path == "myofullbody":
-            return load_model("myofullbody", **MUSCLEMIMIC_LOAD_KWARGS)
+            return load_model("myofullbody")
         return mujoco.MjModel.from_xml_path(str(myo_sim.MODELS_DIR / rel_path))
 
     def test_myofullbody_joints(self):
@@ -80,7 +78,6 @@ class TestMuscleMimicFullBody(unittest.TestCase):
             MUSCLEMIMIC_FULLBODY_SPEC["nu"],
             f"myofullbody.xml has {m.nu} actuators, expected {MUSCLEMIMIC_FULLBODY_SPEC['nu']} (musclemimic spec)",
         )
-        self.assertEqual(load_model("myofullbody").nu, MUSCLEMIMIC_FULLBODY_SPEC["nu"] + THENAR_ACTUATORS)
 
     def test_myofullbody_report(self):
         """Print a summary report for PR inclusion."""

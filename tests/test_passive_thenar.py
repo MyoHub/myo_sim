@@ -1,4 +1,4 @@
-"""Passive joint-moment tendons and thenar muscles: XML fragments, defaults, opt-out and data provenance."""
+"""Passive joint-moment tendons and thenar muscles: generated XML blocks, model content and data provenance."""
 
 from __future__ import annotations
 
@@ -15,10 +15,11 @@ import pytest
 import myo_sim
 from myo_sim.build import compose
 from myo_sim.build.hand_data import (
+    APPLIED_STATUSES,
     load_passive_moment_table,
     load_thenar_table,
     passive_moment,
-    passive_tendon_name,
+    read_generated_block,
     rows_with_status,
     spring_parameters,
     spring_segments,
@@ -30,7 +31,6 @@ THUMB = {
     "r": ("cmc_flexion", "cmc_abduction", "mp_flexion_r", "ip_flexion_r"),
     "l": ("cmc_flexion_l", "cmc_abduction_l", "mp_flexion_l", "ip_flexion_l"),
 }
-OFF = {"thenar_muscles": False, "passive_moments": False}
 
 
 def _script(name: str) -> ModuleType:
@@ -40,9 +40,14 @@ def _script(name: str) -> ModuleType:
     return module
 
 
-def _tendon_count(status: str) -> int:
-    rows = rows_with_status(load_passive_moment_table(), (status,))
-    return sum(len(spring_segments(r, "positive")) + len(spring_segments(r, "negative")) for r in rows)
+def _applied_rows() -> list[dict]:
+    """Applied rows that carry at least one spring."""
+    rows = rows_with_status(load_passive_moment_table(), APPLIED_STATUSES)
+    return [r for r in rows if spring_segments(r, "positive") or spring_segments(r, "negative")]
+
+
+def _tendon_count() -> int:
+    return sum(len(spring_segments(r, "positive")) + len(spring_segments(r, "negative")) for r in _applied_rows())
 
 
 def _passive_tendons(model: mujoco.MjModel) -> set[str]:
@@ -51,20 +56,18 @@ def _passive_tendons(model: mujoco.MjModel) -> set[str]:
 
 @pytest.fixture(scope="module")
 def fullbody() -> mujoco.MjModel:
-    return myo_sim.load_spec("myofullbody", passive_moments="assumed").compile()
+    return myo_sim.load_spec("myofullbody").compile()
 
 
-def test_fragments_are_generated_from_the_tables() -> None:
-    """The XML fragments are what the scripts write from the JSON tables (no hand edits)."""
+def test_generated_blocks_are_what_the_scripts_write() -> None:
+    """The generated blocks of the arm tendon and muscle files are the scripts' output from the JSON tables."""
     fit = _script("fit_passive_moments")
-    table = load_passive_moment_table()
-    for status, path in fit.FRAGMENTS.items():
-        assert path.read_text() == fit.fragment_xml(table, status), path.name
-    gen = _script("generate_thenar_fragments")
+    assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, fit.SCRIPT) == fit.tendon_block(load_passive_moment_table())
+    gen = _script("generate_thenar_muscles")
     thenar = load_thenar_table()
-    assert compose.RIGHT_ARM_THENAR_TENDONS_XML.read_text() == gen.tendon_fragment_xml(thenar)
-    expected = gen.muscle_fragment_xml(thenar, gen.architecture_lengthranges(thenar))
-    assert compose.RIGHT_ARM_THENAR_MUSCLES_XML.read_text() == expected
+    assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, gen.SCRIPT) == gen.tendon_block(thenar)
+    expected = gen.muscle_block(thenar, gen.architecture_lengthranges(thenar))
+    assert read_generated_block(compose.RIGHT_ARM_MUSCLES_XML, gen.SCRIPT) == expected
 
 
 def test_chain_holds_the_thenar_sites() -> None:
@@ -79,46 +82,26 @@ def test_chain_holds_the_thenar_sites() -> None:
 
 
 @pytest.mark.parametrize("name", MODELS)
-def test_default_has_thenar_muscles_and_measured_springs(name: str) -> None:
+def test_models_carry_the_thenar_muscles_and_every_applied_row(name: str) -> None:
     hands = 1 if name == "myoarm_r" else 2
-    off = myo_sim.load_spec(name, **OFF).compile()
-    default = myo_sim.load_spec(name).compile()
-    assert default.nu == off.nu + 3 * hands
-    assert default.nsite == off.nsite  # the thenar sites are always in the chain
-    assert len(_passive_tendons(default)) == _tendon_count("measured") * hands
-    assert default.ntendon == off.ntendon + (3 + _tendon_count("measured")) * hands
-    assumed = myo_sim.load_spec(name, passive_moments="assumed").compile()
-    assert len(_passive_tendons(assumed)) == (_tendon_count("measured") + _tendon_count("assumed")) * hands
-    thenar_only = myo_sim.load_spec(name, passive_moments=False).compile()
-    assert not _passive_tendons(thenar_only) and thenar_only.nu == default.nu
+    model = myo_sim.load_spec(name).compile()
+    assert len(_passive_tendons(model)) == _tendon_count() * hands
+    names = {model.actuator(i).name for i in range(model.nu)}
+    for muscle in (m["name"] for m in load_thenar_table()["muscles"]):
+        assert muscle in names or f"{muscle}_r" in names, muscle
+        assert (f"{muscle}_l" in names) == (hands == 2), muscle
 
 
-def test_opt_out_restores_the_previous_action_space() -> None:
-    assert myo_sim.load_model("myofullbody", **OFF).nu == 416
-    hand = myo_sim.load_model("myohand_r", **OFF)
-    assert hand.nu == 39 and not _passive_tendons(hand)
-    for name in ("AdP", "FPB", "APB"):
-        assert mujoco.mj_name2id(hand, mujoco.mjtObj.mjOBJ_ACTUATOR, f"{name}_r") < 0
-
-
-def test_flags_do_not_leak_between_builds() -> None:
-    myo_sim.load_spec("myoarm_r", **OFF)
-    assert myo_sim.load_model("myoarm_r").nu == 66
-    with pytest.raises(ValueError, match="passive_moments"):
-        myo_sim.load_spec("myoarm_r", passive_moments="measured")
-
-
-def test_both_sides_come_from_the_right_fragments() -> None:
-    """Every fragment element appears on both arms; the left one through the mirroring."""
-    model = myo_sim.load_model("myoarms", passive_moments="assumed")
-    paths = (
-        compose.RIGHT_ARM_THENAR_TENDONS_XML,
-        compose.RIGHT_ARM_THENAR_MUSCLES_XML,
-        compose.RIGHT_ARM_PASSIVE_TENDONS_XML,
-        compose.RIGHT_ARM_PASSIVE_ASSUMED_TENDONS_XML,
-    )
-    for path in paths:
-        for element in ET.parse(path).getroot().iter():
+def test_both_sides_come_from_the_right_arm_files() -> None:
+    """Every generated element appears on both arms; the left one through the mirroring."""
+    model = myo_sim.load_model("myoarms")
+    blocks = [
+        read_generated_block(compose.RIGHT_ARM_TENDONS_XML, "generate_thenar_muscles.py"),
+        read_generated_block(compose.RIGHT_ARM_TENDONS_XML, "fit_passive_moments.py"),
+        read_generated_block(compose.RIGHT_ARM_MUSCLES_XML, "generate_thenar_muscles.py"),
+    ]
+    for block in blocks:
+        for element in ET.fromstring(f"<block>{block}</block>").iter():
             if element.tag not in ("spatial", "fixed", "muscle"):
                 continue
             obj = mujoco.mjtObj.mjOBJ_ACTUATOR if element.tag == "muscle" else mujoco.mjtObj.mjOBJ_TENDON
@@ -133,9 +116,10 @@ def test_table_rows_are_sourced() -> None:
     for row in table["joints"]:
         assert row["status"] in ("measured", "assumed", "gap", "covered_by_muscles", "validation_only")
         assert row["scales_with"] == "none"
-        if row["status"] in ("measured", "assumed"):
+        if row["status"] in APPLIED_STATUSES:
             assert row["source"] in table["sources"] and table["sources"][row["source"]]["doi"]
-            assert "positive" in row or "negative" in row
+            assert "source_curve" in row and "subtract_model_muscles" in row["source_curve"]
+            assert "positive" in row or "negative" in row or row["fit"]["spring"].startswith("none")
             if row["status"] == "assumed":  # a transfer between joints says so
                 assert "Assumption" in row["notes"]
         else:  # nothing is added; a gap says where values could come from
@@ -152,7 +136,7 @@ def test_table_rows_are_sourced() -> None:
 
 def test_passive_moments_match_the_table(fullbody: mujoco.MjModel) -> None:
     data = mujoco.MjData(fullbody)
-    for row in rows_with_status(load_passive_moment_table(), ("measured", "assumed")):
+    for row in _applied_rows():
         for side in ("r", "l"):
             joint = fullbody.joint(row["names"][side])
             for q in np.linspace(*fullbody.jnt_range[joint.id], 7):
@@ -162,7 +146,8 @@ def test_passive_moments_match_the_table(fullbody: mujoco.MjModel) -> None:
                 mujoco.mj_forward(fullbody, data)
                 np.testing.assert_allclose(data.qfrc_passive[joint.dofadr[0]], passive_moment(row, q), atol=1e-9)
     wrist = next(r for r in rows_with_status(load_passive_moment_table()) if r["names"]["r"] == "flexion_r")
-    np.testing.assert_allclose(passive_moment(wrist, [0.2, -0.2]), [-0.554 * 0.2, 1.021 * 0.2])
+    # Formica 2012 linear stiffness, less the little the wrist muscles give at act = 0.
+    np.testing.assert_allclose(passive_moment(wrist, [0.2, -0.2]), [-0.554 * 0.2, 1.021 * 0.2], rtol=0.01)
 
 
 def test_cpu_and_mujoco_warp_passive_moments_agree(fullbody: mujoco.MjModel) -> None:
@@ -171,7 +156,7 @@ def test_cpu_and_mujoco_warp_passive_moments_agree(fullbody: mujoco.MjModel) -> 
     data = mujoco.MjData(fullbody)
     rng = np.random.default_rng(0)
     dofs = []
-    for row in rows_with_status(load_passive_moment_table(), ("measured", "assumed")):
+    for row in _applied_rows():
         for side in ("r", "l"):
             joint = fullbody.joint(row["names"][side])
             data.qpos[joint.qposadr[0]] = rng.uniform(*fullbody.jnt_range[joint.id])
@@ -188,7 +173,7 @@ def test_cpu_and_mujoco_warp_passive_moments_agree(fullbody: mujoco.MjModel) -> 
 def test_left_and_right_hands_are_symmetric(fullbody: mujoco.MjModel) -> None:
     data = mujoco.MjData(fullbody)
     rng = np.random.default_rng(1)
-    for row in rows_with_status(load_passive_moment_table(), ("measured", "assumed")):
+    for row in _applied_rows():
         right, left = fullbody.joint(row["names"]["r"]), fullbody.joint(row["names"]["l"])
         np.testing.assert_allclose(fullbody.jnt_range[left.id], fullbody.jnt_range[right.id])
         q = rng.uniform(*fullbody.jnt_range[right.id])
@@ -216,7 +201,7 @@ def test_relaxed_hands_settle_inside_their_ranges() -> None:
     model = myo_sim.load_spec("myofullbody").compile()
     model.opt.gravity[:] = 0.0
     data = mujoco.MjData(model)
-    rows = rows_with_status(load_passive_moment_table())
+    rows = _applied_rows()
     rng = np.random.default_rng(2)
     for row in rows:  # random start inside each range, mirrored on the left
         right, left = model.joint(row["names"]["r"]), model.joint(row["names"]["l"])
@@ -255,21 +240,6 @@ def test_one_sided_springs_restore_toward_neutral_with_polynomial_terms() -> Non
         mujoco.mj_forward(model, data)
         np.testing.assert_allclose(data.qfrc_passive[0], passive_moment(row, q), atol=1e-12)
         assert data.qfrc_passive[0] * q <= 0.0
-
-
-def test_subject_scale_multiplies_rows() -> None:
-    base = myo_sim.load_spec("myoarm_r").compile()
-    scaled = myo_sim.load_spec("myoarm_r", subject_scale={"wrist_flexion": 2.0, "AdP.force": 0.5, "APB.length": 1.1}).compile()
-    name = passive_tendon_name("wrist_flexion", "positive")
-    stiffness = base.tendon_stiffness[base.tendon(name).id]
-    np.testing.assert_allclose(scaled.tendon_stiffness[scaled.tendon(name).id], 2 * stiffness)
-    assert scaled.actuator_gainprm[scaled.actuator("AdP").id, 2] == pytest.approx(
-        0.5 * base.actuator_gainprm[base.actuator("AdP").id, 2]
-    )
-    span = lambda m: float(np.diff(m.actuator_lengthrange[m.actuator("APB").id])[0])  # noqa: E731
-    assert span(scaled) == pytest.approx(1.1 * span(base))  # 0.3 L_fo
-    both = myo_sim.load_spec("myoarms", subject_scale={"wrist_flexion": 2.0}).compile()
-    np.testing.assert_allclose(both.tendon_stiffness[both.tendon(f"{name[:-2]}_l").id], 2 * stiffness)
 
 
 def _tendon_geometry(model: mujoco.MjModel, tendon: str, joints: tuple[str, ...], q: np.ndarray) -> np.ndarray:
@@ -318,16 +288,6 @@ def test_thenar_moment_arms_act_as_named() -> None:
     assert arm["FPB"][2] < 0
 
 
-def test_assumed_rows_only_on_request() -> None:
-    table = load_passive_moment_table()
-    measured = _passive_tendons(myo_sim.load_spec("myoarm_r").compile())
-    assumed = _passive_tendons(myo_sim.load_spec("myoarm_r", passive_moments="assumed").compile())
-    extra = assumed - measured
-    assert extra and measured < assumed
-    assumed_rows = {r["joint"] for r in table["joints"] if r["status"] == "assumed"}
-    assert all(any(t.startswith(f"passive_{row}_") for row in assumed_rows) for t in extra)
-
-
 def test_fitted_rows_reproduce_from_their_source_curves() -> None:
     """The stored springs are what scripts/fit_passive_moments.py fits from each row's source curve."""
     pytest.importorskip("scipy")
@@ -341,5 +301,5 @@ def test_fitted_rows_reproduce_from_their_source_curves() -> None:
         fit.fit_row(refit, joint_range)
         q = np.linspace(*joint_range, 50)
         np.testing.assert_allclose(passive_moment(refit, q), passive_moment(row, q), atol=1e-9, err_msg=row["joint"])
-        if row["status"] == "measured":
-            assert row["fit"]["max_abs_err_Nm"] <= 0.12 * row["fit"]["source_peak_Nm"], row["joint"]
+        if "rmse_Nm" in row["fit"]:  # the springs never make the total (muscles + springs) worse than the muscles alone
+            assert row["fit"]["rmse_Nm"] <= row["fit"]["rmse_without_spring_Nm"], row["joint"]

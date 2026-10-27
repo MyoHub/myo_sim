@@ -5,35 +5,35 @@ Each fitted row keeps its source curve (published model and parameters) under
 (internal passive moment, Nm, positive along the joint axis), fits one-sided
 polynomial springs on each side of its equilibrium by non-negative least
 squares, and writes the spring segments and the fit error back into the row.
-It then writes the fixed-tendon fragments ``myoarm_r_passive_tendon.xml``
-(rows with status ``measured``) and ``myoarm_r_passive_assumed_tendon.xml``
-(``assumed``), the model's source of truth.
+It then rewrites its generated block in ``myoarm_r_tendon.xml`` (one fixed
+tendon per spring segment of every applied row), the model's source of truth.
 
-Run: ``uv run python scripts/fit_passive_moments.py`` (rewrites the JSON and
-both fragments); ``--xml-only`` rewrites the fragments from the JSON as is.
+Run: ``uv run python scripts/fit_passive_moments.py`` (rewrites the JSON and the
+block); ``--xml-only`` rewrites the block from the JSON as is.
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-from pathlib import Path
 from typing import Any, Callable
 
 import numpy as np
 
 import myo_sim
-from myo_sim.build.compose import RIGHT_ARM_PASSIVE_ASSUMED_TENDONS_XML, RIGHT_ARM_PASSIVE_TENDONS_XML
+from myo_sim.build.compose import RIGHT_ARM_TENDONS_XML
 from myo_sim.build.hand_data import (
+    APPLIED_STATUSES,
     PASSIVE_DATA_PATH,
     passive_moment,
     passive_tendon_name,
     rows_with_status,
     spring_parameters,
     spring_segments,
+    write_generated_block,
 )
 
-FRAGMENTS: dict[str, Path] = {"measured": RIGHT_ARM_PASSIVE_TENDONS_XML, "assumed": RIGHT_ARM_PASSIVE_ASSUMED_TENDONS_XML}
+SCRIPT = "fit_passive_moments.py"
 
 DEG = np.pi / 180.0
 
@@ -55,13 +55,25 @@ def kamper2002_static(p: dict[str, float], rad: np.ndarray) -> np.ndarray:
     return p["c3"] * rad**3 + p["c2"] * rad**2 + p["c1"] * rad + p["c0"]
 
 
+def linear_two_sided(p: dict[str, float], rad: np.ndarray) -> np.ndarray:
+    """Direction-specific linear stiffness about neutral: internal moment (N m) at angle *rad*."""
+    rad = np.asarray(rad, dtype=float)
+    return np.where(rad > 0.0, -p["k_positive"] * rad, -p["k_negative"] * rad)
+
+
 def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndarray:
-    """Passive moment (N m) of the model's own muscles at *joint* (zero activation), other joints per ``posture_deg``."""
+    """Passive moment (N m) at *joint* of the model's own muscles (zero activation), other joints per ``posture_deg``.
+
+    ``muscles`` (optional) restricts the sum to the muscles the source curve
+    includes; by default every muscle counts.
+    """
     import mujoco
 
     base = curve["subtract_model_muscles"]
-    model = myo_sim.load_spec(base["model"], **base.get("load_spec", {})).compile()
+    model = myo_sim.load_spec(base["model"]).compile()
     data = mujoco.MjData(model)
+    ids = [model.actuator(name).id for name in base["muscles"]] if "muscles" in base else None
+    dof = model.joint(joint).dofadr[0]
     out = np.zeros_like(q)
     for i, value in enumerate(q):
         data.qpos[:] = model.qpos0
@@ -72,7 +84,12 @@ def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndar
         data.act[:] = 0.0
         data.ctrl[:] = 0.0
         mujoco.mj_forward(model, data)
-        out[i] = data.qfrc_actuator[model.joint(joint).dofadr[0]]
+        if ids is None:
+            out[i] = data.qfrc_actuator[dof]
+        else:
+            moment = np.zeros((model.nu, model.nv))
+            mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
+            out[i] = float(data.actuator_force[ids] @ moment[ids, dof])
     return out
 
 
@@ -89,6 +106,8 @@ def domalain2010_aa(p: dict[str, float], rel: np.ndarray) -> np.ndarray:
 def source_torque(curve: dict[str, Any], joint_range: np.ndarray) -> Callable[[np.ndarray], np.ndarray]:
     """Internal passive moment (Nm) along the MyoHand joint axis as a function of q (rad)."""
     p, sign = curve["params"], curve["joint_sign"]  # sign: +1 when +q is the source's positive angle
+    if curve["model"] == "linear_two_sided":
+        return lambda q: sign * linear_two_sided(p, sign * np.asarray(q))
     if curve["model"] == "knutson2000_intrinsic":
         return lambda q: sign * knutson2000_intrinsic(p, sign * np.asarray(q) / DEG) / 100.0
     if curve["model"] == "kamper2002_static":
@@ -123,14 +142,29 @@ def _fit_side(tau: Callable, q: np.ndarray, onset: float, sign: float, order: in
     return [float(c) for c in coef] + [0.0] * (3 - order)
 
 
+def _no_spring(row: dict[str, Any], curve: dict[str, Any]) -> None:
+    """Record that the model's muscles already supply the whole source moment of *row*."""
+    row.pop("positive", None)
+    row.pop("negative", None)
+    row["fit"] = {"spring": "none: the model's passive muscle moment already reaches the source curve over its range"}
+
+
 def fit_row(row: dict[str, Any], joint_range: np.ndarray) -> None:
-    """Fill ``positive`` / ``negative`` springs and ``fit`` of a row with a ``source_curve``."""
+    """Fill ``positive`` / ``negative`` springs and ``fit`` of a row with a ``source_curve``.
+
+    The springs are fitted to the residual: the source curve minus the model's
+    own passive muscle moment (act = 0) at the source's posture, so the total
+    (muscles + springs) approaches the source and no moment is counted twice.
+    The non-negative fit cannot reduce a muscle excess; without a restoring
+    residual the row gets no spring.
+    """
     from scipy.optimize import brentq
 
     curve = row["source_curve"]
-    raw = source_torque(curve, joint_range)
+    raw = source = source_torque(curve, joint_range)
+    curve.setdefault("subtract_model_muscles", {"model": "myoarm_r", "posture_deg": {}})
     if "subtract_model_muscles" in curve:
-        # Total moment at the measured posture minus what the model's muscles already give there.
+        # Source moment at its posture minus what the model's muscles already give there.
         joint = row["names"]["r"]
         grid = np.linspace(joint_range[0], joint_range[1], 200)
         baseline = muscle_baseline(curve, joint, grid)
@@ -138,7 +172,6 @@ def fit_row(row: dict[str, Any], joint_range: np.ndarray) -> None:
             "q_rad": [float(grid[0]), float(grid[-1]), 200],
             "moment": [round(float(v), 6) for v in baseline],
         }
-        source = raw
 
         def raw(qq: np.ndarray, _src: Callable = source, _g: np.ndarray = grid, _b: np.ndarray = baseline) -> np.ndarray:
             return _src(qq) - np.interp(qq, _g, _b)
@@ -174,22 +207,22 @@ def fit_row(row: dict[str, Any], joint_range: np.ndarray) -> None:
         mid = 0.5 * (lo + hi)
         k = int(crossings[np.argmin(np.abs(wide[crossings] - mid))])
         onset_pos = onset_neg = brentq(locate, wide[k], wide[k + 1])
-        if "subtract_model_muscles" in curve:
-            # Where the model's muscles already exceed the measured total, the spring adds nothing.
-            unclipped, eq = tau, onset_pos
-            excess = np.maximum(unclipped(q) * np.sign(q - eq), 0.0)
-            curve["subtract_model_muscles"]["model_excess_max_Nm"] = float(excess.max())
-
-            def tau(qq: np.ndarray, _f: Callable = unclipped, _eq: float = eq) -> np.ndarray:
-                v = _f(qq)
-                return np.where(np.asarray(qq) > _eq, np.minimum(v, 0.0), np.maximum(v, 0.0))
-
-            t = tau(q)
-    else:  # one-sided: the spring starts where the source moment is 1 % of its peak
+    else:  # one-sided: the spring starts where the residual is 1 % of its peak
         mag = np.abs(t)
+        if not mag.max() > 0.0:
+            _no_spring(row, curve)
+            return
         side = 1.0 if t[np.argmax(mag)] < 0 else -1.0  # restoring moment opposes the side it acts on
         inside = q[mag >= 0.01 * mag.max()]
         onset_pos = onset_neg = float(inside.min() if side > 0 else inside.max())
+    # Where the model's muscles already exceed the source the residual pushes away from
+    # equilibrium; it stays in the fit, so a spring that would add to that excess pays for it.
+    eq = onset_pos
+    excess = np.maximum(tau(q) * np.sign(q - eq), 0.0)
+    curve["subtract_model_muscles"]["model_excess_max_Nm"] = float(excess.max())
+    if not np.any(tau(q) * np.sign(q - eq) < 0.0):
+        _no_spring(row, curve)
+        return
     for direction, sign, onset in (("positive", 1.0, onset_pos), ("negative", -1.0, onset_neg)):
         n = curve.get("segments", 1)
         n_segments = int(n[direction] if isinstance(n, dict) else n)
@@ -225,6 +258,9 @@ def fit_row(row: dict[str, Any], joint_range: np.ndarray) -> None:
             row[direction] = segments if len(segments) > 1 else segments[0]
         else:
             row.pop(direction, None)
+    if "positive" not in row and "negative" not in row:
+        _no_spring(row, curve)
+        return
     full = np.linspace(joint_range[0], joint_range[1], 400)
     fitted = passive_moment(row, full)
     eq = row.get("positive", row.get("negative"))
@@ -241,8 +277,10 @@ def fit_row(row: dict[str, Any], joint_range: np.ndarray) -> None:
         "range_rad": [lo, hi],
         "measured_range_rad": [float(measured[0]), float(measured[1])],
         "rmse_Nm": float(np.sqrt(np.mean(err[inside] ** 2))),
+        "rmse_without_spring_Nm": float(np.sqrt(np.mean(t[inside] ** 2))),
         "max_abs_err_Nm": float(np.max(np.abs(err[inside]))),
-        "source_peak_Nm": float(np.max(np.abs(t[inside]))),
+        "residual_peak_Nm": float(np.max(np.abs(t[inside]))),
+        "source_peak_Nm": float(np.max(np.abs(source(q[inside])))),
     }
     if not inside.all():
         row["fit"]["max_abs_err_outside_measured_Nm"] = float(np.max(np.abs(err[~inside])))
@@ -254,18 +292,15 @@ def _number(value: float) -> str:
     return text[:-2] if text.endswith(".0") else text
 
 
-def fragment_xml(table: dict[str, Any], status: str) -> str:
-    """Text of the fixed-tendon fragment holding the rows of *status* (right-side joint names)."""
-    lines = [
-        "<mujocoinclude>",
-        "    <!-- Generated by scripts/fit_passive_moments.py from myo_sim/build/data/passive_joint_moments.json"
-        f' (rows with status "{status}"); edit the table and rerun, not this file. -->',
-        "    <tendon>",
-    ]
-    for row in rows_with_status(table, (status,)):
+def tendon_block(table: dict[str, Any]) -> str:
+    """Generated block of ``myoarm_r_tendon.xml``: the springs of every applied row (right-side joint names)."""
+    lines = []
+    for row in rows_with_status(table, APPLIED_STATUSES):
+        if not (spring_segments(row, "positive") or spring_segments(row, "negative")):
+            continue
         source = table["sources"][row["source"]]
         cite = f"{source['citation'].split()[0]} et al. {''.join(c for c in row['source'] if c.isdigit())}"
-        lines.append(f"        <!-- {row['joint']}: {cite}, doi:{source['doi']} -->")
+        lines.append(f"        <!-- {row['joint']} ({row['status']}): {cite}, doi:{source['doi']} -->")
         for direction in ("positive", "negative"):
             for i, part in enumerate(spring_segments(row, direction)):
                 springlength, stiffness = spring_parameters(direction, part["onset"], part["stiffness"])
@@ -275,22 +310,21 @@ def fragment_xml(table: dict[str, Any], status: str) -> str:
                     f'            <joint joint="{row["names"]["r"]}" coef="1"/>',
                     "        </fixed>",
                 ]
-    return "\n".join([*lines, "    </tendon>", "</mujocoinclude>", ""])
+    return "".join(f"{line}\n" for line in lines)
 
 
-def write_fragments(table: dict[str, Any]) -> None:
-    """Write both fixed-tendon fragments from *table*."""
-    for status, path in FRAGMENTS.items():
-        path.write_text(fragment_xml(table, status))
+def write_block(table: dict[str, Any]) -> None:
+    """Rewrite the generated spring block of ``myoarm_r_tendon.xml`` from *table*."""
+    write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table), "</tendon>")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--xml-only", action="store_true", help="only rewrite the XML fragments from the JSON")
+    parser.add_argument("--xml-only", action="store_true", help="only rewrite the XML block from the JSON")
     args = parser.parse_args()
     table = json.loads(PASSIVE_DATA_PATH.read_text())
     if args.xml_only:
-        write_fragments(table)
+        write_block(table)
         return
     model = myo_sim.load_spec("myoarm_r").compile()
     for row in table["joints"]:
@@ -299,6 +333,9 @@ def main() -> None:
         joint_range = model.jnt_range[model.joint(row["names"]["r"]).id]
         fit_row(row, joint_range)
         f = row["fit"]
+        if "spring" in f:
+            print(f"{row['joint']:24s} no spring ({f['spring']})")
+            continue
         out = (
             f", outside measured: max err {f['max_abs_err_outside_measured_Nm']:.3f}, max moment {f['max_abs_moment_outside_measured_Nm']:.3f} Nm"
             if "max_abs_err_outside_measured_Nm" in f
@@ -308,7 +345,7 @@ def main() -> None:
             f"{row['joint']:24s} rmse {f['rmse_Nm']:.4f} Nm, max {f['max_abs_err_Nm']:.4f} Nm (peak {f['source_peak_Nm']:.3f} Nm){out}"
         )
     PASSIVE_DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
-    write_fragments(table)
+    write_block(table)
 
 
 if __name__ == "__main__":

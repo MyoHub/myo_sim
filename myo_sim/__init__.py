@@ -116,23 +116,21 @@ FRAGMENT_SPEC_BUILDERS: dict[str, object] = {
 }
 
 
-def load(name: str, **kwargs: Any) -> tuple:
+def load(name: str) -> tuple:
     """Load a MuJoCo model by registry name. Returns (MjModel, MjData).
 
     Supports MjSpec-composed models such as myohand_r, myohands, myoarms,
     myofullbody, and myolegs, plus packaged legacy static XMLs. For a
     left-hand-only MjSpec builder, use FRAGMENT_SPEC_BUILDERS["myohand_l"].
-    Keyword arguments (e.g. ``thenar_muscles=False``) go to load_spec().
     """
     import mujoco
 
-    model = load_model(name, **kwargs)
+    model = load_model(name)
     return model, mujoco.MjData(model)
 
 
-def load_model(name: str, **kwargs: Any) -> "mujoco.MjModel":
-    """Build and compile a named model; keyword arguments go to load_spec()."""
-    spec = load_spec(name, **kwargs)
+def load_model(name: str) -> tuple:
+    spec = load_spec(name)
     model = spec.compile()
     return model
 
@@ -141,9 +139,6 @@ def load_spec(
     name: str,
     build_kwargs: Optional[dict[str, Any]] = None,
     inertia_floor: float | None = None,
-    passive_moments: bool | str = True,
-    thenar_muscles: bool = True,
-    subject_scale: Optional[dict[str, float]] = None,
 ) -> "mujoco.MjSpec":
     """Build and return the uncompiled MjSpec for a named model.
 
@@ -166,17 +161,6 @@ def load_spec(
             https://github.com/MyoHub/myo_sim/issues/128. Only supported for
             MjSpec-composed models; ignored for packaged static-XML
             fragments.
-        passive_moments: Passive joint-moment tendons of every arm (fixed
-            tendons from ``myoarm_r_passive_tendon.xml``): ``True`` (default)
-            the measured rows, ``"assumed"`` also the documented transfers
-            between joints, ``False`` none.
-        thenar_muscles: Adductor pollicis, flexor and abductor pollicis brevis
-            on every hand (``myoarm_r_thenar_*.xml``; default True). ``False``
-            keeps the previous action space (3 fewer actuators per hand).
-            Both flags only apply to MjSpec-composed models; packaged
-            static-XML fragments ignore them.
-        subject_scale: Subject factors keyed by data row
-            (see myo_sim.build.compose.build_spec). Empty by default.
     """
     import mujoco
 
@@ -191,9 +175,6 @@ def load_spec(
             composed_name,
             inertia_floor=inertia_floor,
             build_kwargs=build_kwargs,
-            passive_moments=passive_moments,
-            thenar_muscles=thenar_muscles,
-            subject_scale=subject_scale,
         )
         return spec
 

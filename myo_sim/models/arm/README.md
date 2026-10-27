@@ -7,7 +7,7 @@ MyoArm is a MuJoCo musculoskeletal model of the right upper extremity — should
 | Property | Value |
 |---|---|
 | Degrees of freedom | 38 |
-| Actuators (muscles) | 66 (63 + thenar AdP, FPB, APB; 63 with `thenar_muscles=False`) |
+| Actuators (muscles) | 66 (63 + thenar AdP, FPB, APB) |
 | Body segments | clavicle, scapula, humerus, radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1–5), proximal/middle/distal phalanges (digits 2–5), thumb phalanges |
 | Primary joints | shoulder (sternoclavicular, acromioclavicular, glenohumeral, scapulothoracic constraints), elbow flexion, forearm pronation/supination, wrist flexion/deviation, finger MCP/PIP/DIP (digits 2–5), thumb CMC/MCP/IP |
 

@@ -63,14 +63,12 @@ def test_myotorso_loads_from_composed_registry():
 
 
 def test_myohand_r_matches_main_spec():
-    """Built myohand_r: njnt=23; nu=39 as the static myohand from main plus the 3 thenar muscles (opt-out restores 39)."""
+    """Built myohand_r: njnt=23; nu=42, the 39 of the static myohand from main plus the 3 thenar muscles."""
     import myo_sim
 
     model, _ = myo_sim.load("myohand_r")
     assert model.njnt == 23, f"Expected 23 joints, got {model.njnt}"
     assert model.nu == 42, f"Expected 42 actuators, got {model.nu}"
-    legacy, _ = myo_sim.load("myohand_r", thenar_muscles=False)
-    assert legacy.nu == 39, f"Expected 39 actuators without thenar muscles, got {legacy.nu}"
 
 
 def test_load_composed_models():
