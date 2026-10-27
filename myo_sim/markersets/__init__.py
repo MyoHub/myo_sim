@@ -17,13 +17,13 @@ import numpy as np
 import yaml
 
 KINDS = ("anatomical", "technical", "cluster", "virtual")
-CONFIDENCE = ("anatomical", "fitted", "nominal")
+CONFIDENCE = ("anatomical", "fitted", "reference", "nominal")
 
 
 @dataclass(frozen=True)
 class Marker:
     """One marker. ``confidence``: "anatomical" (on a model landmark), "fitted" (fitted to recorded data, see the set's
-    description) or "nominal" (placed from the written placement description)."""
+    description), "reference" (copied from a published model with matching body frames) or "nominal" (placed from the written placement description)."""
 
     name: str
     kind: str

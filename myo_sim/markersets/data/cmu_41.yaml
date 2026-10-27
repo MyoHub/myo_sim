@@ -1,9 +1,10 @@
 name: cmu_41
-description: CMU Graphics Lab 41-marker set. Marker names follow the Plug-in Gait convention as used in the CMU C3D files; placements
-  of the waist and shank markers are unverified.
+description: CMU Graphics Lab 41-marker set (Vicon 512 layout plus forearm and shank markers). Names as in the CMU C3D files; the
+  placement guide's figure labels the forearm and shank markers RARM/LARM and RLEG/LLEG. The finger markers are asymmetric (right
+  index, left ring finger).
 sources:
-- 'CMU Graphics Lab Motion Capture Database: https://mocap.cs.cmu.edu/faqs.php'
-- 'CMU marker placement guide: https://mocap.cs.cmu.edu/markerPlacementGuide.pdf'
+- 'CMU marker placement guide: http://mocap.cs.cmu.edu/markerPlacementGuide.pdf'
+- 'CMU Graphics Lab Motion Capture Database: http://mocap.cs.cmu.edu/faqs.php'
 markers:
   RFHD:
     kind: technical
@@ -77,15 +78,6 @@ markers:
     - 0.0
     - -0.04
     - 0.0
-  RBAK:
-    kind: technical
-    description: right scapula (labelling marker)
-    confidence: nominal
-    anchor: thoracis_spine
-    offset:
-    - -0.03
-    - 0.04
-    - 0.09
   RSHO:
     kind: anatomical
     description: acromioclavicular joint, right
@@ -142,7 +134,7 @@ markers:
     - 0.0
   RFRM:
     kind: cluster
-    description: lower lateral forearm (wand marker), right
+    description: outer edge of the forearm near the outer bone (RARM in the guide figure), right
     confidence: nominal
     anchor: Radius_marker_r
     offset:
@@ -151,7 +143,7 @@ markers:
     - 0.0
   LFRM:
     kind: cluster
-    description: lower lateral forearm (wand marker), left
+    description: outer edge of the forearm near the outer bone (LARM in the guide figure), left
     confidence: nominal
     anchor: Radius_marker_l
     offset:
@@ -196,18 +188,18 @@ markers:
     - 0.0
   RFIN:
     kind: technical
-    description: back of the hand at the middle-finger knuckle, right
+    description: base of the index finger, right
     confidence: nominal
-    anchor: 3rdmcp_ellipsoid_site_FDS3_side_r
+    anchor: 2ndmcp_ellipsoid_site_FDS2_side_r
     offset:
     - 0.0
     - 0.0
     - 0.0
   LFIN:
     kind: technical
-    description: back of the hand at the middle-finger knuckle, left
+    description: base of the ring finger, left
     confidence: nominal
-    anchor: 3rdmcp_ellipsoid_site_FDS3_side_l
+    anchor: 4thmcp_ellipsoid_site_FDS4_side_l
     offset:
     - 0.0
     - 0.0
@@ -256,28 +248,28 @@ markers:
     - 0.0
   RSHN:
     kind: cluster
-    description: lateral shank (wand marker), right
+    description: lateral shank on the knee-to-ankle marker line, right
     confidence: nominal
     between:
     - KJC_r
     - LMAL_r
     t: 0.5
     offset:
-    - 0.04
     - 0.0
     - 0.0
+    - 0.03
   LSHN:
     kind: cluster
-    description: lateral shank (wand marker), left
+    description: lateral shank on the knee-to-ankle marker line, left
     confidence: nominal
     between:
     - KJC_l
     - LMAL_l
     t: 0.5
     offset:
-    - 0.04
     - 0.0
     - 0.0
+    - -0.03
   RANK:
     kind: anatomical
     description: lateral malleolus, right
@@ -333,36 +325,36 @@ markers:
     - 0.0
     - 0.045
   RFWT:
-    kind: technical
-    description: front waist near the anterior iliac spine, right
-    confidence: nominal
+    kind: anatomical
+    description: front waist, most prominent point of the pelvis (anterior iliac spine), right
+    confidence: anatomical
     anchor: ASI_r
     offset:
     - 0.0
     - 0.0
     - 0.0
   LFWT:
-    kind: technical
-    description: front waist near the anterior iliac spine, left
-    confidence: nominal
+    kind: anatomical
+    description: front waist, most prominent point of the pelvis (anterior iliac spine), left
+    confidence: anatomical
     anchor: ASI_l
     offset:
     - 0.0
     - 0.0
     - 0.0
   RBWT:
-    kind: technical
-    description: back waist near the posterior iliac spine, right
-    confidence: nominal
+    kind: anatomical
+    description: back waist, posterior iliac spine, right
+    confidence: anatomical
     anchor: PSI_r
     offset:
     - 0.0
     - 0.0
     - 0.0
   LBWT:
-    kind: technical
-    description: back waist near the posterior iliac spine, left
-    confidence: nominal
+    kind: anatomical
+    description: back waist, posterior iliac spine, left
+    confidence: anatomical
     anchor: PSI_l
     offset:
     - 0.0
@@ -370,7 +362,7 @@ markers:
     - 0.0
   RMT5:
     kind: anatomical
-    description: fifth metatarsal head, right
+    description: outer edge of the foot just before the little toe (fifth metatarsal head), right
     confidence: anatomical
     anchor: MT5_r
     offset:
@@ -379,10 +371,19 @@ markers:
     - 0.0
   LMT5:
     kind: anatomical
-    description: fifth metatarsal head, left
+    description: outer edge of the foot just before the little toe (fifth metatarsal head), left
     confidence: anatomical
     anchor: MT5_l
     offset:
     - 0.0
     - 0.0
     - 0.0
+  RBAC:
+    kind: technical
+    description: right scapula (labelling marker)
+    confidence: nominal
+    anchor: thoracis_spine
+    offset:
+    - -0.03
+    - 0.04
+    - 0.09

@@ -1,0 +1,359 @@
+name: opensim_gait2392
+description: Scaling marker set of the OpenSim gait2392 model, copied in the model's body frames (gait2392 and Rajagopal share the
+  Delp lower-limb frames; the torso frame differs slightly, so torso markers are approximate).
+sources:
+- 'OpenSim models, gait2392 pipeline: https://github.com/opensim-org/opensim-models/blob/master/Pipelines/Gait2392_Simbody/gait2392_Scale_MarkerSet.xml'
+- 'Delp SL et al. (1990) An interactive graphics-based model of the lower extremity. IEEE Trans Biomed Eng 37:757-767 (gait2392 model
+  credits: CC BY 3.0)'
+markers:
+  Sternum:
+    kind: anatomical
+    description: sternum
+    confidence: reference
+    body: torso
+    pos:
+    - 0.07
+    - 0.3
+    - 0.0
+  R.Acromium:
+    kind: anatomical
+    description: acromion, right
+    confidence: reference
+    body: torso
+    pos:
+    - -0.03
+    - 0.44
+    - 0.15
+  L.Acromium:
+    kind: anatomical
+    description: acromion, left
+    confidence: reference
+    body: torso
+    pos:
+    - -0.03
+    - 0.44
+    - -0.15
+  Top.Head:
+    kind: technical
+    description: top of the head
+    confidence: reference
+    body: torso
+    pos:
+    - 0.0008
+    - 0.657
+    - 0.0
+  R.ASIS:
+    kind: anatomical
+    description: anterior superior iliac spine, right
+    confidence: reference
+    body: pelvis
+    pos:
+    - 0.02
+    - 0.03
+    - 0.128
+  L.ASIS:
+    kind: anatomical
+    description: anterior superior iliac spine, left
+    confidence: reference
+    body: pelvis
+    pos:
+    - 0.02
+    - 0.03
+    - -0.128
+  V.Sacral:
+    kind: anatomical
+    description: sacrum
+    confidence: reference
+    body: pelvis
+    pos:
+    - -0.16
+    - 0.04
+    - 0.0
+  R.Thigh.Upper:
+    kind: cluster
+    description: thigh technical marker Thigh.Upper, right
+    confidence: reference
+    body: femur_r
+    pos:
+    - 0.018
+    - -0.2
+    - 0.064
+  R.Thigh.Front:
+    kind: cluster
+    description: thigh technical marker Thigh.Front, right
+    confidence: reference
+    body: femur_r
+    pos:
+    - 0.08
+    - -0.25
+    - 0.0047
+  R.Thigh.Rear:
+    kind: cluster
+    description: thigh technical marker Thigh.Rear, right
+    confidence: reference
+    body: femur_r
+    pos:
+    - 0.01
+    - -0.3
+    - 0.06
+  R.Knee.Lat:
+    kind: anatomical
+    description: lateral femoral epicondyle, right
+    confidence: reference
+    body: femur_r
+    pos:
+    - 0.0
+    - -0.404
+    - 0.05
+  R.Knee.Med:
+    kind: anatomical
+    description: medial femoral epicondyle, right
+    confidence: reference
+    body: femur_r
+    pos:
+    - 0.0
+    - -0.404
+    - -0.05
+  R.Shank.Upper:
+    kind: cluster
+    description: shank technical marker Shank.Upper, right
+    confidence: reference
+    body: tibia_r
+    pos:
+    - 0.005
+    - -0.065
+    - 0.05
+  R.Shank.Front:
+    kind: cluster
+    description: shank technical marker Shank.Front, right
+    confidence: reference
+    body: tibia_r
+    pos:
+    - 0.05
+    - -0.08
+    - 0.0
+  R.Shank.Rear:
+    kind: cluster
+    description: shank technical marker Shank.Rear, right
+    confidence: reference
+    body: tibia_r
+    pos:
+    - 0.02
+    - -0.13
+    - 0.05
+  R.Ankle.Lat:
+    kind: anatomical
+    description: lateral malleolus, right
+    confidence: reference
+    body: tibia_r
+    pos:
+    - -0.005
+    - -0.41
+    - 0.053
+  R.Ankle.Med:
+    kind: anatomical
+    description: medial malleolus, right
+    confidence: reference
+    body: tibia_r
+    pos:
+    - 0.006
+    - -0.3888
+    - -0.038
+  R.Heel:
+    kind: anatomical
+    description: calcaneus, right
+    confidence: reference
+    body: calcn_r
+    pos:
+    - -0.02
+    - 0.02
+    - 0.0
+  R.Midfoot.Sup:
+    kind: technical
+    description: dorsal midfoot, right
+    confidence: reference
+    body: calcn_r
+    pos:
+    - 0.13
+    - 0.03
+    - -0.03
+  R.Midfoot.Lat:
+    kind: technical
+    description: lateral midfoot, right
+    confidence: reference
+    body: calcn_r
+    pos:
+    - 0.1
+    - 0.02
+    - 0.04
+  R.Toe.Lat:
+    kind: anatomical
+    description: fifth metatarsal head, right
+    confidence: reference
+    body: calcn_r
+    pos:
+    - 0.19
+    - 0.0
+    - 0.065
+  R.Toe.Med:
+    kind: anatomical
+    description: first metatarsal head, right
+    confidence: reference
+    body: calcn_r
+    pos:
+    - 0.19
+    - 0.005
+    - -0.04
+  R.Toe.Tip:
+    kind: technical
+    description: tip of the toes, right
+    confidence: reference
+    body: calcn_r
+    pos:
+    - 0.26
+    - 0.005
+    - 0.0
+  L.Thigh.Upper:
+    kind: cluster
+    description: thigh technical marker Thigh.Upper, left
+    confidence: reference
+    body: femur_l
+    pos:
+    - 0.018
+    - -0.2
+    - -0.064
+  L.Thigh.Front:
+    kind: cluster
+    description: thigh technical marker Thigh.Front, left
+    confidence: reference
+    body: femur_l
+    pos:
+    - 0.08
+    - -0.25
+    - -0.0047
+  L.Thigh.Rear:
+    kind: cluster
+    description: thigh technical marker Thigh.Rear, left
+    confidence: reference
+    body: femur_l
+    pos:
+    - 0.01
+    - -0.3
+    - -0.06
+  L.Knee.Lat:
+    kind: anatomical
+    description: lateral femoral epicondyle, left
+    confidence: reference
+    body: femur_l
+    pos:
+    - 0.0
+    - -0.404
+    - -0.05
+  L.Knee.Med:
+    kind: anatomical
+    description: medial femoral epicondyle, left
+    confidence: reference
+    body: femur_l
+    pos:
+    - 0.0
+    - -0.404
+    - 0.05
+  L.Shank.Upper:
+    kind: cluster
+    description: shank technical marker Shank.Upper, left
+    confidence: reference
+    body: tibia_l
+    pos:
+    - 0.005
+    - -0.065
+    - -0.05
+  L.Shank.Front:
+    kind: cluster
+    description: shank technical marker Shank.Front, left
+    confidence: reference
+    body: tibia_l
+    pos:
+    - 0.05
+    - -0.08
+    - 0.0
+  L.Shank.Rear:
+    kind: cluster
+    description: shank technical marker Shank.Rear, left
+    confidence: reference
+    body: tibia_l
+    pos:
+    - -0.02
+    - -0.13
+    - -0.05
+  L.Ankle.Lat:
+    kind: anatomical
+    description: lateral malleolus, left
+    confidence: reference
+    body: tibia_l
+    pos:
+    - -0.005
+    - -0.41
+    - -0.053
+  L.Ankle.Med:
+    kind: anatomical
+    description: medial malleolus, left
+    confidence: reference
+    body: tibia_l
+    pos:
+    - 0.006
+    - -0.3888
+    - 0.038
+  L.Heel:
+    kind: anatomical
+    description: calcaneus, left
+    confidence: reference
+    body: calcn_l
+    pos:
+    - -0.02
+    - 0.02
+    - 0.0
+  L.Midfoot.Sup:
+    kind: technical
+    description: dorsal midfoot, left
+    confidence: reference
+    body: calcn_l
+    pos:
+    - 0.13
+    - 0.03
+    - 0.03
+  L.Midfoot.Lat:
+    kind: technical
+    description: lateral midfoot, left
+    confidence: reference
+    body: calcn_l
+    pos:
+    - 0.1
+    - 0.02
+    - -0.04
+  L.Toe.Lat:
+    kind: anatomical
+    description: fifth metatarsal head, left
+    confidence: reference
+    body: calcn_l
+    pos:
+    - 0.19
+    - 0.0
+    - -0.065
+  L.Toe.Med:
+    kind: anatomical
+    description: first metatarsal head, left
+    confidence: reference
+    body: calcn_l
+    pos:
+    - 0.19
+    - 0.005
+    - 0.04
+  L.Toe.Tip:
+    kind: technical
+    description: tip of the toes, left
+    confidence: reference
+    body: calcn_l
+    pos:
+    - 0.26
+    - 0.005
+    - 0.0
