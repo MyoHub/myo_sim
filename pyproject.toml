@@ -39,6 +39,7 @@ myo_sim = [
     "models/**/*",
     "build/*",
     "build/**/*",
+    "markersets/data/*",
 ]
 
 [tool.pytest.ini_options]
