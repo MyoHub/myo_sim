@@ -8,6 +8,10 @@ Code > CLAUDE.md > wiki. If a wiki page contradicts the code, the code wins. Whe
 
 When a wiki page is stale, update it in the same PR as the code change and append an entry to `docs/wiki/log.md`.
 
+## Model policy
+
+Before changing any model, read the *Model policy* at the top of `docs/wiki/model-authoring.md`: one reference model, improvements overwrite it, no feature flags, variants are separate registered models.
+
 ## Pages
 
 - `docs/wiki/repository-map.md` — where things live and where to make each kind of change

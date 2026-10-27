@@ -44,6 +44,9 @@ docs/wiki/            # canonical wiki location
 |---|---|
 | Edit a muscle path or via-point | `myo_sim/models/<part>/assets/*_muscle.xml` and `*_tendon.xml` |
 | Edit skeleton geometry | `myo_sim/models/<part>/assets/*_chain.xml` |
+| Add a passive joint spring or ligament | `<fixed>` tendon in `myo_sim/models/<part>/assets/*_tendon.xml` |
+| Add or refit a parameter from a source | `myo_sim/build/data/<topic>.json` (provenance) + `scripts/fit_<topic>.py` (writes the XML) |
+| Add an expensive or optional variant | A new registered model in `myo_sim/build/compose.py` (see the *Model policy*) |
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |

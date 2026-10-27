@@ -16,7 +16,8 @@ Required workflow for any task in this repository. Follow in order.
 3. Run the fast gate from `docs/wiki/testing-guide.md`.
 4. Update any wiki page made stale by the change.
 5. Append an entry to `docs/wiki/log.md`.
-6. Push to your fork and open a PR to `dev`.
+6. For model changes: run the validation checklist in `docs/wiki/model-authoring.md` and add a `CHANGELOG.md` entry under *Unreleased*.
+7. Push to your fork and open a PR to `dev`.
 
 ## For XML model changes
 
