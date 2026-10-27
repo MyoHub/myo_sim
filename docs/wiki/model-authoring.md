@@ -47,7 +47,7 @@ Add no spring where the remainder is zero or negative, and document that. Refit 
 
 ## Provenance
 
-- **Source data:** cited source data and fit inputs live in `myo_sim/build/data/<topic>.json`, one row per element. Each row holds the citation and DOI, the source curve or table values, the status (`measured`, `transferred` with the stated assumption, or `not added` with the reason), absolute SI units, and personalisation metadata (`scales_with`, `reference_segment`). JSON is provenance and fit input only: the model never reads it at load time.
+- **Source data:** cited source data and fit inputs live in `myo_sim/build/data/<topic>.json`, one row per element. Each row holds the citation and DOI, the source curve or table values, the status (`measured`, `transferred` with the stated assumption, or `not added` with the reason), and absolute SI units. JSON is provenance and fit input only: the model never reads it at load time.
 - **Fit scripts:** a fit or generator script (`scripts/fit_<topic>.py`) writes the values into the XML, inside a delimited block:
 
   ```xml
@@ -59,6 +59,9 @@ Add no spring where the remainder is zero or negative, and document that. Refit 
   A test checks that each generated block matches what its script produces. Hand edits go outside these blocks.
 - **Third-party data:** add a `LICENSE-<SOURCE>.txt` next to the data. Data that does not allow redistribution is cited, never copied. Papers are cited, never committed.
 - **Validation data:** keep it in the data file as well, and test against it.
+- **Inherited values:** a parameter taken over from an earlier model (e.g. Holzbaur, MoBL-ARMS, Rajagopal) is recorded as `inherited`, naming that model and its version. Every parameter has an entry, not only new ones.
+- **Method pages:** every identification or fit method has a wiki page. It covers the data, the target, the loss and bounds, the fit error and the known limitations.
+- **Parameter reference:** a script generates a per-part reference from the data files and the XML. It has one row per parameter: element, value, status, source, method page and fit error. A test fails when a parameter in the XML has no provenance row. The reference is regenerated for every release, and the release notes link to it.
 
 ## Adding a new muscle (worked example)
 
@@ -137,4 +140,4 @@ The right side is the source of truth.
 
 - **Breaking changes:** a model change that alters the number of actuators, joints or sites, or the dynamics, is a breaking change for downstream environments and trained policies.
 - **Recording it:** add a `CHANGELOG.md` entry under *Unreleased* that states what changed and what downstream users must update. Append a line to `docs/wiki/log.md`.
-- **Releasing it:** such changes ship together in the next release tag. Downstream packages (e.g. MyoSuite) pin a release tag and move to the new one deliberately. Older behaviour stays available through older tags, never through flags.
+- **Releasing it:** such changes ship together in the next release tag. Downstream packages (e.g. MyoSuite) pin a release tag and move to the new one deliberately. Older behaviour stays available through older tags, never through flags. No release ships without an up-to-date parameter reference (see *Provenance*).
