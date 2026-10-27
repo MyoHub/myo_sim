@@ -1,0 +1,127 @@
+{
+  "format": "myo_sim.muscle_passive/2",
+  "description": "Tendon slack lengths (absolute, m) of the index extrinsic muscles, fitted per Binder-Markey & Murray 2017 (Eqs. 2-3: least squares on the extrinsic MCP moment of Knutson et al. 2000 over wrist -60..60 deg, plus (1/100) x sum of relative slack changes) with MuJoCo's passive force-length curve, MyoHand's muscle-tendon lengths and moment arms (scripts/fit_muscle_passive.py). reference_value_m is the slack length the fit started from (myo_sim with fix/anatomical-muscle-parameters, i.e. the MoBL-ARMS / Saul et al. 2015 values, also Binder-Markey's initial values). MyoHand's MCP has no hyperextension, so the fit covers MCP 0..90 deg (Knutson and Binder-Markey: -45..90 deg). Index finger only: no extrinsic passive data exist for the other digits.",
+  "sources": {
+    "binder_markey2017": {
+      "citation": "Binder-Markey BI, Murray WM. Incorporating the length-dependent passive-force generating muscle properties of the extrinsic finger muscles into a wrist and finger biomechanical musculoskeletal model. J Biomech 61:250-257, 2017.",
+      "doi": "10.1016/j.jbiomech.2017.06.026",
+      "access": "closed; method (Eqs. 1-8) and Table 2 verified from the PDF"
+    },
+    "knutson2000": {
+      "citation": "Knutson JS, Kilgore KL, Mansour JM, Crago PE. Intrinsic and extrinsic contributions to the passive moment at the metacarpophalangeal joint. J Biomech 33(12):1675-1681, 2000.",
+      "doi": "10.1016/S0021-9290(00)00159-7",
+      "access": "closed; Eqs. (3)-(4) and Table 1 extrinsic medians verified from the PDF"
+    }
+  },
+  "muscles": [
+    {
+      "muscle": "FDS2",
+      "names": {
+        "r": "FDS2",
+        "l": "FDS2_l"
+      },
+      "status": "measured",
+      "source": "knutson2000",
+      "method": "binder_markey2017",
+      "implied_slack_m": 0.27500003432411935,
+      "slack_change_percent": 9.616596270807959,
+      "tendon_slack_m": {
+        "value": 0.301446,
+        "reference_value_m": 0.275,
+        "change_percent": 9.617,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      }
+    },
+    {
+      "muscle": "FDP2",
+      "names": {
+        "r": "FDP2",
+        "l": "FDP2_l"
+      },
+      "status": "measured",
+      "source": "knutson2000",
+      "method": "binder_markey2017",
+      "implied_slack_m": 0.301499965170917,
+      "slack_change_percent": 5.093320777319362,
+      "tendon_slack_m": {
+        "value": 0.316856,
+        "reference_value_m": 0.3015,
+        "change_percent": 5.093,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      }
+    },
+    {
+      "muscle": "EDC2",
+      "names": {
+        "r": "EDC2",
+        "l": "EDC2_l"
+      },
+      "status": "measured",
+      "source": "knutson2000",
+      "method": "binder_markey2017",
+      "implied_slack_m": 0.36499995442904976,
+      "slack_change_percent": -0.3613095176399516,
+      "tendon_slack_m": {
+        "value": 0.363681,
+        "reference_value_m": 0.365,
+        "change_percent": -0.361,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      }
+    },
+    {
+      "muscle": "EIP",
+      "names": {
+        "r": "EIP",
+        "l": "EIP_l"
+      },
+      "status": "measured",
+      "source": "knutson2000",
+      "method": "binder_markey2017",
+      "implied_slack_m": 0.20999995317761022,
+      "slack_change_percent": -2.1887576437837293,
+      "tendon_slack_m": {
+        "value": 0.205404,
+        "reference_value_m": 0.21,
+        "change_percent": -2.189,
+        "scales_with": "length",
+        "reference_segment": "forearm"
+      }
+    }
+  ],
+  "fit": {
+    "grid": {
+      "mcp_deg": [
+        0.0,
+        90.0,
+        5.0
+      ],
+      "wrist_deg": [
+        -60.0,
+        60.0,
+        10.0
+      ]
+    },
+    "rmse_Ncm_before": 98.39725098435576,
+    "rmse_Ncm_after": 2.999144641716304,
+    "max_abs_err_Ncm_after": 9.460614493044734,
+    "target_peak_Ncm": 30.36601987360585
+  },
+  "binder_markey2017_table2": {
+    "initial_m": {
+      "FDSI": 0.275,
+      "FDPI": 0.3015,
+      "EDCI": 0.365,
+      "EIP": 0.21
+    },
+    "optimised_m": {
+      "FDSI": 0.2772,
+      "FDPI": 0.3044,
+      "EDCI": 0.3486,
+      "EIP": 0.1911
+    },
+    "note": "OpenSim compliant tendons; for comparison only (MyoHand tendons are rigid)."
+  }
+}
