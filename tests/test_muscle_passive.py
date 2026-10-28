@@ -204,11 +204,12 @@ def test_relaxed_hand_rests_off_its_limits(wrist_deg: float) -> None:
     """No finger or thumb joint is driven into a limit; only the finger extension limit (0 deg) is allowed.
 
     Holding the fingers off full extension is the job of joint springs, which this table does not add.
-    Known exception: with the wrist extended 60 deg the little-finger MCP reaches its flexion limit.
-    FDP5 keeps some passive force there because it offsets the PIP extension moment of the unfitted
-    digit-5 intrinsics (LU_RB5, UI_UB5).
+    Known exception: with the wrist extended 60 deg the little-finger MCP and PIP reach their flexion
+    limits (the PIP's equilibrium lies there: it gets there within 6 s with the class damping of 0.05
+    N m s/rad, within 3 s with Kamper's finger damping). FDP5 keeps some passive force there because it
+    offsets the PIP extension moment of the unfitted digit-5 intrinsics (LU_RB5, UI_UB5).
     """
-    allowed = {"mcp5_flexion_r", "mcp5_flexion_l"} if wrist_deg <= -60.0 else set()
+    allowed = {f"{j}5_flexion_{s}" for j in ("mcp", "pm") for s in ("r", "l")} if wrist_deg <= -60.0 else set()
     for name, (q, lo, hi) in _settle(wrist_deg).items():
         finger = not name.startswith(("cmc", "mp_", "ip_"))
         assert name in allowed or q < hi - 1.0, f"{name} at its upper limit ({q:.1f} deg)"
