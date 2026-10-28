@@ -67,15 +67,23 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
 | `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
 
-`ModelRegistration` fields that control composition:
+`ModelRegistration.build_kwargs` describes composition only (model policy: no feature flags). The allowed keys are listed in `compose.COMPOSITION_KWARGS`, and `tests/test_no_opt_in.py` enforces the list:
 
 - `left_arm_strategy`: `"mirror_right_to_left"` generates the left arm by mirroring; `"none"` omits it.
-- `include_left_arm_contacts`: whether left-arm contact pairs from `myoarm_contacts.xml` are injected.
-- `include_legs`: whether `myolegs_contacts.xml` pairs are injected.
-- `include_fullbody_contacts`: whether `myofullbody_contacts.xml` pairs are injected.
 - `add_root_freejoint`: adds a free joint to the root body (needed for locomotion models).
 - `root_pos`: initial position of the root body in world space.
-- `mirror_rules`: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
+
+`mirror_rules` is a separate field: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
+
+`load_spec()` and `build_spec()` take no build options, only `inertia_floor`, a numerical-conditioning floor for small body inertias (see the `build_spec()` docstring). Contact sets are not switchable either. Each builder calls `add_contact_sets()` after attaching its parts, which injects every pair of its contact files whose two geoms exist in the model:
+
+| Builders | Contact files |
+|---|---|
+| `TORSO_ARMS`, `ARMS_BODY`, `RIGHT_ARM_BODY` | `myoarm_contacts.xml` |
+| `RIGHT_HAND`, `BOTH_HANDS` | `myohand_contacts.xml` |
+| `LEGS_BODY`, `LEGS_ABDOMEN` | `myolegs_contacts.xml` |
+| `LEGS26_BODY` | `myolegs26_contacts.xml` (in `build_legs26_spec`) |
+| `FULLBODY` | `myoarm_contacts.xml`, `myolegs_contacts.xml`, `myofullbody_contacts.xml` |
 
 ## How to Add a New Composed Model
 
@@ -108,9 +116,8 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
    MODEL_REGISTRY["my_new_model"] = ModelRegistration(
        name="my_new_model",
        build_strategy=BuildStrategy.MY_NEW_MODEL,
-       left_arm_strategy=LEFT_ARM_STRATEGY_MIRROR_RIGHT,
        description="...",
-       include_left_arm_contacts=True,
+       build_kwargs={"left_arm_strategy": LEFT_ARM_STRATEGY_MIRROR_RIGHT},
    )
    ```
 
@@ -158,7 +165,7 @@ Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement. O
 
 ### `add_contact_pairs(spec, contacts_xml, include_pair=None)`
 
-Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<pair>` element into the `MjSpec` via `spec.add_pair()`. The optional `include_pair` callable receives the XML element and returns `False` to skip a pair (used to exclude left-arm pairs when `include_left_arm_contacts=False`).
+Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<pair>` element into the `MjSpec` via `spec.add_pair()`. The optional `include_pair` callable receives the XML element and returns `False` to skip a pair. `compose.add_contact_sets()` uses it to skip pairs whose geoms are not part of the model (e.g. left-arm pairs in a right-arm model).
 
 ### `add_sensors(spec, sensors_xml)`
 

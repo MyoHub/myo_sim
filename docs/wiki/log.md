@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-10-28 — Remove build options and make contact sets unconditional
+Changed: myo_sim/build/compose.py, myo_sim/__init__.py, tests/test_no_opt_in.py (new), docs/wiki/build-and-composition.md, CHANGELOG.md
+Why: Model policy (#140): no feature flags; `build_kwargs` describe composition only. User `build_kwargs`, `disable_finger_collisions` and the four contact-set options are removed; contact pairs follow the parts present. `myolegs_abdomen` gains the leg-leg contacts it lacked.
+
 ## 2026-10-28 — Model policy: non-native muscle and tendon models
 Changed: docs/wiki/model-authoring.md
 Why: muscle or tendon models that MuJoCo and mujoco-warp cannot run natively (plugins, custom step loops) ship as registered variants (policy 4) with parameters generated from provenance JSON into `*_muscle.xml`; task overrides stay in the task; the reference model adopts them once both engines support them natively.
