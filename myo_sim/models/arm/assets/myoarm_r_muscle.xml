@@ -42,11 +42,11 @@
         <muscle name="FDP4" force = "172.9000" range="0.710075 1.584912" fpmax="0.002" class="myoarm_forearm_muscle" tendon="FDP4_tendon" lengthrange="0.348164 0.417976"/>
         <muscle name="FDP3" force = "212.4000" lmin="0.346000" lmax="1.196000" range="0.396144 1.145772" fpmax="0.002" class="myoarm_forearm_muscle" tendon="FDP3_tendon" lengthrange="0.31299305676415506 0.3755870567641551"/>
         <muscle name="FDP2" force = "197.3000" lmin="0.423000" lmax="1.400000" range="0.473338 1.349933" fpmax="0.002" class="myoarm_forearm_muscle" tendon="FDP2_tendon" lengthrange="0.320749034829083 0.38640603482908303"/>
-        <muscle name="EDC5" force = "39.4000" range="0.718600 1.409108" fpmax="0.002" class="myoarm_forearm_muscle" tendon="EDC5_tendon" lengthrange="0.3869689791863382 0.4318519791863382"/>
-        <muscle name="EDC4" force = "109.2000" lmin="0.377000" lmax="1.506000" range="0.426613 1.456134" fpmax="0.002" class="myoarm_forearm_muscle" tendon="EDC4_tendon" lengthrange="0.38670996775005073 0.45115796775005074"/>
-        <muscle name="EDC3" force = "94.4000" lmin="0.430000" lmax="1.317000" range="0.480539 1.267058" fpmax="0.002" class="myoarm_forearm_muscle" tendon="EDC3_tendon" lengthrange="0.3899130385076521 0.44685703850765207"/>
+        <muscle name="EDC5" force = "39.4000" range="0.718600 1.409108" fpmax="0.0525" class="myoarm_forearm_muscle" tendon="EDC5_tendon" lengthrange="0.3869689791863382 0.4318519791863382"/>
+        <muscle name="EDC4" force = "109.2000" lmin="0.377000" lmax="1.506000" range="0.426613 1.456134" fpmax="0.0525" class="myoarm_forearm_muscle" tendon="EDC4_tendon" lengthrange="0.38670996775005073 0.45115796775005074"/>
+        <muscle name="EDC3" force = "94.4000" lmin="0.430000" lmax="1.317000" range="0.480539 1.267058" fpmax="0.0525" class="myoarm_forearm_muscle" tendon="EDC3_tendon" lengthrange="0.3899130385076521 0.44685703850765207"/>
         <muscle name="EDC2" force = "48.8000" lmin="0.392000" lmax="1.343000" range="0.441629 1.292500" fpmax="0.5183" class="myoarm_forearm_muscle" tendon="EDC2_tendon" lengthrange="0.38795204557095025 0.4475130455709503"/>
-        <muscle name="EDM"  force = "72.4000" range="0.623259 1.222948" fpmax="0.002" class="myoarm_forearm_muscle" tendon="EDM_tendon" lengthrange="0.3757719747052222 0.4162509747052222"/>
+        <muscle name="EDM"  force = "72.4000" range="0.623259 1.222948" fpmax="0.0525" class="myoarm_forearm_muscle" tendon="EDM_tendon" lengthrange="0.3757719747052222 0.4162509747052222"/>
         <muscle name="EIP"  force = "47.3000" range="0.607963 1.375993" fpmax="0.9891" class="myoarm_forearm_muscle" tendon="EIP_tendon" lengthrange="0.2426210468223898 0.28785804682238986"/>
         <muscle name="EPL"  force = "88.3000" lmin="0.369000" lmax="1.846000" range="0.419389 1.795889" fpmax="0.002" class="myoarm_forearm_muscle" tendon="EPL_tendon" lengthrange="0.25276700599999996 0.3270980059999999"/>
         <muscle name="EPB"  force = "46.0000" lmin="0.406000" lmax="1.291000" range="0.456178 1.241126" fpmax="0.405" class="myoarm_forearm_muscle" tendon="EPB_tendon" lengthrange="0.14425402081156968 0.19723802081156971"/>

@@ -94,6 +94,23 @@ def test_joint_fit_matches_the_recorded_error() -> None:
         assert abs(row["tendon_slack_m"]["change_percent"]) <= 100.0 * table["joint_fit"]["max_change"] + 1e-3
 
 
+def test_extensors_open_the_digits_in_the_release_trial() -> None:
+    """EDC3-5 and EDM sit at or above the smallest fpmax that opens digits 3-5 in the tenodesis release trial."""
+    fit = _fit_script()
+    table = fit.load_table()
+    spec = table["release_constraint"]
+    bound = spec["result"]["fpmax_lower_bound"]
+    model = myo_sim.load_spec("myoarm_r").compile()
+    for name in spec["muscles"]:
+        assert model.actuator_gainprm[model.actuator(name).id][7] >= bound, name
+    if any(model.tendon(t).name.startswith("passive_") for t in range(model.ntendon)):
+        pytest.skip("the bound was found without joint springs; with them, tests/test_hand_tenodesis.py checks the release")
+    at_bound = fit.release_extension(table, bound)
+    assert at_bound == pytest.approx(spec["result"]["mcp_extension_deg_at_bound"], abs=0.1)
+    assert min(at_bound.values()) >= spec["min_mcp_extension_deg"]
+    assert min(fit.release_extension(table, 0.95 * bound).values()) < spec["min_mcp_extension_deg"]
+
+
 def _side(model: mujoco.MjModel, name: str, side: str) -> str:
     """Joint name of *name* (right-side name) on *side* of a composed model."""
     base = name[:-2] if name.endswith("_r") else name

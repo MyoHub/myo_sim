@@ -24,21 +24,31 @@ finger and thumb flexors in a full fist, and of the extensors in full extension,
 stays at least ``min_fl``. On MuJoCo's curve that is a window on each slack length;
 a slack length is shortened only as far as that window forces it.
 
+A third step, ``release_constraint``, keeps the slack lengths and refits only the
+``fpmax`` of EDC3-5 and EDM: their lower bound is the smallest value at which the
+digits open when the wrist flexes (McFarland et al. 2023 tenodesis trial B, run by
+``scripts/validate_hand_function.py``), and the joint loss sets them above it.
+
 It writes the values (and the references they change) to
 ``build/data/muscle_passive.json`` and the ``lengthrange`` and ``fpmax`` of each
 muscle to ``myoarm_r_muscle.xml``, the model's source of truth (the left arm is
 mirrored from it).
 
 Run: ``uv run python scripts/fit_muscle_passive.py`` (refits, rewrites the JSON and
-the XML attributes); ``--xml-only`` only writes the JSON values into the XML.
+the XML attributes); ``--release-only`` reruns only the release step from the tabled
+values; ``--xml-only`` only writes the JSON values into the XML.
 """
 
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import re
+import sys
+from functools import cache
 from pathlib import Path
+from types import ModuleType
 from typing import Any, Callable
 
 import mujoco
@@ -47,6 +57,7 @@ import numpy as np
 import myo_sim
 
 DATA_PATH = Path(__file__).parents[1] / "myo_sim" / "build" / "data" / "muscle_passive.json"
+VALIDATION_SCRIPT = Path(__file__).with_name("validate_hand_function.py")
 MUSCLE_XML = myo_sim.MODELS_DIR / "arm" / "assets" / "myoarm_r_muscle.xml"
 
 KNUTSON_EXTRINSIC = {"A3": 1.2, "k3": 4.2e-2, "B3": -0.8, "phi3": 10.9, "A4": 0.8, "k4": 5.4e-2, "B4": -0.3, "phi4": 40.9}
@@ -195,11 +206,12 @@ def _forward(model: mujoco.MjModel, data: mujoco.MjData, posture: dict[str, floa
 
 
 def row_geometry(
-    model: mujoco.MjModel, postures: list[dict[str, float]], joint: str, names: tuple[str, ...]
+    model: mujoco.MjModel, postures: list[dict[str, float]], joint: str, names: tuple[str, ...], others: tuple[str, ...]
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Lengths and moment arms on *joint* of *names*, and the passive moment (N m) of every other muscle, per posture."""
+    """Lengths and moment arms on *joint* of *names*, and the passive moment (N m) of the muscles *others*, per posture."""
     data = mujoco.MjData(model)
     ids = [model.actuator(n).id for n in names]
+    rest_ids = [model.actuator(n).id for n in others]
     dof = model.joint(joint).dofadr[0]
     moment = np.zeros((model.nu, model.nv))
     lengths, arms, rest = np.zeros((len(postures), len(names))), np.zeros((len(postures), len(names))), np.zeros(len(postures))
@@ -208,7 +220,7 @@ def row_geometry(
         mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
         lengths[i] = data.actuator_length[ids]
         arms[i] = moment[ids, dof]
-        rest[i] = data.qfrc_actuator[dof] - data.actuator_force[ids] @ moment[ids, dof]
+        rest[i] = data.actuator_force[rest_ids] @ moment[rest_ids, dof]
     return lengths, arms, rest
 
 
@@ -414,12 +426,25 @@ def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray,
     return shift, fpmax
 
 
+def other_muscles(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[str, ...]:
+    """Muscles counted besides ``JOINT_MUSCLES``: those recorded at the fit, else every other actuator of *model*.
+
+    Muscles added to the model after the fit (e.g. the thenar muscles) are left to the joint springs, which are
+    fitted to the residual of all muscles.
+    """
+    recorded = table.get("joint_fit", {}).get("other_muscles")
+    if recorded is not None:
+        return tuple(recorded)
+    return tuple(model.actuator(i).name for i in range(model.nu) if model.actuator(i).name not in JOINT_MUSCLES)
+
+
 def joint_fit_terms(model: mujoco.MjModel, table: dict[str, Any]) -> list[dict[str, Any]]:
     """Per ``joint_targets`` row: geometry of ``JOINT_MUSCLES``, the other muscles' moment and the target (N m)."""
     terms = []
+    others = other_muscles(model, table)
     for row in table["joint_targets"]["rows"]:
         postures, target = row_points(table, row)
-        lengths, arms, rest = row_geometry(model, postures, row["joint"], JOINT_MUSCLES)
+        lengths, arms, rest = row_geometry(model, postures, row["joint"], JOINT_MUSCLES, others)
         terms.append({"row": row, "target": target, "lengths": lengths, "arms": arms, "rest": rest})
     return terms
 
@@ -442,6 +467,8 @@ def joint_error(
 
 def fit_joints(model: mujoco.MjModel, table: dict[str, Any]) -> None:
     """Fit ``JOINT_MUSCLES`` to the total moments of ``joint_targets``; updates *table*."""
+    table.setdefault("joint_fit", {}).pop("other_muscles", None)
+    others = other_muscles(model, table)
     terms = joint_fit_terms(model, table)
     shift, fpmax = _fit(model, table, JOINT_MUSCLES, lambda s, f: joint_error(model, terms, s, f))
     rows = {r["names"]["r"]: r for r in table["muscles"]}
@@ -470,6 +497,7 @@ def fit_joints(model: mujoco.MjModel, table: dict[str, Any]) -> None:
         }
     table["joint_fit"] = {
         "muscles": list(JOINT_MUSCLES),
+        "other_muscles": list(others),
         "excess_weight": EXCESS_WEIGHT,
         "max_change": MAX_CHANGE,
         "fpmax_bounds": list(FPMAX_BOUNDS),
@@ -483,14 +511,149 @@ def fit_joints(model: mujoco.MjModel, table: dict[str, Any]) -> None:
     }
 
 
+@cache
+def _validation() -> ModuleType:
+    """``scripts/validate_hand_function.py`` (McFarland et al. 2023 protocols) as a module."""
+    spec = importlib.util.spec_from_file_location("validate_hand_function", VALIDATION_SCRIPT)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module  # dataclasses resolve their module
+    spec.loader.exec_module(module)
+    return module
+
+
+def release_extension(table: dict[str, Any], fpmax: float) -> dict[str, float]:
+    """MCP extension (deg) of each ``release_constraint`` digit over tenodesis trial B, its muscles at *fpmax*.
+
+    Runs the importable model (its XML) with only the ``fpmax`` of the release muscles replaced.
+    """
+    spec = table["release_constraint"]
+    v = _validation()
+    protocol = v.load_table()
+
+    def mutate(model: mujoco.MjModel) -> None:
+        for name in spec["muscles"]:
+            a = model.actuator(name).id
+            model.actuator_gainprm[a][7] = model.actuator_biasprm[a][7] = fpmax
+
+    trials = v.tenodesis(v.myohand(), protocol, mutate)
+    net = v.tenodesis_metrics(trials, protocol)["B"]["net_deg"]
+    return {str(d): float(net[f"mcp_flexion{d}"]) for d in spec["digits"]}
+
+
+def release_bound(table: dict[str, Any]) -> float:
+    """Smallest common ``fpmax`` (4 decimals) of the release muscles at which every release digit extends enough."""
+    need = table["release_constraint"]["min_mcp_extension_deg"]
+
+    def opens(f: float) -> bool:
+        return min(release_extension(table, f).values()) >= need
+
+    lo, hi = FPMAX_BOUNDS[0], FPMAX_REFERENCE
+    if opens(lo):
+        return lo
+    if not opens(hi):
+        raise ValueError(f"the digits do not open by {need} deg even at fpmax {hi}")
+    while hi - lo > 1e-4:
+        mid = float(np.sqrt(lo * hi)) if hi / lo > 1.01 else 0.5 * (lo + hi)
+        lo, hi = (lo, mid) if opens(mid) else (mid, hi)
+    return float(np.ceil(hi * 1e4) / 1e4)
+
+
+def fit_release(model: mujoco.MjModel, table: dict[str, Any]) -> None:
+    """Refit only the ``fpmax`` of the release muscles, at least ``release_bound``, by the joint loss; updates *table*.
+
+    Slack lengths and every other muscle stay as tabled; *model* holds the tabled values.
+    """
+    spec = table["release_constraint"]
+    names = tuple(spec["muscles"])
+    idx = [JOINT_MUSCLES.index(n) for n in names]
+    bound = release_bound(table)
+    terms = joint_fit_terms(model, table)
+    zero = np.zeros(len(JOINT_MUSCLES))
+    base = np.array([model.actuator_gainprm[model.actuator(n).id][7] for n in JOINT_MUSCLES])
+
+    def with_release(log_f: np.ndarray) -> np.ndarray:
+        f = base.copy()
+        f[idx] = FPMAX_REFERENCE * np.exp(log_f)
+        return f
+
+    def cost(log_f: np.ndarray) -> float:
+        return joint_error(model, terms, zero, with_release(log_f)) + FPMAX_PENALTY * float(np.sum(np.abs(log_f)))
+
+    lower = float(np.log(bound / FPMAX_REFERENCE))
+    bounds = [(lower, float(np.log(FPMAX_BOUNDS[1] / FPMAX_REFERENCE)))] * len(names)
+    x = _minimize(cost, [np.full(len(names), lower), np.full(len(names), lower + 1.0)], bounds)
+    fitted = np.maximum(np.round(FPMAX_REFERENCE * np.exp(x), 4), bound)
+    final = base.copy()
+    final[idx] = fitted
+    rows = {r["names"]["r"]: r for r in table["muscles"]}
+    before = {}
+    for name, value in zip(names, fitted):
+        entry = rows[name]["fpmax"]
+        before[name] = entry["value"]
+        entry.update(
+            value=float(value),
+            change_percent=round(100.0 * (value / FPMAX_REFERENCE - 1.0), 3),
+            at_bound=bool(abs(value - bound) < 1e-4 or abs(value - FPMAX_BOUNDS[1]) < 1e-3),
+            lower_bound=bound,
+            lower_bound_source="release_constraint",
+        )
+    for term in terms:
+        t, row_fit = term["target"], term["row"]["fit"]
+        after = joint_moment(model, term, zero, final)
+        row_fit["max_excess_Nm_without_release"] = row_fit.get(
+            "max_excess_Nm_without_release", row_fit["max_excess_Nm_after"]
+        )
+        row_fit["rmse_Nm_after"] = float(np.sqrt(np.mean((after - t) ** 2)))
+        row_fit["max_excess_Nm_after"] = float(np.max(np.abs(excess_and_deficit(after, t)[0])))
+    table["joint_fit"].setdefault("error_without_release", table["joint_fit"]["error_after"])
+    table["joint_fit"]["error_after"] = joint_error(model, terms, zero, final)
+    table["joint_fit"]["other_muscles"] = list(other_muscles(model, table))
+    first = spec.get("result", {})  # a rerun keeps the values the first release step started from
+    before = first.get("fpmax_before", before)
+    spec["result"] = {
+        "fpmax_lower_bound": bound,
+        "fpmax_before": before,
+        "mcp_extension_deg_before": first.get(
+            "mcp_extension_deg_before", release_extension(table, float(np.mean(list(before.values()))))
+        ),
+        "mcp_extension_deg_at_bound": release_extension(table, bound),
+    }
+
+
+def _report(table: dict[str, Any]) -> None:
+    for row in table["muscles"]:
+        s, f = row["tendon_slack_m"], row["fpmax"]
+        print(
+            f"{row['muscle']:5s} slack {s['change_percent']:+7.2f} % (window {s['active_window_percent'][0]:+.1f}.."
+            f"{s['active_window_percent'][1]:+.1f} %), fpmax {f['value']:.4f}{' (bound)' if f['at_bound'] else ''}"
+        )
+    for row in table["joint_targets"]["rows"]:
+        f = row["fit"]
+        print(
+            f"{row['row']:20s} rmse {f['rmse_Nm_before']:.3f} -> {f['rmse_Nm_after']:.3f} Nm, "
+            f"max excess {f['max_excess_Nm_before']:.3f} -> {f['max_excess_Nm_after']:.3f} Nm "
+            f"(without release {f.get('max_excess_Nm_without_release', f['max_excess_Nm_after']):.3f}; target peak {f['target_peak_Nm']:.3f})"
+        )
+    if "result" in table.get("release_constraint", {}):
+        print(json.dumps(table["release_constraint"]["result"], indent=1))
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--xml-only", action="store_true", help="only write the JSON values into the XML")
+    parser.add_argument("--release-only", action="store_true", help="only rerun the release step from the tabled values")
     args = parser.parse_args()
     model = myo_sim.load_spec("myoarm_r").compile()
     table = load_table()
     if args.xml_only:
         write_muscle_xml(fitted_lengthranges(model, table), fitted_fpmax(table))
+        return
+    if args.release_only:  # the XML holds the tabled values; only fpmax changes
+        fit_release(model, table)
+        DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
+        unchanged = {r["names"]["r"]: [float(v) for v in model.actuator_lengthrange[model.actuator(r["names"]["r"]).id]] for r in table["muscles"]}
+        write_muscle_xml(unchanged, fitted_fpmax(table))
+        _report(table)
         return
     # Fit from the reference values, whatever the XML currently holds.
     for row in table["muscles"]:
@@ -504,19 +667,13 @@ def main() -> None:
     DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
     model = myo_sim.load_spec("myoarm_r").compile()
     write_muscle_xml(fitted_lengthranges(model, table), fitted_fpmax(table))
+    # The release step simulates the written model, then refits the release muscles' fpmax.
+    model = myo_sim.load_spec("myoarm_r").compile()
+    fit_release(model, table)
+    DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
+    write_muscle_xml(fitted_lengthranges(model, table), fitted_fpmax(table))
     print(json.dumps(table["fit"], indent=1))
-    for row in table["muscles"]:
-        s, f = row["tendon_slack_m"], row["fpmax"]
-        print(
-            f"{row['muscle']:5s} slack {s['change_percent']:+7.2f} % (window {s['active_window_percent'][0]:+.1f}.."
-            f"{s['active_window_percent'][1]:+.1f} %), fpmax {f['value']:.4f}{' (bound)' if f['at_bound'] else ''}"
-        )
-    for row in table["joint_targets"]["rows"]:
-        f = row["fit"]
-        print(
-            f"{row['row']:20s} rmse {f['rmse_Nm_before']:.3f} -> {f['rmse_Nm_after']:.3f} Nm, "
-            f"max excess {f['max_excess_Nm_before']:.3f} -> {f['max_excess_Nm_after']:.3f} Nm (target peak {f['target_peak_Nm']:.3f})"
-        )
+    _report(table)
 
 
 if __name__ == "__main__":
