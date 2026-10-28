@@ -17,6 +17,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/model-readme-template.md` — agentic workflow for writing model READMEs
 - `docs/wiki/build-and-composition.md` — MjSpec compose.py reference
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
+- `docs/wiki/proposal-extensor-mechanism.md` — draft proposal for discussion: a finger extensor mechanism (central slip, lateral bands, ORL) for the MyoHand, with options, validation plan and prototype cost
 - `docs/wiki/log.md` — append-only wiki maintenance log
 
 Open issues: https://github.com/MyoHub/myo_sim/issues
