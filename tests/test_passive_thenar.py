@@ -150,6 +150,32 @@ def test_passive_moments_match_the_table(fullbody: mujoco.MjModel) -> None:
     np.testing.assert_allclose(passive_moment(wrist, [0.2, -0.2]), [-0.554 * 0.2, 1.021 * 0.2], rtol=0.01)
 
 
+def _joint_id(model: mujoco.MjModel, name: str, side: str) -> int:
+    """Joint id of the right-side joint *name* on *side* of a composed model (hand models suffix every joint)."""
+    base = name[:-2] if name.endswith("_r") else name
+    for candidate in (name, f"{base}_r") if side == "r" else (f"{base}_l",):
+        if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, candidate) >= 0:
+            return model.joint(candidate).id
+    raise KeyError(name)
+
+
+@pytest.mark.parametrize("name", MODELS)
+def test_finger_damping_is_the_tabled_value(name: str) -> None:
+    """The chain holds each tabled damping (what the script writes) and every model has it on both hands."""
+    fit = _script("fit_passive_moments")
+    table = load_passive_moment_table()
+    text = compose.RIGHT_ARM_CHAIN_XML.read_text()
+    assert fit.chain_with_damping(text, table) == text
+    rows = [r for r in table["joints"] if "damping" in r]
+    assert len(rows) == 12
+    model = myo_sim.load_spec(name).compile()
+    for row in rows:
+        assert row["damping"]["source"] in table["sources"]
+        for side in ("r",) if name == "myoarm_r" else ("r", "l"):
+            dof = model.jnt_dofadr[_joint_id(model, row["names"]["r"], side)]
+            assert model.dof_damping[dof] == row["damping"]["value"], (row["joint"], side)
+
+
 def test_cpu_and_mujoco_warp_passive_moments_agree(fullbody: mujoco.MjModel) -> None:
     mjw = pytest.importorskip("mujoco_warp")
     wp = pytest.importorskip("warp")
@@ -160,6 +186,7 @@ def test_cpu_and_mujoco_warp_passive_moments_agree(fullbody: mujoco.MjModel) -> 
         for side in ("r", "l"):
             joint = fullbody.joint(row["names"][side])
             data.qpos[joint.qposadr[0]] = rng.uniform(*fullbody.jnt_range[joint.id])
+            data.qvel[joint.dofadr[0]] = rng.uniform(-2.0, 2.0)  # damping counts too
             dofs.append(joint.dofadr[0])
     mujoco.mj_forward(fullbody, data)
     with wp.ScopedDevice("cpu"):

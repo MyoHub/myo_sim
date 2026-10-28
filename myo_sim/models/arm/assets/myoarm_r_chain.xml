@@ -559,7 +559,7 @@
                                                     <site name="2ndmcp_ellipsoid_site_EDC2_side_r" pos="0.0058 -0.0294 0.0087"/>
                                                     <site name="2ndmcp_ellipsoid_site_EIP_side_r" pos="0.0058 -0.0294 0.0087"/>
                                                     <body name="2proxph_r" pos="0.003501 -0.028243 0.00362">
-                                                        <joint axis="0.995013 0.09975 0" name="mcp2_flexion_r" pos="0 0 0" range="0.0 1.5708"/>
+                                                        <joint axis="0.995013 0.09975 0" name="mcp2_flexion_r" pos="0 0 0" range="0.0 1.5708" damping="0.0142"/>
                                                         <joint axis="-0.054999 0.085899 0.994785" name="mcp2_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
                                                         <geom name="proxph2_coll_r" class="myohand_coll" size="0.009 0.020" pos="0.004 -0.0210 0.00362" euler="1.45 0.15 -.35"/>
                                                         <geom mesh="2proxph_r" name="2proxph_r" type="mesh"/>
@@ -584,7 +584,7 @@
                                                         <site name="Secondpm_site_UI_UB2_side_r" pos="0.0147187 -0.0418367 0.0110691"/>
                                                         <body name="midph2_r" pos="0.00751 -0.041273 0.007326">
                                                             <geom name="midph2_coll_r" class="myohand_coll" size="0.008 0.012" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
-                                                            <joint axis="0.97517 0.0998334 -0.197677" name="pm2_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                            <joint axis="0.97517 0.0998334 -0.197677" name="pm2_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0105"/>
                                                             <geom mesh="2midph_r" name="2midph_r" type="mesh"/>
                                                             <geom name="Secondmd_wrap" pos="0.0036 -0.0243 0.0003" quat="0.749819 -0.0209733 -0.656264 0.0815428" class="myoarm_wrap" size="0.003 0.005" type="cylinder"/>
                                                             <inertial pos="0 0 0" mass="0.003" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -614,7 +614,7 @@
                                                             <site name="Secondmd_site_EIP_side_r" pos="0.00435202 -0.0234011 0.00618443"/>
 
                                                             <body name="distph2_r" pos="0.003333 -0.024888 0.00122">
-                                                                <joint axis="0.995004 0.0998334 0" name="md2_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                                <joint axis="0.995004 0.0998334 0" name="md2_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0081"/>
                                                                 <geom name="distph2_coll_r" class="myohand_coll" size="0.007 0.008" pos="0.001 -0.008 0.00" euler="1.5 0.14 -.35"/>
                                                                 <geom mesh="2distph_r" name="2distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -666,7 +666,7 @@
                                                     <site name="AdP-P1_r" pos="0.004 0.012 -0.009"/>
                                                     <body name="3proxph_r" pos="0.00024 -0.02629 0.001778">
                                                         <geom name="proxph3_coll_r" class="myohand_coll" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
-                                                        <joint axis="0.980067 0 0.198669" name="mcp3_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                        <joint axis="0.980067 0 0.198669" name="mcp3_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0142"/>
                                                         <joint axis="-0.198669 0 0.980067" name="mcp3_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
                                                         <geom mesh="3proxph_r" name="3proxph_r" type="mesh"/>
                                                         <geom name="Thirdpm_wrap" pos="0.0017 -0.0439 0.005" quat="0.700673 0.00645453 -0.712452 0.0377825" class="myoarm_wrap" size="0.004 0.005" type="cylinder"/>
@@ -697,7 +697,7 @@
                                                         <site name="Thirdpm_site_LU_RB3_side_r" pos="0.00155575 -0.04355 0.012991"/>
                                                         <site name="Thirdpm_site_UI_UB3_side_r" pos="0.00155575 -0.04355 0.012991"/>
                                                         <body name="midph3_r" pos="0.00165 -0.044211 0.00623">
-                                                            <joint axis="1 0 0" name="pm3_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                            <joint axis="1 0 0" name="pm3_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0105"/>
                                                             <geom name="midph3_coll_r" class="myohand_coll" size="0.008 0.014" pos="0.0012 -0.014 0.00" euler="1.55 0.06 -.35"/>
                                                             <geom mesh="3midph_r" name="3midph_r" type="mesh"/>
                                                             <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -719,7 +719,7 @@
                                                             <site name="Thirdmd_site_EDC3_side_r" pos="0.00142423 -0.028063 0.00714128"/>
 
                                                             <body name="distph3_r" pos="0.001365 -0.029047 0.001954">
-                                                                <joint axis="1 0 0" name="md3_flexion" pos="0 0 0" range="0 1.5708"/>
+                                                                <joint axis="1 0 0" name="md3_flexion" pos="0 0 0" range="0 1.5708" damping="0.0081"/>
                                                                 <geom name="distph3_coll_r" class="myohand_coll" size="0.007 0.008" pos="0.0013 -0.009 -.002" euler="1.6 .05 0"/>
                                                                 <geom mesh="3distph_r" name="3distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -762,7 +762,7 @@
                                                     <site name="4thmcp_ellipsoid_site_UI_UB4_side_r" pos="-0.0107758 -0.0261555 -0.00498369"/>
 
                                                     <body name="4proxph_r" pos="-0.00183 -0.023689 -0.000173">
-                                                        <joint axis="0.900447 0 0.434966" name="mcp4_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                        <joint axis="0.900447 0 0.434966" name="mcp4_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0142"/>
                                                         <joint axis="-0.434966 0 0.900447" name="mcp4_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
                                                         <geom name="proxph4_coll_r" class="myohand_coll" size="0.0085 0.018" pos="-.001 -0.0200 .0008" euler="1.57 -.08 0"/>
                                                         <geom mesh="4proxph_r" name="4proxph_r" type="mesh"/>
@@ -795,7 +795,7 @@
                                                         <!-- <site name="Fourthpm_site_LU_RB4_side_r" pos="-0.00228232 -0.0322561 -0.001299"/> -->
                                                         <site name="Fourthpm_site_UI_UB4_side_r" pos="-0.0089 -0.0388 0.0018"/>
                                                         <body name="midph4_r" pos="-0.003528 -0.040255 0.001345">
-                                                            <joint axis="0.921061 0 0.389418" name="pm4_flexion" pos="0 0 0" range="0 1.5708"/>
+                                                            <joint axis="0.921061 0 0.389418" name="pm4_flexion" pos="0 0 0" range="0 1.5708" damping="0.0105"/>
                                                             <geom name="midph4_coll_r" class="myohand_coll" size="0.0075 0.01" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
                                                             <geom mesh="4midph_r" name="4midph_r" type="mesh"/>
                                                             <geom name="Fourthmd_wrap" type="cylinder" size="0.00300000 0.005" pos="-0.0021 -0.0247 -0.0001" euler="-3.02971705 -1.10287355 -2.87211382" class="myoarm_wrap"/>
@@ -817,7 +817,7 @@
                                                             <site name="Fourthmd_site_EDC4_side_r" pos="-0.0021 -0.0247 0.0061" rgba="1 0 0 1"/>
 
                                                             <body name="distph4_r" pos="-0.002317 -0.024789 0.000563">
-                                                                <joint axis="0.825336 0 0.564642" name="md4_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                                <joint axis="0.825336 0 0.564642" name="md4_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0081"/>
                                                                 <geom name="distph4_coll_r" class="myohand_coll" size="0.0068 0.008" pos="0.00 -0.01 -.002" euler="1.6 -.1 0"/>
                                                                 <geom mesh="4distph_r" name="4distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
@@ -859,7 +859,7 @@
                                                     <site name="5thmcp_ellipsoid_site_UI_UB5_side_r" pos="0.00407413 -0.0225573 -0.0142669"/>
 
                                                     <body name="5proxph_r" pos="-0.001597 -0.021431 -0.001496">
-                                                        <joint axis="0.825336 0 0.564642" name="mcp5_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                        <joint axis="0.825336 0 0.564642" name="mcp5_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0142"/>
                                                         <joint axis="-0.564642 0 0.825336" name="mcp5_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
                                                         <geom name="5proxph_coll_r" class="myohand_coll" size="0.008 0.016" pos="-.003 -0.018 -.002" euler="1.68 -.1 0"/>
                                                         <geom mesh="5proxph_r" name="5proxph_r" type="mesh"/>
@@ -894,7 +894,7 @@
                                                         <site name="Fifthpm_site_UI_UB5_side_r" pos="-0.0107 -0.0359 -0.0032"/>
 
                                                         <body name="midph5_r" pos="-0.005279 -0.035563 -0.002879">
-                                                            <joint axis="0.825336 0 0.564642" name="pm5_flexion_r" pos="0 0 0" range="0 1.5708"/>
+                                                            <joint axis="0.825336 0 0.564642" name="pm5_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0105"/>
                                                             <geom name="5midph_coll_r" class="myohand_coll" size="0.007 0.009" pos="-.001 -0.011 -.0025" euler="1.68 -.12 0"/>
                                                             <geom mesh="5midph_r" name="5midph_r" type="mesh"/>
                                                             <geom name="Fifthmd_wrap" pos="-0.0025 -0.0205 -0.0025" quat="0.35929 -0.0253303 -0.929016 -0.0848458" class="myoarm_wrap" size="0.003 0.005" type="cylinder"/>
@@ -910,7 +910,7 @@
                                                             <site name="EDM-P8_r" pos="-0.002 -0.003 0.003"/>
 
                                                             <body name="distph5_r" pos="-0.002871 -0.020677 -0.002243">
-                                                                <joint name="md5_flexion_r" axis="0.867728 -0.149438 0.474042"  pos="0 0 0" range="0 1.5708"/>
+                                                                <joint name="md5_flexion_r" axis="0.867728 -0.149438 0.474042"  pos="0 0 0" range="0 1.5708" damping="0.0081"/>
                                                                 <geom name="5distph_coll_r" class="myohand_coll" size="0.006 0.007" pos="-.0002 -0.009 -.002" euler="1.65 -.1 0"/>
                                                                 <geom mesh="5distph_r" name="5distph" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.001" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>

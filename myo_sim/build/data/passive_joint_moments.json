@@ -1,6 +1,6 @@
 {
   "format": "myo_sim.passive_joint_moments/1",
-  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation. Every applied row has a source_curve; its springs are fitted to the residual (source curve minus the model's own passive muscle moment at act = 0, at the source's posture; only its restoring part), per side of the residual's equilibrium by non-negative least squares over fit.range_rad (scripts/fit_passive_moments.py); onsets are absolute joint angles. Every row is scales_with 'none' (measured stiffness is kept unless a subject measurement exists); scales_with is provenance metadata for later subject scaling. The model itself is the generated block of myoarm_r_tendon.xml written from this table by scripts/fit_passive_moments.py; every measured and assumed row is applied (the status is provenance).",
+  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation. Every applied row has a source_curve; its springs are fitted to the residual (source curve minus the model's own passive muscle moment at act = 0, at the source's posture; only its restoring part), per side of the residual's equilibrium by non-negative least squares over fit.range_rad (scripts/fit_passive_moments.py); onsets are absolute joint angles. Every row is scales_with 'none' (measured stiffness is kept unless a subject measurement exists); scales_with is provenance metadata for later subject scaling. The model itself is the generated block of myoarm_r_tendon.xml written from this table by scripts/fit_passive_moments.py; every measured and assumed row is applied (the status is provenance). A row with a damping entry sets that joint's damping (N m s/rad), written by the same script into myoarm_r_chain.xml; the other joints keep their class damping.",
   "sources": {
     "formica2012": {
       "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
@@ -1505,7 +1505,7 @@
       "damping_reference": {
         "kamper2002_B_Nms_per_rad": 0.0142,
         "myohand_dof_damping": 0.05,
-        "note": "not applied"
+        "note": "not applied: the thumb keeps MyoHand's 0.05 N m s/rad. Domalain 2010 (the thumb CMC source) reports static moments only and no thumb MP / IP damping was measured; Kamper's index value would apply only under the assumed MP = index MCP, IP = index PIP transfer (Barry et al. 2018)."
       },
       "scales_with": "none",
       "positive": {
@@ -1774,7 +1774,7 @@
       "damping_reference": {
         "kamper2002_B_Nms_per_rad": 0.0105,
         "myohand_dof_damping": 0.05,
-        "note": "not applied"
+        "note": "not applied: the thumb keeps MyoHand's 0.05 N m s/rad. Domalain 2010 (the thumb CMC source) reports static moments only and no thumb MP / IP damping was measured; Kamper's index value would apply only under the assumed MP = index MCP, IP = index PIP transfer (Barry et al. 2018)."
       },
       "fit": {
         "range_rad": [
@@ -2133,6 +2133,14 @@
         "source_peak_Nm": 0.04041893114856969
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0142,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index MCP (healthy subjects)",
+        "status": "measured",
+        "previous_value": 0.05
+      },
       "positive": {
         "onset": 0.9991015049004013,
         "stiffness": [
@@ -2410,11 +2418,6 @@
         },
         "signed": true
       },
-      "damping_reference": {
-        "kamper2002_B_Nms_per_rad": 0.0105,
-        "myohand_dof_damping": 0.05,
-        "note": "not applied"
-      },
       "validation": {
         "li2006": {
           "mcp0": {
@@ -2452,6 +2455,14 @@
         "source_peak_Nm": 0.051689929612220034
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0105,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index PIP (healthy subjects)",
+        "status": "measured",
+        "previous_value": 0.05
+      },
       "positive": [
         {
           "onset": 0.1159262570554155,
@@ -2767,11 +2778,6 @@
         },
         "signed": true
       },
-      "damping_reference": {
-        "kamper2002_B_Nms_per_rad": 0.0081,
-        "myohand_dof_damping": 0.05,
-        "note": "not applied"
-      },
       "fit": {
         "range_rad": [
           0.0,
@@ -2788,6 +2794,14 @@
         "source_peak_Nm": 0.07988195974879853
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0081,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index DIP (healthy subjects)",
+        "status": "measured",
+        "previous_value": 0.05
+      },
       "positive": [
         {
           "onset": -0.23337500495857044,
@@ -3086,6 +3100,15 @@
         "source_peak_Nm": 0.04041893114856969
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0142,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index MCP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": {
         "onset": 0.9991015049004013,
         "stiffness": [
@@ -3377,6 +3400,15 @@
         "source_peak_Nm": 0.051689929612220034
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0105,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index PIP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": [
         {
           "onset": 0.1159262570554155,
@@ -3708,6 +3740,15 @@
         "source_peak_Nm": 0.07988195974879853
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0081,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index DIP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": [
         {
           "onset": -0.23337500495857044,
@@ -4006,6 +4047,15 @@
         "source_peak_Nm": 0.04041893114856969
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0142,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index MCP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": {
         "onset": 0.9991015049004013,
         "stiffness": [
@@ -4297,6 +4347,15 @@
         "source_peak_Nm": 0.051689929612220034
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0105,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index PIP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": [
         {
           "onset": 0.1159262570554155,
@@ -4628,6 +4687,15 @@
         "source_peak_Nm": 0.07988195974879853
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0081,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index DIP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": [
         {
           "onset": -0.23337500495857044,
@@ -4926,6 +4994,15 @@
         "source_peak_Nm": 0.04041893114856969
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0142,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index MCP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": {
         "onset": 0.9991015049004013,
         "stiffness": [
@@ -5218,6 +5295,15 @@
         "source_peak_Nm": 0.051689929612220034
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0105,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index PIP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "negative": {
         "onset": 0.1159262570554155,
         "stiffness": [
@@ -5489,6 +5575,15 @@
         "source_peak_Nm": 0.07988195974879853
       },
       "scales_with": "none",
+      "damping": {
+        "value": 0.0081,
+        "unit": "N m s/rad",
+        "source": "kamper2002",
+        "where": "Table 2, damping B of the index DIP (healthy subjects)",
+        "status": "assumed",
+        "previous_value": 0.05,
+        "notes": "Assumption: no damping was measured on this digit; the index value is transferred, as for the stiffness."
+      },
       "positive": [
         {
           "onset": -0.23337500495857044,
