@@ -290,10 +290,11 @@ Each check has a target from the data file and a tolerance stated there.
 
 ## Interaction with other work
 
-**Elastic tendons.** MyoHub/myo_sim#124 (draft) adds series-elastic tendons by inserting a one-DOF slide joint between a muscle's tendon and its bony attachment. Vittorio's newer elastic-tendon work ("Bolt") addresses the same question. Any series-elastic tendon interacts with this proposal in two ways:
+**Elastic tendons.** MyoHub/myo_sim#124 (draft) adds series-elastic tendons by inserting a one-DOF slide joint, with its own body, between a muscle's tendon and its bony attachment. A compliant tendon can instead be a massless series element with the normalised fibre length as a state, as in Bolt (Wang et al., SIGGRAPH Asia 2026; github.com/willwng/bolt, Apache-2.0) and the usual Hill-type formulations (e.g. De Groote et al. 2016). Each step balances fibre and tendon force and applies the tendon force through the muscle's existing path Jacobian. This adds no DOF and no node mass, unlike the slide joint of #124, so neither its armature nor its fixed-axis approximation is needed. For this proposal:
 
-- **Placement.** With option (a), the series-elastic element sits on the main path before the branches, and the branches stay rigid. With option (b), a muscle inserting on a node already has a compliant attachment through the bands, so the series element and the network compliance have to be identified together, not stacked.
-- **Stability.** The force-velocity damping problem in requirement 2 above applies to any light slide joint driven by a muscle. A series-elastic slide on a short-fibred hand intrinsic (2000+ N s/m of FV slope) needs the same care. The Achilles muscles validated in #124 have long fibres and stiff tendons, and those conditions do not transfer to the hand.
+- **Option (a) works with it.** A pulley-branched path is still one tendon with one length, so each muscle carries one lumped compliance over its whole branched path, and the branches share the tendon force by their divisors. The branches themselves stay inextensible.
+- **Option (b) still needs node handling.** A series element serves one muscle on one path: it provides no tendon networks, no branching and no junction nodes. The bands, nodes, armature and damping of option (b) stay as described above, and the series element and the network compliance have to be identified together, not stacked.
+- **A compliant muscle on a light node is a stiff spring on a small mass.** The node sees the tendon stiffness, of the order of F_max over the tendon stretch at F_max (strain at F_max times slack length): tens of kN/m for the hand intrinsics at a strain of about 5 %. Explicit Euler needs k < 4 m / dt², about 1 kN/m for a 1e-3 kg node and 10 kN/m for 1e-2 kg at 2 ms. Option (b) therefore needs node armature sized for this, or rigid treatment of short-tendon muscles (Bolt treats a tendon as rigid when its slack length is shorter than the optimal fibre length). A rigid muscle on a node keeps the force-velocity damping problem of requirement 2.
 
 If the slack lengths and peak forces of the finger muscles are refitted once elastic tendons exist, that refit and the one this proposal needs for the extensors should be a single fit, because the extensor mechanism changes the extensors' paths.
 
@@ -390,7 +391,7 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 4. **Interosseous hood shares** of digits 3-5 (RI3, RI4 and the dorsal interossei of the middle finger), and EDM's share at the little finger.
 5. **MCP hyperextension.** A range change is needed for the claw test. Is it in scope here or a separate PR?
 6. **Option (b) identification.** Node placement and slide directions should be identified from the 3-D geometry of Garcia-Elias et al. (1991a) and the band migration described by Canoso et al. (2021). What tolerance on passive band force over the full range should count as "admits the range of motion"?
-7. **Elastic tendons.** Should the series-elastic tendons (#124 and the newer elastic-tendon work) land before or after this change? The slack-length refit of the extensors should happen once, after both.
+7. **Elastic tendons.** Should compliant tendons (#124's slide joints or a massless series element) land before or after this change? The slack-length refit of the extensors should happen once, after both.
 8. **Variant name and registration** for option (b), if it is pursued.
 9. **Effective moment arms.** Lee et al. (2008b) report effective moment arms smaller than kinematic estimates. Should those be validation targets for the PIP and DIP moment arms of the new paths?
 
