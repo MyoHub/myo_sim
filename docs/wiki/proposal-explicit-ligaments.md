@@ -542,6 +542,21 @@ A side whose residual becomes zero or negative gets no spring, as #139 already h
 Both scripts are rerun whenever muscles, joint axes or ligaments crossing the joint
 change.
 
+**The muscle model is a refit trigger too.** The residual is taken over the muscles'
+passive moment, so changing the muscle model changes it even with every path and
+parameter kept: compliant tendons (the tendon stretch moves each fibre's operating point),
+different passive force-length curves, or fibres that add damping of their own. After such
+a change the ligament reference strains are checked again against the new residual
+(steps 1-2 above) and the residual springs are refitted.
+
+**One element per tissue.** Ligaments, residual springs and any additional joint-limit
+stop forces (for example coordinate-limit springs near the range ends, as some OpenSim
+models carry) must not be stacked for the same tissue. Each passive structure is counted
+by exactly one element: where a ligament models a collateral or a capsule region, neither
+a residual spring nor a stop force may also represent it, and a stop force added later is
+subtracted from the residual like a ligament. MuJoCo's own joint range limits stay the
+hard ends of the range, not a tissue model.
+
 ### Mirroring and hand pruning
 
 **Mirroring.** Everything is authored on the right side with `_r` names. The left side
