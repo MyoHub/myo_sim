@@ -8,9 +8,10 @@ How to add to, change and maintain the models in `myo_sim`. It applies to human 
 2. **Improvements overwrite the model.** A change that makes the model more realistic is written directly into the part's XML files and is active for every user. This covers new muscles, tendons, ligaments, passive joint moments, contacts, and refitted masses, inertias or muscle parameters.
 3. **No feature flags.** Never add a build argument, `build_kwargs` entry or `load()` parameter that switches a model feature on or off, not even for backward compatibility. Previous behaviour lives in previous release tags.
 4. **Variants are separate registered models.** A feature gets its own model only if it makes simulation substantially more expensive (step time or memory), or if it is genuinely optional rather than more realistic. The variant is registered under its own name in `MODEL_REGISTRY` and has its own README section. Existing examples: `myolegs26` (a reduced leg muscle set) and `myotorso_abdomen`.
+   - Prefer generic post-processing functions over per-model variants for simplifications that apply to many models. For example, a function that disables collisions on any loaded `MjSpec` replaces a "no-collision" variant of each model. Such functions run in the user's code after loading; they never change the reference model and are not build options.
 5. **Python composes, XML defines.** `build/compose.py` and `build/utils.py` only attach parts, mirror the right side, and inject the contacts, sensors and keyframes declared in XML. They never create bodies, joints, sites, tendons or actuators.
-   - The one sanctioned exception is pruning (`build/hand.py`), which may re-create an element only where MjSpec cannot rename its references. Each such case is documented in the code.
-   - `build_kwargs` describe how a registered model is assembled (attachment, contact sets, root joint). They are not a user interface for model features.
+   - The one temporary exception is pruning (`build/hand.py`), which may re-create an element only where MjSpec cannot rename its references. Each such case is documented in the code. The target structure removes pruning altogether: a hand-and-wrist part, a shoulder-and-elbow part with an immobilised wrist, and a hand-and-arm model composed from the two.
+   - `build_kwargs` belong to a registration and describe how that registered model is assembled (attachment, root joint, placement). `load_spec()` takes no user `build_kwargs`. Advanced users who need a different assembly register their own recipe (a `ModelRegistration` with its own `build_kwargs`) in their code.
 6. **Every non-trivial value has a source.** Parameters come from a cited measurement or a documented fit (see *Provenance*), never from tuning a downstream task.
 
 ## The four file roles
@@ -45,6 +46,8 @@ Measured passive joint moments include the passive force of the muscles crossing
 
 Add no spring where the remainder is zero or negative, and document that. Refit every affected spring whenever muscles crossing the joint change.
 
+Passive joint properties (stiffness and damping) are added only where measured data exist and a validation shows they improve fidelity, for example tenodesis or the rest posture of the relaxed hand. Elsewhere, joints keep only what numerical stability needs. Joint impedance depends on many factors that are hard to measure, so each property is fitted once per body part, not per joint by hand. Use MuJoCo's polynomial stiffness and damping (MuJoCo 3.7 or later) for nonlinear curves instead of approximating them.
+
 ## Provenance
 
 - **Source data:** cited source data and fit inputs live in `myo_sim/build/data/<topic>.json`, one row per element. Each row holds the citation and DOI, the source curve or table values, the status (`measured`, `transferred` with the stated assumption, or `not added` with the reason), and absolute SI units. JSON is provenance and fit input only: the model never reads it at load time.
@@ -56,12 +59,16 @@ Add no spring where the remainder is zero or negative, and document that. Refit 
   <!-- END generated -->
   ```
 
-  A test checks that each generated block matches what its script produces. Hand edits go outside these blocks.
+  A test checks that each generated block matches what its script produces. Hand edits go outside these blocks. Fit scripts run only during development and release preparation, and their output is committed: the package never edits MJCF files when it is used.
 - **Third-party data:** add a `LICENSE-<SOURCE>.txt` next to the data. Data that does not allow redistribution is cited, never copied. Papers are cited, never committed.
 - **Validation data:** keep it in the data file as well, and test against it.
 - **Inherited values:** a parameter taken over from an earlier model (e.g. Holzbaur, MoBL-ARMS, Rajagopal) is recorded as `inherited`, naming that model and its version. Every parameter has an entry, not only new ones.
 - **Method pages:** every identification or fit method has a wiki page. It covers the data, the target, the loss and bounds, the fit error and the known limitations.
 - **Parameter reference:** a script generates a per-part reference from the data files and the XML. It has one row per parameter: element, value, status, source, method page and fit error. A test fails when a parameter in the XML has no provenance row. The reference is regenerated for every release, and the release notes link to it.
+
+## Updating parameters within a release
+
+A new experimental dataset, or one person's measurements, does not need a new release to be used. Functions that take a loaded `MjSpec` and return it with updated parameters (for example refitted passive springs, or a personalised scaling) apply such data at run time, without writing files. When new data should become the reference, the fit script regenerates the XML for the next release, and the old values stay available through older release tags.
 
 ## Adding a new muscle (worked example)
 
@@ -134,10 +141,10 @@ The right side is the source of truth.
 4. **Physics backends:** CPU and mujoco-warp give the same passive and actuator forces for elements MuJoCo evaluates natively.
 5. **Cost:** `mj_step` time and model memory against `dev` for the affected registered models. Put the numbers in the PR. If the cost grows substantially, discuss a variant (policy 4) before merging.
 6. **Validation against data:** the provenance data reproduces within the tolerance stated in the data file.
-7. **Equivalence references:** if `tests/test_equivalence.py` compares against an external reference model that your change intentionally departs from, say so in the PR. Update the reference expectations instead of weakening the test.
+7. **Equivalence references:** if `tests/test_equivalence.py` compares against an external reference model that your change intentionally departs from, say so in the PR. Update the reference expectations instead of weakening the test. The comparison against the musclemimic reference is retired once that reference is synchronised into `myo_sim`.
 
 ## Releases and downstream impact
 
 - **Breaking changes:** a model change that alters the number of actuators, joints or sites, or the dynamics, is a breaking change for downstream environments and trained policies.
 - **Recording it:** add a `CHANGELOG.md` entry under *Unreleased* that states what changed and what downstream users must update. Append a line to `docs/wiki/log.md`.
-- **Releasing it:** such changes ship together in the next release tag. Downstream packages (e.g. MyoSuite) pin a release tag and move to the new one deliberately. Older behaviour stays available through older tags, never through flags. No release ships without an up-to-date parameter reference (see *Provenance*).
+- **Releasing it:** such changes ship together in the next release tag. Downstream packages (e.g. MyoSuite) pin a release tag, state which `myo_sim` versions they are compatible with, and move to a new one deliberately. Older behaviour stays available through older tags, never through flags. No release ships without an up-to-date parameter reference (see *Provenance*).
