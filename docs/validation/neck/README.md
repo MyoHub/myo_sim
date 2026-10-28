@@ -99,9 +99,13 @@ changed motion by at most 0.014 mm / 0.0061°, coupling residual was below
 Later supine recovery beyond 250 ms is imperfect. Contact, trapdoor settling,
 torso motion, individual anatomy, shoulder–neck interaction, whole-body balance,
 EMG, acceleration, injury response and individual muscle force curves were not
-validated. Production tendons are rigid; converted cervical inertias are balanced
+validated. Production tendons are rigid; converted cervical inertias were balanced
 isotropic values, not verified anatomical measurements. Cervical mesh segmentation
-is heuristic. Body mass with the neck is 89.60644 kg, versus 84.26499 kg with the former rigid head.
+is heuristic. This comparison was recorded with the source masses (skull 4.30 kg,
+cervical segments 3.42 kg), the converted 0.04 kg·m² cervical inertias and joint
+armature 1e-5; the model now uses the de Leva head-and-neck share, cylinder-slice
+inertias and armature 0.01 (see the [head README](../../../myo_sim/models/head/README.md#mass-and-inertia)),
+and the comparison has not been re-run with them.
 
 The figure derives from Wochner, Nölle, Martynenko and Schmitt's 2022 trajectory
 data, distributed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).

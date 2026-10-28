@@ -41,20 +41,27 @@ and the precise scope of acceptance. <!-- TODO: review fidelity against measured
 ## Known limitations
 
 - The part models (`myotorso`, `myotorso_arms`, `myotorso_arm_r`, `myoarms`, `myohands`, `myolegs`, ...) keep the rigid, unactuated head.
-- Total body mass rises from 84.26 kg to 89.61 kg with the neck (head 4.30 kg instead of 2.13 kg, plus 3.42 kg of cervical segments); the torso mass is not reduced to compensate.
+- Segment masses follow the de Leva (1996) convention rather than the source model; see Mass and inertia below. The falling-head comparison in the validation summary was recorded with the source masses and inertias and has not been re-run.
 - Source left attachment asymmetries are replaced by generated right-side symmetry.
 - Fixed thoracic/shoulder muscle landmarks, linearized multi-axis bushings, welded jaw, balanced converted inertias and approximate muscle curves limit dynamic fidelity. The calibrated 20–250 ms head-release benchmark passes both directions and participant-separated evaluation; see the validation report for its exploratory scope.
 - Cervical mesh component labeling is heuristic and requires anatomical review.
 
+## Mass and inertia
+
+- **Head and neck mass.** The skull and the seven cervical segments together carry 6.94 % of body mass, the de Leva (1996) male head-and-neck share; in `myofullbody` that is 5.829 kg of 83.99 kg. The skull keeps the source mass of 4.30 kg. The cervical segments share the remaining 1.529 kg in the source proportions (each source mass × 0.4473; the source gives 3.42 kg in total). The torso body carries 14.897 kg, the OpenSim trunk mass without the head it already contained, so head and neck mass is not counted twice.
+- **Rigid head.** The part models keep the rigid head; its `head` body carries 5.848 kg, 6.94 % of the 84.26 kg body with the rigid head (the convention of MyoHub/myo_sim#138), with the same torso mass.
+- **Cervical inertias.** The source inertias are placeholders (0.02, 0.08, 0.02 kg·m², which violate the triangle inequality), and the converter had replaced them with 0.04 kg·m². Each segment is now a slice of a solid circular cylinder of neck tissue with radius r = 0.06 m (neck circumference about 38 cm) and height h equal to its vertical spacing in the chain (15–19 mm): I_axial = m r²/2 about the neck axis and I_transverse = m (3 r² + h²)/12, giving 1.7–4.7·10⁻⁴ kg·m². As a check, such a cylinder of tissue (1050 kg/m³) over the 118 mm chain weighs 1.40 kg, against the 1.53 kg assigned.
+- **Joint armature.** With the physical inertias, muscle force-velocity damping on the light segments makes explicit Euler ring at the 2 ms step, so the neck joints use `armature="0.01"`, the value of the torso and leg joints (previously 1e-5). This is a numerical setting, not anatomy.
+
 ## Manual adjustments
 
-- Joint `neck_rotation` and `neck_flexion` are commented out in `myohead_rigid_chain.xml`, producing a fully locked (zero-DOF) rigid head used when the torso chain is composed. Uncomment both joints there to restore the standard two-DOF neck configuration.
 - The muscular chain restores source child-frame joint-center offsets missing from cvt3, aligns the skull origin to the existing head and mirrors only muscle sites/paths/actuators, retaining one midline skeleton.
 - Source rotational bushing stiffness/damping is restored with native joint springs: exact in sagittal motion and a first-order approximation in multi-axis motion.
 - Geniohyoid's negative-slack conversion fit is replaced with source physical length/slack/force values and the standard MuJoCo muscle curve, without fitting to acceptance measurements.
 
 ## Changelog
 
+**2026-10-28** — Head and neck at the de Leva mass share (torso without the head it contained), cylinder-slice cervical inertias, neck armature 0.01; commented-out rigid-head joints removed.
 **2026-10-28** — The muscular neck is part of `myofullbody`; the `include_neck` build flag and the `myofullbody_neck` model are removed.
 **2026-10-04** — Align muscle/tendon/site naming with other body parts (`digastric_post_r`, `digastric_post_r_tendon`, `digastric_post-P1_r`); scope materials as `myohead_matskin`.
 **2026-10-03** — Match neck tendon rendering width to the torso (0.005 m) and refresh standalone/full-body neck previews; preserve the default rigid-neck build.

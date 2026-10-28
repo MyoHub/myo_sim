@@ -76,3 +76,54 @@ def test_neck_preserves_head_landmarks_of_the_rigid_scaffold() -> None:
             neck_data.geom_xpos[neck.geom(name).id] - neck_root,
             atol=1e-12,
         )
+
+
+def _subtree_mass(model: mujoco.MjModel, root: str) -> float:
+    root_id = model.body(root).id
+    total = 0.0
+    for body in range(model.nbody):
+        ancestor = body
+        while ancestor > 0 and ancestor != root_id:
+            ancestor = int(model.body_parentid[ancestor])
+        if ancestor == root_id:
+            total += model.body_mass[body]
+    return total
+
+
+def test_head_and_neck_carry_the_de_leva_share() -> None:
+    """Skull + cervical segments (or the rigid head) hold 6.94 % of body mass; the torso no longer contains the head."""
+    full = load_model("myofullbody")
+    assert full.body_mass.sum() == pytest.approx(84.0, abs=0.01)
+    assert _subtree_mass(full, "myohead_base") / full.body_mass.sum() == pytest.approx(0.0694, abs=1e-4)
+    # Rigid-head models: the head body holds the share of the 84.26 kg rigid-head body (myo_sim#138).
+    rigid = load_model("myoarms")
+    assert rigid.body_mass[rigid.body("head").id] == pytest.approx(0.0694 * 84.26, abs=0.01)
+    for model in (full, rigid):
+        assert model.body_mass[model.body("torso").id] == pytest.approx(14.897)
+
+
+def test_cervical_inertias_match_their_size_and_mass() -> None:
+    """Cylinder-slice inertias: small, physically consistent, and the skull keeps its source mass."""
+    model = load_model("myohead")
+    assert model.body_mass[model.body("head").id] == pytest.approx(4.3)
+    for level in range(1, 8):
+        body = model.body(f"myohead_cerv{level}")
+        inertia = np.sort(model.body_inertia[body.id])
+        assert 1e-4 < inertia[0] and inertia[2] < 1e-3, body.name
+        assert inertia[2] <= inertia[0] + inertia[1], body.name
+
+
+def test_neck_does_not_ring_at_the_model_timestep() -> None:
+    """Explicit Euler at 2 ms stays free of step-to-step oscillation under random neck activation."""
+    model = load_model("myohead")
+    data = mujoco.MjData(model)
+    dofs = [model.joint(i).dofadr[0] for i in range(model.njnt) if model.joint(i).name.startswith("myohead_")]
+    data.ctrl[:] = np.random.default_rng(0).uniform(0, 1, model.nu)
+    qacc = []
+    for _ in range(250):
+        mujoco.mj_step(model, data)
+        qacc.append(data.qacc[dofs].copy())
+    qacc = np.array(qacc)[100:]
+    sign_flips = np.mean(np.sign(qacc[1:]) != np.sign(qacc[:-1]), axis=0)
+    assert np.isfinite(qacc).all()
+    assert sign_flips.max() < 0.3

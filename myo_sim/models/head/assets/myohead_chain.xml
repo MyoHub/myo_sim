@@ -2,7 +2,7 @@
     <!-- Derived from MIT-licensed HYOID / Neck6D; see ../README.md and ../LICENSE.Neck6D. -->
     <body name="myohead_base" pos="0.032693 0.01516 0" childclass="myohead_articulated">
         <body name="myohead_cerv7" pos="-0.05434 0.366955 0">
-            <inertial pos="-0.0002 0.0071 0" quat="0.707107 0 0 0.707107" mass="0.584085" diaginertia="0.04 0.04 0.04" />
+            <inertial pos="-0.0002 0.0071 0" quat="0.707107 0 0 0.707107" mass="0.261253" diaginertia="0.0004703 0.000241 0.000241" />
             <joint name="myohead_pitch2" pos="0.00684 -0.005655 0" axis="0 0 1" range="-0.05702 0.08294" stiffness="27.5" damping="2.75" springref="0" />
             <joint name="myohead_roll2" pos="0.00684 -0.005655 0" axis="1 0 0" range="-0.04492 0.04492" stiffness="27.5" damping="2.75" springref="0" />
             <joint name="myohead_yaw2" pos="0.00684 -0.005655 0" axis="0 1 0" range="-0.02969 0.02969" stiffness="13.75" damping="1.375" springref="0" />
@@ -10,7 +10,7 @@
             <site name="long_col_c5thx-P6_r" pos="0.01111 0.00731 0.01979" />
             <site name="trap_acr-P2_r" pos="-0.0477 0.019 0.00305" />
             <body name="myohead_cerv6" pos="0.003837 0.016445 0">
-                <inertial pos="0.0002 0.0064 0" quat="0.707107 0 0 0.707107" mass="0.507749" diaginertia="0.04 0.04 0.04" />
+                <inertial pos="0.0002 0.0064 0" quat="0.707107 0 0 0.707107" mass="0.227109" diaginertia="0.0004088 0.0002105 0.0002105" />
                 <joint name="myohead_aux7jnt_r3" pos="0.009419 -0.004065 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
                 <joint name="myohead_aux7jnt_r1" pos="0.009419 -0.004065 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
                 <joint name="myohead_aux7jnt_r2" pos="0.009419 -0.004065 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="13.75" damping="1.375" springref="0" />
@@ -19,7 +19,7 @@
                 <site name="splen_cap_sklc6-P1_r" pos="-0.0486 0.01647 0.00305" />
                 <site name="longissi_cap_sklc6-P1_r" pos="-0.00817 0.01515 0.02759" />
                 <body name="myohead_cerv5" pos="0.00418 0.0179 0">
-                    <inertial pos="0.0001 0.0063 0" quat="0.707107 0 0 0.707107" mass="0.4291" diaginertia="0.04 0.04 0.04" />
+                    <inertial pos="0.0001 0.0063 0" quat="0.707107 0 0 0.707107" mass="0.191931" diaginertia="0.0003455 0.0001786 0.0001786" />
                     <joint name="myohead_aux6jnt_r3" pos="0.00567 -0.00815 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
                     <joint name="myohead_aux6jnt_r1" pos="0.00567 -0.00815 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="27.5" damping="2.75" springref="0" />
                     <joint name="myohead_aux6jnt_r2" pos="0.00567 -0.00815 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="13.75" damping="1.375" springref="0" />
@@ -30,7 +30,7 @@
                     <site name="semi_cap_sklc5-P1_r" pos="-0.00931 0.01154 0.0235" />
                     <site name="iliocost_cerv_c5rib-P3_r" pos="-0.0094 0.01258 0.026" />
                     <body name="myohead_cerv4" pos="0.00341 0.01917 0">
-                        <inertial pos="-0.0003 0.0067 0" quat="0.707107 0 0 0.707107" mass="0.423317" diaginertia="0.04 0.04 0.04" />
+                        <inertial pos="-0.0003 0.0067 0" quat="0.707107 0 0 0.707107" mass="0.189344" diaginertia="0.0003408 0.0001742 0.0001742" />
                         <joint name="myohead_aux5jnt_r3" pos="0.00502 -0.01172 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
                         <joint name="myohead_aux5jnt_r1" pos="0.00502 -0.01172 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
                         <joint name="myohead_aux5jnt_r2" pos="0.00502 -0.01172 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="11.6" damping="1.16" springref="0" />
@@ -40,7 +40,7 @@
                         <site name="long_col_c1c5-P2_r" pos="0.01121 0.00749 0.0207" />
                         <site name="longissi_cerv_c4thx-P5_r" pos="-0.00709 0.01157 0.0261" />
                         <body name="myohead_cerv3" pos="0.00261 0.0154 0">
-                            <inertial pos="-0.0008 0.0071 0" quat="0.707107 0 0 0.707107" mass="0.419847" diaginertia="0.04 0.04 0.04" />
+                            <inertial pos="-0.0008 0.0071 0" quat="0.707107 0 0 0.707107" mass="0.187792" diaginertia="0.000338 0.0001732 0.0001732" />
                             <joint name="myohead_aux4jnt_r3" pos="0.00471 -0.00902 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
                             <joint name="myohead_aux4jnt_r1" pos="0.00471 -0.00902 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="23.2" damping="2.32" springref="0" />
                             <joint name="myohead_aux4jnt_r2" pos="0.00471 -0.00902 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="11.6" damping="1.16" springref="0" />
@@ -54,7 +54,7 @@
                             <site name="splen_cerv_c3thx-P2_r" pos="-0.00787 0.01005 0.02365" />
                             <site name="semi_cerv_c3thx-P2_r" pos="-0.04064 -0.00322 0.0024" />
                             <body name="myohead_cerv2" pos="-0.00018 0.01629 0">
-                                <inertial pos="-0.001 0.0059 0" quat="0.707107 0 0 0.707107" mass="0.587554" diaginertia="0.04 0.04 0.04" />
+                                <inertial pos="-0.001 0.0059 0" quat="0.707107 0 0 0.707107" mass="0.262805" diaginertia="0.000473 0.0002434 0.0002434" />
                                 <joint name="myohead_aux3jnt_r3" pos="0.00543 -0.01123 0" axis="0 0 1" limited="false" range="-1.57 1.57" stiffness="7.8" damping="0.78" springref="0" />
                                 <joint name="myohead_aux3jnt_r1" pos="0.00543 -0.01123 0" axis="1 0 0" limited="false" range="-1.57 1.57" stiffness="7.8" damping="0.78" springref="0" />
                                 <joint name="myohead_aux3jnt_r2" pos="0.00543 -0.01123 0" axis="0 1 0" limited="false" range="-1.57 1.57" stiffness="3.9" damping="0.39" springref="0" />
@@ -65,7 +65,7 @@
                                 <site name="rectcap_post_maj-P1_r" pos="-0.03637 -0.00647 0.0024" />
                                 <site name="obl_cap_inf-P1_r" pos="-0.03637 -0.00647 0.00547" />
                                 <body name="myohead_cerv1" pos="-0.03556 0.01776 0">
-                                    <inertial pos="0.0312 0.0019 0" quat="0.707107 0 0 0.707107" mass="0.467268" diaginertia="0.04 0.04 0.04" />
+                                    <inertial pos="0.0312 0.0019 0" quat="0.707107 0 0 0.707107" mass="0.209003" diaginertia="0.0003762 0.000192 0.000192" />
                                     <joint name="myohead_pitch1" pos="0.04245 0.00352 0" axis="0 0 1" range="-0.124 0.186" stiffness="7.8" damping="0.78" springref="0" />
                                     <joint name="myohead_roll1" pos="0.04245 0.00352 0" axis="1 0 0" range="-0.05236 0.05236" stiffness="7.8" damping="0.78" springref="0" />
                                     <joint name="myohead_yaw1" pos="0.04245 0.00352 0" axis="0 1 0" range="-0.5896 0.5896" stiffness="3.9" damping="0.39" springref="0" />
