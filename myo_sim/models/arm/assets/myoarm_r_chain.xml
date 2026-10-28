@@ -84,7 +84,7 @@
                             <joint name="shoulder1_r2_r" axis="0.00479995 0.999089 0.0423995" pos="0 0 0" range="-2.242 1.658"/>
                             <body name="humerus_r" pos="0 0 0">
                                 <inertial diaginertia="0.0128576 0.0121576 0.00239265" mass="1.99757" pos="0.018064 -0.140141 -0.012746" quat="0.407851 0.343714 -0.567755 0.627034"/>
-                                <joint axis="0.00479995 0.999089 0.0423995" name="shoulder_rot_r" pos="0 0 0" range="-1.571 2.094"/>
+                                <joint axis="0.00479995 0.999089 0.0423995" name="shoulder_rot_r" pos="0 0 0" range="-1.658 2.094"/>
                                 <geom name="humerus_r" mesh="humerus_r" type="mesh"/>
                                 <geom name="humerus_coll_r" type="capsule" class="myoarm_coll" size="0.042 0.140" pos="0 -.13 0" euler="1.57079632679 0 0"/>
                                 <geom name="Elbow_PT_ECRL_wrap" type="sphere" size="0.027" pos="-0.005 -0.3 0.005" class="myoarm_wrap"/>
@@ -377,8 +377,8 @@
                                         <site class="myoarm_marker" name="Radius_marker_r" pos="0.05749 -0.2272 0.02738"/>
 
                                         <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="myoarm_wrist">
-                                            <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.174533 0.436332" damping="0.25"/>
-                                            <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-0.785398 0.785398" damping="0.25"/>
+                                            <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.349066 0.523599" damping="0.25"/>
+                                            <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-1.396263 1.221730" damping="0.25"/>
                                             <geom mesh="lunate_r" name="lunate_r" type="mesh"/>
                                             <geom name="WristExtensor_wrap" pos="0.0007 0 0.003" quat="0.807649 -0.0333177 0.588355 0.0207694" class="myoarm_wrap" size="0.008 0.02" type="cylinder"/>
                                             <geom name="WristFlexor_wrap" pos="0 -0.01 -0.004" quat="0.807649 -0.0333177 0.588355 0.0207694" class="myoarm_wrap" size="0.007 0.02" type="cylinder"/>

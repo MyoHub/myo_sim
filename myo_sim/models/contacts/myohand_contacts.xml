@@ -20,5 +20,45 @@
         <pair geom1="radius_coll_3_r" geom2="radius_coll_l" condim="3" />
         <pair geom1="radius_coll_3_r" geom2="radius_coll_2_l" condim="3" />
         <pair geom1="radius_coll_3_r" geom2="radius_coll_3_l" condim="3" />
+
+        <!-- Inter-finger self-collision: adjacent digits at each phalanx level,
+             plus thumb-vs-index/middle for opposition. Prevents fingers from
+             passing through each other during grasp/reach policies. No such
+             pairs existed previously (only forearm-torso/forearm-forearm did),
+             which let trained policies interpenetrate fingers freely since
+             there was no physical penalty for it. -->
+        <pair geom1="proxph2_coll_r" geom2="proxph3_coll_r" condim="3" />
+        <pair geom1="midph2_coll_r" geom2="midph3_coll_r" condim="3" />
+        <pair geom1="distph2_coll_r" geom2="distph3_coll_r" condim="3" />
+
+        <pair geom1="proxph3_coll_r" geom2="proxph4_coll_r" condim="3" />
+        <pair geom1="midph3_coll_r" geom2="midph4_coll_r" condim="3" />
+        <pair geom1="distph3_coll_r" geom2="distph4_coll_r" condim="3" />
+
+        <pair geom1="proxph4_coll_r" geom2="5proxph_coll_r" condim="3" />
+        <pair geom1="midph4_coll_r" geom2="5midph_coll_r" condim="3" />
+        <pair geom1="distph4_coll_r" geom2="5distph_coll_r" condim="3" />
+
+        <pair geom1="distal_thumb_coll_r" geom2="proxph2_coll_r" condim="3" />
+        <pair geom1="distal_thumb_coll_r" geom2="midph2_coll_r" condim="3" />
+        <pair geom1="distal_thumb_coll_r" geom2="distph2_coll_r" condim="3" />
+        <pair geom1="distal_thumb_coll_r" geom2="proxph3_coll_r" condim="3" />
+
+        <pair geom1="proxph2_coll_l" geom2="proxph3_coll_l" condim="3" />
+        <pair geom1="midph2_coll_l" geom2="midph3_coll_l" condim="3" />
+        <pair geom1="distph2_coll_l" geom2="distph3_coll_l" condim="3" />
+
+        <pair geom1="proxph3_coll_l" geom2="proxph4_coll_l" condim="3" />
+        <pair geom1="midph3_coll_l" geom2="midph4_coll_l" condim="3" />
+        <pair geom1="distph3_coll_l" geom2="distph4_coll_l" condim="3" />
+
+        <pair geom1="proxph4_coll_l" geom2="5proxph_coll_l" condim="3" />
+        <pair geom1="midph4_coll_l" geom2="5midph_coll_l" condim="3" />
+        <pair geom1="distph4_coll_l" geom2="5distph_coll_l" condim="3" />
+
+        <pair geom1="distal_thumb_coll_l" geom2="proxph2_coll_l" condim="3" />
+        <pair geom1="distal_thumb_coll_l" geom2="midph2_coll_l" condim="3" />
+        <pair geom1="distal_thumb_coll_l" geom2="distph2_coll_l" condim="3" />
+        <pair geom1="distal_thumb_coll_l" geom2="proxph3_coll_l" condim="3" />
     </contact>
 </mujocoinclude>
