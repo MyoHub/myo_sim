@@ -18,7 +18,8 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
-| `test_muscle_passive.py` | Extrinsic hand-muscle slack lengths and fpmax: XML holds the tabled values on both arms of every model, recorded fit errors (Knutson 2000 index fit, one-sided joint fit), active force-length factor >= 0.5 of the flexors in a full fist and the extensors in full extension, tenodesis and relaxed-hand rest off the joint limits on myofullbody | After hand muscle, `build/data/muscle_passive.json` or `scripts/fit_muscle_passive.py` changes |
+| `test_muscle_passive.py` | Extrinsic hand-muscle slack lengths and fpmax: XML holds the tabled values on both arms of every model, recorded fit errors (Knutson 2000 index fit, one-sided joint fit), active force-length factor >= 0.5 of the flexors in a full fist and the extensors in full extension, the release step (EDC3-5 and EDM at the smallest fpmax that opens digits 3-5 in the McFarland trial B), tenodesis and relaxed-hand rest off the joint limits on myofullbody | After hand muscle, `build/data/muscle_passive.json` or `scripts/fit_muscle_passive.py` changes |
+| `test_hand_grip.py` | Maximum power grip after McFarland et al. 2023 (`scripts/validate_hand_function.py`, `build/data/hand_function.json`): the cached optimum of the model it runs on (band, digit shares, wrist balance, penetration) and against weak flexors; skipped without a cached optimum for the model. `MYO_SIM_SLOW=1` adds the optimisation and posture sensitivity | After hand muscle, tendon, spring or chain changes |
 
 ## Fast Gate (Run Before Every PR)
 

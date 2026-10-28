@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-28 — Release step for EDC3-5 and EDM; grip validation after McFarland et al. 2023
+Changed: `scripts/fit_muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `tests/test_muscle_passive.py`, `scripts/validate_hand_function.py`, `myo_sim/build/data/hand_function.json`, `myo_sim/build/hand_function.py`, `tests/test_hand_grip.py`, `docs/wiki/passive-muscles-tenodesis.md`, `docs/wiki/hand-function-validation.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`, `myo_sim/models/arm/README.md`
+Why: EDC3-5 and EDM sat at the fpmax floor, so the digits barely opened when the wrist flexed; only their fpmax is refit, above the smallest value that opens digits 3-5 in the McFarland et al. 2023 release trial, with the slack lengths unchanged. The grip protocol and test of that validation come with it (the script, table and loader are identical in MyoHub/myo_sim#139).
+
 ## 2026-10-27 — Fit fpmax with the slack lengths, under an active force-length constraint
 Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `scripts/fit_muscle_passive.py`, `myo_sim/build/data/muscle_passive.json`, `tests/test_muscle_passive.py`, `docs/wiki/passive-muscles-tenodesis.md`, `docs/wiki/testing-guide.md`
 Why: Lengthening the slack lengths alone left the finger flexors with almost no active force in a fist, so each extrinsic muscle now also gets its own passive-force scale (`fpmax`) and the fit keeps the flexors' active factor at least 0.5 in a full fist and the extensors' in full extension.
