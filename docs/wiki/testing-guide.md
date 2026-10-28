@@ -18,6 +18,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
+| `test_passive_thenar.py` | Passive joint moments and thenar muscles: generated XML blocks equal what the scripts write from the JSON, chain sites match the table, every applied row and the thenar muscles on myofullbody / torso_arms / hands / arm_r, both arms from the right-arm files, CPU vs mujoco-warp, left/right symmetry, relaxed settling, rows refit from their sources (springs never worsen the total) | After arm tendon/muscle/chain, `build/hand.py`, `build/hand_data.py`, `scripts/fit_passive_moments.py` or `scripts/generate_thenar_muscles.py` changes |
 
 ## Fast Gate (Run Before Every PR)
 

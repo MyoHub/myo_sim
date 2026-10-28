@@ -7,7 +7,7 @@ MyoHand is a MuJoCo musculoskeletal model of the right wrist and hand, derived f
 | Property | Value |
 |---|---|
 | Degrees of freedom | 23 |
-| Actuators (muscles) | 39 |
+| Actuators (muscles) | 42 (39 + thenar AdP, FPB, APB) |
 | Body segments | radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1-5), proximal/middle/distal phalanges (digits 2-5), thumb phalanges |
 | Primary joints | forearm pronation/supination, wrist flexion/deviation, thumb CMC/MCP/IP, finger MCP/PIP/DIP (digits 2-5) |
 

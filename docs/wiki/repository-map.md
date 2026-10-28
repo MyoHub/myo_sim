@@ -10,6 +10,7 @@ myo_sim/              # installable Python package
   fragments.py        # FragmentInfo and _FragmentRegistry definitions
   models/             # all MJCF content — packaged into wheels
     arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscle.xml, myoarm_r_tendon.xml, myoarm_r_assets.xml
+                      # (_tendon/_muscle hold script-generated blocks: thenar muscles, passive joint springs)
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
     torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
     head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml
@@ -21,6 +22,11 @@ myo_sim/              # installable Python package
     compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec()/build_model(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
+    hand_data.py      # thenar / passive-moment tables, passive tendon names, generated-block read/write
+    data/             # JSON provenance and fitting input of the thenar muscles and passive springs
+scripts/
+  fit_passive_moments.py       # refits passive springs, rewrites their block in myoarm_r_tendon.xml
+  generate_thenar_muscles.py   # rewrites the thenar blocks in myoarm_r_tendon.xml / myoarm_r_muscle.xml
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -43,6 +49,7 @@ docs/wiki/            # canonical wiki location
 | Task | Location |
 |---|---|
 | Edit a muscle path or via-point | `myo_sim/models/<part>/assets/*_muscle.xml` and `*_tendon.xml` |
+| Change thenar muscles or passive joint moments | `myo_sim/build/data/*.json`, then rerun `scripts/generate_thenar_muscles.py` / `scripts/fit_passive_moments.py` (they rewrite only their generated blocks) |
 | Edit skeleton geometry | `myo_sim/models/<part>/assets/*_chain.xml` |
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |

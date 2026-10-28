@@ -48,9 +48,10 @@ class TestSims(unittest.TestCase):
             self.get_sim(model_path)
 
 
+# The musclemimic layout (416 actuators) plus the thenar muscles (3 per hand).
 MUSCLEMIMIC_FULLBODY_SPEC = {
     "njnt": 123,
-    "nu": 416,
+    "nu": 422,
 }
 
 
