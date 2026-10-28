@@ -146,8 +146,10 @@ def test_passive_moments_match_the_table(fullbody: mujoco.MjModel) -> None:
                 mujoco.mj_forward(fullbody, data)
                 np.testing.assert_allclose(data.qfrc_passive[joint.dofadr[0]], passive_moment(row, q), atol=1e-9)
     wrist = next(r for r in rows_with_status(load_passive_moment_table()) if r["names"]["r"] == "flexion_r")
-    # Formica 2012 linear stiffness, less the little the wrist muscles give at act = 0.
-    np.testing.assert_allclose(passive_moment(wrist, [0.2, -0.2]), [-0.554 * 0.2, 1.021 * 0.2], rtol=0.01)
+    # Formica 2012 measured the total: springs plus the wrist muscles at act = 0, in the row's posture.
+    q = np.array([0.2, -0.2])
+    muscles = _script("fit_passive_moments").muscle_baseline(wrist["source_curve"], "flexion_r", q)
+    np.testing.assert_allclose(passive_moment(wrist, q) + muscles, [-0.554 * 0.2, 1.021 * 0.2], rtol=0.01)
 
 
 def _joint_id(model: mujoco.MjModel, name: str, side: str) -> int:
