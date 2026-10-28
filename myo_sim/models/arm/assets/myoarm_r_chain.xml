@@ -558,7 +558,6 @@
                                                     <site name="2ndmcp_ellipsoid_site_FDP2_side_r" pos="0.0058 -0.0294 -0.0087"/>
                                                     <site name="2ndmcp_ellipsoid_site_EDC2_side_r" pos="0.0058 -0.0294 0.0087"/>
                                                     <site name="2ndmcp_ellipsoid_site_EIP_side_r" pos="0.0058 -0.0294 0.0087"/>
-                                                    <site name="2ndmcp_ellipsoid_site_RI2_side_r" pos="-0.0107522 -0.0332733 0.00473501"/>
                                                     <body name="2proxph_r" pos="0.003501 -0.028243 0.00362">
                                                         <joint axis="0.995013 0.09975 0" name="mcp2_flexion_r" pos="0 0 0" range="0.0 1.5708"/>
                                                         <joint axis="-0.054999 0.085899 0.994785" name="mcp2_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
