@@ -45,7 +45,9 @@ def _pinch(without_thenar: bool = False) -> dict:
     hand = v.myohand()
     if without_thenar:
         kept = tuple(n for n in hand.muscles["thumb_intrinsic"] if n not in THENAR)
-        hand = v.Hand(hand.load, hand.joints, hand.segments, hand.metacarpal3, hand.thumb_distal, hand.muscles | {"thumb_intrinsic": kept})
+        hand = v.Hand(
+            hand.load, hand.joints, hand.segments, hand.metacarpal3, hand.thumb_distal, hand.muscles | {"thumb_intrinsic": kept}
+        )
     return v.pinch(hand, load_hand_function_table())
 
 
