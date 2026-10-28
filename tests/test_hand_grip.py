@@ -40,7 +40,9 @@ def _cached_entry() -> dict | None:
 
 
 CACHED = _cached_entry()
-pytestmark = pytest.mark.skipif(CACHED is None, reason="no cached grip optimum for this model; run scripts/validate_hand_function.py")
+pytestmark = pytest.mark.skipif(
+    CACHED is None, reason="no cached grip optimum for this model; run scripts/validate_hand_function.py"
+)
 
 
 @cache

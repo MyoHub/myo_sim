@@ -600,9 +600,7 @@ def fit_release(model: mujoco.MjModel, table: dict[str, Any]) -> None:
     for term in terms:
         t, row_fit = term["target"], term["row"]["fit"]
         after = joint_moment(model, term, zero, final)
-        row_fit["max_excess_Nm_without_release"] = row_fit.get(
-            "max_excess_Nm_without_release", row_fit["max_excess_Nm_after"]
-        )
+        row_fit["max_excess_Nm_without_release"] = row_fit.get("max_excess_Nm_without_release", row_fit["max_excess_Nm_after"])
         row_fit["rmse_Nm_after"] = float(np.sqrt(np.mean((after - t) ** 2)))
         row_fit["max_excess_Nm_after"] = float(np.max(np.abs(excess_and_deficit(after, t)[0])))
     table["joint_fit"].setdefault("error_without_release", table["joint_fit"]["error_after"])
@@ -651,7 +649,10 @@ def main() -> None:
     if args.release_only:  # the XML holds the tabled values; only fpmax changes
         fit_release(model, table)
         DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
-        unchanged = {r["names"]["r"]: [float(v) for v in model.actuator_lengthrange[model.actuator(r["names"]["r"]).id]] for r in table["muscles"]}
+        unchanged = {
+            r["names"]["r"]: [float(v) for v in model.actuator_lengthrange[model.actuator(r["names"]["r"]).id]]
+            for r in table["muscles"]
+        }
         write_muscle_xml(unchanged, fitted_fpmax(table))
         _report(table)
         return
