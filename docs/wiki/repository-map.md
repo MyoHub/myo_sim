@@ -8,6 +8,7 @@ Navigation guide for agents and contributors.
 myo_sim/              # installable Python package
   __init__.py         # MODELS_DIR, load(), get_path(), composed-model aliases
   fragments.py        # FragmentInfo and _FragmentRegistry definitions
+  postprocess.py      # generic post-processing functions on a loaded MjSpec (disable_collisions())
   models/             # all MJCF content — packaged into wheels
     arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscle.xml, myoarm_r_tendon.xml, myoarm_r_assets.xml
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
@@ -31,6 +32,8 @@ tests/
   test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
+  test_no_opt_in.py                # no build options; contact sets follow the parts present
+  test_postprocess.py              # disable_collisions() and disable_finger_collision()
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -44,6 +47,9 @@ docs/wiki/            # canonical wiki location
 |---|---|
 | Edit a muscle path or via-point | `myo_sim/models/<part>/assets/*_muscle.xml` and `*_tendon.xml` |
 | Edit skeleton geometry | `myo_sim/models/<part>/assets/*_chain.xml` |
+| Add a passive joint spring or ligament | `<fixed>` tendon in `myo_sim/models/<part>/assets/*_tendon.xml` |
+| Add or refit a parameter from a source | `myo_sim/build/data/<topic>.json` (provenance) + `scripts/fit_<topic>.py` (writes the XML) |
+| Add an expensive or optional variant | A new registered model in `myo_sim/build/compose.py` (see the *Model policy*) |
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |

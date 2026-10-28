@@ -22,6 +22,10 @@ cd tests && uv run python debug_muscle_torso.py
 cd tests && uv run python debug_muscle_bimanual.py
 ```
 
+## Model policy
+
+One reference model per body part: realism improvements are written directly into the part's XML and are on for everyone. No feature flags; an expensive or optional feature becomes a separate registered model. Details: `docs/wiki/model-authoring.md`.
+
 ## Commits
 
 - **Never add an AI assistant (e.g. Claude, Anthropic) as a commit co-author** — via `Co-Authored-By` trailers or otherwise. This repo's CLA check requires every commit author/co-author to have signed the CLA, and AI tools cannot sign it, so AI co-author trailers break the check.
