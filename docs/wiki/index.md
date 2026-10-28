@@ -17,6 +17,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/model-readme-template.md` — agentic workflow for writing model READMEs
 - `docs/wiki/build-and-composition.md` — MjSpec compose.py reference
 - `docs/wiki/passive-moments-and-thenar.md` — passive joint moments and thenar muscles of the arm (generated XML blocks, residual fit): row statuses, sources, assumptions
+- `docs/wiki/hand-function-validation.md` — functional hand tests after McFarland et al. 2023 (tenodesis, maximum grip, lateral pinch): method, results per model version, known issues
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
 - `docs/wiki/log.md` — append-only wiki maintenance log
 

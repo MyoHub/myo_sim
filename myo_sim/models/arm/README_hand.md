@@ -37,6 +37,8 @@ None currently tracked.
 
 ## Changelog
 
+**2026-10-28** — Finger MCP, PIP and DIP damping set to Kamper et al. 2002 (0.0142, 0.0105, 0.0081 N m s/rad; was 0.05), and RI2 routed without the second-metacarpal wrap its insertion entered (its length jumped by 7 mm near 10 deg MCP flexion). Both change the dynamics of every model with a hand. See `docs/wiki/passive-moments-and-thenar.md`.
+
 **2026-06-17** — Moved the hand README under the arm model folder and refreshed it to the standard model README format.
 
 **2026-06-16** — Added MyoHand equivalence coverage and documented MjSpec hand composition.
