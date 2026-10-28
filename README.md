@@ -17,12 +17,12 @@ MuJoCo musculoskeletal models for [MyoSuite](https://github.com/facebookresearch
 | [**MyoHand**](myo_sim/models/arm/README.md)<br>`myohands` | [**MyoFullBody**](docs/wiki/build-and-composition.md)<br>`myofullbody` | [**MyoHead**](myo_sim/models/head/README.md)<br>`myohead` |
 |:---:|:---:|:---:|
 | <img src="docs/images/models/myohand_r.png" alt="MyoHand" width="280"> | <img src="docs/images/models/myofullbody.png" alt="MyoFullBody" width="280"> | <img src="docs/images/models/myohead.png" alt="MyoHead" width="280"> |
-| 23 DoF · 39 muscles | 123 DoF · 416 muscles | 24 DoF · 72 muscles · opt-in |
+| 23 DoF · 39 muscles | 147 DoF · 488 muscles | 24 DoF · 72 muscles |
 
-| [**Full body + neck**](myo_sim/models/head/README.md)<br>`myofullbody_neck` | [**MyoLeg26**](myo_sim/models/leg/README.md)<br>`myolegs26` |
-|:---:|:---:|
-| <img src="docs/images/models/myofullbody_neck.png" alt="MyoFullBody with neck" width="280"> | <img src="docs/images/models/myolegs26.png" alt="MyoLeg26" width="280"> |
-| 147 DoF · 488 muscles · opt-in | 18 DoF · 26 muscles · beta |
+| [**MyoLeg26**](myo_sim/models/leg/README.md)<br>`myolegs26` |
+|:---:|
+| <img src="docs/images/models/myolegs26.png" alt="MyoLeg26" width="280"> |
+| 18 DoF · 26 muscles · beta |
 
 Legacy (`myofinger`, `myoelbow`, `osl`) ships under [`myo_sim/models/legacy/`](myo_sim/models/legacy/README.md) for backwards compatibility only.
 
@@ -40,9 +40,7 @@ import myo_sim
 model, data = myo_sim.load("myolegs")
 print(f"Joints: {model.njnt}, Muscles: {model.nu}")
 
-from myo_sim.build.compose import build_model
-model = build_model("myofullbody")
-model_with_neck = build_model("myofullbody_neck")  # opt-in muscular neck
+model = myo_sim.load_model("myofullbody")  # includes the muscular neck
 ```
 
 Other registered assemblies: `myotorso`, `myotorso_arms`, `myoarms`, `myohands`, `myolegs`, `myolegs26`, …

@@ -1,3 +1,7 @@
+## 2026-10-28 — Make the muscular neck part of myofullbody
+Changed: myo_sim/build/compose.py, tests/test_head_build.py, tests/test_build_registry.py, tests/test_sims.py, tests/test_chest_ownership.py, README.md, myo_sim/models/head/README.md, docs/validation/neck/README.md, docs/wiki/build-and-composition.md, scripts/render_composed_models.py, docs/images/models/myofullbody.png, CHANGELOG.md (new)
+Why: Model policy (#140): realism improvements overwrite the reference model and there are no feature flags. The neck costs +14-17 % `mj_step` time on `myofullbody`, below the threshold for a separate variant, so the `include_neck` flag and `myofullbody_neck` are removed. Neck actuators are appended last to keep existing action indices. The part models, `myotorso`, `myotorso_arms` and `myotorso_arm_r` included, keep the rigid head until the simple-versus-full model strategy is decided.
+
 ## 2026-10-04 — Align myohead muscle naming with other body parts
 Changed: myo_sim/models/head/assets/, tests/test_head_build.py, myo_sim/models/head/README.md, docs/validation/neck/README.md, docs/wiki/repository-map.md
 Why: Drop the `myohead_` actuator prefix, use `{muscle}_r_tendon` and `{muscle}-Pn_r` site names, scope materials as `myohead_matskin`, and clarify that 24 hinges are the coupled realization of 6 independent cervical DoFs.

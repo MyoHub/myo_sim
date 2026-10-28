@@ -1,7 +1,8 @@
 # Neck validation summary
 
-Recorded comparison for the opt-in `myohead` and `myofullbody_neck` models,
-2026-10-03. Default `myofullbody` is unchanged. This is source verification and
+Recorded comparison for the `myohead` model and the neck in `myofullbody`,
+2026-10-03 (recorded as an opt-in assembly; the neck is now part of `myofullbody`).
+This is source verification and
 limited experimental agreement, not independent validation of the whole body.
 Datasets, export/calibration scripts and generated trajectory archives are not
 retained in this repository or distributed in the Python package.
@@ -100,7 +101,7 @@ torso motion, individual anatomy, shoulder–neck interaction, whole-body balanc
 EMG, acceleration, injury response and individual muscle force curves were not
 validated. Production tendons are rigid; converted cervical inertias are balanced
 isotropic values, not verified anatomical measurements. Cervical mesh segmentation
-is heuristic. Opt-in body mass is 89.60644 kg versus the default 84.26499 kg.
+is heuristic. Body mass with the neck is 89.60644 kg, versus 84.26499 kg with the former rigid head.
 
 The figure derives from Wochner, Nölle, Martynenko and Schmitt's 2022 trajectory
 data, distributed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
