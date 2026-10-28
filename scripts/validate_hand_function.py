@@ -638,9 +638,7 @@ def pinch(hand: Hand, table: dict[str, Any], restarts: int = 24) -> dict[str, An
     from scipy.optimize import minimize
 
     p = table["pinch"]
-    held = [*ARM, *WRIST] + [
-        f"{k}{d}" for d in DIGITS for k in ("mcp_flexion", "mcp_abduction", "pip_flexion", "dip_flexion")
-    ]
+    held = [*ARM, *WRIST] + [f"{k}{d}" for d in DIGITS for k in ("mcp_flexion", "mcp_abduction", "pip_flexion", "dip_flexion")]
     angles = {k: p["posture_deg"].get(k, 0.0) for k in (*held, *THUMB)}
     scene = build_scene(hand, {k: angles[k] for k in held}, table)
     m = scene.model
