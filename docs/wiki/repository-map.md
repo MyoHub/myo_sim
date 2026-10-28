@@ -8,6 +8,7 @@ Navigation guide for agents and contributors.
 myo_sim/              # installable Python package
   __init__.py         # MODELS_DIR, load(), get_path(), composed-model aliases
   fragments.py        # FragmentInfo and _FragmentRegistry definitions
+  postprocess.py      # generic post-processing functions on a loaded MjSpec (disable_collisions())
   models/             # all MJCF content — packaged into wheels
     arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscle.xml, myoarm_r_tendon.xml, myoarm_r_assets.xml
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
@@ -31,6 +32,8 @@ tests/
   test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
+  test_no_opt_in.py                # no build options; contact sets follow the parts present
+  test_postprocess.py              # disable_collisions() and disable_finger_collision()
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py

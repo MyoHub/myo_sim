@@ -12,7 +12,6 @@ from myo_sim.build import compose
 from myo_sim.build.compose import COMPOSITION_KWARGS, MODEL_REGISTRY
 
 
-
 def test_registrations_use_only_composition_kwargs() -> None:
     for name, registration in MODEL_REGISTRY.items():
         assert set(registration.build_kwargs) <= COMPOSITION_KWARGS, name

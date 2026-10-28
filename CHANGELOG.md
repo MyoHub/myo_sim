@@ -4,6 +4,9 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+### Added
+- **`myo_sim.disable_collisions(spec, bodies=None, geoms=None)`** (model policy 4: post-processing functions instead of per-model variants). Disables collisions on a loaded `MjSpec`: all geoms, or those whose geom or body name matches the given regular expressions, and removes the explicit pairs that reference them. `compose.disable_finger_collision()` now delegates to it with the same fixed geom list; its result is unchanged.
+
 ### Changed (breaking)
 - **No build options (model policy #140).** `myo_sim.load_spec()` and `myo_sim.build.compose.build_spec()` no longer accept `build_kwargs`; only `inertia_floor` remains. Registrations may set only the composition keys in `compose.COMPOSITION_KWARGS` (`left_arm_strategy`, `add_root_freejoint`, `root_pos`). Previously, user `build_kwargs` were also written into the global `MODEL_REGISTRY` and leaked into every later build in the process.
 - **Finger collisions are always on.** The `disable_finger_collisions` build option is removed (no registered model set it). `compose.disable_finger_collision()` stays as a spec-editing helper for downstream tasks calibrated to the pre-#111 convention. The unused `CollisionMode` type is removed.

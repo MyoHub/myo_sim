@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import argparse
 import os
+import re
 import sys
 import time
 import xml.etree.ElementTree as ET
@@ -29,6 +30,7 @@ from typing import Any, Optional
 import mujoco
 
 from myo_sim import MODELS_DIR
+from myo_sim.postprocess import disable_collisions
 
 try:
     from .hand import prune_arm_spec_to_hand
@@ -606,7 +608,8 @@ def disable_finger_collision(spec: mujoco.MjSpec) -> mujoco.MjSpec:
     whichever are present in ``spec``), leaving every other geom --
     including the palm/metacarpal skin geoms -- untouched. Geoms absent from
     ``spec`` (e.g. a right-only fragment has no ``_l`` geoms) are silently
-    skipped.
+    skipped. A thin wrapper around the generic
+    ``myo_sim.disable_collisions()`` with this fixed geom list.
 
     Also removes any explicit ``<pair>`` contact referencing a disabled geom:
     explicit pairs (e.g. the humerus/radius/ulna cross-arm and torso pairs in
@@ -620,18 +623,8 @@ def disable_finger_collision(spec: mujoco.MjSpec) -> mujoco.MjSpec:
     Returns:
         The same spec, mutated in place, for convenient chaining.
     """
-    disabled_names = {
-        base_name + suffix for base_name in COARSE_COLLISION_DISABLED_GEOM_BASENAMES for suffix in _ARM_SIDE_SUFFIXES
-    }
-    for name in disabled_names:
-        geom = spec.geom(name)
-        if geom is not None:
-            geom.contype = 0
-            geom.conaffinity = 0
-    for pair in list(spec.pairs):
-        if pair.geomname1 in disabled_names or pair.geomname2 in disabled_names:
-            spec.delete(pair)
-    return spec
+    names = [base_name + suffix for base_name in COARSE_COLLISION_DISABLED_GEOM_BASENAMES for suffix in _ARM_SIDE_SUFFIXES]
+    return disable_collisions(spec, geoms=[re.escape(name) for name in names])
 
 
 def build_spec(

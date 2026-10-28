@@ -4,6 +4,7 @@ from typing import TYPE_CHECKING
 
 from myo_sim.fragments import FragmentInfo as FragmentInfo
 from myo_sim.fragments import FragmentRegistry as FragmentRegistry
+from myo_sim.postprocess import disable_collisions as disable_collisions
 
 if TYPE_CHECKING:
     import mujoco
