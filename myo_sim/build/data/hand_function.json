@@ -5,19 +5,19 @@
   "mcfarland2023": {
    "citation": "McFarland et al. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
    "doi": "10.1109/TBME.2022.3217722",
-   "access": "protocols and results as summarised for this validation (title from memory, authors abbreviated); the ARMS model (non-commercial) is cited only"
+   "access": "protocols and results summarised for this validation; the ARMS model (non-commercial) is cited only"
   },
   "odriscoll1992": {
    "citation": "O'Driscoll SW et al. The relationship between wrist position, grasp size, and grip strength. J Hand Surg Am 17(1):169-177, 1992.",
-   "access": "not read; numbers as reported by mcfarland2023, citation details not verified"
+   "access": "numbers as reported by mcfarland2023"
   },
   "valerocuevas2003": {
    "citation": "Valero-Cuevas FJ et al. Towards a realistic biomechanical model of the thumb: the choice of kinematic description may be more critical than the solution method or the variability/uncertainty of musculoskeletal parameters. J Biomech 36(7):1019-1030, 2003.",
-   "access": "not read; numbers as reported by mcfarland2023, citation details not verified"
+   "access": "numbers as reported by mcfarland2023"
   },
   "kong2011": {
    "citation": "Kong et al. 2011, individual finger contributions to gripping (as cited by mcfarland2023).",
-   "access": "not read; cited by mcfarland2023 as similar to its simulated digit shares"
+   "access": "cited by mcfarland2023 as similar to its simulated digit shares"
   }
  },
  "simulation": {

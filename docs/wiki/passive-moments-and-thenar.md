@@ -62,7 +62,8 @@ range. Muscles and springs therefore do not count the same moment twice.
 RMS of the total model moment (muscles + springs) against the source curve over the
 source's range (N m). "Muscles only" is the model without springs. "Before" are the
 springs of the earlier version, fitted without subtracting the thenar muscles or, for the
-wrist and Knutson rows, any muscle.
+wrist and Knutson rows, any muscle; for the index MCP, "Before" is the residual fit with the old
+RI2 path (see below).
 
 | Row | Status | Source | Muscles subtracted | Segments (+/-) | Source peak | Muscles only | Before | After |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -73,7 +74,7 @@ wrist and Knutson rows, any muscle.
 | thumb CMC abduction | measured | Domalain 2010 | all | 2+1 | 1.384 | 0.338 | 0.338 | 0.131 |
 | thumb MP flexion | assumed | Barry 2018 (= index MCP, Kamper 2002) | all | 1+1 | 0.061 | 0.027 | 0.0229 | 0.0223 |
 | thumb IP flexion | assumed | Barry 2018 (= index PIP, Kamper 2002) | all | 4+4 | 0.052 | 0.038 | 0.0006 | 0.0006 |
-| index MCP flexion | measured | Knutson 2000, intrinsic | RI2, LU_RB2, UI_UB2 | 1+1 | 0.040 | 0.027 | 0.0228 | 0.0128 |
+| index MCP flexion | measured | Knutson 2000, intrinsic | RI2, LU_RB2, UI_UB2 | 1+1 | 0.040 | 0.010 | 0.0128 | 0.0003 |
 | index PIP flexion | measured | Kamper 2002 | all | 4+4 | 0.052 | 0.031 | 0.0011 | 0.0011 |
 | index DIP flexion | measured | Kamper 2002 | all | 4+0 | 0.080 | 0.057 | 0.0032 | 0.0032 |
 | MCP 3-5 flexion | assumed | index curve (Knutson 2000) | that digit's RI, LU_RB, UI_UB | 1+1 | 0.040 | 0.010 | 0.0004 | 0.0004 |
@@ -86,7 +87,6 @@ What remains is muscle excess that a restoring spring cannot remove:
 - Thumb MP: FPB and AdP alone give up to 0.091 N m against a 0.061 N m peak.
 - PIP 5: the digit-5 extensors give up to 0.166 N m against 0.052 N m. The flexion-side
   spring is dropped because the residual there pushes away from rest.
-- Index MCP: an RI2 path jump near 10-15 deg (see below).
 
 The two CMC rows now partly cancel AdP's passive adduction and extension moment. Their
 residual equilibrium moved toward the abduction / extension limits, because AdP's
@@ -117,16 +117,53 @@ Mappings and caveats (details in each row's `notes`):
   -0.25 N m at 90 deg. Kamper's simulation used the angle relative to the proximal joint;
   measured with that joint at neutral, which is what a single-joint spring reproduces.
   The DIP cubic crosses zero near -14 deg although the paper states 7 deg as the
-  zero-torque DIP angle; used as published. Damping B (0.81 / 1.05 / 1.42 x 1e-2 N m s/rad
-  for DIP / PIP / MCP) is recorded but not applied (MyoHand: 0.05 N m s/rad).
+  zero-torque DIP angle; used as published. Its damping B is applied (below).
 - **Li 2006** (index PIP, MCP 0 / 60 deg): kept as a validation target in the PIP row.
 - **Assumed rows** are transfers, not measurements of those joints: Barry et al. 2018 set
   the thumb MCP / IP equal to the index MCP / PIP; McFarland et al. 2023 scaled the index
   PIP/DIP curves for digits 3-5 (scale factors not available, so transferred unscaled).
-- Model issues found on the way: an RI2 path jump between 10 and 15 deg MCP flexion; no
-  MCP hyperextension (range starts at 0 deg; measured passive extension reaches -65 deg,
+- Model issues found on the way: an RI2 path jump between 10 and 15 deg MCP flexion (fixed,
+  below); no MCP hyperextension (range starts at 0 deg; measured passive extension reaches -65 deg,
   Binder-Markey 2021 data); the thumb muscles at the MP joint and the digit-5 extensors at
   PIP 5 exceed the transferred totals, and AdP exceeds Domalain's CMC totals (see above).
+
+## Finger joint damping
+
+Kamper et al. 2002 (Table 2) measured the damping B of the index MCP, PIP and DIP: 0.0142,
+0.0105 and 0.0081 N m s/rad. MyoHand's finger joints had the class damping of 0.05 N m s/rad,
+so against passive moments of a few N cm the fingers settled over seconds and lagged a wrist
+moving at 20 deg/s. Each finger flexion row now has a `damping` entry (value, source, status,
+previous value): measured for the index, transferred unchanged to digits 3-5 (status
+`assumed`, as for their stiffness). `fit_passive_moments.py` writes these values as the
+`damping` attribute of the twelve finger flexion joints in `myoarm_r_chain.xml`; every other
+joint keeps its class damping. The thumb keeps 0.05: Domalain 2010 reports static moments only
+and no thumb MP / IP damping was measured, so its rows keep the Kamper index values under
+`damping_reference`, not applied.
+
+At the 2 ms Euler step with the class armature (1e-4) these values are stable: 6 s
+random-excitation rollouts of `myohand_r` and `myoarm_r` stay finite, with the same rate of
+step-to-step velocity reversals as with 0.05 N m s/rad, and relaxed hands settle. This changes
+the dynamics of every downstream model with a hand.
+
+## RI2 path
+
+RI2's insertion (`RI2-P3_r`) lies on the surface of `2ndmcp_ellipsoid_wrap` at MCP 0 deg and
+inside it from about 10 deg flexion. MuJoCo skips a wrap whose end point is inside the
+cylinder, so the path snapped to the straight line and its length dropped by 7.1 mm between
+MCP 10 and 15 deg (and by up to 10 mm across MCP abduction). Below the jump the sidesite,
+which projects onto the dorsal-distal side of the cylinder, forced a dorsal wrap: an MCP
+extension moment arm, and a length of up to 50 mm against a `lengthrange` of 31.4-42.4 mm,
+so RI2's passive force held the index MCP near 7 deg. RI2 now runs through its three sites
+without that wrap, and the unused sidesite is gone. The path is continuous, its length
+(31.4-42.1 mm) lies within the unchanged `lengthrange` (so slack and optimal fibre length are
+unchanged), and its MCP moment arm is flexor (3-8 mm) throughout.
+
+A scan of every hand and wrist muscle's length against each crossed joint (four
+random-background sweeps of every joint) found no other jump above 0.2 mm. EDC2, EDC4 and
+EDC5 show steps of 0.15-0.22 mm against wrist deviation where their torus wraps engage; these
+torus wraps have their sidesite at the wrap centre, which MuJoCo treats as an inside wrap, a
+different mechanism, and they are left as they are. The same wraps account for the largest
+CPU / mujoco-warp differences in muscle length (below 0.5 mm here, larger on dev).
 
 ## Thenar muscles (`build/data/thenar_muscles.json`)
 
