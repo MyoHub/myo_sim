@@ -18,6 +18,9 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
+| `test_passive_thenar.py` | Passive joint moments and thenar muscles: generated XML blocks equal what the scripts write from the JSON, chain sites match the table, every applied row and the thenar muscles on myofullbody / torso_arms / hands / arm_r, both arms from the right-arm files, finger damping as tabled on both hands, springs plus muscles against Formica's wrist stiffness, CPU vs mujoco-warp (with joint velocities), left/right symmetry, relaxed settling, rows refit from their sources (springs never worsen the total) | After arm tendon/muscle/chain, `build/hand.py`, `build/hand_data.py`, `scripts/fit_passive_moments.py` or `scripts/generate_thenar_muscles.py` changes |
+| `test_hand_pinch.py` | Lateral pinch after McFarland et al. 2023 (`scripts/validate_hand_function.py`, `build/data/hand_function.json`): force in the in vivo band under the off-axis limit, MuJoCo static check, none without the thenar muscles, posture mapping; skipped without the thenar muscles | After thumb muscle, tendon or chain changes |
+| `test_hand_tenodesis.py` | Passive tenodesis after McFarland et al. 2023: trial A range of motion, direction, PIP / DIP, spread, trial B release, two negative controls; runs only with the fitted extrinsic muscles (`muscle_passive.json`) and springs fitted on them, read from the data | After hand muscle, tendon, spring, damping or chain changes |
 
 ## Fast Gate (Run Before Every PR)
 

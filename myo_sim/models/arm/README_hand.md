@@ -7,7 +7,7 @@ MyoHand is a MuJoCo musculoskeletal model of the right wrist and hand, derived f
 | Property | Value |
 |---|---|
 | Degrees of freedom | 23 |
-| Actuators (muscles) | 39 |
+| Actuators (muscles) | 42 (39 + thenar AdP, FPB, APB) |
 | Body segments | radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1-5), proximal/middle/distal phalanges (digits 2-5), thumb phalanges |
 | Primary joints | forearm pronation/supination, wrist flexion/deviation, thumb CMC/MCP/IP, finger MCP/PIP/DIP (digits 2-5) |
 
@@ -36,6 +36,8 @@ None currently tracked.
 - Contact properties optimized for contact-rich behaviors.
 
 ## Changelog
+
+**2026-10-28** — Finger MCP, PIP and DIP damping set to Kamper et al. 2002 (0.0142, 0.0105, 0.0081 N m s/rad; was 0.05), and RI2 routed without the second-metacarpal wrap its insertion entered (its length jumped by 7 mm near 10 deg MCP flexion). Both change the dynamics of every model with a hand. See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-06-17** — Moved the hand README under the arm model folder and refreshed it to the standard model README format.
 

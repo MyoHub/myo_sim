@@ -1,0 +1,229 @@
+{
+  "format": "myo_sim.thenar_muscles/2",
+  "description": "Thenar muscles missing from MyoHand, added on its bodies. Sites (right-hand body frames; the left hand mirrors z, as myo_sim mirrors the arm) from MUSIC (MIT); architecture (PCSA, optimal fibre length, pennation) from Jacobson et al. 1992 Table I (n = 9 cadaver hands, means); peak force = PCSA x specific tension, with the specific tension MyoHand implies for the thumb muscles Jacobson also measured (below). All values SI except PCSA (cm2) and angles (deg). scales_with / reference_segment tell a personalisation pipeline how to rescale (provenance metadata for later subject scaling). The model itself is the XML: sites in myoarm_r_chain.xml, tendons and muscles in the generated blocks of myoarm_r_tendon.xml and myoarm_r_muscle.xml written from this table by scripts/generate_thenar_muscles.py.",
+  "sources": {
+    "music2026": {
+      "citation": "Xu P, Ye Y, Sun S, Ding Y, Schumann E, Liu CK. MUSIC: Learning muscle-driven dexterous hand control. ACM Trans Graph 45(4), 2026 (arXiv:2604.23886).",
+      "doi": "10.1145/3811402",
+      "code": "github.com/xupei0610/music (MIT licence), commit d92783b, right_hand_body.xml / right_hand_tendons.xml / right_hand_muscles.xml",
+      "provenance": "MUSIC Appendix A: peak force and optimal fibre length from prior literature (Holzbaur et al. 2005; Del Santo et al. 2007), scaled as the other MyoHand muscles; attachments from anatomical atlases (Rohen et al. 2006; Standring et al. 2005); straight-line paths with via points."
+    },
+    "holzbaur2005": {
+      "citation": "Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005.",
+      "doi": "10.1007/s10439-005-3320-7",
+      "note": "Origin of the MyoHand thumb kinematics and extrinsic thumb muscles; it has no intrinsic hand muscles, so thumb and index moments were not expected to be accurate."
+    },
+    "barry2018": {
+      "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
+      "doi": "10.1016/j.jbiomech.2018.06.017",
+      "access": "paper closed; OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)",
+      "note": "Eq. (1): tendon slack length = (L_MT with all crossed joints at 0 - L_fo cos(alpha)) / 1.033."
+    },
+    "mcfarland2023": {
+      "citation": "McFarland DC, Binder-Markey BI, Nichols JA, Wohlman SJ, de Bruin M, Murray WM. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
+      "doi": "10.1109/TBME.2022.3217722",
+      "access": "paper open (bioRxiv 10.1101/2021.12.28.474357, PMC10650739); passive parameters in supplement S7 and the ARMS model (simtk.org/projects/arms_hand_model: BSD-3 for non-commercial use only, login required)"
+    },
+    "jacobson1992": {
+      "citation": "Jacobson MD, Raab R, Fazeli BM, Abrams RA, Botte MJ, Lieber RL. Architectural design of the human intrinsic hand muscles. J Hand Surg Am 17(5):804-809, 1992.",
+      "doi": "10.1016/0363-5023(92)90446-V",
+      "access": "closed; Table I verified visually from the PDF",
+      "note": "The text quotes AddP PCSA as 1.10 cm2; Table I gives 1.94 +- 0.39 cm2 (used)."
+    },
+    "stamenkovic2014": {
+      "citation": "Stamenkovic A, Munro BJ, Peoples GE. Physiological cross-sectional area of the oblique head of the adductor pollicis is greater than its transverse counterpart: implications for functional testing. Muscle Nerve 49(3):405-412, 2014.",
+      "doi": "10.1002/mus.23933",
+      "access": "closed; Table 1 verified visually from the PDF"
+    }
+  },
+  "preferred_replacement": "Barry et al. 2018 model paths (MIT) for AdP (two heads) once available.",
+  "template_muscle": "OP",
+  "muscles": [
+    {
+      "name": "AdP",
+      "anatomy": "adductor pollicis",
+      "source": "music2026",
+      "sites": [
+        [
+          "thirdmc",
+          [
+            0.004,
+            0.012,
+            -0.009
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            0.0,
+            -0.012,
+            0.0
+          ]
+        ]
+      ],
+      "source_lengthrange_m": [
+        0.04,
+        0.06
+      ],
+      "music_force_N": 100.0,
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "AddP",
+      "pcsa_cm2": {
+        "value": 1.94,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 167.5,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "1.94 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.034,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 17.3,
+        "scales_with": "none"
+      },
+      "alternative": {
+        "source": "stamenkovic2014",
+        "transverse_head": {
+          "pcsa_cm2": 1.18,
+          "optimal_fascicle_length_m": 0.02862,
+          "pennation_deg": 15.73
+        },
+        "oblique_head": {
+          "pcsa_cm2": 2.01,
+          "optimal_fascicle_length_m": 0.02389,
+          "pennation_deg": 15.77
+        },
+        "note": "Two heads (n = 10, combined PCSA 3.19 cm2); not used because the MUSIC path is a single adductor pollicis."
+      },
+      "path_note": "MUSIC's straight path from the third metacarpal gives ~47 mm muscle-tendon excursion over MyoHand's thumb range against 34 mm fibres, so with the architecture length range the normalised fibre length spans ~0.2-1.55 (no active force when short, strong passive force when long). Barry 2018 used two heads and wrapping surfaces; a better path needs their model."
+    },
+    {
+      "name": "FPB",
+      "anatomy": "flexor pollicis brevis",
+      "source": "music2026",
+      "sites": [
+        [
+          "trapezium",
+          [
+            0.0,
+            0.0,
+            -0.006
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            -0.008,
+            0.0,
+            -0.007
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            0.002,
+            -0.011,
+            -0.007
+          ]
+        ]
+      ],
+      "source_lengthrange_m": [
+        0.06,
+        0.08
+      ],
+      "music_force_N": 80.0,
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "FPB",
+      "pcsa_cm2": {
+        "value": 0.66,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 57.0,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.66 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0415,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 6.2,
+        "scales_with": "none"
+      }
+    },
+    {
+      "name": "APB",
+      "anatomy": "abductor pollicis brevis",
+      "source": "music2026",
+      "sites": [
+        [
+          "trapezium",
+          [
+            0.0,
+            0.0,
+            -0.006
+          ]
+        ],
+        [
+          "firstmc",
+          [
+            0.015,
+            -0.022,
+            -0.02
+          ]
+        ],
+        [
+          "proximal_thumb",
+          [
+            0.004,
+            -0.002,
+            -0.006
+          ]
+        ]
+      ],
+      "source_lengthrange_m": [
+        0.055,
+        0.075
+      ],
+      "music_force_N": 42.7,
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "AbPB",
+      "pcsa_cm2": {
+        "value": 0.68,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 58.7,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.68 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0416,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 4.6,
+        "scales_with": "none"
+      }
+    }
+  ],
+  "joint_name_note": "MUSIC's thumb CMC joints have the same axes as MyoHand's but swapped names: MUSIC cmc_flexion = myo_sim cmc_abduction and vice versa. Sites are body-relative, so the geometry transfers unchanged (lengths and moment arms match MUSIC to 1e-11 m with the names mapped).",
+  "specific_tension": {
+    "value_N_per_cm2": 86.3,
+    "derivation": "least squares F = sigma x PCSA over MyoHand's OP (180 N), EPB (46.0 N) and APL (116.7 N) with Jacobson 1992 PCSA 1.02, 0.47, 1.93 cm2; per muscle 176.5, 97.9, 60.5 N/cm2, so MyoHand implies no single value and the fitted one is a compromise (forces scale linearly with it)."
+  }
+}
