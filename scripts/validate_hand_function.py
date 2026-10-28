@@ -484,14 +484,17 @@ def grip_forces(gs: GripScene, data: mujoco.MjData) -> dict[str, Any]:
     return {"segments": out, "digits": grip, "grip": sum(grip.values()), "penetration_m": depth}
 
 
-def grip_evaluate(gs: GripScene, levels: dict[str, float], table: dict[str, Any]) -> dict[str, Any]:
-    """Simulate ``eval_s`` from the closed hand at *levels*; forces and lock moments averaged over ``average_s``."""
+def grip_evaluate(
+    gs: GripScene, levels: dict[str, float], table: dict[str, Any], duration_s: float | None = None
+) -> dict[str, Any]:
+    """Simulate ``eval_s`` (or *duration_s*) from the closed hand at *levels*; forces and lock moments averaged over
+    ``average_s``."""
     p = table["grip"]
     scene, m = gs.scene, gs.scene.model
     data = mujoco.MjData(m)
     mujoco.mj_copyData(data, m, gs.start)
     set_activation(scene, data, levels)
-    n = int(round(p["eval_s"] / m.opt.timestep))
+    n = int(round((p["eval_s"] if duration_s is None else duration_s) / m.opt.timestep))
     k = int(round(p["average_s"] / m.opt.timestep))
     samples = []
     for i in range(n):
@@ -516,6 +519,19 @@ def grip_evaluate(gs: GripScene, levels: dict[str, float], table: dict[str, Any]
     return mean
 
 
+def grip_settled(gs: GripScene, levels: dict[str, float], table: dict[str, Any]) -> dict[str, Any]:
+    """The grip at the same *levels* after ``settled.settle_s``, reported next to the ``eval_s`` value (not tested).
+
+    Returns the force, digit forces and shares, wrist-lock moment and penetration at ``settle_s``, and the relative
+    change of the grip from ``settled.check_s`` to ``settle_s`` (how far from settled it still is).
+    """
+    s = table["grip"]["settled"]
+    check = grip_evaluate(gs, levels, table, s["check_s"])["grip"]
+    late = grip_evaluate(gs, levels, table, s["settle_s"])
+    keys = ("grip", "digits", "share", "wrist_lock_Nm", "penetration_m")
+    return {k: late[k] for k in keys} | {"change_from_check": late["grip"] / check - 1.0 if check > 0 else 0.0}
+
+
 def _wrist_columns(gs: GripScene, names: tuple[str, ...]) -> np.ndarray:
     """Wrist moment (anatomical sign) per unit activation of each muscle in *names* (2 x n).
 
@@ -537,13 +553,14 @@ def _wrist_columns(gs: GripScene, names: tuple[str, ...]) -> np.ndarray:
 
 
 def optimise_grip(gs: GripScene, table: dict[str, Any], balance: bool = True) -> dict[str, Any]:
-    """Maximise the grip over the free activation levels (paper: 15 levels in [0, 1]).
+    """Maximise the grip over the free activation levels (paper: 15 levels in [0, 1]); report it settled too.
 
     The wrist and thumb are held, so the wrist-only and extrinsic thumb muscles change nothing but the
     moment the wrist lock supplies. Their levels therefore come from a linear program that minimises that
     moment (L1), and the remaining levels (shared FDS, FDP, EDC; EIP; EDM) are optimised by bounded
     Powell (several deterministic starts) on grip - weight x residual lock moment, each evaluation a ``eval_s`` simulation. With
-    *balance* False the lock may supply any moment (wrist rigidly held).
+    *balance* False the lock may supply any moment (wrist rigidly held). The optimum's grip at the same levels
+    after ``settled.settle_s`` is added under ``settled`` (``grip_settled``); the optimisation uses ``eval_s`` only.
     """
     from scipy.optimize import linprog, minimize
 
@@ -596,6 +613,7 @@ def optimise_grip(gs: GripScene, table: dict[str, Any], balance: bool = True) ->
     }
     final["residual_Nm"] = r["residual_Nm"]
     final["evaluations"] = len(cache)
+    final["settled"] = grip_settled(gs, levels, table)
     return final
 
 
@@ -785,6 +803,16 @@ def _fmt(results: dict[str, Any], table: dict[str, Any]) -> str:
             lines.append(
                 "grip change vs self-selected (balanced): " + ", ".join(f"{k} {100 * v:+.0f} %" for k, v in change.items())
             )
+            settled = {k: v["balanced"].get("settled", {}).get("grip") for k, v in results["grip"].items()}
+            if all(settled.values()):
+                lines.append(
+                    "  settled: "
+                    + ", ".join(
+                        f"{k} {100 * (v / settled['self_selected'] - 1.0):+.0f} %"
+                        for k, v in settled.items()
+                        if k != "self_selected"
+                    )
+                )
         for posture, modes in results["grip"].items():
             for mode, r in modes.items():
                 share = " ".join(f"{d}:{100 * r['share'][d]:.1f}%" for d in DIGITS)
@@ -793,6 +821,14 @@ def _fmt(results: dict[str, Any], table: dict[str, Any]) -> str:
                     f"grip {posture} {mode}: {r['grip']:.1f} N, shares {share}, residual {r.get('residual_Nm', 0):.3f} N m, "
                     f"pen {1000 * r['penetration_m']:.2f} mm, levels {json.dumps({k: round(v, 3) for k, v in r['levels'].items()})}, FL {fl}"
                 )
+                if "settled" in r:
+                    st = r["settled"]
+                    share = " ".join(f"{d}:{100 * st['share'][d]:.1f}%" for d in DIGITS)
+                    lines.append(
+                        f"  settled ({table['grip']['settled']['settle_s']:g} s, same levels): {st['grip']:.1f} N, shares {share}, "
+                        f"change since {table['grip']['settled']['check_s']:g} s {100 * st['change_from_check']:+.1f} %, "
+                        f"wrist lock {max(abs(v) for v in st['wrist_lock_Nm']):.3f} N m"
+                    )
     if "pinch" in results:
         r = results["pinch"]
         if not r["feasible"]:

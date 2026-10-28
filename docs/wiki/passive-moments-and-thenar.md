@@ -59,6 +59,15 @@ range. Muscles and springs therefore do not count the same moment twice.
 - A side, or a row, whose residual is nowhere restoring gets no spring. `fit.spring`
   then records why, as for pro/supination.
 
+**Refit triggers.** The springs, and the finger damping below, are residuals over the
+model's own muscles: they supply what the muscles do not. Refit them
+(`fit_passive_moments.py`) whenever the muscle model changes, for example compliant tendons
+(the tendon stretch moves each fibre's operating point), different passive force-length
+curves or a muscle model whose fibres add damping of their own, and whenever the muscles
+crossing a joint change (paths, parameters, added or removed muscles). The damping is
+applied in full today because the rigid-tendon muscles add none at act = 0; with fibre
+damping it becomes the measured value minus the muscles' share.
+
 RMS of the total model moment (muscles + springs) against the source curve over the
 source's range (N m). "Muscles only" is the model without springs. "Before" are the
 springs of the earlier version, fitted without subtracting the thenar muscles or, for the

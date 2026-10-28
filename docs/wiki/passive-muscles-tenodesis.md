@@ -137,6 +137,15 @@ window for FDS3, FDS5, FDP2, FDP3 and FDP4, so these flexors lose force with the
 force in a fist. Compliant tendons would change these operating ranges, so the windows and
 the slack-length fit are left as they are until the tendons are compliant.
 
+The fitted values are for MuJoCo's rigid-tendon muscle: its active and passive force-length
+curves, with the whole muscle-tendon excursion in the fibres. With compliant tendons the fit
+is redone rather than carried over. It then fits the slack length plus a tendon or passive
+parameter (tendon strain at peak force, or a passive-force scale or strain) with each muscle
+at its fibre-tendon force equilibrium in every fitted posture, and the slack lengths here
+serve as start values. `fpmax`, a scale on MuJoCo's passive curve, has no counterpart in
+common Hill-type formulations (e.g. De Groote et al. 2016, Ann Biomed Eng 44:2922), so it
+would not carry over. The table records this as `muscle_model_note`.
+
 Model drift: dev's MyoHub/myo_sim#135 (after #123 branched) moved the EDC torus wraps. On
 dev with #123 and this fit, EDC3's factor in full extension with the wrist extended 30 deg is
 0.498 instead of 0.5, and the wrist row's recorded error differs by 2e-4 N m; with the two wrap

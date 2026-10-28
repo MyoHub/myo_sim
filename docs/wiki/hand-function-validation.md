@@ -55,6 +55,11 @@ wrist motion is a penalty on the moment the wrist lock supplies. The ten wrist a
 levels come from a linear program, the other five from bounded Powell with five starts. "Held" runs
 drop the penalty.
 
+**Settled grip.** Next to every optimum the script reports the grip at the same levels after 2 s
+from the same closed hand (`grip.settled` in the table; force and digit shares averaged over the
+last 0.05 s), with the change of the grip between 1 and 2 s as a check on how settled it is. It is
+reported only: the optimisation, the tolerances and `tests/test_hand_grip.py` use the paper's 0.15 s.
+
 **Lateral pinch.** Wrist 0/0, fingers locked. Thumb: CMC 15 deg extension and 20 deg adduction, MP
 20 deg and IP 40 deg flexion. Static on the four thumb DOFs: the tip presses on a sensor, and the tip
 force along the palmar normal of the distal phalanx is maximised with the off-axis part at most 17 %,
@@ -80,6 +85,10 @@ muscles. #2 alone carries #123.
 | Shares 2 / 3 / 4 / 5 (%) | 23.3 / 42.2 / 23.0 / 11.5 | 30 / 37 / 25 / 8 | 30 / 38 / 20 / 12 | 52 / 36 / 6 / 6 | 48 / 34 / 12 / 6 |
 | Grip, neutral / flexed wrist | -41 % / -46 % | -27 % / -65 % | -44 % / -74 % | -26 % / -66 % | -22 % / -65 % |
 | Grip, wrist held (N) | | 356 | 395 | 315 | 309 |
+| Settled grip, self-selected (N); change 1-2 s | | 259; -6 % | 301; +3 % | 300; +2 % | 261; +0 % |
+| Settled shares 2 / 3 / 4 / 5 (%) | | 37 / 42 / 12 / 9 | 47 / 35 / 4 / 15 | 52 / 35 / 6 / 7 | 54 / 38 / 0 / 8 |
+| Settled grip, neutral / flexed wrist | | -18 % / -61 % | -45 % / -67 % | -36 % / -67 % | -33 % / -64 % |
+| Settled grip, wrist held (N) | | 337 | 301 | 322 | 323 |
 | Lateral pinch (N) | 66.3 (in vivo 51.9 +- 20.4) | 38.7 | none | 39.5 | none |
 
 "none" for the pinch: no thumb force meets the 17 % off-axis limit without AdP, FPB and APB (best palmar
@@ -107,12 +116,15 @@ passes wherever the thenar muscles are present.
 ## Known issues
 
 - **The 0.15 s grip is not settled.** At fixed activation levels the grip keeps changing well after
-  0.15 s, in every model: at #2's optimum, #2 alone goes from 374 N at 0.15 s to 293-301 N at 1-2 s, and
-  the integration from 339 N to about 295 N. Settled, all models give 290-305 N with digit 4 at 4-6 % of
-  the grip, below the share band. The finger damping changes the transient, not the settled force: at
-  the same levels the integration with and without it converges to the same 297 N. The protocol keeps
-  the paper's short evaluation for now; a settled protocol (about 1 s per evaluation, eight times the
-  cost) would move every grip result.
+  0.15 s, in every model, so the script reports the settled grip next to it (rows "Settled" above, each
+  at the model's own 0.15 s optimum). Self-selected, the grip settles at 259-301 N with digit 4 at 0-12 %
+  of the grip, mostly below the share band; the integration drops from 294 to 259 N and #2 alone from
+  374 to 301 N. Some optima are still moving at 2 s (the neutral-wrist optima of #2 alone and dev by
+  13-19 % between 1 and 2 s), and the levels balanced for the 0.15 s state leave up to 0.9 N m on the
+  wrist lock once settled. The finger damping changes the transient, not the settled force: at #2's
+  levels the integration with and without it converges to the same 297 N. The test and the tolerances
+  keep the paper's 0.15 s evaluation; optimising the settled grip (about 2 s per evaluation, over ten
+  times the cost) would move every grip result.
 - **Little-finger release.** On the integration the digit-5 MCP extends 27 deg in trial B (30 deg on #2
   alone, where the release bound was found): the digit-5 joint springs of the integration hold it back.
 - **Active force-length windows.** With #123's per-muscle windows, FDS4 and FDP5 (`lmin` 0.95) lose all

@@ -134,6 +134,11 @@
   },
   "eval_s": 0.15,
   "average_s": 0.05,
+  "settled": {
+   "settle_s": 2.0,
+   "check_s": 1.0,
+   "note": "Reported next to the eval_s grip, not tested: the optimum's levels held for settle_s from the same closed hand (force and lock moments averaged over the last average_s, as for eval_s), with the relative change of the grip since check_s. The optimisation and the tolerances use the paper's eval_s; at fixed levels the grip keeps changing well after it (see the wiki page)."
+  },
   "activation": "Paper: 12 independent levels (wrist muscles, extrinsic thumb, EIP, EDM), one shared level each for the FDS, FDP and EDC slips, the finger intrinsics at 1 (ARMS: 14; MyoHand: 12, RI/LU_RB/UI_UB of digits 2-5), the thumb intrinsics at 0; activations set directly (steady state). Grip: contact force of the proximal and middle phalanges on the dynamometer, perpendicular to its axis (sum of magnitudes); distal contacts act but are not counted.",
   "balance_weight_N_per_Nm": 1000.0,
   "optimiser_restarts": 4,
