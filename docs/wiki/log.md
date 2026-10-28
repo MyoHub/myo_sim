@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-28 — Refit triggers for the springs and finger damping; settled grip reported next to the 0.15 s grip
+Changed: `docs/wiki/passive-moments-and-thenar.md`, `scripts/validate_hand_function.py`, `myo_sim/build/data/hand_function.json`, `docs/wiki/hand-function-validation.md`
+Why: the springs and the finger damping are residuals over the model's muscles, so a change of the muscle model or of the muscles crossing a joint requires a refit. The 0.15 s grip of the paper is not settled; the script now also reports the grip at the same levels after 2 s, while the optimisation, tolerances and test stay on 0.15 s (the script and table are identical in Vittorio-Caggiano/myo_sim#2).
+
 ## 2026-10-28 — RI2 path, Kamper finger damping, pinch and tenodesis validation after McFarland et al. 2023
 Changed: `myo_sim/models/arm/assets/myoarm_r_tendon.xml`, `myoarm_r_chain.xml`, `myo_sim/build/data/passive_joint_moments.json`, `scripts/fit_passive_moments.py`, `tests/test_passive_thenar.py`, `scripts/validate_hand_function.py`, `myo_sim/build/data/hand_function.json`, `myo_sim/build/hand_function.py`, `tests/test_hand_pinch.py`, `tests/test_hand_tenodesis.py`, `docs/wiki/passive-moments-and-thenar.md`, `docs/wiki/hand-function-validation.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`, `myo_sim/models/arm/README.md`, `myo_sim/models/arm/README_hand.md`
 Why: RI2's path jumped by 7 mm because its insertion entered a wrap cylinder; finger damping was three to six times Kamper's measurement; the McFarland et al. 2023 validation found both. The pinch and tenodesis protocols and tests come with it (the script, table and loader are identical in Vittorio-Caggiano/myo_sim#2).
