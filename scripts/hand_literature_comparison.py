@@ -178,6 +178,18 @@ def _arms(model: mujoco.MjModel, tendon: str, posture: dict[str, float], joints:
     return [(length({j: posture.get(j, 0.0) + h}) - length({j: posture.get(j, 0.0) - h})) / (2 * h) * 1e3 for j in joints]
 
 
+def cmc45(model: mujoco.MjModel) -> dict[str, Any]:
+    """CMC4/5 arcs, flexion limits and coupling ratio, if the model has the joints."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "cmc4_flexion_r") < 0:
+        return {}
+    ranges = [np.degrees(model.jnt_range[model.joint(f"cmc{d}_flexion_r").id]) for d in (4, 5)]
+    return {
+        "cmc45_arc": [float(r[1] - r[0]) for r in ranges],
+        "cmc45_active_flexion": [float(r[1]) for r in ranges],
+        "cmc45_coupling": float(model.eq_data[model.equality("cmc45_coupling_r").id][1]),
+    }
+
+
 def intrinsic_moment_arms(model: mujoco.MjModel) -> dict[str, Any]:
     """Thumb intrinsic moment arms at the Smutz 1998 neutral and the first dorsal interosseous at MCP2 (mm)."""
     out: dict[str, Any] = {}
@@ -216,7 +228,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
     model = myo_sim.load_model(model_name)
-    out: dict[str, Any] = {"pip_flexion_limit": pip_limits(model)} | intrinsic_moment_arms(model)
+    out: dict[str, Any] = {"pip_flexion_limit": pip_limits(model)} | cmc45(model) | intrinsic_moment_arms(model)
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

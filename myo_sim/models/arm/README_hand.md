@@ -9,7 +9,7 @@ MyoHand is a MuJoCo musculoskeletal model of the right wrist and hand, derived f
 | Degrees of freedom | 23 |
 | Actuators (muscles) | 45 (39 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s; RI2 is DI1d) |
 | Body segments | radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1-5), proximal/middle/distal phalanges (digits 2-5), thumb phalanges |
-| Primary joints | forearm pronation/supination, wrist flexion/deviation, thumb CMC/MCP/IP, finger MCP/PIP/DIP (digits 2-5) |
+| Primary joints | forearm pronation/supination, wrist flexion/deviation, thumb CMC/MCP/IP, CMC4/5 flexion (coupled), finger MCP/PIP/DIP (digits 2-5) |
 
 ## Reference model
 
@@ -36,6 +36,8 @@ None currently tracked.
 - Contact properties optimized for contact-rich behaviors.
 
 ## Changelog
+
+**2026-10-29** — Fourth and fifth carpometacarpal joints `cmc4_flexion_r` / `cmc5_flexion_r`, coupled CMC5 = 2.06 x CMC4, with end-range springs; five sites moved to the bone they belong to. See `docs/wiki/hand-cmc-joints.md`.
 
 **2026-10-29** — Thumb and first-dorsal-interosseous heads: `AdP` -> `AdPt` + `AdPo`, `FPB` -> `FPBs` + `FPBd`, `RI2` -> `DI1d` + `DI1s`; OP, APB, FPB and DI1 sites fitted to published moment arms, thumb intrinsic passive scales and springs refitted (+3 actuators per hand). See `docs/wiki/passive-moments-and-thenar.md`.
 

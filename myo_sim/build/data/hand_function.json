@@ -189,12 +189,13 @@
    "justification": "Grip within the experimental mean +- 1 SD (O'Driscoll 1992). Digit shares within 12 percentage points of the paper's (its own ARMS shares differ from Kong 2011 by several points). Neutral and flexed wrists each lose 20-80 % against the self-selected posture (paper 41 and 46 %), and the flexed loses at least as much as the neutral. With the balance penalty the wrist lock supplies at most 0.5 N m. Negative control: the flexors (FDS, FDP) at half their peak force must fall below the band."
   },
   "cached": {
-   "note": "Optimum found by scripts/validate_hand_function.py for each model; tests/test_hand_grip.py re-evaluates the entry whose fingerprint matches the model (actuator count, passive_* spring tendons present, damping of mcp2_flexion_r, fpmax of EDC3, palm pad thickness, fpmax of OP) and, with MYO_SIM_SLOW=1, re-optimises. The optimum depends on the model: the levels that balance the wrist of one leave a lock moment on the other.",
+   "note": "Optimum found by scripts/validate_hand_function.py for each model; tests/test_hand_grip.py re-evaluates the entry whose fingerprint matches the model (actuator and position counts, passive_* spring tendons present, damping of mcp2_flexion_r, fpmax of EDC3, palm pad thickness, fpmax of OP) and, with MYO_SIM_SLOW=1, re-optimises. The optimum depends on the model: the levels that balance the wrist of one leave a lock moment on the other.",
    "entries": [
     {
      "model": "Vittorio-Caggiano/myo_sim#2 alone (anatomical parameters of #123, fitted extrinsic slack lengths and fpmax, release step)",
      "fingerprint": {
       "nu": 63,
+      "nq": 38,
       "passive_springs": false,
       "mcp2_flexion_damping": 0.05,
       "edc3_fpmax": 0.0525,
@@ -226,6 +227,7 @@
      "model": "#123 + #2 + MyoHub/myo_sim#139 (thenar muscles, springs refitted on #2's muscles, RI2 path, Kamper finger damping)",
      "fingerprint": {
       "nu": 66,
+      "nq": 38,
       "passive_springs": true,
       "mcp2_flexion_damping": 0.0142,
       "edc3_fpmax": 0.0525,
@@ -257,6 +259,7 @@
      "model": "+ hand rebuild S1 (palmar fingertip pads, palm, thenar and hypothenar pads, hand self-contacts)",
      "fingerprint": {
       "nu": 66,
+      "nq": 38,
       "passive_springs": true,
       "mcp2_flexion_damping": 0.0142,
       "edc3_fpmax": 0.0525,
@@ -288,6 +291,7 @@
      "model": "+ hand rebuild S1b (PIP flexion limit 115 deg, palm pads refitted)",
      "fingerprint": {
       "nu": 66,
+      "nq": 38,
       "passive_springs": true,
       "mcp2_flexion_damping": 0.0142,
       "edc3_fpmax": 0.0525,
@@ -319,6 +323,7 @@
      "model": "+ hand rebuild S2 (thumb and first-dorsal-interosseous heads, intrinsic paths and passive scales fitted, springs refitted)",
      "fingerprint": {
       "nu": 69,
+      "nq": 38,
       "passive_springs": true,
       "mcp2_flexion_damping": 0.0142,
       "edc3_fpmax": 0.0525,
@@ -345,6 +350,38 @@
       "APL": 0.0
      },
      "grip_N": 334.8
+    },
+    {
+     "model": "+ hand rebuild S3 (CMC4/5 joints coupled 2.06, digit-5 flexor and interosseous sites moved, CMC springs)",
+     "fingerprint": {
+      "nu": 69,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003492
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9042,
+      "FDP": 0.6939,
+      "EDC": 0.9064,
+      "EIP": 0.9996,
+      "EDM": 0.0001,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.8987,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.4028,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 314.9
     }
    ]
   }

@@ -41,9 +41,10 @@ def hand_with_torso() -> mujoco.MjModel:
     return m
 
 
-def test_njnt_equals_23(hand_only, hand_with_torso):
-    assert hand_only.njnt == 23
-    assert hand_with_torso.njnt == 23
+def test_njnt_equals_25(hand_only, hand_with_torso):
+    # 23 joints of the static myohand from main plus CMC4 and CMC5.
+    assert hand_only.njnt == 25
+    assert hand_with_torso.njnt == 25
 
 
 def test_nu_equals_45(hand_only, hand_with_torso):

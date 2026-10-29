@@ -665,10 +665,7 @@
                                                     <site name="UI_UB3-P1_r" pos="0.0013 0.0064 -0.0095"/>
                                                     <!-- <site name="UI_UB3-P2_r" pos="-0.0077 -0.0271 -0.004"/> -->
                                                     <site name="UI_UB3-P2_r" pos="-0.0031 -0.0248 -0.0034"/>
-                                                    <site name="RI4-P1_r" pos="-0.0091 0.0054 -0.0108"/>
                                                     <site name="LU_RB4-P1_r" pos="-0.0091 0.0054 -0.0108"/>
-                                                    <site name="UI_UB4-P1_r" pos="-0.0091 0.0054 -0.0108"/>
-                                                    <site name="RI5-P1_r" pos="-0.0091 0.0054 -0.0108"/>
                                                     <site name="LU_RB5-P1_r" pos="-0.0091 0.0254 -0.0108"/>
                                                     <site name="UI_UB5-P1_r" pos="-0.0201 0.0254 -0.0158"/>
                                                     <site name="3rdmcp_ellipsoid_site_FDS3_side_r" pos="0.0015 -0.025 0.002"/>
@@ -747,6 +744,12 @@
 
                                                 <!-- RING FINGER -->
                                                 <body name="fourthmc_r" pos="-0.012046 -0.040519 0.003513">
+                                                    <!-- CMC joint: written by scripts/fit_cmc_joints.py from build/data/cmc_joints.json -->
+                                                    <joint name="cmc4_flexion_r" pos="0.002396 0.025745 -0.002052" axis="0.988559 -0.008704 0.150584" range="-0.087266 0.279253" damping="0.0142"/>
+                                                    <!-- Moved here from thirdmc_r (build/data/cmc_joints.json, site_moves) -->
+                                                    <site name="UI_UB4-P1_r" pos="0.003423 0.00668 -0.006936"/>
+                                                    <!-- Moved here from thirdmc_r (build/data/cmc_joints.json, site_moves) -->
+                                                    <site name="RI4-P1_r" pos="0.003423 0.00668 -0.006936"/>
                                                     <geom name="4mcski_r" class="myohand_coll" size="0.0095 0.026" euler="1.55 -.08 0" pos=".001 0.002 -.00"/>
                                                     <geom mesh="4mc_r" name="4mc_r" type="mesh"/>
                                                     <!-- <geom name="4thmcp_ellipsoid_wrap" pos="-0.00413111 -0.0311007 0.00480312" quat="0.562021 -0.225806 -0.785857 0.124787" class="myoarm_wrap" size="0.00604155"/> -->
@@ -760,9 +763,7 @@
                                                     <site name="RI4-P2_r" pos="0.0079 -0.0144 -0.0003"/>
                                                     <site name="LU_RB4-P2_r" pos="0.006 -0.0054 -0.0067"/>
                                                     <site name="UI_UB4-P2_r" pos="-0.006 -0.021 -0.006"/> -->
-                                                    <site name="FDS5-P4_r" pos="-0.0029 0.0085 -0.0121"/>
                                                     <site name="FDS4-P5_r" pos="0.002 -0.0138 -0.006"/>
-                                                    <site name="FDP5-P4_r" pos="-0.0069 0.0089 -0.0062"/>
                                                     <site name="FDP4-P5_r" pos="-0.0006 -0.0136 -0.0063"/>
                                                     <site name="EDC4-P4_r" pos="-0.0004 -0.0207 0.0095"/>
                                                     <site name="RI4-P2_r" pos="0.0079 -0.0144 -0.0003"/>
@@ -845,6 +846,14 @@
 
                                                 <!-- Little Finger -->
                                                 <body name="fifthmc_r" pos="-0.021896 -0.034683 -0.004218">
+                                                    <!-- CMC joint: written by scripts/fit_cmc_joints.py from build/data/cmc_joints.json -->
+                                                    <joint name="cmc5_flexion_r" pos="0.003835 0.022057 -6e-06" axis="0.964827 0.217961 0.146974" range="-0.179769 0.575959" damping="0.0142"/>
+                                                    <!-- Moved here from thirdmc_r (build/data/cmc_joints.json, site_moves) -->
+                                                    <site name="RI5-P1_r" pos="0.013273 0.000844 0.000795"/>
+                                                    <!-- Moved here from fourthmc_r (build/data/cmc_joints.json, site_moves) -->
+                                                    <site name="FDP5-P4_r" pos="0.00295 0.003064 0.001531"/>
+                                                    <!-- Moved here from fourthmc_r (build/data/cmc_joints.json, site_moves) -->
+                                                    <site name="FDS5-P4_r" pos="0.00695 0.002664 -0.004369"/>
                                                     <geom name="5mcskin_r" class="myohand_coll" size="0.0095 0.024" euler="1.6 -.13 0" pos=".001 0.002 -.001"/>
                                                     <geom name="hypothenar_pad_r" class="myohand_coll" type="ellipsoid" size="0.01 0.018 0.016839" pos="-0.001408 0.005 -0.00379" rgba="1 1 1 .8" quat="0 0.955345 0 0.295492"/>
                                                     <geom mesh="5mc_r" name="5mc_r" type="mesh"/>

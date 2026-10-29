@@ -49,9 +49,9 @@ class TestSims(unittest.TestCase):
 
 
 # The musclemimic layout (416 actuators) plus the hand rebuild's intrinsic muscles (thenar 3, thumb and
-# first-dorsal-interosseous heads 3; per hand).
+# first-dorsal-interosseous heads 3; per hand); joints: plus CMC4 and CMC5 per hand.
 MUSCLEMIMIC_FULLBODY_SPEC = {
-    "njnt": 123,
+    "njnt": 127,
     "nu": 428,
 }
 

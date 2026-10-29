@@ -75,6 +75,41 @@
       "short": "Schreuders et al. 2006",
       "citation": "Schreuders TAR, Selles RW, Roebroeck ME, Stam HJ. Strength measurements of the intrinsic hand muscles: a review of the development and evaluation of the Rotterdam Intrinsic Hand Myometer. J Hand Ther 19(4):393-402, 2006.",
       "note": "RIHM protocols: the sling sits at the PIP joint (p. 397)."
+    },
+    "elshennawy2001": {
+      "short": "El-Shennawy et al. 2001",
+      "citation": "El-Shennawy M, Nakamura K, Patterson RM, Viegas SF. Three-dimensional kinematic analysis of the second through fifth carpometacarpal joints. J Hand Surg Am 26(6):1030-1035, 2001.",
+      "doi": "10.1053/jhsu.2001.28761",
+      "note": "Five fresh-frozen arms; passive arcs relative to the hamate under 22 N on an intramedullary pin, other metacarpals pinned (Table 1)."
+    },
+    "buren2020": {
+      "short": "Büren et al. 2020",
+      "citation": "Büren C, Al Maktary A, Windolf J, Gehrmann SV. Metacarpal arc motion: comparison of different measurement methods. J Hand Microsurg 14(1):79-84, 2022 (online 2020).",
+      "doi": "10.1055/s-0040-1715918",
+      "note": "44 hands of 22 healthy adults; MC5 relative to MC3 in maximal little-finger opposition (ultrasound, electrogoniometer, photographs)."
+    },
+    "almaktary2019": {
+      "short": "Al Maktary 2019",
+      "citation": "Al Maktary A. Doctoral thesis, Heinrich Heine University Duesseldorf, 2019 (same cohort as Büren et al.).",
+      "note": "Same cohort as Büren et al.; MC4 relative to MC3."
+    },
+    "shimawaki2019": {
+      "short": "Shimawaki et al. 2019",
+      "citation": "Shimawaki S, Koya D, Nakabayashi M, Yoshida K, Sugimoto H, Toishi M. Influence of the diameter of grasped spheres on the rotation angle and axis of the second to fifth carpometacarpal joints. J Med Biol Eng 39:646-652, 2019.",
+      "doi": "10.1007/s40846-018-0448-0",
+      "note": "Nine subjects, in-vivo CT while grasping spheres of 40-97 mm (Table 2)."
+    },
+    "batmanabane1985": {
+      "short": "Batmanabane & Malathi 1985",
+      "citation": "Batmanabane M, Malathi S. Movements at the carpometacarpal and metacarpophalangeal joints of the hand and their effect on the dimensions of the articular ends of the metacarpal bones. Anat Rec 213:102-110, 1985.",
+      "doi": "10.1002/ar.1092130114",
+      "note": "Ten fresh cadaver hands, total passive arc from full extension (Table 2; mean +- SEM)."
+    },
+    "buffi2013": {
+      "short": "Buffi et al. 2013",
+      "citation": "Buffi JH, Crisco JJ, Murray WM. A method for defining carpometacarpal joint kinematics from three-dimensional rotations of the metacarpal bones captured in vivo using computed tomography. J Biomech 46(12):2104-2108, 2013.",
+      "doi": "10.1016/j.jbiomech.2013.05.019",
+      "note": "One subject (Table 1)."
     }
   },
   "quantities": {
@@ -465,6 +500,84 @@
           "kind": "in vivo (93.3 N x 11.1 mm)",
           "source": "infantolino2014",
           "protocol": "maximum FDI force and its in-vivo moment arm, Table 2"
+        }
+      ]
+    },
+    "cmc45_arc": {
+      "label": "CMC4 / CMC5 flexion-extension arc",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": [
+            20,
+            44
+          ],
+          "spread": [
+            10,
+            8
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, passive",
+          "source": "elshennawy2001",
+          "protocol": "22 N on a pin through the metacarpal, relative to the hamate; CMC5 with CMC4 free (28 +- 3 deg with CMC4 pinned)"
+        },
+        {
+          "value": [
+            16.9,
+            26.0
+          ],
+          "spread": [
+            0.7,
+            1.4
+          ],
+          "spread_kind": "SEM",
+          "kind": "cadaver, passive (right hands)",
+          "source": "batmanabane1985",
+          "protocol": "total arc from full extension, Table 2"
+        }
+      ]
+    },
+    "cmc45_active_flexion": {
+      "label": "CMC4 / CMC5 flexion limit (model) against the active maximum",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": [
+            12.2,
+            25.1
+          ],
+          "spread": [
+            3.0,
+            3.5
+          ],
+          "spread_kind": "SD",
+          "kind": "in vivo, active",
+          "source": "buren2020",
+          "protocol": "maximal little-finger opposition, relative to MC3, ultrasound (CMC4: Al Maktary 2019, same hands)"
+        }
+      ]
+    },
+    "cmc45_coupling": {
+      "label": "Coupling CMC5 / CMC4",
+      "unit": "ratio",
+      "literature": [
+        {
+          "value": 2.06,
+          "kind": "in vivo, active maxima (25.1 / 12.2 deg)",
+          "source": "buren2020",
+          "protocol": "maximal little-finger opposition; CMC4 value of Al Maktary 2019"
+        },
+        {
+          "value": 2.05,
+          "kind": "in vivo, grasp",
+          "source": "shimawaki2019",
+          "protocol": "helical angles 9.0 / 4.4 deg, spheres of 40-97 mm"
+        },
+        {
+          "value": 2.72,
+          "kind": "in vivo, one subject",
+          "source": "buffi2013",
+          "protocol": "equivalent-axis flexion, Table 1"
         }
       ]
     }
@@ -1052,6 +1165,203 @@
         "Index MCP abduction moment with both DI1 heads active: 0.34 -> 1.05 N m (force 61.2 -> 129.4 N at the thenar precedent of 86.3 N/cm2, moment arm 5.6 -> 8.1 mm), equal to Infantolino & Challis's in-vivo FDI moment (about 1.0 N m) and 39-57 % of the RIHM norms.",
         "Passive thumb moments: the passive scale (fpmax) of OP, AdPo and the FPB heads fits to near zero, AdPt 0.69, APB 0.44 (MuJoCo's curve is much stiffer than measured ones, as for the extrinsic muscles). Spring fits (RMS against the source): thumb CMC flexion 0.074 -> 0.009 N m, CMC abduction 0.128 -> 0.075 N m, MP 0.028 -> 0.010 N m (the MP excess of FPB and AdP is gone).",
         "Grip: the intrinsics are inactive in the grip, but their passive forces change; self-selected grip 310.3 -> 334.8 N, settled 305.9 N. Tenodesis passes unchanged."
+      ]
+    },
+    {
+      "id": "s3",
+      "title": "S3: fourth and fifth carpometacarpal joints",
+      "summary": "CMC4 and CMC5 hinges (centres sphere-fitted to the metacarpal bases; CMC5 axis from Shimawaki 2019, CMC4 on the CMC5 pattern), coupled CMC5 = 2.06 x CMC4 by a joint equality; ranges -5 to 16 and -10.3 to 33 deg; the digit-5 flexor via points and three interosseous origins moved so that only the anatomical crossings remain (paths unchanged at CMC 0); linear end-range springs from El-Shennawy 2001's load. Before = S2.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.34,
+          78.22,
+          73.38,
+          50.09
+        ],
+        "tenodesis_pip_rom": 29.84,
+        "tenodesis_index_gap": [
+          66.81,
+          81.85
+        ],
+        "tenodesis_release": [
+          77.65,
+          78.48,
+          74.0,
+          26.4
+        ],
+        "grip_self_selected": 314.91,
+        "grip_settled": 277.95,
+        "grip_shares": [
+          34.3,
+          34.03,
+          19.71,
+          11.96
+        ],
+        "grip_posture_change": [
+          -32.48,
+          -66.41
+        ],
+        "lateral_pinch": 52.9,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          19.35,
+          16.82,
+          2.57
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "di1_moment_arms": [
+          4.38,
+          8.06
+        ],
+        "index_abduction_moment": 1.05,
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.8,
+          "3": 16.31,
+          "4": -0.67,
+          "5": -0.38
+        },
+        "fist_max_penetration": 0.8
+      },
+      "before": {
+        "label": "s3",
+        "id": "s2",
+        "values": {
+          "tenodesis_mcp_rom": [
+            77.34,
+            78.22,
+            73.38,
+            50.37
+          ],
+          "tenodesis_pip_rom": 29.89,
+          "tenodesis_index_gap": [
+            66.62,
+            81.84
+          ],
+          "tenodesis_release": [
+            77.65,
+            78.48,
+            73.99,
+            26.68
+          ],
+          "grip_self_selected": 334.84,
+          "grip_settled": 305.89,
+          "grip_shares": [
+            33.86,
+            34.99,
+            21.26,
+            9.89
+          ],
+          "grip_posture_change": [
+            -32.06,
+            -65.1
+          ],
+          "lateral_pinch": 52.9,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            19.35,
+            16.82,
+            2.57
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "di1_moment_arms": [
+            4.38,
+            8.06
+          ],
+          "index_abduction_moment": 1.05,
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": -0.33,
+            "3": 14.36,
+            "4": -0.51,
+            "5": -0.27
+          },
+          "fist_max_penetration": 0.77
+        }
+      },
+      "notes": [
+        "Crossing moment arms (dL/dq at 0, CMC4 / CMC5, mm): FDS4 -6.0 / -, FDP4 -3.3 / -, EDC4 13.1 / -, FDS5 - / -9.3, FDP5 - / -6.4, EDC5 - / 10.0, EDM - / 7.4, ECU - / 3.5, FCU - / -4.6, LU_RB4 -8.8 / -, UI_UB5 - / -3.6. Before the site moves FDP5 would have flexed CMC4 (16.9) and extended CMC5 (10.7), and RI5 extended CMC5 (7.1).",
+        "Coupling: 2.06 is the ratio of the mean active maxima of one cohort (CMC5 25.1 +- 3.5, CMC4 12.2 +- 3.0 deg); individual ratios are not reported and vary at least as much as these SDs (14 % and 25 % of the means). Passive end-range arcs bound the ratio at about 2.2-2.75 (El-Shennawy 2001); Buffi 2013's single subject gives 2.72. With CMC4 pinned CMC5 still moves 28 +- 3 deg in cadaver tests, which the equality cannot reproduce.",
+        "Ranges: the arcs match El-Shennawy's passive arcs; the split into flexion and extension is assumed (Aljasim 2025 finds more extension than flexion from the MC3 axis under 100 N). The active maxima lie 3.8 / 7.9 deg inside the flexion limits.",
+        "Relaxed hand: without springs the muscles' passive tension (mostly FDP5) cupped the hand to 10 / 21 deg; with the end-range springs it rests within 0.2 deg of neutral.",
+        "Grip: 334.8 -> 314.9 N, digit-5 share 9.9 -> 12.0 % (ARMS 11.5 %), settled 305.9 -> 278.0 N; the active fist leaves the middle finger 16.3 mm from the palm (14.4 before). Tenodesis and lateral pinch unchanged."
       ]
     }
   ]

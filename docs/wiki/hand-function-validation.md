@@ -194,3 +194,15 @@ passive scale, which tell S1b and S2 apart.
 - **Pinch posture.** The CMC angles are measured from each model's own zero. Flipping the flexion sign
   leaves no feasible force; 20 deg abduction instead of adduction gives 68.8 N; the zero posture gives
   60.1 N. FPB and APB are at full activation at the optimum.
+
+## Hand rebuild S3 (CMC4/5 joints)
+
+CMC4/5 are free in every scene (coupled). Fresh optimum (before = S2):
+
+| Quantity | S2 | S3 |
+| --- | --- | --- |
+| Grip, self-selected (N) | 334.8 | 314.9 |
+| Shares 2 / 3 / 4 / 5 (%) | 34 / 35 / 21 / 10 | 34 / 34 / 20 / 12 |
+| Settled grip (N) | 306 | 278 |
+| Grip, neutral / flexed wrist | -32 % / -65 % | -32 % / -66 % |
+| Tenodesis, lateral pinch | pass, 52.9 N | pass, 52.9 N |
