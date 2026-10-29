@@ -216,18 +216,11 @@ MODEL_REGISTRY = {
     ),
 }
 
-# The neck is opt-in: keep the established full-body observation/action layout.
 MODEL_REGISTRY["myohead"] = ModelRegistration(
     name="myohead",
     description="HYOID cervical chain with mirrored neck muscles",
     build_strategy=BuildStrategy.HEAD,
     build_kwargs={},
-)
-MODEL_REGISTRY["myofullbody_neck"] = ModelRegistration(
-    name="myofullbody_neck",
-    description="Full body with the source-validated HYOID neck",
-    build_strategy=BuildStrategy.FULLBODY,
-    build_kwargs={**MODEL_REGISTRY["myofullbody"].build_kwargs, "include_neck": True},
 )
 
 # Legacy names that resolve to a MODEL_REGISTRY entry. This is the single source
@@ -269,11 +262,6 @@ def build_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     if registration.build_kwargs.get("add_root_freejoint", False):
         root_body.add_freejoint(name="root")
 
-    if registration.build_kwargs.get("include_neck", False):
-        torso.delete(find_body(torso, "neck"))
-        head_frame = find_body(torso, "head_attach").add_frame(name="myohead_attach")
-        torso.attach(build_head_spec(), prefix="", suffix="", frame=head_frame)
-
     if registration.build_kwargs.get("include_arm_contacts", True):
         add_contact_pairs(
             torso,
@@ -287,6 +275,18 @@ def build_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     if registration.build_kwargs.get("include_fullbody_contacts", False):
         add_contact_pairs(torso, FULLBODY_CONTACTS_XML)
     return torso
+
+
+def attach_neck(torso: mujoco.MjSpec) -> None:
+    """Replace the rigid head scaffold with the muscular HYOID neck, in place.
+
+    Called last by the full-body builder, so the neck's tendons, actuators and
+    equalities come after those of the arms and legs. The torso part models
+    keep the rigid head.
+    """
+    torso.delete(find_body(torso, "neck"))
+    head_frame = find_body(torso, "head_attach").add_frame(name="myohead_attach")
+    torso.attach(build_head_spec(), prefix="", suffix="", frame=head_frame)
 
 
 def build_torso_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
@@ -506,6 +506,7 @@ def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     full_body = find_body(torso, "Full Body")
     legs_frame = full_body.add_frame(name="legs_attach")
     torso.attach(build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    attach_neck(torso)
 
     return torso
 

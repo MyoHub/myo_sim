@@ -136,8 +136,8 @@ def main() -> None:
             print(f"SKIP {name}: {exc}")
             continue
         out_path = OUT_DIR / f"{name}.png"
-        plate = name in {"myohead", "myofullbody_neck"}
-        render_model(model, out_path, transparent=plate, crop=name == "myofullbody_neck")
+        plate = name in {"myohead", "myofullbody"}
+        render_model(model, out_path, transparent=plate, crop=name == "myofullbody")
         print(f"wrote {out_path}")
 
     for name, (xml_path, key_name) in sorted(STATIC_XML_TARGETS.items()):

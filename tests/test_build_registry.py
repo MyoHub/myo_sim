@@ -35,7 +35,6 @@ def test_every_registered_model_has_build_strategy():
         "myohand_r": BuildStrategy.RIGHT_HAND,
         "myohands": BuildStrategy.BOTH_HANDS,
         "myofullbody": BuildStrategy.FULLBODY,
-        "myofullbody_neck": BuildStrategy.FULLBODY,
         "myohead": BuildStrategy.HEAD,
         "myolegs": BuildStrategy.LEGS_BODY,
         "myolegs26": BuildStrategy.LEGS26_BODY,

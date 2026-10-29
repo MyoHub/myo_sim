@@ -1,7 +1,8 @@
 # Neck validation summary
 
-Recorded comparison for the opt-in `myohead` and `myofullbody_neck` models,
-2026-10-03. Default `myofullbody` is unchanged. This is source verification and
+Recorded comparison for the `myohead` model and the neck in `myofullbody`,
+2026-10-03 (recorded as an opt-in assembly; the neck is now part of `myofullbody`).
+This is source verification and
 limited experimental agreement, not independent validation of the whole body.
 Datasets, export/calibration scripts and generated trajectory archives are not
 retained in this repository or distributed in the Python package.
@@ -98,9 +99,13 @@ changed motion by at most 0.014 mm / 0.0061°, coupling residual was below
 Later supine recovery beyond 250 ms is imperfect. Contact, trapdoor settling,
 torso motion, individual anatomy, shoulder–neck interaction, whole-body balance,
 EMG, acceleration, injury response and individual muscle force curves were not
-validated. Production tendons are rigid; converted cervical inertias are balanced
+validated. Production tendons are rigid; converted cervical inertias were balanced
 isotropic values, not verified anatomical measurements. Cervical mesh segmentation
-is heuristic. Opt-in body mass is 89.60644 kg versus the default 84.26499 kg.
+is heuristic. This comparison was recorded with the source masses (skull 4.30 kg,
+cervical segments 3.42 kg), the converted 0.04 kg·m² cervical inertias and joint
+armature 1e-5; the model now uses the de Leva head-and-neck share, cylinder-slice
+inertias and armature 0.01 (see the [head README](../../../myo_sim/models/head/README.md#mass-and-inertia)),
+and the comparison has not been re-run with them.
 
 The figure derives from Wochner, Nölle, Martynenko and Schmitt's 2022 trajectory
 data, distributed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
