@@ -18,6 +18,13 @@ SKIP_JOINTS = {
     "Abs_r3",
     "L1_L2_LB",
     "L1_L2_AR",
+    # Neck lateral bending and axial rotation: left and right act in opposite directions.
+    "myohead_roll1",
+    "myohead_roll2",
+    "myohead_yaw1",
+    "myohead_yaw2",
+    # The vertebral joints coupled to them (_r1 follows roll, _r2 follows yaw).
+    *(f"myohead_aux{level}jnt_r{axis}" for level in (1, 3, 4, 5, 6, 7) for axis in (1, 2)),
 }
 
 

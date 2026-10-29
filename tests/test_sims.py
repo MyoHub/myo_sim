@@ -52,6 +52,8 @@ MUSCLEMIMIC_FULLBODY_SPEC = {
     "njnt": 123,
     "nu": 416,
 }
+# myofullbody = musclemimic spec + the muscular neck (myohead), which musclemimic does not have.
+NECK_SPEC = {"njnt": 24, "nu": 72}
 
 
 class TestMuscleMimicFullBody(unittest.TestCase):
@@ -65,17 +67,17 @@ class TestMuscleMimicFullBody(unittest.TestCase):
     def test_myofullbody_joints(self):
         m = self._load("myofullbody")
         self.assertEqual(
-            m.njnt,
+            m.njnt - NECK_SPEC["njnt"],
             MUSCLEMIMIC_FULLBODY_SPEC["njnt"],
-            f"myofullbody.xml has {m.njnt} joints, expected {MUSCLEMIMIC_FULLBODY_SPEC['njnt']} (musclemimic spec)",
+            f"myofullbody has {m.njnt} joints, expected {MUSCLEMIMIC_FULLBODY_SPEC['njnt']} (musclemimic spec) + {NECK_SPEC['njnt']} (neck)",
         )
 
     def test_myofullbody_actuators(self):
         m = self._load("myofullbody")
         self.assertEqual(
-            m.nu,
+            m.nu - NECK_SPEC["nu"],
             MUSCLEMIMIC_FULLBODY_SPEC["nu"],
-            f"myofullbody.xml has {m.nu} actuators, expected {MUSCLEMIMIC_FULLBODY_SPEC['nu']} (musclemimic spec)",
+            f"myofullbody has {m.nu} actuators, expected {MUSCLEMIMIC_FULLBODY_SPEC['nu']} (musclemimic spec) + {NECK_SPEC['nu']} (neck)",
         )
 
     def test_myofullbody_report(self):
@@ -83,10 +85,10 @@ class TestMuscleMimicFullBody(unittest.TestCase):
         m = self._load("myofullbody")
         report = (
             f"\n=== myofullbody.xml vs musclemimic spec ===\n"
-            f"  joints (njnt):    {m.njnt:4d}  expected {MUSCLEMIMIC_FULLBODY_SPEC['njnt']}\n"
-            f"  actuators (nu):   {m.nu:4d}  expected {MUSCLEMIMIC_FULLBODY_SPEC['nu']}\n"
+            f"  joints (njnt):    {m.njnt:4d}  expected {MUSCLEMIMIC_FULLBODY_SPEC['njnt']} + {NECK_SPEC['njnt']} (neck)\n"
+            f"  actuators (nu):   {m.nu:4d}  expected {MUSCLEMIMIC_FULLBODY_SPEC['nu']} + {NECK_SPEC['nu']} (neck)\n"
             f"  nq:               {m.nq:4d}\n"
-            f"  match: {'PASS' if m.njnt == MUSCLEMIMIC_FULLBODY_SPEC['njnt'] and m.nu == MUSCLEMIMIC_FULLBODY_SPEC['nu'] else 'FAIL'}\n"
+            f"  match: {'PASS' if (m.njnt - NECK_SPEC['njnt'], m.nu - NECK_SPEC['nu']) == (MUSCLEMIMIC_FULLBODY_SPEC['njnt'], MUSCLEMIMIC_FULLBODY_SPEC['nu']) else 'FAIL'}\n"
         )
         print(report)
 

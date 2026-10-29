@@ -5,17 +5,22 @@ import numpy as np
 import pytest
 
 from myo_sim import load_model
+from myo_sim.build.compose import MODEL_REGISTRY
+
+# The full body and the torso models carry the muscular neck; the scaffold part models keep the rigid head.
+NECK_MODELS = ("myofullbody", "myotorso", "myotorso_arms", "myotorso_arm_r")
 
 
-def _right_neck_actuator_ids(model: mujoco.MjModel, name: str) -> list[int]:
-    if name == "myohead":
-        return [i for i in range(model.nu) if model.actuator(i).name.endswith("_r")]
-    base = load_model("myofullbody")
-    base_names = {base.actuator(i).name for i in range(base.nu)}
-    return [i for i in range(model.nu) if model.actuator(i).name.endswith("_r") and model.actuator(i).name not in base_names]
+def _neck_joint_count(model: mujoco.MjModel) -> int:
+    return sum(model.joint(i).name.startswith("myohead_") for i in range(model.njnt))
 
 
-@pytest.mark.parametrize("name", ["myohead", "myofullbody_neck"])
+def _right_neck_actuator_ids(model: mujoco.MjModel) -> list[int]:
+    # The neck is attached last, so its 72 actuators are the trailing block.
+    return [i for i in range(model.nu - 72, model.nu) if model.actuator(i).name.endswith("_r")]
+
+
+@pytest.mark.parametrize("name", ("myohead",) + NECK_MODELS)
 def test_neck_passive_mechanics_and_muscle_parameters(name: str) -> None:
     model = load_model(name)
     data = mujoco.MjData(model)
@@ -31,7 +36,7 @@ def test_neck_passive_mechanics_and_muscle_parameters(name: str) -> None:
     data.qvel[dofs] = 0.1
     mujoco.mj_forward(model, data)
     assert data.qvel[dofs] @ (data.qfrc_passive - restoring)[dofs] < 0
-    right = _right_neck_actuator_ids(model, name)
+    right = _right_neck_actuator_ids(model)
     assert len(right) == 36
     left = [model.actuator(model.actuator(i).name[:-2] + "_l").id for i in right]
     np.testing.assert_array_equal(model.actuator_gainprm[right], model.actuator_gainprm[left])
@@ -42,21 +47,61 @@ def test_neck_passive_mechanics_and_muscle_parameters(name: str) -> None:
     assert np.all(lengthrange[:, 0] - parameters[:, 0] * l0 >= 0)
 
 
-def test_neck_preserves_fullbody_landmarks_and_existing_actuators() -> None:
-    base, extended = load_model("myofullbody"), load_model("myofullbody_neck")
-    assert (base.njnt, base.nu) == (123, 416)
-    assert (extended.njnt, extended.nu) == (147, 488)
-    assert extended.neq - base.neq == 18
-    base_data, extended_data = mujoco.MjData(base), mujoco.MjData(extended)
-    mujoco.mj_forward(base, base_data)
-    mujoco.mj_forward(extended, extended_data)
-    np.testing.assert_allclose(base_data.xpos[base.body("head").id], extended_data.xpos[extended.body("head").id], atol=1e-12)
+def test_neck_models() -> None:
+    for name in MODEL_REGISTRY:
+        expected = 24 if name in NECK_MODELS + ("myohead",) else 0
+        assert _neck_joint_count(load_model(name)) == expected, name
+    full = load_model("myofullbody")
+    assert (full.njnt, full.nu, full.neq) == (147, 488, 69)
+    # Neck actuators are appended after the existing torso, arm and leg actuators.
+    head = load_model("myohead")
+    neck_names = {head.actuator(i).name for i in range(head.nu)}
+    for name in NECK_MODELS:
+        model = load_model(name)
+        assert {model.actuator(i).name for i in range(model.nu - 72, model.nu)} == neck_names, name
+
+
+def test_neck_preserves_head_landmarks_of_the_rigid_scaffold() -> None:
+    """At qpos0 the articulated head sits exactly where the rigid scaffold's head does."""
+    rigid, neck = load_model("myoarms"), load_model("myofullbody")
+    rigid_data, neck_data = mujoco.MjData(rigid), mujoco.MjData(neck)
+    mujoco.mj_forward(rigid, rigid_data)
+    mujoco.mj_forward(neck, neck_data)
+    rigid_root = rigid_data.xpos[rigid.body("Full Body").id]
+    neck_root = neck_data.xpos[neck.body("Full Body").id]
+    np.testing.assert_allclose(
+        rigid_data.xpos[rigid.body("head").id] - rigid_root, neck_data.xpos[neck.body("head").id] - neck_root, atol=1e-12
+    )
     for name in ("hat_jaw", "hat_skull", "hat_jaw_coll2", "hat_skull_coll", "hat_cervical_coll"):
         np.testing.assert_allclose(
-            base_data.geom_xpos[base.geom(name).id], extended_data.geom_xpos[extended.geom(name).id], atol=1e-12
+            rigid_data.geom_xpos[rigid.geom(name).id] - rigid_root,
+            neck_data.geom_xpos[neck.geom(name).id] - neck_root,
+            atol=1e-12,
         )
-    for i in range(base.nu):
-        j = extended.actuator(base.actuator(i).name).id
-        for attribute in ("actuator_gainprm", "actuator_biasprm", "actuator_dynprm", "actuator_lengthrange"):
-            np.testing.assert_array_equal(getattr(base, attribute)[i], getattr(extended, attribute)[j])
-    assert [base.sensor(i).name for i in range(base.nsensor)] == [extended.sensor(i).name for i in range(extended.nsensor)]
+
+
+def test_cervical_inertias_match_their_size_and_mass() -> None:
+    """Cylinder-slice inertias: small, physically consistent, and the skull keeps its source mass."""
+    model = load_model("myohead")
+    assert model.body_mass[model.body("head").id] == pytest.approx(4.3)
+    for level in range(1, 8):
+        body = model.body(f"myohead_cerv{level}")
+        inertia = np.sort(model.body_inertia[body.id])
+        assert 1e-4 < inertia[0] and inertia[2] < 1e-3, body.name
+        assert inertia[2] <= inertia[0] + inertia[1], body.name
+
+
+def test_neck_does_not_ring_at_the_model_timestep() -> None:
+    """Explicit Euler at 2 ms stays free of step-to-step oscillation under random neck activation."""
+    model = load_model("myohead")
+    data = mujoco.MjData(model)
+    dofs = [model.joint(i).dofadr[0] for i in range(model.njnt) if model.joint(i).name.startswith("myohead_")]
+    data.ctrl[:] = np.random.default_rng(0).uniform(0, 1, model.nu)
+    qacc = []
+    for _ in range(250):
+        mujoco.mj_step(model, data)
+        qacc.append(data.qacc[dofs].copy())
+    qacc = np.array(qacc)[100:]
+    sign_flips = np.mean(np.sign(qacc[1:]) != np.sign(qacc[:-1]), axis=0)
+    assert np.isfinite(qacc).all()
+    assert sign_flips.max() < 0.3

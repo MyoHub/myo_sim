@@ -66,9 +66,8 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `myolegs` | `LEGS_BODY` | Passive anatomical torso scaffold + legs |
 | `myolegs26` | `LEGS26_BODY` | Passive anatomical torso scaffold + reduced 26-muscle legs (see [MyoLeg26](../../myo_sim/models/leg/README.md#myoleg26-reduced-26-muscle-legs-only)) |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
-| `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
+| `myofullbody` | `FULLBODY` | Full body: torso + muscular neck + mirrored arms + legs; free-floating root |
 | `myohead` | `HEAD` | Fixed HYOID cervical chain; six independent coordinates and 72 muscles |
-| `myofullbody_neck` | `FULLBODY` | Opt-in full body with HYOID neck replacing the rigid scaffold |
 
 `ModelRegistration` fields that control composition:
 
@@ -80,14 +79,18 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 - `root_pos`: initial position of the root body in world space.
 - `mirror_rules`: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
 
-The neck variant sets `build_kwargs["include_neck"]`. It replaces the rigid
-head subtree before contacts are injected and attaches `build/head.py`'s spec
-to the existing `head_attach` frame. The midline skeleton is authored once;
-only right muscle sites, tendons and actuators are mirrored with `MirrorRules`.
-The existing `neck`, `head` and head collision names are preserved at build time.
-The canonical articulated source and the legacy rigid compatibility scaffold
-use separate body names in their fragments; they are never composed together.
-The default `myofullbody` and generated snapshot targets remain unchanged.
+`myofullbody` and the torso models (`myotorso`, `myotorso_arms`, `myotorso_arm_r`)
+carry the muscular neck; there is no switch for it.
+`compose.attach_neck()` runs last in its builder: it deletes the rigid head
+subtree and attaches `build/head.py`'s spec to the existing `head_attach` frame,
+so the neck's tendons, actuators and equalities follow those of the torso, arms and legs.
+The neck joints sit in the torso subtree, before the arm and leg joints.
+The midline skeleton is authored once; only right muscle sites, tendons and
+actuators are mirrored with `MirrorRules`. The existing `neck`, `head` and head
+collision names are preserved. The scaffold part models (`myotorso_abdomen`,
+`myoarms`, `myohands`, `myolegs`, ...) keep the rigid head
+(`myohead_rigid_chain.xml`), which has no joints or muscles: their torso is fixed
+or built separately, so a neck would add muscles unrelated to them.
 See `docs/validation/neck/README.md` for source and acceptance scope.
 
 ## How to Add a New Composed Model

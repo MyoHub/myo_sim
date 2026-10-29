@@ -47,7 +47,12 @@ def test_chest_scaffold_carries_no_phantom_mass(model_name):
 
 
 def test_fullbody_total_mass_is_anthropometrically_consistent():
-    """myofullbody should weigh ~84.3 kg, matching the MuscleMimic reference model."""
+    """myofullbody weighs ~84.0 kg: the MuscleMimic reference without the rigid head.
+
+    The torso carries its OpenSim mass minus the head it contained, and the skull and
+    cervical segments carry the de Leva head-and-neck share; see
+    myo_sim/models/head/README.md.
+    """
     model = load_spec("myofullbody").compile()
 
-    assert model.body_mass.sum() == pytest.approx(84.3, abs=0.3)
+    assert model.body_mass.sum() == pytest.approx(84.0, abs=0.1)
