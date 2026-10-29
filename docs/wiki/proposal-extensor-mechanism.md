@@ -60,17 +60,21 @@ MyoHand is a little better than ARMS, because LU_RB and UI_UB do cross the PIP. 
 
 **Fingertip force directions.** Valero-Cuevas et al. (1998) measured maximal index fingertip forces in five directions: palmar 27.9, distal 24.3, medial 22.9, lateral 14.7 and dorsal 7.5 N. Their model reproduced these only with a Winslow-rhombus extensor mechanism. The dorsal force was most sensitive to the PIP extensor moment arm and to how tension is allocated in the network, and the "floating net" of the intrinsic bands was critical.
 
-Synek and Pahr (2016) compared models with and without the extensor mechanism and report large differences in predicted forces. Hu et al. (2014) found that including the network lowers the estimated intrinsic muscle forces by 22-61 % and the MCP contact force by 10-41 % in isometric pressing.
+Synek and Pahr (2016) compared two index models built on the normative data of An et al. (1979), one with a Winslow-rhombus mechanism and one with a single extensor tendon and the intrinsics ending on the proximal phalanx, over nine postures. With the mechanism, the maximal forces in the palmar, proximal, dorsal and distal directions were 187.6 % larger on average (palmar +40.0 %), while the peak resultant force was 4.3 % smaller (Figs. 4-5, p. 3426). Co-contraction of the intrinsics and the long extensor let the extrinsic flexors reach higher activations. Hu et al. (2014) found that including the network lowers the estimated intrinsic muscle forces by 22-61 % and the MCP contact force by 10-41 % in isometric pressing.
 
 ## Anatomy to cover
 
 - **EDC split.** Over the proximal phalanx the EDC tendon splits into:
   - a central slip, inserting on the base of the middle phalanx and extending the PIP;
   - two lateral slips. These join the interosseous and lumbrical contributions as the lateral bands, which converge into the terminal tendon on the base of the distal phalanx and extend the DIP.
-- **Retinacular and triangular ligaments.** Transverse retinacular ligaments hold the bands at the sides of the PIP. The triangular ligament keeps the bands from drifting apart on the dorsum of the middle phalanx.
-- **Oblique retinacular ligament (ORL).** It runs volar to the PIP and dorsal to the DIP and couples PIP and DIP extension (Landsmeer 1949, 1958).
-- **Sagittal bands.** They centre the extensor tendon over the MCP. They also carry part of the EDC force into the proximal phalanx.
+
+  Landsmeer (1949, pp. 34-35) describes the mixing: the lateral band of the communis joins the lateral part of the interosseous tendon to form the lateral tendon, and the medial band of the interosseous joins the middle part of the communis to form the middle tendon (central slip). Harris and Rutledge (1972, p. 724) likewise have the interossei and lumbricals inserting into both the central slip and the lateral bands. The lateral bands leave the mechanism 1-2 cm proximal to the PIP (p. 717).
+- **Retinacular and triangular ligaments.** Transverse retinacular ligaments hold the bands at the sides of the PIP. The triangular ligament keeps the bands from drifting apart on the dorsum of the middle phalanx. Harris and Rutledge (1972, pp. 717-719) cut the triangular ligaments and freed the bands from the transverse and oblique retinacular ligaments and from the central slip: the bands still moved palmarly in flexion and dorsally in extension. They attribute the shift to bowstringing between the band origin and the insertion, which moves with the middle phalanx, and to the shape of the proximal-phalanx head, which is wider palmarly.
+- **Oblique retinacular ligament (ORL).** Landsmeer (1949, pp. 35-36) describes it as the oblique part of the retinacular ligament: the most lateral fibres of the terminal tendon, attached to the lateral border of the proximal phalanx and partly to the flexor sheath, passing closely palmar to the PIP axis. In his account, DIP flexion tenses it and flexes the PIP, and PIP extension extends the DIP through it (pp. 38, 41-42). Its role is disputed (see *PIP-DIP coupling*).
+- **Sagittal bands.** They centre the extensor tendon over the MCP. They also carry part of the EDC force into the proximal phalanx. Harris and Rutledge (1972, pp. 719-722) found that the MCP is extended mainly by these fibres encircling the joint to the flexor sheath. The direct slip to the base of the proximal phalanx is lax from 0 to 90 deg of MCP flexion and tightens only in extreme hyperextension. Landsmeer (1949, p. 32) found no tendinous insertion there.
 - **A posture-dependent network.** Together these form Winslow's rhombus. The force split depends on posture, because the bands translate as the PIP flexes.
+  - Forced DIP flexion pulls the aponeurosis about 3 mm distally and slackens the central slip until the PIP has flexed 60-70 deg (Landsmeer 1949, pp. 39, 42).
+  - With the PIP flexed 80-90 deg, the distal phalanx escapes the extensor (Landsmeer 1949, pp. 37, 41). Harris and Rutledge (1972, p. 724) attribute this to the central slip holding the mechanism distally: after the central slip was cut, the extensor extended the DIP in any PIP position.
 
 ## Literature
 
@@ -108,8 +112,17 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
 - Canoso et al. (2021) measured the band shift in vivo by ultrasound (7 subjects aged 23-55, middle and ring fingers, MCP at 0 deg, PIP actively flexed 0 to 90 deg). At mid-proximal phalanx the ulnar lateral band moved palmarly by a median of 1.8 mm (range 0.7-3.0) in the middle finger and 1.1 mm (0.3-2.7) in the ring finger (Table 1). Palpation suggested 5-10 mm, which the authors attribute to a haptic illusion. Dissection of 5 embalmed hands confirmed the direction of the shift but could not measure it. This is smaller than the 2.6 mm Garcia-Elias et al. (1991a) report as the PIP flexes, and is measured further proximally.
 
 **PIP-DIP coupling.**
-- Landsmeer (1949, 1958, 1963) described the dorsal aponeurosis and the coordination of the interphalangeal joints.
-- Ueba et al. (2011) found the ORL radially and ulnarly in all but 2 of 40 fingers. Its share of the passive resistance to DIP flexion is 25 % at PIP 0 deg, 31 % at 30 deg, 18 % at 60 deg and 3 % at 90 deg, independent of the MCP.
+- Landsmeer (1949) described the dorsal aponeurosis and the retinacular ligament (*Anatomy to cover*); his later papers (1958, 1963) treat the coordination of the interphalangeal joints.
+- Harris and Rutledge (1972) found the ORL thin and, in fresh fingers, slack in normal motion.
+  - With the PIP at 0 deg it tightened only beyond about 70 deg of DIP flexion, and with the PIP at 30, 60 or 90 deg it did not tighten at all (Table II, p. 715).
+  - Cutting it on both sides caused no perceptible loss of flexion or extension (p. 714). Cutting the lateral bands while sparing the ORL left the DIP hanging at 70 deg, without active extension (p. 715).
+  - In high-speed films of one hand, the PIP and DIP angles differed by at most 30 deg in unresisted flexion and 25 deg in extension, too little to tighten the ORL (Table I, pp. 715-716). They conclude that the lateral bands alone extend the DIP and that the ORL is a stay ligament (p. 716).
+- Ueba et al. (2011) dissected 40 fresh-frozen fingers from 10 hands (age 57 ± 14 years).
+  - The ORL was present on both sides in 38 fingers; 2 of the 80 sides lacked it. It was thin on average (3 on a 5-point scale) and most robust on the ulnar side of the ring finger. It arose from the flexor sheath near the A2 pulley and merged with the lateral band over the proximal third of the middle phalanx (pp. 1961-1962).
+  - Protocol: the extrinsic extensor was preloaded with 1.96 N, and the DIP was cycled passively from 0 to 45 deg (it would flex only to 45 deg with the PIP extended). The outcome was the peak force at a screw in the distal-phalanx tuft (pp. 1960-1961).
+  - The intact peak force was highest at PIP 30 deg (3.1 ± 2.0 N) and lowest at PIP 90 deg (1.5 ± 1.6 N). The MCP at 0, 45 or 90 deg, tested with the PIP extended, had no effect (p. 1962).
+  - Cutting the ORL lowered the force by 25 % at PIP 0 deg, 31 % at 30 deg, 18 % at 60 deg and 3 % at 90 deg, with the MCP extended (p. 1962). These are shares of the peak force, not moments; the paper does not give the lever arm.
+  - The low force at PIP 90 deg does not depend on the ORL. Cutting the central slip raised it markedly, which the authors attribute to the central slip pulling the bands distally and relaxing the terminal tendon (pp. 1962, 1964).
 - Leijnse, Quesada and Spoor (2010) measured coupled IP trajectories in vivo in 68 fingers (17 hands, 9 subjects aged 33 ± 11 years), unloaded, flexed by the deep flexor with the MCP at 0 deg.
   - The DIP-versus-PIP trajectories are sigmoid and consistent within a finger but vary between fingers. The mean slope dDIP/dPIP of the extension trajectories peaks at 1.0 ± 0.31 at PIP 70 deg and falls to 0.53 ± 0.28 at 100 deg, 0.25 ± 0.25 at 0 deg and -0.11 ± 0.25 at -13 deg (p. 2386, Fig. 4A).
   - Passive PIP hyperextension ranges from 0 to almost 50 deg; greater hyperextensibility goes with flatter slopes near extension (correlation C1, p. 2386). Mean passive ranges per digit are in Table 2 (e.g. PIP flexion 110-119 deg, PIP extension -11 to -21 deg).
@@ -118,14 +131,35 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
   - Fits needed 4.9 ± 2 strings (2 to 10). For PIP below 25-45 deg the fits were within 0.5 deg RMS; over the full range, about half of the fingers stayed within 3 deg and the rest had maximum errors of 3-12 deg in the upper mid-range (p. 576).
   - The retinacular ligament went slack with IP flexion; one sufficed in 66 of 68 fingers. The oblique retinacular ligament improved the fit in only one finger, by 2 deg (p. 577), so it does not drive unloaded coupling.
   - Inextensible strings sufficed, which suggests that hood strain is not essential to unloaded coupling (p. 577).
-- Harris and Rutledge (1972) give the functional anatomy.
+- **The ORL sources disagree.** Landsmeer (1949) gives the ORL an active coupling role. Harris and Rutledge (1972) and Leijnse and Spoor (2012) find it slack or unnecessary in unloaded motion. Ueba et al. (2011) measure a passive share of up to 31 % with the PIP extended and the DIP within 45 deg, where Harris and Rutledge saw it slack. Their protocols differ: a preloaded extensor and peak force over 0-45 deg in Ueba, visual tautness in fresh fingers in Harris and Rutledge. Also, Ueba cut all tissue at the ORL's location where the ligament was absent. We therefore treat the ORL as a passive element fitted to Ueba's shares, and check that it stays slack in unresisted flexion.
 
 **Models with constant fractions.** Most musculoskeletal models that include the mechanism distribute force with constant coefficients:
+- Chao et al. (1976): the first 3-D force analysis of finger joints, from biplanar radiographs of six cadaver fingers. It assumes that the terminal tendon carries the sum of the two band forces and that the central slip carries the full long-extensor force (assumptions 3-4, p. 391). The band forces are otherwise free unknowns. The redundancy was removed by setting four of the nine tendon forces to zero in turn (126 combinations, p. 392). The extensors were treated as passive and capped at 0.5 of the applied force at the DIP and PIP (p. 392).
 - An et al. (1979);
-- Chao and An (1978);
+- Chao and An (1978), as reproduced by Brook et al. (1995, Eqs. 12a-d, p. 59): F_TE = F_RB + F_UB, F_RB = 2/3 F_LU + 1/6 F_LE, F_UB = 1/3 F_UI + 1/6 F_LE, F_ES = 1/3 F_LU + 1/6 F_LE + 1/3 F_RI + 1/3 F_UI. Half of the long-extensor force thus reaches the slips, two thirds of it the terminal tendon (c = 0.5, r = 2/3 in the notation of Lee et al. 2008a);
 - Valero-Cuevas et al. (1998): 50 % of EDC/EIP to the central slip and 25 % to each lateral offshoot nominally, plus a floating net for the intrinsic bands;
-- Hu et al. (2014): F_RB = 2/3 F_LU + 1/6 F_LE, F_UB = 1/3 F_UI + 1/6 F_LE, F_TE = F_RB + F_UB, central slip 1/3 each of RI, UI and LU plus 1/6 of LE, following Chao and An 1978 and Brook et al. 1995;
+- Hu et al. (2014): the same coefficients, citing Chao and An (1978) and Brook et al. (1995);
+- Synek and Pahr (2016): central-to-terminal ratios of 50:50 for the lumbrical and ulnar interosseous and 60:40 for the long extensor, following Qiu and Kamper (2014). The radial interosseous ends on bone, and the mechanism is not deformable (p. 3424);
+- MacIntosh and Keir (2017), an OpenSim index finger. Seven muscles are divided into 14 muscle components; each extensor and intrinsic muscle has one component per insertion, with its share of the maximal force (Table 1, p. 1376):
+  - EDC: 12.18 N to the central slip and 3.05 N to each band (terminal share 0.33);
+  - EI: 7.23 N each to the central slip and the two bands (0.67);
+  - FDI: 54.0 N to the proximal phalanx and 13.5 N to the terminal slip;
+  - FPI: 22.45 N central, 11.31 N terminal;
+  - lumbrical: 1.81 N central, 3.15 N terminal.
+
+  The shares were chosen to minimise the deviation between predicted activations and EMG in two postures at 5 and 30 N (p. 1374). The model then predicted terminal-to-central slip forces of 0.59:0.41 (± 0.05) in static pressing (0.58 at 5 N to 0.68 at 30 N, not significant pairwise) and 60:40 averaged over unloaded movements (pp. 1377-1378);
 - Synek et al. (2019): transmission fractions identified from cadaver fingertip forces.
+
+The terminal share of the long extensor ranges across these models from 0.3 to 0.67, against r = 0.63 measured by Lee et al. (2008a).
+
+**Models where the split is solved with the muscle forces.**
+- Brook et al. (1995): a 3-D dynamic index model. They keep the form of Chao and An's equations with variable coefficients (Eqs. 14a-d, p. 59):
+  - F_TE = χ_RB F_RB + χ_UB F_UB, with χ ≈ 0.985 for a convergence angle of about 10 deg;
+  - F_RB = α_LU F_LU + α_LE F_LE − K ε_RB, and F_UB likewise with α_UI F_UI;
+  - the central slip takes the remainder plus K(ε_RB + ε_UB), where ε is the relative displacement of a band and the central slip and K an elasticity taken from an earlier model.
+
+  All of the long-extensor force reaches the slips, the radial interosseous ends on bone, and the retinacular ligaments are omitted. The α are optimised together with the muscle forces. In a simulated pinch, α_LU stayed near 0.67, while α_LE settled at about 0.15 instead of its initial 0.33. This sends 70 % of the long-extensor force to the central slip, a terminal share of about 0.3 (p. 61). Excursion coefficients fitted to An et al. (1983) are in Table 2 (p. 59): terminal tendon 1.88 mm at the DIP, central slip 2.92 mm at the PIP.
+- Sancho-Bru et al. (2001): a 3-D inverse-dynamic index model. The mechanism is a net of straight branches with a force balance at each connection point (Fig. 4, p. 1494). The 4 equations of motion and 8 balances (12 equations) face 18 unknowns (6 muscle forces and 12 branch forces), which are found by minimising Σ(F/PCSA)², bounded by Hill-type muscle limits (pp. 1495-1496). EDC and EI are lumped; the radial interosseous ends on bone; the lumbrical arises from a floating point on the FDP. The MCP collateral ligaments are quadratic springs, and no retinacular ligament is included (pp. 1492-1495).
 
 **Models where the split emerges from the network.**
 - Valero-Cuevas et al. (2007): a 3-D string network solved quasi-statically.
@@ -138,7 +172,7 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
 **OpenSim models.**
 - Holzbaur et al. (2005) and Saul et al. (2015) have no intrinsics and no extensor mechanism.
 - Mirakhorlo et al. (2018) model the medial bands as separate paths that share via points. They omit the lateral bands, because an OpenSim muscle-tendon unit cannot have several insertions. The model is published under CC BY-NC-ND 4.0.
-- MacIntosh and Keir (2017) published an OpenSim index finger with a 14-component extensor mechanism on SimTK (simtk.org/projects/finger), under an agreement titled "MIT Use Agreement". Its licence would have to be confirmed before reusing any value. This proposal uses none.
+- MacIntosh and Keir (2017) published their index finger (above) on SimTK (simtk.org/projects/finger). The paper calls it open-source but names no licence. The SimTK download carries a "MIT Use Agreement" whose text is the MIT licence, with a copyright line naming Stanford University (2016). That permits reuse with the notice. This proposal uses no values from the model files; the shares quoted above are the published Table 1, cited for comparison only.
 
 **AnyBody model.** Engelhardt et al. (2021, CC BY) built a detailed AnyBody hand from a 16-specimen dataset. It has no extensor mechanism: the DIP is driven from the PIP by a finger rhythm when motion data lack the distal phalanx, and the passive tension of the hood is omitted (pp. 779, 785). The lumbricals arise from a massless substitute segment between two via points on the FDP tendon (p. 779).
 
@@ -153,7 +187,7 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
 
 Where a dorsal interosseous inserts into both, the two insertions usually come from functionally separate fleshy parts (p. 401). Salsbury also describes a transverse fascial sheet over the MCP that gives the common extensor an extensive insertion, which he considers the main reason it does not act as an IP extensor (p. 402).
 
-**What this means for us.** An et al. (1983) and Lee et al. (2008b) give whole-tendon moment-arm targets. Lee et al. (2008a) give slip-force checks for r and c across the nine postures. Ueba (2011) gives a target for the ORL. Leijnse (2010) gives a free-flexion coupling target. Valero-Cuevas (1998) gives fingertip-force targets. The material data (Garcia-Elias 1991b, Qian 2014) bound the band stiffness.
+**What this means for us.** An et al. (1983) and Lee et al. (2008b) give whole-tendon moment-arm targets. Lee et al. (2008a) give slip-force checks for r and c across the nine postures. Ueba (2011) gives a passive target for the ORL, and Harris and Rutledge (1972) a slack range for it. Leijnse (2010) gives a free-flexion coupling target. Valero-Cuevas (1998) gives fingertip-force targets. The material data (Garcia-Elias 1991b, Qian 2014) bound the band stiffness.
 
 ## Proposed model changes
 
@@ -200,7 +234,7 @@ Taking the geometry of Garcia-Elias et al. (1991a) as an illustration (r_CS ≈ 
 
 The slip forces of Lee et al. (2008a) and the ESMAs of Lee et al. (2008b) at the nine postures are reported as checks. The MCP is not a target for c, because the MCP ESMA (7.0 mm) is smaller than the kinematic moment arm (8.6 mm) and rises with IP flexion.
 
-**Intrinsics.** LU_RB and UI_UB end at their band site and branch to the terminal tendon and to the central slip. Their fractions would come from the constant coefficients of Chao and An (1978) as used by Hu et al. (2014): LU 2/3 to the radial band and 1/3 to the central slip; UI 1/3 to the band, 1/3 to the central slip, and the rest to the proximal phalanx. With r_TE = 3.5-4 mm, the lumbrical's 2/3 terminal share gives a DIP moment arm of 2.3-2.7 mm, against an ESMA of 0.53 ± 1.33 mm that falls towards zero with IP flexion (Lee et al. 2008b, Tables 3-4) and a kinematic moment arm of 0.7 ± 0.6 mm (An et al. 1983, Table 3). The intrinsic fractions are therefore checked against the same ESMAs.
+**Intrinsics.** LU_RB and UI_UB end at their band site and branch to the terminal tendon and to the central slip. Their fractions would come from the constant coefficients of Chao and An (1978) as used by Hu et al. (2014) and reproduced by Brook et al. (1995, Eqs. 12a-d): LU 2/3 to the radial band and 1/3 to the central slip; UI 1/3 to the band, 1/3 to the central slip, and the rest to the proximal phalanx. With r_TE = 3.5-4 mm, the lumbrical's 2/3 terminal share gives a DIP moment arm of 2.3-2.7 mm, against an ESMA of 0.53 ± 1.33 mm that falls towards zero with IP flexion (Lee et al. 2008b, Tables 3-4) and a kinematic moment arm of 0.7 ± 0.6 mm (An et al. 1983, Table 3). The intrinsic fractions are therefore checked against the same ESMAs.
 
 **Muscle lengths.** The muscle sees the divisor-weighted length. Its `lengthrange` must therefore be recomputed, and the slack-length and `fpmax` fit of the extrinsic extensors (`passive-muscles-tenodesis.md`, Vittorio-Caggiano/myo_sim#2) rerun.
 
@@ -211,7 +245,7 @@ The slip forces of Lee et al. (2008a) and the ESMAs of Lee et al. (2008b) at the
 - it behaves identically on CPU and mujoco-warp (pulleys are supported natively);
 - every fraction is one XML number with a citation.
 
-**Cons:** the split is constant by construction. It cannot show the posture dependence of c, the band translation, or the switching of Valero-Cuevas et al. (2007).
+**Cons:** the split is constant by construction. It cannot show the posture dependence of c, the band translation, or the switching of Valero-Cuevas et al. (2007). Nor can it release the distal phalanx when the PIP is flexed 80-90 deg. In the hand the central slip then holds the mechanism distally, and the extensor loses the DIP (Landsmeer 1949; Harris and Rutledge 1972; Ueba et al. 2011, central-slip section). In option (a) the EDC keeps c·r of its force on the terminal tendon in every posture.
 
 A tendon `equality` constraint is the other fixed option. It couples tendon *lengths*, not forces, so it is a kinematic constraint. It is not a force split, and we do not recommend it for the bands.
 
@@ -264,7 +298,7 @@ Three ways:
 2. **A passive fixed tendon over PIP and DIP** with coefficients equal to the ORL moment arms (volar at the PIP, dorsal at the DIP) and a tension-only dead-band spring (`springlength="-1e1 0"`; only lengthening is resisted). It is cheap: no geometry evaluation and no DOF. Its moment arms are constant.
 3. **A passive spatial tendon** from the proximal phalanx (volar and lateral, about 8 mm proximal to the PIP), past a lateral via site on the middle phalanx, to the terminal tendon insertion. It has posture-dependent moment arms. In the prototype it had 1.6-3.5 mm (flexion) at the PIP and 2.5 mm (extension) at the DIP at the neutral posture. Without a wrap object it crossed to the volar side of the DIP at 45 deg flexion, so it needs a wrap or a second via site.
 
-Variant 3 fits the explicit-ligament framework of MyoHub/myo_sim#142 (see *Interaction with other work*). Variant 2 or 3, radial and ulnar, would be fitted to the ORL share of the passive DIP moment in Ueba et al. (2011): 25/31/18/3 % at PIP 0/30/60/90 deg. Its stiffness has no direct measurement in the sources above, so it is a fitted parameter. The fit has to go together with the residual DIP and PIP springs (below). The ORL is a passive element, not the source of the active coupling: in Leijnse and Spoor's (2012) fits to 68 fingers it improved the unloaded FDP-driven trajectory in only one finger, by 2 deg. The coupling target of validation 2 is therefore met by the extensor branches, and the ORL is fitted to the passive data only.
+Variant 3 fits the explicit-ligament framework of MyoHub/myo_sim#142 (see *Interaction with other work*). Variant 2 or 3, radial and ulnar, would be fitted to the ORL share of the passive DIP resistance in Ueba et al. (2011): 25/31/18/3 % at PIP 0/30/60/90 deg. These are shares of the peak force over DIP 0-45 deg with the MCP extended and 1.96 N on the extrinsic extensor, so the fit has to reproduce that protocol. Its stiffness and slack length have no direct measurement in the sources above, so they are fitted parameters. The slack length is constrained from the other side by Harris and Rutledge (1972): in unresisted flexion the ORL should not become taut (Tables I-II, pp. 715-716). The fit has to go together with the residual DIP and PIP springs (below). The ORL is a passive element, not the source of the active coupling: in Leijnse and Spoor's (2012) fits to 68 fingers it improved the unloaded FDP-driven trajectory in only one finger, by 2 deg. The coupling target of validation 2 is therefore met by the extensor branches, and the ORL is fitted to the passive data only.
 
 ### Sagittal bands
 
@@ -277,7 +311,7 @@ Ulnar or radial subluxation of the tendon (sagittal band rupture) is not modelle
 
 The actuators stay as they are: RI2-5, LU_RB2-5 and UI_UB2-5, the same names and the same count. Their paths change:
 - LU_RB and UI_UB end at the band site on the proximal phalanx (option a) or the band node (option b). From there the force reaches the terminal tendon and the central slip. Their PIP moment arm becomes one band moment arm, no longer a path straight to the middle phalanx, and they gain a DIP moment arm.
-- RI keeps its MCP-only insertion on the index finger. This assumes the index radial interosseous (the first dorsal interosseous) inserts mainly into the proximal phalanx. Lee et al. (2008b) support it functionally: the FDI's PIP and DIP ESMAs were near zero (-0.38 and 0.34 mm, the PIP value not different from zero) and its main action was MCP abduction (3.10 mm; Table 4, p. 1571). Salsbury (1937) found the first dorsal interosseous inserting wholly into the proximal phalanx in every hand.
+- RI keeps its MCP-only insertion on the index finger. This assumes the index radial interosseous (the first dorsal interosseous) inserts mainly into the proximal phalanx. Lee et al. (2008b) support it functionally: the FDI's PIP and DIP ESMAs were near zero (-0.38 and 0.34 mm, the PIP value not different from zero) and its main action was MCP abduction (3.10 mm; Table 4, p. 1571). Salsbury (1937) found the first dorsal interosseous inserting wholly into the proximal phalanx in every hand. MacIntosh and Keir (2017) give their FDI a terminal-slip component (13.5 of 67.5 N), but that share was fitted to EMG, not dissected.
 - The other radial bundles are not all bony:
   - RI3 (DI2) sends about half its tendon to the expansion (48 %);
   - RI4 and RI5 (palmar interossei of the ring and little fingers) send 89-100 % (Salsbury 1937, Table II).
@@ -331,7 +365,9 @@ Each check has a target from the data file and a tolerance stated there.
    - Intrinsic loading, compared with Valero-Cuevas et al. (2007): the slip ratio should reverse as the intrinsic-to-extensor ratio grows.
 2. **PIP-DIP coupling in free flexion.**
    - Setup: drive the finger with FDP alone and with FDS alone, slowly and from extension.
-   - Targets: the DIP-PIP trajectories of Leijnse et al. (2010) with FDP driving: slope dDIP/dPIP of 1.0 ± 0.31 at PIP 70 deg, 0.53 ± 0.28 at 100 deg and 0.25 ± 0.25 at 0 deg (p. 2386); and the passive ORL share against Ueba et al. (2011).
+   - Targets: the DIP-PIP trajectories of Leijnse et al. (2010) with FDP driving: slope dDIP/dPIP of 1.0 ± 0.31 at PIP 70 deg, 0.53 ± 0.28 at 100 deg and 0.25 ± 0.25 at 0 deg (p. 2386); and the passive ORL share against Ueba et al. (2011), under Ueba's protocol (1.96 N on the extrinsic extensor, DIP 0-45 deg).
+   - ORL slack: in unloaded flexion, with the PIP-DIP differences of Harris and Rutledge (1972, Table I; at most 30 deg), the ORL carries no more than a small force.
+   - Distal-phalanx release: with the PIP flexed 90 deg, the passive DIP resistance falls (Ueba et al. 2011: 1.5 ± 1.6 N against 3.1 ± 2.0 N at PIP 30 deg). Option (a) is expected to miss this (see its cons); option (b) should show it.
    - Full passive range: with all muscles off, every band force stays below a small bound over the joint ranges (the locking check above).
 3. **Fingertip force.**
    - Setup: index posture of Valero-Cuevas et al. (1998); maximal forces in the five directions from an optimisation over the index muscles, as in `hand-function-validation.md`'s pinch.
@@ -447,7 +483,7 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 
 1. **Index pilot first?** Is an index-only pilot of both options, compared on the validation list, acceptable before any change to the reference model?
 2. **Fractions for option (a).** Should they come from Lee et al. (2008a) (r = 0.63, c = 0.39, with c's posture dependence lost) or from the nominal 50/25/25 of Valero-Cuevas et al. (1998)? Lee's c also includes force lost to the joint capsule, the hood's connections to the phalanges and carpal-tunnel friction, and its mean of 0.39 includes the flexed postures. Our suggestion (see *Checking the fractions against joint moments*): keep r = 0.63 and fit c to the whole-tendon DIP and PIP moment arms, on which An et al. (1983) and Lee et al. (2008b) agree. This gives c of about 0.75-1.0, because c = 0.39 gives about half the measured IP extension moment.
-3. **ORL: fixed or spatial?** Fixed tendon (constant moment arms, cheapest) or spatial tendon (posture-dependent arms, needs a wrap)? Its stiffness is fitted to Ueba et al. (2011); values to be confirmed from Ueba et al. (2011) and Landsmeer (1958) before the fit.
+3. **ORL: fixed or spatial?** Fixed tendon (constant moment arms, cheapest) or spatial tendon (posture-dependent arms, needs a wrap)? Its stiffness and slack length are fitted to the shares of Ueba et al. (2011), with the slack range of Harris and Rutledge (1972) as a constraint. The two disagree on when the ORL tightens (see *PIP-DIP coupling*); if both cannot be met, which should win?
 4. **Interosseous hood shares** of digits 3-5, and EDM's share at the little finger. Salsbury's (1937) expansion shares are a starting point. In today's bundle names:
    - RI3 (DI2) 0.48;
    - UI_UB3 (DI3) 0.93;
@@ -470,6 +506,7 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 - An KN, Ueba Y, Chao EY, Cooney WP, Linscheid RL (1983). Tendon excursion and moment arm of index finger muscles. J Biomech 16(6):419-425. doi:10.1016/0021-9290(83)90074-X
 - Brook N, Mizrahi J, Shoham M, Dayan J (1995). A biomechanical model of index finger dynamics. Med Eng Phys 17(1):54-63. doi:10.1016/1350-4533(95)90378-O
 - Canoso JJ, Naredo E, Martínez-Estupiñán L, Mérida-Velasco JR, Pascual-Ramos V, Murillo-González J (2021). Palpation of the lateral bands of the extensor apparatus of the fingers. J Anat 239(3):663-668. doi:10.1111/joa.13446
+- Chao EY, Opgrande JD, Axmear FE (1976). Three-dimensional force analysis of finger joints in selected isometric hand functions. J Biomech 9(6):387-396. doi:10.1016/0021-9290(76)90116-0
 - Chao EY, An KN (1978). Graphical interpretation of the solution to the redundant problem in biomechanics. J Biomech Eng 100:159-167. doi:10.1115/1.3426207
 - Dogadov A, Alamir M, Servière C, Quaine F (2017). The biomechanical model of the long finger extensor mechanism and its parametric identification. J Biomech 58:232-236. doi:10.1016/j.jbiomech.2017.04.030
 - Dogadov AA, Valero-Cuevas FJ, Servière C, Quaine F (2025). The bundles of intercrossing fibers of the extensor mechanism of the fingers greatly influence the transmission of muscle forces. Int J Numer Methods Biomed Eng 41(7):e70068. doi:10.1002/cnm.70068
@@ -492,8 +529,10 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 - Micks JE, Reswick JB (1981). Confirmation of differential loading of lateral and central fibers of the extensor tendon. J Hand Surg Am 6(5):462-467. doi:10.1016/S0363-5023(81)80104-9
 - Mirakhorlo M, Van Beek N, Wesseling M, Maas H, Veeger HEJ, Jonkers I (2018). A musculoskeletal model of the hand and wrist: model definition and evaluation. Comput Methods Biomech Biomed Engin 21(9):548-557. doi:10.1080/10255842.2018.1490952
 - Qian K, Traylor K, Lee SW, Ellis B, Weiss J, Kamper D (2014). Mechanical properties vary for different regions of the finger extensor apparatus. J Biomech 47(12):3094-3099. doi:10.1016/j.jbiomech.2014.06.035
+- Qiu D, Kamper DG (2014). Orthopaedic applications of a validated force-based biomechanical model of the index finger. Proc 36th Annu Int Conf IEEE Eng Med Biol Soc, pp. 4013-4016. doi:10.1109/EMBC.2014.6944504
 - Sachdeva P, Sueda S, Bradley S, Fain M, Pai DK (2015). Biomechanical simulation and control of hands and tendinous systems. ACM Trans Graph 34(4):42. doi:10.1145/2766987
 - Salsbury CR (1937). The interosseous muscles of the hand. J Anat 71(Pt 3):395-403.
+- Sancho-Bru JL, Pérez-González A, Vergara-Monedero M, Giurintano D (2001). A 3-D dynamic model of human finger for studying free movements. J Biomech 34(11):1491-1500. doi:10.1016/S0021-9290(01)00106-3
 - Saul KR, Hu X, Goehler CM, Vidt ME, Daly M, Velisar A, Murray WM (2015). Benchmarking of dynamic simulation predictions in two software platforms using an upper limb musculoskeletal model. Comput Methods Biomech Biomed Engin 18(13):1445-1458. doi:10.1080/10255842.2014.916698
 - Saxena A, Lipson H, Valero-Cuevas FJ (2012). Functional inference of complex anatomical tendinous networks at a macroscopic scale via sparse experimentation. PLoS Comput Biol 8(11):e1002751. doi:10.1371/journal.pcbi.1002751
 - Schultz RJ, Furlong J, Storace A (1981). Detailed anatomy of the extensor mechanism at the proximal aspect of the finger. J Hand Surg Am 6(5):493-498. doi:10.1016/S0363-5023(81)80110-4
