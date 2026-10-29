@@ -233,12 +233,30 @@ the cited paper.
     - Bone-ligament-bone tests of seven ligaments.
     - The dorsoradial ligament has the greatest ultimate load.
     - The anterior oblique ligament has the least stiffness.
-    - The stiffness and ultimate-load values are to be confirmed from the paper.
+    - No stiffness or ultimate-load value is taken from it. The measured thumb CMC
+      stiffness comes from D'Agostino et al. (2014), below.
   - D'Agostino P, Kerkhof FD, Shahabpour M, Moermans JP, Stockmans F, Vereecke EE
     (2014). Comparison of the anatomical dimensions and mechanical properties of the
     dorsoradial and anterior oblique ligaments of the trapeziometacarpal joint. J Hand
-    Surg Am 39(6):1098-1107. doi:10.1016/j.jhsa.2014.02.025. The DRL is shorter, thicker
-    and stiffer than the AOL; values are to be confirmed from the paper.
+    Surg Am 39(6):1098-1107. doi:10.1016/j.jhsa.2014.02.025.
+    - 13 fresh-frozen thumbs from 9 donors (mean age 74 years, Eaton stage I-II;
+      Table 2, p. 1100). Lengths between the deep bony attachments on MRI (9 hands),
+      width and thickness by caliper at maximal passive tension (pp. 1100-1101).
+    - Dimensions, mean ± SD (Tables 3-5, pp. 1103-1105): DRL length 10.0 ± 1.0 mm on
+      MRI (12.9 ± 2.1 mm by dissection), thickness 1.1 ± 0.2 mm, width 12.1 ± 1.6 mm;
+      AOL 12.2 ± 2.1 mm (13.0 ± 2.6 mm), 0.6 ± 0.1 mm, 13.6 ± 2.6 mm. The DRL appeared
+      as one sheet with no separate dorsal central ligament (Fig. 2), so its width
+      covers what Ladd et al. 2012 split into the dorsal radial and dorsal central
+      ligaments.
+    - Bone-ligament-bone complexes, cyclic displacement-controlled loading at 2 Hz up to
+      150 N or failure. Stiffness is the slope of the linear part in cycle 20, the
+      highest value over the subsequent tests (p. 1101).
+    - **Stiffness: DRL 89 ± 21 N/mm, AOL 65 ± 30 N/mm** (p. 1103; Tables 4-5, whose
+      column header prints the unit as MPa). Hysteresis 25 ± 3 % and 21 ± 4 %. The DRL
+      is significantly stiffer, shorter and thicker than the AOL.
+    - These are the only measured thumb CMC ligament stiffnesses used here. With the
+      MRI dimensions they correspond to an effective modulus k L / A of about 67 MPa
+      (DRL) and 97 MPa (AOL).
   - Colman M, Mass DP, Draganich LF (2007). Effects of the deep anterior oblique and
     dorsoradial ligaments on trapeziometacarpal joint stability. J Hand Surg Am
     32(3):310-317. doi:10.1016/j.jhsa.2006.12.002. In lateral pinch, mean 3-D translation
@@ -339,6 +357,12 @@ the cited paper.
   Giurintano D (2001). A 3-D dynamic model of human finger for studying free movements.
   J Biomech 34(11):1491-1500. doi:10.1016/s0021-9290(01)00106-3. Includes the passive
   action of the MCP ligaments, which is needed to reproduce ab/adduction.
+- **Hand models without ligaments.** Mirakhorlo M, Van Beek N, Wesseling M, Maas H,
+  Veeger HEJ, Jonkers I (2018). A musculoskeletal model of the hand and wrist: model
+  definition and evaluation. Comput Methods Biomech Biomed Engin 21(9):548-557.
+  doi:10.1080/10255842.2018.1490952. An OpenSim hand and wrist with no ligaments or
+  capsule; the authors name the absent carpal and ligamentous structures as one source
+  of its wrist moment-arm errors (p. 554).
 
 ### Wrist and elbow
 
@@ -353,7 +377,14 @@ the cited paper.
     extrinsic human wrist ligaments. J Biomech Eng 113(1):85-93. doi:10.1115/1.2894089.
   - Majors BJ, Wayne JS (2011). Development and validation of a computational model for
     investigation of wrist biomechanics. Ann Biomed Eng 39(11):2807-2815.
-    doi:10.1007/s10439-011-0361-y. A rigid-body wrist with ligaments as linear springs.
+    doi:10.1007/s10439-011-0361-y.
+    - A rigid-body wrist: 15 bones free in six DOFs, articular contact from CT surfaces,
+      46 ligaments as 75 straight linear tension-only springs (p. 2809).
+    - Carpal ligament stiffness from published tests or earlier models, 40-220 N/mm per
+      ligament (Table 1, p. 2809). Every carpometacarpal and intermetacarpal ligament was
+      assumed to be 100 N/mm.
+    - No in-situ strain (a uniform 2 % deformed the carpus) and no toe region, which the
+      authors note overestimates the ligaments at low strain (p. 2814).
   - Gislason MK et al. (2009). Proc Inst Mech Eng H 223(7):849-861.
     doi:10.1243/09544119jeim527. A finite-element wrist with ligaments.
 - **Elbow**
@@ -367,6 +398,13 @@ the cited paper.
   - Spratley EM, Wayne JS (2011). Computational model of the human elbow and forearm:
     application to complex varus instability. Ann Biomed Eng 39(3):1084-1091.
     doi:10.1007/s10439-010-0224-y.
+    - Ligaments as straight, linear tension-only springs, most in fan-shaped arrays
+      (p. 1085); no toe region, no wrapping (p. 1090).
+    - Collateral stiffness and tension-free flexion angles taken from Regan et al. 1991
+      (Table 1, p. 1086): anterior MCL bundle 72.3 N/mm (tension-free at 22 deg),
+      posterior MCL fibres 26.1 N/mm (80 and 110 deg), radial collateral fibres
+      15.5 N/mm (30-85 deg), lateral ulnar collateral 57.0 N/mm (107 deg), annular
+      ligament 28.5 N/mm at 2 % in-situ strain.
   - Rahman M, Cil A, Stylianou AP (2018). Medial collateral ligament deficiency of the
     elbow joint: a computational approach. Bioengineering 5(4):84.
     doi:10.3390/bioengineering5040084.
@@ -379,6 +417,13 @@ the cited paper.
   - Wismans J, Veldpaus F, Janssen J, Huson A, Struben P (1980). A three-dimensional
     mathematical model of the knee-joint. J Biomech 13(8):677-685.
     doi:10.1016/0021-9290(80)90354-1.
+    - Ligaments and capsule as seven tension-only springs with a purely quadratic law,
+      f = k (L - L0)² for L > L0 (Eq. 12), k = 10-35 N/mm² from Trent et al. 1976
+      (mean of six specimens), and an initial strain in extension of -3 to +5 % that
+      sets L0 (Eq. 13, Table 1). The linear branch came later, with Blankevoort et al.
+      1991.
+    - Doubling k changed the anterior-posterior laxity little; small changes in the
+      initial strains changed it a lot (sensitivity section).
   - Blankevoort L, Kuiper JH, Huiskes R, Grootenboer HJ (1991). Articular contact in a
     three-dimensional model of the knee. J Biomech 24(11):1019-1031.
     doi:10.1016/0021-9290(91)90019-j. Ligaments as non-linear elastic line elements:
@@ -399,23 +444,34 @@ the cited paper.
       Table 2 compares the resulting k with earlier knee models.
   - Blankevoort L, Huiskes R (1991). Ligament-bone interaction in a three-dimensional
     model of the knee. J Biomech Eng 113(3):263-269. doi:10.1115/1.2894883. Wrapping
-    the MCL over the tibial edge changes how it resists valgus moments. Its effect on
-    internal/external rotation laxity is negligible.
+    the MCL over the tibial edge changes how it resists valgus moments: valgus rotation
+    under 24 N m fell by 0.9-1.7 deg (Fig. 6). Its effect on internal/external rotation
+    laxity is negligible (abstract).
   - Shelburne KB, Pandy MG (1997). A musculoskeletal model of the knee for evaluating
     ligament forces during isometric contractions. J Biomech 30(2):163-176.
     doi:10.1016/s0021-9290(96)00119-4.
+    - A sagittal-plane knee with 11 straight-line bundles (ACL, PCL, MCL, LCL,
+      posterior capsule) and the Blankevoort-Huiskes force law (p. 165).
+    - Bundle stiffness 1500-4500 N (per unit strain), started from Blankevoort and
+      Huiskes 1991 and tuned to cadaver anterior-posterior drawer stiffness; reference
+      strains -0.21 to +0.06 (Table B1, p. 176).
+    - In maximal isometric extension the resultant ACL force reaches about 500 N at
+      20 deg of flexion (p. 167).
   - Shelburne KB, Pandy MG, Anderson FC, Torry MR (2004). Pattern of anterior cruciate
     ligament force in normal walking. J Biomech 37(6):797-805.
     doi:10.1016/j.jbiomech.2003.10.010. Peak ACL force 303 N.
 - **Lenhart et al. 2015.** Lenhart RL, Kaiser J, Smith CR, Thelen DG. Prediction and
   validation of load-dependent behavior of the tibiofemoral and patellofemoral joints
-  during movement. Ann Biomed Eng 43(11):2675-2685. doi:10.1007/s10439-015-1326-3. An
-  OpenSim knee with 14 multi-strand ligament bundles:
-  - non-linear toe region below 6 % strain;
-  - linear stiffness = cross-sectional area × 125 MPa;
-  - reference strains from the literature;
-  - Monte Carlo spread: 30 % in stiffness, 0.02 in reference strain;
-  - wrap objects for the MCL and the posterior capsule.
+  during movement. Ann Biomed Eng 43(11):2675-2685. doi:10.1007/s10439-015-1326-3. A
+  12-DOF OpenSim knee with 14 ligament bundles of 76 strands in all (Fig. 1, p. 2677):
+  - non-linear toe region below 6 % strain, linear above (p. 2677);
+  - linear stiffness = cross-sectional area × 125 MPa, divided equally over a bundle's
+    strands;
+  - reference strains in an extended posture taken from the literature; the per-bundle
+    values are in the paper's supplementary material;
+  - Monte Carlo spread (n = 2000): SD 30 % in stiffness and 0.02 in reference strain
+    (p. 2678);
+  - wrap objects for the MCL, the posterior capsule and the patellar tendon (p. 2677).
 - **Smith et al. 2016 (two papers)**
   - Smith CR, Lenhart RL, Kaiser J, Vignos MF, Thelen DG (2016). Influence of ligament
     properties on tibiofemoral mechanics in walking. J Knee Surg 29(2):99-106.
@@ -426,10 +482,24 @@ the cited paper.
   - Smith CR, Vignos MF, Lenhart RL, Kaiser J, Thelen DG (2016). The influence of
     component alignment and ligament properties on tibiofemoral contact forces in total
     knee replacement. J Biomech Eng 138(2):021017. doi:10.1115/1.4032464.
+    - Same framework (quadratic toe, linear above; 125 MPa × area), 11 bundles of 1-20
+      strands plus the patellar tendon, in an 83-year-old subject with a knee
+      replacement (pp. 021017-1 to -2).
+    - Table 1 (p. 021017-2): stiffness 800-5700 N per unit strain per bundle; reference
+      strains in the relaxed extended posture from -0.06 (posteromedial PCL) to +0.08
+      (posterior capsule); MCL 0.03, LCL 0.06. Monte Carlo SD 30 % and 0.02, as
+      Lenhart et al.
 - **Other knee models**
-  - Marra MA et al. (2015). A subject-specific musculoskeletal modeling framework to
-    predict in vivo mechanics of total knee arthroplasty. J Biomech Eng 137(2):020904.
+  - Marra MA, Vanheule V, Fluit R, Koopman BHFJM, Rasmussen J, Verdonschot N, Andersen
+    MS (2015). A subject-specific musculoskeletal modeling framework to predict in vivo
+    mechanics of total knee arthroplasty. J Biomech Eng 137(2):020904.
     doi:10.1115/1.4029258.
+    - AnyBody force-dependent kinematics: an 11-DOF knee with 17 ligament bundles that
+      wrap geometric shapes (Fig. 3).
+    - The Blankevoort law with ε_l = 0.03 and L0 = L_r / (ε_r + 1) at upright standing
+      (Eqs. 2-3, p. 020904-5).
+    - Table 1 (p. 020904-5): stiffness 1000-6000 N per unit strain; reference strains
+      from -0.25 (anterior LCL) to +0.12 (superior medial patellofemoral ligament).
   - Bloemker KH, Guess TM, Maletsky L, Dodd K (2012). Computational knee ligament
     modeling using experimentally determined zero-load lengths. Open Biomed Eng J
     6:33-41. doi:10.2174/1874230001206010033.
@@ -440,29 +510,60 @@ the cited paper.
   - Guess TM, Razu S, Jahandar H (2016). J Knee Surg 29(2):126-137.
     doi:10.1055/s-0036-1571954.
 - **Tissue properties**
-  - Woo SL, Hollis JM, Adams DJ, Lyon RM, Takai S (1991). Tensile properties of the
-    human femur-anterior cruciate ligament-tibia complex. Am J Sports Med
-    19(3):217-225. doi:10.1177/036354659101900303. Young specimens: 242 ± 28 N/mm
-    linear stiffness and 2160 ± 157 N ultimate load.
-  - Noyes FR, Grood ES (1976). J Bone Joint Surg Am 58(8):1074-1082.
-    doi:10.2106/00004623-197658080-00006.
-  - Trent PS, Walker PS, Wolf B (1976). Clin Orthop Relat Res (117):263-270.
-    doi:10.1097/00003086-197606000-00034.
-  - Butler DL, Kay MD, Stouffer DC (1986). J Biomech 19(6):425-432.
-    doi:10.1016/0021-9290(86)90019-9.
+  - Woo SL-Y, Hollis JM, Adams DJ, Lyon RM, Takai S (1991). Tensile properties of the
+    human femur-anterior cruciate ligament-tibia complex: the effects of specimen age
+    and orientation. Am J Sports Med 19(3):217-225. doi:10.1177/036354659101900303.
+    - 27 pairs of knees in three age groups (22-35, 40-50, 60-97 years), tested at 30 deg
+      of flexion; one knee of each pair loaded along the ACL axis (anatomical), the other
+      along the tibial axis (p. 218).
+    - Linear stiffness (slope between 3 and 7 mm of elongation, p. 220), anatomical
+      orientation: 242 ± 28, 220 ± 24 and 180 ± 25 N/mm; ultimate load 2160 ± 157,
+      1503 ± 83 and 658 ± 129 N for the young, middle and older groups (mean ± SEM;
+      Table 3, pp. 221-222).
+  - Noyes FR, Grood ES (1976). The strength of the anterior cruciate ligament in humans
+    and Rhesus monkeys. J Bone Joint Surg Am 58(8):1074-1082.
+    doi:10.2106/00004623-197658080-00006. Bone-ACL-bone units at a fast strain rate:
+    donors 16-26 years (n = 6) 182 ± 56 N/mm stiffness, 1730 ± 660 N maximum force,
+    111 ± 26 MPa modulus; donors 48-86 years (n = 20) 129 ± 39 N/mm, 734 ± 266 N,
+    65.3 ± 24.0 MPa (Tables II-III, pp. 1077-1078).
+  - Trent PS, Walker PS, Wolf B (1976). Ligament length patterns, strength, and
+    rotational axes of the knee joint. Clin Orthop Relat Res (117):263-270.
+    doi:10.1097/00003086-197606000-00034. The source of Wismans's stiffness values;
+    Woo et al. 1991 (p. 217) quote its ACL stiffness as 141 N/mm and its ultimate load
+    as 633 N (donors 25-55 years).
+  - Butler DL, Kay MD, Stouffer DC (1986). Comparison of material properties in
+    fascicle-bone units from human patellar tendon and knee ligaments. J Biomech
+    19(6):425-432. doi:10.1016/0021-9290(86)90019-9.
+    - Fascicle-bone units from three donors aged 21-30 (Table 1, p. 426), at a strain
+      rate of 100 %/s (p. 429).
+    - Ligament (ACL, PCL, LCL) modulus 315 ± 22 MPa across donors (mean ± SEM,
+      n = 23 units; per-donor means 278-447 MPa); patellar tendon 643 ± 53 MPa; strain
+      at maximum stress 15 % for the ligaments (Table 3, p. 431).
   - Chandrashekar N, Mansouri H, Slauterbeck J, Hashemi J (2006). J Biomech
     39(16):2943-2950. doi:10.1016/j.jbiomech.2005.10.031.
 
 ### Shoulder
 
 - **Tissue properties**
-  - Bigliani LU et al. (1992). Tensile properties of the inferior glenohumeral ligament.
-    J Orthop Res 10(2):187-197. doi:10.1002/jor.1100100205. Strain to failure averages
-    27 % for the whole specimen and 11 % for the midsubstance.
-  - Boardman ND et al. (1996). Tensile properties of the superior glenohumeral and
-    coracohumeral ligaments. J Shoulder Elbow Surg 5(4):249-254.
-    doi:10.1016/s1058-2746(96)80050-4. Stiffness: coracohumeral 36.7 ± 5.9 N/mm,
-    superior glenohumeral 17.4 ± 1.5 N/mm.
+  - Bigliani LU, Pollock RG, Soslowsky LJ, Flatow EL, Pawluk RJ, Mow VC (1992). Tensile
+    properties of the inferior glenohumeral ligament. J Orthop Res 10(2):187-197.
+    doi:10.1002/jor.1100100205.
+    - 16 shoulders, 48 bone-ligament-bone specimens (superior band, anterior and
+      posterior pouch), pulled at 0.004-0.04 mm/s (abstract; p. 191).
+    - Mean ± SD over all regions (Table 1, p. 190): thickness 2.28 ± 0.66 mm, width
+      12.3 ± 2.9 mm, length 40.7 ± 4.7 mm; failure stress 5.5 ± 2.2 MPa; strain to
+      failure 27.0 ± 8.9 % for the whole specimen and 10.9 ± 5.5 % for the midsubstance,
+      so most of the strain occurs near the insertions.
+    - Modulus 36.9 ± 14.6 MPa (anterior pouch 30.3, posterior pouch 41.9; Table 2,
+      p. 192). Modulus × mean area gives about 1 kN per unit strain for the whole
+      ligament.
+  - Boardman ND 3rd, Debski RE, Warner JJ, Taskiran E, Maddox L, Imhoff AB, Fu FH,
+    Woo SL (1996). Tensile properties of the superior glenohumeral and coracohumeral
+    ligaments. J Shoulder Elbow Surg 5(4):249-254. doi:10.1016/s1058-2746(96)80050-4.
+    - 10 of each ligament, donors 55-76 years (p. 250).
+    - Stiffness: coracohumeral 36.7 ± 5.9 N/mm, superior glenohumeral 17.4 ± 1.5 N/mm;
+      ultimate load 359.8 ± 40.3 N and 101.9 ± 11.5 N; mid-portion area 53.7 ± 3.2 and
+      11.3 ± 1.6 mm² (abstract; Table 1, p. 252).
   - Voycheck CA et al. (2010). J Appl Physiol 108(6):1711-1718.
     doi:10.1152/japplphysiol.01175.2009.
 - **Capsule as a sheet vs strands**
@@ -479,8 +580,14 @@ the cited paper.
     stability constraints. Front Bioeng Biotechnol 13:1441530.
     doi:10.3389/fbioe.2025.1441530.
     - AnyBody model with SGHL, MGHL, IGHL and CHL modelled as 2, 2, 8 and 5 strands
-      wrapped on the humeral head.
-    - Stiffness 320-1099 N per unit strain.
+      wrapped on a sphere at the humeral head, with the force law of Marra et al. 2015
+      (section 2.2.3).
+    - Stiffness 320-1099 N per unit strain (IGHL posterior, inferior and anterior 320,
+      388 and 582; MGHL 375; SGHL 550; CHL 1099), based on Bigliani et al. 1992 and
+      Boardman et al. 1996 among others (Table 1).
+    - Slack lengths calibrated per subject from reference strains of 5-11 % at stated
+      glenohumeral positions, e.g. MGHL 7 % and CHL 5 % at 0 deg abduction, the IGHL
+      regions 10-11 % at 60 deg abduction with rotation (Table 1).
   - Dalman MJ, Saul KR (2026). Assessing sensitivity of predictive shoulder simulations
     to uncertain soft tissue properties. J Biomech 195:113114.
     doi:10.1016/j.jbiomech.2025.113114.
@@ -492,7 +599,15 @@ the cited paper.
 
 - **Reviews**
   - Weiss JA, Gardiner JC (2001). Computational modeling of ligament mechanics. Crit Rev
-    Biomed Eng 29(3):303-371. doi:10.1615/critrevbiomedeng.v29.i3.20.
+    Biomed Eng 29(3):303-371. doi:10.1615/critrevbiomedeng.v29.i3.20. From its review
+    of one-dimensional ligament models (section V.A):
+    - quadratic and linear force-elongation laws with a zero-force reference length are
+      the norm, the quadratic-then-linear form being Blankevoort's;
+    - in Mommersteeg et al.'s comparison, three or fewer line elements per knee
+      ligament made the model very sensitive to the geometry, while seven or more were
+      redundant;
+    - reference strains optimised to reproduce measured kinematics, as Blankevoort et
+      al. did (-25 % to +10 %), are often physiologically unrealistic and not unique.
   - Butler DL, Grood ES, Noyes FR, Zernicke RF (1978). Biomechanics of ligaments and
     tendons. Exerc Sport Sci Rev 6:125-181. doi:10.1249/00003677-197800060-00005.
 - **OpenSim.**
@@ -505,6 +620,33 @@ the cited paper.
   write the parameter as ε_l = 0.03, with the toe region ending at 2ε_l. That is the same
   curve as OpenSim's transition strain of 0.06: k ε² / (4 ε_l) = k ε² / (2 ε_t) and
   k (ε - ε_l) = k (ε - ε_t / 2) with ε_t = 2 ε_l.
+- **Spine tissue data.**
+  - Chazal J, Tanguy A, Bourges M, Gaurel G, Escande G, Guillot M, Vanneuville G (1985).
+    Biomechanical properties of spinal ligaments and a histological study of the
+    supraspinal ligament in traction. J Biomech 18(3):167-176.
+    doi:10.1016/0021-9290(85)90202-7.
+    - 43 whole ligaments from 12 fresh cadavers (30-80 years) and surgery, pulled at
+      1 mm/min between bone clamps (p. 167).
+    - Sigmoid curves (intertransverse ligament excepted): the toe ends at strains of
+      0.06-0.12 (point A), the linear part at 0.16-0.44 (point B), failure at 0.21-0.57
+      (point C). Failure stress: posterior longitudinal
+      20.8, flavum 15.2, anterior longitudinal 10.6, supra- and interspinous 8.7 MPa
+      (Table 2, p. 170). Failure loads 437 N (anterior) and 323 N (posterior
+      longitudinal; p. 170).
+  - Pintar FA, Yoganandan N, Myers T, Elhagediab A, Sances A Jr (1992). Biomechanical
+    properties of human lumbar spine ligaments. J Biomech 25(11):1351-1356.
+    doi:10.1016/0021-9290(92)90290-H.
+    - 132 samples from 38 cadavers, T12-S1 (abstract).
+    - Linear-region stiffness by ligament type, mean ± SD (Table 3, p. 1353): anterior
+      longitudinal 33.0 ± 15.7, posterior longitudinal 20.4 ± 11.9, capsules
+      33.9 ± 10.7, flavum 27.2 ± 9.2, interspinous 11.5 ± 6.6, supraspinous
+      23.7 ± 10.9 N/mm. Failure strain from 11-16 % (posterior longitudinal) to
+      71-115 % (supraspinous) (p. 1352).
+  - Christophy M, Faruk Senan NA, Lotz JC, O'Reilly OM (2012). A musculoskeletal model
+    for the lumbar spine. Biomech Model Mechanobiol 11:19-34.
+    doi:10.1007/s10237-011-0290-6. Open access. Its lumbar joints follow constraint
+    functions, and ligaments and facets are not modelled; the authors propose a joint
+    stiffness matrix for them (pp. 30-31).
 - **Spine precedent.** Meszaros-Beller L, Hammer M, Schmitt S, Pivonka P (2023). Effect
   of neglecting passive spinal structures. Front Physiol 14:1135531.
   doi:10.3389/fphys.2023.1135531.
@@ -521,20 +663,35 @@ the cited paper.
 - No tensile or stiffness study of the finger (digits 2-5) MCP collaterals was found.
 - For the PIP there are failure loads (collateral 162.5 N in distraction, about 177 N in
   lateral bending; volar plate about 220-390 N in hyperextension) but no stiffness.
-- For the thumb CMC, the one study of isolated ligaments gives failure loads of a few
-  newtons from very old donors (Najima et al. 1997) and no stiffness.
+- For the thumb CMC, stiffness is measured for two of the seven ligaments only: the
+  dorsoradial (89 ± 21 N/mm) and anterior oblique (65 ± 30 N/mm) ligaments, from donors
+  with a mean age of 74 (D'Agostino et al. 2014). The isolated-ligament failure loads of
+  Najima et al. 1997 are a few newtons from very old donors.
 - No in-vivo length or strain measurement of the thumb CMC ligaments was found.
+- The CMC2-5 ligaments have no data of their own; a published wrist model assumes
+  100 N/mm for all of them (Majors and Wayne 2011).
 
 Finger ligament stiffness would therefore be transferred: either from cross-sectional
 area times a modulus, as Lenhart et al. do, or from related ligaments. Those rows would
-carry the status `transferred`.
+carry the status `transferred`. The thumb CMC dorsoradial and anterior oblique rows can
+carry D'Agostino's measured values; the dorsal central ligament is part of D'Agostino's
+dorsoradial sheet and shares its value.
 
 An example of the area route for the thumb CMC: width × thickness from Ladd et al. 2012
-(Table I) gives about 1.7 mm² (intermetacarpal) to 10.2 mm² (posterior oblique). With
-the knee-ligament modulus of 345 MPa that Blankevoort et al. 1991 take from Butler et al.
-1986 (Appendix B), k is about 0.6-3.5 kN per unit strain, or k / L of about 6·10⁴ to
-3.6·10⁵ N/m at Ladd's lengths. The rectangle overestimates the area of a tapering
-ligament, and the modulus comes from young knee ligaments, so this is an upper estimate.
+(Table I) gives about 1.7 mm² (intermetacarpal) to 10.2 mm² (posterior oblique).
+- With the knee-ligament modulus of 345 MPa that Blankevoort et al. 1991 take from
+  Butler et al. 1986 (Appendix B; Butler's own cross-donor ligament mean is 315 MPa), k
+  is about 0.6-3.5 kN per unit strain, or k / L of about 6·10⁴ to 3.6·10⁵ N/m at Ladd's
+  lengths.
+- D'Agostino's measured thumb CMC stiffness implies an effective modulus of only about
+  65-100 MPa (section 2, thumb CMC mechanics), close to the 65 MPa of older ACLs (Noyes
+  and Grood 1976) and below Lenhart's 125 MPa. With it, k is about 0.1-1.0 kN per unit
+  strain, or k / L of about 1·10⁴ to 1·10⁵ N/m, which brackets the measured
+  6.5·10⁴-8.9·10⁴ N/m.
+- **Proposal:** transfer hand ligament stiffness with D'Agostino's effective modulus
+  (about 80 MPa, from donors of the same age as the hand-anatomy series), and keep
+  345 MPa as the upper sensitivity bound. The rectangle overestimates the area of a
+  tapering ligament, which adds to the margin.
 
 ## 3. MuJoCo mechanics
 
@@ -620,7 +777,11 @@ That is 24 + 16 + 7 = 47 strands per hand.
   2015. That is a separate, larger change.
 - **Glenohumeral capsule.** Combined elevation-rotation end range. Moore et al. 2010 is
   the caveat on strands.
-- **Elbow collaterals.** Only with a varus-valgus DOF.
+- **Elbow collaterals.** Only with a varus-valgus DOF. Spratley and Wayne 2011 give a
+  per-fibre stiffness and tension-free angle set to start from.
+- **Lumbar spine.** Only with intervertebral DOFs. Per-ligament stiffness and failure
+  strains exist (Pintar et al. 1992; Chazal et al. 1985), while Christophy et al. 2012's
+  lumbar model leaves the ligaments out.
 - **DIP joints and the thumb MP/IP.** These are hinges and stay with the residual
   springs.
 
@@ -658,8 +819,9 @@ ligaments as passive spatial tendons. The role table's `*_tendon.xml` entry woul
 
 ### Force law and parameters
 
-Strain is ε = (L - L0) / L0. The force law is the Blankevoort / Wismans curve
-(Blankevoort et al. 1991, Eqs. 6a-c) used by OpenSim's `Blankevoort1991Ligament`, with
+Strain is ε = (L - L0) / L0. The force law is the Blankevoort curve (Blankevoort et al.
+1991, Eqs. 6a-c; Wismans et al. 1980 used its quadratic part alone) used by OpenSim's
+`Blankevoort1991Ligament`, Lenhart et al. 2015 and Marra et al. 2015, with
 stiffness k in newtons per unit strain and transition strain ε_t (0.06 by default, i.e.
 Blankevoort's ε_l = 0.03):
 
@@ -880,9 +1042,11 @@ warning or a finger speed above 100 rad/s.
 | rod-like phalanx inertia, armature 1e-6 | 1.7·10⁵ / 6.5·10⁵ | 3·10⁵ N/m | 1·10⁶ N/m |
 
 Published bone-ligament-bone stiffness runs from tens of N/mm for small ligaments
-(coracohumeral 36.7 N/mm, superior glenohumeral 17.4 N/mm) to 242 N/mm for a young ACL,
-i.e. about 10⁴ to 2.4·10⁵ N/m. The area × modulus estimate for the short thumb CMC
-ligaments (section 2, up to 3.6·10⁵ N/m) reaches the top of that range.
+(superior glenohumeral 17.4 N/mm, coracohumeral 36.7 N/mm; thumb CMC anterior oblique
+65 N/mm and dorsoradial 89 N/mm) to 242 N/mm for a young ACL, i.e. about 10⁴ to
+2.4·10⁵ N/m. The area × 345 MPa estimate for the short thumb CMC ligaments (section 2, up
+to 3.6·10⁵ N/m) exceeds that range; with the proposed effective modulus of about 80 MPa
+they stay below about 1·10⁵ N/m, consistent with D'Agostino's measurements.
 
 **What the stability numbers say.**
 - **Current `dev` inertias.** Hand ligaments in that range are stable with a large
@@ -891,8 +1055,9 @@ ligaments (section 2, up to 3.6·10⁵ N/m) reaches the top of that range.
   reduced to physical values (cf. issue #128), the margin for the stiffest hand strands
   falls to about 1-3×. The analytic bound 4 / (h² · invweight) predicts the empirical
   limit to within a factor of about 2. It would be a test on every strand. A strand at
-  the top of the CMC estimate (3.6·10⁵ N/m) would sit at the empirical limit of the
-  rod-like-inertia case (stable at 3·10⁵, diverged at 10⁶ N/m).
+  the top of the 345 MPa CMC estimate (3.6·10⁵ N/m) would sit at the empirical limit of
+  the rod-like-inertia case (stable at 3·10⁵, diverged at 10⁶ N/m). The measured thumb
+  CMC values (6.5·10⁴-8.9·10⁴ N/m) leave a margin of about 3× in that case.
 - **Damping.** A tendon damper of 500 N s/m, the order used by Rahman et al. and Bloemker
   et al. (0.5 N s/mm), was stable on `dev`. It diverged with realistic inertia, because
   it is explicit. 50 N s/m was stable in both cases. This is another reason for no
@@ -922,15 +1087,25 @@ run of `lin_nowrap` hit a QACC warning. The cause was a NaN in the length of the
    - transfer from the PIP collateral and thumb CMC data;
    - transfer from the knee and shoulder data.
 
-   Each option is a `transferred` row with the assumption stated. The CMC stiffness
-   values are to be confirmed from Bettinger et al. 2000 and D'Agostino et al. 2014.
+   Each option is a `transferred` row with the assumption stated. For the thumb CMC,
+   D'Agostino et al. 2014 give measured values for the dorsoradial and anterior oblique
+   ligaments, which also fix an effective modulus (about 65-100 MPa) for the area route;
+   section 2 proposes that modulus for the other hand ligaments, with 345 MPa as the
+   upper bound. Is that acceptable for the MCP and PIP collaterals?
 3. **Reference strains.** We have no in-vivo strain data for the CMC ligaments. Do we
    set the reference strain from the length-angle data (MCP) and from a "taut at the end
    of range" assumption (CMC)? For the CMC, Ladd et al. 2012 give the posture in which
    each ligament is maximally taut and its length there (Table I), which could fix that
    assumption per strand. Minami's MCP lengths are apparent lengths, valid only while a
    portion is taut. Slack length is the most influential parameter in every published
-   sensitivity study.
+   sensitivity study. Wismans et al. 1980 already found the knee laxity far more
+   sensitive to the initial strains than to doubling k. For scale, the published knee
+   models set reference strains per bundle in an extended or standing posture of -0.25 to
+   +0.10 (Blankevoort et al. 1991), -0.06 to +0.08 (Smith et al. 2016) and -0.25 to
+   +0.12 (Marra et al. 2015); Menze et al. 2025 set 5-11 % at stated shoulder positions.
+   Weiss and Gardiner 2001 caution that reference strains tuned to reproduce kinematics
+   are often physiologically unrealistic and not unique, which argues for the
+   anatomical "taut at the end of range" route here.
 4. **How much of the residual the ligaments may take.** Kuo and Deshpande 2012 suggest
    the capsule-ligament complex dominates MCP stiffness; Knutson et al. 2000 find the
    multi-joint muscles dominant at the range ends for most wrist angles. Both leave the
@@ -939,7 +1114,9 @@ run of `lin_nowrap` hit a QACC warning. The cause was a NaN in the length of the
    is better data?
 5. **Wrapping surfaces.** MuJoCo wraps only spheres and cylinders. Are three strands per
    collateral on a cylinder enough to reproduce the MCP cam effect, or do we need more
-   strands?
+   strands? In a knee comparison quoted by Weiss and Gardiner 2001, three or fewer line
+   elements per ligament made the model very sensitive to the attachment geometry, and
+   seven or more were redundant.
 6. **Inertia and stability.** The stability margin depends on the phalanx inertia floor
    and armature. Should a ligament PR wait for, or be coordinated with, the inertia work
    (#128)?
