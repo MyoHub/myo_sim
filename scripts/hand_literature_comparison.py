@@ -34,6 +34,8 @@ END = "<!-- END generated -->"
 DIGITS = (2, 3, 4, 5)
 # Distal-phalanx body of each digit (the thumb last).
 DISTAL_BODIES = {**{d: f"distph{d}_r" for d in DIGITS}, "thumb": "distal_thumb_r"}
+# Long flexor of each digit: its shortening defines the palmar side.
+LONG_FLEXORS = {**{d: f"FDP{d}_r" for d in DIGITS}, "thumb": "FPL_r"}
 PALM_PADS = ("palm_pad_r", "thenar_pad_r", "hypothenar_pad_r")
 METACARPAL_BODIES = ("firstmc_r", "secondmc_r", "thirdmc_r", "fourthmc_r", "fifthmc_r")
 FIST_SECONDS = 1.0
@@ -43,14 +45,20 @@ def load_data(path: Path = DATA_PATH) -> dict[str, Any]:
     return json.loads(path.read_text())
 
 
+def _pads() -> Any:
+    return _load_script("fit_hand_pads")
+
+
 def _validator() -> Any:
-    if "validate_hand_function" in sys.modules:
-        return sys.modules["validate_hand_function"]
-    spec = importlib.util.spec_from_file_location(
-        "validate_hand_function", Path(__file__).with_name("validate_hand_function.py")
-    )
+    return _load_script("validate_hand_function")
+
+
+def _load_script(name: str) -> Any:
+    if name in sys.modules:
+        return sys.modules[name]
+    spec = importlib.util.spec_from_file_location(name, Path(__file__).with_name(f"{name}.py"))
     module = importlib.util.module_from_spec(spec)
-    sys.modules["validate_hand_function"] = module
+    sys.modules[name] = module  # dataclasses resolve their module
     spec.loader.exec_module(module)
     return module
 
@@ -67,102 +75,28 @@ def _collision(model: mujoco.MjModel, g: int) -> bool:
     return model.geom_group[g] == 4 and model.geom_type[g] != mujoco.mjtGeom.mjGEOM_MESH
 
 
-def _ray_geom(model: mujoco.MjModel, data: mujoco.MjData, g: int, pnt: np.ndarray, vec: np.ndarray) -> float:
-    if model.geom_type[g] == mujoco.mjtGeom.mjGEOM_MESH:
-        return mujoco.mj_rayMesh(model, data, g, pnt, vec)
-    return mujoco.mju_rayGeom(data.geom_xpos[g], data.geom_xmat[g], model.geom_size[g], pnt, vec, model.geom_type[g])
-
-
-def _pad_axis(model: mujoco.MjModel, data: mujoco.MjData, pad: int, bone: int) -> np.ndarray:
-    """Unit outward normal of a pad: its shortest semi-axis, pointing away from the bone."""
-    axis = data.geom_xmat[pad].reshape(3, 3)[:, int(np.argmin(model.geom_size[pad]))]
-    return axis if np.dot(data.geom_xpos[pad] - data.geom_xpos[bone], axis) > 0 else -axis
-
-
-def soft_tissue_mm(model: mujoco.MjModel, data: mujoco.MjData, pad: int, bones: list[int], skin: list[int]) -> float:
-    """Largest soft-tissue thickness normal to a pad (mm), as Dallard 2018 measure it.
-
-    Rays parallel to the pad normal are cast towards the bone over a grid covering the pad; on each ray
-    the thickness is the distance from the outermost skin geom to the bone. The largest value is returned.
-    """
-    normal = _pad_axis(model, data, pad, bones[0])
-    axes = data.geom_xmat[pad].reshape(3, 3)
-    order = np.argsort(model.geom_size[pad])
-    best = float("nan")
-    for u in np.linspace(-1.0, 1.0, 11):
-        for v in np.linspace(-1.0, 1.0, 11):
-            offset = (
-                u * model.geom_size[pad][order[2]] * axes[:, order[2]] + v * model.geom_size[pad][order[1]] * axes[:, order[1]]
-            )
-            start = data.geom_xpos[pad] + offset + 0.05 * normal
-            hits_skin = [x for x in (_ray_geom(model, data, g, start, -normal) for g in skin) if x >= 0]
-            hits_bone = [x for x in (_ray_geom(model, data, g, start, -normal) for g in bones) if x >= 0]
-            if hits_skin and hits_bone:
-                thickness = 1000.0 * (min(hits_bone) - min(hits_skin))
-                best = thickness if np.isnan(best) else max(best, thickness)
-    return best
-
-
-def _mesh_vertices(model: mujoco.MjModel, data: mujoco.MjData, g: int) -> np.ndarray:
-    mesh = model.geom_dataid[g]
-    local = model.mesh_vert[model.mesh_vertadr[mesh] : model.mesh_vertadr[mesh] + model.mesh_vertnum[mesh]]
-    return local @ data.geom_xmat[g].reshape(3, 3).T + data.geom_xpos[g]
-
-
-def fingertip_soft_tissue_mm(model: mujoco.MjModel, data: mujoco.MjData, body: str) -> float:
-    """Palmar soft tissue of a fingertip at q = 0 (mm), measured like Dallard 2018's D_N0.
-
-    D_N0 runs from the distal palmar corner of the phalanx perpendicular to its long axis to the skin
-    (Dallard Fig. 2); its mean is their "maximal thickness". Here: the long axis runs from the joint centre
-    to the farthest bone vertex, the palmar direction is the pad normal made perpendicular to it, and
-    palmar rays through the bone's mid-line over its last 6 mm give the skin (outermost collision geom)
-    to bone distance; the largest is returned.
-    """
-    geoms = _body_geoms(model, body)
-    bone = next(g for g in geoms if model.geom_type[g] == mujoco.mjtGeom.mjGEOM_MESH)
-    skin = [g for g in geoms if _collision(model, g)]
-    pad = next(g for g in skin if model.geom_type[g] == mujoco.mjtGeom.mjGEOM_ELLIPSOID)
-    origin = data.xpos[model.body(body).id]
-    verts = _mesh_vertices(model, data, bone)
-    tip = verts[np.argmax(np.linalg.norm(verts - origin, axis=1))]
-    axis = (tip - origin) / np.linalg.norm(tip - origin)
-    palmar = _pad_axis(model, data, pad, bone)
-    palmar = palmar - np.dot(palmar, axis) * axis
-    palmar /= np.linalg.norm(palmar)
-    lateral = np.cross(axis, palmar)
-    centre = np.mean(verts @ lateral) * lateral
-    length = np.dot(tip - origin, axis)
-    best = float("nan")
-    for station in np.arange(length - 0.006, length, 0.0002):
-        start = origin + station * axis - np.dot(origin, lateral) * lateral + centre + 0.05 * palmar
-        bone_hit = _ray_geom(model, data, bone, start, -palmar)
-        skin_hits = [x for x in (_ray_geom(model, data, g, start, -palmar) for g in skin) if x >= 0]
-        if bone_hit >= 0 and skin_hits:
-            thickness = 1000.0 * (bone_hit - min(skin_hits))
-            best = thickness if np.isnan(best) else max(best, thickness)
-    return best
-
-
 def fingertip_pads(model: mujoco.MjModel) -> dict[str, float]:
     """Fingertip soft tissue (Dallard 2018's D_N0) of digits 2-5 and the thumb at q = 0."""
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
-    return {str(digit): fingertip_soft_tissue_mm(model, data, body) for digit, body in DISTAL_BODIES.items()}
+    pads = _pads()
+    corner = pads.load_table()["fingertip"]["corner_m"]
+    return {
+        str(digit): pads.fingertip_soft_tissue_mm(model, data, body, LONG_FLEXORS[digit], corner)
+        for digit, body in DISTAL_BODIES.items()
+    }
 
 
 def palm_pads(model: mujoco.MjModel) -> dict[str, float]:
-    """Soft tissue under each palm pad (pad surface to the nearest metacarpal bone along the pad normal)."""
+    """Soft tissue under each palm pad at q = 0 (``fit_hand_pads.palm_soft_tissue_mm``)."""
+    pads = _pads()
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
-    bones = [g for b in METACARPAL_BODIES for g in _body_geoms(model, b) if model.geom_type[g] == mujoco.mjtGeom.mjGEOM_MESH]
-    out = {}
-    for name in PALM_PADS:
-        g = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, name)
-        if g < 0:
-            continue
-        own = [b for b in bones if model.geom_bodyid[b] == model.geom_bodyid[g]] or bones
-        out[name] = soft_tissue_mm(model, data, g, own + [b for b in bones if b not in own], [g])
-    return out
+    return {
+        row["name"]: pads.palm_soft_tissue_mm(model, data, row["name"], row["bones"])
+        for row in pads.load_table()["palm"]
+        if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, row["name"]) >= 0
+    }
 
 
 def _subtree(model: mujoco.MjModel, root: str) -> set[int]:
@@ -194,7 +128,7 @@ def fist(model_name: str = "myoarm_r") -> dict[str, Any]:
     hand = vhf.myohand()
     table = vhf.load_table()
     locks = {k: 0.0 for k in (*vhf.ARM, *vhf.WRIST, *vhf.THUMB)} | {"elbow_flexion": 90.0}
-    scene = vhf.build_scene(hand, locks, table)
+    scene = vhf.build_scene(hand, locks, table, keep_model_pairs=True)
     model = scene.model
     data = vhf.start(scene, locks)
     flexors = [n for n in (*hand.muscles["FDS"], *hand.muscles["FDP"])]
@@ -206,8 +140,8 @@ def fist(model_name: str = "myoarm_r") -> dict[str, Any]:
         mujoco.mj_step(model, data)
         if i >= steps - int(round(0.2 / model.opt.timestep)):
             for c in data.contact[: data.ncon]:
-                if model.geom_bodyid[c.geom1] in hand_bodies and model.geom_bodyid[c.geom2] in hand_bodies:
-                    deepest = min(deepest, float(c.dist))
+                if c.exclude == 0 and model.geom_bodyid[c.geom1] in hand_bodies and model.geom_bodyid[c.geom2] in hand_bodies:
+                    deepest = min(deepest, float(c.dist - c.includemargin))  # beyond the pair's margin
     palm = palm_geoms(model)
     gaps = {}
     for digit in DIGITS:

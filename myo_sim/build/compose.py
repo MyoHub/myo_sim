@@ -74,7 +74,7 @@ SCENE_XML = ROOT / "scene" / "myosuite_scene.xml"
 MUSCLEMIMIC_SCENE_XML = ROOT / "scene" / "myosuite_scene_musclemimic.xml"
 TORSO_ABDOMEN_UNLOCKED_JOINTS = {"flex_extension", "lat_bending", "axial_rotation"}
 ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
-HAND_CONTACTS_XML = ROOT / "contacts" / "myohand_contacts.xml"
+HAND_SELF_CONTACTS_XML = ROOT / "contacts" / "myohand_self_contacts.xml"
 LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
 FULLBODY_SENSORS_XML = ROOT / "sensors" / "myofullbody_sensors.xml"
@@ -289,6 +289,19 @@ def build_passive_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
+def add_hand_self_contacts(arm: mujoco.MjSpec) -> None:
+    """Add the hand's self-contact pairs (``myohand_self_contacts.xml``) whose geoms are in *arm*.
+
+    The pairs belong to the arm itself, so every model with a hand carries them, and the hand models keep
+    them through the pruning.
+    """
+
+    def present(pair: ET.Element) -> bool:
+        return arm.geom(pair.get("geom1")) is not None and arm.geom(pair.get("geom2")) is not None
+
+    add_contact_pairs(arm, HAND_SELF_CONTACTS_XML, include_pair=present)
+
+
 def build_right_arm_spec(registration: Optional[ModelRegistration] = None) -> mujoco.MjSpec:
     right_arm_xml = build_child_xml_from_components(
         model_name="myoarm_r_attach",
@@ -302,6 +315,7 @@ def build_right_arm_spec(registration: Optional[ModelRegistration] = None) -> mu
     )
     right_arm = mujoco.MjSpec.from_string(right_arm_xml)
     right_arm.compiler.balanceinertia = True
+    add_hand_self_contacts(right_arm)
 
     if registration and registration.build_kwargs.get("disable_finger_collisions", False):
         right_arm = disable_finger_collision(right_arm)
@@ -323,6 +337,7 @@ def build_mirrored_left_arm_spec(registration: Optional[ModelRegistration] = Non
     )
     left_arm = mujoco.MjSpec.from_string(left_arm_xml)
     left_arm.compiler.balanceinertia = True
+    add_hand_self_contacts(left_arm)
     if registration and registration.build_kwargs.get("disable_finger_collisions", False):
         left_arm = disable_finger_collision(left_arm)
     return left_arm
@@ -428,17 +443,13 @@ def build_left_hand_from_arm_spec(registration: Optional[ModelRegistration] = No
 
 
 def add_hand_contact_pairs(torso: mujoco.MjSpec, include_left_arm_contacts: bool) -> None:
-    """Contact pairs of a hand model: the arm's pairs that survive pruning, plus the finger pairs.
+    """Contact pairs of a hand model with the torso and the other arm: the arm's pairs that survive pruning.
 
     The arm's pairs are pruned like the rest of the arm (``prune_rigid_pairs``): a pair goes when a geom
-    was removed or its two geoms are welded together in the hand model.
+    was removed or its two geoms are welded together in the hand model. The hand's self-contacts come with
+    the pruned arm itself.
     """
-
-    def supported(pair: ET.Element) -> bool:
-        return pair_is_supported(pair, include_left_arm_contacts)
-
-    add_contact_pairs(torso, ARM_CONTACTS_XML, include_pair=supported)
-    add_contact_pairs(torso, HAND_CONTACTS_XML, include_pair=supported)
+    add_contact_pairs(torso, ARM_CONTACTS_XML, include_pair=lambda pair: pair_is_supported(pair, include_left_arm_contacts))
     prune_rigid_pairs(torso)
 
 
@@ -605,6 +616,9 @@ COARSE_COLLISION_DISABLED_GEOM_BASENAMES: tuple[str, ...] = (
     "5midph_coll",
     "5distph_coll",
     "5distph_coll_2",
+    "palm_pad",
+    "thenar_pad",
+    "hypothenar_pad",
 )
 _ARM_SIDE_SUFFIXES: tuple[str, ...] = ("_r", "_l")
 

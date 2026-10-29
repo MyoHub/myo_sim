@@ -197,7 +197,8 @@ def test_cpu_and_mujoco_warp_passive_moments_agree(fullbody: mujoco.MjModel) -> 
     mujoco.mj_forward(fullbody, data)
     with wp.ScopedDevice("cpu"):
         model_w = mjw.put_model(fullbody)
-        data_w = mjw.put_data(fullbody, data)
+        # The hand self-contacts need more contact rows than mujoco-warp's default guess (48 overflows).
+        data_w = mjw.put_data(fullbody, data, nconmax=max(256, 2 * data.ncon), njmax=max(1024, 2 * data.nefc))
         mjw.forward(model_w, data_w)
         warp_passive = data_w.qfrc_passive.numpy()[0]
     np.testing.assert_allclose(warp_passive[dofs], data.qfrc_passive[dofs], atol=1e-5)

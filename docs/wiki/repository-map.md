@@ -15,7 +15,7 @@ myo_sim/              # installable Python package
     torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
     head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml
     meshes/           # 127 shared STL files
-    contacts/         # myoarm_contacts.xml, myolegs_contacts.xml, myofullbody_contacts.xml
+    contacts/         # myoarm_contacts.xml, myolegs_contacts.xml, myofullbody_contacts.xml, myohand_self_contacts.xml (generated)
     scene/            # scene wrapper XMLs for rendering
     textures/         # shared textures
   build/

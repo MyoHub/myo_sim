@@ -169,17 +169,21 @@ def build_scene(
     locks: dict[str, float],
     table: dict[str, Any],
     edit_spec: Callable[[mujoco.MjSpec, Hand], None] | None = None,
+    keep_model_pairs: bool = False,
 ) -> Scene:
     """Compile *hand* with every key of *locks* held by a joint equality at that anatomical angle (deg).
 
-    Collisions are switched off (contype = conaffinity = 0); scenes that need contacts add explicit pairs
-    in *edit_spec*.
+    Collisions are switched off (contype = conaffinity = 0, and the model's own contact pairs removed unless
+    *keep_model_pairs*); scenes that need contacts add explicit pairs in *edit_spec*.
     """
     spec = hand.load()
     lock = table["simulation"]["lock"]
     colliders = frozenset(g.name for g in spec.geoms if g.name and (g.contype or g.conaffinity))
     for geom in spec.geoms:
         geom.contype = geom.conaffinity = 0
+    if not keep_model_pairs:
+        for pair in list(spec.pairs):
+            spec.delete(pair)
     for key in locks:
         eq = spec.add_equality(
             type=mujoco.mjtEq.mjEQ_JOINT, objtype=mujoco.mjtObj.mjOBJ_JOINT, name1=hand.joints[key][0], name=f"lock_{key}"

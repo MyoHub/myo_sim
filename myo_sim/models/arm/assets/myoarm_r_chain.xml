@@ -468,6 +468,7 @@
                                                         <joint axis="-0.042399 -0.665286 0.745384" name="cmc_flexion_r" pos="0 0 0" range="-0.78 0.7"/>
                                                         <joint axis="0.495557 0.731736 0.467959"  name="cmc_abduction_r" pos="0 0 0" range="-0.5 0.78"/>
                                                         <geom name="1mcskin_r" class="myohand_coll" size="0.0095" fromto="-.002 0.004 0.003 0.0165 -0.0292 -0.0127"/>
+                                                        <geom name="thenar_pad_r" class="myohand_coll" type="ellipsoid" size="0.012 0.018 0.0267" pos="0.006918 -0.010823 -0.008989" rgba="1 1 1 .8" quat="-0.205044 0.950468 0.232972 0.017094"/>
                                                         <geom mesh="1mc_r" name="1mc_r" type="mesh"/>
                                                         <geom name="MPthumb_wrap_r" type="cylinder" size="0.0085 0.01" pos="0.0177 -0.0305 -0.0143" euler="0.32131512 0.11013028 -0.83479098" class="myoarm_wrap"/>
                                                         <inertial pos="0.0078 -0.0147 -0.006" mass="0.016" fullinertia="1.2e-06 7.1e-07 1.3e-06 4.7e-07 2.5e-07 -4.1e-07"/>
@@ -518,7 +519,7 @@
                                                                 <inertial pos="0.0056 -0.0104 -0.0044" mass="0.003" fullinertia="5e-08 3e-08 5e-08 1e-08 1e-08 -1e-08"/>
                                                                 <site name="EPL-P12_r" pos="0.0054 -0.0071 -0.0046"/>
                                                                 <site name="FPL-P11_r" pos="0.0024 -0.0113 -0.0041"/>
-                                                                <geom name="distal_thumb_coll_2_r" class="myohand_coll" type="ellipsoid" size=".007 .0055 .002" pos=".015 -.018 -.007" euler="0.2 1.57 1.5" rgba="1 1 1 .8"/>
+                                                                <geom name="distal_thumb_coll_2_r" class="myohand_coll" type="ellipsoid" size="0.007392 0.009856 0.00308" pos="-0.001157 -0.013261 -0.006171" rgba="1 1 1 .8" quat="-0.025226 -0.737397 -0.302095 0.603613"/>
                                                                 <site name="THtip_r" size="0.005" pos=".010 -.020 -.008" rgba=".8 0 0 1"/>
                                                             </body>
                                                         </body>
@@ -622,7 +623,7 @@
                                                                 <site name="EDC2-P9_r" pos="0 -0.0056 0.0034"/>
                                                                 <site name="EIP-P10_r" pos="0.001 -0.004 0.003"/>
                                                                 <site name="EIP-P11_r" pos="0.0026 -0.0123 0.0027"/>
-                                                                <geom name="distph2_coll_2_r" class="myohand_coll" type="ellipsoid" size=".005 .008 .002" pos=".003 -.018 0.0055" euler="0.2 0.1 0.15" rgba="1 1 1 .8"/>
+                                                                <geom name="distph2_coll_2_r" class="myohand_coll" type="ellipsoid" size="0.006 0.008 0.0025" pos="0.001212 -0.010475 -0.005345" rgba="1 1 1 .8" quat="0.048279 0.996635 0.066214 0.001634"/>
                                                                 <site name="IFtip_r" size="0.005" pos=".002 -.018 -.00" rgba="0 0.8 0 1"/>
                                                             </body>
                                                         </body>
@@ -631,6 +632,7 @@
                                                 <!-- MIDDLE FINGER -->
                                                 <body name="thirdmc_r" pos="0.000477 -0.039239 0.007377">
                                                     <geom name="3mcskin_coll_r" class="myohand_coll" size="0.010 0.028" euler="1.42 0.01 0" pos="0 0 0"/>
+                                                    <geom name="palm_pad_r" class="myohand_coll" type="ellipsoid" size="0.02 0.018 0.019087" pos="0.001269 -0.008 -0.001822" rgba="1 1 1 .8" quat="0 0.995001 0 0.099861"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                     <geom mesh="3mc_r" name="3mc_r" type="mesh"/>
                                                     <geom name="3rdmcp_ellipsoid_wrap_r" type="cylinder" size="0.0065 0.005" pos="0.0016 -0.0271 0.0001" euler="-2.5794221 -1.44967048 2.90614774" class="myoarm_wrap"/>
@@ -720,12 +722,12 @@
 
                                                             <body name="distph3_r" pos="0.001365 -0.029047 0.001954">
                                                                 <joint axis="1 0 0" name="md3_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0081"/>
-                                                                <geom name="distph3_coll_r" class="myohand_coll" size="0.007 0.008" pos="0.0013 -0.009 -.002" euler="1.6 .05 0"/>
+                                                                <geom name="distph3_coll_r" class="myohand_coll" size="0.007 0.008" pos="0.0013 -0.008849 4.7e-05" euler="1.6 .05 0"/>
                                                                 <geom mesh="3distph_r" name="3distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                                 <site name="FDP3-P10_r" pos="0.0008 -0.004 -0.002"/>
                                                                 <site name="EDC3-P9_r" pos="0.0008 -0.0058 0.0041"/>
-                                                                <geom name="distph3_coll_2_r" class="myohand_coll" type="ellipsoid" size=".0055 .008 .002" pos="0.002 -.019 0.003" euler="0.2 0 0.0" rgba="1 1 1 .8"/>
+                                                                <geom name="distph3_coll_2_r" class="myohand_coll" type="ellipsoid" size="0.006217 0.008289 0.00259" pos="0.000649 -0.010784 -0.005925" rgba="1 1 1 .8" quat="0.03682 0.998868 0.030083 -0.001094"/>
                                                                 <site name="MFtip_r" size="0.005" pos=".002 -.019 -.001" rgba="0 0 0.8 1"/>
                                                             </body>
                                                         </body>
@@ -818,12 +820,12 @@
 
                                                             <body name="distph4_r" pos="-0.002317 -0.024789 0.000563">
                                                                 <joint axis="0.825336 0 0.564642" name="md4_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0081"/>
-                                                                <geom name="distph4_coll_r" class="myohand_coll" size="0.0068 0.008" pos="0.00 -0.01 -.002" euler="1.6 -.1 0"/>
+                                                                <geom name="distph4_coll_r" class="myohand_coll" size="0.0068 0.008" pos="-0.001543 -0.009489 0.000255" euler="1.6 -.1 0"/>
                                                                 <geom mesh="4distph_r" name="4distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.002" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                                 <site name="FDP4-P10_r" pos="0.0002 -0.014 -0.0022"/>
                                                                 <site name="EDC4-P9_r" pos="-0.001 -0.008 0.003"/>
-                                                                <geom name="distph4_coll_2_r" class="myohand_coll" type="ellipsoid" size=".005 .008 .002" pos="-.004 -.019 0.003" euler="0.2 -.5 0.0" rgba="1 1 1 .8"/>
+                                                                <geom name="distph4_coll_2_r" class="myohand_coll" type="ellipsoid" size="0.006286 0.008382 0.002619" pos="0.002673 -0.011497 -0.003754" rgba="1 1 1 .8" quat="-0.089819 -0.95139 0.022068 -0.293772"/>
                                                                 <site name="RFtip_r" size="0.005" pos="-.001 -.018 .001" rgba="0.8 0.8 0 1"/>
                                                             </body>
                                                         </body>
@@ -833,6 +835,7 @@
                                                 <!-- Little Finger -->
                                                 <body name="fifthmc_r" pos="-0.021896 -0.034683 -0.004218">
                                                     <geom name="5mcskin_r" class="myohand_coll" size="0.0095 0.024" euler="1.6 -.13 0" pos=".001 0.002 -.001"/>
+                                                    <geom name="hypothenar_pad_r" class="myohand_coll" type="ellipsoid" size="0.01 0.018 0.017035" pos="-0.001408 0.005 -0.00379" rgba="1 1 1 .8" quat="0 0.955345 0 0.295492"/>
                                                     <geom mesh="5mc_r" name="5mc_r" type="mesh"/>
                                                     <!-- <geom name="5thmcp_ellipsoid_wrap" pos="0.00188166 -0.0190329 -0.0064628" quat="0.442485 -0.205619 -0.870066 -0.070096" class="myoarm_wrap" size="0.00833444"/> -->
                                                     <geom name="5thmcp_ellipsoid_wrap_r" type="cylinder" size="0.0065 0.005" pos="-0.0004 -0.0218 -0.0037" euler="-2.67175002 -0.83479098 -2.4659757" class="myoarm_wrap"/>
@@ -911,13 +914,13 @@
 
                                                             <body name="distph5_r" pos="-0.002871 -0.020677 -0.002243">
                                                                 <joint name="md5_flexion_r" axis="0.867728 -0.149438 0.474042"  pos="0 0 0" range="0 1.5708" damping="0.0081"/>
-                                                                <geom name="5distph_coll_r" class="myohand_coll" size="0.006 0.007" pos="-.0002 -0.009 -.002" euler="1.65 -.1 0"/>
+                                                                <geom name="5distph_coll_r" class="myohand_coll" size="0.006 0.007" pos="-0.000548 -0.008973 -0.001355" euler="1.65 -.1 0"/>
                                                                 <geom mesh="5distph_r" name="5distph_r" type="mesh"/>
                                                                 <inertial pos="0 0 0" mass="0.001" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                                 <site name="FDP5-P10_r" pos="-0.0003 -0.0139 -0.0048"/>
                                                                 <site name="EDC5-P9_r" pos="-0.002 -0.007 0"/>
                                                                 <site name="EDM-P9_r" pos="-0.0023 -0.0033 0.0006"/>
-                                                                <geom name="5distph_coll_2_r" class="myohand_coll" type="ellipsoid" size=".0045 .006 .002" pos="-.005 -.018 0.000" euler="0.2 -.8 0.0" rgba="1 1 1 .8"/>
+                                                                <geom name="5distph_coll_2_r" class="myohand_coll" type="ellipsoid" size="0.005688 0.007584 0.00237" pos="0.001201 -0.009524 -0.005746" rgba="1 1 1 .8" quat="0.003167 -0.965518 0.087153 -0.245296"/>
                                                                 <site name="LFtip_r" size="0.005" pos="-.001 -.017 -.003" rgba="0.8 0 0.8 1"/>
                                                             </body>
                                                         </body>

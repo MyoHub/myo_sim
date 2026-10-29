@@ -78,18 +78,17 @@ def test_fingertip_measurement_rejects_a_thinner_pad() -> None:
 
     import myo_sim
 
-    script = _script()
+    pads = _script()._pads()
+    corner = pads.load_table()["fingertip"]["corner_m"]
     model = myo_sim.load_spec("myoarm_r").compile()
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
-    before = script.fingertip_soft_tissue_mm(model, data, "distph2_r")
-    geoms = script._body_geoms(model, "distph2_r")
-    pad = next(g for g in geoms if model.geom_type[g] == mujoco.mjtGeom.mjGEOM_ELLIPSOID)
-    bone = next(g for g in geoms if model.geom_type[g] == mujoco.mjtGeom.mjGEOM_MESH)
-    shift = data.xmat[model.geom_bodyid[pad]].reshape(3, 3).T @ script._pad_axis(model, data, pad, bone)
-    for g in geoms:
-        if script._collision(model, g):
+    before = pads.fingertip_soft_tissue_mm(model, data, "distph2_r", "FDP2_r", corner)
+    _, palmar = pads.palmar_direction(model, data, "distph2_r", "FDP2_r")
+    shift = data.xmat[model.body("distph2_r").id].reshape(3, 3).T @ palmar
+    for g in pads.body_geoms(model, "distph2_r"):
+        if pads.is_collision(model, g):
             model.geom_pos[g] -= 0.001 * shift
     mujoco.mj_forward(model, data)
-    after = script.fingertip_soft_tissue_mm(model, data, "distph2_r")
+    after = pads.fingertip_soft_tissue_mm(model, data, "distph2_r", "FDP2_r", corner)
     assert after == pytest.approx(before - 1.0, abs=0.2)

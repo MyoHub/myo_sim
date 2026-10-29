@@ -1,0 +1,412 @@
+{
+  "format": "myo_sim.hand_pads/1",
+  "description": "Fingertip and palm pads of the right hand (collision geoms in myoarm_r_chain.xml, mirrored to the left), fitted by scripts/fit_hand_pads.py. Positions and quaternions are in the frame of the pad's body; lengths in metres. Provenance and fit input only: the model never reads this file.",
+  "sources": {
+    "dallard2018": {
+      "citation": "Dallard J, Merlhiot X, Petitjean N, Duprey S. MRI-based experimentations of fingertip flat compression: geometrical measurements and finite element inverse simulations to investigate material property parameters. J Biomech 67:166-171, 2018.",
+      "doi": "10.1016/j.jbiomech.2017.11.024",
+      "values": "Index fingertip, 5 men: soft tissue normal to the pad D_N0 6.4 +- 0.8 mm (Table 2); phalanx height h_p 4 +- 1 mm; fingertip width 16.7 mm (external)."
+    },
+    "misirlioglu2018": {
+      "citation": "Ozekli Misirlioglu T, Ozyemisci Taskiran O. Reliability of sonographic muscle thickness measurements of the thenar and hypothenar muscles. Muscle Nerve 57(1):E14-E17, 2018.",
+      "doi": "10.1002/mus.25735",
+      "values": "Muscle thickness, transverse (Table 2): hypothenar 8.4 +- 1.9 mm, whole thenar 26.7 +- 3.9 mm. Muscle only, so a lower bound for the soft tissue."
+    }
+  },
+  "fingertip": {
+    "status": "measured (index), transferred (digits 3-5 and thumb, scaled by distal-phalanx length)",
+    "source": "dallard2018",
+    "target_m": 0.0064,
+    "corner_m": 0.002,
+    "corner_note": "D_N0 starts at the distal palmar corner of the phalanx (Dallard Fig. 2); the corner is taken half the phalanx height (h_p = 4 mm) proximal of the bone tip.",
+    "pad_semi_axes_m": [
+      0.006,
+      0.008,
+      0.0025
+    ],
+    "pad_shape_note": "Pad semi-axes (lateral, along the phalanx, palmar) for the index, scaled like the target: about 16 mm of pulp along the phalanx and 12 mm across (Dallard's fingertip is 16.7 mm wide including the capsule). Assumed.",
+    "how_to_measure": "Ultrasound or MRI of the fingertip soft tissue normal to the pad (D_N0) per digit",
+    "digits": [
+      {
+        "digit": 2,
+        "body": "distph2_r",
+        "flexor": "FDP2_r",
+        "pad": "distph2_coll_2_r",
+        "capsule": "distph2_coll_r",
+        "capsule_original": {
+          "pos": [
+            0.001,
+            -0.008,
+            0.0
+          ]
+        },
+        "target_m": 0.0064,
+        "scale": 1.0,
+        "fitted": {
+          "pad_pos": [
+            0.001212,
+            -0.010475,
+            -0.005345
+          ],
+          "pad_quat": [
+            0.048279,
+            0.996635,
+            0.066214,
+            0.001634
+          ],
+          "pad_size": [
+            0.006,
+            0.008,
+            0.0025
+          ],
+          "capsule_dorsal_shift_m": 0.0,
+          "capsule_shift_local_m": [
+            -0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      {
+        "digit": 3,
+        "body": "distph3_r",
+        "flexor": "FDP3_r",
+        "pad": "distph3_coll_2_r",
+        "capsule": "distph3_coll_r",
+        "capsule_original": {
+          "pos": [
+            0.0013,
+            -0.009,
+            -0.002
+          ]
+        },
+        "target_m": 0.006631,
+        "scale": 1.0361,
+        "fitted": {
+          "pad_pos": [
+            0.000649,
+            -0.010784,
+            -0.005925
+          ],
+          "pad_quat": [
+            0.03682,
+            0.998868,
+            0.030083,
+            -0.001094
+          ],
+          "pad_size": [
+            0.006217,
+            0.008289,
+            0.00259
+          ],
+          "capsule_dorsal_shift_m": 0.002053,
+          "capsule_shift_local_m": [
+            -0.0,
+            0.000151,
+            0.002047
+          ]
+        }
+      },
+      {
+        "digit": 4,
+        "body": "distph4_r",
+        "flexor": "FDP4_r",
+        "pad": "distph4_coll_2_r",
+        "capsule": "distph4_coll_r",
+        "capsule_original": {
+          "pos": [
+            0.0,
+            -0.01,
+            -0.002
+          ]
+        },
+        "target_m": 0.006705,
+        "scale": 1.0477,
+        "fitted": {
+          "pad_pos": [
+            0.002673,
+            -0.011497,
+            -0.003754
+          ],
+          "pad_quat": [
+            -0.089819,
+            -0.95139,
+            0.022068,
+            -0.293772
+          ],
+          "pad_size": [
+            0.006286,
+            0.008382,
+            0.002619
+          ],
+          "capsule_dorsal_shift_m": 0.00278,
+          "capsule_shift_local_m": [
+            -0.001543,
+            0.000511,
+            0.002255
+          ]
+        }
+      },
+      {
+        "digit": 5,
+        "body": "distph5_r",
+        "flexor": "FDP5_r",
+        "pad": "5distph_coll_2_r",
+        "capsule": "5distph_coll_r",
+        "capsule_original": {
+          "pos": [
+            -0.0002,
+            -0.009,
+            -0.002
+          ]
+        },
+        "target_m": 0.006067,
+        "scale": 0.948,
+        "fitted": {
+          "pad_pos": [
+            0.001201,
+            -0.009524,
+            -0.005746
+          ],
+          "pad_quat": [
+            0.003167,
+            -0.965518,
+            0.087153,
+            -0.245296
+          ],
+          "pad_size": [
+            0.005688,
+            0.007584,
+            0.00237
+          ],
+          "capsule_dorsal_shift_m": 0.000733,
+          "capsule_shift_local_m": [
+            -0.000348,
+            2.7e-05,
+            0.000645
+          ]
+        }
+      },
+      {
+        "digit": "thumb",
+        "body": "distal_thumb_r",
+        "flexor": "FPL_r",
+        "pad": "distal_thumb_coll_2_r",
+        "capsule": "distal_thumb_coll_r",
+        "capsule_original": {
+          "fromto": [
+            0,
+            0,
+            0,
+            0.01,
+            -0.018,
+            -0.007
+          ]
+        },
+        "target_m": 0.007885,
+        "scale": 1.232,
+        "fitted": {
+          "pad_pos": [
+            -0.001157,
+            -0.013261,
+            -0.006171
+          ],
+          "pad_quat": [
+            -0.025226,
+            -0.737397,
+            -0.302095,
+            0.603613
+          ],
+          "pad_size": [
+            0.007392,
+            0.009856,
+            0.00308
+          ],
+          "capsule_dorsal_shift_m": 0.0,
+          "capsule_shift_local_m": [
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      }
+    ]
+  },
+  "palm": [
+    {
+      "name": "palm_pad_r",
+      "body": "thirdmc_r",
+      "status": "fitted to the fist (no palmar soft-tissue thickness is published; the model has no skin mesh)",
+      "digits": [
+        2,
+        3,
+        4
+      ],
+      "palmar_from": {
+        "body": "3proxph_r",
+        "flexor": "FDS3_r"
+      },
+      "long_axis_local": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "anchor_local_m": [
+        0.0009,
+        -0.008,
+        0.0
+      ],
+      "bones": [
+        "secondmc_r",
+        "thirdmc_r",
+        "fourthmc_r"
+      ],
+      "semi_axes_m": [
+        0.02,
+        0.018
+      ],
+      "centre_depth_fraction": 0.0,
+      "thickness_bounds_m": [
+        0.001,
+        0.03
+      ],
+      "lower_bound_m": null,
+      "shape_note": "Central palm over metacarpals 2-4 (anchor midway between the MC2 and MC4 axes, 8 mm proximal of the MC3 centre), 40 mm across and 36 mm along the hand. Assumed.",
+      "how_to_measure": "Ultrasound of the mid-palm soft tissue, or a 3-D hand surface scan registered to the skeleton",
+      "fitted": {
+        "thickness_m": 0.019087,
+        "method": "fist",
+        "pos": [
+          0.001269,
+          -0.008,
+          -0.001822
+        ],
+        "quat": [
+          0.0,
+          0.995001,
+          0.0,
+          0.099861
+        ],
+        "size": [
+          0.02,
+          0.018,
+          0.019087
+        ]
+      }
+    },
+    {
+      "name": "hypothenar_pad_r",
+      "body": "fifthmc_r",
+      "status": "fitted to the fist; compared with the hypothenar muscle thickness (lower bound)",
+      "digits": [
+        5
+      ],
+      "palmar_from": {
+        "body": "5proxph_r",
+        "flexor": "FDS5_r"
+      },
+      "long_axis_local": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "anchor_local_m": [
+        -0.004,
+        0.005,
+        0.0
+      ],
+      "bones": [
+        "fifthmc_r"
+      ],
+      "semi_axes_m": [
+        0.01,
+        0.018
+      ],
+      "centre_depth_fraction": 0.0,
+      "thickness_bounds_m": [
+        0.001,
+        0.03
+      ],
+      "lower_bound_m": 0.0084,
+      "lower_bound_source": "misirlioglu2018",
+      "shape_note": "Over the proximal two thirds of MC5, 4 mm ulnar of its axis. Assumed.",
+      "how_to_measure": "Ultrasound of the hypothenar soft tissue (skin to MC5)",
+      "fitted": {
+        "thickness_m": 0.017035,
+        "method": "fist",
+        "pos": [
+          -0.001408,
+          0.005,
+          -0.00379
+        ],
+        "quat": [
+          -0.0,
+          0.955345,
+          0.0,
+          0.295492
+        ],
+        "size": [
+          0.01,
+          0.018,
+          0.017035
+        ]
+      }
+    },
+    {
+      "name": "thenar_pad_r",
+      "body": "firstmc_r",
+      "status": "lower bound: whole thenar muscle thickness (no fingertip reaches the thenar eminence in the fist)",
+      "digits": [],
+      "palmar_from": {
+        "body": "3proxph_r",
+        "flexor": "FDS3_r"
+      },
+      "long_axis_local": [
+        0.4499,
+        -0.8074,
+        -0.3818
+      ],
+      "anchor_local_m": [
+        0.0072,
+        -0.0126,
+        -0.0049
+      ],
+      "bones": [
+        "firstmc_r"
+      ],
+      "semi_axes_m": [
+        0.012,
+        0.018
+      ],
+      "centre_depth_fraction": 0.0,
+      "thickness_bounds_m": [
+        0.001,
+        0.03
+      ],
+      "lower_bound_m": 0.0267,
+      "lower_bound_source": "misirlioglu2018",
+      "shape_note": "Along the MC1 shaft (the axis of 1mcskin_r), facing the palm. Assumed.",
+      "how_to_measure": "Ultrasound of the thenar soft tissue (skin to MC1)",
+      "fitted": {
+        "thickness_m": 0.0267,
+        "method": "lower bound (no fingertip reaches the pad in the fist)",
+        "pos": [
+          0.006918,
+          -0.010823,
+          -0.008989
+        ],
+        "quat": [
+          -0.205044,
+          0.950468,
+          0.232972,
+          0.017094
+        ],
+        "size": [
+          0.012,
+          0.018,
+          0.0267
+        ]
+      }
+    }
+  ]
+}

@@ -32,7 +32,7 @@ None currently tracked.
 - Adjustments post conversion to optimize for kinematic and dynamic behaviors.
 - Inertial properties.
 - Dynamics properties of the joints.
-- Contact geometries manually designed with references.
+- Contact geometries manually designed with references; fingertip and palm pads fitted to Dallard et al. 2018 and to the fist, and 144 self-contact pairs per hand (`docs/wiki/hand-contacts-and-pads.md`).
 - Contact properties optimized for contact-rich behaviors.
 
 ## Changelog

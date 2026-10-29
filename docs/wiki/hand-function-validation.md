@@ -33,7 +33,9 @@ The script uses whichever `myo_sim` is importable, so another model version runs
 
 **Common.** Shoulder neutral, elbow 90 deg, forearm neutral. Locked joints are joint equalities to
 a constant (`simulation.lock`, timeconst 2 x timestep); the prescribed wrist is the same equality with
-its constant moved every step. Collisions are off except the explicit dynamometer pairs. Angles in the
+its constant moved every step. Collisions are off except the explicit dynamometer pairs: the scenes switch
+geom collisions off and remove the model's own contact pairs (forearm-torso pairs and, since the hand
+rebuild's S1, the hand self-contacts; `build_scene(..., keep_model_pairs=False)`). Angles in the
 table are anatomical; the script maps them with a sign per joint (MyoHand's `cmc_flexion_r`,
 `mp_flexion_r` and `ip_flexion_r` are positive in extension, read from the muscle actions).
 
@@ -112,6 +114,25 @@ Tests that pass on the integration: all three files, including the index MCP ran
 negative controls of the tenodesis tolerances (springs removed; the extrinsic slack lengths and `fpmax`
 of #123). The grip passes on #2 alone and on the integration with their own cached optima; the pinch
 passes wherever the thenar muscles are present.
+
+## Hand rebuild S1 (pads and self-contacts)
+
+With the palmar fingertip pads and the palm pads of S1 (`hand-contacts-and-pads.md`), the dynamometer is
+placed against the palm pad, 11 mm further palmar than against the metacarpal capsules. Fresh optimum
+(before = S0 in the same scenes, which now remove the model's contact pairs):
+
+| Quantity | S0 | S1 |
+| --- | --- | --- |
+| Grip, self-selected (N) | 288.5 | 232.5 (below the band, 270.7-533.5) |
+| Shares 2 / 3 / 4 / 5 (%) | 45 / 28 / 12 / 15 | 21 / 41 / 27 / 12 |
+| Grip, neutral / flexed wrist | -26 % / -64 % | -30 % / -68 % |
+| Settled grip, self-selected (N) | 296 | 133 |
+| Tenodesis, lateral pinch | unchanged | unchanged (no contacts in their scenes) |
+
+The cached optimum of S1 (fingerprint `palm_pad_m`) fails `test_grip_at_the_cached_optimum`: the grip is
+below the experimental mean − 1 SD. With the hand's self-contacts kept in the tenodesis scene, the
+direction check fails (largest reversal 2.6 deg): with MCP abduction locked, digits 2-4 converge as they
+flex and push each other.
 
 ## Known issues
 

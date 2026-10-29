@@ -56,8 +56,8 @@ No arm model changes (every MjModel array of myoarm_r, myoarms, myotorso_arms an
 | Lateral (key) pinch force (N) | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
 | ″ |  | 72.1 ± 13.3 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
-| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 5.9 / 3.5 / 3.1 / 4.0 / 6.8 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
-| Palmar soft tissue under the pads: palm / thenar / hypothenar (mm) | no palm pads | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 6.4 / 8.7 / 9.5 / 6.8 / 4.9 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
+| Palmar soft tissue under the pads: palm / hypothenar / thenar (mm) | no palm pads | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
 | ″ |  | 26.7 ± 3.9 (SD); in vivo, whole thenar muscles (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
 | ″ |  | OP 9.7, APB 6.0, FPB 6.2; in vivo, single thenar muscles (medians, lower bounds) | Karademir et al. 2022 | water-bath ultrasound, healthy controls, Tables 2-3 |
 | Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration) (mm) | -3.2 / -1.7 / 0.1 / 2.3 | contact; functional criterion (no published distance used) | – | FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on |
@@ -65,6 +65,7 @@ No arm model changes (every MjModel array of myoarm_r, myoarms, myotorso_arms an
 
 - The grip is a fresh optimisation on this commit (balanced wrist, four restarts); its digit shares differ from the cached optimum in hand-function-validation.md (30 / 37 / 25 / 8 %) by up to 14 points.
 - No contact pair of myoarm_r involves a finger: in the active fist the fingers pass into the palm geoms and each other (negative fingertip-to-palm distances).
+- Fingertip values re-measured with the method of S1 (palmar direction from the long flexor, D_N0 at the distal palmar corner); the first recording measured along the old pads' normals, which point dorsally (see S1).
 
 ### S0: side suffix on every right-arm name
 
@@ -86,12 +87,46 @@ Names only. scripts/compare_model_numerics.py finds every MjModel array, and the
 | Lateral (key) pinch force (N) | 38.7 | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
 | ″ |  |  | 72.1 ± 13.3 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
-| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 5.9 / 3.5 / 3.1 / 4.0 / 6.8 | 5.9 / 3.5 / 3.1 / 4.0 / 6.8 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
-| Palmar soft tissue under the pads: palm / thenar / hypothenar (mm) | no palm pads | no palm pads | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 6.4 / 8.7 / 9.5 / 6.8 / 4.9 | 5.9 / 3.5 / 3.1 / 4.0 / 6.8 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
+| Palmar soft tissue under the pads: palm / hypothenar / thenar (mm) | no palm pads | no palm pads | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
 | ″ |  |  | 26.7 ± 3.9 (SD); in vivo, whole thenar muscles (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
 | ″ |  |  | OP 9.7, APB 6.0, FPB 6.2; in vivo, single thenar muscles (medians, lower bounds) | Karademir et al. 2022 | water-bath ultrasound, healthy controls, Tables 2-3 |
 | Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration) (mm) | -3.2 / -1.7 / 0.1 / 2.3 | -3.2 / -1.7 / 0.1 / 2.3 | contact; functional criterion (no published distance used) | – | FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on |
 | Active fist: deepest penetration of any contact pair of the hand (mm) | no hand pairs | no hand pairs | < 1; model criterion | – | as above |
+
+- Fingertip values re-measured with the method of S1 (palmar direction from the long flexor, D_N0 at the distal palmar corner); the first recording measured along the old pads' normals, which point dorsally (see S1).
+
+### S1: hand self-contacts and pads
+
+Fingertip pads moved to the palmar side and fitted to Dallard's D_N0 (6.4 mm, scaled by distal-phalanx length); palm, thenar and hypothenar pads; 144 self-contact pairs per hand in one shared file used by every model with a hand. Before = S0 with the same validation scenes (the scenes now remove the model's own contact pairs, as the protocol states).
+
+| Quantity | Model (s1) | Model (before) | Literature (± spread) | Reference | Protocol / posture |
+| --- | --- | --- | --- | --- | --- |
+| Tenodesis: MCP flexion range per digit 2 / 3 / 4 / 5, trial A (deg) | 77.3 / 78.2 / 73.4 / 50.9 | 77.3 / 78.2 / 73.4 / 50.9 | mean 65.2; model (ARMS) | McFarland et al. 2023 | act = 0; wrist 60 deg flexion to 60 deg extension at 20 deg/s; elbow 90 deg, forearm neutral; thumb and MCP abduction locked |
+| Tenodesis: mean PIP flexion range, trial A (deg) | 28.2 | 28.2 | 16.1; model (ARMS) | McFarland et al. 2023 | as above |
+| Tenodesis: largest index-to-other-digit spread, MCP / PIP (deg) | 66.7 / 77.3 | 66.7 / 77.3 | 49.2 / 14.6; model (ARMS) | McFarland et al. 2023 | as above |
+| Release (trial B): MCP extension per digit 2 / 3 / 4 / 5 (deg) | 77.7 / 78.5 / 74.0 / 26.6 | 77.7 / 78.5 / 74.0 / 26.6 | digits extend; model (ARMS) | McFarland et al. 2023 | from the end of trial A: 60 deg extension back to 60 deg flexion |
+| Maximum power grip, self-selected wrist (N) | 232.5 | 288.5 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | dynamometer, self-selected wrist (35 deg extension, 7 deg ulnar deviation) |
+| ″ |  |  | 463.9 ± 125.9 (SD); in vivo, men | Mathiowetz et al. 1985 | Jamar, second handle position, seated, shoulder adducted, elbow 90 deg, forearm and wrist neutral, right hand (Table 2) |
+| ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
+| Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 132.8 | 295.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 20.8 / 40.7 / 27.0 / 11.5 | 44.7 / 27.9 / 12.3 / 15.1 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip change, neutral / flexed wrist against self-selected (%) | -29.6 / -68.3 | -26.1 / -64.3 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
+| Lateral (key) pinch force (N) | 38.7 | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
+| ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
+| ″ |  |  | 72.1 ± 13.3 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 / 8.7 / 9.5 / 6.8 / 4.9 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
+| Palmar soft tissue under the pads: palm / hypothenar / thenar (mm) | 19.1 / 17.0 / 26.7 | no palm pads | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | 26.7 ± 3.9 (SD); in vivo, whole thenar muscles (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | OP 9.7, APB 6.0, FPB 6.2; in vivo, single thenar muscles (medians, lower bounds) | Karademir et al. 2022 | water-bath ultrasound, healthy controls, Tables 2-3 |
+| Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration) (mm) | -0.7 / 18.5 / -0.6 / -0.4 | -3.2 / -1.7 / 0.1 / 2.3 | contact; functional criterion (no published distance used) | – | FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on |
+| Active fist: deepest penetration of any contact pair of the hand (mm) | 0.7 | no hand pairs | < 1; model criterion | – | as above |
+
+- Grip: the dynamometer is moved palmarly until it touches the palm, which is now the 19 mm palm pad instead of the metacarpal capsules; the dynamometer sits 11 mm further palmar, so the hand closes on it wider open. The self-selected grip falls below the in-vivo band (O'Driscoll 1992 mean - 1 SD = 270.7 N) and the digit shares move to within 4 points of the ARMS shares.
+- Active fist: digits 2, 4 and 5 touch the palm and hypothenar pads (within 0.8 mm); digit 3 stops 18 mm short, held by its neighbours (with MCP abduction free the flexing fingers converge). Penetration beyond each pair's margin stays below 1 mm.
+- The palm pad thickness (19.1 mm) comes from the fist criterion with the joints at their flexion limits; the model's PIP limit (90 deg) is below the usual 100-110 deg, so the fingertips land farther from the bones than in a real fist and the pad compensates.
+- Tenodesis and lateral pinch are unchanged: their scenes remove all model contact pairs (the protocol). With the self-contacts kept, tenodesis with MCP abduction locked fails the direction check (largest reversal 2.6 deg against 2 deg): fingers 2-4 converge and push each other.
 
 ### References
 

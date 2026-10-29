@@ -1,0 +1,1612 @@
+{
+  "format": "myo_sim.hand_contact_pairs/1",
+  "description": "Self-contact pairs of the right hand (mirrored to the left), selected by scripts/generate_hand_contacts.py from a posture scan of myohand_r and written to myo_sim/models/contacts/myohand_self_contacts.xml. Provenance and generator input only.",
+  "scan": {
+    "postures": 3000,
+    "seed": 0,
+    "penetration_m": 0.002,
+    "note": "Uniform random postures over the 20 thumb and finger joint ranges (wrist and forearm at 0), plus the full fist (MCP, PIP and DIP at their flexion limits). Signed distance per pair of hand collision geoms on bodies that are neither the same nor parent and child.",
+    "penetrating_pairs": 213
+  },
+  "selection": {
+    "min_pen_frac": 0.02,
+    "rest_clearance_mm": 0.0,
+    "condim": 3,
+    "condim_pulp": 4,
+    "rule": "Not paired when the geoms overlap at rest (q = 0), except the existing pairs, which get margin = rest_margin_m: their contact starts only beyond 2 mm of penetration, so they stay inactive at rest (side-by-side fingers touch and compress slightly at rest). Finger-finger and thumb-finger pairs with pen_frac >= min_pen_frac. Functional pairs regardless of frequency: thumb pulp against every fingertip pad (pinch; condim 4, torsional friction, so a pinched pad does not spin), and every finger or thumb geom against a palm geom that it penetrates somewhere in the scan or comes within fist_reach_mm of in the fist (the palm pads are fitted to just touch the fingertips there). Always paired unless they overlap at rest: the groups under 'always'.",
+    "parameters": "condim 3 (condim 4 for pulp-to-pulp pairs, torsional friction 0.005). friction: MuJoCo's default (sliding 1, torsional 0.005, rolling 0.0001), as in the earlier finger pairs; no skin-on-skin coefficient is sourced. solref 0.004 1 and solimp 0.95 0.99 0.001 0.5 2: the stiffest contact MuJoCo keeps stable at the 2 ms step (time constant 2 x timestep), as for the grip dynamometer in hand_function.json; with MuJoCo's softer defaults (solref 0.02) a fist at full FDS and FDP activation pushes the fingertips 3-8 mm into the palm. margin 0 (-2 mm for the two pairs that overlap at rest). The pads are not given Dallard 2018's fingertip compliance (3.1 mm at 4 N): MuJoCo's soft-contact penetration scales with the effective inverse mass of each contact, so one solref cannot reproduce a force-deflection curve across contacts.",
+    "rest_margin_m": -0.002,
+    "fist_reach_mm": 1.0,
+    "friction": [
+      1.0,
+      1.0,
+      0.005,
+      0.0001,
+      0.0001
+    ],
+    "solref": [
+      0.004,
+      1.0
+    ],
+    "solimp": [
+      0.95,
+      0.99,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "always": [
+      {
+        "geoms": [
+          "distph2_coll_r",
+          "distph2_coll_2_r",
+          "midph2_coll_r",
+          "distph3_coll_r",
+          "distph3_coll_2_r",
+          "midph3_coll_r",
+          "distph4_coll_r",
+          "distph4_coll_2_r",
+          "midph4_coll_r",
+          "5distph_coll_r",
+          "5distph_coll_2_r",
+          "5midph_coll_r"
+        ],
+        "against": [
+          "palm_pad_r",
+          "hypothenar_pad_r"
+        ],
+        "note": "fingertip pads, distal and middle phalanges of digits 2-5 against the palm and hypothenar pads (fist and grasp)"
+      },
+      {
+        "geoms": [
+          "distal_thumb_coll_r",
+          "distal_thumb_coll_2_r",
+          "proximal_thumb_coll_r"
+        ],
+        "against": [
+          "palm_pad_r",
+          "hypothenar_pad_r"
+        ],
+        "note": "thumb against the palm and hypothenar pads (opposition)"
+      }
+    ]
+  },
+  "roles": {
+    "finger": [
+      "proxph2_coll_r",
+      "midph2_coll_r",
+      "distph2_coll_r",
+      "proxph3_coll_r",
+      "midph3_coll_r",
+      "distph3_coll_r",
+      "proxph4_coll_r",
+      "midph4_coll_r",
+      "distph4_coll_r",
+      "5proxph_coll_r",
+      "5midph_coll_r",
+      "5distph_coll_r"
+    ],
+    "finger_pad": [
+      "distph2_coll_2_r",
+      "distph3_coll_2_r",
+      "distph4_coll_2_r",
+      "5distph_coll_2_r"
+    ],
+    "thumb": [
+      "proximal_thumb_coll_r",
+      "distal_thumb_coll_r"
+    ],
+    "thumb_pad": [
+      "distal_thumb_coll_2_r"
+    ],
+    "palm": [
+      "1mcskin_r",
+      "2mcskin_coll_r",
+      "3mcskin_coll_r",
+      "4mcski_r",
+      "5mcskin_r",
+      "palm_pad_r",
+      "thenar_pad_r",
+      "hypothenar_pad_r"
+    ]
+  },
+  "existing_pairs": [
+    [
+      "proxph2_coll_r",
+      "proxph3_coll_r"
+    ],
+    [
+      "midph2_coll_r",
+      "midph3_coll_r"
+    ],
+    [
+      "distph2_coll_r",
+      "distph3_coll_r"
+    ],
+    [
+      "proxph3_coll_r",
+      "proxph4_coll_r"
+    ],
+    [
+      "midph3_coll_r",
+      "midph4_coll_r"
+    ],
+    [
+      "distph3_coll_r",
+      "distph4_coll_r"
+    ],
+    [
+      "proxph4_coll_r",
+      "5proxph_coll_r"
+    ],
+    [
+      "midph4_coll_r",
+      "5midph_coll_r"
+    ],
+    [
+      "distph4_coll_r",
+      "5distph_coll_r"
+    ],
+    [
+      "distal_thumb_coll_r",
+      "proxph2_coll_r"
+    ],
+    [
+      "distal_thumb_coll_r",
+      "midph2_coll_r"
+    ],
+    [
+      "distal_thumb_coll_r",
+      "distph2_coll_r"
+    ],
+    [
+      "distal_thumb_coll_r",
+      "proxph3_coll_r"
+    ]
+  ],
+  "existing_note": "The 13 finger pairs of MyoHub/myo_sim#123 (adjacent digits at each phalanx level; thumb against the index and the middle proximal phalanx).",
+  "pairs": [
+    {
+      "geom1": "proxph3_coll_r",
+      "geom2": "proxph4_coll_r",
+      "group": "existing",
+      "pen_frac": 0.4143,
+      "min_mm": -17.33,
+      "rest_mm": -1.47,
+      "fist_mm": -6.01,
+      "condim": 3,
+      "margin_m": -0.002
+    },
+    {
+      "geom1": "proxph2_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "existing",
+      "pen_frac": 0.266,
+      "min_mm": -17.99,
+      "rest_mm": 0.47,
+      "fist_mm": -8.68,
+      "condim": 3
+    },
+    {
+      "geom1": "5proxph_coll_r",
+      "geom2": "proxph4_coll_r",
+      "group": "existing",
+      "pen_frac": 0.254,
+      "min_mm": -15.86,
+      "rest_mm": -0.22,
+      "fist_mm": -0.99,
+      "condim": 3,
+      "margin_m": -0.002
+    },
+    {
+      "geom1": "midph2_coll_r",
+      "geom2": "midph3_coll_r",
+      "group": "existing",
+      "pen_frac": 0.24,
+      "min_mm": -15.96,
+      "rest_mm": 6.73,
+      "fist_mm": -10.24,
+      "condim": 3
+    },
+    {
+      "geom1": "midph3_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "existing",
+      "pen_frac": 0.2123,
+      "min_mm": -15.47,
+      "rest_mm": 7.08,
+      "fist_mm": -5.47,
+      "condim": 3
+    },
+    {
+      "geom1": "midph2_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.1987,
+      "min_mm": -16.57,
+      "rest_mm": 5.7,
+      "fist_mm": -8.35,
+      "condim": 3
+    },
+    {
+      "geom1": "midph3_coll_r",
+      "geom2": "proxph2_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.189,
+      "min_mm": -16.92,
+      "rest_mm": 5.69,
+      "fist_mm": -7.87,
+      "condim": 3
+    },
+    {
+      "geom1": "midph4_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.1793,
+      "min_mm": -16.34,
+      "rest_mm": 5.41,
+      "fist_mm": -4.31,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "existing",
+      "pen_frac": 0.1667,
+      "min_mm": -14.17,
+      "rest_mm": 5.72,
+      "fist_mm": -4.02,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "midph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.161,
+      "min_mm": -14.8,
+      "rest_mm": 9.82,
+      "fist_mm": -9.26,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "proxph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.1483,
+      "min_mm": -15.21,
+      "rest_mm": 3.81,
+      "fist_mm": 1.33,
+      "condim": 3
+    },
+    {
+      "geom1": "midph3_coll_r",
+      "geom2": "proxph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.1417,
+      "min_mm": -12.16,
+      "rest_mm": 6.74,
+      "fist_mm": -5.51,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_r",
+      "geom2": "midph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.1407,
+      "min_mm": -14.74,
+      "rest_mm": 11.49,
+      "fist_mm": -4.05,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "distph4_coll_r",
+      "group": "existing",
+      "pen_frac": 0.1173,
+      "min_mm": -13.65,
+      "rest_mm": 14.73,
+      "fist_mm": -3.26,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "distph3_coll_r",
+      "group": "existing",
+      "pen_frac": 0.113,
+      "min_mm": -13.98,
+      "rest_mm": 11.1,
+      "fist_mm": -4.34,
+      "condim": 3
+    },
+    {
+      "geom1": "5proxph_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.109,
+      "min_mm": -13.2,
+      "rest_mm": 8.6,
+      "fist_mm": -5.64,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0973,
+      "min_mm": -13.15,
+      "rest_mm": 7.4,
+      "fist_mm": 1.39,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "midph2_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.096,
+      "min_mm": -14.93,
+      "rest_mm": 10.56,
+      "fist_mm": -4.88,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "distph4_coll_r",
+      "group": "existing",
+      "pen_frac": 0.0947,
+      "min_mm": -12.42,
+      "rest_mm": 9.61,
+      "fist_mm": -0.42,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "midph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.091,
+      "min_mm": -13.04,
+      "rest_mm": 12.47,
+      "fist_mm": -2.14,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0877,
+      "min_mm": -14.44,
+      "rest_mm": 15.38,
+      "fist_mm": -4.31,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_2_r",
+      "geom2": "midph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0853,
+      "min_mm": -12.87,
+      "rest_mm": 11.59,
+      "fist_mm": 0.32,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "distph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0793,
+      "min_mm": -13.37,
+      "rest_mm": 14.38,
+      "fist_mm": -3.35,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "distph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.072,
+      "min_mm": -13.32,
+      "rest_mm": 36.78,
+      "fist_mm": 5.0,
+      "condim": 3
+    },
+    {
+      "geom1": "midph2_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0697,
+      "min_mm": -15.42,
+      "rest_mm": 27.95,
+      "fist_mm": 0.47,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "midph2_coll_r",
+      "group": "existing",
+      "pen_frac": 0.0663,
+      "min_mm": -13.96,
+      "rest_mm": 50.0,
+      "fist_mm": 17.59,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0643,
+      "min_mm": -13.18,
+      "rest_mm": 18.47,
+      "fist_mm": -2.18,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "midph3_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0627,
+      "min_mm": -14.44,
+      "rest_mm": 50.0,
+      "fist_mm": 26.43,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0603,
+      "min_mm": -14.27,
+      "rest_mm": 34.72,
+      "fist_mm": 1.45,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0573,
+      "min_mm": -12.8,
+      "rest_mm": 13.76,
+      "fist_mm": -1.03,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "midph2_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0567,
+      "min_mm": -12.56,
+      "rest_mm": 16.38,
+      "fist_mm": -3.88,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_r",
+      "geom2": "midph2_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0553,
+      "min_mm": -14.52,
+      "rest_mm": 34.96,
+      "fist_mm": 4.31,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "distph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0547,
+      "min_mm": -10.7,
+      "rest_mm": 14.35,
+      "fist_mm": 2.87,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "distph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.051,
+      "min_mm": -11.57,
+      "rest_mm": 13.2,
+      "fist_mm": 5.58,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "distph3_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0507,
+      "min_mm": -10.12,
+      "rest_mm": 14.38,
+      "fist_mm": -4.23,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "midph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0503,
+      "min_mm": -14.21,
+      "rest_mm": 27.33,
+      "fist_mm": 5.25,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0477,
+      "min_mm": -12.77,
+      "rest_mm": 20.24,
+      "fist_mm": 0.45,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_2_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0473,
+      "min_mm": -11.91,
+      "rest_mm": 11.33,
+      "fist_mm": 2.79,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "midph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0467,
+      "min_mm": -13.77,
+      "rest_mm": 29.62,
+      "fist_mm": 8.91,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "distph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.046,
+      "min_mm": -12.82,
+      "rest_mm": 36.59,
+      "fist_mm": 9.53,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "midph4_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.046,
+      "min_mm": -13.98,
+      "rest_mm": 50.0,
+      "fist_mm": 38.01,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "distph2_coll_r",
+      "group": "existing",
+      "pen_frac": 0.0447,
+      "min_mm": -13.29,
+      "rest_mm": 50.0,
+      "fist_mm": 27.05,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_2_r",
+      "geom2": "distph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.043,
+      "min_mm": -11.19,
+      "rest_mm": 14.36,
+      "fist_mm": 0.96,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0417,
+      "min_mm": -11.1,
+      "rest_mm": 35.93,
+      "fist_mm": 6.7,
+      "condim": 3
+    },
+    {
+      "geom1": "midph2_coll_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0413,
+      "min_mm": -16.29,
+      "rest_mm": 50.0,
+      "fist_mm": 10.62,
+      "condim": 3
+    },
+    {
+      "geom1": "midph3_coll_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0413,
+      "min_mm": -15.66,
+      "rest_mm": 50.0,
+      "fist_mm": 15.26,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0403,
+      "min_mm": -15.43,
+      "rest_mm": 50.0,
+      "fist_mm": 7.24,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "distph4_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0383,
+      "min_mm": -13.27,
+      "rest_mm": 50.0,
+      "fist_mm": 46.23,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.038,
+      "min_mm": -13.62,
+      "rest_mm": 18.7,
+      "fist_mm": 5.57,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "proxph2_coll_r",
+      "group": "existing",
+      "pen_frac": 0.037,
+      "min_mm": -14.45,
+      "rest_mm": 41.22,
+      "fist_mm": 16.64,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0367,
+      "min_mm": -10.49,
+      "rest_mm": 11.83,
+      "fist_mm": 7.39,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "existing",
+      "pen_frac": 0.0357,
+      "min_mm": -15.05,
+      "rest_mm": 50.0,
+      "fist_mm": 25.5,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "distph3_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0353,
+      "min_mm": -13.11,
+      "rest_mm": 50.0,
+      "fist_mm": 36.14,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "midph3_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0347,
+      "min_mm": -13.15,
+      "rest_mm": 50.0,
+      "fist_mm": 26.18,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_2_r",
+      "geom2": "midph2_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0343,
+      "min_mm": -11.04,
+      "rest_mm": 34.94,
+      "fist_mm": 6.0,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "distal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.034,
+      "min_mm": -13.37,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "midph2_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.033,
+      "min_mm": -11.54,
+      "rest_mm": 50.0,
+      "fist_mm": 16.99,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.033,
+      "min_mm": -13.88,
+      "rest_mm": 50.0,
+      "fist_mm": 15.78,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "distph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.032,
+      "min_mm": -13.61,
+      "rest_mm": 40.12,
+      "fist_mm": 6.57,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "distal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.029,
+      "min_mm": -12.44,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.029,
+      "min_mm": -13.96,
+      "rest_mm": 50.0,
+      "fist_mm": 26.58,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "proxph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0287,
+      "min_mm": -11.56,
+      "rest_mm": 26.75,
+      "fist_mm": 5.56,
+      "condim": 3
+    },
+    {
+      "geom1": "midph4_coll_r",
+      "geom2": "proxph2_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0287,
+      "min_mm": -12.95,
+      "rest_mm": 26.01,
+      "fist_mm": 5.1,
+      "condim": 3
+    },
+    {
+      "geom1": "proximal_thumb_coll_r",
+      "geom2": "proxph2_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0287,
+      "min_mm": -16.5,
+      "rest_mm": 31.73,
+      "fist_mm": 13.13,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "proxph4_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.028,
+      "min_mm": -13.89,
+      "rest_mm": 50.0,
+      "fist_mm": 37.18,
+      "condim": 3
+    },
+    {
+      "geom1": "midph4_coll_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.028,
+      "min_mm": -14.24,
+      "rest_mm": 50.0,
+      "fist_mm": 25.42,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0273,
+      "min_mm": -12.98,
+      "rest_mm": 50.0,
+      "fist_mm": 9.82,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "midph4_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0257,
+      "min_mm": -11.54,
+      "rest_mm": 50.0,
+      "fist_mm": 38.72,
+      "condim": 3
+    },
+    {
+      "geom1": "proximal_thumb_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0253,
+      "min_mm": -16.81,
+      "rest_mm": 42.0,
+      "fist_mm": 20.88,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "distal_thumb_coll_2_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.025,
+      "min_mm": -12.05,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 3
+    },
+    {
+      "geom1": "5proxph_coll_r",
+      "geom2": "distal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.024,
+      "min_mm": -14.19,
+      "rest_mm": 50.0,
+      "fist_mm": 48.49,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "distph2_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0237,
+      "min_mm": -12.28,
+      "rest_mm": 50.0,
+      "fist_mm": 31.15,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "distph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0237,
+      "min_mm": -9.53,
+      "rest_mm": 39.1,
+      "fist_mm": 14.57,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_2_r",
+      "geom2": "proxph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0233,
+      "min_mm": -12.01,
+      "rest_mm": 22.78,
+      "fist_mm": 14.03,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0233,
+      "min_mm": -11.19,
+      "rest_mm": 16.95,
+      "fist_mm": 16.43,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "distph2_coll_2_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.023,
+      "min_mm": -10.05,
+      "rest_mm": 50.0,
+      "fist_mm": 26.07,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "midph4_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.023,
+      "min_mm": -10.17,
+      "rest_mm": 37.82,
+      "fist_mm": 7.19,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "proxph2_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0227,
+      "min_mm": -11.82,
+      "rest_mm": 44.28,
+      "fist_mm": 16.32,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0227,
+      "min_mm": -11.94,
+      "rest_mm": 50.0,
+      "fist_mm": 17.6,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_2_r",
+      "geom2": "midph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0223,
+      "min_mm": -9.95,
+      "rest_mm": 32.88,
+      "fist_mm": 11.67,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "distph3_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0223,
+      "min_mm": -10.05,
+      "rest_mm": 37.06,
+      "fist_mm": 15.8,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "proxph3_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0217,
+      "min_mm": -11.63,
+      "rest_mm": 50.0,
+      "fist_mm": 25.34,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "distph4_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0213,
+      "min_mm": -12.62,
+      "rest_mm": 50.0,
+      "fist_mm": 49.8,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "distph2_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.021,
+      "min_mm": -12.12,
+      "rest_mm": 50.0,
+      "fist_mm": 18.02,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "distph3_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.021,
+      "min_mm": -10.13,
+      "rest_mm": 42.87,
+      "fist_mm": 8.73,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "proxph4_coll_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0207,
+      "min_mm": -11.67,
+      "rest_mm": 50.0,
+      "fist_mm": 37.8,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0207,
+      "min_mm": -6.35,
+      "rest_mm": 12.68,
+      "fist_mm": 0.05,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "proxph3_coll_r",
+      "group": "finger_vs_finger",
+      "pen_frac": 0.0203,
+      "min_mm": -12.04,
+      "rest_mm": 22.67,
+      "fist_mm": 11.62,
+      "condim": 3
+    },
+    {
+      "geom1": "5proxph_coll_r",
+      "geom2": "distal_thumb_coll_2_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.0203,
+      "min_mm": -12.47,
+      "rest_mm": 50.0,
+      "fist_mm": 49.94,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "distph3_coll_2_r",
+      "group": "thumb_vs_fingers",
+      "pen_frac": 0.02,
+      "min_mm": -10.46,
+      "rest_mm": 50.0,
+      "fist_mm": 36.75,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "distph2_coll_2_r",
+      "group": "thumb_pad_vs_finger_pads",
+      "pen_frac": 0.0107,
+      "min_mm": -7.62,
+      "rest_mm": 50.0,
+      "fist_mm": 30.89,
+      "condim": 4
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "thumb_pad_vs_finger_pads",
+      "pen_frac": 0.01,
+      "min_mm": -7.14,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 4
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "distph2_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0093,
+      "min_mm": -11.02,
+      "rest_mm": 50.0,
+      "fist_mm": 5.65,
+      "condim": 3
+    },
+    {
+      "geom1": "palm_pad_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.009,
+      "min_mm": -5.41,
+      "rest_mm": 21.27,
+      "fist_mm": 21.27,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "distph3_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0083,
+      "min_mm": -14.79,
+      "rest_mm": 50.0,
+      "fist_mm": 12.9,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "distph3_coll_2_r",
+      "group": "thumb_pad_vs_finger_pads",
+      "pen_frac": 0.0073,
+      "min_mm": -8.74,
+      "rest_mm": 50.0,
+      "fist_mm": 41.04,
+      "condim": 4
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "distph3_coll_2_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0053,
+      "min_mm": -12.04,
+      "rest_mm": 50.0,
+      "fist_mm": 16.12,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "distph2_coll_2_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.005,
+      "min_mm": -10.79,
+      "rest_mm": 50.0,
+      "fist_mm": 9.05,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_2_r",
+      "geom2": "distal_thumb_coll_2_r",
+      "group": "thumb_pad_vs_finger_pads",
+      "pen_frac": 0.005,
+      "min_mm": -5.47,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 4
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "thenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0037,
+      "min_mm": -9.25,
+      "rest_mm": 50.0,
+      "fist_mm": 11.3,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "thenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0033,
+      "min_mm": -6.63,
+      "rest_mm": 50.0,
+      "fist_mm": 6.08,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "distph4_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.003,
+      "min_mm": -10.68,
+      "rest_mm": 50.0,
+      "fist_mm": 23.53,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "midph3_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0027,
+      "min_mm": -9.17,
+      "rest_mm": 50.0,
+      "fist_mm": 13.57,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.002,
+      "min_mm": -5.5,
+      "rest_mm": 50.0,
+      "fist_mm": 25.82,
+      "condim": 3
+    },
+    {
+      "geom1": "5mcskin_r",
+      "geom2": "distal_thumb_coll_2_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.001,
+      "min_mm": -3.09,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "thenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.001,
+      "min_mm": -3.11,
+      "rest_mm": 50.0,
+      "fist_mm": 13.54,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "thenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0007,
+      "min_mm": -5.02,
+      "rest_mm": 50.0,
+      "fist_mm": 16.42,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_r",
+      "geom2": "thenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0007,
+      "min_mm": -3.85,
+      "rest_mm": 50.0,
+      "fist_mm": 20.42,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "5distph_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0003,
+      "min_mm": -2.28,
+      "rest_mm": 50.0,
+      "fist_mm": 33.91,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "5midph_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0003,
+      "min_mm": -2.51,
+      "rest_mm": 50.0,
+      "fist_mm": 32.84,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "midph2_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0003,
+      "min_mm": -3.64,
+      "rest_mm": 50.0,
+      "fist_mm": 9.64,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "midph4_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0003,
+      "min_mm": -3.02,
+      "rest_mm": 50.0,
+      "fist_mm": 23.24,
+      "condim": 3
+    },
+    {
+      "geom1": "5mcskin_r",
+      "geom2": "distal_thumb_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0003,
+      "min_mm": -3.0,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_2_r",
+      "geom2": "thenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0003,
+      "min_mm": -4.09,
+      "rest_mm": 50.0,
+      "fist_mm": 24.27,
+      "condim": 3
+    },
+    {
+      "geom1": "1mcskin_r",
+      "geom2": "5distph_coll_2_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": -0.01,
+      "rest_mm": 50.0,
+      "fist_mm": 37.52,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_2_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_2_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": -0.32,
+      "rest_mm": 50.0,
+      "fist_mm": -0.0,
+      "condim": 3
+    },
+    {
+      "geom1": "5distph_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "5midph_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": -0.88,
+      "rest_mm": 50.0,
+      "fist_mm": 50.0,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_2_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distal_thumb_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_2_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph2_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": 0.0,
+      "rest_mm": 50.0,
+      "fist_mm": 0.0,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_2_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_2_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_r",
+      "geom2": "hypothenar_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": -0.09,
+      "rest_mm": 50.0,
+      "fist_mm": -0.09,
+      "condim": 3
+    },
+    {
+      "geom1": "distph4_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "hypothenar_pad_r",
+      "geom2": "midph2_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "hypothenar_pad_r",
+      "geom2": "midph3_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "hypothenar_pad_r",
+      "geom2": "midph4_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "hypothenar_pad_r",
+      "geom2": "proximal_thumb_coll_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "midph2_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "midph3_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "midph4_coll_r",
+      "geom2": "palm_pad_r",
+      "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    }
+  ]
+}

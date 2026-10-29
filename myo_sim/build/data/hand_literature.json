@@ -211,7 +211,7 @@
       ]
     },
     "palm_pad_thickness": {
-      "label": "Palmar soft tissue under the pads: palm / thenar / hypothenar",
+      "label": "Palmar soft tissue under the pads: palm / hypothenar / thenar",
       "unit": "mm",
       "literature": [
         {
@@ -300,11 +300,11 @@
         ],
         "lateral_pinch": 38.69,
         "fingertip_pad_thickness": {
-          "2": 5.87,
-          "3": 3.5,
-          "4": 3.13,
-          "5": 4.03,
-          "thumb": 6.83
+          "2": 6.4,
+          "3": 8.68,
+          "4": 9.48,
+          "5": 6.8,
+          "thumb": 4.86
         },
         "palm_pad_thickness": "no palm pads",
         "fist_tip_to_palm": {
@@ -317,7 +317,8 @@
       },
       "notes": [
         "The grip is a fresh optimisation on this commit (balanced wrist, four restarts); its digit shares differ from the cached optimum in hand-function-validation.md (30 / 37 / 25 / 8 %) by up to 14 points.",
-        "No contact pair of myoarm_r involves a finger: in the active fist the fingers pass into the palm geoms and each other (negative fingertip-to-palm distances)."
+        "No contact pair of myoarm_r involves a finger: in the active fist the fingers pass into the palm geoms and each other (negative fingertip-to-palm distances).",
+        "Fingertip values re-measured with the method of S1 (palmar direction from the long flexor, D_N0 at the distal palmar corner); the first recording measured along the old pads' normals, which point dorsally (see S1)."
       ]
     },
     {
@@ -356,11 +357,11 @@
         ],
         "lateral_pinch": 38.69,
         "fingertip_pad_thickness": {
-          "2": 5.87,
-          "3": 3.5,
-          "4": 3.13,
-          "5": 4.03,
-          "thumb": 6.83
+          "2": 6.4,
+          "3": 8.68,
+          "4": 9.48,
+          "5": 6.8,
+          "thumb": 4.86
         },
         "palm_pad_thickness": "no palm pads",
         "fist_tip_to_palm": {
@@ -421,7 +422,123 @@
           },
           "fist_max_penetration": "no hand pairs"
         }
-      }
+      },
+      "notes": [
+        "Fingertip values re-measured with the method of S1 (palmar direction from the long flexor, D_N0 at the distal palmar corner); the first recording measured along the old pads' normals, which point dorsally (see S1)."
+      ]
+    },
+    {
+      "id": "s1",
+      "title": "S1: hand self-contacts and pads",
+      "summary": "Fingertip pads moved to the palmar side and fitted to Dallard's D_N0 (6.4 mm, scaled by distal-phalanx length); palm, thenar and hypothenar pads; 144 self-contact pairs per hand in one shared file used by every model with a hand. Before = S0 with the same validation scenes (the scenes now remove the model's own contact pairs, as the protocol states).",
+      "before": {
+        "label": "s1",
+        "id": "s0, same scenes",
+        "values": {
+          "tenodesis_mcp_rom": [
+            77.34,
+            78.22,
+            73.38,
+            50.87
+          ],
+          "tenodesis_pip_rom": 28.21,
+          "tenodesis_index_gap": [
+            66.7,
+            77.26
+          ],
+          "tenodesis_release": [
+            77.65,
+            78.48,
+            73.99,
+            26.6
+          ],
+          "grip_self_selected": 288.52,
+          "grip_settled": 295.7,
+          "grip_shares": [
+            44.68,
+            27.87,
+            12.35,
+            15.1
+          ],
+          "grip_posture_change": [
+            -26.09,
+            -64.27
+          ],
+          "lateral_pinch": 38.69,
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 8.68,
+            "4": 9.48,
+            "5": 6.8,
+            "thumb": 4.86
+          },
+          "palm_pad_thickness": "no palm pads",
+          "fist_tip_to_palm": {
+            "2": -3.18,
+            "3": -1.68,
+            "4": 0.05,
+            "5": 2.27
+          },
+          "fist_max_penetration": "no hand pairs"
+        }
+      },
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.34,
+          78.22,
+          73.38,
+          50.87
+        ],
+        "tenodesis_pip_rom": 28.21,
+        "tenodesis_index_gap": [
+          66.7,
+          77.26
+        ],
+        "tenodesis_release": [
+          77.65,
+          78.48,
+          73.99,
+          26.6
+        ],
+        "grip_self_selected": 232.48,
+        "grip_settled": 132.84,
+        "grip_shares": [
+          20.76,
+          40.72,
+          27.01,
+          11.51
+        ],
+        "grip_posture_change": [
+          -29.59,
+          -68.33
+        ],
+        "lateral_pinch": 38.69,
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 19.09,
+          "hypothenar_pad_r": 17.04,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.73,
+          "3": 18.48,
+          "4": -0.64,
+          "5": -0.43
+        },
+        "fist_max_penetration": 0.74
+      },
+      "notes": [
+        "Grip: the dynamometer is moved palmarly until it touches the palm, which is now the 19 mm palm pad instead of the metacarpal capsules; the dynamometer sits 11 mm further palmar, so the hand closes on it wider open. The self-selected grip falls below the in-vivo band (O'Driscoll 1992 mean - 1 SD = 270.7 N) and the digit shares move to within 4 points of the ARMS shares.",
+        "Active fist: digits 2, 4 and 5 touch the palm and hypothenar pads (within 0.8 mm); digit 3 stops 18 mm short, held by its neighbours (with MCP abduction free the flexing fingers converge). Penetration beyond each pair's margin stays below 1 mm.",
+        "The palm pad thickness (19.1 mm) comes from the fist criterion with the joints at their flexion limits; the model's PIP limit (90 deg) is below the usual 100-110 deg, so the fingertips land farther from the bones than in a real fist and the pad compensates.",
+        "Tenodesis and lateral pinch are unchanged: their scenes remove all model contact pairs (the protocol). With the self-contacts kept, tenodesis with MCP abduction locked fails the direction check (largest reversal 2.6 deg against 2 deg): fingers 2-4 converge and push each other."
+      ]
     }
   ]
 }
