@@ -129,8 +129,21 @@ the cited paper.
 - **Thumb MCP UCL elongation.** Sircar K, Hägermann C, Scaal M, Müller LP, Dargel J,
   Wegmann K (2024). Thumb metacarpophalangeal joint kinematics and elongation of the
   ulnar collateral ligament. J Hand Surg Am 49(1):8-14. doi:10.1016/j.jhsa.2023.10.001.
-  Four UCL portions measured over 0-60 deg flexion; maximum elongation is 111-117 % of
-  neutral length, depending on portion and joint shape.
+  - 28 fresh-frozen thumbs (donors 64-81 years, mean 71), MCP loaded by 10 N on each of
+    EPL and FPL. Radiopaque markers at the UCL origin and insertions, lateral radiographs
+    at 0, 20, 40 and 60 deg flexion. Joints split by head sphericity into round
+    (n = 15) and flat (n = 13).
+  - Four marker distances from the common origin: to the dorsal (L1), middle (L2) and
+    palmar (L3) insertion of the proper UCL, and to the dorsal insertion of the
+    accessory UCL (L4).
+  - Elongation relative to neutral (Table 3, p. 12): flat joints peak at 111 % (L1,
+    40 deg) and fall back to 106 % at 60 deg; round joints are longest near 60 deg
+    (L1 117 %, L2 112 %, L3 107-108 %, L4 113 %). The abstract attributes the 117 % to the accessory
+    UCL; the table gives it to the dorsal proper portion.
+  - The flexion axis lies at 29 % (flat) or 40 % (round) of the head's dorsopalmar
+    depth and at 96 % or 86 % of metacarpal length (Table 1, p. 11). Absolute lengths
+    are in the online supplement (Table S1).
+  - Like Minami's, these are apparent lengths (marker distances).
 - **PIP collaterals and volar plate**
   - Allison DM (2005). Anatomy of the collateral ligaments of the proximal
     interphalangeal joint. J Hand Surg Am 30(5):1026-1031.
@@ -140,11 +153,36 @@ the cited paper.
   - Bowers WH, Wolf JW, Nehil JL, Bittinger S (1980). The proximal interphalangeal joint
     volar plate. I. An anatomical and biomechanical study. J Hand Surg Am 5(1):79-88.
     doi:10.1016/s0363-5023(80)80049-9.
+    - Anatomy in 56 PIP joints of 14 hands. The plate averages 1.5 mm thick (0.5-2.5 mm),
+      about a third of the condylar radius (p. 81). Its main distal attachments are
+      lateral, confluent with the proper collateral insertion; the accessory collateral
+      slings it from the proper collateral and the condyles.
+    - Sequential sectioning under a static hyperextension load (p. 81-82): accessory
+      collateral alone +5 deg, central 80 % of the distal attachment +5 deg, proximal
+      attachments +10 deg; with the lateral distal attachments also cut, 25-35 deg.
+    - Hyperextension to failure in 20 further digits (Table I, p. 85): 7-59 kgf at the
+      volar complex (lever-corrected). At 20 cm/min the index averaged 39.5 kgf and the
+      little finger 22.5 kgf (about 390 and 220 N; p. 84-85). Fast loading ruptured the
+      distal attachment, slow loading (2 cm/min) attenuated the proximal check
+      ligaments.
   - Rhee RY, Reading G, Wray RC (1992). A biomechanical study of the collateral
     ligaments of the proximal interphalangeal joint. J Hand Surg Am 17(1):157-163.
-    doi:10.1016/0363-5023(92)90134-b. The lateral collateral is the primary restraint to
-    medial-lateral stress. Failure loads by loading rate are to be confirmed from the
-    paper.
+    doi:10.1016/0363-5023(92)90134-b.
+    - 68 fresh fingers, donors over 60 (mean 67). The PIP was held at 0 deg and bent
+      sideways to failure; the force at the ligament was computed from the lever arms
+      (Fig. 2, p. 158).
+    - Failure force 176.9 ± 5.9 N (mean ± SE, n = 58), after about 7 mm of loading-head
+      travel (p. 161). By loading rate (Table III, p. 160): 184 ± 8 N at 1 mm/s,
+      171 ± 10 N at 4 mm/s, 165 ± 16 N at 10 mm/s, not significantly different; the rate
+      changes the rupture site (Table IV).
+    - Radial 197.3 ± 9.7 vs ulnar 164.9 ± 12.9 N, not significant (Table I). The little
+      finger is about 27 % weaker: 142 ± 8 N against 185-203 N for index, long and ring
+      (Table II).
+    - The lateral collateral is the primary restraint to medial-lateral stress: removing
+      the extensor hood and palmar plate left 144.8 ± 19 N against 171.0 ± 10 N intact
+      (not significant), while halving the collateral cut it to 118.6 ± 5 N (Table VI,
+      p. 162).
+    - No stiffness is reported.
   - Dzwierzynski WW, Pintar F, Matloub HS, Yoganandan N (1996). Biomechanics of the
     intact and surgically repaired proximal interphalangeal joint collateral ligaments.
     J Hand Surg Am 21(4):679-683. doi:10.1016/s0363-5023(96)80026-8. Native ligament
@@ -205,8 +243,31 @@ the cited paper.
     dorsoradial ligaments on trapeziometacarpal joint stability. J Hand Surg Am
     32(3):310-317. doi:10.1016/j.jhsa.2006.12.002. In lateral pinch, mean 3-D translation
     increased by 1.3 mm after DRL transection and by 0.6 mm after dAOL transection.
-  - Najima H, Oberlin C, Alnot JY, Cadot B (1997). J Hand Surg Br 22(2):183-188.
-    doi:10.1016/s0266-7681(97)80058-7.
+  - Najima H, Oberlin C, Alnot JY, Cadot B (1997). Anatomical and biomechanical studies
+    of the pathogenesis of trapeziometacarpal degenerative arthritis. J Hand Surg Br
+    22(2):183-188. doi:10.1016/s0266-7681(97)80058-7.
+    - 32 hands, donors 71-95 years (mean 84).
+    - Five ligaments after Pieron: anterior oblique, ulnar collateral, first
+      intermetacarpal, posterior oblique and dorsoradial. All were present in every hand
+      except the ulnar collateral (31/32). Seven hands had two intermetacarpal ligaments,
+      an anterior one to the palmar-ulnar MC1 tubercle and a posterior one to the
+      dorsoulnar MC1 (p. 185).
+    - Attachments (p. 185): the anterior oblique, posterior oblique, ulnar collateral and
+      intermetacarpal ligaments all insert on or near the palmar-ulnar tubercle of the MC1
+      base; the posterior oblique arises from the dorsoulnar trapezial tubercle, the
+      dorsoradial from the dorsoradial tubercle (to the dorsal MC1 edge), the ulnar
+      collateral from the flexor retinaculum, the intermetacarpal from the dorsoradial
+      MC2 base.
+    - Excised ligaments pulled to failure at 5 mm/min, 31 mm between the clamps (p. 184).
+      Maximum load, all cartilage grades (Table 2, p. 186): anterior oblique 5.19,
+      ulnar collateral 5.63, intermetacarpal 4.46, posterior oblique 7.06, dorsoradial
+      7.74 N (SEM 0.4-0.7 N). Maximum strain 104-110 %, dorsoradial 137 % (Fig. 5).
+    - Strength of the anterior oblique, intermetacarpal and posterior oblique falls with
+      age and with cartilage degeneration.
+    - No stiffness is reported. The loads are one to two orders of magnitude below the
+      PIP collateral and wrist ligament values above, and the strain is grip-to-grip on
+      excised, very old tissue. Use them for the strength ranking (dorsoradial and
+      posterior oblique strongest, intermetacarpal weakest), not for k.
   - Esplugas M et al. (2016). J Wrist Surg 5(4):277-283. doi:10.1055/s-0036-1581052.
   - Lin JD, Karl JW, Strauch RJ (2014). Trapeziometacarpal joint stability: the evolving
     importance of the dorsal ligaments. Clin Orthop Relat Res 472(4):1138-1145.
@@ -217,14 +278,37 @@ the cited paper.
 - **How much of the passive moment is ligament.**
   - Kuo PH, Deshpande AD (2012). Muscle-tendon units provide limited contributions to
     the passive stiffness of the index finger metacarpophalangeal joint. J Biomech
-    45(15):2531-2538. doi:10.1016/j.jbiomech.2012.07.034. The muscle-tendon units do
-    less than 50 % of the passive work, and the capsule-ligament complex dominates the
-    joint stiffness throughout the flexion-extension range.
+    45(15):2531-2538. doi:10.1016/j.jbiomech.2012.07.034.
+    - 10 healthy adults (6 men, 4 women, 23 ± 3.7 years), index MCP driven through its
+      range in vivo. Peak passive moment 438 ± 185 N mm in full extension and
+      288 ± 71 N mm in full flexion (p. 2533).
+    - The muscle-tendon share is computed, not measured: a subject-scaled model of the
+      seven MCP muscles (Holzbaur-based parameters) is subtracted from the measured
+      total, and the rest is assigned to the capsule-ligament complex.
+    - The muscle-tendon units do 24.9 ± 10.6 % of the passive work (Fig. 7, p. 2536);
+      the flexors 31.8 ± 11.7 % in extension and the extensors 19.9 ± 12.9 % in flexion
+      (Fig. 8, p. 2537). The intrinsic muscles contribute almost nothing.
   - Knutson JS, Kilgore KL, Mansour JM, Crago PE (2000). Intrinsic and extrinsic
     contributions to the passive moment at the metacarpophalangeal joint. J Biomech
     33(12):1675-1681. doi:10.1016/s0021-9290(00)00159-7.
-  - These two papers are the closest thing to a published partition. They suggest that
-    at the MCP, ligaments may legitimately take most of the residual.
+    - 8 subjects (6 men, 2 women, 21-39 years), index MP at seven wrist angles. The
+      extrinsic part is whatever changes with wrist angle; the intrinsic part (capsule,
+      ligaments, cartilage and inactive intrinsic muscles) is a function of MP angle
+      only (Eqs. 1-4, p. 1677).
+    - Near the MP extension limit (40 N cm) the median extrinsic share is 94 % with the
+      wrist extended 60 deg, 57 % at wrist 0 and 14 % with the wrist flexed 60 deg; near
+      the flexion limit it rises from 40 % to 88 % from wrist extension to flexion
+      (p. 1678; Fig. 5, p. 1680).
+    - The intrinsic component rises faster than the extrinsic one in every subject.
+      Median intrinsic slack angles: -18 deg (volar tissues, hyperextension) and 79 deg
+      (dorsal tissues, flexion) (Table 1, p. 1678).
+  - Together these are the closest thing to a published partition, and they disagree on
+    the muscle share: Kuo's modelled muscles take a quarter of the work, while
+    Knutson's wrist-dependent part takes more than half at the extension limit with the
+    wrist neutral. Kuo finds the intrinsic muscles negligible, so Knutson's single-joint
+    part is mostly capsule and ligament. So ligaments may take most of the
+    single-joint residual that #139 fits from Knutson, minus a share for the capsule;
+    not most of the total passive moment.
 - **The sources the residual springs use**
   - Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI (2012). The
     passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166.
@@ -232,11 +316,25 @@ the cited paper.
   - Domalain M, Vigouroux L, Berton E (2010). Determination of passive moment-angle
     relationships at the trapeziometacarpal joint. J Biomech Eng 132(7):071009.
     doi:10.1115/1.4001397.
+    - 10 men (26.0 ± 5.2 years), in vivo, wrist neutral, thumb MCP and IP free.
+    - Each moment depends on both angles (Eqs. 2-3, Table 1, p. 071009-3): the
+      flexion-extension moment has an abduction-angle exponential, and the
+      ab/adduction moment a flexion-angle one. These are the cross terms a one-joint
+      spring cannot hold.
+    - Flexion beyond the resting posture was not measured, so the fit does not hold
+      there (p. 071009-4).
+    - The measured moment includes the passive opponens pollicis and APL. The
+      multi-joint thumb muscles were kept slack by posture (p. 071009-4), so the
+      residual has to be taken at that posture.
   - Kamper DG, Hornby TG, Rymer WZ (2002). Extrinsic flexor muscles generate concurrent
     flexion of all three finger joints. J Biomech 35(12):1581-1589.
     doi:10.1016/s0021-9290(02)00229-4.
   - Esteki A, Mansour JM (1996). An experimentally based nonlinear viscoelastic model of
     joint passive moment. J Biomech 29(4):443-450. doi:10.1016/0021-9290(95)00081-x.
+    Index MCP of 3 subjects. The hysteresis loop barely depends on speed: the
+    dissipative part scales with joint speed to the power n = 0.12-0.25 (Table 3,
+    p. 448), and no significant friction was found. Neither a linear tendon damper nor
+    MuJoCo's joint damping reproduces this.
 - **Finger models with ligaments.** Sancho-Bru JL, Pérez-González A, Vergara-Monedero M,
   Giurintano D (2001). A 3-D dynamic model of human finger for studying free movements.
   J Biomech 34(11):1491-1500. doi:10.1016/s0021-9290(01)00106-3. Includes the passive
@@ -421,6 +519,10 @@ the cited paper.
 ### Gaps in the data
 
 - No tensile or stiffness study of the finger (digits 2-5) MCP collaterals was found.
+- For the PIP there are failure loads (collateral 162.5 N in distraction, about 177 N in
+  lateral bending; volar plate about 220-390 N in hyperextension) but no stiffness.
+- For the thumb CMC, the one study of isolated ligaments gives failure loads of a few
+  newtons from very old donors (Najima et al. 1997) and no stiffness.
 - No in-vivo length or strain measurement of the thumb CMC ligaments was found.
 
 Finger ligament stiffness would therefore be transferred: either from cross-sectional
@@ -498,7 +600,8 @@ thumb CMC.
   - anterior oblique (thin and capsular, so a low-stiffness strand);
   - ulnar collateral (first volar trapeziometacarpal);
   - first dorsal trapeziometacarpal;
-  - intermetacarpal (second metacarpal base to the volar-ulnar first metacarpal).
+  - intermetacarpal (second metacarpal base to the volar-ulnar first metacarpal; double
+    in 7 of 32 hands in Najima et al. 1997).
 
 That is 24 + 16 + 7 = 47 strands per hand.
 
@@ -590,6 +693,8 @@ most scrutiny.
 
 **No damping** on ligament tendons, because MuJoCo's tendon damper is not gated by the
 dead band. Viscous behaviour stays in the joint damping (#139, from Kamper et al. 2002).
+The measured whole-joint dissipation is nearly rate-independent anyway (Esteki and
+Mansour 1996: speed to the power 0.12-0.25), which no MuJoCo damper reproduces.
 
 **Springs, not tendon limits.** Limits remain an option for a strand that must act as a
 hard stop. Their force is set by `solref` rather than tissue data, and the prototype
@@ -663,7 +768,9 @@ postures).
      the dorsal length plateau from 50 to 70 deg). The middle-portion target applies if a
      third proper-collateral strand is used. These are apparent lengths, so they only
      bound a strand while it is taut;
-   - thumb MCP UCL elongation vs Sircar et al. 2024 (if the thumb MP is added later);
+   - thumb MCP UCL elongation vs Sircar et al. 2024 (if the thumb MP is added later):
+     dorsal proper portion at most 111 % (flat heads, 40 deg) to 117 % (round heads,
+     60 deg) of its neutral length;
    - near-isometric PIP proper collaterals per Allison 2005.
 
    The tolerances are stated in the JSON row.
@@ -683,8 +790,9 @@ postures).
    Translational laxity data (e.g. Colman et al. 2007) do not apply while the CMC cannot
    translate.
 4. **Ligament forces.** Where published, compare against them.
-   - In the hand, the published values are failure loads (e.g. 162.5 N for the PIP
-     collateral), and they serve as upper bounds in the grip and pinch tests.
+   - In the hand, the published values are failure loads (e.g. 162.5 N in distraction
+     and about 177 N in lateral bending for the PIP collateral, Rhee et al. 1992), and
+     they serve as upper bounds in the grip and pinch tests.
    - Knee, elbow and shoulder forces become relevant with those joints.
 5. **CPU vs mujoco-warp.** Compare ligament lengths, `qfrc_passive` and `qacc` at random
    postures. The prototype already does this (section 6).
@@ -824,8 +932,11 @@ run of `lin_nowrap` hit a QACC warning. The cause was a NaN in the length of the
    portion is taut. Slack length is the most influential parameter in every published
    sensitivity study.
 4. **How much of the residual the ligaments may take.** Kuo and Deshpande 2012 suggest
-   the capsule-ligament complex dominates MCP stiffness. Do we let ligaments take most of
-   the MCP residual, or cap them at a fixed fraction until there is better data?
+   the capsule-ligament complex dominates MCP stiffness; Knutson et al. 2000 find the
+   multi-joint muscles dominant at the range ends for most wrist angles. Both leave the
+   single-joint part to capsule and ligament. Do we let ligaments take most of that
+   single-joint residual, or cap them at a fixed fraction (for the capsule) until there
+   is better data?
 5. **Wrapping surfaces.** MuJoCo wraps only spheres and cylinders. Are three strands per
    collateral on a cylinder enough to reproduce the MCP cam effect, or do we need more
    strands?
