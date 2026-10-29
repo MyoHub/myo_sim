@@ -33,8 +33,10 @@ parameterised, not what the model can do.
 
 - **Joints with several DOFs, where the passive moment depends on the combination of
   angles.** One-joint springs cannot represent this coupling.
-  - MCP: the collaterals are slack in extension and taut in flexion (Minami et al. 1984),
-    which couples abduction to flexion.
+  - MCP: the dorsal portions of the collaterals lengthen with flexion and the volar
+    portions with extension, so different portions restrain the joint at the two ends of
+    the range (Minami et al. 1984). Ab/adduction laxity falls with flexion (Minami et al.
+    1985), which couples abduction to flexion.
   - Thumb CMC (two DOFs). #139 had to leave out Domalain's cross terms because single-joint
     springs cannot hold them.
   - The CMC4/5 joints now being added.
@@ -74,20 +76,56 @@ the cited paper.
   - Minami A, An KN, Cooney WP, Linscheid RL, Chao EY (1984). Ligamentous structures of
     the metacarpophalangeal joint: a quantitative anatomic study. J Orthop Res
     1(4):361-368. doi:10.1002/jor.1100010404.
-  - Index MCP flexed from 0 to 80 deg:
+  - Specimens: index MCP joints of 10 hands (6 donors, mean age 52 years), 7 of them
+    measured by biplanar radiography with markers at the origin and insertion of the
+    dorsal, middle and volar thirds of each collateral, under a 20 N joint compression.
+  - Each collateral has a superficial and a deep layer. The radial collateral is thicker
+    and wider and attaches closer to the joint margin; its origin is further distal than
+    the ulnar one's, and the ulnar collateral is less oblique (pp. 363-364). Both arise
+    from a comma-shaped area dorsoproximal to the rotation axis on the metacarpal head and
+    insert progressively more volarly on the phalanx base, about a quarter of the base
+    width onto its volar aspect. The accessory collateral runs from just proximal and
+    volar of the proper origin to the distal two thirds of the volar plate's lateral
+    border, so its insertion moves with the plate, which bends 10-55 deg against the
+    metacarpal during flexion (p. 365).
+  - Attachment coordinates, n = 7, mean ± SD in mm, in a metacarpal frame (origin at the
+    centre of the head's lateral-view profile, x along the shaft) and a proximal-phalanx
+    frame: Table 2, p. 366. The proper-collateral origins lie 6.0-7.9 mm dorsal of the
+    head centre (y; accessory collaterals 4.8-5.3 mm) and their insertions 3.1-5.3 mm
+    volar of the phalanx-base origin; the radial collateral sits closer to the shaft
+    centre line (z) than the ulnar one.
+  - Index MCP flexed from 0 to 80 deg (abstract; text p. 365; Fig. 7, p. 367):
     - the dorsal portions of both collaterals lengthened by 3-4 mm;
     - the middle portions by 0.4-1.0 mm;
     - the volar portions shortened by 1-2 mm.
-  - In hyperextension the dorsal portions shortened by 2-3 mm.
+  - The dorsal portions lengthen from 0 to 50 deg, stay constant to 70 deg and shorten
+    slightly beyond; the volar portions shorten from 20 to 80 deg (p. 367). The apparent
+    lengths in Fig. 7 lie between roughly 15 and 25 mm.
+  - In hyperextension the dorsal portions shortened by 2-3 mm, the middle portions
+    slightly, and the volar portions lengthened slightly.
+  - These are apparent lengths (marker distances). They follow the true length only while
+    the ligament is under tension; a slack ligament crimps (p. 367).
   - Implication: one strand per collateral cannot reproduce this cam behaviour. Use at
-    least a dorsal and a volar strand, preferably three. The origin and insertion
-    coordinates are to be confirmed from the paper.
+    least a dorsal and a volar strand, preferably three.
 - **MCP collaterals: sectioning.** Minami A et al. (1985). Ligament stability of the
   metacarpophalangeal joint: a biomechanical study. J Hand Surg Am 10(2):255-260.
   doi:10.1016/s0363-5023(85)80117-9.
-  - The proper collaterals are the primary stabilizers in all directions.
-  - The accessory collaterals act mainly in ab/adduction.
-  - The palmar plate prevents dorsal dislocation only at full extension.
+  - 15 fresh fingers (7 index, 4 long, 4 ring; donors aged 40-70), load-displacement
+    tests with sequential sectioning at 0 and 75 deg flexion, n = 3 per condition.
+    Contributions are shares of the total capsuloligamentous restraining load, mean ± SE.
+  - The proper collaterals are the primary stabilizers in all four modes (distraction,
+    dorsopalmar, ab/adduction, pronation-supination). Together they carry about 85 % of
+    the distraction restraint at 0 deg and about 72 % at 75 deg (Table I, p. 256).
+  - The accessory collaterals act mainly in ab/adduction, and only in extension: the
+    ulnar accessory carries 37.3 ± 6.3 % of the abduction restraint at 0 deg and
+    8.4 ± 5.2 % at 75 deg; the radial accessory 31.2 ± 14.3 % and 9.4 ± 6.9 % of the
+    adduction restraint. The proper collateral on the tension side carries the rest
+    (57-58 % at 0 deg, 88 % at 75 deg; Table IV, p. 257).
+  - The palmar plate prevents dorsal dislocation only at full extension (19.5 ± 6.4 % at
+    0 deg, 0 at 75 deg; Table III). The dorsal capsule carries about 20 % of the
+    distraction restraint in flexion (Table I).
+  - Laxity in every mode except distraction falls with flexion, most of it between 0 and
+    45 deg (p. 258).
 - **Thumb MCP UCL elongation.** Sircar K, Hägermann C, Scaal M, Müller LP, Dargel J,
   Wegmann K (2024). Thumb metacarpophalangeal joint kinematics and elongation of the
   ulnar collateral ligament. J Hand Surg Am 49(1):8-14. doi:10.1016/j.jhsa.2023.10.001.
@@ -122,13 +160,32 @@ the cited paper.
   - Ladd AL, Lee J, Hagert E (2012). Macroscopic and microscopic analysis of the thumb
     carpometacarpal ligaments: a cadaveric study of ligament anatomy and histology.
     J Bone Joint Surg Am 94(16):1468-1477. doi:10.2106/jbjs.k.00329.
-    - Seven principal ligaments:
-      - three dorsal (dorsal radial, dorsal central, posterior oblique);
-      - two volar (anterior oblique, ulnar collateral);
-      - two ulnar (dorsal trapeziometacarpal, intermetacarpal).
-    - The dorsal ligaments are thicker.
-    - The anterior oblique ligament is thin, variable, and closer to capsule than to a
-      proper ligament.
+    - 30 hands (10 fresh-frozen, 20 embalmed) from 19 donors, mean age 76 years.
+    - Seven principal ligaments, present in all 30 hands:
+      - three dorsal (dorsal radial, dorsal central, posterior oblique), a "deltoid"
+        complex fanning from the dorsal tubercle of the trapezium to the dorsal MC1 base;
+      - two volar (anterior oblique, ulnar collateral, also called the first volar
+        trapeziometacarpal ligament);
+      - two ulnar (first dorsal trapeziometacarpal, intermetacarpal).
+    - Attachments (pp. 1471-1474): dorsal radial from the radial side of the dorsal
+      tubercle to the dorsoradial MC1; dorsal central from its centre to the central
+      dorsal MC1 edge; posterior oblique from its ulnar side to the ulnar MC1, at the
+      first dorsal interosseous origin; anterior oblique from the volar trapezium edge to
+      the volar MC1 "beak", ulnar to the APL insertion; ulnar collateral from the distal
+      edge of the transverse carpal ligament and the volar-ulnar trapezial ridge to the
+      volar-ulnar MC1; first dorsal trapeziometacarpal from the dorsal-ulnar trapezium
+      edge to next to the posterior oblique insertion; intermetacarpal from the dorsal
+      radial edge of MC2 to the volar-ulnar MC1.
+    - Taut positions under manual passive load (pp. 1472-1474): the dorsal complex in
+      flexion; the anterior oblique in extension and adduction; the ulnar collateral in
+      extension and abduction; the first dorsal trapeziometacarpal in abduction and
+      pronation; the intermetacarpal at the extremes of abduction.
+    - Dimensions, measured with each ligament at maximum passive tension (Table I,
+      p. 1473): lengths 9.2-13.0 mm (posterior oblique longest, 13.03 ± 1.58 mm; dorsal
+      central shortest, 9.18 ± 1.29 mm), widths 2.2-6.0 mm, thicknesses 0.71-1.95 mm.
+    - The dorsal ligaments are thicker (1.71-1.95 mm) than the volar ones (p < 0.05).
+    - The anterior oblique ligament is thin (0.71 ± 0.11 mm), variable, and histologically
+      closer to capsule than to a proper ligament.
   - Hagert E, Lee J, Ladd AL (2012). Innervation patterns of thumb trapeziometacarpal
     joint ligaments. J Hand Surg Am 37(4):706-714.e1. doi:10.1016/j.jhsa.2011.12.038.
 - **Thumb CMC mechanics**
@@ -226,7 +283,22 @@ the cited paper.
     doi:10.1016/0021-9290(80)90354-1.
   - Blankevoort L, Kuiper JH, Huiskes R, Grootenboer HJ (1991). Articular contact in a
     three-dimensional model of the knee. J Biomech 24(11):1019-1031.
-    doi:10.1016/0021-9290(91)90019-j. Ligaments as non-linear elastic line elements.
+    doi:10.1016/0021-9290(91)90019-j. Ligaments as non-linear elastic line elements:
+    - force law, Eqs. 6a-c (p. 1021): f = k ε² / (4 ε_l) for 0 ≤ ε ≤ 2 ε_l,
+      f = k (ε - ε_l) for ε > 2 ε_l, f = 0 for ε < 0, with ε = (L - L0) / L0 (Eq. 7)
+      and k the stiffness in N (newtons per unit strain);
+    - ε_l = 0.03 for all ligaments, after Butler et al. 1986 (p. 1021);
+    - slack length from a reference strain ε_r at the reference (extended) posture:
+      L0 = L_r / (ε_r + 1) (Eqs. 8a-b);
+    - k per line element, the ligament's stiffness divided equally over its elements:
+      ACL bundles 5000 N, PCL 9000 N, LCL 2000 N, MCL 2750 N, medial capsule 1000 N
+      (Table 1, p. 1022);
+    - reference strains from -0.25 to +0.10 (Table 1), not measured but tuned so that
+      the model reproduced the specimen's measured internal-external rotation under
+      ±3 N m (p. 1022);
+    - Appendix B (p. 1030): k as elastic modulus × cross-sectional area, with
+      E ≈ 345 MPa from fascicle-bone units of three donors aged 20-30 (Butler et al. 1986);
+      Table 2 compares the resulting k with earlier knee models.
   - Blankevoort L, Huiskes R (1991). Ligament-bone interaction in a three-dimensional
     model of the knee. J Biomech Eng 113(3):263-269. doi:10.1115/1.2894883. Wrapping
     the MCL over the tibial edge changes how it resists valgus moments. Its effect on
@@ -263,7 +335,8 @@ the cited paper.
   - Bloemker KH, Guess TM, Maletsky L, Dodd K (2012). Computational knee ligament
     modeling using experimentally determined zero-load lengths. Open Biomed Eng J
     6:33-41. doi:10.2174/1874230001206010033.
-    - Stiffness per bundle (N per unit strain): ACL 5000, PCL 9000, LCL 2000, MCL 2750.
+    - Stiffness per bundle (N per unit strain): ACL 5000, PCL 9000, LCL 2000, MCL 2750,
+      the per-element values of Blankevoort et al. 1991, Table 1.
     - Kinematics are highly sensitive to zero-load length.
   - Kia M et al. (2016). J Biomech Eng 138(5):051010. doi:10.1115/1.4032850.
   - Guess TM, Razu S, Jahandar H (2016). J Knee Surg 29(2):126-137.
@@ -330,8 +403,10 @@ the cited paper.
     - damping c·ε̇, applied only while stretching (default c = 0.003 per unit strain per
       second).
   - The older `Ligament` class uses a normalised spline scaled by a force constant.
-- **Notation trap.** Several papers write the transition as ε_l = 0.03, with the toe
-  region ending at 2ε_l. That is the same curve as a transition strain of 0.06.
+- **Notation trap.** Blankevoort et al. 1991 (Eqs. 6a-c) and the papers that follow them
+  write the parameter as ε_l = 0.03, with the toe region ending at 2ε_l. That is the same
+  curve as OpenSim's transition strain of 0.06: k ε² / (4 ε_l) = k ε² / (2 ε_t) and
+  k (ε - ε_l) = k (ε - ε_t / 2) with ε_t = 2 ε_l.
 - **Spine precedent.** Meszaros-Beller L, Hammer M, Schmitt S, Pivonka P (2023). Effect
   of neglecting passive spinal structures. Front Physiol 14:1135531.
   doi:10.3389/fphys.2023.1135531.
@@ -351,6 +426,13 @@ the cited paper.
 Finger ligament stiffness would therefore be transferred: either from cross-sectional
 area times a modulus, as Lenhart et al. do, or from related ligaments. Those rows would
 carry the status `transferred`.
+
+An example of the area route for the thumb CMC: width × thickness from Ladd et al. 2012
+(Table I) gives about 1.7 mm² (intermetacarpal) to 10.2 mm² (posterior oblique). With
+the knee-ligament modulus of 345 MPa that Blankevoort et al. 1991 take from Butler et al.
+1986 (Appendix B), k is about 0.6-3.5 kN per unit strain, or k / L of about 6·10⁴ to
+3.6·10⁵ N/m at Ladd's lengths. The rectangle overestimates the area of a tapering
+ligament, and the modulus comes from young knee ligaments, so this is an upper estimate.
 
 ## 3. MuJoCo mechanics
 
@@ -409,15 +491,16 @@ thumb CMC.
 - **MCP.** Per collateral, a dorsal and a volar strand of the proper collateral (Minami
   1984), plus the accessory collateral. This is 3 strands per side, 6 per MCP.
 - **PIP.** Per side, a proper and an accessory collateral, 4 per PIP.
-- **Thumb CMC.** Six ligaments, following the consensus set of Ladd et al. 2012:
+- **Thumb CMC.** The seven ligaments that Ladd et al. 2012 found in every specimen:
   - dorsoradial;
   - dorsal central;
   - posterior oblique;
-  - anterior oblique;
-  - ulnar collateral;
-  - intermetacarpal (first to second metacarpal base).
+  - anterior oblique (thin and capsular, so a low-stiffness strand);
+  - ulnar collateral (first volar trapeziometacarpal);
+  - first dorsal trapeziometacarpal;
+  - intermetacarpal (second metacarpal base to the volar-ulnar first metacarpal).
 
-That is 24 + 16 + 6 = 46 strands per hand.
+That is 24 + 16 + 7 = 47 strands per hand.
 
 **Why these joints.**
 - The MCP and the thumb CMC are the two-DOF joints where coupling matters and where #139
@@ -472,9 +555,10 @@ ligaments as passive spatial tendons. The role table's `*_tendon.xml` entry woul
 
 ### Force law and parameters
 
-Strain is ε = (L - L0) / L0. The force law is the Blankevoort / Wismans curve used by
-OpenSim's `Blankevoort1991Ligament`, with stiffness k in newtons per unit strain and
-transition strain ε_t (0.06 by default):
+Strain is ε = (L - L0) / L0. The force law is the Blankevoort / Wismans curve
+(Blankevoort et al. 1991, Eqs. 6a-c) used by OpenSim's `Blankevoort1991Ligament`, with
+stiffness k in newtons per unit strain and transition strain ε_t (0.06 by default, i.e.
+Blankevoort's ε_l = 0.03):
 
 - F = 0 for ε ≤ 0;
 - F = k ε² / (2 ε_t) for 0 < ε ≤ ε_t;
@@ -575,7 +659,10 @@ postures).
 
 1. **Length vs joint angle.** Per strand, against the cadaver data:
    - MCP collateral portions vs Minami et al. 1984 (dorsal +3 to 4 mm, middle +0.4 to
-     1.0 mm, volar -1 to -2 mm from 0 to 80 deg; dorsal -2 to -3 mm in hyperextension);
+     1.0 mm, volar -1 to -2 mm from 0 to 80 deg; dorsal -2 to -3 mm in hyperextension;
+     the dorsal length plateau from 50 to 70 deg). The middle-portion target applies if a
+     third proper-collateral strand is used. These are apparent lengths, so they only
+     bound a strand while it is taut;
    - thumb MCP UCL elongation vs Sircar et al. 2024 (if the thumb MP is added later);
    - near-isometric PIP proper collaterals per Allison 2005.
 
@@ -585,8 +672,11 @@ postures).
    moment never exceeds the residual inside each measured span.
 3. **End-feel and laxity.**
    - Moment-angle sweeps at the end of range in each DOF.
-   - MCP abduction laxity at 0 vs 90 deg flexion; the abduction range should shrink
-     with flexion.
+   - MCP abduction laxity at 0 vs 75 deg flexion; the abduction range should shrink
+     with flexion, mostly between 0 and 45 deg (Minami et al. 1985, p. 258).
+   - MCP ab/adduction restraint shares at 0 and 75 deg flexion: accessory collaterals
+     about a third in extension and under 10 % in flexion, the rest from the proper
+     collateral (Minami et al. 1985, Table IV).
    - CMC laxity in flexion-abduction combinations.
    - No new posture where the passive moment changes sign unexpectedly.
 
@@ -623,7 +713,7 @@ three dorsal ligaments.
 **Geometry and parameters.** Attachments were placed from each joint's anchor and axis
 (lateral offset 4-7 mm, eccentric dorsal origins). The geometry is plausible, not
 anatomical. Slack length was set at 85 % of each strand's length span over its joints'
-ranges, with k = 5·10⁴ N/m. The full prototype is a larger set than the 46-strand pilot,
+ranges, with k = 5·10⁴ N/m. The full prototype is a larger set than the 47-strand pilot,
 which would cost roughly 60-75 % of the increments below.
 
 **Variants:**
@@ -683,7 +773,8 @@ warning or a finger speed above 100 rad/s.
 
 Published bone-ligament-bone stiffness runs from tens of N/mm for small ligaments
 (coracohumeral 36.7 N/mm, superior glenohumeral 17.4 N/mm) to 242 N/mm for a young ACL,
-i.e. about 10⁴ to 2.4·10⁵ N/m.
+i.e. about 10⁴ to 2.4·10⁵ N/m. The area × modulus estimate for the short thumb CMC
+ligaments (section 2, up to 3.6·10⁵ N/m) reaches the top of that range.
 
 **What the stability numbers say.**
 - **Current `dev` inertias.** Hand ligaments in that range are stable with a large
@@ -691,7 +782,9 @@ i.e. about 10⁴ to 2.4·10⁵ N/m.
 - **Realistic phalanx inertia.** If the inertia floor and the 1e-4 armature are ever
   reduced to physical values (cf. issue #128), the margin for the stiffest hand strands
   falls to about 1-3×. The analytic bound 4 / (h² · invweight) predicts the empirical
-  limit to within a factor of about 2. It would be a test on every strand.
+  limit to within a factor of about 2. It would be a test on every strand. A strand at
+  the top of the CMC estimate (3.6·10⁵ N/m) would sit at the empirical limit of the
+  rod-like-inertia case (stable at 3·10⁵, diverged at 10⁶ N/m).
 - **Damping.** A tendon damper of 500 N s/m, the order used by Rahman et al. and Bloemker
   et al. (0.5 N s/mm), was stable on `dev`. It diverged with realistic inertia, because
   it is explicit. 50 N s/m was stable in both cases. This is another reason for no
@@ -725,8 +818,11 @@ run of `lin_nowrap` hit a QACC warning. The cause was a NaN in the length of the
    values are to be confirmed from Bettinger et al. 2000 and D'Agostino et al. 2014.
 3. **Reference strains.** We have no in-vivo strain data for the CMC ligaments. Do we
    set the reference strain from the length-angle data (MCP) and from a "taut at the end
-   of range" assumption (CMC)? Slack length is the most influential parameter in every
-   published sensitivity study.
+   of range" assumption (CMC)? For the CMC, Ladd et al. 2012 give the posture in which
+   each ligament is maximally taut and its length there (Table I), which could fix that
+   assumption per strand. Minami's MCP lengths are apparent lengths, valid only while a
+   portion is taut. Slack length is the most influential parameter in every published
+   sensitivity study.
 4. **How much of the residual the ligaments may take.** Kuo and Deshpande 2012 suggest
    the capsule-ligament complex dominates MCP stiffness. Do we let ligaments take most of
    the MCP residual, or cap them at a fixed fraction until there is better data?
