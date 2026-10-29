@@ -15,7 +15,7 @@ import mujoco
 import numpy as np
 import pytest
 
-from myo_sim.build.compose import build_model
+import myo_sim
 
 musclemimic_models = pytest.importorskip("musclemimic_models")
 
@@ -261,7 +261,7 @@ def ref_model():
 
 @pytest.fixture(scope="module")
 def tgt_model():
-    return build_model(TGT_MODEL_NAME)
+    return myo_sim.load_model(TGT_MODEL_NAME)
 
 
 @pytest.fixture(scope="module")
@@ -282,7 +282,7 @@ def tgt_eq_map(tgt_model):
 def _shared_actuator_names() -> list[str]:
     """Return ref-side actuator names whose tgt mapping also exists."""
     ref = mujoco.MjModel.from_xml_path(str(REF_XML))
-    tgt = build_model(TGT_MODEL_NAME)
+    tgt = myo_sim.load_model(TGT_MODEL_NAME)
     tgt_names = {mujoco.mj_id2name(tgt, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(tgt.nu)}
     shared = []
     for i in range(ref.nu):
@@ -490,7 +490,7 @@ def test_torso_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map
 def test_actuator_coverage():
     """All actuators in ref must map to tgt and vice versa."""
     ref = mujoco.MjModel.from_xml_path(str(REF_XML))
-    tgt = build_model(TGT_MODEL_NAME)
+    tgt = myo_sim.load_model(TGT_MODEL_NAME)
 
     ref_names = {mujoco.mj_id2name(ref, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(ref.nu)}
     tgt_names = {mujoco.mj_id2name(tgt, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(tgt.nu)}

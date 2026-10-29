@@ -25,7 +25,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 
 ## Known limitations
 
-- [ ] No open arm-specific issues at this time — see [all open issues](https://github.com/MyoHub/myo_sim/issues)
+- [ ] With mujoco-warp older than 3.16, the tendons with a sidesite inside their wrap geom (DELT2, DELT3, PECM1, ECRL, ECRB, ECU, FCR, PQ, FDP4, EDC2, EDC4, EDC5, EDM, FPL) can be up to about 3 mm longer on the GPU than in CPU MuJoCo, because the float32 inside-wrap solve falls back to an approximate contact point ([mujoco_warp#1713](https://github.com/google-deepmind/mujoco_warp/issues/1713)). Use mujoco-warp 3.16 or newer; `tests/test_warp_parity.py` checks this.
+- [ ] See [all open issues](https://github.com/MyoHub/myo_sim/issues)
 
 ## Manual adjustments
 
@@ -34,6 +35,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 - Muscle parameters updated during the 2026-05 refactor to improve force-length accuracy.
 
 ## Changelog
+
+**2026-10-28** — Took `Elbow_BIC_BRD_ellipsoid_BIClong` out of the `BIClong_tendon` path. Within the elbow range it touched the path in 0.05 % of postures (below 0.4 µm in length and 0.04 mm in moment arm). Past the extension limit its onset gave NaN lengths in MuJoCo < 3.16, and its sidesite flipping sides made BIClong 15-20 mm longer at once. The geom and its sidesite stay in the chain so that model sizes and indices do not change.
 
 **2026-06-29** — Compared MyoArm-derived full-body geoms against the previous MuscleMimic full-body model. The old reference contained non-collision wrap geoms `APL_torus_wrap_left` on `hamate_l`, `FCU_wrap_left` on `pisiform_l`, and `Trpzm_wrap_left` on `trapezium_l`; these are intentionally absent from the current MyoArm XML as they were never used. Removed `distph2_r_coll_2` from the required parity list because it duplicated the unnamed ellipsoid already present on `distph2_r`.
 

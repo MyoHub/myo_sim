@@ -4,13 +4,13 @@ Reference for agents editing the MjSpec composition pipeline in `myo_sim/build/c
 
 ## Overview
 
-`build_spec(name: str)` is the core entry point; `build_model(name: str)` is a thin convenience wrapper (`build_spec(name).compile()`) for callers who just want a compiled `MjModel`. Both:
+`build_spec(name: str)` is the core entry point. It:
 
 1. Look up `name` in `MODEL_REGISTRY` to get a `ModelRegistration`.
 2. Dispatch to the matching builder function via `SPEC_BUILDERS[registration.build_strategy]`.
-3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, and injects contact pairs / sensors as needed. Every builder returns an editable `MjSpec` (not a compiled `MjModel`) — `build_spec()` stops there so callers can edit further before compiling; `build_model()` compiles it for you.
+3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, and injects contact pairs / sensors as needed. Every builder returns an editable `MjSpec` (not a compiled `MjModel`) — `build_spec()` stops there so callers can edit further before compiling.
 
-`myo_sim.load_spec(name)` / `myo_sim.load_model(name)` / `myo_sim.load(name)` (in `myo_sim/__init__.py`) are the package-level entry points most consumers should use instead of calling `compose.py` directly — they also resolve packaged legacy static XMLs and legacy aliases (`hand`, `myoarm`, ...), which `build_spec`/`build_model` do not.
+`myo_sim.load_spec(name)` / `myo_sim.load_model(name)` / `myo_sim.load(name)` (in `myo_sim/__init__.py`) are the package-level entry points most consumers should use instead of calling `compose.py` directly — they also resolve packaged legacy static XMLs and legacy aliases (`hand`, `myoarm`, ...), which `build_spec` does not.
 
 All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/models/` directory). The `compiler_meshdir` for child XMLs is always set to `MODELS_DIR` (the repo root of the models tree) so that relative mesh paths inside the XML resolve correctly.
 
@@ -86,7 +86,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
        MY_NEW_MODEL = "my_new_model"
    ```
 
-2. **Write a builder function** following the existing pattern. It receives a `ModelRegistration` and must return an editable `MjSpec` (not a compiled `MjModel` — compilation happens later, in `build_model()` or by the caller):
+2. **Write a builder function** following the existing pattern. It receives a `ModelRegistration` and must return an editable `MjSpec` (not a compiled `MjModel` — compilation happens later, in `myo_sim.load_model()` or by the caller):
    ```python
    def build_my_new_spec(registration: ModelRegistration) -> mujoco.MjSpec:
        torso = load_torso_spec(registration)  # or load_passive_torso_spec

@@ -97,7 +97,7 @@ def test_no_static_xml_combines_conflicting_asset_files():
     Before the rename in this PR, both files declared class="wrap" and class="marker",
     causing MuJoCo 3.8 to raise "repeated default class name". Those names are now
     scoped (myotorso_wrap, myoarm_wrap, etc.) so the pair can in principle be composed,
-    but multi-part assemblies must still go through build_model() in compose.py to keep
+    but multi-part assemblies must still go through build_spec() in compose.py to keep
     contact pairs and bilateral symmetry centralised.
     """
     conflicting_pairs = [
@@ -113,6 +113,6 @@ def test_no_static_xml_combines_conflicting_asset_files():
             includes_b = b in source
             assert not (includes_a and includes_b), (
                 f"{model_xml} includes both {a} and {b}. "
-                f"Multi-part assemblies must use build_model() in compose.py "
+                f"Multi-part assemblies must use build_spec() in compose.py "
                 f"to keep contact pairs and bilateral symmetry centralised."
             )
