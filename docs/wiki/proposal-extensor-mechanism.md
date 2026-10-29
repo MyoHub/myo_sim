@@ -80,9 +80,14 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
   - EIP: r = 0.64 (0.09), c = 0.40 (0.21).
   - The terminal-to-central ratio stays near 1.7:1 across postures. The transmitted fraction c falls significantly with IP flexion.
   - This contradicts the classical 50:25:25 split, which gives a terminal share of 0.5.
-- Micks and Reswick (1981) showed in cadaver long fingers that the central fibres are tensed in flexion and the lateral fibres in extension.
+- Micks and Reswick (1981) showed in three cadaver long fingers, MCP fixed in extension, that the central fibres are tensed in flexion and the lateral fibres in extension, with a distribution over all fibres at mid-range.
+  - They measured the effective PIP moment arm of the whole communis force (measured proximal to the hood), with the passive tissue moments cancelled by using force increments: 2.3-5.5 mm over 5-90 deg; in two of the fingers lowest at mid-flexion (2.7 mm at 50 deg, 2.3 mm at 45 deg), and 4.3-5.5 mm at 90 deg in all three (Table I, p. 466).
+  - Passive PIP moments become substantial beyond about ±25 deg from the balanced position. Excising the oblique fibres of the extensor complex shifted the passive moment-angle curve by about 15 deg; at 95 deg flexion they carried an extension moment of about 100 g·cm (about 10 N·mm) (pp. 465-466).
 - Valero-Cuevas et al. (2007) loaded the network of cadaver middle fingers (MCP 45, PIP 45, DIP 10 deg). The ratio of central-slip to terminal-slip tension reversed as the input ratio between intrinsics and extensor changed. They note that a network with invariant tension propagation "by definition cannot display this behavior".
-- Lee et al. (2008b) estimated effective static moment arms for five tendons of the index extensor mechanism.
+- Lee et al. (2008b) estimated effective static moment arms (ESMAs: joint moment per unit tendon force, passive moments removed) for five tendons of the index extensor mechanism: five fresh-frozen hands, the same nine postures, loads up to 11.8 N for EDC and EIP, 8.8 N for FDI and FPI and 5.9 N for LUM (Table 1).
+  - Means across postures and specimens, in mm (Table 4, p. 1571): EDC DIP 2.26 (1.08), PIP 3.10 (1.18), MCP 7.03 (3.21), MCP abduction about 0; EIP 2.41, 3.42, 7.53; FDI DIP 0.34, PIP -0.38, MCP -2.02 (flexion), abduction 3.10; FPI DIP 0.90, PIP 0.13, MCP -4.63, adduction 3.91; LUM DIP 0.53, PIP -0.84, MCP -6.99, abduction 1.77.
+  - Posture effects (Table 3): the EDC MCP ESMA rises from 4.29 to 8.92 mm as the IPs flex from 0/0 to 45/30 deg; the DIP ESMAs of FPI (1.75 to 0.38 mm) and LUM (0.83 to 0.08 mm) fall with IP flexion; the abduction ESMAs fall with MCP flexion (FDI 4.69 to 1.24 mm).
+  - The ESMAs are smaller than kinematic moment arms (EDC at the MCP: 7.0 mm against 8.6 mm in An et al. 1983). The authors attribute the difference to force distribution within the hood, dissipation into the capsule and the ORL, and the reaction at the fixed fingertip (pp. 1571-1572).
 
 **Geometry and material.**
 - Garcia-Elias et al. (1991a) measured the 3-D geometry of the mechanism in seven fingers in five configurations. Band lengths change little, while their spatial orientation varies considerably.
@@ -94,8 +99,14 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
 **PIP-DIP coupling.**
 - Landsmeer (1949, 1958, 1963) described the dorsal aponeurosis and the coordination of the interphalangeal joints.
 - Ueba et al. (2011) found the ORL radially and ulnarly in all but 2 of 40 fingers. Its share of the passive resistance to DIP flexion is 25 % at PIP 0 deg, 31 % at 30 deg, 18 % at 60 deg and 3 % at 90 deg, independent of the MCP.
-- Leijnse, Quesada and Spoor (2010) measured coupled IP trajectories in 68 fingers.
-- Leijnse and Spoor (2012) fitted a 2-D model of strings that go slack or taut, including the retinacular and oblique retinacular ligaments, to these trajectories.
+- Leijnse, Quesada and Spoor (2010) measured coupled IP trajectories in vivo in 68 fingers (17 hands, 9 subjects aged 33 ± 11 years), unloaded, flexed by the deep flexor with the MCP at 0 deg.
+  - The DIP-versus-PIP trajectories are sigmoid and consistent within a finger but vary between fingers. The mean slope dDIP/dPIP of the extension trajectories peaks at 1.0 ± 0.31 at PIP 70 deg and falls to 0.53 ± 0.28 at 100 deg, 0.25 ± 0.25 at 0 deg and -0.11 ± 0.25 at -13 deg (p. 2386, Fig. 4A).
+  - Passive PIP hyperextension ranges from 0 to almost 50 deg; greater hyperextensibility goes with flatter slopes near extension (correlation C1, p. 2386). Mean passive ranges per digit are in Table 2 (e.g. PIP flexion 110-119 deg, PIP extension -11 to -21 deg).
+- Leijnse and Spoor (2012) fitted a 2-D kinematic model of inextensible strings that go slack or taut to these 68 trajectories: a central string M (PIP moment arm 5 mm), n lateral strings joining a terminal tendon (DIP moment arm 3.5-4 mm), one retinacular ligament from the PIP volar plate, and the oblique retinacular ligament (Table 1, Fig. 3).
+  - The coupling follows dθ_DIP = (r_M − r_T) / r_T,DIP · dθ_PIP (Eq. 1): the lateral parts move palmar of the central slip at the PIP as it flexes. It needs only a two-segment extensor insertion and is active only while both parts are taut, i.e. with the deep flexor active (pp. 570-571).
+  - Fits needed 4.9 ± 2 strings (2 to 10). For PIP below 25-45 deg the fits were within 0.5 deg RMS; over the full range, about half of the fingers stayed within 3 deg and the rest had maximum errors of 3-12 deg in the upper mid-range (p. 576).
+  - The retinacular ligament went slack with IP flexion; one sufficed in 66 of 68 fingers. The oblique retinacular ligament improved the fit in only one finger, by 2 deg (p. 577), so it does not drive unloaded coupling.
+  - Inextensible strings sufficed, which suggests that hood strain is not essential to unloaded coupling (p. 577).
 - Harris and Rutledge (1972) give the functional anatomy.
 
 **Models with constant fractions.** Most musculoskeletal models that include the mechanism distribute force with constant coefficients:
@@ -146,7 +157,14 @@ Each extensor and intrinsic muscle keeps its actuator and its tendon. The tendon
 
 The main path ends on the proximal phalanx, so the remaining (1−c)·F acts on the proximal phalanx at the hood. This is the share Lee et al. (2008a) attribute to the sagittal bands and capsule. With r = 0.63 and c = 0.39, the central slip carries 0.14 F and each lateral slip 0.12 F.
 
-**Intrinsics.** LU_RB and UI_UB end at their band site and branch to the terminal tendon and to the central slip. Their fractions would come from the constant coefficients of Chao and An (1978) as used by Hu et al. (2014): LU 2/3 to the radial band and 1/3 to the central slip; UI 1/3 to the band, 1/3 to the central slip, and the rest to the proximal phalanx.
+**Checking the fractions against joint moments.** In option (a) the EDC's DIP moment arm is c·r·r_TE and its PIP moment arm c(1−r)·r_CS + c·r·r_LB, with the geometric moment arms of the terminal tendon (r_TE), central slip (r_CS) and lateral bands (r_LB). Taking the values of the Leijnse and Spoor (2012) model (r_CS = 5 mm, r_TE = 3.5-4 mm) as an illustration:
+- with r = 0.63 and c = 0.39 (c·r = 0.25), the DIP moment arm is 0.9-1.0 mm and the PIP moment arm at most about 2.0 mm (lateral bands at the central-slip moment arm or less);
+- the measured whole-tendon values are larger: Lee et al. (2008b) ESMAs of 2.26 ± 1.08 mm (DIP) and 3.10 ± 1.18 mm (PIP), and Micks and Reswick's (1981) effective PIP moment arm of 2.3-5.5 mm;
+- with c near 1 and the same r, the same moment arms give a DIP moment arm of 2.2-2.5 mm and a PIP moment arm of about 3-5 mm, close to those measurements.
+
+The ESMAs include the reaction at the fixed fingertip and Micks and Reswick's moment arm includes every fibre over the PIP, so neither is a pure slip force. But a split with c = 0.39 would give the IP joints roughly half the extension moment the cadaver joint-moment data show. We therefore propose to fit c and r for option (a) to the ESMAs of Lee et al. (2008b) with the model's own moment arms, keeping r = 0.63 as the prior and reporting the slip forces of Lee et al. (2008a) as a check, not as a target.
+
+**Intrinsics.** LU_RB and UI_UB end at their band site and branch to the terminal tendon and to the central slip. Their fractions would come from the constant coefficients of Chao and An (1978) as used by Hu et al. (2014): LU 2/3 to the radial band and 1/3 to the central slip; UI 1/3 to the band, 1/3 to the central slip, and the rest to the proximal phalanx. With r_TE = 3.5-4 mm, the lumbrical's 2/3 terminal share gives a DIP moment arm of 2.3-2.7 mm, against an ESMA of 0.53 ± 1.33 mm that falls towards zero with IP flexion (Lee et al. 2008b, Tables 3-4). The intrinsic fractions are therefore checked against the same ESMAs.
 
 **Muscle lengths.** The muscle sees the divisor-weighted length. Its `lengthrange` must therefore be recomputed, and the slack-length and `fpmax` fit of the extrinsic extensors (`passive-muscles-tenodesis.md`, Vittorio-Caggiano/myo_sim#2) rerun.
 
@@ -210,7 +228,7 @@ Three ways:
 2. **A passive fixed tendon over PIP and DIP** with coefficients equal to the ORL moment arms (volar at the PIP, dorsal at the DIP) and a tension-only dead-band spring (`springlength="-1e1 0"`; only lengthening is resisted). It is cheap: no geometry evaluation and no DOF. Its moment arms are constant.
 3. **A passive spatial tendon** from the proximal phalanx (volar and lateral, about 8 mm proximal to the PIP), past a lateral via site on the middle phalanx, to the terminal tendon insertion. It has posture-dependent moment arms. In the prototype it had 1.6-3.5 mm (flexion) at the PIP and 2.5 mm (extension) at the DIP at the neutral posture. Without a wrap object it crossed to the volar side of the DIP at 45 deg flexion, so it needs a wrap or a second via site.
 
-Variant 3 fits the explicit-ligament framework of MyoHub/myo_sim#142 (see *Interaction with other work*). Variant 2 or 3, radial and ulnar, would be fitted to the ORL share of the passive DIP moment in Ueba et al. (2011): 25/31/18/3 % at PIP 0/30/60/90 deg. Its stiffness has no direct measurement in the sources above, so it is a fitted parameter. The fit has to go together with the residual DIP and PIP springs (below).
+Variant 3 fits the explicit-ligament framework of MyoHub/myo_sim#142 (see *Interaction with other work*). Variant 2 or 3, radial and ulnar, would be fitted to the ORL share of the passive DIP moment in Ueba et al. (2011): 25/31/18/3 % at PIP 0/30/60/90 deg. Its stiffness has no direct measurement in the sources above, so it is a fitted parameter. The fit has to go together with the residual DIP and PIP springs (below). The ORL is a passive element, not the source of the active coupling: in Leijnse and Spoor's (2012) fits to 68 fingers it improved the unloaded FDP-driven trajectory in only one finger, by 2 deg. The coupling target of validation 2 is therefore met by the extensor branches, and the ORL is fitted to the passive data only.
 
 ### Sagittal bands
 
@@ -223,7 +241,7 @@ Ulnar or radial subluxation of the tendon (sagittal band rupture) is not modelle
 
 The actuators stay as they are: RI2-5, LU_RB2-5 and UI_UB2-5, the same names and the same count. Their paths change:
 - LU_RB and UI_UB end at the band site on the proximal phalanx (option a) or the band node (option b). From there the force reaches the terminal tendon and the central slip. Their PIP moment arm becomes one band moment arm, no longer a path straight to the middle phalanx, and they gain a DIP moment arm.
-- RI keeps its MCP-only insertion on the index finger. This assumes the index radial interosseous (the first dorsal interosseous) inserts mainly into the proximal phalanx, which needs a cited source before the pilot. Whether RI3 and RI4 should get a hood share is an open question.
+- RI keeps its MCP-only insertion on the index finger. This assumes the index radial interosseous (the first dorsal interosseous) inserts mainly into the proximal phalanx. Lee et al. (2008b) support it functionally: the FDI's PIP and DIP ESMAs were near zero (-0.38 and 0.34 mm, the PIP value not different from zero) and its main action was MCP abduction (3.10 mm; Table 4, p. 1571). Whether RI3 and RI4 should get a hood share is an open question.
 
 The lumbrical's moving origin on the FDP tendon is a separate topic and is not part of this proposal.
 
@@ -268,10 +286,11 @@ Each check has a target from the data file and a tolerance stated there.
    - Setup: lock the index at the nine postures and load EDC and EIP separately at 11.8 N; with option (b), let the nodes settle.
    - Output: terminal and central slip tensions.
    - Targets: r near 0.63 with no strong posture trend; c falling with IP flexion. This is exactly where option (a) is constant by construction and option (b) has to earn its cost.
+   - Joint-moment targets at the same postures: the ESMAs of Lee et al. (2008b) per tendon and DOF (Table 4) and their posture trends (Table 3: EDC MCP ESMA rising with IP flexion, FPI and LUM DIP ESMAs falling with it); the effective PIP moment arm of the communis, 2.3-5.5 mm with the MCP extended (Micks and Reswick 1981, Table I).
    - Intrinsic loading, compared with Valero-Cuevas et al. (2007): the slip ratio should reverse as the intrinsic-to-extensor ratio grows.
 2. **PIP-DIP coupling in free flexion.**
    - Setup: drive the finger with FDP alone and with FDS alone, slowly and from extension.
-   - Targets: the DIP-PIP trajectories of Leijnse et al. (2010), and the passive ORL share against Ueba et al. (2011).
+   - Targets: the DIP-PIP trajectories of Leijnse et al. (2010) with FDP driving: slope dDIP/dPIP of 1.0 ± 0.31 at PIP 70 deg, 0.53 ± 0.28 at 100 deg and 0.25 ± 0.25 at 0 deg (p. 2386); and the passive ORL share against Ueba et al. (2011).
    - Full passive range: with all muscles off, every band force stays below a small bound over the joint ranges (the locking check above).
 3. **Fingertip force.**
    - Setup: index posture of Valero-Cuevas et al. (1998); maximal forces in the five directions from an optimisation over the index muscles, as in `hand-function-validation.md`'s pinch.
@@ -386,14 +405,14 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 ## Open questions
 
 1. **Index pilot first?** Is an index-only pilot of both options, compared on the validation list, acceptable before any change to the reference model?
-2. **Fractions for option (a).** Should they come from Lee et al. (2008a) (r = 0.63, c = 0.39, with c's posture dependence lost) or from the nominal 50/25/25 of Valero-Cuevas et al. (1998)? Lee's c also includes force lost to the joint capsule, which in our model would go into the proximal phalanx.
+2. **Fractions for option (a).** Should they come from Lee et al. (2008a) (r = 0.63, c = 0.39, with c's posture dependence lost) or from the nominal 50/25/25 of Valero-Cuevas et al. (1998)? Lee's c also includes force lost to the joint capsule, which in our model would go into the proximal phalanx. Our suggestion (see *Checking the fractions against joint moments*): fit c and r to the ESMAs of Lee et al. (2008b), because c = 0.39 gives about half the measured IP extension moment.
 3. **ORL: fixed or spatial?** Fixed tendon (constant moment arms, cheapest) or spatial tendon (posture-dependent arms, needs a wrap)? Its stiffness is fitted to Ueba et al. (2011); values to be confirmed from Ueba et al. (2011) and Landsmeer (1958) before the fit.
 4. **Interosseous hood shares** of digits 3-5 (RI3, RI4 and the dorsal interossei of the middle finger), and EDM's share at the little finger.
 5. **MCP hyperextension.** A range change is needed for the claw test. Is it in scope here or a separate PR?
 6. **Option (b) identification.** Node placement and slide directions should be identified from the 3-D geometry of Garcia-Elias et al. (1991a) and the band migration described by Canoso et al. (2021). What tolerance on passive band force over the full range should count as "admits the range of motion"?
 7. **Elastic tendons.** Should compliant tendons (#124's slide joints or a massless series element) land before or after this change? The slack-length refit of the extensors should happen once, after both.
 8. **Variant name and registration** for option (b), if it is pursued.
-9. **Effective moment arms.** Lee et al. (2008b) report effective moment arms smaller than kinematic estimates. Should those be validation targets for the PIP and DIP moment arms of the new paths?
+9. **Effective moment arms.** Lee et al. (2008b) report effective moment arms smaller than kinematic estimates. We suggest using them (Table 4) as the fit targets for option (a) and as validation targets for option (b), with the kinematic moment arms of the paths reported next to them.
 
 ## References
 
@@ -414,8 +433,8 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 - Landsmeer JMF (1963). The coordination of finger-joint motions. J Bone Joint Surg Am 45:1654-1662.
 - Lee SW, Chen H, Towles JD, Kamper DG (2008a). Effect of finger posture on the tendon force distribution within the finger extensor mechanism. J Biomech Eng 130(5):051014. doi:10.1115/1.2978983
 - Lee SW, Chen H, Towles JD, Kamper DG (2008b). Estimation of the effective static moment arms of the tendons in the index finger extensor mechanism. J Biomech 41(7):1567-1573. doi:10.1016/j.jbiomech.2008.02.008
-- Leijnse JNAL, Quesada PM, Spoor CW (2010). Kinematic evaluation of the finger's interphalangeal joints coupling mechanism. J Biomech 43(12):2381-2393. doi:10.1016/j.jbiomech.2010.04.021
-- Leijnse JNAL, Spoor CW (2012). Reverse engineering finger extensor apparatus morphology from measured coupled interphalangeal joint angle trajectories. J Biomech 45(3):569-578. doi:10.1016/j.jbiomech.2011.11.002
+- Leijnse JNAL, Quesada PM, Spoor CW (2010). Kinematic evaluation of the finger's interphalangeal joints coupling mechanism: variability, flexion-extension differences, triggers, locking swanneck deformities, anthropometric correlations. J Biomech 43(12):2381-2393. doi:10.1016/j.jbiomech.2010.04.021
+- Leijnse JNAL, Spoor CW (2012). Reverse engineering finger extensor apparatus morphology from measured coupled interphalangeal joint angle trajectories: a generic 2D kinematic model. J Biomech 45(3):569-578. doi:10.1016/j.jbiomech.2011.11.002
 - MacIntosh AR, Keir PJ (2017). An open-source model and solution method to predict co-contraction in the finger. Comput Methods Biomech Biomed Engin 20(13):1373-1381. doi:10.1080/10255842.2017.1364732
 - McFarland DC, Binder-Markey BI, Nichols JA, Wohlman SJ, de Bruin M, Murray WM (2023). A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435. doi:10.1109/TBME.2022.3217722
 - Micks JE, Reswick JB (1981). Confirmation of differential loading of lateral and central fibers of the extensor tendon. J Hand Surg Am 6(5):462-467. doi:10.1016/S0363-5023(81)80104-9
