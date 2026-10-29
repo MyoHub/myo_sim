@@ -119,3 +119,12 @@ mjlab tasks set it explicitly.
 scenes (the protocol has collisions off except the dynamometer), so tenodesis and the lateral pinch are
 unchanged. The grip changes: the dynamometer is placed against the palm, now the palm pad, 11 mm further
 palmar (see `hand-function-validation.md`).
+
+**Left and right hands.** The left pairs mirror the right ones in order, parameters and geom roles
+(`tests/test_hand_contacts.py`). Where fingers touch at rest (both wrists extended 60 deg in
+`myofullbody`), the two hands still settle up to 0.15 deg apart (MCP3, MCP4): static friction keeps
+whatever posture the contact solver reaches, and at MuJoCo's default solver tolerance (1e-8, warm-started)
+the solution of the two hands differs slightly. At tolerance 1e-12 the difference is 0.015 deg, without
+warm start 0.010 deg, with frictionless pairs 0.013 deg and without contacts 0.002 deg. The solver options
+are shared by every model, so they stay at their defaults; `test_relaxed_hand_rests_off_its_limits`
+allows 0.2 deg for these two joints in that case only.

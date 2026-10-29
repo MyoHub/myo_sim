@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-29 — Left-right settling with touching fingers (hand rebuild)
+Changed: `tests/test_hand_contacts.py` (pair order and geom roles), `tests/test_muscle_passive.py` (0.2 deg for MCP3/MCP4 at 60 deg wrist extension), `docs/wiki/hand-contacts-and-pads.md`
+Why: Since S4 the left and right MCP3/MCP4 settled 0.10-0.15 deg apart with both wrists extended; the contact pairs are mirrored exactly, and the difference comes from the contact solver's tolerance with static friction, not from the model.
+
 ## 2026-10-29 — Thumb CMC axes after Hollister 1992 tested, not adopted (hand rebuild S2b)
 Changed: `docs/wiki/hand-literature-comparison.md` (sections "Tested and not adopted" and "Open checks before release"), `docs/wiki/passive-moments-and-thenar.md` (pointer)
 Why: Hollister's non-intersecting thumb CMC axes were tried to make Smutz's moment-arm trends reachable; they do not (the thumb-intrinsic match got worse), so the model is unchanged and the evidence is recorded, together with the adopted values that need a check before the release.

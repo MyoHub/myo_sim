@@ -85,6 +85,15 @@ def test_left_pairs_mirror_the_right_ones() -> None:
                 np.testing.assert_array_equal(getattr(model, field)[i], getattr(model, field)[j], err_msg=f"{g1}/{g2} {field}")
 
 
+def test_left_pairs_keep_the_right_order_and_roles() -> None:
+    """In the composed full body the left hand's pairs come in the right hand's order, geom1 and geom2 alike."""
+    model = _model("myofullbody")
+    hand = [model.pair(i) for i in range(model.npair) if "__" in model.pair(i).name]
+    right = [(model.geom(p.geom1[0]).name, model.geom(p.geom2[0]).name) for p in hand if p.name.endswith("_r")]
+    left = [(model.geom(p.geom1[0]).name, model.geom(p.geom2[0]).name) for p in hand if p.name.endswith("_l")]
+    assert left == [(mirror_name(a, MirrorRules()), mirror_name(b, MirrorRules())) for a, b in right]
+
+
 def _active_hand_contacts(model: mujoco.MjModel, data: mujoco.MjData) -> list[tuple[str, str, float]]:
     gen = _script("generate_hand_contacts")
     hand = set()
