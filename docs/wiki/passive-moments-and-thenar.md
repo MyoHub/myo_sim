@@ -297,9 +297,9 @@ passive scales first.
   (DI2 0.48, DI3 0.93, DI4 0.66; pending decision D6, the alternative is 0.5 each); DI1 stays bony.
   A row's `insertion` gives the main path (`split`), the bony and hood branch sites and the junction;
   the generator writes the pulley divisors 1 / (1 - f), 1 / f and 1 / (f x band fraction) and computes
-  the length range from MuJoCo's tendon length. The lumbricals keep a fixed origin next to their FDP
-  tendon in the palm (the moving origin follows in S6); LUM4's former origin lay 25 mm proximal of the
-  MC3 base and now starts next to FDP5 at the MC5 base. Path fit as above, with the MCP3/MCP4 boxes
+  the length range from MuJoCo's tendon length. The lumbricals arise from junction nodes on their FDP
+  tendons (S6, below); LUM4's former origin lay 25 mm proximal of the MC3 base and now starts next to
+  FDP5 at the MC5 base. Path fit as above, with the MCP3/MCP4 boxes
   added; targets An et al. 1983 Table 3 for the index (LU flexion 9.3 ± 2.1, radial 4.8 ± 1.6 mm; UI
   flexion 6.6 ± 2.1, ulnar 5.8 ± 1.7 mm; averaged over the range) and An et al. 1979 Tables 4-6 for
   digits 3-5 (moment potentials times MyoHand's middle-phalanx length, 29.1 / 24.9 / 21.0 mm; 2 mm
@@ -309,9 +309,39 @@ passive scales first.
   LUM3 -6.6 / -7.7 (-7.5 / -8.6), DI4 -4.9 / 7.6 (-5.4 / 8.2), PI3 -2.4 / -8.5 (-1.5 / -10.0), LUM4
   -5.5 / -8.7 (-6.1 / -9.3). DI2 misses An 1979's flexion arm (z = -2.4): the fibre-length window
   (0.5 at full MCP extension) holds its sites, as it does for PI2.
+- **Lumbrical junction nodes** (step S6; `lumbrical_nodes` in the table): every lumbrical arises from
+  its own FDP tendon (Eladoumikdachi et al. 2002 II; the bipennate LUM2-4 origins on the neighbouring
+  tendon are left out). Per lumbrical a light body `node_LUM{n}_r` on a slide joint of the same name sits
+  in the metacarpal on the FDP path at the level of the S5 origin (the origin projected on the path
+  segment leaving `FDP{d}-P4_r`; `--place-nodes`) and slides along that segment; the lumbrical's first
+  site is on it. The tendon equality `node_LUM{n}_tie_r` (assets file) ties the slide to the FDP path
+  distal of the node's rest point, s = L_distal(q) - L_distal(q0), with the helper tendons
+  `node_LUM{n}_slide_r` (the slide) and `node_LUM{n}_fdp_r` (FDP's own sites and wraps from
+  `node_LUM{n}_ref_r`). For a rigid tendon this is exact: the lumbrical force reaches the joints
+  through its own path minus the FDP's distal path, the massless substitute segment of Engelhardt et
+  al. 2021 in forward dynamics. FDP's actuator and path are unchanged. The tie also holds the node when
+  the FDP is slack (no slack model) and assumes a rigid FDP (for compliant tendons the node should follow
+  the tendon material; bounded by FDP's distal stretch, about 5 mm against 30-37 mm of excursion).
+  Numerical settings (not tissue values): node mass 1e-4 kg with an explicit inertial (so the
+  compiler's inertia bound adds nothing to the metacarpal), slide armature 0.03 kg, damping 5 N s/m,
+  equality `solref` 0.004 1. With the prototype's 1e-2 kg and 0.5 N s/m, LUM1 alone chattered (2.8 N
+  step to step at 2 ms); 0.03 kg and 5 N s/m are quiet. As reflected inertia and damping at the MCP
+  (FDP arm about 11 mm) they add 3.6e-6 kg m2 and 6e-4 N m s/rad, about 1 % of the finger's own.
+  `place_tendon_nodes` (`myo_sim.build.hand_data`) puts the nodes on their ties after a posture is set,
+  and `fold_node_forces` passes static forces on the nodes to the joints (used by the passive fits).
+  Effect: from the straight finger to the flexion limits the lumbricals lengthen by 31.9 / 36.7 /
+  36.5 / 29.6 mm (a fixed origin shortened them); Ranney & Wells 1988 measured 25 -> 56 mm (+31 mm) on
+  index fingers, and Leijnse & Kalker 1995 the maximal elongation in the fist. The own moment arms
+  (node held, An et al. 1983's quantity) are unchanged from S5; with the node following the tendon
+  (own minus FDP's) LUM1's dL/dq at rest is MCP flexion +3.0 mm (a slight extensor), abduction -4.3 mm,
+  PIP +6.8 and DIP +4.3 mm (extensor): the small MCP and large IP terms Leijnse & Kalker describe. LUM1 alone
+  flexes the MCP (25 deg) with the IPs extended.
 - **Length range**: a rigid tendon of slack length `(L_MT(q = 0) - L_fo cos(alpha)) /
   1.033` (Barry et al. 2018, Eq. 1), so the class's normalised range 0.75-1.05 spans the
-  same range of L_fo. OP's length range follows this rule since S2 (before: MyoHand's
+  same range of L_fo. A lumbrical on its node takes the mean L_MT of the straight finger and its
+  digit's flexion limits: with Eq. 1 at q = 0 its 30-37 mm excursion (0.55-0.65 L_fo) reached 1.6-1.66
+  L_fo in the fist, where MuJoCo's passive force is twice F_max; with the mean it spans 0.70-1.36 (4-7 N
+  passive at the flexion limits). OP's length range follows this rule since S2 (before: MyoHand's
   fixed values, an effective 68 mm fibre).
 - Activation dynamics and force-length shape come from the class.
 

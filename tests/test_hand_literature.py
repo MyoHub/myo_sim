@@ -72,6 +72,8 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
         ("fist_max_penetration", 0.1),
         *((f"{m}_moment_arms", 0.05) for m in ("pi1", "lum1", "di2", "lum2", "di3", "pi2", "lum3", "di4", "pi3", "lum4")),
         ("index_intrinsic_forces", 0.05),
+        ("lumbrical_excursion", 0.1),
+        ("lum1_systemic_mcp_arm", 0.05),
     ],
 )
 def test_latest_step_matches_the_current_model(key: str, tol: float) -> None:

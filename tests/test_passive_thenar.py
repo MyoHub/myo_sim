@@ -19,6 +19,7 @@ from myo_sim.build.hand_data import (
     load_intrinsic_table,
     load_passive_moment_table,
     passive_moment,
+    place_tendon_nodes,
     read_generated_block,
     rows_with_status,
     spring_parameters,
@@ -364,9 +365,19 @@ def test_intrinsic_muscles_follow_jacobson_and_share_the_forearm_class() -> None
             np.delete(model.actuator_gainprm[act][:9], [2, 7]), np.delete(model.actuator_gainprm[reference][:9], [2, 7])
         )
         np.testing.assert_array_equal(model.actuator_dynprm[act], model.actuator_dynprm[reference])
-        # Architecture length range: rigid tendon of Barry's slack length, range 0.75-1.05 of L_fo.
+        # Architecture length range: rigid tendon of Barry's slack length, range 0.75-1.05 of L_fo; a lumbrical
+        # on its node takes the mean length of the straight finger and the fist (its whole excursion).
         l_fo, alpha = muscle["optimal_fiber_length_m"]["value"], np.radians(muscle["pennation_deg"]["value"])
-        l_ts = (data.actuator_length[act] - l_fo * np.cos(alpha)) / 1.033
+        l_mt = data.actuator_length[act]
+        if muscle["name"] in table["lumbrical_nodes"]["nodes"]:
+            fist = mujoco.MjData(model)
+            digit = muscle["insertion"]["hood"]["digit"]
+            for joint in (f"mcp{digit}_flexion_r", f"pm{digit}_flexion_r", f"md{digit}_flexion_r"):
+                fist.qpos[model.joint(joint).qposadr[0]] = model.jnt_range[model.joint(joint).id][1]
+            place_tendon_nodes(model, fist)
+            mujoco.mj_forward(model, fist)
+            l_mt = 0.5 * (l_mt + fist.actuator_length[act])
+        l_ts = (l_mt - l_fo * np.cos(alpha)) / 1.033
         np.testing.assert_allclose(model.actuator_lengthrange[act], [l_ts + 0.75 * l_fo, l_ts + 1.05 * l_fo], atol=1e-9)
 
 

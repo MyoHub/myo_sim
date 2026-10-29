@@ -21,6 +21,8 @@ NAME_REFERENCE_ATTRS = {
     "joint2",
     "joint",
     "tendon",
+    "tendon1",
+    "tendon2",
 }
 
 
@@ -308,7 +310,10 @@ def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
         elif attr_name in {"pos", "scale", "ipos"}:
             mirror_xyz_attribute(mirrored, attr_name, rules)
         elif attr_name == "axis":
-            mirror_axial_attribute(mirrored, attr_name)
+            if mirrored.tag == "joint" and mirrored.get("type") == "slide":
+                mirror_xyz_attribute(mirrored, attr_name, rules)  # a translation axis mirrors like a position
+            else:
+                mirror_axial_attribute(mirrored, attr_name)
         elif attr_name == "euler":
             if mirrored.tag != "body":
                 mirror_axial_attribute(mirrored, attr_name)

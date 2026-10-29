@@ -241,7 +241,8 @@ def ligament_block(table: dict[str, Any]) -> str:
 def skeleton() -> mujoco.MjModel:
     """``myoarm_r`` without actuators and tendons: the geometry the junction sites are placed on."""
     spec = build_spec("myoarm_r")
-    for element in list(spec.actuators) + list(spec.tendons):
+    ties = [e for e in spec.equalities if e.type == mujoco.mjtEq.mjEQ_TENDON]  # the lumbrical nodes' ties
+    for element in list(spec.actuators) + list(spec.tendons) + ties:
         spec.delete(element)
     return spec.compile()
 

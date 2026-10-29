@@ -200,10 +200,20 @@ def build_scene(
     return scene
 
 
+def place_tendon_nodes(model: mujoco.MjModel, data: mujoco.MjData) -> None:
+    """Lumbrical nodes on their FDP ties (``myo_sim.build.hand_data``; models before S6 have none)."""
+    from myo_sim.build import hand_data
+
+    place = getattr(hand_data, "place_tendon_nodes", None)
+    if place is not None:
+        place(model, data)
+
+
 def start(scene: Scene, angles: dict[str, float]) -> mujoco.MjData:
     """Data at the anatomical *angles* (deg), every other joint at qpos0."""
     data = mujoco.MjData(scene.model)
     scene.pose(data, angles)
+    place_tendon_nodes(scene.model, data)  # lumbrical nodes on their FDP ties
     mujoco.mj_forward(scene.model, data)
     return data
 

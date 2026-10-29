@@ -9,7 +9,7 @@ MyoArm is a MuJoCo musculoskeletal model of the right upper extremity — should
 | Degrees of freedom | 38 |
 | Actuators (muscles) | 71 (63 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s, FDM, ODM; RI2 is DI1d, UI_UB5 is ADM, and RI3-5 / LU_RB2-5 / UI_UB2-4 are DI2-4, PI1-3, LUM1-4) |
 | Body segments | clavicle, scapula, humerus, radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1–5), proximal/middle/distal phalanges (digits 2–5), thumb phalanges |
-| Primary joints | shoulder (sternoclavicular, acromioclavicular, glenohumeral, scapulothoracic constraints), elbow flexion, forearm pronation/supination, wrist flexion/deviation, finger MCP/PIP/DIP (digits 2–5), CMC4/5 flexion (coupled), thumb CMC/MCP/IP |
+| Primary joints | shoulder (sternoclavicular, acromioclavicular, glenohumeral, scapulothoracic constraints), elbow flexion, forearm pronation/supination, wrist flexion/deviation, finger MCP/PIP/DIP (digits 2–5), CMC4/5 flexion (coupled), thumb CMC/MCP/IP; internal lumbrical node slides `node_LUM1-4_r` (tied by equalities, not controlled) |
 
 ## Reference model
 
@@ -34,6 +34,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 - Muscle parameters updated during the 2026-05 refactor to improve force-length accuracy.
 
 ## Changelog
+
+**2026-10-29** — Lumbrical junction nodes: each lumbrical arises from a node on its FDP tendon (slide joint `node_LUM{1..4}_r` tied by a tendon equality to the FDP's distal length), +4 joints/qpos and +4 equalities per hand. See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-10-29** — Interossei and lumbricals by identity: `LU_RB2-5` -> `LUM1-4`, `UI_UB2` -> `PI1`, `RI3` -> `DI2`, `UI_UB3` -> `DI3`, `RI4` -> `PI2`, `UI_UB4` -> `DI4`, `RI5` -> `PI3` (same indices); Jacobson 1992 forces, hood fractions after Salsbury 1937, paths fitted to An 1979/1983. See `docs/wiki/passive-moments-and-thenar.md`.
 

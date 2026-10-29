@@ -90,6 +90,21 @@
     },
     "eladoumikdachi2002": {
       "citation": "Eladoumikdachi F, Valkov PL, Thomas J, Netscher DT. Anatomy of the intrinsic hand muscles revisited: part II. Lumbricals. Plast Reconstr Surg 110:1225-1231, 2002. doi:10.1097/01.PRS.0000024443.27141.1D"
+    },
+    "leijnsekalker1995": {
+      "citation": "Leijnse JNAL, Kalker JJ. A two-dimensional kinematic model of the lumbrical in the human finger. J Biomech 28(3):237-249, 1995.",
+      "doi": "10.1016/0021-9290(94)00070-K"
+    },
+    "ranneywells1988": {
+      "citation": "Ranney DA, Wells RP. Lumbrical muscle function as revealed by a new and physiological approach. Anat Rec 222:110-114, 1988.",
+      "doi": "10.1002/ar.1092220116",
+      "location": "pp. 112-113: lumbrical length 25 mm (finger straight) to 56 mm (full flexion), fresh index fingers"
+    },
+    "engelhardt2021": {
+      "citation": "Engelhardt L, Melzner M, Havelkova L, Fiala P, Christen P, Dendorfer S, Simon U. A new musculoskeletal AnyBody detailed hand model. Comput Methods Biomech Biomed Engin 24(7):777-787, 2021.",
+      "doi": "10.1080/10255842.2020.1851367",
+      "location": "p. 779: the lumbrical origin is a massless segment between two via points on the FDP tendon",
+      "licence": "CC BY 4.0; method cited only"
     }
   },
   "specific_tension": {
@@ -256,7 +271,7 @@
         }
       },
       "fpmax": {
-        "value": 0.006505,
+        "value": 0.005824,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -429,7 +444,7 @@
         "pcsa_cm2": 0.533
       },
       "fpmax": {
-        "value": 0.6959,
+        "value": 0.695,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -651,7 +666,7 @@
         }
       },
       "fpmax": {
-        "value": 0.02533,
+        "value": 0.02156,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -845,7 +860,7 @@
         }
       },
       "fpmax": {
-        "value": 0.5833,
+        "value": 0.5571,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1014,7 +1029,7 @@
         "pcsa_cm2": 1.293
       },
       "fpmax": {
-        "value": 0.01264,
+        "value": 0.01169,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1135,7 +1150,7 @@
         }
       },
       "fpmax": {
-        "value": 0.03075,
+        "value": 0.02833,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1572,17 +1587,17 @@
       "digit": "2",
       "sites": [
         {
-          "body": "secondmc_r",
+          "body": "node_LUM1_r",
           "pos": [
-            -0.0041,
-            -0.0002,
-            -0.0048
+            -0.00209,
+            -0.000639,
+            -0.001837
           ],
           "start": {
             "pos": [
-              -0.0041,
-              -0.0002,
-              -0.0048
+              -0.00209,
+              -0.000639,
+              -0.001837
             ],
             "source": "caggiano2022"
           }
@@ -1681,12 +1696,12 @@
             1.04
           ],
           "fibre_length_measurement_box": [
-            0.775,
-            1.033
+            0.755,
+            0.923
           ],
           "fibre_length_full_range": [
-            0.775,
-            1.033
+            0.755,
+            0.923
           ],
           "model_mm": {
             "mcp2_flexion_r": [
@@ -1704,7 +1719,21 @@
               -6.47
             ]
           },
-          "rms_z": 0.368
+          "rms_z": 0.368,
+          "systemic_mm": {
+            "mcp2_flexion_r": [
+              3.0
+            ],
+            "mcp2_abduction_r": [
+              -4.32
+            ],
+            "pm2_flexion_r": [
+              6.8
+            ],
+            "md2_flexion_r": [
+              4.29
+            ]
+          }
         }
       }
     },
@@ -1901,17 +1930,17 @@
       "digit": "3",
       "sites": [
         {
-          "body": "thirdmc_r",
+          "body": "node_LUM2_r",
           "pos": [
-            0.0013,
-            0.0064,
-            -0.0095
+            0.002599,
+            0.000309,
+            -0.001101
           ],
           "start": {
             "pos": [
-              0.0013,
-              0.0064,
-              -0.0095
+              0.002599,
+              0.000309,
+              -0.001101
             ],
             "source": "caggiano2022"
           }
@@ -1921,7 +1950,7 @@
           "pos": [
             0.014327,
             -0.029085,
-            -0.007733
+            -0.007732
           ],
           "start": {
             "pos": [
@@ -1935,7 +1964,7 @@
         {
           "body": "3proxph_r",
           "pos": [
-            0.007798,
+            0.007799,
             -0.024009,
             0.004754
           ],
@@ -2024,12 +2053,12 @@
             3.39
           ],
           "fibre_length_measurement_box": [
-            0.706,
-            1.062
+            0.671,
+            0.886
           ],
           "fibre_length_full_range": [
-            0.706,
-            1.062
+            0.671,
+            0.886
           ],
           "model_mm": {
             "mcp3_abduction_r": [
@@ -2047,7 +2076,21 @@
               -2.99
             ]
           },
-          "rms_z": 0.756
+          "rms_z": 0.757,
+          "systemic_mm": {
+            "mcp3_flexion_r": [
+              -3.1
+            ],
+            "mcp3_abduction_r": [
+              -10.38
+            ],
+            "pm3_flexion_r": [
+              7.39
+            ],
+            "md3_flexion_r": [
+              2.61
+            ]
+          }
         }
       }
     },
@@ -2403,17 +2446,17 @@
       "digit": "4",
       "sites": [
         {
-          "body": "thirdmc_r",
+          "body": "node_LUM3_r",
           "pos": [
-            -0.0091,
-            0.0054,
-            -0.0108
+            0.0013,
+            0.0007,
+            -0.0028
           ],
           "start": {
             "pos": [
-              -0.0091,
-              0.0054,
-              -0.0108
+              0.0013,
+              0.0007,
+              -0.0028
             ],
             "source": "caggiano2022"
           }
@@ -2526,12 +2569,12 @@
             2.05
           ],
           "fibre_length_measurement_box": [
-            0.867,
-            1.055
+            0.689,
+            0.946
           ],
           "fibre_length_full_range": [
-            0.851,
-            1.055
+            0.689,
+            0.946
           ],
           "model_mm": {
             "mcp4_abduction_r": [
@@ -2549,7 +2592,21 @@
               -2.38
             ]
           },
-          "rms_z": 0.49
+          "rms_z": 0.49,
+          "systemic_mm": {
+            "mcp4_flexion_r": [
+              -0.28
+            ],
+            "mcp4_abduction_r": [
+              -10.56
+            ],
+            "pm4_flexion_r": [
+              6.8
+            ],
+            "md4_flexion_r": [
+              2.2
+            ]
+          }
         }
       }
     },
@@ -2910,17 +2967,17 @@
       "digit": "5",
       "sites": [
         {
-          "body": "fifthmc_r",
+          "body": "node_LUM4_r",
           "pos": [
-            0.00595,
-            0.003064,
-            -0.001469
+            0.003132,
+            0.001089,
+            -0.002307
           ],
           "start": {
             "pos": [
-              0.00595,
-              0.003064,
-              -0.001469
+              0.003132,
+              0.001089,
+              -0.002307
             ],
             "source": "radial side of FDP5 at the MC5 base: MyoHand FDP5-P4 moved 3 mm radially and 3 mm palmarly (the former origin lay 25 mm proximal of the MC3 base)"
           }
@@ -2929,7 +2986,7 @@
           "body": "fifthmc_r",
           "pos": [
             0.009603,
-            -0.021576,
+            -0.021577,
             -0.001054
           ],
           "start": {
@@ -2944,7 +3001,7 @@
         {
           "body": "5proxph_r",
           "pos": [
-            0.004972,
+            0.004973,
             -0.013799,
             0.001703
           ],
@@ -3033,12 +3090,12 @@
             1.66
           ],
           "fibre_length_measurement_box": [
-            0.832,
-            1.05
+            0.708,
+            0.944
           ],
           "fibre_length_full_range": [
-            0.832,
-            1.05
+            0.707,
+            0.944
           ],
           "model_mm": {
             "mcp5_abduction_r": [
@@ -3056,7 +3113,21 @@
               -2.85
             ]
           },
-          "rms_z": 0.319
+          "rms_z": 0.319,
+          "systemic_mm": {
+            "mcp5_flexion_r": [
+              -0.71
+            ],
+            "mcp5_abduction_r": [
+              -10.71
+            ],
+            "pm5_flexion_r": [
+              3.9
+            ],
+            "md5_flexion_r": [
+              2.29
+            ]
+          }
         }
       },
       "fpmax": {
@@ -3420,8 +3491,106 @@
     "fpmax_reference": 1.3,
     "penalty": 1.0,
     "result": {
-      "cost_before": 108458.064,
-      "cost_after": 6201.194
+      "cost_before": 108783.019,
+      "cost_after": 6273.693
+    }
+  },
+  "lumbrical_nodes": {
+    "method": "Each lumbrical arises from a junction node on its own FDP tendon (Eladoumikdachi 2002 II: LUM1 always from the radial side of FDP2; the bipennate LUM2-4 origins on the neighbouring tendon are omitted, one node per lumbrical on its own FDP). The node is a light body on a slide joint in the metacarpal, on the FDP path at the level of the S5 lumbrical origin (that origin projected on the path segment leaving segment_start; --place-nodes), sliding along that segment. A tendon equality ties the slide to the FDP path distal of the node's rest point, s = L_distal(q) - L_distal(q0), which is exact for a rigid tendon; the lumbrical force then reaches the joints through the FDP's distal path (its own path minus the FDP's), as in the massless substitute segment of Engelhardt et al. 2021. The FDP actuator and its path are unchanged. While the FDP carries at least the lumbrical's force the tie is the physical tendon; it also holds the node when the FDP is slack (no slack model).",
+    "sources": [
+      "eladoumikdachi2002",
+      "leijnsekalker1995",
+      "ranneywells1988",
+      "engelhardt2021"
+    ],
+    "mass_kg": {
+      "value": 0.0001,
+      "method": "numerical: small next to the armature; explicit inertial (diaginertia 1e-9 kg m2) so the compiler's mass and inertia bounds do not add rotational inertia to the metacarpal"
+    },
+    "armature_kg": {
+      "value": 0.03,
+      "method": "numerical, not a tissue property. DESIGN prototype (index node, old 6 N bundle): 1e-4 kg chattered, 1e-3 kg left 3-6 mm residual, 1e-2 kg was quiet. In the full model with LUM1 at 9.5 N and 1e-2 kg, LUM1 alone chattered (2.8 N step to step at a 3.9 N mean; 1.3 deg deviation from a 0.1 ms run): the tie's reflected mass is too small for the explicit force-velocity damping of a short muscle. 0.03 kg with 5 N s/m damping (below) is quiet (0.002 N) and within 0.13 deg of the 0.1 ms run; as a reflected inertia it adds 0.03 x (11 mm)^2 = 3.6e-6 kg m2 at the MCP, about 1 % of the finger's composite inertia"
+    },
+    "damping_Ns_per_m": {
+      "value": 5.0,
+      "method": "numerical: 0.5 N s/m (prototype) with 0.03 kg still chattered (2.0 N); 5 N s/m, integrated implicitly, removes it. Reflected joint damping 5 x (11 mm)^2 = 6e-4 N m s/rad at the MCP, about 1 % of the finger joint damping (0.05)"
+    },
+    "equality_solref": {
+      "value": [
+        0.004,
+        1.0
+      ],
+      "method": "numerical: time constant 2 timesteps, critically damped (the default 0.02 lets the node lag the tendon)"
+    },
+    "nodes": {
+      "LUM1": {
+        "fdp": "FDP2",
+        "segment_start": "FDP2-P4_r",
+        "body": "secondmc_r",
+        "pos": [
+          -0.00201,
+          0.000439,
+          -0.002963
+        ],
+        "axis": [
+          0.347532,
+          -0.935027,
+          -0.070334
+        ],
+        "segment_fraction": 0.273,
+        "origin_offset_mm": 2.85
+      },
+      "LUM2": {
+        "fdp": "FDP3",
+        "segment_start": "FDP3-P4_r",
+        "body": "thirdmc_r",
+        "pos": [
+          -0.001299,
+          0.006091,
+          -0.008399
+        ],
+        "axis": [
+          0.148839,
+          -0.986057,
+          0.074419
+        ],
+        "segment_fraction": 0.0,
+        "origin_offset_mm": 2.84
+      },
+      "LUM3": {
+        "fdp": "FDP4",
+        "segment_start": "FDP4-P4_r",
+        "body": "thirdmc_r",
+        "pos": [
+          -0.0104,
+          0.0047,
+          -0.008
+        ],
+        "axis": [
+          -0.148648,
+          -0.987886,
+          0.044563
+        ],
+        "segment_fraction": 0.0,
+        "origin_offset_mm": 3.17
+      },
+      "LUM4": {
+        "fdp": "FDP5",
+        "segment_start": "FDP5-P4_r",
+        "body": "fifthmc_r",
+        "pos": [
+          0.002818,
+          0.001975,
+          0.000838
+        ],
+        "axis": [
+          -0.101855,
+          -0.839074,
+          -0.534398
+        ],
+        "segment_fraction": 0.068,
+        "origin_offset_mm": 4.04
+      }
     }
   }
 }

@@ -14,6 +14,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+import mujoco
 import numpy as np
 
 DATA_DIR = Path(__file__).with_name("data")
@@ -112,3 +113,53 @@ def passive_moment(row: dict[str, Any], q: np.ndarray | float) -> np.ndarray:
             k0, k1, k2 = part["stiffness"]
             moment -= sign * (k0 * x + k1 * x**2 + k2 * x**3)
     return moment
+
+
+def place_tendon_nodes(model: mujoco.MjModel, data: mujoco.MjData) -> None:
+    """Put every slide joint that a tendon equality ties to a tendon (the ``node_`` joints) on its constraint.
+
+    The equality reads ``L1 - L1(qpos0) = poly(L2 - L2(qpos0))`` with ``L1`` a fixed tendon over the slide
+    alone, so after setting a posture the slide is set from ``L2`` directly (rigid-tendon tie). Updates the
+    kinematics; call ``mj_forward`` afterwards as usual.
+    """
+    mujoco.mj_kinematics(model, data)
+    mujoco.mj_comPos(model, data)
+    mujoco.mj_tendon(model, data)
+    for e in range(model.neq):
+        if model.eq_type[e] != mujoco.mjtEq.mjEQ_TENDON:
+            continue
+        t1, t2 = model.eq_obj1id[e], model.eq_obj2id[e]
+        adr = model.tendon_adr[t1]
+        if model.tendon_num[t1] != 1 or model.wrap_type[adr] != mujoco.mjtWrap.mjWRAP_JOINT:
+            continue
+        joint = model.wrap_objid[adr]
+        if model.jnt_type[joint] != mujoco.mjtJoint.mjJNT_SLIDE:
+            continue
+        x = data.ten_length[t2] - model.tendon_length0[t2]
+        target = float(np.polyval(model.eq_data[e, 4::-1], x))
+        data.qpos[model.jnt_qposadr[joint]] = model.qpos0[model.jnt_qposadr[joint]] + target / model.wrap_prm[adr]
+    mujoco.mj_kinematics(model, data)
+
+
+def fold_node_forces(model: mujoco.MjModel, data: mujoco.MjData, qfrc: np.ndarray) -> np.ndarray:
+    """*qfrc* (nv, or rows of nv) with each tied node's generalized force passed on to the joints.
+
+    In a static posture the tie holds the node: a force f on a node (slide coefficient c) reaches the joints
+    as ``f / c`` times the Jacobian of the tied tendon (the FDP path distal of the node), and the node keeps
+    none. Needs ``data.ten_J`` (``mj_forward`` or ``mj_tendon``).
+    """
+    out = np.array(qfrc, dtype=float, copy=True)
+    jac = np.zeros((model.ntendon, model.nv))
+    mujoco.mju_sparse2dense(jac, data.ten_J, model.ten_J_rownnz, model.ten_J_rowadr, model.ten_J_colind)
+    for e in range(model.neq):
+        if model.eq_type[e] != mujoco.mjtEq.mjEQ_TENDON:
+            continue
+        t1, t2 = model.eq_obj1id[e], model.eq_obj2id[e]
+        adr = model.tendon_adr[t1]
+        if model.tendon_num[t1] != 1 or model.wrap_type[adr] != mujoco.mjtWrap.mjWRAP_JOINT:
+            continue
+        dof = model.jnt_dofadr[model.wrap_objid[adr]]
+        force = out[..., dof] / model.wrap_prm[adr]
+        out += np.multiply.outer(force, jac[t2] * model.eq_data[e, 1])
+        out[..., dof] = 0.0
+    return out

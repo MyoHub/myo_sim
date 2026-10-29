@@ -26,7 +26,15 @@ passive-force scale of the muscles that cross the thumb to its measured passive 
 and records both in the table. Rows of one ``fit.group`` are fitted together: the first row's targets apply to
 the force-weighted mean of the group's moment arms, the other rows' targets to that row alone.
 
-Run: ``uv run python scripts/generate_hand_intrinsic_muscles.py [--fit]``.
+The lumbricals arise from junction nodes on their FDP tendons (``lumbrical_nodes`` in the table): per
+lumbrical a light body on a slide joint ``node_<name>_r`` in the metacarpal (labelled chain block
+``node <name>``), the lumbrical's first site on it, and a tendon equality ``node_<name>_tie_r`` (assets
+file) that ties the slide to the FDP path distal of the node: s = L_distal(q) - L_distal(q0), with
+``node_<name>_slide_r`` (the slide) and ``node_<name>_fdp_r`` (the FDP's own path from the node's rest
+point) in the main tendon block. ``--place-nodes`` recomputes the node positions and slide axes from the
+compiled model (the lumbrical origin projected on the FDP path, which runs along the slide).
+
+Run: ``uv run python scripts/generate_hand_intrinsic_muscles.py [--place-nodes] [--fit]``.
 """
 
 from __future__ import annotations
@@ -40,8 +48,21 @@ from typing import Any
 import mujoco
 import numpy as np
 
-from myo_sim.build.compose import RIGHT_ARM_CHAIN_XML, RIGHT_ARM_MUSCLES_XML, RIGHT_ARM_TENDONS_XML, build_spec
-from myo_sim.build.hand_data import DATA_DIR, INTRINSIC_DATA_PATH, load_intrinsic_table, write_generated_block
+from myo_sim.build.compose import (
+    RIGHT_ARM_ASSETS_XML,
+    RIGHT_ARM_CHAIN_XML,
+    RIGHT_ARM_MUSCLES_XML,
+    RIGHT_ARM_TENDONS_XML,
+    build_spec,
+)
+from myo_sim.build.hand_data import (
+    DATA_DIR,
+    INTRINSIC_DATA_PATH,
+    fold_node_forces,
+    load_intrinsic_table,
+    place_tendon_nodes,
+    write_generated_block,
+)
 
 SCRIPT = "generate_hand_intrinsic_muscles.py"
 MUSCLE_CLASS = "myoarm_forearm_muscle"
@@ -171,6 +192,8 @@ def tendon_block(table: dict[str, Any], label: str | None = None) -> str:
         else:
             lines += [f'            <site site="{site_name(row, i)}"/>' for i in range(len(row["sites"]))]
         lines.append("        </spatial>")
+    if label is None:
+        lines += node_tendons(table)
     return "".join(f"{line}\n" for line in lines)
 
 
@@ -189,6 +212,127 @@ def branched_path(row: dict[str, Any]) -> list[str]:
     return out
 
 
+# --- lumbrical junction nodes ----------------------------------------------------------------------------
+
+
+def node_rows(table: dict[str, Any]) -> list[dict[str, Any]]:
+    """Rows whose first site sits on a junction node (the lumbricals)."""
+    return [r for r in table["muscles"] if r["name"] in table.get("lumbrical_nodes", {}).get("nodes", {})]
+
+
+def node_name(row: dict[str, Any]) -> str:
+    """Body and slide joint of the node of *row*."""
+    return f"node_{row['name']}_r"
+
+
+def _fdp_path_after(fdp: str, start: str) -> list[str]:
+    """Path elements of tendon *fdp* distal of its site *start*, as written in ``myoarm_r_tendon.xml``."""
+    text = RIGHT_ARM_TENDONS_XML.read_text()
+    body = re.search(rf'<spatial name="{re.escape(fdp)}_r_tendon"[^>]*>(.*?)</spatial>', text, re.S)
+    if body is None:
+        raise ValueError(f"{RIGHT_ARM_TENDONS_XML.name}: no tendon {fdp}_r_tendon")
+    elements = re.findall(r"<(?:site|geom)\b[^>]*/>", re.sub(r"<!--.*?-->", "", body.group(1), flags=re.S))
+    index = elements.index(f'<site site="{start}"/>')
+    return elements[index + 1 :]
+
+
+def place_nodes(table: dict[str, Any]) -> None:
+    """Node position and slide axis of every lumbrical, and its first site moved onto the node.
+
+    On the compiled model at q0: the lumbrical origin is projected on the FDP path segment that leaves the
+    node's ``segment_start`` site (to the next path point: a site or a wrap tangent point); the node sits
+    at that point in the start site's body and slides along the segment (distal positive). The origin
+    keeps its position: its site is re-expressed relative to the node (the node body is not rotated).
+    """
+    model = build_spec("myoarm_r").compile()
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    cfg = table["lumbrical_nodes"]
+    for row in node_rows(table):
+        node = cfg["nodes"][row["name"]]
+        site = model.site(node["segment_start"])
+        tendon = model.tendon(f"{node['fdp']}_r_tendon").id
+        adr, num = data.ten_wrapadr[tendon], data.ten_wrapnum[tendon]
+        points = data.wrap_xpos.reshape(-1, 3)[adr : adr + num]
+        k = int(np.argmin(np.linalg.norm(points - data.site_xpos[site.id], axis=1)))
+        a, b = points[k], points[k + 1]
+        body = model.site_bodyid[site.id]
+        rot, origin = data.xmat[body].reshape(3, 3), data.xpos[body]
+        first = row["sites"][0]
+        if first["body"] == node_name(row):  # already on the node: its old position in the parent frame
+            local = np.add(node["pos"], first["pos"])
+            start = np.add(node["pos"], first["start"]["pos"])
+        else:
+            local, start = np.asarray(first["pos"]), np.asarray(first["start"]["pos"])
+        world = origin + rot @ local
+        t = float(np.clip((world - a) @ (b - a) / ((b - a) @ (b - a)), 0.0, 1.0))
+        pos = rot.T @ (a + t * (b - a) - origin)
+        axis = rot.T @ ((b - a) / np.linalg.norm(b - a))
+        node.update(
+            body=model.body(body).name,
+            pos=[round(float(v), 6) for v in pos],
+            axis=[round(float(v), 6) for v in axis],
+            segment_fraction=round(t, 3),
+            origin_offset_mm=round(float(np.linalg.norm(local - pos) * 1e3), 2),
+        )
+        first["body"] = node_name(row)
+        first["pos"] = [round(float(v), 6) for v in local - pos]
+        first["start"]["pos"] = [round(float(v), 6) for v in start - pos]
+
+
+def chain_node_block(table: dict[str, Any], row: dict[str, Any]) -> str:
+    """Generated chain block ``node <name>``: the node body with its slide and the lumbrical's first site."""
+    cfg = table["lumbrical_nodes"]
+    node = cfg["nodes"][row["name"]]
+    ind = " " * 52
+    pos = " ".join(_number(v) for v in node["pos"])
+    first = " ".join(_number(v) for v in row["sites"][0]["pos"])
+    return (
+        f"{ind}<!-- {node_name(row)}: {row['name']} origin on {node['fdp']} (tendon equality {node_name(row)[:-2]}_tie_r) -->\n"
+        f'{ind}<site name="{node_name(row)[:-2]}_ref_r" pos="{pos}"/>\n'
+        f'{ind}<body name="{node_name(row)}" pos="{pos}">\n'
+        f'{ind}    <inertial pos="0 0 0" mass="{cfg["mass_kg"]["value"]:g}" diaginertia="1e-09 1e-09 1e-09"/>\n'
+        f'{ind}    <joint name="{node_name(row)}" type="slide" axis="{" ".join(_number(v) for v in node["axis"])}"'
+        f' limited="false" stiffness="0" armature="{cfg["armature_kg"]["value"]:g}"'
+        f' damping="{cfg["damping_Ns_per_m"]["value"]:g}"/>\n'
+        f'{ind}    <site name="{site_name(row, 0)}" pos="{first}"/>\n'
+        f"{ind}</body>\n"
+    )
+
+
+def node_tendons(table: dict[str, Any]) -> list[str]:
+    """Per node the fixed tendon of its slide and the FDP path distal of the node's rest point."""
+    lines = []
+    for row in node_rows(table):
+        node = table["lumbrical_nodes"]["nodes"][row["name"]]
+        base = node_name(row)[:-2]
+        lines.append(
+            f"        <!-- {node_name(row)}: slide and {node['fdp']} distal of the node (tendon equality {base}_tie_r) -->"
+        )
+        lines.append(f'        <fixed name="{base}_slide_r">')
+        lines.append(f'            <joint joint="{node_name(row)}" coef="1"/>')
+        lines.append("        </fixed>")
+        lines.append(f'        <spatial name="{base}_fdp_r" rgba="0 0 0 0">')
+        lines.append(f'            <site site="{base}_ref_r"/>')
+        lines += [f"            {e}" for e in _fdp_path_after(node["fdp"], node["segment_start"])]
+        lines.append("        </spatial>")
+    return lines
+
+
+def equality_block(table: dict[str, Any]) -> str:
+    """Generated block of ``myoarm_r_assets.xml``: the node ties."""
+    cfg = table["lumbrical_nodes"]
+    solref = " ".join(_number(v) for v in cfg["equality_solref"]["value"])
+    lines = []
+    for row in node_rows(table):
+        base = node_name(row)[:-2]
+        lines.append(
+            f'        <tendon name="{base}_tie_r" tendon1="{base}_slide_r" tendon2="{base}_fdp_r"'
+            f' polycoef="0 1 0 0 0" solref="{solref}"/>'
+        )
+    return "".join(f"{line}\n" for line in lines)
+
+
 def architecture_lengthranges(table: dict[str, Any]) -> dict[str, tuple[float, float]]:
     """Length range per row from its straight site path at q = 0 (sites from ``myoarm_r_chain.xml``)."""
     model = build_spec("myoarm_r").compile()
@@ -199,9 +343,19 @@ def architecture_lengthranges(table: dict[str, Any]) -> dict[str, tuple[float, f
     lo, hi = model.actuator_gainprm[model.actuator(f"{table['template_muscle']}_r").id, :2]
     ranges = {}
     for row in table["muscles"]:
-        if "insertion" in row:  # MuJoCo's length of the branched tendon
-            mujoco.mj_tendon(model, data)
-            l_mt0 = float(data.ten_length[model.tendon(f"{row['name']}_r_tendon").id])
+        if "insertion" in row:  # MuJoCo's length of the branched tendon (mean over the slack postures)
+            lengths = []
+            for posture in slack_postures(table, row):
+                data.qpos[:] = 0.0
+                for joint, q in posture.items():
+                    data.qpos[model.joint(joint).qposadr[0]] = q
+                place_tendon_nodes(model, data)
+                mujoco.mj_comPos(model, data)
+                mujoco.mj_tendon(model, data)
+                lengths.append(float(data.ten_length[model.tendon(f"{row['name']}_r_tendon").id]))
+            l_mt0 = float(np.mean(lengths))
+            data.qpos[:] = 0.0
+            mujoco.mj_kinematics(model, data)
         else:
             points = [data.site_xpos[model.site(site_name(row, i)).id] for i in range(len(row["sites"]))]
             l_mt0 = float(sum(np.linalg.norm(b - a) for a, b in zip(points[:-1], points[1:])))
@@ -233,6 +387,10 @@ def muscle_block(table: dict[str, Any], lengthranges: dict[str, tuple[float, flo
 
 def write_xml(table: dict[str, Any]) -> dict[str, tuple[float, float]]:
     """Write the sites, then every tendon and muscle block (length ranges from the written sites)."""
+    for row in node_rows(table):
+        write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, chain_node_block(table, row), "", f"node {row['name']}")
+    if node_rows(table):
+        write_generated_block(RIGHT_ARM_ASSETS_XML, SCRIPT, equality_block(table), "</equality>")
     RIGHT_ARM_CHAIN_XML.write_text(chain_with_sites(RIGHT_ARM_CHAIN_XML.read_text(), table))
     for label in block_labels(table):
         write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table, label), "</tendon>", label)
@@ -251,16 +409,30 @@ def _model() -> mujoco.MjModel:
 
 
 class Poses:
-    """Body positions and orientations of ``myoarm_r`` at a list of postures (joint name -> q, others 0)."""
+    """Body positions and orientations of ``myoarm_r`` at a list of postures (joint name -> q, others 0).
 
-    def __init__(self, postures: list[dict[str, float]]) -> None:
+    The lumbrical nodes sit on their ties (``place_tendon_nodes``) at *node_postures* (default: the postures
+    themselves); a sweep passes the centre posture there to read a muscle's own moment arm (node held).
+    """
+
+    def __init__(self, postures: list[dict[str, float]], node_postures: list[dict[str, float]] | None = None) -> None:
         model = _model()
         data = mujoco.MjData(model)
+        slides = [j for j in range(model.njnt) if model.joint(j).name.startswith("node_")]
         pos, mat = [], []
-        for posture in postures:
+        for posture, node_posture in zip(postures, node_postures or postures):
+            nodes = {}
+            if slides:
+                data.qpos[:] = model.qpos0
+                for joint, q in node_posture.items():
+                    data.qpos[model.joint(joint).qposadr[0]] = q
+                place_tendon_nodes(model, data)
+                nodes = {j: data.qpos[model.jnt_qposadr[j]] for j in slides}
             data.qpos[:] = model.qpos0
             for joint, q in posture.items():
                 data.qpos[model.joint(joint).qposadr[0]] = q
+            for j, q in nodes.items():
+                data.qpos[model.jnt_qposadr[j]] = q
             mujoco.mj_kinematics(model, data)
             pos.append(data.xpos.copy())
             mat.append(data.xmat.copy().reshape(-1, 3, 3))
@@ -282,14 +454,42 @@ class Poses:
 
 
 class Sweep:
-    """dL/dq (mm) about *joint* at posture *base* with *joint* at each of *values*."""
+    """dL/dq (mm) about *joint* at posture *base* with *joint* at each of *values*.
 
-    def __init__(self, base: dict[str, float], joint: str, values: np.ndarray) -> None:
-        self.plus = Poses([base | {joint: float(v) + H} for v in values])
-        self.minus = Poses([base | {joint: float(v) - H} for v in values])
+    By default the lumbrical nodes are held where they sit at each value (the muscle's own moment arm, the
+    quantity of An et al. 1983); ``systemic`` lets them follow the tendon (own arm minus the FDP's).
+    """
+
+    def __init__(self, base: dict[str, float], joint: str, values: np.ndarray, systemic: bool = False) -> None:
+        centre = None if systemic else [base | {joint: float(v)} for v in values]
+        self.plus = Poses([base | {joint: float(v) + H} for v in values], centre)
+        self.minus = Poses([base | {joint: float(v) - H} for v in values], centre)
 
     def arms(self, sites: list[tuple[str, np.ndarray]]) -> np.ndarray:
         return (self.plus.length(sites) - self.minus.length(sites)) / (2.0 * H) * 1e3
+
+
+def fist(row: dict[str, Any]) -> dict[str, float]:
+    """The lumbrical's digit at its MCP, PIP and DIP flexion limits (the lumbrical's longest posture)."""
+    model = _model()
+    digit = table_digit(row)
+    return {
+        j: float(model.joint(j).range[1]) for j in (f"mcp{digit}_flexion_r", f"pm{digit}_flexion_r", f"md{digit}_flexion_r")
+    }
+
+
+def table_digit(row: dict[str, Any]) -> int:
+    return int(row["insertion"]["hood"]["digit"])
+
+
+def slack_postures(table: dict[str, Any], row: dict[str, Any]) -> list[dict[str, float]]:
+    """Postures whose mean muscle-tendon length sets the rigid-tendon slack length of *row*.
+
+    q = 0 (Barry et al. 2018, Eq. 1), except for a lumbrical on its node: its length changes by about 31 mm
+    from the straight finger to the fist (Ranney & Wells 1988), so the mean of the two postures sits at the
+    optimal fibre length and the whole excursion stays on MuJoCo's force-length curve.
+    """
+    return [{}, fist(row)] if row in node_rows(table) else [{}]
 
 
 def thumb_neutral() -> dict[str, float]:
@@ -387,7 +587,7 @@ def fit_group(table: dict[str, Any], group: str) -> None:
     lo_fl, hi_fl = cfg["fibre_length_window"]
     x0 = np.concatenate([np.ravel([s["start"]["pos"] for s in r["sites"]]) for r in rows])
     offsets = np.cumsum([0] + [3 * len(r["sites"]) for r in rows])
-    rest = Poses([{}])
+    rests = [Poses(slack_postures(table, r)) for r in rows]
 
     fixed = {r["name"]: _junction_point(r) for r in rows if junction(r)}
 
@@ -400,7 +600,8 @@ def fit_group(table: dict[str, Any], group: str) -> None:
 
     def normalised(path: list, poses: Poses, row: dict[str, Any]) -> np.ndarray:
         l_fo = row["optimal_fiber_length_m"]["value"]
-        l_ts = (rest.length(path)[0] - l_fo * np.cos(np.radians(row["pennation_deg"]["value"]))) / 1.033
+        l_mt = rests[rows.index(row)].length(path).mean()
+        l_ts = (l_mt - l_fo * np.cos(np.radians(row["pennation_deg"]["value"]))) / 1.033
         return (poses.length(path) - l_ts) / l_fo
 
     def model_values(p: list) -> list[np.ndarray]:
@@ -470,6 +671,12 @@ def fit_group(table: dict[str, Any], group: str) -> None:
                 j: [round(float(a), 2) for a in (np.atleast_1d(s.arms(path).mean()) if over else s.arms(path))]
                 for j, s, _, _, over in sweeps
             }
+        if row in node_rows(table):  # with the node following its FDP (reported, not fitted)
+            digit = table_digit(row)
+            result["systemic_mm"] = {
+                j: [round(float(Sweep({}, j, np.zeros(1), systemic=True).arms(path)[0]), 2)]
+                for j in (f"mcp{digit}_flexion_r", f"mcp{digit}_abduction_r", f"pm{digit}_flexion_r", f"md{digit}_flexion_r")
+            }
         row["fit"]["result"] = result
 
 
@@ -523,9 +730,11 @@ def fit_passive_scale(table: dict[str, Any]) -> None:
             data.qpos[:] = model.qpos0
             data.qpos[joint.qposadr[0]] = value
             data.qvel[:] = data.act[:] = data.ctrl[:] = 0.0
+            place_tendon_nodes(model, data)
             mujoco.mj_forward(model, data)
             moment = np.zeros((model.nu, model.nv))
             mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
+            moment = fold_node_forces(model, data, moment)
             per = data.actuator_force * moment[:, joint.dofadr[0]] * 100.0
             unit[n] = per[ids] / model.actuator_gainprm[ids, 7]
             named = prow["source_curve"].get("subtract_model_muscles", {}).get("muscles")
@@ -553,8 +762,12 @@ def fit_passive_scale(table: dict[str, Any]) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--fit", action="store_true", help="refit the sites to the tabled moment arms first")
+    parser.add_argument("--place-nodes", action="store_true", help="recompute the lumbrical node positions first")
     args = parser.parse_args()
     table = load_intrinsic_table()
+    if args.place_nodes:
+        place_nodes(table)
+        INTRINSIC_DATA_PATH.write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n")
     if args.fit:
         fit(table)
         for row in table["muscles"]:

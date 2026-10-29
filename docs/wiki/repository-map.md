@@ -22,11 +22,11 @@ myo_sim/              # installable Python package
     compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec()/build_model(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
-    hand_data.py      # intrinsic-muscle / passive-moment tables, passive tendon names, generated-block read/write
+    hand_data.py      # intrinsic-muscle / passive-moment tables, passive tendon names, generated-block read/write, lumbrical node placement (place_tendon_nodes, fold_node_forces)
     data/             # JSON provenance and fitting input of the intrinsic muscles and passive springs
 scripts/
   fit_passive_moments.py       # refits passive springs, rewrites their block in myoarm_r_tendon.xml
-  generate_hand_intrinsic_muscles.py # fits (--fit) and writes the intrinsic sites and blocks in the arm XML
+  generate_hand_intrinsic_muscles.py # fits (--fit) and writes the intrinsic sites and blocks in the arm XML, the lumbrical nodes (--place-nodes) and their ties
   fit_cmc_joints.py            # fits (--fit) and writes the CMC4/5 joints, their coupling and the moved sites
   fit_extensor_mechanism.py    # fits (--fit) and writes the extensor-mechanism sites, branched tendons and ORL ligaments
 tests/

@@ -36,7 +36,9 @@ RENAMED = {
 
 @cache
 def _gen() -> ModuleType:
-    spec = importlib.util.spec_from_file_location("generate_hand_intrinsic_muscles", SCRIPTS / "generate_hand_intrinsic_muscles.py")
+    spec = importlib.util.spec_from_file_location(
+        "generate_hand_intrinsic_muscles", SCRIPTS / "generate_hand_intrinsic_muscles.py"
+    )
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module

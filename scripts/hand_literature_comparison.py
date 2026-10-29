@@ -27,6 +27,8 @@ from typing import Any
 import mujoco
 import numpy as np
 
+from myo_sim.build.hand_data import fold_node_forces
+
 ROOT = Path(__file__).resolve().parents[1]
 DATA_PATH = ROOT / "myo_sim" / "build" / "data" / "hand_literature.json"
 WIKI_PATH = ROOT / "docs" / "wiki" / "hand-literature-comparison.md"
@@ -276,6 +278,7 @@ def extensor_mechanism(model: mujoco.MjModel) -> dict[str, Any]:
     data = mujoco.MjData(m)
     for joint, deg in (("mcp2_flexion_r", 90.0), ("pm2_flexion_r", 100.0), ("md2_flexion_r", 70.0)):
         data.qpos[m.joint(joint).qposadr[0]] = np.radians(deg)
+    _validator().place_tendon_nodes(m, data)
     index = [n for n in ("DI1d_r", "DI1s_r", "LUM1_r", "PI1_r") if mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_ACTUATOR, n) >= 0]
     for name in index:
         data.act[m.actuator(name).id] = data.ctrl[m.actuator(name).id] = 1.0
@@ -301,13 +304,15 @@ def orl_shares(model: mujoco.MjModel) -> list[float]:
         data.qpos[model.joint("pm2_flexion_r").qposadr[0]] = np.radians(pip)
         data.qpos[model.joint("md2_flexion_r").qposadr[0]] = np.radians(45.0)
         data.qvel[:] = data.act[:] = data.ctrl[:] = 0.0
+        _validator().place_tendon_nodes(model, data)
         mujoco.mj_forward(model, data)
         jac = np.zeros((model.ntendon, model.nv))
         mujoco.mju_sparse2dense(jac, data.ten_J, model.ten_J_rownnz, model.ten_J_rowadr, model.ten_J_colind)
         stretch = max(0.0, data.ten_length[t] - model.tendon_lengthspring[t][1])
         orl = model.tendon_stiffness[t] * stretch * jac[t, dof]
         preload = 1.96 * jac[model.tendon("EDC2_r_tendon").id, dof]
-        total = data.qfrc_passive[dof] + data.qfrc_actuator[dof] - preload
+        actuator = fold_node_forces(model, data, data.qfrc_actuator)  # node forces reach the joints via the ties
+        total = data.qfrc_passive[dof] + actuator[dof] - preload
         shares.append(float(100.0 * orl / -total) if total < 0 else 0.0)
     return shares
 
@@ -377,6 +382,35 @@ def interossei_lumbricals(model: mujoco.MjModel) -> dict[str, Any]:
     return out
 
 
+def lumbrical_nodes(model: mujoco.MjModel) -> dict[str, Any]:
+    """Lumbrical lengthening from the straight finger to the digit's flexion limits (mm, nodes on their ties)
+    and LUM1's MCP2 flexion dL/dq at rest with the node following its FDP (mm, positive = lengthens)."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "node_LUM1_r") < 0:
+        return {}
+    validator = _validator()
+    data = mujoco.MjData(model)
+    validator.place_tendon_nodes(model, data)
+    mujoco.mj_forward(model, data)
+    straight = data.actuator_length.copy()
+    excursion = []
+    for n, digit in zip((1, 2, 3, 4), (2, 3, 4, 5)):
+        data.qpos[:] = model.qpos0
+        for joint in (f"mcp{digit}_flexion_r", f"pm{digit}_flexion_r", f"md{digit}_flexion_r"):
+            data.qpos[model.joint(joint).qposadr[0]] = model.jnt_range[model.joint(joint).id][1]
+        validator.place_tendon_nodes(model, data)
+        mujoco.mj_forward(model, data)
+        lum = model.actuator(f"LUM{n}_r").id
+        excursion.append(1e3 * float(data.actuator_length[lum] - straight[lum]))
+    lengths = []
+    for dq in (1e-5, -1e-5):
+        data.qpos[:] = model.qpos0
+        data.qpos[model.joint("mcp2_flexion_r").qposadr[0]] = dq
+        validator.place_tendon_nodes(model, data)
+        mujoco.mj_forward(model, data)
+        lengths.append(float(data.actuator_length[model.actuator("LUM1_r").id]))
+    return {"lumbrical_excursion": excursion, "lum1_systemic_mcp_arm": 1e3 * (lengths[0] - lengths[1]) / 2e-5}
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -386,6 +420,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     )
     out |= interossei_lumbricals(model)
     out |= extensor_mechanism(model)
+    out |= lumbrical_nodes(model)
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

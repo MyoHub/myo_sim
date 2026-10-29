@@ -55,6 +55,7 @@ import mujoco
 import numpy as np
 
 import myo_sim
+from myo_sim.build.hand_data import fold_node_forces, place_tendon_nodes
 
 DATA_PATH = Path(__file__).parents[1] / "myo_sim" / "build" / "data" / "muscle_passive.json"
 VALIDATION_SCRIPT = Path(__file__).with_name("validate_hand_function.py")
@@ -202,6 +203,7 @@ def _forward(model: mujoco.MjModel, data: mujoco.MjData, posture: dict[str, floa
     data.qvel[:] = 0.0
     data.act[:] = 0.0
     data.ctrl[:] = 0.0
+    place_tendon_nodes(model, data)  # lumbrical nodes on their FDP ties
     mujoco.mj_forward(model, data)
 
 
@@ -220,7 +222,7 @@ def row_geometry(
         mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
         lengths[i] = data.actuator_length[ids]
         arms[i] = moment[ids, dof]
-        rest[i] = data.actuator_force[rest_ids] @ moment[rest_ids, dof]
+        rest[i] = data.actuator_force[rest_ids] @ fold_node_forces(model, data, moment[rest_ids])[:, dof]
     return lengths, arms, rest
 
 

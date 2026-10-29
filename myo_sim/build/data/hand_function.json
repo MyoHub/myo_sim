@@ -478,6 +478,38 @@
       "APL": 0.0
      },
      "grip_N": 335.4
+    },
+    {
+     "model": "+ hand rebuild S6 (lumbrical junction nodes on the FDP tendons; intrinsic passive scales, extrinsic slack lengths and passive scales, springs refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 44,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.1265,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.005824
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9967,
+      "FDP": 0.5732,
+      "EDC": 0.6845,
+      "EIP": 0.5069,
+      "EDM": 0.9353,
+      "ECRL": 0.6429,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.6418,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 331.5
     }
    ]
   }

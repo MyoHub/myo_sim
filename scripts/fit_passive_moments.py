@@ -30,8 +30,10 @@ from myo_sim.build.compose import RIGHT_ARM_CHAIN_XML, RIGHT_ARM_TENDONS_XML
 from myo_sim.build.hand_data import (
     APPLIED_STATUSES,
     PASSIVE_DATA_PATH,
+    fold_node_forces,
     passive_moment,
     passive_tendon_name,
+    place_tendon_nodes,
     rows_with_status,
     spring_parameters,
     spring_segments,
@@ -107,14 +109,15 @@ def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndar
         data.qvel[:] = 0.0
         data.act[:] = 0.0
         data.ctrl[:] = 0.0
+        place_tendon_nodes(model, data)  # lumbrical nodes on their FDP ties
         mujoco.mj_forward(model, data)
         out[i] = ligament_moment(model, data, dof) if ligaments else 0.0
         if ids is None:
-            out[i] += data.qfrc_actuator[dof]
+            out[i] += fold_node_forces(model, data, data.qfrc_actuator)[dof]
         else:
             moment = np.zeros((model.nu, model.nv))
             mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
-            out[i] = float(data.actuator_force[ids] @ moment[ids, dof])
+            out[i] = float(data.actuator_force[ids] @ fold_node_forces(model, data, moment[ids])[:, dof])
     return out
 
 
