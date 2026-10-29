@@ -280,9 +280,9 @@ def build_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
 def attach_neck(torso: mujoco.MjSpec) -> None:
     """Replace the rigid head scaffold with the muscular HYOID neck, in place.
 
-    Called last by the full-body builder, so the neck's tendons, actuators and
-    equalities come after those of the arms and legs. The torso part models
-    keep the rigid head.
+    Called last by the full-body and torso builders, so the neck's tendons,
+    actuators and equalities come after those of the torso, arms and legs. The
+    scaffold part models (arms, hands, legs, abdomen) keep the rigid head.
     """
     torso.delete(find_body(torso, "neck"))
     head_frame = find_body(torso, "head_attach").add_frame(name="myohead_attach")
@@ -290,7 +290,9 @@ def attach_neck(torso: mujoco.MjSpec) -> None:
 
 
 def build_torso_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
-    return build_torso_spec(registration)
+    torso = build_torso_spec(registration)
+    attach_neck(torso)
+    return torso
 
 
 def make_torso_passive(torso: mujoco.MjSpec) -> None:
@@ -490,6 +492,7 @@ def build_torso_arms_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso.attach(right_arm, prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     if left_arm is not None:
         torso.attach(left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
+    attach_neck(torso)
 
     return torso
 

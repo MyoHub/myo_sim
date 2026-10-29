@@ -7,13 +7,12 @@ from myo_sim.build.mass import audit_mass, subtree_mass
 FULLBODY_MASS = 84.0
 DE_LEVA_HEAD_NECK = 0.0694  # de Leva (1996) head-and-neck share of body mass
 TORSO_MASS = 14.897  # OpenSim trunk minus the head it contained (#138)
-# Part models keep the rigid head at the de Leva share of the 84.26 kg rigid-head body (#138).
+# Scaffold part models keep the rigid head at the de Leva share of the 84.26 kg rigid-head body (#138).
 RIGID_HEAD_MASS = 5.848
 RIGID_HEAD_BODY_MASS = 84.26
+# Torso models carry the same muscular neck as myofullbody.
+NECK_PART_MODELS = ("myotorso", "myotorso_arms", "myotorso_arm_r")
 RIGID_HEAD_MODELS = (
-    "myotorso",
-    "myotorso_arms",
-    "myotorso_arm_r",
     "myotorso_abdomen",
     "myoarms",
     "myoarm_r",
@@ -70,6 +69,13 @@ def test_part_models_keep_the_rigid_head(name):
     head = model.body("head").id
     assert model.body_mass[head] == pytest.approx(RIGID_HEAD_MASS)
     assert model.body_mass[head] / RIGID_HEAD_BODY_MASS == pytest.approx(DE_LEVA_HEAD_NECK, abs=1e-4)
+    assert model.body_mass[model.body("torso").id] == pytest.approx(TORSO_MASS)
+
+
+@pytest.mark.parametrize("name", NECK_PART_MODELS)
+def test_torso_models_carry_the_fullbody_head_and_neck(name, fullbody_model):
+    model = load_model(name)
+    assert subtree_mass(model, "myohead_base") == pytest.approx(subtree_mass(fullbody_model, "myohead_base"))
     assert model.body_mass[model.body("torso").id] == pytest.approx(TORSO_MASS)
 
 

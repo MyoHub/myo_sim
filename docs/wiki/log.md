@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-10-29 — Proposal: the torso models carry the muscular neck
+Changed: myo_sim/build/compose.py, tests/test_head_build.py, tests/test_mass_convention.py, tests/test_torso_muscle_symmetry.py, CHANGELOG.md, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md
+Why: under the model policy (one maintained reference model, no near-duplicate variants), a torso model with a rigid head is a second, slightly simpler version of the same body segment. Open for discussion: the neck costs +19-86 % `mj_step` time on these models. The symmetry test skips the neck's roll and yaw joints and the vertebral joints coupled to them, as it skips the lumbar lateral-bending and axial-rotation joints.
+
 ## 2026-10-29 — Merge dev; mass convention test covers the neck chain
 Changed: tests/test_mass_convention.py, tests/test_head_build.py, myo_sim/build/mass.py, CHANGELOG.md, docs/wiki/testing-guide.md
 Why: dev brought #138's mass test, which measured the head share on the `head` body and expected 84.3 kg. With the neck in `myofullbody`, the share is taken over the `myohead_base` subtree and the total is 84.0 kg; part models are checked for #138's rigid head. The neck mass check moves from `test_head_build.py` into this test, and `audit_mass` uses the neck chain when present.

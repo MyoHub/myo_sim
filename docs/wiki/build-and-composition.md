@@ -79,18 +79,18 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 - `root_pos`: initial position of the root body in world space.
 - `mirror_rules`: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
 
-`myofullbody` carries the muscular neck; there is no switch for it.
+`myofullbody` and the torso models (`myotorso`, `myotorso_arms`, `myotorso_arm_r`)
+carry the muscular neck; there is no switch for it.
 `compose.attach_neck()` runs last in its builder: it deletes the rigid head
 subtree and attaches `build/head.py`'s spec to the existing `head_attach` frame,
-so the neck's tendons, actuators and equalities follow those of the arms and legs.
+so the neck's tendons, actuators and equalities follow those of the torso, arms and legs.
 The neck joints sit in the torso subtree, before the arm and leg joints.
 The midline skeleton is authored once; only right muscle sites, tendons and
 actuators are mirrored with `MirrorRules`. The existing `neck`, `head` and head
-collision names are preserved. All part models (`myotorso`, `myotorso_arms`,
-`myotorso_arm_r`, `myoarms`, `myohands`, `myolegs`, ...) keep the rigid head
-(`myohead_rigid_chain.xml`), which has no joints or muscles. Whether the torso
-part models should also carry the neck depends on the simple-versus-full model
-strategy of the model policy, which is still open.
+collision names are preserved. The scaffold part models (`myotorso_abdomen`,
+`myoarms`, `myohands`, `myolegs`, ...) keep the rigid head
+(`myohead_rigid_chain.xml`), which has no joints or muscles: their torso is fixed
+or built separately, so a neck would add muscles unrelated to them.
 See `docs/validation/neck/README.md` for source and acceptance scope.
 
 ## How to Add a New Composed Model

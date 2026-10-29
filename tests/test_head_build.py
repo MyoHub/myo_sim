@@ -7,8 +7,8 @@ import pytest
 from myo_sim import load_model
 from myo_sim.build.compose import MODEL_REGISTRY
 
-# Only the full body carries the muscular neck; every part model keeps the rigid head.
-NECK_MODELS = ("myofullbody",)
+# The full body and the torso models carry the muscular neck; the scaffold part models keep the rigid head.
+NECK_MODELS = ("myofullbody", "myotorso", "myotorso_arms", "myotorso_arm_r")
 
 
 def _neck_joint_count(model: mujoco.MjModel) -> int:
@@ -20,7 +20,7 @@ def _right_neck_actuator_ids(model: mujoco.MjModel) -> list[int]:
     return [i for i in range(model.nu - 72, model.nu) if model.actuator(i).name.endswith("_r")]
 
 
-@pytest.mark.parametrize("name", ["myohead", "myofullbody"])
+@pytest.mark.parametrize("name", ("myohead",) + NECK_MODELS)
 def test_neck_passive_mechanics_and_muscle_parameters(name: str) -> None:
     model = load_model(name)
     data = mujoco.MjData(model)
@@ -47,7 +47,7 @@ def test_neck_passive_mechanics_and_muscle_parameters(name: str) -> None:
     assert np.all(lengthrange[:, 0] - parameters[:, 0] * l0 >= 0)
 
 
-def test_neck_is_part_of_myofullbody_only() -> None:
+def test_neck_models() -> None:
     for name in MODEL_REGISTRY:
         expected = 24 if name in NECK_MODELS + ("myohead",) else 0
         assert _neck_joint_count(load_model(name)) == expected, name
@@ -56,7 +56,9 @@ def test_neck_is_part_of_myofullbody_only() -> None:
     # Neck actuators are appended after the existing torso, arm and leg actuators.
     head = load_model("myohead")
     neck_names = {head.actuator(i).name for i in range(head.nu)}
-    assert {full.actuator(i).name for i in range(full.nu - 72, full.nu)} == neck_names
+    for name in NECK_MODELS:
+        model = load_model(name)
+        assert {model.actuator(i).name for i in range(model.nu - 72, model.nu)} == neck_names, name
 
 
 def test_neck_preserves_head_landmarks_of_the_rigid_scaffold() -> None:
