@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-10-29 — Model policy: canonical model and derived models
+Changed: docs/wiki/model-authoring.md
+Why: one canonical (full) model per part; models that only remove muscles or joints are derived procedurally from it, and pruning is the sanctioned way to do so; separate variants only for truly simplified models (merged muscles, e.g. myolegs26) or expensive or optional features (review comment on #140).
+
 ## 2026-10-28 — Generic disable_collisions() post-processing function
 Changed: myo_sim/postprocess.py (new), myo_sim/__init__.py, myo_sim/build/compose.py, tests/test_postprocess.py (new), docs/wiki/model-authoring.md, CHANGELOG.md
 Why: Model policy 4 prefers generic post-processing functions over per-model variants. `myo_sim.disable_collisions()` turns off all collisions or a pattern-selected subset on any loaded `MjSpec`; `disable_finger_collision()` keeps its signature and result and delegates to it.
