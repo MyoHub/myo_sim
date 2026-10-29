@@ -104,8 +104,8 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
 
   The abstract's "275 N/mm" is the mean of the proximal and distal central band. The paper gives no force distribution and no failure loads.
 - Qian et al. (2014) tested coupons from 19 hoods and give modulus, stiffness and failure load per region. For example: central slip 101 MPa, terminal slip 90 MPa, lateral band 105 MPa, sagittal band 55 MPa. Passive flexion alone strains the hood by 2-3 %.
-- Schultz et al. (1981) describe how the criss-cross fibres govern lateral-band displacement.
-- Canoso et al. (2021) describe palmar migration of the bands with PIP flexion.
+- Schultz et al. (1981) found no elastic tissue in the hood over the PIP (histology, pp. 494-496). The central tendon and the lateral bands are linked by criss-cross fibres in two separate, non-interdigitating layers. The authors suggest that these fibres govern how far the lateral bands move palmarly in flexion and how they return in extension; the study is qualitative (fresh and preserved cadaver fingers, no counts or forces).
+- Canoso et al. (2021) measured the band shift in vivo by ultrasound (7 subjects aged 23-55, middle and ring fingers, MCP at 0 deg, PIP actively flexed 0 to 90 deg). At mid-proximal phalanx the ulnar lateral band moved palmarly by a median of 1.8 mm (range 0.7-3.0) in the middle finger and 1.1 mm (0.3-2.7) in the ring finger (Table 1). Palpation suggested 5-10 mm, which the authors attribute to a haptic illusion. Dissection of 5 embalmed hands confirmed the direction of the shift but could not measure it. This is smaller than the 2.6 mm Garcia-Elias et al. (1991a) report as the PIP flexes, and is measured further proximally.
 
 **PIP-DIP coupling.**
 - Landsmeer (1949, 1958, 1963) described the dorsal aponeurosis and the coordination of the interphalangeal joints.
@@ -139,6 +139,8 @@ Synek and Pahr (2016) compared models with and without the extensor mechanism an
 - Holzbaur et al. (2005) and Saul et al. (2015) have no intrinsics and no extensor mechanism.
 - Mirakhorlo et al. (2018) model the medial bands as separate paths that share via points. They omit the lateral bands, because an OpenSim muscle-tendon unit cannot have several insertions. The model is published under CC BY-NC-ND 4.0.
 - MacIntosh and Keir (2017) published an OpenSim index finger with a 14-component extensor mechanism on SimTK (simtk.org/projects/finger), under an agreement titled "MIT Use Agreement". Its licence would have to be confirmed before reusing any value. This proposal uses none.
+
+**AnyBody model.** Engelhardt et al. (2021, CC BY) built a detailed AnyBody hand from a 16-specimen dataset. It has no extensor mechanism: the DIP is driven from the PIP by a finger rhythm when motion data lack the distal phalanx, and the passive tension of the hood is omitted (pp. 779, 785). The lumbricals arise from a massless substitute segment between two via points on the FDP tendon (p. 779).
 
 **MuJoCo models.**
 - MS-Human-700's manipulation model (Apache-2.0) has separate lumbricals and palmar and dorsal interossei. Their tendon Jacobians at the neutral posture show that all of them cross only the MCP, while EDCI crosses MCP, PIP and DIP.
@@ -457,7 +459,7 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 
    Should the bundles take these values?
 5. **MCP hyperextension.** A range change is needed for the claw test. Is it in scope here or a separate PR?
-6. **Option (b) identification.** Node placement and slide directions should be identified from the 3-D geometry of Garcia-Elias et al. (1991a) and the band migration described by Canoso et al. (2021). What tolerance on passive band force over the full range should count as "admits the range of motion"?
+6. **Option (b) identification.** Node placement and slide directions should be identified from the 3-D geometry of Garcia-Elias et al. (1991a). The in-vivo band shift of Canoso et al. (2021), 1-2 mm at mid-proximal phalanx from PIP 0 to 90 deg, is a check on the band nodes' slide range. What tolerance on passive band force over the full range should count as "admits the range of motion"?
 7. **Elastic tendons.** Should compliant tendons (#124's slide joints or a massless series element) land before or after this change? The slack-length refit of the extensors should happen once, after both.
 8. **Variant name and registration** for option (b), if it is pursued.
 9. **Effective moment arms.** Lee et al. (2008b) report effective moment arms smaller than kinematic estimates. We suggest using them (Table 4) as the fit targets for option (a) and as validation targets for option (b), with the kinematic moment arms of the paths reported next to them.
@@ -471,6 +473,7 @@ The split is posture dependent, as it should be, but the geometry has to be iden
 - Chao EY, An KN (1978). Graphical interpretation of the solution to the redundant problem in biomechanics. J Biomech Eng 100:159-167. doi:10.1115/1.3426207
 - Dogadov A, Alamir M, Servière C, Quaine F (2017). The biomechanical model of the long finger extensor mechanism and its parametric identification. J Biomech 58:232-236. doi:10.1016/j.jbiomech.2017.04.030
 - Dogadov AA, Valero-Cuevas FJ, Servière C, Quaine F (2025). The bundles of intercrossing fibers of the extensor mechanism of the fingers greatly influence the transmission of muscle forces. Int J Numer Methods Biomed Eng 41(7):e70068. doi:10.1002/cnm.70068
+- Engelhardt L, Melzner M, Havelkova L, Fiala P, Christen P, Dendorfer S, Simon U (2021). A new musculoskeletal AnyBody detailed hand model. Comput Methods Biomech Biomed Engin 24(7):777-787. doi:10.1080/10255842.2020.1851367
 - Garcia-Elias M, An KN, Berglund L, Linscheid RL, Cooney WP, Chao EYS (1991a). Extensor mechanism of the fingers. I. A quantitative geometric study. J Hand Surg Am 16(6):1130-1136. doi:10.1016/S0363-5023(10)80079-6
 - Garcia-Elias M, An KN, Berglund LJ, Linscheid RL, Cooney WP, Chao EYS (1991b). Extensor mechanism of the fingers. II. Tensile properties of components. J Hand Surg Am 16(6):1136-1140. doi:10.1016/S0363-5023(10)80080-2
 - Harris C, Rutledge GL (1972). The functional anatomy of the extensor mechanism of the finger. J Bone Joint Surg Am 54(4):713-726. doi:10.2106/00004623-197254040-00003
