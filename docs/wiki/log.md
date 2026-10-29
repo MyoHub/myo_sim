@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-10-29 — Merge dev; mass convention test covers the neck chain
+Changed: tests/test_mass_convention.py, tests/test_head_build.py, myo_sim/build/mass.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: dev brought #138's mass test, which measured the head share on the `head` body and expected 84.3 kg. With the neck in `myofullbody`, the share is taken over the `myohead_base` subtree and the total is 84.0 kg; part models are checked for #138's rigid head. The neck mass check moves from `test_head_build.py` into this test, and `audit_mass` uses the neck chain when present.
+
 ## 2026-10-28 — Head and neck mass, cervical inertias and neck armature
 Changed: myo_sim/models/head/assets/myohead_chain.xml, myo_sim/models/head/assets/myohead_assets.xml, myo_sim/models/head/assets/myohead_rigid_chain.xml, myo_sim/models/torso/assets/myotorso_chain.xml, tests/test_head_build.py, tests/test_chest_ownership.py, myo_sim/models/head/README.md, docs/validation/neck/README.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: the neck raised body mass by 5.3 kg while the torso mass still contained the head. Head and neck now carry the de Leva share (6.94 %) and the torso drops to 14.897 kg as in #138; cervical inertias were 0.04 kg·m² placeholders, about 100 times too large, and come from a cylinder-slice approximation; with them the neck rang at 2 ms, so its joints use the torso's armature of 0.01. The commented-out rigid-head joints are removed.

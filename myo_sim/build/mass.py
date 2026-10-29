@@ -5,7 +5,8 @@ from __future__ import annotations
 import mujoco
 import numpy as np
 
-HEAD_BODY = "head"
+# De Leva head segment root: the muscular neck chain (skull + cervical segments), else the rigid head.
+HEAD_ROOTS = ("myohead_base", "head")
 
 
 def subtree_mass(model: mujoco.MjModel, root: str) -> float:
@@ -32,6 +33,7 @@ def audit_mass(model: mujoco.MjModel) -> dict[str, float | list[str]]:
         if model.body_mass[b] > 0 and i[2] > i[0] + i[1] + 1e-12:
             violations.append(mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_BODY, b))
     out: dict[str, float | list[str]] = {"total_mass": total, "triangle_violations": violations}
-    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, HEAD_BODY) >= 0:
-        out["head_fraction"] = subtree_mass(model, HEAD_BODY) / total
+    root = next((r for r in HEAD_ROOTS if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_BODY, r) >= 0), None)
+    if root is not None:
+        out["head_fraction"] = subtree_mass(model, root) / total
     return out

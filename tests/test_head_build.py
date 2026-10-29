@@ -78,30 +78,6 @@ def test_neck_preserves_head_landmarks_of_the_rigid_scaffold() -> None:
         )
 
 
-def _subtree_mass(model: mujoco.MjModel, root: str) -> float:
-    root_id = model.body(root).id
-    total = 0.0
-    for body in range(model.nbody):
-        ancestor = body
-        while ancestor > 0 and ancestor != root_id:
-            ancestor = int(model.body_parentid[ancestor])
-        if ancestor == root_id:
-            total += model.body_mass[body]
-    return total
-
-
-def test_head_and_neck_carry_the_de_leva_share() -> None:
-    """Skull + cervical segments (or the rigid head) hold 6.94 % of body mass; the torso no longer contains the head."""
-    full = load_model("myofullbody")
-    assert full.body_mass.sum() == pytest.approx(84.0, abs=0.01)
-    assert _subtree_mass(full, "myohead_base") / full.body_mass.sum() == pytest.approx(0.0694, abs=1e-4)
-    # Rigid-head models: the head body holds the share of the 84.26 kg rigid-head body (myo_sim#138).
-    rigid = load_model("myoarms")
-    assert rigid.body_mass[rigid.body("head").id] == pytest.approx(0.0694 * 84.26, abs=0.01)
-    for model in (full, rigid):
-        assert model.body_mass[model.body("torso").id] == pytest.approx(14.897)
-
-
 def test_cervical_inertias_match_their_size_and_mass() -> None:
     """Cylinder-slice inertias: small, physically consistent, and the skull keeps its source mass."""
     model = load_model("myohead")
