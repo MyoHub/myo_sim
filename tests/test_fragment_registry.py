@@ -63,11 +63,11 @@ def test_myotorso_loads_from_composed_registry():
 
 
 def test_myohand_r_matches_main_spec():
-    """Built myohand_r: njnt=29 (23 + CMC4/5 + four lumbrical node slides); nu=47, the 39 of the static myohand from main plus 8 hand-rebuild intrinsic muscles."""
+    """Built myohand_r: njnt=32 (23 + CMC4/5 + four lumbrical and three junctura node slides); nu=47, the 39 of the static myohand from main plus 8 hand-rebuild intrinsic muscles."""
     import myo_sim
 
     model, _ = myo_sim.load("myohand_r")
-    assert model.njnt == 29, f"Expected 29 joints, got {model.njnt}"
+    assert model.njnt == 32, f"Expected 32 joints, got {model.njnt}"
     assert model.nu == 47, f"Expected 47 actuators, got {model.nu}"
 
 

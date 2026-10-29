@@ -128,5 +128,7 @@ wrists at 0 the ring finger rests against its neighbours and the two MCP4 settle
 deg at tolerance 1e-12, 0.034 deg without warm start, 0.007 deg with frictionless pairs, 0.001 deg without
 contacts). Before the extensor mechanism the same happened to MCP3/MCP4 with both wrists flexed 60 deg
 (0.10 / 0.15 deg); that case now settles within 0.02 deg. The solver options are shared by every model,
-so they stay at their defaults; `test_relaxed_hand_rests_off_its_limits` allows 0.2 deg for MCP4 at wrist
-0 only.
+so they stay at their defaults. Which joint and case shows the effect changes with small model changes:
+since S7 (juncturae) it is MCP4 with both wrists flexed 60 deg (0.17 deg; 0.007 deg at tolerance 1e-12,
+0.001 deg without contacts), while the wrist-0 case settles within 0.03 deg.
+`test_relaxed_hand_rests_off_its_limits` allows 0.2 deg for that joint in that case only.

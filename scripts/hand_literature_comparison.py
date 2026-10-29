@@ -411,6 +411,36 @@ def lumbrical_nodes(model: mujoco.MjModel) -> dict[str, Any]:
     return {"lumbrical_excursion": excursion, "lum1_systemic_mcp_arm": 1e3 * (lengths[0] - lengths[1]) / 2e-5}
 
 
+def extrinsic_revisions(model: mujoco.MjModel) -> dict[str, Any]:
+    """S7: junctura share of the neighbour MP extension under 1.5 kg on EDC4 / EDC3 (deg, links minus no links,
+    myohand_r protocol of ``generate_extrinsic_muscles.py``), FCU flexion / ulnar and ECU extension / ulnar
+    moment arms at wrist neutral (mm; ECU in supination / neutral / pronation) and FDS5 force (N, % of FDS4)."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_TENDON, "lig_JT34_r") < 0:
+        return {}
+    gen = _load_script("generate_extrinsic_muscles")
+    table = gen.load_table()
+    k = {n: v["stiffness_N_per_m"]["value"] for n, v in table["juncturae"]["links"].items()}
+    scene = gen._hand_scene()
+    share = {}
+    for tendon, joints in (("EDC4", ("mcp3_flexion", "mcp5_flexion")), ("EDC3", ("mcp4_flexion", "mcp5_flexion"))):
+        with_links, without = gen.traction_transfer(k, tendon, scene), gen.traction_transfer(None, tendon, scene)
+        share[tendon] = [with_links[j] - without[j] for j in joints]
+    ecu = []
+    for deg in (-90.0, 0.0, 90.0):  # + = pronation
+        data = mujoco.MjData(model)
+        t = model.tendon("ECU_r_tendon").id
+        posture = {"pro_sup_r": np.radians(deg)}
+        ecu.append(gen._arm(model, data, t, "flexion_r", posture))
+    force = {n: model.actuator_gainprm[model.actuator(f"{n}_r").id][2] for n in ("FDS4", "FDS5")}
+    return {
+        "juncturae_ring_traction": share["EDC4"],
+        "juncturae_middle_traction": share["EDC3"],
+        "fcu_moment_arms": list(gen.fcu_arms(model)),
+        "ecu_extension_rotation": ecu,
+        "fds5_force": [force["FDS5"], 100.0 * force["FDS5"] / force["FDS4"]],
+    }
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -421,6 +451,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= interossei_lumbricals(model)
     out |= extensor_mechanism(model)
     out |= lumbrical_nodes(model)
+    out |= extrinsic_revisions(model)
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

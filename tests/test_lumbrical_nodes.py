@@ -48,7 +48,7 @@ def test_every_hand_carries_its_nodes_and_ties(name: str) -> None:
             tie = model.equality(f"{node}_tie_{side}")
             assert model.tendon(tie.obj1id[0]).name == f"{node}_slide_{side}"
             assert model.tendon(tie.obj2id[0]).name == f"{node}_fdp_{side}"
-    assert len(_ties(model)) == 4 * len(sides)
+    assert sum(model.equality(e).name.startswith("node_LUM") for e in _ties(model)) == 4 * len(sides)
 
 
 def test_left_nodes_mirror_the_right_ones() -> None:

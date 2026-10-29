@@ -155,6 +155,36 @@
       "citation": "Leijnse JNAL, Kalker JJ. A two-dimensional kinematic model of the lumbrical in the human finger. J Biomech 28(3):237-249, 1995.",
       "doi": "10.1016/0021-9290(94)00070-K",
       "note": "The lumbrical elongates maximally in the fist while the interosseus stays nearly isometric; the lumbrical's MCP effect is the small difference of its own and the deep flexor's moment arms."
+    },
+    "vonschroeder1993": {
+      "short": "von Schroeder & Botte 1993",
+      "citation": "von Schroeder HP, Botte MJ. The functional significance of the long extensors and juncturae tendinum in finger extension. J Hand Surg Am 18(4):641-647, 1993.",
+      "doi": "10.1016/0363-5023(93)90309-Q",
+      "note": "21 fresh-frozen limbs; 1.5 kg on one extensor, wrist pinned neutral, palm down; MP extension of the neighbours intact, after cutting the juncturae and fascia, and after cutting the web (Figs. 3-6)."
+    },
+    "horii1993": {
+      "short": "Horii et al. 1993",
+      "citation": "Horii E, An KN, Linscheid RL. Excursion of prime wrist tendons. J Hand Surg Am 18(1):83-90, 1993.",
+      "doi": "10.1016/0363-5023(93)90250-7",
+      "note": "7 cadaver arms, elbow 90 deg; Table II moment arms, Table III excursion in supination, neutral and pronation."
+    },
+    "loren1996": {
+      "short": "Loren et al. 1996",
+      "citation": "Loren GJ, Shoemaker SD, Burkholder TJ, Jacobson MD, Friden J, Lieber RL. Human wrist motors: biomechanical design and application to tendon transfers. J Biomech 29(3):331-342, 1996.",
+      "doi": "10.1016/0021-9290(95)00055-0",
+      "note": "5 cadaver arms; appendix p. 342: moment arms against wrist angle in pronation, neutral and supination (wrist neutral values used)."
+    },
+    "lieber1992": {
+      "short": "Lieber et al. 1992",
+      "citation": "Lieber RL, Jacobson MD, Fazeli BM, Abrams RA, Botte MJ. Architecture of selected muscles of the arm and forearm: anatomy and implications for tendon transfer. J Hand Surg Am 17(5):787-798, 1992.",
+      "doi": "10.1016/0363-5023(92)90444-T",
+      "note": "Table I (mean +- SEM): PCSA FDS4 1.61 +- 0.18, FDS5 0.40 +- 0.05 cm2."
+    },
+    "holzbaur2005": {
+      "short": "Holzbaur et al. 2005",
+      "citation": "Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005.",
+      "doi": "10.1007/s10439-005-3320-7",
+      "note": "Table 1: peak forces at 45 N/cm2 (FDS4 57.9, FDS5 16.5 N). Cited only; no model file used."
     }
   },
   "quantities": {
@@ -1075,6 +1105,115 @@
           "kind": "derived: deep-flexor minus lumbrical MCP moment arm, cadaver tendon excursion",
           "source": "an1983",
           "protocol": "FP 11.1 +- 1.1 minus LU 9.3 +- 2.1 mm (Table 3, averaged over the range); spread combined assuming independence. Leijnse & Kalker 1995: the difference is small"
+        }
+      ]
+    },
+    "juncturae_ring_traction": {
+      "label": "Junctura share of the neighbour MP extension under 1.5 kg on the ring-finger EDC: middle / little finger",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": [
+            18.0,
+            22.0
+          ],
+          "kind": "cadaver, intact minus juncturae and fascia cut (38 -> 20, 44 -> 22 deg)",
+          "source": "vonschroeder1993",
+          "protocol": "palm down, wrist pinned neutral, 1.5 kg at the myotendinous junction (Fig. 5); model: myohand_r palm down, 14.7 N along EDC4, links minus no links"
+        }
+      ]
+    },
+    "juncturae_middle_traction": {
+      "label": "Junctura share of the neighbour MP extension under 1.5 kg on the middle-finger EDC: ring / little finger",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": [
+            8.0,
+            7.0
+          ],
+          "kind": "cadaver, intact minus juncturae and fascia cut (26 -> 18, 16 -> 9 deg)",
+          "source": "vonschroeder1993",
+          "protocol": "as above, traction on EDC-long (Fig. 4)"
+        }
+      ]
+    },
+    "fcu_moment_arms": {
+      "label": "FCU moment arm at wrist neutral, flexion / ulnar deviation",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            16.0,
+            14.0
+          ],
+          "kind": "cadaver",
+          "source": "horii1993",
+          "protocol": "Table II; no significant change with forearm rotation (Table III); model: dL/dq, forearm neutral",
+          "spread": [
+            3.0,
+            3.0
+          ],
+          "spread_kind": "SD"
+        },
+        {
+          "value": [
+            14.0,
+            23.0
+          ],
+          "kind": "cadaver",
+          "source": "loren1996",
+          "protocol": "appendix, forearm neutral, wrist neutral"
+        }
+      ]
+    },
+    "ecu_extension_rotation": {
+      "label": "ECU extension moment arm at wrist neutral in supination / neutral / pronation",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            7.8,
+            7.2,
+            0.9
+          ],
+          "kind": "cadaver",
+          "source": "loren1996",
+          "protocol": "appendix p. 342; model: forearm at -90 / 0 / +90 deg"
+        },
+        {
+          "value": [
+            5.7,
+            5.7,
+            2.3
+          ],
+          "kind": "cadaver, mean over 100 deg of flexion-extension",
+          "source": "horii1993",
+          "protocol": "Table III excursion 10 / 10 / 4 mm over 100 deg"
+        }
+      ]
+    },
+    "fds5_force": {
+      "label": "FDS5 peak force; FDS5 force as a share of FDS4",
+      "unit": "N; %",
+      "literature": [
+        {
+          "value": [
+            16.5,
+            28.5
+          ],
+          "kind": "model at 45 N/cm2",
+          "source": "holzbaur2005",
+          "protocol": "Table 1 (16.5 / 57.9 N); MyoHand's extrinsic forces are 2.7-3.0 x Holzbaur's for FDS2-4"
+        },
+        {
+          "value": [
+            null,
+            24.8
+          ],
+          "kind": "cadaver PCSA ratio (0.40 / 1.61 cm2)",
+          "source": "lieber1992",
+          "protocol": "Table I"
         }
       ]
     }
@@ -3131,6 +3270,419 @@
         "Lumbrical excursion from the straight finger to the flexion limits: 31.9 / 36.7 / 36.5 / 29.6 mm (LUM1-4; a fixed origin shortened them by 0-10 mm); Ranney & Wells 1988 measured 25 -> 56 mm (+31 mm) on index fingers. With the node following its FDP, LUM1's MCP flexion dL/dq at rest is +3.0 mm (a slight extensor; An 1983's FP minus LU arm gives +1.8 +- 2.4 mm), PIP +6.8 and DIP +4.3 mm (extensor): the small MCP and large IP terms of Leijnse & Kalker 1995.",
         "LUM1 alone (1 s, from rest): MCP2 25 deg flexion with PIP and DIP at 0 (S5's fixed origin: 82 deg); the tie residual stays below 0.3 mm in a fist and 0.5 mm with FDP2 and LUM1 active; no force chatter at 2 ms (0.002 N step to step; the prototype's 1e-2 kg without damping chattered by 2.8 N). Index joint error against a 0.1 ms run over a fist / lumbricals / release protocol: 0.53 deg RMS, 1.6 deg max (S5: 0.67 / 2.7 deg).",
         "Grip 335 -> 332 N (settled 267 -> 263 N), middle-finger share 29.7 -> 27.9 % (test_grip_at_the_cached_optimum still fails, now 2.3 points outside); tenodesis passes; lateral pinch unchanged (51.5 N). The lumbricals now carry 4-7 N of passive tension at the flexion limits (1.32-1.36 L_fo)."
+      ]
+    },
+    {
+      "id": "s7",
+      "title": "S7: juncturae tendinum, FCU, FDS5",
+      "summary": "Junction nodes on EDC3, EDC4 and EDC5 with tension-only junctura links EDC4-EDC3 and EDC4-EDC5, stiffness fitted to von Schroeder & Botte 1993's traction transfers; FCU over the pisiform (via point fitted to Horii 1993) and the hamate hook to the MC5 base; FDS5 force from Holzbaur 2005 scaled like FDS2-4 (75.3 -> 46.5 N); extrinsic slack lengths, passive scales and springs refitted. ECU's forearm-rotation dependence and the FDP inter-tendon links were tried or considered and not added (hand-extrinsic-muscles.md). Before = S6.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          76.98,
+          60.21,
+          69.57,
+          55.61
+        ],
+        "tenodesis_pip_rom": 14.47,
+        "tenodesis_index_gap": [
+          39.62,
+          9.61
+        ],
+        "tenodesis_release": [
+          77.32,
+          59.58,
+          55.54,
+          30.11
+        ],
+        "grip_self_selected": 324.6,
+        "grip_settled": 251.56,
+        "grip_shares": [
+          31.87,
+          25.2,
+          20.26,
+          22.67
+        ],
+        "grip_posture_change": [
+          -25.74,
+          -61.28
+        ],
+        "lateral_pinch": 51.52,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          19.35,
+          16.82,
+          2.57
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "di1_moment_arms": [
+          4.38,
+          8.06
+        ],
+        "index_abduction_moment": 1.04,
+        "adm_moment_arms": [
+          5.18,
+          9.92
+        ],
+        "little_abduction_moment": 1.0,
+        "hypothenar_cupping": [
+          11.85,
+          24.41
+        ],
+        "pi1_moment_arms": [
+          5.97,
+          5.86
+        ],
+        "lum1_moment_arms": [
+          8.22,
+          4.93
+        ],
+        "di2_moment_arms": [
+          5.47,
+          10.65
+        ],
+        "lum2_moment_arms": [
+          11.38,
+          9.96
+        ],
+        "di3_moment_arms": [
+          4.44,
+          8.79
+        ],
+        "pi2_moment_arms": [
+          3.42,
+          8.2
+        ],
+        "lum3_moment_arms": [
+          6.55,
+          7.65
+        ],
+        "di4_moment_arms": [
+          4.91,
+          7.56
+        ],
+        "pi3_moment_arms": [
+          2.43,
+          8.54
+        ],
+        "lum4_moment_arms": [
+          5.45,
+          8.65
+        ],
+        "index_intrinsic_forces": [
+          129.4,
+          64.7,
+          9.5
+        ],
+        "edc_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "eip_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "lumbrical_ip_moment_arms": [
+          0.7,
+          1.8
+        ],
+        "ui_ip_moment_arms": [
+          1.02,
+          1.87
+        ],
+        "orl_share": [
+          23.71,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intrinsic_plus": [
+          91.08,
+          -0.61,
+          -0.5
+        ],
+        "ip_coupling_slope": [
+          -0.01,
+          0.26,
+          null
+        ],
+        "lumbrical_excursion": [
+          31.93,
+          36.66,
+          36.46,
+          29.56
+        ],
+        "lum1_systemic_mcp_arm": 3.0,
+        "juncturae_ring_traction": [
+          6.21,
+          22.34
+        ],
+        "juncturae_middle_traction": [
+          -0.86,
+          0.18
+        ],
+        "fcu_moment_arms": [
+          14.66,
+          12.25
+        ],
+        "ecu_extension_rotation": [
+          7.55,
+          7.55,
+          7.55
+        ],
+        "fds5_force": [
+          46.5,
+          27.16
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.58,
+          "3": 11.87,
+          "4": -0.52,
+          "5": -0.37
+        },
+        "fist_max_penetration": 0.79
+      },
+      "before": {
+        "label": "s7",
+        "id": "s6",
+        "values": {
+          "tenodesis_mcp_rom": [
+            76.98,
+            75.77,
+            63.87,
+            59.77
+          ],
+          "tenodesis_pip_rom": 16.03,
+          "tenodesis_index_gap": [
+            45.79,
+            8.8
+          ],
+          "tenodesis_release": [
+            77.32,
+            75.92,
+            69.67,
+            30.01
+          ],
+          "grip_self_selected": 331.54,
+          "grip_settled": 263.13,
+          "grip_shares": [
+            29.67,
+            27.92,
+            19.57,
+            22.84
+          ],
+          "grip_posture_change": [
+            -29.74,
+            -62.91
+          ],
+          "lateral_pinch": 51.52,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "cmc45_arc": [
+            21.0,
+            43.3
+          ],
+          "cmc45_active_flexion": [
+            16.0,
+            33.0
+          ],
+          "cmc45_coupling": 2.06,
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            19.35,
+            16.82,
+            2.57
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "di1_moment_arms": [
+            4.38,
+            8.06
+          ],
+          "index_abduction_moment": 1.04,
+          "adm_moment_arms": [
+            5.18,
+            9.92
+          ],
+          "little_abduction_moment": 1.0,
+          "hypothenar_cupping": [
+            11.37,
+            23.43
+          ],
+          "pi1_moment_arms": [
+            5.97,
+            5.86
+          ],
+          "lum1_moment_arms": [
+            8.22,
+            4.93
+          ],
+          "di2_moment_arms": [
+            5.47,
+            10.65
+          ],
+          "lum2_moment_arms": [
+            11.38,
+            9.96
+          ],
+          "di3_moment_arms": [
+            4.44,
+            8.79
+          ],
+          "pi2_moment_arms": [
+            3.42,
+            8.2
+          ],
+          "lum3_moment_arms": [
+            6.55,
+            7.65
+          ],
+          "di4_moment_arms": [
+            4.91,
+            7.56
+          ],
+          "pi3_moment_arms": [
+            2.43,
+            8.54
+          ],
+          "lum4_moment_arms": [
+            5.45,
+            8.65
+          ],
+          "index_intrinsic_forces": [
+            129.4,
+            64.7,
+            9.5
+          ],
+          "edc_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "eip_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "lumbrical_ip_moment_arms": [
+            0.7,
+            1.8
+          ],
+          "ui_ip_moment_arms": [
+            1.02,
+            1.87
+          ],
+          "orl_share": [
+            23.71,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "intrinsic_plus": [
+            91.08,
+            -0.61,
+            -0.5
+          ],
+          "ip_coupling_slope": [
+            -0.01,
+            0.26,
+            null
+          ],
+          "lumbrical_excursion": [
+            31.93,
+            36.66,
+            36.46,
+            29.56
+          ],
+          "lum1_systemic_mcp_arm": 3.0,
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": 0.16,
+            "3": 10.31,
+            "4": -0.51,
+            "5": -0.36
+          },
+          "fist_max_penetration": 0.77
+        }
+      },
+      "notes": [
+        "Juncturae: ring-finger traction extends the little-finger MP by 22.3 deg more with the links (von Schroeder & Botte: 22 deg junctura share), the middle-finger MP by 6.2 deg (18 deg): JT34 sits at its upper stiffness bound (1000 N/m, set by force chatter at 2 ms), and even a rigid link stays far below because of its obliquity. Middle-finger traction does not reach the neighbours (7-8 deg in the cadavers): a tension-only link from the ring tendon slackens.",
+        "FCU: flexion / ulnar arms 18.4 / 10.6 -> 14.7 / 12.2 mm (Horii 16 +- 3 / 14 +- 3), unchanged with forearm rotation; CMC5 flexion arm 4.6 -> 3.1 mm. ECU unchanged: 7.5 mm extension at every forearm rotation against Loren's 7.8 / 7.2 / 0.9 mm (supination / neutral / pronation); with its groove on the ulna the model's rotation axis, about 20 mm from the groove, swings the arm from 16 to -12.6 mm.",
+        "Extrinsic passive refit: joint-fit error 10812 -> 1754 (without the release step 1020 -> 1017); the release bound of EDC3-5 and EDM fpmax falls 0.127 -> 0.028, since the juncturae carry part of the ring and little fingers' opening. Springs: digit-5 CMC RMS 0.005 -> 0.023 N m (peak 0.96 N m), the other rows within 0.001 N m.",
+        "Grip 331.5 -> 324.6 N, middle-finger share 27.9 -> 25.2 % (protocol band 42.2 +- 12, already outside since S5). Tenodesis passes (mean PIP range 16.0 -> 14.5 deg); lateral pinch unchanged (51.5 N).",
+        "Springs refitted a second time after the junctura fit's second pass (digit-5 CMC RMS 0.023 N m); the hand-function values are from the model before that refit (spring change below 0.004 N m), the geometric values from the final model."
       ]
     }
   ]
