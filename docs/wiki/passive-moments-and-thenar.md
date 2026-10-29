@@ -118,7 +118,8 @@ Mappings and caveats (details in each row's `notes`):
   N m at MyoHand's adduction limit, 26 deg past the measured span.
 - **Hollister 1992**: thumb CMC axes 72.7 +- 8.4 deg apart, flexion-extension in the
   trapezium, abduction-adduction in the metacarpal, not intersecting. MyoHand's are 80.9
-  deg apart and intersect (both on `firstmc`); the Domalain mapping is by joint limits.
+  deg apart and intersect (both on `firstmc`); the Domalain mapping is by joint limits. Axes after Hollister were
+  tried and not adopted (`hand-literature-comparison.md`, S2b).
 - **Knutson 2000** (healthy, n = 8, Table 1 medians): only the intrinsic component; the
   extrinsic component belongs to the extrinsic muscles. MyoHand's FDS/FDP/EDC/EI give at
   most 1.2 N cm at the index MCP (Knutson: up to 30 N cm), so tenodesis is missing until

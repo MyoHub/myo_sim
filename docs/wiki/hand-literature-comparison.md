@@ -333,3 +333,101 @@ UI_UB5 re-routed as ADM (pisiform to the ulnar base of the proximal phalanx, via
 - **Lee et al. 2015**: Lee JH, Asakawa DS, Dennerlein JT, Jindrich DL. Finger muscle attachments for an OpenSim upper-extremity model. PLoS ONE 10(4):e0121712, 2015; correction PLoS ONE 17:e0267620, 2022. doi:10.1371/journal.pone.0121712 OpenSim finger attachments optimised to An et al. 1979; Table 6 moment arms.
 
 <!-- END generated -->
+
+## Tested and not adopted
+
+### S2b: thumb CMC axes after Hollister et al. 1992
+
+MyoHand's two thumb CMC hinges both pass through one point at the base of the first metacarpal, 80.9 deg
+apart. Hollister et al. 1992 located the axes in seven cadaver thumbs with an axis finder: the
+flexion-extension axis lies in the trapezium, the abduction-adduction axis in the metacarpal base, and
+the two do not intersect. The trial asked whether axes placed after Hollister make Smutz et al. 1998's
+moment-arm trends reachable for the thumb intrinsics while the lateral pinch stays in its band. It did
+not, so the model is unchanged.
+
+**Axes against the source.** Model values in the first metacarpal's frame: long axis from the CMC
+centre to the MP centre, coronal plane through it and the MP flexion axis; metacarpal length 45.8 mm
+from the bone meshes.
+
+| Quantity | Model | Hollister et al. 1992 (mean ± SD, n = 7) |
+| --- | --- | --- |
+| Angle between the axes (deg) | 80.9 | 72.7 ± 8.4 |
+| Abduction axis to the metacarpal coronal plane, transverse / sagittal projection (deg) | 79.6 / 57.4 | 78.3 ± 12.9 / 83.6 ± 14.2 |
+| Abduction axis from the metacarpal base, % of metacarpal length | 10.7 | 12.5 ± 6.2 |
+| Abduction axis from the ulnar side, % of metacarpal breadth | 54 | 59.5 ± 14.3 |
+| Flexion axis location | metacarpal base (intersects the abduction axis) | in the trapezium, 36.0 ± 13.6 % of its breadth from the dorsum |
+
+The abduction axis is tilted 26 deg further toward the long axis than measured (1.8 SD), and the flexion
+axis sits in the metacarpal instead of the trapezium.
+
+**Trial.** Abduction axis along Hollister's mean projections (tilts toward the current axis's sides)
+through his point in the metacarpal base; flexion axis rotated in its plane with the abduction axis to
+72.7 deg and moved into the trapezium at 36 % of its dorsovolar breadth from the dorsum, at the
+trapezium's mid-length (common perpendicular 9.6 mm). Both hinges stay on `firstmc_r` (MuJoCo applies
+the joints of a body in order, so the abduction axis follows the flexion axis as in Hollister's linked
+hinges); ranges unchanged, so the rest posture is identical. OP, both FPB heads and APB refitted with
+the S2 path fit (same targets, bounds and fibre-length window); the AdP heads evaluated on their paths
+and, separately, fitted to Smutz too.
+
+| Quantity | Model (S2-S4 axes) | Trial (Hollister axes) | Literature | Reference |
+| --- | --- | --- | --- | --- |
+| Smutz match, OP / FPB (both heads) / APB after the refit (RMS of (model - mean) / SD) | 0.96 / 0.79 / 0.54 | 0.90 / 0.85 / 0.60 | 0 | Smutz et al. 1998, Tables 2, 4, 5 |
+| Smutz match, all thumb intrinsics incl. the AdP heads on their paths (RMS z, 33 values) | 1.29 | 1.43 | 0 | as above |
+| Smutz match, AdPt / AdPo fitted to Smutz (RMS z) | 1.45 / 1.00 | 1.67 / 0.93 | 0 | as above |
+| CMC abduction moment arm at 20 deg abduction / neutral / 20 deg adduction, OP (mm) | -4.9 / -2.4 / 0.3 | -3.9 / -2.0 / 0.2 | 1.5 / -4.8 / -9.7 (SD 4.5-5.7) | Smutz et al. 1998, Table 5 |
+| ″ APB (mm) | -10.7 / -9.7 / -7.9 | -11.7 / -9.7 / -7.2 | -13.2 / -16.5 / -16.1 (SD 7.0-7.7) | as above |
+| ″ AdPt on its path (mm) | 12.0 / 16.8 / 21.1 | 18.3 / 22.2 / 24.7 | 25.5 / 20.6 / 0.8 (SD 6.6-15.4) | as above |
+| Smutz match, thumb extrinsics FPL / EPL / EPB / APL at the CMC, unfitted (RMS z, 24 values) | 1.91 | 1.59 | 0 | Smutz et al. 1998, Tables 4-5 |
+| Lateral (key) pinch (N) | 52.9 | 60.9 (paths refitted; passive scales and springs not refitted) | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 |
+
+**Why the trends stay out of reach.** A straight path from a trapezial or retinacular origin to the
+metacarpal shaft crosses an abduction axis that lies in the metacarpal base: origin and insertion lie on
+opposite sides of the axis, so the path is longest near neutral and its abduction moment arm falls toward
+zero as the thumb adducts. Smutz's OP, FPB and APB arms grow toward adduction (and AdP's fall toward
+adduction), which needs origin and insertion on the same side of the axis. A scan over the four tilt
+sides and axis positions along the metacarpal confirms it: the OP and APB trends turn only with the
+abduction axis 6-12 mm proximal of the S2 axis point, at or beyond the proximal end of the metacarpal
+(in the trapezium), outside Hollister's location (12.5 ± 6.2 % of the length, -2 to +4 mm from that
+point). Hollister's axes improve the
+extrinsic CMC arms (APL becomes an extensor, as in Smutz; EPB an abductor) but lower FPL's CMC flexion
+arm further (4.2 -> 1.3 mm against 14.3 ± 4.0 mm).
+
+**Outcome.** The thumb-intrinsic Smutz match got worse (RMS z 1.29 -> 1.43) and the pinch moved away
+from the in-vivo mean (still inside its band), so the axes were not changed. Wrapping the intrinsic paths
+over the metacarpal base or the sesamoids is the remaining lever for the trends, together with the
+extrinsic findings below.
+
+## Open checks before release
+
+Adopted values that the literature questions, to be checked once more before the release of the
+revised hand. Nothing here is changed yet.
+
+- **Specific tension of the hand intrinsics: 86.3 N/cm2** for all intrinsics (OP keeps 180 N). This is
+  the thenar precedent, a fit to MyoHand's earlier forces, not a measured hand value. At this value the
+  index MCP abduction moment with both DI1 heads (1.05 N m) equals the in-vivo first dorsal interosseous
+  moment (Infantolino & Challis 2014, about 1.0 N m) but is 39-57 % of the RIHM norms (McGee et al. 2020:
+  2.7 / 1.8 N m, men / women, sling at the PIP after Schreuders et al. 2006), i.e. about 2x below. The
+  little-finger abduction moment (1.02 N m) lies between the women's and men's norms (0.95 / 1.56 N m).
+  Published values span 35 N/cm2 (Brand et al. 1981) to 55 N/cm2 (O'Brien et al. 2010, quadriceps in
+  vivo); Holzbaur et al. 2005 use 45 N/cm2 for the forearm muscles.
+- **First dorsal interosseous head split 0.36 / 0.64** (DI1s / DI1d) from one specimen (Mirakhorlo et
+  al. 2016). Linscheid et al. 1991 (n = 8, Table 1) give 2.05 and 2.04 cm2 for the two heads, i.e.
+  0.50 / 0.50.
+- **CMC4/5 flexion-extension split.** The arcs match El-Shennawy et al. 2001, but their split into
+  flexion and extension is assumed (CMC4 -5 to 16, CMC5 -10.3 to 33 deg); Aljasim et al. 2025 measure
+  more extension than flexion from the MC3 axis under 100 N (medians about 25 vs 14 deg).
+- **Thumb CMC axes and Smutz's trends** (S2b above): not reachable with Hollister's axes and straight
+  intrinsic paths. Also from that trial: the FPL's CMC flexion moment arm is 4.2 mm against 14.3 ± 4.0
+  mm, and APL is a weak CMC flexor (1.4 mm) where Smutz measured an extensor (-7.1 ± 3.4 mm).
+- **Lumbrical path of digit 5:** LU_RB5 turns into a PIP flexor at 114-115 deg PIP flexion (its wrap over
+  `Fifthpm_wrap_r` switches side). To be fixed with the lumbrical paths (S5).
+- **Extrinsic passive fit:** `scripts/fit_muscle_passive.py` is to be rerun after the intrinsic changes;
+  `test_joint_fit_matches_the_recorded_error` already fails since before the rebuild.
+- **Left-right contact settling:** with both wrists extended 60 deg in `myofullbody` the touching fingers
+  settle up to 0.15 deg apart left to right (see `tests/test_muscle_passive.py`).
+
+References (this section): Hollister A, Buford WL, Myers LM, Giurintano DJ, Novick A. The axes of
+rotation of the thumb carpometacarpal joint. J Orthop Res 10(3):454-460, 1992 (seven fresh cadaver
+hands, axis finder; Figs. 4-5 and Results). Aljasim et al. 2025 and Linscheid et al. 1991: see
+`build/data/cmc_joints.json` and `build/data/hand_intrinsic_muscles.json`; the other references are
+listed above.

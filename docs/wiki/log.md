@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-29 — Thumb CMC axes after Hollister 1992 tested, not adopted (hand rebuild S2b)
+Changed: `docs/wiki/hand-literature-comparison.md` (sections "Tested and not adopted" and "Open checks before release"), `docs/wiki/passive-moments-and-thenar.md` (pointer)
+Why: Hollister's non-intersecting thumb CMC axes were tried to make Smutz's moment-arm trends reachable; they do not (the thumb-intrinsic match got worse), so the model is unchanged and the evidence is recorded, together with the adopted values that need a check before the release.
+
 ## 2026-10-29 — Hypothenar muscles (hand rebuild S4)
 Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (hypothenar sites; UI_UB5 sites removed), `myoarm_r_tendon.xml`, `myoarm_r_muscle.xml` (ADM labelled block, FDM and ODM in the main block, springs), `myo_sim/build/data/hand_intrinsic_muscles.json`, `passive_joint_moments.json`, `hand_function.json`, `hand_literature.json`, `myo_sim/build/hand.py`, `scripts/generate_hand_intrinsic_muscles.py` (little-finger boxes, passive fit over named rows), `scripts/validate_hand_function.py`, `scripts/hand_literature_comparison.py`, `tests/test_passive_thenar.py`, `test_cmc_joints.py`, `test_hand_literature.py`, `test_muscle_passive.py` (docstring), actuator counts in `test_sims.py`, `test_passive_torso_build.py`, `test_fragment_registry.py`, `test_myohand_equivalence.py`, `docs/wiki/passive-moments-and-thenar.md`, `hand-cmc-joints.md`, `hand-function-validation.md`, `hand-literature-comparison.md`, `myo_sim/models/arm/README.md`, `README_hand.md`, `CHANGELOG.md`
 Why: The little finger had no hypothenar muscles: UI_UB5 stood in for the abductor with an interosseous-like path, and FDM and ODM were missing, so the palm could not cup actively once CMC4/5 existed.
