@@ -14,10 +14,8 @@ tags.
 | passive joint-moment springs (`<fixed>` tendons) | generated block of `myoarm_r_tendon.xml` (`scripts/fit_passive_moments.py`) |
 
 The left arm is mirrored from these files as usual. Hand models keep the thenar muscles
-and the springs through the arm-to-hand pruning in `build/hand.py`. MjSpec neither
-updates a tendon's joint references when the pruning renames `cmc_flexion` to
-`cmc_flexion_r` nor lets them be reassigned, so the pruning re-creates the fixed tendons
-with the new joint names.
+and the springs through the arm-to-hand pruning in `build/hand.py` (see
+`build-and-composition.md`, *Hand models by pruning*).
 
 **Downstream changes.** The thenar muscles add 3 actuators per hand (`AdP`, `FPB`,
 `APB`; `_l` on the left, `_r` in hand-only models), after each arm's other muscles:

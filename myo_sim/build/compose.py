@@ -31,7 +31,7 @@ import mujoco
 from myo_sim import MODELS_DIR
 
 try:
-    from .hand import prune_arm_spec_to_hand
+    from .hand import prune_arm_spec_to_hand, prune_rigid_pairs
     from .utils import (
         MirrorRules,
         add_contact_pairs,
@@ -42,7 +42,7 @@ try:
         find_site,
     )
 except ImportError:
-    from hand import prune_arm_spec_to_hand
+    from hand import prune_arm_spec_to_hand, prune_rigid_pairs
     from utils import (
         MirrorRules,
         add_contact_pairs,
@@ -427,16 +427,27 @@ def build_left_hand_from_arm_spec(registration: Optional[ModelRegistration] = No
     return hand
 
 
+def add_hand_contact_pairs(torso: mujoco.MjSpec, include_left_arm_contacts: bool) -> None:
+    """Contact pairs of a hand model: the arm's pairs that survive pruning, plus the finger pairs.
+
+    The arm's pairs are pruned like the rest of the arm (``prune_rigid_pairs``): a pair goes when a geom
+    was removed or its two geoms are welded together in the hand model.
+    """
+
+    def supported(pair: ET.Element) -> bool:
+        return pair_is_supported(pair, include_left_arm_contacts)
+
+    add_contact_pairs(torso, ARM_CONTACTS_XML, include_pair=supported)
+    add_contact_pairs(torso, HAND_CONTACTS_XML, include_pair=supported)
+    prune_rigid_pairs(torso)
+
+
 def build_right_hand_torso_from_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = build_passive_torso_spec(registration)
     torso.attach(
         build_right_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
     )
-    add_contact_pairs(
-        torso,
-        HAND_CONTACTS_XML,
-        include_pair=lambda pair: pair_is_supported(pair, include_left_arm_contacts=False),
-    )
+    add_hand_contact_pairs(torso, include_left_arm_contacts=False)
     return torso
 
 
@@ -446,7 +457,7 @@ def build_both_hands_torso_from_arm_spec(registration: ModelRegistration) -> muj
         build_right_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
     )
     torso.attach(build_left_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
-    add_contact_pairs(torso, HAND_CONTACTS_XML)
+    add_hand_contact_pairs(torso, include_left_arm_contacts=True)
     return torso
 
 

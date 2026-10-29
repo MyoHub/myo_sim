@@ -180,6 +180,32 @@ None of these files are referenced via `<include>` from any model XML. They are 
 
 The `test_contact_paths.py` test enforces this: it verifies that contact XML paths appear only via `ROOT / "contacts" / ...` in `compose.py`, never embedded in `assets/` XMLs.
 
+## Hand models by pruning
+
+`myohand_r`, `myohands` and the bare hand fragments (`FRAGMENT_SPEC_BUILDERS["myohand_r"]` / `["myohand_l"]`)
+are the arm with elements removed (`prune_arm_spec_to_hand` in `build/hand.py`); no hand element is
+defined in Python. The pruning keeps the actuators in `RIGHT_HAND_ACTUATORS` and removes the joints in
+`RIGHT_HAND_REMOVED_JOINTS`; everything else follows generically:
+
+- tendons driven by a removed actuator go; passive tendons (springs, ligaments) stay when their length
+  depends on a kept joint and they name no removed joint;
+- equalities, sensors, contact pairs and excludes that name a removed element go
+  (`delete_dangling_references`), and so do contact pairs whose geoms are welded together in the hand
+  (`prune_rigid_pairs`);
+- kept joints, actuators and actuated tendons get the side suffix through `rename_elements`.
+
+`rename_elements(spec, {mjtObj: {old: new}})` renames elements of any type together with every
+reference to them. MjSpec stores references by name and does not follow a rename: actuator, equality,
+sensor, pair, exclude and camera/light references are rewritten in place; a tendon path cannot be
+re-pointed, so every tendon from the first affected one on is re-created with the same attributes and
+wraps, which keeps the tendon order. A tendon whose wrap target lies outside the spec (a torso site
+before attachment) exposes no name, so re-creating it raises an error.
+
+The hand models' contact pairs are the arm's (`myoarm_contacts.xml`) pruned the same way, plus the
+finger pairs of `myohand_contacts.xml` (`add_hand_contact_pairs`). `tests/test_hand_pruning.py` checks
+that every arm actuator, tendon, equality, sensor and pair that should survive is in the hand models
+with identical parameters, and that tendon lengths agree at random hand postures.
+
 ## Sensor Injection Pattern
 
 Full-body observation compatibility sensors live under `myo_sim/models/sensors/`. They are injected programmatically by `build_fullbody_spec()` after the torso and arms are attached, but before the legs are attached. This keeps the MuscleMimic frame velocity sensors first in `sensordata`, followed by the four leg touch sensors from `myolegs_assets.xml`.

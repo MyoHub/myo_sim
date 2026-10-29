@@ -1,0 +1,324 @@
+{
+  "format": "myo_sim.hand_literature/1",
+  "description": "Where the hand model stands against published data, step by step. 'quantities' holds the literature values (with spread, source and protocol); 'steps' holds the model values recorded by scripts/hand_literature_comparison.py after each change of the hand. docs/wiki/hand-literature-comparison.md is generated from this file. Literature values are cited, never copied from figures: each row names the table it comes from.",
+  "sources": {
+    "mcfarland2023": {
+      "short": "McFarland et al. 2023",
+      "citation": "McFarland et al. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
+      "doi": "10.1109/TBME.2022.3217722",
+      "note": "Protocols and results of its ARMS model are cited only; no ARMS file, parameter or coordinate is used."
+    },
+    "odriscoll1992": {
+      "short": "O'Driscoll et al. 1992",
+      "citation": "O'Driscoll SW et al. The relationship between wrist position, grasp size, and grip strength. J Hand Surg Am 17(1):169-177, 1992.",
+      "note": "Value as reported by mcfarland2023."
+    },
+    "valerocuevas2003": {
+      "short": "Valero-Cuevas et al. 2003",
+      "citation": "Valero-Cuevas FJ et al. Towards a realistic biomechanical model of the thumb: the choice of kinematic description may be more critical than the solution method or the variability/uncertainty of musculoskeletal parameters. J Biomech 36(7):1019-1030, 2003.",
+      "note": "Value as reported by mcfarland2023."
+    },
+    "mathiowetz1985": {
+      "short": "Mathiowetz et al. 1985",
+      "citation": "Mathiowetz V, Kashman N, Volland G, Weber K, Dowe M, Rogers S. Grip and pinch strength: normative data for adults. Arch Phys Med Rehabil 66:69-72, 1985.",
+      "note": "Right hand, all subjects (n = 628, ages 20-94); pounds converted at 4.448 N/lb. Table 2 (grip, Jamar second handle position), Table 3 (tip pinch), Table 4 (key pinch)."
+    },
+    "dallard2018": {
+      "short": "Dallard et al. 2018",
+      "citation": "Dallard J, Merlhiot X, Petitjean N, Duprey S. MRI-based experimentations of fingertip flat compression: geometrical measurements and finite element inverse simulations to investigate material property parameters. J Biomech 67:166-171, 2018.",
+      "doi": "10.1016/j.jbiomech.2017.11.024",
+      "note": "Index fingertip, 5 men (32 +- 8 years), MRI. Table 2 (soft-tissue thickness normal to the pad at 0, 45 and 90 deg), Table 3 (deflection under flat compression)."
+    },
+    "misirlioglu2018": {
+      "short": "Ozekli Misirlioglu & Ozyemisci Taskiran 2018",
+      "citation": "Ozekli Misirlioglu T, Ozyemisci Taskiran O. Reliability of sonographic muscle thickness measurements of the thenar and hypothenar muscles. Muscle Nerve 57(1):E14-E17, 2018.",
+      "doi": "10.1002/mus.25735",
+      "note": "Both hands of 15 volunteers, ultrasound. Table 2. Muscle thickness only: a lower bound for the soft tissue under the palm pads."
+    },
+    "karademir2022": {
+      "short": "Karademir et al. 2022",
+      "citation": "Karademir F, Ayhan Kuru C, Arin G, Soylu R. Morphometry of thenar muscles by water bath ultrasonography in trapeziometacarpal osteoarthritis: intra- and inter-rater reliability. J Hand Surg Eur Vol, 2022.",
+      "doi": "10.1177/17531934221130669",
+      "note": "Eight healthy volunteers (medians), Tables 2-3. Muscle thickness only: a lower bound."
+    }
+  },
+  "quantities": {
+    "tenodesis_mcp_rom": {
+      "label": "Tenodesis: MCP flexion range per digit 2 / 3 / 4 / 5, trial A",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": "mean 65.2",
+          "kind": "model (ARMS)",
+          "source": "mcfarland2023",
+          "protocol": "act = 0; wrist 60 deg flexion to 60 deg extension at 20 deg/s; elbow 90 deg, forearm neutral; thumb and MCP abduction locked"
+        }
+      ]
+    },
+    "tenodesis_pip_rom": {
+      "label": "Tenodesis: mean PIP flexion range, trial A",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": 16.1,
+          "kind": "model (ARMS)",
+          "source": "mcfarland2023",
+          "protocol": "as above"
+        }
+      ]
+    },
+    "tenodesis_index_gap": {
+      "label": "Tenodesis: largest index-to-other-digit spread, MCP / PIP",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": "49.2 / 14.6",
+          "kind": "model (ARMS)",
+          "source": "mcfarland2023",
+          "protocol": "as above"
+        }
+      ]
+    },
+    "tenodesis_release": {
+      "label": "Release (trial B): MCP extension per digit 2 / 3 / 4 / 5",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": "digits extend",
+          "kind": "model (ARMS)",
+          "source": "mcfarland2023",
+          "protocol": "from the end of trial A: 60 deg extension back to 60 deg flexion"
+        }
+      ]
+    },
+    "grip_self_selected": {
+      "label": "Maximum power grip, self-selected wrist",
+      "unit": "N",
+      "literature": [
+        {
+          "value": 402.1,
+          "spread": 131.4,
+          "spread_kind": "SD",
+          "kind": "in vivo",
+          "source": "odriscoll1992",
+          "protocol": "dynamometer, self-selected wrist (35 deg extension, 7 deg ulnar deviation)"
+        },
+        {
+          "value": 463.9,
+          "spread": 125.9,
+          "spread_kind": "SD",
+          "kind": "in vivo, men",
+          "source": "mathiowetz1985",
+          "protocol": "Jamar, second handle position, seated, shoulder adducted, elbow 90 deg, forearm and wrist neutral, right hand (Table 2)"
+        },
+        {
+          "value": 279.3,
+          "spread": 75.6,
+          "spread_kind": "SD",
+          "kind": "in vivo, women",
+          "source": "mathiowetz1985",
+          "protocol": "as above"
+        },
+        {
+          "value": 436.4,
+          "spread": 6.9,
+          "kind": "model (ARMS)",
+          "source": "mcfarland2023",
+          "protocol": "model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation"
+        }
+      ]
+    },
+    "grip_settled": {
+      "label": "Maximum power grip, self-selected wrist, settled (same levels after 2 s)",
+      "unit": "N",
+      "literature": [
+        {
+          "value": 402.1,
+          "spread": 131.4,
+          "spread_kind": "SD",
+          "kind": "in vivo",
+          "source": "odriscoll1992",
+          "protocol": "as above"
+        }
+      ]
+    },
+    "grip_shares": {
+      "label": "Grip share per digit 2 / 3 / 4 / 5",
+      "unit": "%",
+      "literature": [
+        {
+          "value": "23.3 / 42.2 / 23.0 / 11.5",
+          "kind": "model (ARMS)",
+          "source": "mcfarland2023",
+          "protocol": "self-selected wrist"
+        }
+      ]
+    },
+    "grip_posture_change": {
+      "label": "Grip change, neutral / flexed wrist against self-selected",
+      "unit": "%",
+      "literature": [
+        {
+          "value": "-41 / -46",
+          "kind": "model (ARMS)",
+          "source": "mcfarland2023",
+          "protocol": "wrist 0 deg and 35 deg flexion"
+        }
+      ]
+    },
+    "lateral_pinch": {
+      "label": "Lateral (key) pinch force",
+      "unit": "N",
+      "literature": [
+        {
+          "value": 51.9,
+          "spread": 20.4,
+          "spread_kind": "SD",
+          "kind": "in vivo",
+          "source": "valerocuevas2003",
+          "protocol": "lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 %"
+        },
+        {
+          "value": 109.0,
+          "spread": 20.5,
+          "spread_kind": "SD",
+          "kind": "in vivo, men",
+          "source": "mathiowetz1985",
+          "protocol": "B&L pinch gauge, key pinch, same seated posture, right hand (Table 4)"
+        },
+        {
+          "value": 72.1,
+          "spread": 13.3,
+          "spread_kind": "SD",
+          "kind": "in vivo, women",
+          "source": "mathiowetz1985",
+          "protocol": "as above"
+        }
+      ]
+    },
+    "fingertip_pad_thickness": {
+      "label": "Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": 6.4,
+          "spread": 0.8,
+          "spread_kind": "SD",
+          "kind": "in vivo (index)",
+          "source": "dallard2018",
+          "protocol": "MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2)"
+        }
+      ]
+    },
+    "palm_pad_thickness": {
+      "label": "Palmar soft tissue under the pads: palm / thenar / hypothenar",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": 8.4,
+          "spread": 1.9,
+          "spread_kind": "SD",
+          "kind": "in vivo, hypothenar muscles only (lower bound)",
+          "source": "misirlioglu2018",
+          "protocol": "ultrasound, transverse, Table 2"
+        },
+        {
+          "value": 26.7,
+          "spread": 3.9,
+          "spread_kind": "SD",
+          "kind": "in vivo, whole thenar muscles (lower bound)",
+          "source": "misirlioglu2018",
+          "protocol": "ultrasound, transverse, Table 2"
+        },
+        {
+          "value": "OP 9.7, APB 6.0, FPB 6.2",
+          "kind": "in vivo, single thenar muscles (medians, lower bounds)",
+          "source": "karademir2022",
+          "protocol": "water-bath ultrasound, healthy controls, Tables 2-3"
+        }
+      ]
+    },
+    "fist_tip_to_palm": {
+      "label": "Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": "contact",
+          "kind": "functional criterion (no published distance used)",
+          "source": null,
+          "protocol": "FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on"
+        }
+      ]
+    },
+    "fist_max_penetration": {
+      "label": "Active fist: deepest penetration of any contact pair of the hand",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": "< 1",
+          "kind": "model criterion",
+          "source": null,
+          "protocol": "as above"
+        }
+      ]
+    }
+  },
+  "steps": [
+    {
+      "id": "step1",
+      "title": "Step 1: hand models derived from the arm by generic pruning",
+      "summary": "No arm model changes (every MjModel array of myoarm_r, myoarms, myotorso_arms and myofullbody is identical before and after). myohand_r and myohands are the arm pruned; their actuators, tendons, equalities and pairs equal the arm's. This is the baseline of the rebuild, measured on myoarm_r.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.35,
+          78.22,
+          73.4,
+          50.88
+        ],
+        "tenodesis_pip_rom": 28.21,
+        "tenodesis_index_gap": [
+          66.67,
+          77.26
+        ],
+        "tenodesis_release": [
+          77.66,
+          78.5,
+          74.01,
+          26.62
+        ],
+        "grip_self_selected": 287.85,
+        "grip_settled": 204.99,
+        "grip_shares": [
+          43.57,
+          25.67,
+          12.71,
+          18.05
+        ],
+        "grip_posture_change": [
+          -25.98,
+          -64.7
+        ],
+        "lateral_pinch": 38.69,
+        "fingertip_pad_thickness": {
+          "2": 5.87,
+          "3": 3.5,
+          "4": 3.13,
+          "5": 4.03,
+          "thumb": 6.83
+        },
+        "palm_pad_thickness": "no palm pads",
+        "fist_tip_to_palm": {
+          "2": -3.18,
+          "3": -1.68,
+          "4": 0.05,
+          "5": 2.27
+        },
+        "fist_max_penetration": "no hand pairs"
+      },
+      "notes": [
+        "The grip is a fresh optimisation on this commit (balanced wrist, four restarts); its digit shares differ from the cached optimum in hand-function-validation.md (30 / 37 / 25 / 8 %) by up to 14 points.",
+        "No contact pair of myoarm_r involves a finger: in the active fist the fingers pass into the palm geoms and each other (negative fingertip-to-palm distances)."
+      ]
+    }
+  ]
+}

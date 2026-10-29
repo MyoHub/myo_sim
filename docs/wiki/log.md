@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-29 — Hand models by generic pruning; literature comparison page
+Changed: `myo_sim/build/hand.py`, `myo_sim/build/compose.py`, `myo_sim/models/contacts/myohand_contacts.xml`, `tests/test_hand_pruning.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_hand_literature.py`, `docs/wiki/hand-literature-comparison.md`, `docs/wiki/build-and-composition.md`, `docs/wiki/passive-moments-and-thenar.md`, `docs/wiki/testing-guide.md`, `docs/wiki/index.md`, `myo_sim/build/README.md`, `CHANGELOG.md`
+Why: The hand models stay removal-only derivations of the canonical arm, but the pruning now handles every reference MjSpec cannot follow (tendon paths, equalities, sensors, pairs) generically instead of case by case, and a test proves every surviving arm element is in the hand unchanged. The new page records the hand against published data after each step of the hand rebuild.
+
 ## 2026-10-27 — Head and trunk mass convention
 Changed: myo_sim/models/head/assets/myohead_rigid_chain.xml, myo_sim/models/torso/assets/myotorso_chain.xml, myo_sim/build/mass.py, tests/test_mass_convention.py, CHANGELOG.md
 Why: the OpenSim torso mass already contained the head, leaving the head at about 2.5 % of body mass; head set to 6.94 % (de Leva) at unchanged total mass.

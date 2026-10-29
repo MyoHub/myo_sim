@@ -1,26 +1,7 @@
 <?xml version="1.0" ?>
 <mujocoinclude>
     <contact>
-        <pair geom1="radius_coll_r" geom2="thorax_coll1" condim="3" />
-        <pair geom1="radius_coll_r" geom2="thorax_coll2" condim="3" />
-        <pair geom1="radius_coll_r" geom2="thorax_coll3" condim="3" />
-
-        <pair geom1="radius_coll_l" geom2="thorax_coll1" condim="3" />
-        <pair geom1="radius_coll_l" geom2="thorax_coll2" condim="3" />
-        <pair geom1="radius_coll_l" geom2="thorax_coll3" condim="3" />
-
-        <pair geom1="radius_coll_r" geom2="radius_coll_l" condim="3" />
-        <pair geom1="radius_coll_r" geom2="radius_coll_2_l" condim="3" />
-        <pair geom1="radius_coll_r" geom2="radius_coll_3_l" condim="3" />
-
-        <pair geom1="radius_coll_2_r" geom2="radius_coll_l" condim="3" />
-        <pair geom1="radius_coll_2_r" geom2="radius_coll_2_l" condim="3" />
-        <pair geom1="radius_coll_2_r" geom2="radius_coll_3_l" condim="3" />
-
-        <pair geom1="radius_coll_3_r" geom2="radius_coll_l" condim="3" />
-        <pair geom1="radius_coll_3_r" geom2="radius_coll_2_l" condim="3" />
-        <pair geom1="radius_coll_3_r" geom2="radius_coll_3_l" condim="3" />
-
+        <!-- Forearm pairs of the hand models come from myoarm_contacts.xml (pruned with the arm). -->
         <!-- Inter-finger self-collision: adjacent digits at each phalanx level,
              plus thumb-vs-index/middle for opposition. Prevents fingers from
              passing through each other during grasp/reach policies. No such
