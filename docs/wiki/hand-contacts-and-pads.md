@@ -121,10 +121,12 @@ unchanged. The grip changes: the dynamometer is placed against the palm, now the
 palmar (see `hand-function-validation.md`).
 
 **Left and right hands.** The left pairs mirror the right ones in order, parameters and geom roles
-(`tests/test_hand_contacts.py`). Where fingers touch at rest (both wrists extended 60 deg in
-`myofullbody`), the two hands still settle up to 0.15 deg apart (MCP3, MCP4): static friction keeps
-whatever posture the contact solver reaches, and at MuJoCo's default solver tolerance (1e-8, warm-started)
-the solution of the two hands differs slightly. At tolerance 1e-12 the difference is 0.015 deg, without
-warm start 0.010 deg, with frictionless pairs 0.013 deg and without contacts 0.002 deg. The solver options
-are shared by every model, so they stay at their defaults; `test_relaxed_hand_rests_off_its_limits`
-allows 0.2 deg for these two joints in that case only.
+(`tests/test_hand_contacts.py`). Where fingers touch at rest, the two hands can still settle slightly
+apart: static friction keeps whatever posture the contact solver reaches, and at MuJoCo's default solver
+tolerance (1e-8, warm-started) the solutions of the two hands differ slightly. In `myofullbody` with both
+wrists at 0 the ring finger rests against its neighbours and the two MCP4 settle 0.13 deg apart (0.036
+deg at tolerance 1e-12, 0.034 deg without warm start, 0.007 deg with frictionless pairs, 0.001 deg without
+contacts). Before the extensor mechanism the same happened to MCP3/MCP4 with both wrists flexed 60 deg
+(0.10 / 0.15 deg); that case now settles within 0.02 deg. The solver options are shared by every model,
+so they stay at their defaults; `test_relaxed_hand_rests_off_its_limits` allows 0.2 deg for MCP4 at wrist
+0 only.

@@ -17,6 +17,7 @@ whichever ``myo_sim`` is importable.
 from __future__ import annotations
 
 import argparse
+import copy
 import importlib.util
 import json
 import sys
@@ -243,6 +244,102 @@ def intrinsic_moment_arms(model: mujoco.MjModel) -> dict[str, Any]:
     return out
 
 
+def _held(model: mujoco.MjModel, joints: tuple[str, ...]) -> None:
+    """Hold *joints* in place (heavy armature and damping), gravity off."""
+    model.opt.gravity[:] = 0.0
+    for name in joints:
+        dof = model.joint(name).dofadr[0]
+        model.dof_armature[dof] = model.dof_damping[dof] = 1e4
+
+
+def extensor_mechanism(model: mujoco.MjModel) -> dict[str, Any]:
+    """Index extensor-mechanism quantities: IP moment arms, ORL shares, intrinsic-plus posture, IP coupling."""
+    out: dict[str, Any] = {}
+    for key, tendon in (("edc_ip", "EDC2"), ("eip_ip", "EIP"), ("lumbrical_ip", "LU_RB2"), ("ui_ip", "UI_UB2")):
+        arms = []
+        for joint, span in (("md2_flexion_r", (0.0, 60.0)), ("pm2_flexion_r", (0.0, 90.0))):
+            arms.append(
+                float(
+                    np.mean(
+                        [
+                            _arms(model, f"{tendon}_r_tendon", {joint: np.radians(d)}, (joint,))[0]
+                            for d in np.linspace(*span, 10)
+                        ]
+                    )
+                )
+            )
+        out[f"{key}_moment_arms"] = arms
+    out["orl_share"] = orl_shares(model)
+    held = ("flexion_r", "deviation_r", "pro_sup_r", "elbow_flexion_r", "mcp2_abduction_r")
+    m = copy.deepcopy(model)
+    _held(m, held)
+    data = mujoco.MjData(m)
+    for joint, deg in (("mcp2_flexion_r", 90.0), ("pm2_flexion_r", 100.0), ("md2_flexion_r", 70.0)):
+        data.qpos[m.joint(joint).qposadr[0]] = np.radians(deg)
+    index = [
+        n
+        for n in ("DI1d_r", "DI1s_r", "RI2_r", "LU_RB2_r", "UI_UB2_r")
+        if mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_ACTUATOR, n) >= 0
+    ]
+    for name in index:
+        data.act[m.actuator(name).id] = data.ctrl[m.actuator(name).id] = 1.0
+    for _ in range(int(round(1.0 / m.opt.timestep))):
+        mujoco.mj_step(m, data)
+    out["intrinsic_plus"] = [
+        float(np.degrees(data.qpos[m.joint(j).qposadr[0]])) for j in ("mcp2_flexion_r", "pm2_flexion_r", "md2_flexion_r")
+    ]
+    out["ip_coupling_slope"] = ip_coupling(model)
+    return out
+
+
+def orl_shares(model: mujoco.MjModel) -> list[float]:
+    """Index ORL share (%) of the passive DIP moment at DIP 45 deg, PIP 0/30/60/90, MCP 0, 1.96 N on EDC2 (Ueba 2011)."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_TENDON, "lig_ORL2_r") < 0:
+        return [0.0, 0.0, 0.0, 0.0]
+    data = mujoco.MjData(model)
+    dof = model.joint("md2_flexion_r").dofadr[0]
+    t = model.tendon("lig_ORL2_r").id
+    shares = []
+    for pip in (0.0, 30.0, 60.0, 90.0):
+        data.qpos[:] = model.qpos0
+        data.qpos[model.joint("pm2_flexion_r").qposadr[0]] = np.radians(pip)
+        data.qpos[model.joint("md2_flexion_r").qposadr[0]] = np.radians(45.0)
+        data.qvel[:] = data.act[:] = data.ctrl[:] = 0.0
+        mujoco.mj_forward(model, data)
+        jac = np.zeros((model.ntendon, model.nv))
+        mujoco.mju_sparse2dense(jac, data.ten_J, model.ten_J_rownnz, model.ten_J_rowadr, model.ten_J_colind)
+        stretch = max(0.0, data.ten_length[t] - model.tendon_lengthspring[t][1])
+        orl = model.tendon_stiffness[t] * stretch * jac[t, dof]
+        preload = 1.96 * jac[model.tendon("EDC2_r_tendon").id, dof]
+        total = data.qfrc_passive[dof] + data.qfrc_actuator[dof] - preload
+        shares.append(float(100.0 * orl / -total) if total < 0 else 0.0)
+    return shares
+
+
+def ip_coupling(model: mujoco.MjModel) -> list[float]:
+    """dDIP/dPIP of the index driven by FDP2 alone (activation ramp 0-1 over 3 s), MCP held at 0, at PIP 0 / 70 / 100 deg."""
+    m = copy.deepcopy(model)
+    _held(m, ("flexion_r", "deviation_r", "pro_sup_r", "elbow_flexion_r", "mcp2_flexion_r", "mcp2_abduction_r"))
+    data = mujoco.MjData(m)
+    fdp = m.actuator("FDP2_r").id
+    steps = int(round(3.0 / m.opt.timestep))
+    pip, dip = [], []
+    for k in range(steps):
+        data.ctrl[fdp] = (k + 1) / steps
+        mujoco.mj_step(m, data)
+        pip.append(np.degrees(data.qpos[m.joint("pm2_flexion_r").qposadr[0]]))
+        dip.append(np.degrees(data.qpos[m.joint("md2_flexion_r").qposadr[0]]))
+    pip, dip = np.array(pip), np.array(dip)
+    out = []
+    for target in (0.0, 70.0, 100.0):
+        sel = np.abs(pip - target) <= 5.0 if target > 0 else pip <= 5.0
+        if pip.max() < target + 5.0 or sel.sum() < 3:  # the ramp does not carry the PIP through the window
+            out.append(float("nan"))
+            continue
+        out.append(float(np.polyfit(pip[sel], dip[sel], 1)[0]))
+    return out
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -250,6 +347,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out: dict[str, Any] = (
         {"pip_flexion_limit": pip_limits(model)} | cmc45(model) | intrinsic_moment_arms(model) | hypothenar(model)
     )
+    out |= extensor_mechanism(model)
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

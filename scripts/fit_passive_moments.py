@@ -40,6 +40,7 @@ from myo_sim.build.hand_data import (
 
 SCRIPT = "fit_passive_moments.py"
 
+LIGAMENT_PREFIX = "lig_"  # passive ligament tendons (extensor mechanism ORL): part of the model's own passive moment
 DEG = np.pi / 180.0
 
 
@@ -66,11 +67,28 @@ def linear_two_sided(p: dict[str, float], rad: np.ndarray) -> np.ndarray:
     return np.where(rad > 0.0, -p["k_positive"] * rad, -p["k_negative"] * rad)
 
 
+def ligament_moment(model: object, data: object, dof: int) -> float:
+    """Passive moment (N m) at *dof* of the ligament tendons (``lig_``), from the forward-computed *data*."""
+    import mujoco
+
+    jac = np.zeros((model.ntendon, model.nv))
+    mujoco.mju_sparse2dense(jac, data.ten_J, model.ten_J_rownnz, model.ten_J_rowadr, model.ten_J_colind)
+    total = 0.0
+    for t in range(model.ntendon):
+        if not model.tendon(t).name.startswith(LIGAMENT_PREFIX):
+            continue
+        lo, hi = model.tendon_lengthspring[t]
+        x = min(0.0, data.ten_length[t] - lo) + max(0.0, data.ten_length[t] - hi)
+        k0, k1, k2 = model.tendon_stiffness[t] if np.ndim(model.tendon_stiffness[t]) else (model.tendon_stiffness[t], 0.0, 0.0)
+        total += -(k0 * x + k1 * x * abs(x) + k2 * x**3) * jac[t, dof]
+    return float(total)
+
+
 def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndarray:
-    """Passive moment (N m) at *joint* of the model's own muscles (zero activation), other joints per ``posture_deg``.
+    """Passive moment (N m) at *joint* of the model's own muscles (zero activation) and ligaments, other joints per ``posture_deg``.
 
     ``muscles`` (optional) restricts the sum to the muscles the source curve
-    includes; by default every muscle counts.
+    includes (no ligaments then); by default every muscle and ligament counts.
     """
     import mujoco
 
@@ -78,6 +96,7 @@ def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndar
     model = myo_sim.load_spec(base["model"]).compile()
     data = mujoco.MjData(model)
     ids = [model.actuator(name).id for name in base["muscles"]] if "muscles" in base else None
+    ligaments = "muscles" not in base  # a source that names its muscles excludes the ligaments too
     dof = model.joint(joint).dofadr[0]
     out = np.zeros_like(q)
     for i, value in enumerate(q):
@@ -89,8 +108,9 @@ def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndar
         data.act[:] = 0.0
         data.ctrl[:] = 0.0
         mujoco.mj_forward(model, data)
+        out[i] = ligament_moment(model, data, dof) if ligaments else 0.0
         if ids is None:
-            out[i] = data.qfrc_actuator[dof]
+            out[i] += data.qfrc_actuator[dof]
         else:
             moment = np.zeros((model.nu, model.nv))
             mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)

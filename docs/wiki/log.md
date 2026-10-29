@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-29 — Finger extensor mechanism, option (a) (hand rebuild EM-a)
+Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (junction sites and band wraps; obsolete extensor and band sites removed), `myoarm_r_tendon.xml` (branched tendons, ORL ligaments, springs), `myoarm_r_muscle.xml` (length ranges, slack lengths, fpmax), `myo_sim/build/data/extensor_mechanism.json` (new), `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache), `hand_literature.json`, `scripts/fit_extensor_mechanism.py` (new), `scripts/fit_passive_moments.py` (ligaments in the baseline), `scripts/hand_literature_comparison.py`, `tests/test_extensor_mechanism.py` (new), `test_passive_thenar.py`, `test_muscle_passive.py`, `docs/wiki/extensor-mechanism.md` (new), `hand-literature-comparison.md`, `hand-contacts-and-pads.md`, `passive-muscles-tenodesis.md`, `index.md`, `repository-map.md`, `testing-guide.md`, `myo_sim/models/arm/README.md`, `README_hand.md`, `CHANGELOG.md`
+Why: Extensor force reached the DIP only through the long extensors and no intrinsic crossed the DIP; the extensors now split into central slip and lateral bands with measured fractions, the band-inserting intrinsics extend PIP and DIP, and an oblique retinacular ligament couples the two passively.
+
 ## 2026-10-29 — Left-right settling with touching fingers (hand rebuild)
 Changed: `tests/test_hand_contacts.py` (pair order and geom roles), `tests/test_muscle_passive.py` (0.2 deg for MCP3/MCP4 at 60 deg wrist extension), `docs/wiki/hand-contacts-and-pads.md`
 Why: Since S4 the left and right MCP3/MCP4 settled 0.10-0.15 deg apart with both wrists extended; the contact pairs are mirrored exactly, and the difference comes from the contact solver's tolerance with static friction, not from the model.

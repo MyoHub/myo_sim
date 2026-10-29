@@ -214,12 +214,14 @@ def test_relaxed_hand_rests_off_its_limits(wrist_deg: float) -> None:
         finger = not name.startswith(("cmc", "mp_", "ip_"))
         assert name in allowed or q < hi - 1.0, f"{name} at its upper limit ({q:.1f} deg)"
         assert finger or q > lo + 1.0, f"{name} at its lower limit ({q:.1f} deg)"
-    # With both wrists extended 60 deg the fingers touch, and static friction holds whatever posture the
-    # contact solver reaches. At MuJoCo's default solver tolerance (1e-8, warm-started) MCP3 and MCP4 settle
-    # 0.10 and 0.15 deg apart left to right, although both hands' pairs, parameters, geom roles and order are
-    # mirrored (test_hand_contacts.py): 0.015 deg at tolerance 1e-12, 0.010 deg without warm start, 0.002 deg
-    # without contacts. A limit of the contact solution, not of the model; only these two joints get 0.2 deg.
-    touching = {"mcp3_flexion", "mcp4_flexion"} if wrist_deg >= 60.0 else set()
+    # With both wrists at 0 the ring finger rests against its neighbours (MCP4 41 deg; 50 deg without
+    # contacts), and static friction holds whatever posture the contact solver reaches. At MuJoCo's default
+    # solver tolerance (1e-8, warm-started) the two MCP4 settle 0.13 deg apart, although both hands' pairs,
+    # parameters, geom roles and order are mirrored (test_hand_contacts.py): 0.036 deg at tolerance 1e-12,
+    # 0.034 deg without warm start, 0.007 deg with frictionless pairs, 0.001 deg without contacts. A limit of
+    # the contact solution, not of the model; only this joint gets 0.2 deg. (Before the extensor mechanism
+    # the same happened to MCP3/MCP4 with both wrists flexed 60 deg; that case now settles within 0.02 deg.)
+    touching = {"mcp4_flexion"} if wrist_deg == 0.0 else set()
     for base in HAND:
         tol = 0.2 if base in touching else 0.1
         assert _settle(wrist_deg)[f"{base}_r"][0] == pytest.approx(_settle(wrist_deg)[f"{base}_l"][0], abs=tol)

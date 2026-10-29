@@ -37,6 +37,8 @@ None currently tracked.
 
 ## Changelog
 
+**2026-10-29** — Finger extensor mechanism (option a): EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal phalanx and branch (MuJoCo pulleys) into central slip and lateral bands; oblique retinacular ligaments `lig_ORL{2..5}_r` (+4 tendons per hand). See `docs/wiki/extensor-mechanism.md`.
+
 **2026-10-29** — Hypothenar muscles: `UI_UB5` re-routed as `ADM`, `FDM` and `ODM` added (+2 actuators per hand). See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-10-29** — Fourth and fifth carpometacarpal joints `cmc4_flexion_r` / `cmc5_flexion_r`, coupled CMC5 = 2.06 x CMC4, with end-range springs; five sites moved to the bone they belong to. See `docs/wiki/hand-cmc-joints.md`.

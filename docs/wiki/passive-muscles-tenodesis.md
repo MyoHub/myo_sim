@@ -73,6 +73,14 @@ the joint away from its passive equilibrium. Slack changes are bounded by 10 %.
 | FPL | 0 | 0.0626 | APL | -0.32 % | 1.3 |
 | ECRB | +2.37 % | 1.3 | ECU | +3.35 % | 1.766 |
 
+**Since the extensor mechanism (EM-a, `extensor-mechanism.md`).** EDC2-5, EIP and EDM now end on the
+hood and branch to the central slip and lateral bands, so their IP moment arms are smaller (index DIP /
+PIP 3.1 / 3.7 -> 1.9 / 2.6 mm). Their tabled slack lengths were shifted once by the tendon-length change at
+q = 0 (`reanchored_m` in `muscle_passive.json`) and every muscle refitted: EDC2 -2.24 % / fpmax 0.622, EIP
+-1.64 % / 0.791, EDC3 -2.80 %, EDC4 -1.41 %, EDC5 +1.60 %, EDM -0.39 %, the last four at the release bound,
+which rises from 0.0525 to 0.133 (the MCPs of digits 3-5 extend 78, 67 and 30 deg in the release trial).
+The joint-fit error falls from 16211 to 12271 (7178 -> 1194 without the release step).
+
 Every negative slack change is forced by the active constraint (the anatomical slack
 lengths already violate it for FDS3, FDS4, FDP2, FDP3, FDP5 and EDC2-4). Six muscles sit at
 the `fpmax` floor (0.002), and EDC3-5 and EDM did before the release step (below): with the

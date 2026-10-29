@@ -28,6 +28,7 @@ scripts/
   fit_passive_moments.py       # refits passive springs, rewrites their block in myoarm_r_tendon.xml
   generate_hand_intrinsic_muscles.py # fits (--fit) and writes the intrinsic sites and blocks in the arm XML
   fit_cmc_joints.py            # fits (--fit) and writes the CMC4/5 joints, their coupling and the moved sites
+  fit_extensor_mechanism.py    # fits (--fit) and writes the extensor-mechanism sites, branched tendons and ORL ligaments
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness

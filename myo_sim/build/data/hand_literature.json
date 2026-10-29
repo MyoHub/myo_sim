@@ -122,6 +122,24 @@
       "citation": "Lee JH, Asakawa DS, Dennerlein JT, Jindrich DL. Finger muscle attachments for an OpenSim upper-extremity model. PLoS ONE 10(4):e0121712, 2015; correction PLoS ONE 17:e0267620, 2022.",
       "doi": "10.1371/journal.pone.0121712",
       "note": "OpenSim finger attachments optimised to An et al. 1979; Table 6 moment arms."
+    },
+    "lee2008b": {
+      "short": "Lee et al. 2008b",
+      "citation": "Lee SW, Chen H, Towles JD, Kamper DG. Estimation of the effective static moment arms of the tendons in the index finger extensor mechanism. J Biomech 41(7):1567-1573, 2008.",
+      "doi": "10.1016/j.jbiomech.2008.02.008",
+      "note": "Five fresh-frozen index fingers, nine postures (MCP 0/30/60 deg x PIP/DIP 0/0, 30/20, 45/30 deg); effective static moment arms (joint moment per unit tendon force, passive moments removed), means over postures and specimens (Table 4)."
+    },
+    "ueba2011": {
+      "short": "Ueba et al. 2011",
+      "citation": "Ueba H, Moradi N, Erne HC, Gardner TR, Strauch RJ. An anatomic and biomechanical study of the oblique retinacular ligament and its role in finger extension. J Hand Surg Am 36(12):1959-1964, 2011.",
+      "doi": "10.1016/j.jhsa.2011.09.033",
+      "note": "40 fresh-frozen fingers; peak force to flex the DIP 0-45 deg with 1.96 N on the extrinsic extensor, MCP 0, before and after cutting the ORL (p. 1962)."
+    },
+    "ranneywells1988": {
+      "short": "Ranney & Wells 1988",
+      "citation": "Ranney DA, Wells RP. Lumbrical muscle function as revealed by a new and physiological approach. Anat Rec 222:110-114, 1988.",
+      "doi": "10.1002/ar.1092220116",
+      "note": "Fresh index fingers; a 5 N lumbrical load produced the intrinsic-plus posture (p. 113)."
     }
   },
   "quantities": {
@@ -649,6 +667,173 @@
           "kind": "in vivo, maximal little-finger opposition",
           "source": "buren2020",
           "protocol": "MC4 / MC5 relative to MC3 (CMC4: Al Maktary 2019); model: all other muscles at 0, 1 s, myoarm_r"
+        }
+      ]
+    },
+    "edc_ip_moment_arms": {
+      "label": "EDC2 extension moment arm, DIP / PIP (index; model: averaged over DIP 0-60 / PIP 0-90 deg)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            2.2,
+            2.8
+          ],
+          "spread": [
+            0.4,
+            1.1
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, tendon excursion",
+          "source": "an1983",
+          "protocol": "averaged over the range, 5 N load (Table 3, EC)"
+        },
+        {
+          "value": [
+            2.26,
+            3.1
+          ],
+          "spread": [
+            1.08,
+            1.18
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, effective static moment arm",
+          "source": "lee2008b",
+          "protocol": "mean of nine postures (Table 4, EDC)"
+        }
+      ]
+    },
+    "eip_ip_moment_arms": {
+      "label": "EIP extension moment arm, DIP / PIP (as above)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            1.9,
+            2.6
+          ],
+          "spread": [
+            0.5,
+            1.1
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, tendon excursion",
+          "source": "an1983",
+          "protocol": "Table 3 (EI)"
+        },
+        {
+          "value": [
+            2.41,
+            3.42
+          ],
+          "kind": "cadaver, effective static moment arm",
+          "source": "lee2008b",
+          "protocol": "Table 4 (EIP)"
+        }
+      ]
+    },
+    "lumbrical_ip_moment_arms": {
+      "label": "First lumbrical (LU_RB2) extension moment arm, DIP / PIP (as above)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            0.7,
+            1.8
+          ],
+          "spread": [
+            0.6,
+            1.3
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, tendon excursion",
+          "source": "an1983",
+          "protocol": "Table 3 (LU)"
+        },
+        {
+          "value": [
+            0.53,
+            -0.84
+          ],
+          "kind": "cadaver, effective static moment arm (negative = flexion)",
+          "source": "lee2008b",
+          "protocol": "Table 4 (LUM)"
+        }
+      ]
+    },
+    "ui_ip_moment_arms": {
+      "label": "Index ulnar intrinsic (UI_UB2, first palmar interosseous) extension moment arm, DIP / PIP (as above)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            1.6,
+            2.6
+          ],
+          "kind": "cadaver, tendon excursion",
+          "source": "an1983",
+          "protocol": "Table 3 (UI)"
+        },
+        {
+          "value": [
+            0.9,
+            0.13
+          ],
+          "kind": "cadaver, effective static moment arm",
+          "source": "lee2008b",
+          "protocol": "Table 4 (FPI)"
+        }
+      ]
+    },
+    "orl_share": {
+      "label": "Index ORL share of the passive DIP resistance at PIP 0 / 30 / 60 / 90 deg",
+      "unit": "%",
+      "literature": [
+        {
+          "value": [
+            25,
+            31,
+            18,
+            3
+          ],
+          "kind": "cadaver, force drop after cutting the ORL",
+          "source": "ueba2011",
+          "protocol": "DIP 45 deg, MCP 0, 1.96 N on the extrinsic extensor; model: ORL moment over the total passive DIP moment with 1.96 N on EDC2"
+        }
+      ]
+    },
+    "intrinsic_plus": {
+      "label": "Intrinsic-plus test: index MCP / PIP / DIP after 1 s with the index intrinsics at full activation from a fist",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": "MCP flexed, PIP and DIP extended",
+          "kind": "cadaver",
+          "source": "ranneywells1988",
+          "protocol": "5 N on the lumbrical; model: start MCP 90, PIP 100, DIP 70 deg, extrinsics at 0, wrist and MCP abduction held"
+        }
+      ]
+    },
+    "ip_coupling_slope": {
+      "label": "DIP-PIP coupling with FDP2 alone: dDIP/dPIP at PIP 0 / 70 / 100 deg",
+      "unit": "ratio",
+      "literature": [
+        {
+          "value": [
+            0.25,
+            1.0,
+            0.53
+          ],
+          "spread": [
+            0.25,
+            0.31,
+            0.28
+          ],
+          "spread_kind": "SD",
+          "kind": "in vivo, unloaded, FDP-driven",
+          "source": "leijnse2010",
+          "protocol": "mean slope of the extension trajectories, MCP 0 (p. 2386, Fig. 4A); model: FDP2 ramp 0-1 over 3 s, MCP and wrist held, slope over +-5 deg (none if the PIP does not pass the window)"
         }
       ]
     }
@@ -1653,6 +1838,296 @@
         "Active cupping with ODM, FDM and ADM: CMC4 / CMC5 11.4 / 23.6 deg, inside the in-vivo maxima of maximal little-finger opposition (12.2 +- 3.0 / 25.1 +- 3.5 deg).",
         "Grip 314.9 -> 377.2 N with the digit-5 share 12.0 -> 20.6 % (ARMS 11.5 %; within the protocol's 12-point tolerance); settled 278.0 -> 339.7 N. FDM and ODM are not in the grip's muscle set; the change comes from their passive tension and ADM's path. Lateral pinch unchanged (52.9 N).",
         "FDM and ODM have no published moment arms: their registered paths are kept and checked for sign (both flex CMC5; FDM flexes and ulnarly abducts MCP5: 6.4 / 5.3 mm)."
+      ]
+    },
+    {
+      "id": "em_a",
+      "title": "EM-a: finger extensor mechanism (option a) and oblique retinacular ligament",
+      "summary": "EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal phalanx and branch (MuJoCo pulleys) into the central slip and the lateral bands to the terminal tendon: extensors c (1 - r) / c r with r = 0.63 (Lee 2008a) and c = 1.0 fitted to the index IP moment arms (An 1983; Lee 2008b), intrinsics after Chao & An 1978 (via Brook 1995). One tension-only ORL per finger, slack while DIP - PIP <= 30 deg (Harris & Rutledge 1972), stiffness from Ueba 2011 at PIP 0. Extrinsic slack lengths and passive scales and the joint springs refitted. Before = S4 (the extension columns of S4 are measured on the S4 model).",
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.35,
+          78.24,
+          61.92,
+          60.98
+        ],
+        "tenodesis_pip_rom": 10.91,
+        "tenodesis_index_gap": [
+          40.9,
+          7.86
+        ],
+        "tenodesis_release": [
+          77.69,
+          78.47,
+          67.3,
+          30.84
+        ],
+        "grip_self_selected": 389.51,
+        "grip_settled": 362.74,
+        "grip_shares": [
+          28.07,
+          33.03,
+          17.03,
+          21.87
+        ],
+        "grip_posture_change": [
+          -33.84,
+          -62.09
+        ],
+        "lateral_pinch": 53.06,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          19.35,
+          16.82,
+          2.57
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "di1_moment_arms": [
+          4.38,
+          8.06
+        ],
+        "index_abduction_moment": 1.05,
+        "adm_moment_arms": [
+          5.18,
+          9.92
+        ],
+        "little_abduction_moment": 1.01,
+        "hypothenar_cupping": [
+          11.52,
+          23.74
+        ],
+        "edc_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "eip_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "lumbrical_ip_moment_arms": [
+          2.05,
+          2.51
+        ],
+        "ui_ip_moment_arms": [
+          1.02,
+          1.87
+        ],
+        "orl_share": [
+          23.73,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intrinsic_plus": [
+          91.89,
+          -1.34,
+          -1.17
+        ],
+        "ip_coupling_slope": [
+          -0.01,
+          0.38,
+          null
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": 0.33,
+          "3": 10.76,
+          "4": -1.41,
+          "5": -0.38
+        },
+        "fist_max_penetration": 0.78
+      },
+      "before": {
+        "label": "em_a",
+        "id": "s4",
+        "values": {
+          "tenodesis_mcp_rom": [
+            77.34,
+            78.22,
+            73.37,
+            53.63
+          ],
+          "tenodesis_pip_rom": 19.72,
+          "tenodesis_index_gap": [
+            70.26,
+            37.34
+          ],
+          "tenodesis_release": [
+            77.65,
+            78.48,
+            73.99,
+            22.41
+          ],
+          "grip_self_selected": 377.18,
+          "grip_settled": 339.7,
+          "grip_shares": [
+            29.83,
+            30.89,
+            18.62,
+            20.65
+          ],
+          "grip_posture_change": [
+            -36.89,
+            -61.86
+          ],
+          "lateral_pinch": 52.9,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "cmc45_arc": [
+            21.0,
+            43.3
+          ],
+          "cmc45_active_flexion": [
+            16.0,
+            33.0
+          ],
+          "cmc45_coupling": 2.06,
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            19.35,
+            16.82,
+            2.57
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "di1_moment_arms": [
+            4.38,
+            8.06
+          ],
+          "index_abduction_moment": 1.05,
+          "adm_moment_arms": [
+            5.18,
+            9.92
+          ],
+          "little_abduction_moment": 1.02,
+          "hypothenar_cupping": [
+            11.43,
+            23.55
+          ],
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": -0.79,
+            "3": 16.16,
+            "4": -0.67,
+            "5": -0.38
+          },
+          "fist_max_penetration": 0.79,
+          "edc_ip_moment_arms": [
+            3.07,
+            3.72
+          ],
+          "eip_ip_moment_arms": [
+            2.85,
+            4.88
+          ],
+          "lumbrical_ip_moment_arms": [
+            0.0,
+            3.55
+          ],
+          "ui_ip_moment_arms": [
+            0.0,
+            2.48
+          ],
+          "orl_share": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "intrinsic_plus": [
+            91.88,
+            -1.55,
+            -0.11
+          ],
+          "ip_coupling_slope": [
+            -0.01,
+            0.52,
+            null
+          ]
+        }
+      },
+      "notes": [
+        "Extensor share c = 1.0 (unbounded optimum 1.09; RMS z 0.34 over An 1983 and Lee 2008b for EDC2 and EIP), against Lee 2008a's nine-posture mean of 0.39 (0.72 with the finger extended); with r = 0.63 each extensor sends 37 % of its force to the central slip and 31.5 % to each lateral band. EDC2 and EIP share the index hood, so their IP arms are equal (1.9 / 2.6 mm).",
+        "IP moment arms stay extensor over the full PIP (0-115 deg) and DIP ranges for every branched tendon; the bands wrap a 1.9 mm cylinder on the PIP axis (Garcia-Elias 1991a). LU_RB5 no longer turns into a PIP flexor near 114-115 deg (S1b note).",
+        "Intrinsics (Chao & An coefficients): the first palmar interosseous matches (DIP 1.0 mm vs An 1.6, Lee 0.9); the lumbrical's 2/3 terminal share gives DIP 2.1 mm, 3-4x An 1983's 0.7 +- 0.6 and Lee 2008b's 0.53 mm (open check).",
+        "ORL: 23.7 % of the passive DIP resistance at PIP 0 (Ueba 25 %); slack at PIP 30-90 deg, where Ueba measured 31 / 18 / 3 %, because Harris & Rutledge's slack range (no force while DIP - PIP <= 30 deg) is kept as the constraint (Ueba's PIP 30 deg posture differs by 15 deg).",
+        "Intrinsic-plus: from the fist the index intrinsics reach MCP 92, PIP -1, DIP -1 deg in both models: the passive extensor tension (refitted since the proposal's prototype) already extended the DIP in S4. IP coupling under FDP2 alone: dDIP/dPIP 0.38 at PIP 70 deg (S4 0.52; Leijnse 1.0 +- 0.31); the ramp stalls at PIP 99 deg, so no slope at 100 deg.",
+        "Refits: extrinsic joint fit error 16211 -> 12271 (without the release step 7178 -> 1194), and test_joint_fit_matches_the_recorded_error passes again; the release bound of EDC3-5 and EDM rises from fpmax 0.0525 to 0.133 (smaller IP arms need more passive force to open the digits); every spring fit RMS is equal or smaller (digit-5 PIP 0.049 -> 0.022 N m).",
+        "Tenodesis passes; mean PIP range 19.7 -> 10.9 deg and the index-to-other-digit spread 70 / 37 -> 41 / 8 deg (ARMS 16.1 deg and 49 / 15 deg). Grip 377 -> 390 N, settled 340 -> 363 N; lateral pinch 52.9 -> 53.1 N."
       ]
     }
   ]

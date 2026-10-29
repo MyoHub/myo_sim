@@ -170,6 +170,8 @@ def test_table_rows_are_sourced() -> None:
 
 
 def test_passive_moments_match_the_table(fullbody: mujoco.MjModel) -> None:
+    """The springs give the tabled moments; the ligaments (``lig_``, extensor mechanism) come on top of them."""
+    ligaments = _script("fit_passive_moments").ligament_moment
     data = mujoco.MjData(fullbody)
     for row in _applied_rows():
         for side in ("r", "l"):
@@ -179,7 +181,8 @@ def test_passive_moments_match_the_table(fullbody: mujoco.MjModel) -> None:
                 data.qvel[:] = 0.0
                 data.qpos[joint.qposadr[0]] = q
                 mujoco.mj_forward(fullbody, data)
-                np.testing.assert_allclose(data.qfrc_passive[joint.dofadr[0]], passive_moment(row, q), atol=1e-9)
+                springs = data.qfrc_passive[joint.dofadr[0]] - ligaments(fullbody, data, joint.dofadr[0])
+                np.testing.assert_allclose(springs, passive_moment(row, q), atol=1e-9)
     wrist = next(r for r in rows_with_status(load_passive_moment_table()) if r["names"]["r"] == "flexion_r")
     # Formica 2012 measured the total: springs plus the wrist muscles at act = 0, in the row's posture. A
     # one-segment linear spring per side cannot follow the muscles' curvature, so the total matches within

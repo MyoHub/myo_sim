@@ -414,6 +414,38 @@
       "APL": 0.0
      },
      "grip_N": 377.2
+    },
+    {
+     "model": "+ hand rebuild EM-a (extensor mechanism option a, ORL; extrinsic slack lengths, passive scales and springs refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.1328,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003488
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9998,
+      "FDP": 0.6723,
+      "EDC": 0.9759,
+      "EIP": 0.0004,
+      "EDM": 0.0226,
+      "ECRL": 0.1669,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.6319,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 389.5
     }
    ]
   }

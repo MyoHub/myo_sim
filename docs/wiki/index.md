@@ -17,6 +17,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/model-readme-template.md` — agentic workflow for writing model READMEs
 - `docs/wiki/build-and-composition.md` — MjSpec compose.py reference
 - `docs/wiki/hand-cmc-joints.md` — fourth and fifth carpometacarpal joints: centres, axes, ranges, the coupling and its caveats, moved sites, end-range springs
+- `docs/wiki/extensor-mechanism.md` — finger extensor mechanism (option a): junction sites, pulley branches and their fractions, the oblique retinacular ligament, fits and limitations
 - `docs/wiki/passive-moments-and-thenar.md` — passive joint moments and the hand intrinsic muscles defined from data (generated XML blocks, path and residual fits): row statuses, sources, assumptions
 - `docs/wiki/passive-muscles-tenodesis.md` — passive tension of the extrinsic finger, thumb and wrist muscles (tenodesis): method, fitted slack lengths and fpmax in `myoarm_r_muscle.xml`, active force-length constraint, validation
 - `docs/wiki/hand-function-validation.md` — functional hand tests after McFarland et al. 2023 (tenodesis, maximum grip, lateral pinch): method, results per model version, known issues
