@@ -230,11 +230,55 @@ the cited paper.
   - Bettinger PC, Smutz WP, Linscheid RL, Cooney WP, An KN (2000). Material properties
     of the trapezial and trapeziometacarpal ligaments. J Hand Surg Am 25(6):1085-1095.
     doi:10.1053/jhsu.2000.18487.
-    - Bone-ligament-bone tests of seven ligaments.
-    - The dorsoradial ligament has the greatest ultimate load.
-    - The anterior oblique ligament has the least stiffness.
-    - No stiffness or ultimate-load value is taken from it. The measured thumb CMC
-      stiffness comes from D'Agostino et al. (2014), below.
+    - 20 fresh-frozen hands from 19 donors: 10 men (75 ± 7.4 years) and 10 women
+      (67 ± 11.6 years). Six ligaments come from each hand. The trapezio-third
+      metacarpal ligament comes from 6 further hands (pp. 1087-1088).
+    - Bone-ligament-bone complexes, aligned with the actuator and mounted lax. They were
+      preconditioned at 1.78 N, cycled to 7.13 N for hysteresis, then pulled to failure
+      at 25 % of the gauge length per second (p. 1089).
+    - Stiffness is the slope of the part of the load-deformation curve where the slope
+      is about constant. Cross-section was measured by caliper in the middle third.
+      Strain is actuator displacement over the gauge length.
+    - Ligament names follow Bettinger et al. 1999. Two of the seven are thumb CMC
+      ligaments:
+      - The **dorsoradial (DRL)** corresponds to Ladd's dorsal radial ligament. The
+        dorsal figure (Fig. 3) shows a DRL and a posterior oblique ligament and no
+        separate dorsal central ligament, as in D'Agostino's single dorsoradial sheet.
+      - The **anterior oblique (AOL)** is Ladd's anterior oblique ligament. The paper
+        does not say whether the superficial or the deep part was tested; the volar
+        figure (Fig. 2) labels only the superficial one.
+    - The other five tie the trapezium to the trapezoid (dorsal and volar, DTT and VTT),
+      to MC2 (dorsal and volar, DT-II MC and VT-II MC) and to MC3 (T-III MC). None is one
+      of Ladd's seven. In `myohand_r` the trapezium, trapezoid, MC2 and MC3 are all fixed
+      to the capitate, so these five cross no model joint. Their values serve as hand
+      data for the transfer below.
+    - Ladd's posterior oblique, ulnar collateral, first dorsal trapeziometacarpal and
+      intermetacarpal ligaments were not tested.
+    - Results, mean ± SD (pp. 1090-1092; values not printed in the text were read from
+      the bar charts, Figs. 6-8, and are marked ≈). Each line gives stiffness, ultimate
+      load, ultimate stress and ultimate strain:
+      - DRL: **78.3 ± 21.9 N/mm**, 205.5 ± 60.2 N, 8.1 ± 1.7 MPa, ≈ 80 %;
+      - AOL: **24.1 ± 13.3 N/mm**, 64.5 ± 27.8 N (men 79.5 ± 27.6, women
+        49.6 ± 19.8 N), 5.8 ± 1.9 MPa, ≈ 64 %;
+      - DTT: 66.9 ± 30.4 N/mm, 76.1 ± 27.3 N, ≈ 6.5 MPa, ≈ 70 %;
+      - VTT: 31.1 ± 9.5 N/mm, 37.3 ± 18.9 N, 4.4 ± 2.0 MPa, ≈ 61 %;
+      - DT-II MC: 48.0 ± 17.4 N/mm, 91.1 ± 27.1 N, 6.3 ± 1.8 MPa, 128.8 ± 57.0 %;
+      - VT-II MC: 56.5 ± 35.6 N/mm, ≈ 78 N, 5.5 ± 2.2 MPa, ≈ 50 %;
+      - T-III MC: 88.3 ± 41.0 N/mm, 128.0 ± 58.4 N, 18.9 ± 8.6 MPa, 20.2 ± 5.3 %.
+    - The AOL is the least stiff and has the greatest hysteresis. The DRL has the
+      greatest ultimate load and energy to failure. The T-III MC ligament is the stiffest
+      and has the greatest ultimate stress.
+    - No cross-section, length or modulus is printed.
+      - Load ÷ stress (ratio of means) gives cross-sections of about 25 mm² (DRL),
+        11 mm² (AOL) and 7-15 mm² for the other five. The DRL and AOL areas are larger
+        than D'Agostino's width × thickness (13.3 and 8.2 mm²).
+      - Gauge lengths follow only from the extreme failure rates, 0.78 mm/s (DT-II MC)
+        and 3.42 mm/s (T-III MC), i.e. about 3 and 14 mm.
+    - Strain at the low loads, measured from the lax mount, is 5.4-9.0 % at 1.78 N and
+      10.6-18.1 % at 7.13 N (p. 1089). Elongation from a lax start up to a few newtons
+      is therefore of order 10 %. The paper does not separate slack from the toe region.
+    - Garcia-Elias et al. 1989, as quoted on pp. 1093-1094, give 85.8 and 65.6 N/mm and
+      113.7 and 119.3 N for the DTT and VTT, at twice the loading rate.
   - D'Agostino P, Kerkhof FD, Shahabpour M, Moermans JP, Stockmans F, Vereecke EE
     (2014). Comparison of the anatomical dimensions and mechanical properties of the
     dorsoradial and anterior oblique ligaments of the trapeziometacarpal joint. J Hand
@@ -254,9 +298,17 @@ the cited paper.
     - **Stiffness: DRL 89 ± 21 N/mm, AOL 65 ± 30 N/mm** (p. 1103; Tables 4-5, whose
       column header prints the unit as MPa). Hysteresis 25 ± 3 % and 21 ± 4 %. The DRL
       is significantly stiffer, shorter and thicker than the AOL.
-    - These are the only measured thumb CMC ligament stiffnesses used here. With the
-      MRI dimensions they correspond to an effective modulus k L / A of about 67 MPa
-      (DRL) and 97 MPa (AOL).
+    - With the MRI dimensions they correspond to an effective modulus k L / A of about
+      67 MPa (DRL) and 97 MPa (AOL).
+    - **Comparison with Bettinger et al. 2000.**
+      - The DRL agrees: 89 ± 21 vs 78.3 ± 21.9 N/mm.
+      - The AOL does not: 65 ± 30 vs 24.1 ± 13.3 N/mm, a factor of 2.7.
+      - Both find the AOL the least stiff. The protocols differ: D'Agostino reports the
+        highest slope over repeated 2 Hz cycles, Bettinger the linear slope of one pull
+        to failure.
+      - With D'Agostino's MRI lengths, Bettinger's DRL and AOL give an effective modulus
+        of about 25-60 MPa. The lower end uses Bettinger's load ÷ stress area, the upper
+        end D'Agostino's width × thickness.
   - Colman M, Mass DP, Draganich LF (2007). Effects of the deep anterior oblique and
     dorsoradial ligaments on trapeziometacarpal joint stability. J Hand Surg Am
     32(3):310-317. doi:10.1016/j.jhsa.2006.12.002. In lateral pinch, mean 3-D translation
@@ -669,19 +721,34 @@ the cited paper.
 - No tensile or stiffness study of the finger (digits 2-5) MCP collaterals was found.
 - For the PIP there are failure loads (collateral 162.5 N in distraction, about 177 N in
   lateral bending; volar plate about 220-390 N in hyperextension) but no stiffness.
-- For the thumb CMC, stiffness is measured for two of the seven ligaments only: the
-  dorsoradial (89 ± 21 N/mm) and anterior oblique (65 ± 30 N/mm) ligaments, from donors
-  with a mean age of 74 (D'Agostino et al. 2014). The isolated-ligament failure loads of
-  Najima et al. 1997 are a few newtons from very old donors.
+- For the thumb CMC, stiffness is measured for two of the seven ligaments only, the
+  dorsoradial and the anterior oblique, in two studies:
+  - D'Agostino et al. 2014 (donor mean age 74): 89 ± 21 and 65 ± 30 N/mm;
+  - Bettinger et al. 2000 (donor ages 67-75): 78.3 ± 21.9 and 24.1 ± 13.3 N/mm.
+  - The dorsoradial values agree. The anterior oblique values differ by a factor of
+    2.7, so its stiffness is uncertain.
+  - Bettinger's bone-ligament-bone failure loads are 205.5 ± 60.2 N (dorsoradial) and
+    64.5 ± 27.8 N (anterior oblique). Najima et al. 1997 found 5-8 N for excised
+    ligaments from very old donors.
+  - The posterior oblique, ulnar collateral, first dorsal trapeziometacarpal and
+    intermetacarpal ligaments have no stiffness data.
 - No in-vivo length or strain measurement of the thumb CMC ligaments was found.
 - The CMC2-5 ligaments have no data of their own; a published wrist model assumes
   100 N/mm for all of them (Majors and Wayne 2011).
 
 Finger ligament stiffness would therefore be transferred: either from cross-sectional
 area times a modulus, as Lenhart et al. do, or from related ligaments. Those rows would
-carry the status `transferred`. The thumb CMC dorsoradial and anterior oblique rows can
-carry D'Agostino's measured values; the dorsal central ligament is part of D'Agostino's
-dorsoradial sheet and shares its value.
+carry the status `transferred`.
+
+The thumb CMC dorsoradial and anterior oblique rows can carry measured values.
+- **Dorsoradial:** D'Agostino's 89 N/mm, confirmed by Bettinger's 78 N/mm.
+- **Dorsal central:** part of the dorsoradial sheet in both studies, so it shares the
+  dorsoradial value.
+- **Anterior oblique:** D'Agostino's 65 N/mm as the default, with Bettinger's 24 N/mm as
+  the lower sensitivity value. D'Agostino is kept as the default because the effective
+  modulus below comes from the same specimens and dimensions.
+- **The other four** (posterior oblique, ulnar collateral, first dorsal
+  trapeziometacarpal, intermetacarpal) stay `transferred`.
 
 An example of the area route for the thumb CMC: width × thickness from Ladd et al. 2012
 (Table I) gives about 1.7 mm² (intermetacarpal) to 10.2 mm² (posterior oblique).
@@ -694,10 +761,18 @@ An example of the area route for the thumb CMC: width × thickness from Ladd et 
   and Grood 1976) and below Lenhart's 125 MPa. With it, k is about 0.1-1.0 kN per unit
   strain, or k / L of about 1·10⁴ to 1·10⁵ N/m, which brackets the measured
   6.5·10⁴-8.9·10⁴ N/m.
+- Bettinger et al. 2000 print no modulus, area or length. With D'Agostino's lengths,
+  their dorsoradial and anterior oblique stiffnesses give about 25-60 MPa (thumb CMC
+  mechanics, above).
+  For the other five ligaments the lengths are unknown, so no modulus can be derived.
+- Their seven measured stiffnesses, 24-88 N/mm (2.4·10⁴-8.8·10⁴ N/m), lie inside the
+  1·10⁴-1·10⁵ N/m that the area route gives at about 80 MPa. This supports the route
+  as a check on its output: it tests the stiffness range, not the modulus.
 - **Proposal:** transfer hand ligament stiffness with D'Agostino's effective modulus
-  (about 80 MPa, from donors of the same age as the hand-anatomy series), and keep
-  345 MPa as the upper sensitivity bound. The rectangle overestimates the area of a
-  tapering ligament, which adds to the margin.
+  (about 80 MPa, from donors of the same age as the hand-anatomy series). Use about
+  30 MPa (Bettinger's lower end) as the lower and 345 MPa as the upper sensitivity
+  bound. The rectangle overestimates the area of a tapering ligament, which adds to the
+  margin.
 
 ## 3. MuJoCo mechanics
 
@@ -835,6 +910,10 @@ Blankevoort's ε_l = 0.03):
 - F = k ε² / (2 ε_t) for 0 < ε ≤ ε_t;
 - F = k (ε - ε_t / 2) for ε > ε_t.
 
+For the thumb CMC ligaments, ε_t = 0.06 may be short. Bettinger et al. 2000 measured
+10.6-18.1 % elongation at 7.13 N from a lax mount. That figure mixes slack with the toe
+region, so it bounds the toe length from above and does not measure it.
+
 **Mapping to MuJoCo.** Let x = L - L0.
 
 - The toe region is the quadratic term b = k / (2 ε_t L0²) on a tendon with
@@ -958,9 +1037,11 @@ postures).
    Translational laxity data (e.g. Colman et al. 2007) do not apply while the CMC cannot
    translate.
 4. **Ligament forces.** Where published, compare against them.
-   - In the hand, the published values are failure loads (e.g. 162.5 N in distraction
-     and about 177 N in lateral bending for the PIP collateral, Rhee et al. 1992), and
-     they serve as upper bounds in the grip and pinch tests.
+   - In the hand, the published values are failure loads, and they serve as upper
+     bounds in the grip and pinch tests. Examples: 162.5 N in distraction and about
+     177 N in lateral bending for the PIP collateral (Rhee et al. 1992); 205.5 N for
+     the thumb CMC dorsoradial and 64.5 N for the anterior oblique (Bettinger et al.
+     2000).
    - Knee, elbow and shoulder forces become relevant with those joints.
 5. **CPU vs mujoco-warp.** Compare ligament lengths, `qfrc_passive` and `qacc` at random
    postures. The prototype already does this (section 6).
@@ -1047,12 +1128,18 @@ warning or a finger speed above 100 rad/s.
 | `dev` (phalanx inertia floor 1e-4 kg m², armature 1e-4) | 2.0·10⁶ / 5.8·10⁷ | 1·10⁷ N/m | 3·10⁷ N/m |
 | rod-like phalanx inertia, armature 1e-6 | 1.7·10⁵ / 6.5·10⁵ | 3·10⁵ N/m | 1·10⁶ N/m |
 
-Published bone-ligament-bone stiffness runs from tens of N/mm for small ligaments
-(superior glenohumeral 17.4 N/mm, coracohumeral 36.7 N/mm; thumb CMC anterior oblique
-65 N/mm and dorsoradial 89 N/mm) to 242 N/mm for a young ACL, i.e. about 10⁴ to
-2.4·10⁵ N/m. The area × 345 MPa estimate for the short thumb CMC ligaments (section 2, up
-to 3.6·10⁵ N/m) exceeds that range; with the proposed effective modulus of about 80 MPa
-they stay below about 1·10⁵ N/m, consistent with D'Agostino's measurements.
+Published bone-ligament-bone stiffness runs from tens of N/mm for small ligaments to
+242 N/mm for a young ACL, i.e. about 10⁴ to 2.4·10⁵ N/m. Examples of small ligaments:
+- shoulder: superior glenohumeral 17.4 N/mm, coracohumeral 36.7 N/mm;
+- thumb CMC: anterior oblique 24-65 N/mm and dorsoradial 78-89 N/mm (Bettinger et al.
+  2000; D'Agostino et al. 2014);
+- trapezial ligaments: up to 88.3 ± 41.0 N/mm, the trapezio-third metacarpal ligament
+  (Bettinger et al. 2000).
+
+The area × 345 MPa estimate for the short thumb CMC ligaments (section 2, up to
+3.6·10⁵ N/m) exceeds that range. With the proposed effective modulus of about 80 MPa
+they stay below about 1·10⁵ N/m, consistent with both measured series. The highest
+measured hand value, mean + 1 SD, is about 1.3·10⁵ N/m (trapezio-third metacarpal).
 
 **What the stability numbers say.**
 - **Current `dev` inertias.** Hand ligaments in that range are stable with a large
@@ -1063,7 +1150,10 @@ they stay below about 1·10⁵ N/m, consistent with D'Agostino's measurements.
   limit to within a factor of about 2. It would be a test on every strand. A strand at
   the top of the 345 MPa CMC estimate (3.6·10⁵ N/m) would sit at the empirical limit of
   the rod-like-inertia case (stable at 3·10⁵, diverged at 10⁶ N/m). The measured thumb
-  CMC values (6.5·10⁴-8.9·10⁴ N/m) leave a margin of about 3× in that case.
+  CMC values (2.4·10⁴-8.9·10⁴ N/m) leave a margin of at least 3× in that case. The
+  stiffest measured hand ligament at mean + 1 SD (about 1.3·10⁵ N/m) leaves about 2×.
+  No measured value approaches the 3.6·10⁵ N/m of the 345 MPa estimate, so that case
+  is a sensitivity bound only.
 - **Damping.** A tendon damper of 500 N s/m, the order used by Rahman et al. and Bloemker
   et al. (0.5 N s/mm), was stable on `dev`. It diverged with realistic inertia, because
   it is explicit. 50 N s/m was stable in both cases. This is another reason for no
@@ -1093,11 +1183,16 @@ run of `lin_nowrap` hit a QACC warning. The cause was a NaN in the length of the
    - transfer from the PIP collateral and thumb CMC data;
    - transfer from the knee and shoulder data.
 
-   Each option is a `transferred` row with the assumption stated. For the thumb CMC,
-   D'Agostino et al. 2014 give measured values for the dorsoradial and anterior oblique
-   ligaments, which also fix an effective modulus (about 65-100 MPa) for the area route;
-   section 2 proposes that modulus for the other hand ligaments, with 345 MPa as the
-   upper bound. Is that acceptable for the MCP and PIP collaterals?
+   Each option is a `transferred` row with the assumption stated.
+   - For the thumb CMC, D'Agostino et al. 2014 and Bettinger et al. 2000 give measured
+     values for the dorsoradial and anterior oblique ligaments.
+   - D'Agostino's dimensions fix an effective modulus of about 65-100 MPa for the area
+     route; Bettinger's values give about 25-60 MPa.
+   - Section 2 proposes about 80 MPa for the other hand ligaments, with 30 and 345 MPa
+     as the sensitivity bounds.
+   - Is that acceptable for the MCP and PIP collaterals?
+   - Should the anterior oblique default be D'Agostino's 65 N/mm or a value nearer
+     Bettinger's 24 N/mm?
 3. **Reference strains.** We have no in-vivo strain data for the CMC ligaments. Do we
    set the reference strain from the length-angle data (MCP) and from a "taut at the end
    of range" assumption (CMC)? For the CMC, Ladd et al. 2012 give the posture in which
