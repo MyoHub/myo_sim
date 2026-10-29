@@ -32,6 +32,9 @@ CROSSING = {
     "RI4_r_tendon": (0, 0),
     "UI_UB4_r_tendon": (0, 0),
     "RI5_r_tendon": (0, 0),
+    "ADM_r_tendon": (0, -1),
+    "FDM_r_tendon": (0, -1),
+    "ODM_r_tendon": (0, -1),
 }
 
 
@@ -119,7 +122,7 @@ def test_crossing_muscles_act_as_anatomy_says() -> None:
 def test_positive_angles_flex_and_the_coupling_holds() -> None:
     model = myo_sim.load_model("myoarm_r")
     data = mujoco.MjData(model)
-    flexors = [model.actuator(n).id for n in ("FDS5_r", "FDP5_r", "UI_UB5_r")]
+    flexors = [model.actuator(n).id for n in ("FDS5_r", "FDP5_r", "ADM_r")]
     data.ctrl[flexors] = 1.0
     for _ in range(500):
         mujoco.mj_step(model, data)

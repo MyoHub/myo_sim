@@ -58,7 +58,9 @@ RIGHT_HAND_ACTUATORS = frozenset(
         "UI_UB4",
         "RI5",
         "LU_RB5",
-        "UI_UB5",
+        "ADM",
+        "FDM",
+        "ODM",
     }
 )
 

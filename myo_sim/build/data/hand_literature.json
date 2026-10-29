@@ -110,6 +110,18 @@
       "citation": "Buffi JH, Crisco JJ, Murray WM. A method for defining carpometacarpal joint kinematics from three-dimensional rotations of the metacarpal bones captured in vivo using computed tomography. J Biomech 46(12):2104-2108, 2013.",
       "doi": "10.1016/j.jbiomech.2013.05.019",
       "note": "One subject (Table 1)."
+    },
+    "an1979": {
+      "short": "An et al. 1979",
+      "citation": "An KN, Chao EY, Cooney WP, Linscheid RL. Normative model of human hand for biomechanical analysis. J Biomech 12(10):775-788, 1979.",
+      "doi": "10.1016/0021-9290(79)90163-5",
+      "note": "Normative hand model from 10 cadaver hands; Table 6: moment potentials of the little-finger ulnar intrinsic (normalised by the middle-phalanx length)."
+    },
+    "lee2015": {
+      "short": "Lee et al. 2015",
+      "citation": "Lee JH, Asakawa DS, Dennerlein JT, Jindrich DL. Finger muscle attachments for an OpenSim upper-extremity model. PLoS ONE 10(4):e0121712, 2015; correction PLoS ONE 17:e0267620, 2022.",
+      "doi": "10.1371/journal.pone.0121712",
+      "note": "OpenSim finger attachments optimised to An et al. 1979; Table 6 moment arms."
     }
   },
   "quantities": {
@@ -578,6 +590,65 @@
           "kind": "in vivo, one subject",
           "source": "buffi2013",
           "protocol": "equivalent-axis flexion, Table 1"
+        }
+      ]
+    },
+    "adm_moment_arms": {
+      "label": "ADM moment arm (UI_UB5 before S4), MCP5 flexion / ulnar abduction",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            5.7,
+            10.4
+          ],
+          "kind": "normative model (moment potentials 0.271 / 0.495 x MyoHand's middle-phalanx-5 length of 21.0 mm)",
+          "source": "an1979",
+          "protocol": "MCP neutral; magnitudes"
+        },
+        {
+          "value": [
+            1.7,
+            6.1
+          ],
+          "kind": "model fitted to An 1979",
+          "source": "lee2015",
+          "protocol": "Table 6; magnitudes"
+        }
+      ]
+    },
+    "little_abduction_moment": {
+      "label": "Little-finger MCP abduction moment, ADM and FDM (UI_UB5 before S4) at full activation",
+      "unit": "N m",
+      "literature": [
+        {
+          "value": [
+            1.56,
+            0.95
+          ],
+          "kind": "in vivo, men / women (RIHM break test 43.1 / 26.4 N x PP5 length 36.1 mm)",
+          "source": "mcgee2020",
+          "protocol": "RIHM little-finger abduction, sling at the PIP (Schreuders 2006); model: hand at rest"
+        }
+      ]
+    },
+    "hypothenar_cupping": {
+      "label": "Active cupping: CMC4 / CMC5 flexion with ODM, FDM and ADM at full activation",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": [
+            12.2,
+            25.1
+          ],
+          "spread": [
+            3.0,
+            3.5
+          ],
+          "spread_kind": "SD",
+          "kind": "in vivo, maximal little-finger opposition",
+          "source": "buren2020",
+          "protocol": "MC4 / MC5 relative to MC3 (CMC4: Al Maktary 2019); model: all other muscles at 0, 1 s, myoarm_r"
         }
       ]
     }
@@ -1362,6 +1433,226 @@
         "Ranges: the arcs match El-Shennawy's passive arcs; the split into flexion and extension is assumed (Aljasim 2025 finds more extension than flexion from the MC3 axis under 100 N). The active maxima lie 3.8 / 7.9 deg inside the flexion limits.",
         "Relaxed hand: without springs the muscles' passive tension (mostly FDP5) cupped the hand to 10 / 21 deg; with the end-range springs it rests within 0.2 deg of neutral.",
         "Grip: 334.8 -> 314.9 N, digit-5 share 9.9 -> 12.0 % (ARMS 11.5 %), settled 305.9 -> 278.0 N; the active fist leaves the middle finger 16.3 mm from the palm (14.4 before). Tenodesis and lateral pinch unchanged."
+      ]
+    },
+    {
+      "id": "s4",
+      "title": "S4: hypothenar muscles",
+      "summary": "UI_UB5 re-routed as ADM (pisiform to the ulnar base of the proximal phalanx, via point on the MC5 head, fitted to An 1979's little-finger moment potentials); FDM and ODM added on their registered Mirakhorlo 2016 paths; Jacobson 1992 architecture at the thenar specific tension (ADM 76.8 N, was 47.9 N; FDM 46.6 N; ODM 94.9 N); passive scales and springs refitted. Before = S3; the before columns of ADM are UI_UB5.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.34,
+          78.22,
+          73.37,
+          53.63
+        ],
+        "tenodesis_pip_rom": 19.72,
+        "tenodesis_index_gap": [
+          70.26,
+          37.34
+        ],
+        "tenodesis_release": [
+          77.65,
+          78.48,
+          73.99,
+          22.41
+        ],
+        "grip_self_selected": 377.18,
+        "grip_settled": 339.7,
+        "grip_shares": [
+          29.83,
+          30.89,
+          18.62,
+          20.65
+        ],
+        "grip_posture_change": [
+          -36.89,
+          -61.86
+        ],
+        "lateral_pinch": 52.9,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          19.35,
+          16.82,
+          2.57
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "di1_moment_arms": [
+          4.38,
+          8.06
+        ],
+        "index_abduction_moment": 1.05,
+        "adm_moment_arms": [
+          5.18,
+          9.92
+        ],
+        "little_abduction_moment": 1.02,
+        "hypothenar_cupping": [
+          11.43,
+          23.55
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.79,
+          "3": 16.16,
+          "4": -0.67,
+          "5": -0.38
+        },
+        "fist_max_penetration": 0.79
+      },
+      "before": {
+        "label": "s4",
+        "id": "s3",
+        "values": {
+          "tenodesis_mcp_rom": [
+            77.34,
+            78.22,
+            73.38,
+            50.09
+          ],
+          "tenodesis_pip_rom": 29.84,
+          "tenodesis_index_gap": [
+            66.81,
+            81.85
+          ],
+          "tenodesis_release": [
+            77.65,
+            78.48,
+            74.0,
+            26.4
+          ],
+          "grip_self_selected": 314.91,
+          "grip_settled": 277.95,
+          "grip_shares": [
+            34.3,
+            34.03,
+            19.71,
+            11.96
+          ],
+          "grip_posture_change": [
+            -32.48,
+            -66.41
+          ],
+          "lateral_pinch": 52.9,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "cmc45_arc": [
+            21.0,
+            43.3
+          ],
+          "cmc45_active_flexion": [
+            16.0,
+            33.0
+          ],
+          "cmc45_coupling": 2.06,
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            19.35,
+            16.82,
+            2.57
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "di1_moment_arms": [
+            4.38,
+            8.06
+          ],
+          "index_abduction_moment": 1.05,
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": -0.8,
+            "3": 16.31,
+            "4": -0.67,
+            "5": -0.38
+          },
+          "fist_max_penetration": 0.8,
+          "adm_moment_arms": [
+            3.2,
+            6.37
+          ],
+          "little_abduction_moment": 0.318
+        }
+      },
+      "notes": [
+        "ADM no longer reaches the lateral band (Santo Neto 1984: an aponeurosis expansion in 16 % of hands), so it has no PIP moment (UI_UB5: 2.8 mm extensor). In tenodesis the little-finger PIP range falls from 80 to 40 deg and the largest index-to-other-digit PIP spread from 82 to 37 deg (ARMS: 16 and 15 deg).",
+        "Little-finger abduction: ADM and FDM give 1.02 N m at rest (UI_UB5 0.32 N m), between the RIHM norms of women (0.95) and men (1.56 N m), at the thenar specific tension of 86.3 N/cm2.",
+        "Active cupping with ODM, FDM and ADM: CMC4 / CMC5 11.4 / 23.6 deg, inside the in-vivo maxima of maximal little-finger opposition (12.2 +- 3.0 / 25.1 +- 3.5 deg).",
+        "Grip 314.9 -> 377.2 N with the digit-5 share 12.0 -> 20.6 % (ARMS 11.5 %; within the protocol's 12-point tolerance); settled 278.0 -> 339.7 N. FDM and ODM are not in the grip's muscle set; the change comes from their passive tension and ADM's path. Lateral pinch unchanged (52.9 N).",
+        "FDM and ODM have no published moment arms: their registered paths are kept and checked for sign (both flex CMC5; FDM flexes and ulnarly abducts MCP5: 6.4 / 5.3 mm)."
       ]
     }
   ]

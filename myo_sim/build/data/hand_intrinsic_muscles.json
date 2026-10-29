@@ -1,6 +1,6 @@
 {
   "format": "myo_sim.hand_intrinsic_muscles/3",
-  "description": "Hand intrinsic muscles defined from data, on MyoHand's bodies (right-hand body frames; the left hand mirrors z, as myo_sim mirrors the arm): the thenar muscles, the two heads of the first dorsal interosseous, and (group) further intrinsics as they are rebuilt. Architecture (PCSA, optimal fibre length, pennation) from Jacobson et al. 1992 Table I (n = 9), head splits as cited per row; peak force = PCSA x specific_tension unless a row says otherwise. Sites start at the cited source points (sites[*].start) and are fitted to published moment arms by scripts/generate_hand_intrinsic_muscles.py --fit (path_fit); sites[*].pos is the fitted position. All values SI except PCSA (cm2), moment arms (mm) and angles (deg). The model itself is the XML: sites in myoarm_r_chain.xml, tendons and muscles in the generated blocks of myoarm_r_tendon.xml and myoarm_r_muscle.xml, all written from this table by the same script. Rows with a block label are written in place of the hand-written element they replace, so actuator indices stay.",
+  "description": "Hand intrinsic muscles defined from data, on MyoHand's bodies (right-hand body frames; the left hand mirrors z, as myo_sim mirrors the arm): the thenar muscles, the two heads of the first dorsal interosseous and the hypothenar muscles (group). Architecture (PCSA, optimal fibre length, pennation) from Jacobson et al. 1992 Table I (n = 9), head splits as cited per row; peak force = PCSA x specific_tension unless a row says otherwise. Sites start at the cited source points (sites[*].start) and are fitted to published moment arms by scripts/generate_hand_intrinsic_muscles.py --fit (path_fit); sites[*].pos is the fitted position. All values SI except PCSA (cm2), moment arms (mm) and angles (deg). The model itself is the XML: sites in myoarm_r_chain.xml, tendons and muscles in the generated blocks of myoarm_r_tendon.xml and myoarm_r_muscle.xml, all written from this table by the same script. Rows with a block label are written in place of the hand-written element they replace, so actuator indices stay.",
   "sources": {
     "music2026": {
       "citation": "Xu P, Ye Y, Sun S, Ding Y, Schumann E, Liu CK. MUSIC: Learning muscle-driven dexterous hand control. ACM Trans Graph 45(4), 2026 (arXiv:2604.23886).",
@@ -67,6 +67,26 @@
     "salsbury1937": {
       "citation": "Salsbury CR. The interosseous muscles of the hand. J Anat 71:395-403, 1937.",
       "location": "Table I pp. 397-399 (per hand), Table II p. 400 (summary: share of tendon to expansion vs bone; 28 specimens per muscle, embalmed)"
+    },
+    "an1979": {
+      "citation": "An KN, Chao EY, Cooney WP, Linscheid RL. Normative model of human hand for biomechanical analysis. J Biomech 12(10):775-788, 1979.",
+      "doi": "10.1016/0021-9290(79)90163-5",
+      "location": "Table 1 (p. 776: 'ulnar interosseous (UI)' at the MP of every finger), Table 6 (p. 784: little-finger moment potentials, UL-I flexion 0.271, ulnar bending -0.495, axial -0.104, normalised by the middle-phalanx length), Table 11 (p. 786: little-finger tendon locations)",
+      "note": "10 specimens. No hypothenar muscle is named; UI5 = ADM is an anatomical inference."
+    },
+    "santoneto1984": {
+      "citation": "Santo Neto H, de Carvalho VC, Penteado CV. The abductor digiti minimi muscle of the hand. Okajimas Folia Anat Jpn 60:389-400, 1984.",
+      "location": "full text (J-STAGE); 50 hands, 11 for fibre lengths"
+    },
+    "patil2021": {
+      "citation": "Patil RK, Malhotra G, Tsai TM. Assessing the usability of flexor digiti minimi muscle for opponensplasty: an anatomic study. J Hand Surg Am 46(10):925.e1-925.e5, 2021.",
+      "doi": "10.1016/j.jhsa.2021.01.013",
+      "location": "Results, Table 1 (30 fresh cadaver hands)"
+    },
+    "lee2015": {
+      "citation": "Lee JH, Asakawa DS, Dennerlein JT, Jindrich DL. Finger muscle attachments for an OpenSim upper-extremity model. PLoS ONE 10(4):e0121712, 2015; correction PLoS ONE 17:e0267620, 2022.",
+      "doi": "10.1371/journal.pone.0121712",
+      "location": "Methods (muscle list), Table 6 (moment arms), Table 10 (digit-5 tendon locations, from An et al. 1979)"
     }
   },
   "specific_tension": {
@@ -86,7 +106,7 @@
     ],
     "full_range_max": 1.6,
     "posture": "Smutz 1998 neutral = mid-point of the thumb CMC ranges (thumb at the radial side of the index DIP) = mid-point of MyoHand's cmc_flexion_r and cmc_abduction_r ranges; MP and IP at 0. posture_deg are anatomical (flexion, abduction positive) offsets from it: cmc_flexion_r q = q_mid - deg (MyoHand +q extends), cmc_abduction_r q = q_mid + deg, mp_flexion_r q = -deg. Signs of the targets: positive = flexor / adductor, equal to MyoHand's dL/dq.",
-    "measurement_box": "thumb: the Smutz posture box (CMC 20 deg flexion to 25 deg extension, 20 deg abduction to 20 deg adduction, MP 10 deg hyperextension to 40 deg flexion); index: MCP2 flexion 0-90 deg and abduction +-15 deg, with the thumb box for DI1s"
+    "measurement_box": "thumb: the Smutz posture box (CMC 20 deg flexion to 25 deg extension, 20 deg abduction to 20 deg adduction, MP 10 deg hyperextension to 40 deg flexion); index: MCP2 flexion 0-90 deg and abduction +-15 deg, with the thumb box for DI1s; little finger: MCP5 flexion 0-90 deg and abduction +-15 deg, CMC5 -10.3 to 33 deg for muscles that arise proximal of MC5"
   },
   "muscles": [
     {
@@ -233,7 +253,7 @@
         }
       },
       "fpmax": {
-        "value": 0.003492,
+        "value": 0.003488,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -628,7 +648,7 @@
         }
       },
       "fpmax": {
-        "value": 0.01131,
+        "value": 0.01132,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -991,7 +1011,7 @@
         "pcsa_cm2": 1.293
       },
       "fpmax": {
-        "value": 0.008102,
+        "value": 0.0081,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1112,7 +1132,7 @@
         }
       },
       "fpmax": {
-        "value": 0.01913,
+        "value": 0.01912,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1394,15 +1414,353 @@
         "reference_value": 1.3,
         "method": "passive_fit"
       }
+    },
+    {
+      "name": "ADM",
+      "group": "hypothenar",
+      "anatomy": "abductor digiti minimi (from the pisiform; insertion on the ulnar base of the proximal phalanx)",
+      "replaces": "UI_UB5",
+      "block": "ADM",
+      "sites": [
+        {
+          "body": "pisiform_r",
+          "pos": [
+            -0.001,
+            0.0021,
+            -0.0129
+          ],
+          "start": {
+            "pos": [
+              -0.001,
+              0.0021,
+              -0.0129
+            ],
+            "source": "mirakhorlo2016"
+          }
+        },
+        {
+          "body": "fifthmc_r",
+          "pos": [
+            -0.006451,
+            -0.018829,
+            -0.011353
+          ],
+          "start": {
+            "pos": [
+              -0.0051,
+              -0.0197,
+              -0.0076
+            ],
+            "source": "ulnar-palmar of the MC5 head: start at the former UI_UB5 via point (caggiano2022), so the tendon follows the bone in MCP flexion"
+          }
+        },
+        {
+          "body": "5proxph_r",
+          "pos": [
+            -0.007446,
+            -0.008516,
+            -0.011506
+          ],
+          "start": {
+            "pos": [
+              -0.0082,
+              -0.0084,
+              -0.0111
+            ],
+            "source": "mirakhorlo2016"
+          }
+        }
+      ],
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "AbDM",
+      "pcsa_cm2": {
+        "value": 0.89,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 76.8,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.89 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0462,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 3.9,
+        "scales_with": "none"
+      },
+      "identity_note": "UI_UB5 played the ulnar abductor of digit 5 but arose from MC3 at the CMC5 level and inserted into the ulnar lateral band; ADM arises from the pisiform in 50/50 hands and reaches the dorsal aponeurosis in 16 % (Santo Neto 1984). An 1979 names the MP intrinsic on the ulnar side of every finger 'ulnar interosseous'; on digit 5 only ADM lies there (our identification).",
+      "fit": {
+        "group": "ADM",
+        "targets": {
+          "mcp5_abduction_r": {
+            "source": "an1979",
+            "where": "Table 6 p. 784, little-finger ulnar intrinsic: ulnar bending potential 0.495 x middle-phalanx length (MyoHand 21.0 mm)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              10.39
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp5_flexion_r": {
+            "source": "an1979",
+            "where": "Table 6 p. 784: flexion potential 0.271 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -5.69
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            4.08,
+            0.86
+          ],
+          "fibre_length_measurement_box": [
+            0.64,
+            1.13
+          ],
+          "fibre_length_full_range": [
+            0.637,
+            1.13
+          ],
+          "model_mm": {
+            "mcp5_abduction_r": [
+              9.92
+            ],
+            "mcp5_flexion_r": [
+              -5.18
+            ]
+          },
+          "start_mm": {
+            "mcp5_abduction_r": [
+              6.2
+            ],
+            "mcp5_flexion_r": [
+              -2.74
+            ]
+          },
+          "rms_z": 0.246
+        }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
+      }
+    },
+    {
+      "name": "FDM",
+      "group": "hypothenar",
+      "anatomy": "flexor digiti minimi brevis (from the hook of the hamate; insertion on the ulnar-palmar base of the proximal phalanx)",
+      "sites": [
+        {
+          "body": "hamate_r",
+          "pos": [
+            -0.0051,
+            0.0036,
+            -0.0147
+          ],
+          "start": {
+            "pos": [
+              -0.0051,
+              0.0036,
+              -0.0147
+            ],
+            "source": "mirakhorlo2016"
+          }
+        },
+        {
+          "body": "fifthmc_r",
+          "pos": [
+            -0.002,
+            -0.02,
+            -0.01
+          ],
+          "start": {
+            "pos": [
+              -0.002,
+              -0.02,
+              -0.01
+            ],
+            "source": "palmar of the MC5 head (assumed), so the tendon follows the bone in MCP flexion"
+          }
+        },
+        {
+          "body": "5proxph_r",
+          "pos": [
+            -0.0045,
+            -0.0138,
+            -0.0128
+          ],
+          "start": {
+            "pos": [
+              -0.0045,
+              -0.0138,
+              -0.0128
+            ],
+            "source": "mirakhorlo2016"
+          }
+        }
+      ],
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "FDM",
+      "pcsa_cm2": {
+        "value": 0.54,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 46.6,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.54 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0406,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 3.6,
+        "scales_with": "none"
+      },
+      "presence_note": "absent in 10 of 30 hands and much smaller than ADM in 4 more (Patil 2021); modelled as present (Jacobson's n = 9 mean).",
+      "fit": {
+        "group": "FDM",
+        "note": "No moment arm of FDM is published; the registered path is kept (moved only as far as the fibre-length window requires) and checked for sign (MCP5 and CMC5 flexor).",
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "fibre_length_measurement_box": [
+            0.721,
+            1.098
+          ],
+          "fibre_length_full_range": [
+            0.709,
+            1.098
+          ]
+        }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
+      }
+    },
+    {
+      "name": "ODM",
+      "group": "hypothenar",
+      "anatomy": "opponens digiti minimi (from the hook of the hamate; insertion along the ulnar border of the MC5 shaft); crosses only CMC5",
+      "sites": [
+        {
+          "body": "hamate_r",
+          "pos": [
+            0.0085,
+            -0.007,
+            -0.0185
+          ],
+          "start": {
+            "pos": [
+              0.0085,
+              -0.007,
+              -0.0185
+            ],
+            "source": "mirakhorlo2016"
+          }
+        },
+        {
+          "body": "fifthmc_r",
+          "pos": [
+            -0.0163,
+            -0.0152,
+            -0.0042
+          ],
+          "start": {
+            "pos": [
+              -0.0163,
+              -0.0152,
+              -0.0042
+            ],
+            "source": "mirakhorlo2016"
+          }
+        }
+      ],
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "ODM",
+      "pcsa_cm2": {
+        "value": 1.1,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 94.9,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "1.1 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0195,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 7.7,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "ODM",
+        "note": "No moment arm of ODM is published; validated by the active cupping it produces with FDM and ADM (Büren et al. 2020 / Al Maktary 2019 maxima).",
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            0.0
+          ],
+          "fibre_length_measurement_box": [
+            0.758,
+            1.14
+          ],
+          "fibre_length_full_range": [
+            0.758,
+            1.14
+          ]
+        }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
+      }
     }
   ],
   "joint_name_note": "MUSIC's thumb CMC joints have the same axes as MyoHand's but swapped names: MUSIC cmc_flexion = myo_sim cmc_abduction_r and vice versa. Sites are body-relative, so the geometry transfers unchanged (lengths and moment arms match MUSIC to 1e-11 m with the names mapped).",
   "passive_fit": {
-    "method": "fpmax (MuJoCo's passive-force scale) of every row that crosses the thumb, fitted with the extrinsic muscles' loss of fit_muscle_passive.py to the measured total passive moments of these rows of passive_joint_moments.json, over each row's fit range, other joints at 0; the joint springs are fitted afterwards to the remainder. MuJoCo's passive force-length curve (class default fpmax 1.3) is much stiffer than measured curves, as for the extrinsic muscles.",
+    "method": "fpmax (MuJoCo's passive-force scale) of every row that crosses a joint of these passive rows (thumb, little-finger MCP and CMC5), fitted with the extrinsic muscles' loss of fit_muscle_passive.py to the measured total passive moments of these rows of passive_joint_moments.json, over each row's fit range, other joints at 0, counting only the muscles a row's source includes (subtract_model_muscles.muscles) where it names them; the joint springs are fitted afterwards to the remainder. MuJoCo's passive force-length curve (class default fpmax 1.3) is much stiffer than measured curves, as for the extrinsic muscles.",
     "rows": [
       "thumb_cmc_flexion",
       "thumb_cmc_abduction",
-      "thumb_mp_flexion"
+      "thumb_mp_flexion",
+      "digit5_mcp_flexion",
+      "digit5_cmc_flexion"
     ],
     "excess_weight": 100.0,
     "fpmax_bounds": [
@@ -1412,8 +1770,8 @@
     "fpmax_reference": 1.3,
     "penalty": 1.0,
     "result": {
-      "cost_before": 107163.077,
-      "cost_after": 3163.94
+      "cost_before": 110911.467,
+      "cost_after": 6912.33
     }
   }
 }

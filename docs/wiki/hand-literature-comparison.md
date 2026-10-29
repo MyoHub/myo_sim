@@ -255,6 +255,59 @@ CMC4 and CMC5 hinges (centres sphere-fitted to the metacarpal bases; CMC5 axis f
 - Relaxed hand: without springs the muscles' passive tension (mostly FDP5) cupped the hand to 10 / 21 deg; with the end-range springs it rests within 0.2 deg of neutral.
 - Grip: 334.8 -> 314.9 N, digit-5 share 9.9 -> 12.0 % (ARMS 11.5 %), settled 305.9 -> 278.0 N; the active fist leaves the middle finger 16.3 mm from the palm (14.4 before). Tenodesis and lateral pinch unchanged.
 
+### S4: hypothenar muscles
+
+UI_UB5 re-routed as ADM (pisiform to the ulnar base of the proximal phalanx, via point on the MC5 head, fitted to An 1979's little-finger moment potentials); FDM and ODM added on their registered Mirakhorlo 2016 paths; Jacobson 1992 architecture at the thenar specific tension (ADM 76.8 N, was 47.9 N; FDM 46.6 N; ODM 94.9 N); passive scales and springs refitted. Before = S3; the before columns of ADM are UI_UB5.
+
+| Quantity | Model (s4) | Model (before) | Literature (± spread) | Reference | Protocol / posture |
+| --- | --- | --- | --- | --- | --- |
+| Tenodesis: MCP flexion range per digit 2 / 3 / 4 / 5, trial A (deg) | 77.3 / 78.2 / 73.4 / 53.6 | 77.3 / 78.2 / 73.4 / 50.1 | mean 65.2; model (ARMS) | McFarland et al. 2023 | act = 0; wrist 60 deg flexion to 60 deg extension at 20 deg/s; elbow 90 deg, forearm neutral; thumb and MCP abduction locked |
+| Tenodesis: mean PIP flexion range, trial A (deg) | 19.7 | 29.8 | 16.1; model (ARMS) | McFarland et al. 2023 | as above |
+| Tenodesis: largest index-to-other-digit spread, MCP / PIP (deg) | 70.3 / 37.3 | 66.8 / 81.8 | 49.2 / 14.6; model (ARMS) | McFarland et al. 2023 | as above |
+| Release (trial B): MCP extension per digit 2 / 3 / 4 / 5 (deg) | 77.7 / 78.5 / 74.0 / 22.4 | 77.7 / 78.5 / 74.0 / 26.4 | digits extend; model (ARMS) | McFarland et al. 2023 | from the end of trial A: 60 deg extension back to 60 deg flexion |
+| Maximum power grip, self-selected wrist (N) | 377.2 | 314.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | dynamometer, self-selected wrist (35 deg extension, 7 deg ulnar deviation) |
+| ″ |  |  | 463.9 ± 125.9 (SD); in vivo, men | Mathiowetz et al. 1985 | Jamar, second handle position, seated, shoulder adducted, elbow 90 deg, forearm and wrist neutral, right hand (Table 2) |
+| ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
+| Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 339.7 | 277.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.8 / 30.9 / 18.6 / 20.6 | 34.3 / 34.0 / 19.7 / 12.0 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip change, neutral / flexed wrist against self-selected (%) | -36.9 / -61.9 | -32.5 / -66.4 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
+| Lateral (key) pinch force (N) | 52.9 | 52.9 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
+| ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
+| ″ |  |  | 72.1 ± 13.3 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| PIP flexion limit, digit 2 / 3 / 4 / 5 (deg) | 115.0 / 115.0 / 115.0 / 115.0 | 115.0 / 115.0 / 115.0 / 115.0 | 115.0 ± 7.0 (SD); in vivo, maximum passive flexion | Leijnse et al. 2010 | goniometer on the dorsum, gentle force to the end of motion; digits 2-5 pooled (Table 1) |
+| CMC4 / CMC5 flexion-extension arc (deg) | 21.0 / 43.3 | 21.0 / 43.3 | 20.0 / 44.0 ± 10.0 / 8.0 (SD); cadaver, passive | El-Shennawy et al. 2001 | 22 N on a pin through the metacarpal, relative to the hamate; CMC5 with CMC4 free (28 +- 3 deg with CMC4 pinned) |
+| ″ |  |  | 16.9 / 26.0 ± 0.7 / 1.4 (SEM); cadaver, passive (right hands) | Batmanabane & Malathi 1985 | total arc from full extension, Table 2 |
+| CMC4 / CMC5 flexion limit (model) against the active maximum (deg) | 16.0 / 33.0 | 16.0 / 33.0 | 12.2 / 25.1 ± 3.0 / 3.5 (SD); in vivo, active | Büren et al. 2020 | maximal little-finger opposition, relative to MC3, ultrasound (CMC4: Al Maktary 2019, same hands) |
+| Coupling CMC5 / CMC4 (ratio) | 2.1 | 2.1 | 2.1; in vivo, active maxima (25.1 / 12.2 deg) | Büren et al. 2020 | maximal little-finger opposition; CMC4 value of Al Maktary 2019 |
+| ″ |  |  | 2.0; in vivo, grasp | Shimawaki et al. 2019 | helical angles 9.0 / 4.4 deg, spheres of 40-97 mm |
+| ″ |  |  | 2.7; in vivo, one subject | Buffi et al. 2013 | equivalent-axis flexion, Table 1 |
+| OP moment arm, CMC flexion / CMC abduction (mm) | 13.4 / -2.4 | 13.4 / -2.4 | 12.9 / -4.8 ± 3.8 / 5.0 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 4-5) |
+| AdPt moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 19.4 / 16.8 / 2.6 | 19.4 / 16.8 / 2.6 | 36.9 / 20.6 / 9.7 ± 5.8 / 15.4 / 5.2 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 2, 4, 5) |
+| AdPo moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 14.7 / 1.4 / 8.3 | 14.7 / 1.4 / 8.3 | 27.0 / 17.0 / 8.2 ± 10.5 / 12.5 / 3.9 (SD); cadaver | Smutz et al. 1998 | as above |
+| FPB moment arm (force-weighted heads), CMC flexion / CMC abduction / MP flexion (mm) | 16.9 / -4.3 / 8.7 | 16.9 / -4.3 / 8.7 | 13.4 / -10.5 / 8.8 ± 7.5 / 6.8 / 1.4 (SD); cadaver, whole muscle | Smutz et al. 1998 | as above |
+| APB moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 4.1 / -9.7 / 2.0 | 4.1 / -9.7 / 2.0 | 3.9 / -16.5 / 2.6 ± 3.1 / 7.0 / 2.4 (SD); cadaver | Smutz et al. 1998 | as above |
+| First dorsal interosseous moment arm (force-weighted heads), MCP2 flexion / radial abduction (mm) | 4.4 / 8.1 | 4.4 / 8.1 | 3.7 / 6.1 ± 1.4 / 2.1 (SD); cadaver | An et al. 1983 | averaged over the range (model: MCP2 flexion 0-90 deg, abduction -15 to 15 deg); magnitudes |
+| ″ |  |  | abduction 11.1 ± 2.9 (SD); in vivo | Infantolino & Challis 2014 | ultrasound tendon excursion, Table 2 |
+| Index MCP abduction moment, both DI1 heads at full activation (N m) | 1.1 | 1.1 | 2.7 / 1.8; in vivo, men / women (RIHM break test x PP2 length 42.6 mm) | McGee et al. 2020 | RIHM index abduction, sling at the PIP (Schreuders 2006); model: index at rest, act = 1 on DI1s and DI1d |
+| ″ |  |  | about 1.0; in vivo (93.3 N x 11.1 mm) | Infantolino & Challis 2014 | maximum FDI force and its in-vivo moment arm, Table 2 |
+| ADM moment arm (UI_UB5 before S4), MCP5 flexion / ulnar abduction (mm) | 5.2 / 9.9 | 3.2 / 6.4 | 5.7 / 10.4; normative model (moment potentials 0.271 / 0.495 x MyoHand's middle-phalanx-5 length of 21.0 mm) | An et al. 1979 | MCP neutral; magnitudes |
+| ″ |  |  | 1.7 / 6.1; model fitted to An 1979 | Lee et al. 2015 | Table 6; magnitudes |
+| Little-finger MCP abduction moment, ADM and FDM (UI_UB5 before S4) at full activation (N m) | 1.0 | 0.3 | 1.6 / 0.9; in vivo, men / women (RIHM break test 43.1 / 26.4 N x PP5 length 36.1 mm) | McGee et al. 2020 | RIHM little-finger abduction, sling at the PIP (Schreuders 2006); model: hand at rest |
+| Active cupping: CMC4 / CMC5 flexion with ODM, FDM and ADM at full activation (deg) | 11.4 / 23.6 | – | 12.2 / 25.1 ± 3.0 / 3.5 (SD); in vivo, maximal little-finger opposition | Büren et al. 2020 | MC4 / MC5 relative to MC3 (CMC4: Al Maktary 2019); model: all other muscles at 0, 1 s, myoarm_r |
+| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
+| Palmar soft tissue under the pads: palm / hypothenar / thenar (mm) | 8.0 / 16.8 / 26.7 | 8.0 / 16.8 / 26.7 | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | 26.7 ± 3.9 (SD); in vivo, whole thenar muscles (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | OP 9.7, APB 6.0, FPB 6.2; in vivo, single thenar muscles (medians, lower bounds) | Karademir et al. 2022 | water-bath ultrasound, healthy controls, Tables 2-3 |
+| Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration) (mm) | -0.8 / 16.2 / -0.7 / -0.4 | -0.8 / 16.3 / -0.7 / -0.4 | contact; functional criterion (no published distance used) | – | FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on |
+| Active fist: deepest penetration of any contact pair of the hand (mm) | 0.8 | 0.8 | < 1; model criterion | – | as above |
+
+- ADM no longer reaches the lateral band (Santo Neto 1984: an aponeurosis expansion in 16 % of hands), so it has no PIP moment (UI_UB5: 2.8 mm extensor). In tenodesis the little-finger PIP range falls from 80 to 40 deg and the largest index-to-other-digit PIP spread from 82 to 37 deg (ARMS: 16 and 15 deg).
+- Little-finger abduction: ADM and FDM give 1.02 N m at rest (UI_UB5 0.32 N m), between the RIHM norms of women (0.95) and men (1.56 N m), at the thenar specific tension of 86.3 N/cm2.
+- Active cupping with ODM, FDM and ADM: CMC4 / CMC5 11.4 / 23.6 deg, inside the in-vivo maxima of maximal little-finger opposition (12.2 +- 3.0 / 25.1 +- 3.5 deg).
+- Grip 314.9 -> 377.2 N with the digit-5 share 12.0 -> 20.6 % (ARMS 11.5 %; within the protocol's 12-point tolerance); settled 278.0 -> 339.7 N. FDM and ODM are not in the grip's muscle set; the change comes from their passive tension and ADM's path. Lateral pinch unchanged (52.9 N).
+- FDM and ODM have no published moment arms: their registered paths are kept and checked for sign (both flex CMC5; FDM flexes and ulnarly abducts MCP5: 6.4 / 5.3 mm).
+
 ### References
 
 - **McFarland et al. 2023**: McFarland et al. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023. doi:10.1109/TBME.2022.3217722 Protocols and results of its ARMS model are cited only; no ARMS file, parameter or coordinate is used.
@@ -276,5 +329,7 @@ CMC4 and CMC5 hinges (centres sphere-fitted to the metacarpal bases; CMC5 axis f
 - **Shimawaki et al. 2019**: Shimawaki S, Koya D, Nakabayashi M, Yoshida K, Sugimoto H, Toishi M. Influence of the diameter of grasped spheres on the rotation angle and axis of the second to fifth carpometacarpal joints. J Med Biol Eng 39:646-652, 2019. doi:10.1007/s40846-018-0448-0 Nine subjects, in-vivo CT while grasping spheres of 40-97 mm (Table 2).
 - **Batmanabane & Malathi 1985**: Batmanabane M, Malathi S. Movements at the carpometacarpal and metacarpophalangeal joints of the hand and their effect on the dimensions of the articular ends of the metacarpal bones. Anat Rec 213:102-110, 1985. doi:10.1002/ar.1092130114 Ten fresh cadaver hands, total passive arc from full extension (Table 2; mean +- SEM).
 - **Buffi et al. 2013**: Buffi JH, Crisco JJ, Murray WM. A method for defining carpometacarpal joint kinematics from three-dimensional rotations of the metacarpal bones captured in vivo using computed tomography. J Biomech 46(12):2104-2108, 2013. doi:10.1016/j.jbiomech.2013.05.019 One subject (Table 1).
+- **An et al. 1979**: An KN, Chao EY, Cooney WP, Linscheid RL. Normative model of human hand for biomechanical analysis. J Biomech 12(10):775-788, 1979. doi:10.1016/0021-9290(79)90163-5 Normative hand model from 10 cadaver hands; Table 6: moment potentials of the little-finger ulnar intrinsic (normalised by the middle-phalanx length).
+- **Lee et al. 2015**: Lee JH, Asakawa DS, Dennerlein JT, Jindrich DL. Finger muscle attachments for an OpenSim upper-extremity model. PLoS ONE 10(4):e0121712, 2015; correction PLoS ONE 17:e0267620, 2022. doi:10.1371/journal.pone.0121712 OpenSim finger attachments optimised to An et al. 1979; Table 6 moment arms.
 
 <!-- END generated -->

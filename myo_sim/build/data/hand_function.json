@@ -382,6 +382,38 @@
       "APL": 0.0
      },
      "grip_N": 314.9
+    },
+    {
+     "model": "+ hand rebuild S4 (UI_UB5 re-routed as ADM, FDM and ODM added, hypothenar and thumb passive scales refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003488
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9966,
+      "FDP": 0.6154,
+      "EDC": 0.9012,
+      "EIP": 0.8213,
+      "EDM": 0.8369,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.6035,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.1559,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 377.2
     }
    ]
   }

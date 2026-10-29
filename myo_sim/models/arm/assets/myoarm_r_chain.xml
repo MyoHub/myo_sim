@@ -427,6 +427,8 @@
                                                 <geom mesh="pisiform_r" name="pisiform_r" type="mesh"/>
                                                 <!--<geom name="FCU_wrap" pos="0 0 0.006" quat="0.600794 -0.4144 0.573042 -0.372748" class="myoarm_wrap" size="0.005 0.01" type="cylinder"/> -->
                                                 <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+                                                <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                <site name="ADM-P1_r" pos="-0.001 0.0021 -0.0129"/>
                                                 <site name="FCU-P4_r" pos="0.001 0.003 -0.01"/>
                                             </body>
                                             <body name="triquetrum_r" pos="-0.010784 -0.007499 -0.001289">
@@ -541,6 +543,9 @@
                                                     <!-- Never used <geom name="APL_torus_wrap" pos="0.0082 0.0023 -0.0101" quat="0.686412 -0.716478 0.0748666 -0.0994649" class="myoarm_wrap" size="0.004"/> -->
                                                     <site name="APL_torus_site_APL_side_r" pos="0.0082 0.0023 -0.0101"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+                                                    <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="FDM-P1_r" pos="-0.0051 0.0036 -0.0147"/>
+                                                    <site name="ODM-P1_r" pos="0.0085 -0.007 -0.0185"/>
                                                 </body>
                                                 <body name="secondmc_r" pos="0.014685 -0.03762 0.005032">
                                                     <geom name="2mcskin_coll_r" class="myohand_coll" size="0.010 0.028" euler="1.42 0.15 -.1"/>
@@ -667,7 +672,6 @@
                                                     <site name="UI_UB3-P2_r" pos="-0.0031 -0.0248 -0.0034"/>
                                                     <site name="LU_RB4-P1_r" pos="-0.0091 0.0054 -0.0108"/>
                                                     <site name="LU_RB5-P1_r" pos="-0.0091 0.0254 -0.0108"/>
-                                                    <site name="UI_UB5-P1_r" pos="-0.0201 0.0254 -0.0158"/>
                                                     <site name="3rdmcp_ellipsoid_site_FDS3_side_r" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_FDP3_side_r" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_EDC3_side_r" pos="0.0016 -0.0291 0.0081"/>
@@ -860,6 +864,10 @@
                                                     <!-- <geom name="5thmcp_ellipsoid_wrap" pos="0.00188166 -0.0190329 -0.0064628" quat="0.442485 -0.205619 -0.870066 -0.070096" class="myoarm_wrap" size="0.00833444"/> -->
                                                     <geom name="5thmcp_ellipsoid_wrap_r" type="cylinder" size="0.0065 0.005" pos="-0.0004 -0.0218 -0.0037" euler="-2.67175002 -0.83479098 -2.4659757" class="myoarm_wrap"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+                                                    <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="ADM-P2_r" pos="-0.006451 -0.018829 -0.011353"/>
+                                                    <site name="FDM-P2_r" pos="-0.002 -0.02 -0.01"/>
+                                                    <site name="ODM-P2_r" pos="-0.0163 -0.0152 -0.0042"/>
                                                     <site name="ECU-P6_r" pos="-0.0006 0.0207 0.0029"/>
                                                     <site name="FCU-P5_r" pos="0.0015 0.017 -0.0033"/>
                                                     <site name="FDS5-P5_r" pos="-0.00010445     -0.01308000     -0.00952000"/>
@@ -874,12 +882,10 @@
                                                     <site name="UI_UB5-P2_r" pos="-0.008 -0.019 -0.006"/> -->
                                                     <site name="RI5-P2_r" pos="0.0061 -0.0149 -0.0066"/>
                                                     <site name="LU_RB5-P2_r" pos="0.0061 -0.0199 -0.0002"/>
-                                                    <site name="UI_UB5-P2_r" pos="-0.0051 -0.0197 -0.0076"/>
                                                     <site name="5thmcp_ellipsoid_site_FDS5_side_r" pos="0.00787277 -0.0230374 -0.0115918"/>
                                                     <site name="5thmcp_ellipsoid_site_FDP5_side_r" pos="-0.0107453 -0.0256233 -0.000443011"/>
                                                     <site name="5thmcp_ellipsoid_site_EDC5_side_r" pos="-0.0101211 -0.0279141 -0.00430677"/>
                                                     <site name="5thmcp_ellipsoid_site_LU_RB5_side_r" pos="-0.00890322 -0.0194098 -0.0110643"/>
-                                                    <site name="5thmcp_ellipsoid_site_UI_UB5_side_r" pos="0.00407413 -0.0225573 -0.0142669"/>
 
                                                     <body name="5proxph_r" pos="-0.001597 -0.021431 -0.001496">
                                                         <joint axis="0.825336 0 0.564642" name="mcp5_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0142"/>
@@ -888,6 +894,9 @@
                                                         <geom mesh="5proxph_r" name="5proxph_r" type="mesh"/>
                                                         <geom name="Fifthpm_wrap_r" pos="-0.0046 -0.0349 -0.0042" quat="0.4295 -0.0398509 -0.90052 -0.0548241" class="myoarm_wrap" size="0.004 0.005" type="cylinder"/>
                                                         <inertial pos="0 0 0" mass="0.005" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
+                                                        <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                        <site name="ADM-P3_r" pos="-0.007446 -0.008516 -0.011506"/>
+                                                        <site name="FDM-P3_r" pos="-0.0045 -0.0138 -0.0128"/>
                                                         <!-- <site name="FDS5-P6_r" pos="0.0018 -0.0143 -0.0055"/>
                                                         <site name="FDS5-P7_r" pos="0.001 -0.021 -0.007"/>
                                                         <site name="FDP5-P6_r" pos="-0.001 -0.018 -0.008"/>
@@ -909,12 +918,9 @@
                                                         <site name="RI5-P3_r" pos="0.0047 -0.0143 0.0023"/>
                                                         <site name="LU_RB5-P3_r" pos="0.0035 -0.0131 0.002"/>
                                                         <site name="LU_RB5-P4_r" pos="-0.0032 -0.0372 0.0031"/>
-                                                        <site name="UI_UB5-P3_r" pos="-0.0031 -0.0177 -0.0079"/>
-                                                        <site name="UI_UB5-P4_r" pos="-0.0107 -0.0359 -0.0032"/>
 
                                                         <site name="Fifthpm_site_EDC5_side_r" pos="-0.0026 -0.0399 -0.0022"/>
                                                         <site name="Fifthpm_site_LU_RB5_side_r" pos="-0.0032 -0.0372 0.0031"/>
-                                                        <site name="Fifthpm_site_UI_UB5_side_r" pos="-0.0107 -0.0359 -0.0032"/>
 
                                                         <body name="midph5_r" pos="-0.005279 -0.035563 -0.002879">
                                                             <joint axis="0.825336 0 0.564642" name="pm5_flexion_r" pos="0 0 0" range="0 2.007129" damping="0.0105"/>
@@ -928,7 +934,6 @@
                                                             <site name="EDC5-P7_r" pos="-0.005 -0.01 0.002"/>
                                                             <site name="EDC5-P8_r" pos="-0.005 -0.021 0"/>
                                                             <site name="LU_RB5-P5_r" pos="-0.0007 -0.0167 0.0017"/>
-                                                            <site name="UI_UB5-P5_r" pos="-0.005 -0.016 -0.002"/>
                                                             <site name="Fifthmd_site_EDC5_side_r" pos="-0.00694323 -0.0205834 0.00153122"/>
                                                             <site name="EDM-P8_r" pos="-0.002 -0.003 0.003"/>
 

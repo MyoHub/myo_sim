@@ -43,6 +43,12 @@ PENALTY = 1000.0  # residual per unit of normalised fibre length outside the win
 # Anatomical offsets (deg; flexion, abduction positive) spanning the measurement box of Smutz et al. 1998.
 THUMB_BOX_DEG = {"cmc_flexion_r": (20.0, 0.0, -25.0), "cmc_abduction_r": (20.0, 0.0, -20.0), "mp_flexion_r": (-10.0, 0.0, 40.0)}
 INDEX_BOX_DEG = {"mcp2_flexion_r": (0.0, 45.0, 90.0), "mcp2_abduction_r": (-15.0, 0.0, 15.0)}
+LITTLE_BOX_DEG = {
+    "mcp5_flexion_r": (0.0, 45.0, 90.0),
+    "mcp5_abduction_r": (-15.0, 0.0, 15.0),
+    "cmc5_flexion_r": (-10.3, 0.0, 33.0),
+}
+PROXIMAL_OF_MC5 = {"pisiform_r", "hamate_r", "capitate_r", "triquetrum_r", "lunate_r"}
 
 
 def _cite(table: dict[str, Any], key: str) -> str:
@@ -218,6 +224,10 @@ def crossed(row: dict[str, Any]) -> list[str]:
         joints += ["cmc_flexion_r", "cmc_abduction_r"] + (["mp_flexion_r"] if "proximal_thumb_r" in bodies else [])
     if "2proxph_r" in bodies:
         joints += ["mcp2_flexion_r", "mcp2_abduction_r"]
+    if "5proxph_r" in bodies:
+        joints += ["mcp5_flexion_r", "mcp5_abduction_r"]
+    if bodies & {"fifthmc_r", "5proxph_r"} and bodies & PROXIMAL_OF_MC5:
+        joints += ["cmc5_flexion_r"]
     return joints
 
 
@@ -232,7 +242,7 @@ def boxes(row: dict[str, Any]) -> tuple[Poses, Poses]:
     """Measurement box and full range of motion of the joints *row* crosses (``path_fit.measurement_box``)."""
     model = _model()
     joints = crossed(row)
-    box = {j: [joint_q(j, d) for d in (THUMB_BOX_DEG | INDEX_BOX_DEG)[j]] for j in joints}
+    box = {j: [joint_q(j, d) for d in (THUMB_BOX_DEG | INDEX_BOX_DEG | LITTLE_BOX_DEG)[j]] for j in joints}
     full = {j: np.linspace(*model.joint(j).range, 5) for j in joints}
     return Poses(_grid(box)), Poses(_grid(full))
 
@@ -371,10 +381,10 @@ def _passive_script() -> Any:
 
 
 def fit_passive_scale(table: dict[str, Any]) -> None:
-    """Fit the passive-force scale (``fpmax``) of the rows that cross the thumb to the measured passive totals.
+    """Fit the passive-force scale (``fpmax``) of the rows that cross the joints of ``passive_fit.rows``.
 
     MuJoCo's passive force is linear in ``fpmax``, so each joint moment is the other muscles' moment plus
-    ``sum fpmax_i m_i(q)``. Loss as for the extrinsic muscles (``fit_muscle_passive.py``): per row of
+    ``sum fpmax_i m_i(q)`` (only the muscles a row's source includes, if it names them). Loss as for the extrinsic muscles (``fit_muscle_passive.py``): per row of
     ``passive_fit.rows`` (passive_joint_moments.json) the mean of ``excess_weight * excess^2 + deficit^2``
     (N cm) over the row's fit range, plus ``penalty * |ln(fpmax / reference)|``; the joint springs are
     fitted afterwards to what remains (``fit_passive_moments.py``).
@@ -388,12 +398,14 @@ def fit_passive_scale(table: dict[str, Any]) -> None:
     rows = [r for r in load_passive_moment_table()["joints"] if r["joint"] in cfg["rows"]]
     model = build_spec("myoarm_r").compile()
     data = mujoco.MjData(model)
-    fitted = [r for r in table["muscles"] if set(crossed(r)) & set(THUMB_BOX_DEG)]
+    joints = {prow["names"]["r"] for prow in rows}
+    fitted = [r for r in table["muscles"] if set(crossed(r)) & joints]
     ids = [model.actuator(f"{r['name']}_r").id for r in fitted]
     terms = []
     for prow in rows:
         joint = model.joint(prow["names"]["r"])
-        lo, hi = np.radians(prow["source_curve"]["fit_range_deg"])
+        span = prow["source_curve"].get("fit_range_deg")  # else the joint range
+        lo, hi = np.radians(span) if span else model.jnt_range[joint.id]
         q = np.linspace(lo, hi, 25)
         target = passive.source_torque(prow["source_curve"], model.jnt_range[joint.id])(q) * 100.0
         unit, other = np.zeros((len(q), len(ids))), np.zeros(len(q))
@@ -406,7 +418,10 @@ def fit_passive_scale(table: dict[str, Any]) -> None:
             mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
             per = data.actuator_force * moment[:, joint.dofadr[0]] * 100.0
             unit[n] = per[ids] / model.actuator_gainprm[ids, 7]
-            other[n] = per.sum() - per[ids].sum()
+            named = prow["source_curve"].get("subtract_model_muscles", {}).get("muscles")
+            counted = [model.actuator(m).id for m in named] if named else range(model.nu)
+            unit[n] *= np.array([float(i in counted) for i in ids])
+            other[n] = sum(per[i] for i in counted if i not in ids)
         terms.append((prow["joint"], target, unit, other))
     reference, (f_lo, f_hi) = cfg["fpmax_reference"], cfg["fpmax_bounds"]
 

@@ -207,7 +207,7 @@ def test_relaxed_hand_rests_off_its_limits(wrist_deg: float) -> None:
     Known exception: with the wrist extended 60 deg the little-finger MCP and PIP reach their flexion
     limits (the PIP's equilibrium lies there: it gets there within 6 s with the class damping of 0.05
     N m s/rad, within 3 s with Kamper's finger damping). FDP5 keeps some passive force there because it
-    offsets the PIP extension moment of the unfitted digit-5 intrinsics (LU_RB5, UI_UB5).
+    offsets the PIP extension moment of the unfitted digit-5 intrinsics (LU_RB5; UI_UB5 until step S4).
     """
     allowed = {f"{j}5_flexion_{s}" for j in ("mcp", "pm") for s in ("r", "l")} if wrist_deg <= -60.0 else set()
     for name, (q, lo, hi) in _settle(wrist_deg).items():

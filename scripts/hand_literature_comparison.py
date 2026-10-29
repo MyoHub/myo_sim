@@ -178,6 +178,25 @@ def _arms(model: mujoco.MjModel, tendon: str, posture: dict[str, float], joints:
     return [(length({j: posture.get(j, 0.0) + h}) - length({j: posture.get(j, 0.0) - h})) / (2 * h) * 1e3 for j in joints]
 
 
+def hypothenar(model: mujoco.MjModel) -> dict[str, Any]:
+    """ADM moment arms, little-finger abduction moment and active cupping, if the model has ADM."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "ADM_r") < 0:
+        return {}
+    arms = _arms(model, "ADM_r_tendon", {}, ("mcp5_flexion_r", "mcp5_abduction_r"))
+    data = mujoco.MjData(model)
+    for name in ("ADM_r", "FDM_r"):
+        data.act[model.actuator(name).id] = 1.0
+    mujoco.mj_forward(model, data)
+    moment = abs(float(data.qfrc_actuator[model.joint("mcp5_abduction_r").dofadr[0]]))
+    data = mujoco.MjData(model)
+    for name in ("ODM_r", "FDM_r", "ADM_r"):
+        data.ctrl[model.actuator(name).id] = 1.0
+    for _ in range(int(round(1.0 / model.opt.timestep))):
+        mujoco.mj_step(model, data)
+    cupping = [float(np.degrees(data.qpos[model.joint(f"cmc{d}_flexion_r").qposadr[0]])) for d in (4, 5)]
+    return {"adm_moment_arms": [-arms[0], arms[1]], "little_abduction_moment": moment, "hypothenar_cupping": cupping}
+
+
 def cmc45(model: mujoco.MjModel) -> dict[str, Any]:
     """CMC4/5 arcs, flexion limits and coupling ratio, if the model has the joints."""
     if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "cmc4_flexion_r") < 0:
@@ -228,7 +247,9 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
     model = myo_sim.load_model(model_name)
-    out: dict[str, Any] = {"pip_flexion_limit": pip_limits(model)} | cmc45(model) | intrinsic_moment_arms(model)
+    out: dict[str, Any] = (
+        {"pip_flexion_limit": pip_limits(model)} | cmc45(model) | intrinsic_moment_arms(model) | hypothenar(model)
+    )
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

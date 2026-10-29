@@ -7,7 +7,7 @@ MyoArm is a MuJoCo musculoskeletal model of the right upper extremity — should
 | Property | Value |
 |---|---|
 | Degrees of freedom | 38 |
-| Actuators (muscles) | 69 (63 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s; RI2 is DI1d) |
+| Actuators (muscles) | 71 (63 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s, FDM, ODM; RI2 is DI1d, UI_UB5 is ADM) |
 | Body segments | clavicle, scapula, humerus, radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1–5), proximal/middle/distal phalanges (digits 2–5), thumb phalanges |
 | Primary joints | shoulder (sternoclavicular, acromioclavicular, glenohumeral, scapulothoracic constraints), elbow flexion, forearm pronation/supination, wrist flexion/deviation, finger MCP/PIP/DIP (digits 2–5), CMC4/5 flexion (coupled), thumb CMC/MCP/IP |
 
@@ -34,6 +34,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 - Muscle parameters updated during the 2026-05 refactor to improve force-length accuracy.
 
 ## Changelog
+
+**2026-10-29** — Hypothenar muscles: `UI_UB5` re-routed as `ADM`, `FDM` and `ODM` added (+2 actuators per hand). See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-10-29** — Fourth and fifth carpometacarpal joints `cmc4_flexion_r` / `cmc5_flexion_r`, coupled CMC5 = 2.06 x CMC4, with end-range springs; five sites moved to the bone they belong to. See `docs/wiki/hand-cmc-joints.md`.
 

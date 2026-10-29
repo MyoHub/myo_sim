@@ -206,3 +206,17 @@ CMC4/5 are free in every scene (coupled). Fresh optimum (before = S2):
 | Settled grip (N) | 306 | 278 |
 | Grip, neutral / flexed wrist | -32 % / -65 % | -32 % / -66 % |
 | Tenodesis, lateral pinch | pass, 52.9 N | pass, 52.9 N |
+
+## Hand rebuild S4 (hypothenar muscles)
+
+ADM (was UI_UB5), FDM and ODM join the finger intrinsics; none is in the grip's muscle set. Fresh optimum
+(before = S3):
+
+| Quantity | S3 | S4 |
+| --- | --- | --- |
+| Grip, self-selected (N) | 314.9 | 377.2 |
+| Shares 2 / 3 / 4 / 5 (%) | 34 / 34 / 20 / 12 | 30 / 31 / 19 / 21 |
+| Settled grip (N) | 278 | 340 |
+| Grip, neutral / flexed wrist | -32 % / -66 % | -37 % / -62 % |
+| Tenodesis | pass | pass; little-finger PIP range 80 -> 40 deg (ADM has no lateral-band insertion) |
+| Lateral pinch (N) | 52.9 | 52.9 |

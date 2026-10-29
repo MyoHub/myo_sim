@@ -58,7 +58,7 @@ same world position at q = 0, so every path is unchanged with CMC4/5 at 0 (check
 | `RI5-P1_r` | MC3 | MC5 | This little-finger interosseous arises from MC5; from MC3 it extended CMC5 (7.1 mm). |
 
 `tests/test_cmc_joints.py` checks the sign of every crossing (FDS4, FDP4, LU_RB4 flex and EDC4 extends
-CMC4; FDS5, FDP5, FCU, UI_UB5 flex and EDC5, EDM, ECU extend CMC5) and that the moved interossei cross
+CMC4; FDS5, FDP5, FCU, ADM, FDM, ODM flex and EDC5, EDM, ECU extend CMC5) and that the moved interossei cross
 neither joint. The anatomical origins of the interossei are rebuilt with their identities later.
 
 ## Passive moments

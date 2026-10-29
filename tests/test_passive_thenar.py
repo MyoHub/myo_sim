@@ -28,8 +28,10 @@ from myo_sim.build.hand_data import (
 MODELS = ("myofullbody", "myotorso_arms", "myohands", "myoarm_r")
 SCRIPTS = Path(__file__).parents[1] / "scripts"
 THUMB = {
-    "r": ("cmc_flexion_r", "cmc_abduction_r", "mp_flexion_r", "ip_flexion_r", "mcp2_flexion_r", "mcp2_abduction_r"),
-    "l": ("cmc_flexion_l", "cmc_abduction_l", "mp_flexion_l", "ip_flexion_l", "mcp2_flexion_l", "mcp2_abduction_l"),
+    "r": ("cmc_flexion_r", "cmc_abduction_r", "mp_flexion_r", "ip_flexion_r", "mcp2_flexion_r", "mcp2_abduction_r")
+    + ("mcp5_flexion_r", "mcp5_abduction_r", "cmc5_flexion_r"),
+    "l": ("cmc_flexion_l", "cmc_abduction_l", "mp_flexion_l", "ip_flexion_l", "mcp2_flexion_l", "mcp2_abduction_l")
+    + ("mcp5_flexion_l", "mcp5_abduction_l", "cmc5_flexion_l"),
 }
 
 
@@ -66,7 +68,7 @@ def test_generated_blocks_are_what_the_scripts_write() -> None:
     gen = _script("generate_hand_intrinsic_muscles")
     table = load_intrinsic_table()
     ranges = gen.architecture_lengthranges(table)
-    assert gen.block_labels(table) == [None, "OP", "DI1d"]
+    assert gen.block_labels(table) == [None, "OP", "DI1d", "ADM"]
     for label in gen.block_labels(table):
         assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, gen.SCRIPT, label) == gen.tendon_block(table, label)
         assert read_generated_block(compose.RIGHT_ARM_MUSCLES_XML, gen.SCRIPT, label) == gen.muscle_block(table, ranges, label)
@@ -122,7 +124,7 @@ def test_models_carry_the_intrinsic_muscles_and_every_applied_row(name: str) -> 
 def test_both_sides_come_from_the_right_arm_files() -> None:
     """Every generated element appears on both arms; the left one through the mirroring."""
     model = myo_sim.load_model("myoarms")
-    labels = (None, "OP", "DI1d")
+    labels = (None, "OP", "DI1d", "ADM")
     blocks = [read_generated_block(compose.RIGHT_ARM_TENDONS_XML, "fit_passive_moments.py")]
     blocks += [
         read_generated_block(path, "generate_hand_intrinsic_muscles.py", label)
@@ -370,7 +372,9 @@ def test_intrinsic_moment_arms_act_as_named() -> None:
     the CMC; FPB flexes the CMC and MP and abducts the CMC. An 1983: DI1 flexes and radially abducts MCP2.
     """
     model = myo_sim.load_spec("myoarm_r").compile()
-    q = np.array([np.mean(model.joint("cmc_flexion_r").range), np.mean(model.joint("cmc_abduction_r").range), 0, 0, 0, 0])
+    q = np.array(
+        [np.mean(model.joint("cmc_flexion_r").range), np.mean(model.joint("cmc_abduction_r").range), 0, 0, 0, 0, 0, 0, 0]
+    )
     arm = {
         m: _tendon_geometry(model, f"{m}_r_tendon", THUMB["r"], q)[1:]
         for m in ("OP", "AdPt", "AdPo", "APB", "FPBs", "FPBd", "DI1s", "DI1d")
@@ -384,6 +388,13 @@ def test_intrinsic_moment_arms_act_as_named() -> None:
     for m in ("DI1s", "DI1d"):
         assert arm[m][4] < 0 and arm[m][5] < 0, m
     assert 0.0 < arm["DI1s"][1] < 5e-3  # small CMC adduction arm (Brand & Hollister 1993)
+    # Hypothenar (dL/dq; +q flexes MCP5 and CMC5 and moves digit 5 radially): ADM and FDM flex MCP5 and
+    # abduct it ulnarly, all three flex CMC5 (An 1979 for ADM; anatomy for FDM and ODM).
+    little = {m: _tendon_geometry(model, f"{m}_r_tendon", THUMB["r"], q)[1:] for m in ("ADM", "FDM", "ODM")}
+    for m in ("ADM", "FDM"):
+        assert little[m][6] < 0 and little[m][7] > 0, m
+    for m in ("ADM", "FDM", "ODM"):
+        assert little[m][8] < 0, m
 
 
 def test_fitted_rows_reproduce_from_their_source_curves() -> None:
