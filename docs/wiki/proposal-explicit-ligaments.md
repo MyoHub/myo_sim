@@ -395,6 +395,12 @@ the cited paper.
       arc.
     - The posterior MCL is taut only in flexion.
     - The anterior MCL is the strongest and stiffest, failing at 260 N on average.
+    - Table 1 (p. 175; mean, SD), anterior MCL / posterior MCL / radial collateral:
+      stiffness 1528 (478) / 861 (240) / 924 (470) N per unit strain, resting length
+      21.1 / 16.5 / 19.9 mm, which gives about 72 / 52 / 46 N/mm; modulus 118 (37) /
+      97 (27) / 54 (28) MPa; cross-section 12.9 / 8.9 / 17.0 mm²; n = 6-7.
+    - The 54-118 MPa moduli bracket the transfer modulus of about 80 MPa used for the
+      hand ligaments above.
   - Spratley EM, Wayne JS (2011). Computational model of the human elbow and forearm:
     application to complex varus instability. Ann Biomed Eng 39(3):1084-1091.
     doi:10.1007/s10439-010-0224-y.
