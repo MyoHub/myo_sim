@@ -198,8 +198,7 @@ def fds5_force(table: dict[str, Any]) -> None:
     factors = [f["model_force_N"][m] / f["holzbaur_force_N"][m] for m in ("FDS2", "FDS3", "FDS4")]
     f["force_N"] = {
         "value": round(f["holzbaur_force_N"]["FDS5"] * float(np.mean(factors)), 1),
-        "derivation": "Holzbaur 2005 FDS5 x mean(MyoHand / Holzbaur, FDS2-4) = "
-        f"16.5 x {np.mean(factors):.3f}",
+        "derivation": f"Holzbaur 2005 FDS5 x mean(MyoHand / Holzbaur, FDS2-4) = 16.5 x {np.mean(factors):.3f}",
     }
 
 

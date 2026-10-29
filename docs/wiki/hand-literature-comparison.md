@@ -721,14 +721,19 @@ extrinsic findings below.
 Adopted values that the literature questions, to be checked once more before the release of the
 revised hand. Items that a later step resolved say so.
 
-- **Specific tension of the hand intrinsics: 86.3 N/cm2** for all intrinsics (OP keeps 180 N). This is
-  the thenar precedent, a fit to MyoHand's earlier forces, not a measured hand value. At this value the
-  index MCP abduction moment with both DI1 heads (1.05 N m) equals the in-vivo first dorsal interosseous
-  moment (Infantolino & Challis 2014, about 1.0 N m) but is 39-57 % of the RIHM norms (McGee et al. 2020:
-  2.7 / 1.8 N m, men / women, sling at the PIP after Schreuders et al. 2006), i.e. about 2x below. The
-  little-finger abduction moment (1.02 N m) lies between the women's and men's norms (0.95 / 1.56 N m).
-  Published values span 35 N/cm2 (Brand et al. 1981) to 55 N/cm2 (O'Brien et al. 2010, quadriceps in
-  vivo); Holzbaur et al. 2005 use 45 N/cm2 for the forearm muscles.
+- **One specific tension for the whole hand (decisions D4 and D7, one question).** The intrinsics use
+  86.3 N/cm2 (OP keeps 180 N), the thenar precedent: a fit to MyoHand's earlier forces, not a measured hand
+  value. The extrinsics keep MyoHand's forces, which are Holzbaur et al. 2005's (45 N/cm2) times 2.1-3.7
+  (ECU 2.07, FCU 3.72, FDS2-4 2.66-2.96, FDP2-5 2.60-2.97, EDC2-5 2.67-3.21; S7 moved only the outlier FDS5,
+  4.56 -> 2.82 x), i.e. an implied 93-167 N/cm2 against Holzbaur's PCSAs. The two halves of the hand
+  therefore sit at different specific tensions. Evidence on either side: at 86.3 N/cm2 the index MCP
+  abduction moment with both DI1 heads (1.05 N m) equals the in-vivo first dorsal interosseous moment
+  (Infantolino & Challis 2014, about 1.0 N m) but is 39-57 % of the RIHM norms (McGee et al. 2020: 2.7 / 1.8
+  N m, men / women, sling at the PIP after Schreuders et al. 2006); the little-finger abduction moment
+  (1.02 N m) lies between the women's and men's norms (0.95 / 1.56 N m); the grip (324.6 N after S7) lies
+  inside O'Driscoll et al. 1992's 402.1 +- 131.4 N. Published values span 35 N/cm2 (Brand et al. 1981) to
+  55 N/cm2 (O'Brien et al. 2010, quadriceps in vivo); Holzbaur et al. 2005 use 45 N/cm2 for the forearm and
+  hand. Open: one value for intrinsics and extrinsics, and with it the forces of both.
 - **First dorsal interosseous head split 0.36 / 0.64** (DI1s / DI1d) from one specimen (Mirakhorlo et
   al. 2016). Linscheid et al. 1991 (n = 8, Table 1) give 2.05 and 2.04 cm2 for the two heads, i.e.
   0.50 / 0.50.
@@ -749,7 +754,7 @@ revised hand. Items that a later step resolved say so.
   0.228, 0.405 on the proximal phalanx; Chao & An's 1/3 / 2/3 gave a DIP arm of 2.1 mm against 0.7 +- 0.6
   mm). Lee et al. 2008b's effective PIP arm is a small flexor (-0.84 mm), which no fixed fraction gives (the
   model: 2.0 mm extensor at Lee's postures). Fitted on the index and applied to all four lumbricals.
-- **Dorsal-interosseous hood fractions (decision D6, pending):** DI2 0.48, DI3 0.93, DI4 0.66 from Salsbury
+- **Dorsal-interosseous hood fractions (decision D6, kept):** DI2 0.48, DI3 0.93, DI4 0.66 from Salsbury
   1937 (Table II, 28 hands; tendon share to the expansion, which includes the transverse hood fibres acting at
   the MCP, so an upper bound for the band share). The alternative is 0.5 each (the middle of Ikebuchi 1988's
   one to two thirds); it changes the grip by -1 % and the digit shares by < 1 point.
@@ -762,43 +767,55 @@ revised hand. Items that a later step resolved say so.
   extensor); the protocol keeps every
   finger intrinsic at full activation, and LU_RB3's 98 N MCP flexion (1225 N/cm2 implied) is gone. The
   settled grip is 267 N (in vivo 402 +- 131 N). ARMS's shares are model values, not measurements.
+- **Extensor share c = 1.0:** fitted by weighted least squares to the index EDC2 and EIP DIP and PIP
+  moment arms (An et al. 1983; Lee et al. 2008b; unbounded optimum 1.09, `extensor-mechanism.md`). Lee et
+  al. 2008a measured a nine-posture mean of 0.39 (0.72 with the finger extended, 0.25-0.31 with the IP
+  joints flexed); at 0.39 the IP joints get about a third of the measured extension arms. The model keeps
+  the moment arms and leaves no extensor force on the proximal phalanx.
 - **ORL above PIP 0:** Ueba et al. 2011's ORL shares at PIP 30 / 60 / 90 deg (31 / 18 / 3 %) are not
-  reproduced; the ORL stays slack there because Harris & Rutledge 1972's slack range is kept
-  (`extensor-mechanism.md`).
-- **IP coupling under FDP alone:** dDIP/dPIP at PIP 70 deg is 0.38 (Leijnse et al. 2010: 1.0 +- 0.31), and
-  the FDP ramp stalls at PIP 99 deg; constant extensor fractions cannot release the distal phalanx in deep
-  PIP flexion (option (b) of the extensor-mechanism proposal).
+  reproduced (model 0 / 0 / 0 %, 23.7 % at PIP 0 against 25 %); the ORL stays slack there because Harris &
+  Rutledge 1972's slack range (no force while DIP - PIP <= 30 deg) is kept (`extensor-mechanism.md`). To be
+  revisited with the explicit-ligaments proposal (myo_sim PR #142).
+- **IP coupling under FDP alone:** dDIP/dPIP at PIP 70 deg is 0.26 since S5 (0.38 after EM-a; Leijnse et
+  al. 2010: 1.0 +- 0.31), and the FDP ramp stalls before PIP 100 deg, so no slope there (Leijnse 0.5 +-
+  0.3). Constant extensor fractions cannot release the distal phalanx in deep PIP flexion (option (b) of the
+  extensor-mechanism proposal).
 - **Lumbrical node tie (S6):** the tendon equality ties each lumbrical node to its FDP as a rigid,
   always-taut tendon. With compliant tendons the node should follow the tendon material (error bounded by
   FDP's distal stretch, about 5 mm against 30-37 mm of lumbrical excursion), and when the FDP is slack the
-  tie still holds the node instead of letting the tendon buckle. The node's armature (0.03 kg) and damping
-  (5 N s/m) are numerical settings chosen against chatter at 2 ms, not tissue values.
-- **Lumbrical passive tension in the fist (S6):** with the node following the FDP, the lumbricals reach
-  1.32-1.36 L_fo at the flexion limits (slack length set at the middle of the excursion) and MuJoCo's
-  passive curve gives 4-7 N there (39-71 % of F_max); no measured lumbrical passive force is available to fit it.
+  tie still holds the node instead of letting the tendon buckle.
 - **Left-right contact settling:** where fingers touch at rest, the two hands of `myofullbody` settle up
   to 0.17 deg apart; the joint and case move with small model changes (since S7: MCP4 with both wrists
   flexed 60 deg; see `tests/test_muscle_passive.py` and `hand-contacts-and-pads.md`).
-- **Juncturae (S7):** ring-finger traction extends the little finger as von Schroeder & Botte 1993
-  measured (junctura share 22.3 against 22 deg) but the middle finger by 6.2 against 18 deg: the EDC4-EDC3
-  link sits at its numerical stiffness bound (force chatter above 1000 N/m at 2 ms) and its obliquity
-  limits the transfer. Traction on the middle-finger tendon does not reach the neighbours (7-8 deg
-  measured). The node positions along the tendons are a judgement (`hand-extrinsic-muscles.md`).
-- **FDP inter-tendon links (S7, not added):** need a population slack range and stiffness; neural
+- **FDP inter-tendon links (S7, not modelled):** the deep flexor tendons are coupled by passive
+  connections that are slack over a range and then taut (Leijnse 1997, `hand-extrinsic-muscles.md`); the
+  model's FDP tendons are independent. A link needs a population slack range and stiffness; neural
   enslaving (Zatsiorsky et al. 2000) bounds the transfer from above only.
 - **ECU and forearm rotation (S7, not changed):** the model's ECU extension arm (7.5 mm) does not fall in
   pronation (Loren 1996: 7.8 / 7.2 / 0.9 mm in supination / neutral / pronation). Putting its groove on
   the ulna overshoots (16 to -12.6 mm) because the model's forearm-rotation axis passes about 20 mm from
   the ulnar groove.
-- **Extrinsic forces (decision D7):** MyoHand's extrinsic forces are Holzbaur et al. 2005's (45 N/cm2)
-  times 2.1-3.7 (ECU 2.07, FCU 3.72, FDS2-4 2.66-2.96, FDP2-5 2.60-2.97, EDC2-5 2.67-3.21), i.e. an
-  implied 93-167 N/cm2 against Holzbaur's PCSAs, mostly above the intrinsics' adopted 86.3 N/cm2. S7 only moved
-  the outlier FDS5 (4.56 -> 2.82 x). Re-deriving all extrinsics at one specific tension is open.
 - **Wrap side sites at a sphere's centre:** `EDCI_torus_site_EDC2_side_r` and `ECU_torus_site_ECU_side_r`
   sit at the centre of their wrap spheres; CPU and mujoco-warp resolve the side differently there (EDC2's
   tangent points 4.2 mm apart, length 0.25 mm). Moving the side sites off-centre would make both agree.
 - **Digit-5 CMC spring (S7):** RMS against the source 0.005 -> 0.023 N m (peak 0.96 N m) after the FCU
   re-route; the intrinsic passive scales were not refitted.
+
+### Accepted design choices
+
+Settings without a direct measurement that are kept as the final design.
+
+- **Lumbrical node armature and damping (S6):** 0.03 kg and 5 N s/m on each node slide, numerical settings
+  chosen against chatter at 2 ms, not tissue values; the node carries no mass in reality.
+- **Lumbrical slack rule (S6):** each lumbrical's slack length sits at the middle of its excursion with the
+  node following the FDP. The lumbricals reach 1.32-1.36 L_fo at the flexion limits and MuJoCo's passive
+  curve gives 4-7 N there (39-71 % of F_max); no measured lumbrical passive force exists to fit it.
+- **Junctura link JT34 at its stiffness bound (S7):** ring-finger traction extends the little finger as von
+  Schroeder & Botte 1993 measured (junctura share 22.3 against 22 deg) but the middle finger by 6.2 against
+  18 deg: the EDC4-EDC3 link sits at 1000 N/m, the bound set by force chatter at 2 ms, and its obliquity
+  limits the transfer (even a rigid link stays far below 18 deg). Traction on the middle-finger tendon
+  does not reach the neighbours (7-8 deg measured), since a tension-only link from the ring tendon
+  slackens. The node positions along the tendons are a judgement (`hand-extrinsic-muscles.md`).
 
 References (this section): Hollister A, Buford WL, Myers LM, Giurintano DJ, Novick A. The axes of
 rotation of the thumb carpometacarpal joint. J Orthop Res 10(3):454-460, 1992 (seven fresh cadaver

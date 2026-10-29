@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-29 — Release checks of the hand rebuild: open questions and accepted design choices
+Changed: `docs/wiki/hand-literature-comparison.md` (section "Open checks before release", new subsection "Accepted design choices")
+Why: Before the release of the revised hand, the adopted values that the literature questions are listed with their evidence (one specific tension for intrinsics and extrinsics, hood fractions, extensor share, ORL slack, IP coupling, FDP links), and the numerical settings kept as final (lumbrical node armature and damping, lumbrical slack rule, JT34 at its stiffness bound) are recorded as such.
+
 ## 2026-10-29 — Juncturae tendinum, FCU and FDS5 (hand rebuild S7)
 Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (node blocks JT3-5, FCU hamate block, FCU sites), `myoarm_r_tendon.xml` (junctura ties and links, FCU path), `myoarm_r_assets.xml` (tie equalities), `myoarm_r_muscle.xml` (FCU length range, FDS5 force, refitted passive parameters), `myo_sim/build/data/extrinsic_muscles.json` (new), `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache), `hand_literature.json`, `scripts/generate_extrinsic_muscles.py` (new), `scripts/hand_literature_comparison.py`, `tests/test_extrinsic_muscles.py` (new), joint counts in `test_sims.py`, `test_fragment_registry.py`, `test_myohand_equivalence.py`, `test_lumbrical_nodes.py`, `test_muscle_passive.py` (contact settling exception moved to MCP4 at 60 deg wrist flexion), `docs/wiki/hand-extrinsic-muscles.md` (new), `hand-literature-comparison.md`, `index.md`, `repository-map.md`, `testing-guide.md`, `myo_sim/models/arm/README.md`, `README_hand.md`, `CHANGELOG.md`
 Why: The extensor tendons of the ulnar fingers were independent although the juncturae couple them; FCU ran past the pisiform without the hamate hook and with flexion and ulnar arms outside Horii's bands; FDS5 carried almost half of FDS4's force against a quarter of its PCSA.
