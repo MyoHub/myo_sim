@@ -35,6 +35,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 
 ## Changelog
 
+**2026-10-29** — PIP flexion limit of digits 2-5 raised from 90 to 115 deg (Leijnse et al. 2010), palm pads refitted (palm 8.0 mm), EDM without the `Fifthpm_wrap_r` wrap. See `docs/wiki/passive-moments-and-thenar.md`.
+
 **2026-10-29** — Fingertip pads moved from the nail side to the palm side and fitted to the fingertip soft tissue of Dallard et al. 2018; palm, thenar and hypothenar pads added; 144 self-contact pairs per hand (`contacts/myohand_self_contacts.xml`) now in every model with a hand. Changes the dynamics wherever fingers touch each other or the palm. See `docs/wiki/hand-contacts-and-pads.md`.
 
 **2026-10-29** — Every right-arm joint, actuator, tendon, geom and camera name carries `_r` (`OP` -> `OP_r`, `cmc_flexion` -> `cmc_flexion_r`); muscle tendons are named after their actuator (`OP_r_tendon`, left `OP_l_tendon`); `plam_lookat` is `palm_lookat_r`. Names only: the compiled numerics are identical. See `CHANGELOG.md` for the downstream list.

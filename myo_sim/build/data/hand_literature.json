@@ -40,6 +40,12 @@
       "citation": "Karademir F, Ayhan Kuru C, Arin G, Soylu R. Morphometry of thenar muscles by water bath ultrasonography in trapeziometacarpal osteoarthritis: intra- and inter-rater reliability. J Hand Surg Eur Vol, 2022.",
       "doi": "10.1177/17531934221130669",
       "note": "Eight healthy volunteers (medians), Tables 2-3. Muscle thickness only: a lower bound."
+    },
+    "leijnse2010": {
+      "short": "Leijnse et al. 2010",
+      "citation": "Leijnse JNAL, Quesada PM, Spoor CW. Kinematic evaluation of the finger's interphalangeal joints coupling mechanism: variability, flexion-extension differences, triggers, locking swanneck deformities, anthropometric correlations. J Biomech 43(12):2381-2393, 2010.",
+      "doi": "10.1016/j.jbiomech.2010.04.021",
+      "note": "17 hands of 9 healthy adults (33 +- 11 years); maximum passive flexion and extension per joint with a goniometer, digits 2-5 pooled per hand (Table 1)."
     }
   },
   "quantities": {
@@ -259,6 +265,20 @@
           "kind": "model criterion",
           "source": null,
           "protocol": "as above"
+        }
+      ]
+    },
+    "pip_flexion_limit": {
+      "label": "PIP flexion limit, digit 2 / 3 / 4 / 5",
+      "unit": "deg",
+      "literature": [
+        {
+          "value": 115,
+          "spread": 7,
+          "spread_kind": "SD",
+          "kind": "in vivo, maximum passive flexion",
+          "source": "leijnse2010",
+          "protocol": "goniometer on the dorsum, gentle force to the end of motion; digits 2-5 pooled (Table 1)"
         }
       ]
     }
@@ -538,6 +558,130 @@
         "Active fist: digits 2, 4 and 5 touch the palm and hypothenar pads (within 0.8 mm); digit 3 stops 18 mm short, held by its neighbours (with MCP abduction free the flexing fingers converge). Penetration beyond each pair's margin stays below 1 mm.",
         "The palm pad thickness (19.1 mm) comes from the fist criterion with the joints at their flexion limits; the model's PIP limit (90 deg) is below the usual 100-110 deg, so the fingertips land farther from the bones than in a real fist and the pad compensates.",
         "Tenodesis and lateral pinch are unchanged: their scenes remove all model contact pairs (the protocol). With the self-contacts kept, tenodesis with MCP abduction locked fails the direction check (largest reversal 2.6 deg against 2 deg): fingers 2-4 converge and push each other."
+      ]
+    },
+    {
+      "id": "s1b",
+      "title": "S1b: PIP flexion range from the literature",
+      "summary": "PIP flexion limit of digits 2-5 raised from 90 to 115 deg (Leijnse et al. 2010, maximum passive flexion, 115 +- 7 deg); palm pads refitted to the fist at the new limits; the PIP springs refitted (they change by less than 0.01 %); EDM loses a wrap that switched on abruptly near PIP5 108 deg. Before = S1.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.34,
+          78.22,
+          73.38,
+          50.37
+        ],
+        "tenodesis_pip_rom": 29.89,
+        "tenodesis_index_gap": [
+          66.66,
+          81.84
+        ],
+        "tenodesis_release": [
+          77.65,
+          78.48,
+          73.99,
+          26.68
+        ],
+        "grip_self_selected": 310.32,
+        "grip_settled": 282.87,
+        "grip_shares": [
+          29.54,
+          37.97,
+          22.94,
+          9.54
+        ],
+        "grip_posture_change": [
+          -33.85,
+          -67.94
+        ],
+        "lateral_pinch": 38.69,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.33,
+          "3": 14.36,
+          "4": -0.51,
+          "5": -0.27
+        },
+        "fist_max_penetration": 0.77
+      },
+      "before": {
+        "label": "s1b",
+        "id": "s1",
+        "values": {
+          "tenodesis_mcp_rom": [
+            77.34,
+            78.22,
+            73.38,
+            50.87
+          ],
+          "tenodesis_pip_rom": 28.21,
+          "tenodesis_index_gap": [
+            66.7,
+            77.26
+          ],
+          "tenodesis_release": [
+            77.65,
+            78.48,
+            73.99,
+            26.6
+          ],
+          "grip_self_selected": 232.48,
+          "grip_settled": 132.84,
+          "grip_shares": [
+            20.76,
+            40.72,
+            27.01,
+            11.51
+          ],
+          "grip_posture_change": [
+            -29.59,
+            -68.33
+          ],
+          "lateral_pinch": 38.69,
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 19.09,
+            "hypothenar_pad_r": 17.04,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": -0.73,
+            "3": 18.48,
+            "4": -0.64,
+            "5": -0.43
+          },
+          "fist_max_penetration": 0.74
+        }
+      },
+      "notes": [
+        "Grip: with the 8.0 mm palm pad (was 19.1 mm) the dynamometer sits closer to the metacarpals and the fingers close further around it. The self-selected grip rises from 232.5 to 310.3 N, back inside the in-vivo band (O'Driscoll 1992 mean - 1 SD = 270.7 N), and the settled grip from 132.8 to 282.9 N. The digit shares (29.5 / 38.0 / 22.9 / 9.5 %) are within 6 points of the ARMS shares.",
+        "Active fist: digits 2, 4 and 5 touch the palm and hypothenar pads; digit 3 still stops short, now 14.4 mm (was 18.5 mm), held by its neighbours.",
+        "Palm pad: 8.0 mm with the fingertips at the new flexion limits, close to the hypothenar muscle thickness of Misirlioglu (8.4 +- 1.9 mm); the hypothenar pad changes little (16.8 mm), as digit 5 lands on it with MCP and DIP, not PIP, setting the reach.",
+        "Tenodesis passes all checks; trial A ROM of digit 5 PIP is 80 deg, the other values move by at most 2 deg. Lateral pinch is unchanged (no thumb change).",
+        "Passive PIP moment near the new end range (muscles at act = 0 plus springs, other joints at 0): index -0.08 / -0.11 / -0.14 N m at 90 / 100 / 115 deg, digits 3-4 -0.07 to -0.10 N m; Kamper 2002 measured up to 60 deg (held at -0.04 N m beyond). The excess over the held value comes from the interosseous and lumbrical bundles stretched over the PIP (LU_RB, UI_UB), which a restoring spring cannot remove. Digit 5: -0.16 / -0.24 N m at 90 / 100 deg, but LU_RB5 turns into a PIP flexor at 114-115 deg (its wrap over Fifthpm_wrap_r switches side), so the total becomes +0.16 N m at the limit; the lumbrical paths are rebuilt in S5."
       ]
     }
   ]

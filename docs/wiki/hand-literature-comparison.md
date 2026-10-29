@@ -128,6 +128,40 @@ Fingertip pads moved to the palmar side and fitted to Dallard's D_N0 (6.4 mm, sc
 - The palm pad thickness (19.1 mm) comes from the fist criterion with the joints at their flexion limits; the model's PIP limit (90 deg) is below the usual 100-110 deg, so the fingertips land farther from the bones than in a real fist and the pad compensates.
 - Tenodesis and lateral pinch are unchanged: their scenes remove all model contact pairs (the protocol). With the self-contacts kept, tenodesis with MCP abduction locked fails the direction check (largest reversal 2.6 deg against 2 deg): fingers 2-4 converge and push each other.
 
+### S1b: PIP flexion range from the literature
+
+PIP flexion limit of digits 2-5 raised from 90 to 115 deg (Leijnse et al. 2010, maximum passive flexion, 115 +- 7 deg); palm pads refitted to the fist at the new limits; the PIP springs refitted (they change by less than 0.01 %); EDM loses a wrap that switched on abruptly near PIP5 108 deg. Before = S1.
+
+| Quantity | Model (s1b) | Model (before) | Literature (± spread) | Reference | Protocol / posture |
+| --- | --- | --- | --- | --- | --- |
+| Tenodesis: MCP flexion range per digit 2 / 3 / 4 / 5, trial A (deg) | 77.3 / 78.2 / 73.4 / 50.4 | 77.3 / 78.2 / 73.4 / 50.9 | mean 65.2; model (ARMS) | McFarland et al. 2023 | act = 0; wrist 60 deg flexion to 60 deg extension at 20 deg/s; elbow 90 deg, forearm neutral; thumb and MCP abduction locked |
+| Tenodesis: mean PIP flexion range, trial A (deg) | 29.9 | 28.2 | 16.1; model (ARMS) | McFarland et al. 2023 | as above |
+| Tenodesis: largest index-to-other-digit spread, MCP / PIP (deg) | 66.7 / 81.8 | 66.7 / 77.3 | 49.2 / 14.6; model (ARMS) | McFarland et al. 2023 | as above |
+| Release (trial B): MCP extension per digit 2 / 3 / 4 / 5 (deg) | 77.7 / 78.5 / 74.0 / 26.7 | 77.7 / 78.5 / 74.0 / 26.6 | digits extend; model (ARMS) | McFarland et al. 2023 | from the end of trial A: 60 deg extension back to 60 deg flexion |
+| Maximum power grip, self-selected wrist (N) | 310.3 | 232.5 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | dynamometer, self-selected wrist (35 deg extension, 7 deg ulnar deviation) |
+| ″ |  |  | 463.9 ± 125.9 (SD); in vivo, men | Mathiowetz et al. 1985 | Jamar, second handle position, seated, shoulder adducted, elbow 90 deg, forearm and wrist neutral, right hand (Table 2) |
+| ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
+| Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 282.9 | 132.8 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.5 / 38.0 / 22.9 / 9.5 | 20.8 / 40.7 / 27.0 / 11.5 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip change, neutral / flexed wrist against self-selected (%) | -33.9 / -67.9 | -29.6 / -68.3 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
+| Lateral (key) pinch force (N) | 38.7 | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
+| ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
+| ″ |  |  | 72.1 ± 13.3 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| PIP flexion limit, digit 2 / 3 / 4 / 5 (deg) | 115.0 / 115.0 / 115.0 / 115.0 | – | 115.0 ± 7.0 (SD); in vivo, maximum passive flexion | Leijnse et al. 2010 | goniometer on the dorsum, gentle force to the end of motion; digits 2-5 pooled (Table 1) |
+| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
+| Palmar soft tissue under the pads: palm / hypothenar / thenar (mm) | 8.0 / 16.8 / 26.7 | 19.1 / 17.0 / 26.7 | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | 26.7 ± 3.9 (SD); in vivo, whole thenar muscles (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | OP 9.7, APB 6.0, FPB 6.2; in vivo, single thenar muscles (medians, lower bounds) | Karademir et al. 2022 | water-bath ultrasound, healthy controls, Tables 2-3 |
+| Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration) (mm) | -0.3 / 14.4 / -0.5 / -0.3 | -0.7 / 18.5 / -0.6 / -0.4 | contact; functional criterion (no published distance used) | – | FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on |
+| Active fist: deepest penetration of any contact pair of the hand (mm) | 0.8 | 0.7 | < 1; model criterion | – | as above |
+
+- Grip: with the 8.0 mm palm pad (was 19.1 mm) the dynamometer sits closer to the metacarpals and the fingers close further around it. The self-selected grip rises from 232.5 to 310.3 N, back inside the in-vivo band (O'Driscoll 1992 mean - 1 SD = 270.7 N), and the settled grip from 132.8 to 282.9 N. The digit shares (29.5 / 38.0 / 22.9 / 9.5 %) are within 6 points of the ARMS shares.
+- Active fist: digits 2, 4 and 5 touch the palm and hypothenar pads; digit 3 still stops short, now 14.4 mm (was 18.5 mm), held by its neighbours.
+- Palm pad: 8.0 mm with the fingertips at the new flexion limits, close to the hypothenar muscle thickness of Misirlioglu (8.4 +- 1.9 mm); the hypothenar pad changes little (16.8 mm), as digit 5 lands on it with MCP and DIP, not PIP, setting the reach.
+- Tenodesis passes all checks; trial A ROM of digit 5 PIP is 80 deg, the other values move by at most 2 deg. Lateral pinch is unchanged (no thumb change).
+- Passive PIP moment near the new end range (muscles at act = 0 plus springs, other joints at 0): index -0.08 / -0.11 / -0.14 N m at 90 / 100 / 115 deg, digits 3-4 -0.07 to -0.10 N m; Kamper 2002 measured up to 60 deg (held at -0.04 N m beyond). The excess over the held value comes from the interosseous and lumbrical bundles stretched over the PIP (LU_RB, UI_UB), which a restoring spring cannot remove. Digit 5: -0.16 / -0.24 N m at 90 / 100 deg, but LU_RB5 turns into a PIP flexor at 114-115 deg (its wrap over Fifthpm_wrap_r switches side), so the total becomes +0.16 N m at the limit; the lumbrical paths are rebuilt in S5.
+
 ### References
 
 - **McFarland et al. 2023**: McFarland et al. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023. doi:10.1109/TBME.2022.3217722 Protocols and results of its ARMS model are cited only; no ARMS file, parameter or coordinate is used.
@@ -137,5 +171,6 @@ Fingertip pads moved to the palmar side and fitted to Dallard's D_N0 (6.4 mm, sc
 - **Dallard et al. 2018**: Dallard J, Merlhiot X, Petitjean N, Duprey S. MRI-based experimentations of fingertip flat compression: geometrical measurements and finite element inverse simulations to investigate material property parameters. J Biomech 67:166-171, 2018. doi:10.1016/j.jbiomech.2017.11.024 Index fingertip, 5 men (32 +- 8 years), MRI. Table 2 (soft-tissue thickness normal to the pad at 0, 45 and 90 deg), Table 3 (deflection under flat compression).
 - **Ozekli Misirlioglu & Ozyemisci Taskiran 2018**: Ozekli Misirlioglu T, Ozyemisci Taskiran O. Reliability of sonographic muscle thickness measurements of the thenar and hypothenar muscles. Muscle Nerve 57(1):E14-E17, 2018. doi:10.1002/mus.25735 Both hands of 15 volunteers, ultrasound. Table 2. Muscle thickness only: a lower bound for the soft tissue under the palm pads.
 - **Karademir et al. 2022**: Karademir F, Ayhan Kuru C, Arin G, Soylu R. Morphometry of thenar muscles by water bath ultrasonography in trapeziometacarpal osteoarthritis: intra- and inter-rater reliability. J Hand Surg Eur Vol, 2022. doi:10.1177/17531934221130669 Eight healthy volunteers (medians), Tables 2-3. Muscle thickness only: a lower bound.
+- **Leijnse et al. 2010**: Leijnse JNAL, Quesada PM, Spoor CW. Kinematic evaluation of the finger's interphalangeal joints coupling mechanism: variability, flexion-extension differences, triggers, locking swanneck deformities, anthropometric correlations. J Biomech 43(12):2381-2393, 2010. doi:10.1016/j.jbiomech.2010.04.021 17 hands of 9 healthy adults (33 +- 11 years); maximum passive flexion and extension per joint with a goniometer, digits 2-5 pooled per hand (Table 1).
 
 <!-- END generated -->

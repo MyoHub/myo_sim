@@ -277,6 +277,35 @@
       "APL": 0.0
      },
      "grip_N": 232.5
+    },
+    {
+     "model": "+ hand rebuild S1b (PIP flexion limit 115 deg, palm pads refitted)",
+     "fingerprint": {
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.007986
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9997,
+      "FDP": 0.6736,
+      "EDC": 0.9886,
+      "EIP": 1.0,
+      "EDM": 0.0001,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.8763,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.3162,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 310.3
     }
    ]
   }

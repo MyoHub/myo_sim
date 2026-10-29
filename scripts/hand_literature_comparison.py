@@ -156,11 +156,16 @@ def fist(model_name: str = "myoarm_r") -> dict[str, Any]:
     return {"tip_to_palm_mm": gaps, "max_penetration_mm": penetration, "hand_pairs": int(hand_pairs)}
 
 
+def pip_limits(model: mujoco.MjModel) -> list[float]:
+    """Upper (flexion) limit of the PIP joints of digits 2-5 (deg)."""
+    return [float(np.degrees(model.jnt_range[model.joint(f"pm{d}_flexion_r").id][1])) for d in DIGITS]
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
     model = myo_sim.load_model(model_name)
-    out: dict[str, Any] = {"fingertip_pad_thickness": fingertip_pads(model)}
+    out: dict[str, Any] = {"pip_flexion_limit": pip_limits(model), "fingertip_pad_thickness": fingertip_pads(model)}
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"
     f = fist(model_name)

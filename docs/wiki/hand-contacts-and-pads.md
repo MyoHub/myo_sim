@@ -55,15 +55,18 @@ to the fist:
   the soft tissue under it equals its palmar semi-axis. Shapes and anchors are assumed
   (`hand_pads.json`).
 - `palm_pad_r` (on MC3, over MC2-4, 40 × 36 mm): the thickness at which, with MCP, PIP and DIP of digits
-  2-4 at their flexion limits, the nearest fingertip just touches it: **19.1 mm**.
-- `hypothenar_pad_r` (on MC5, proximal two thirds): the same with digit 5: **17.0 mm**, above the
-  hypothenar muscle thickness (8.4 mm).
+  2-4 at their flexion limits, the nearest fingertip just touches it: **8.0 mm** (19.1 mm while the PIP
+  flexion limit was 90 deg, before S1b).
+- `hypothenar_pad_r` (on MC5, proximal two thirds): the same with digit 5: **16.8 mm** (17.0 mm before
+  S1b), above the hypothenar muscle thickness (8.4 mm).
 - `thenar_pad_r` (on MC1): no fingertip reaches the thenar eminence in the fist, so it takes the lower
   bound, the whole-thenar muscle thickness: **26.7 mm**.
 
-**Limitation.** The model's PIP flexion stops at 90 deg (the usual range is 100-110 deg), so in the fist
-the fingertips land farther from the bones than in a real hand and the palm pad compensates; the palm
-pad is likely thicker than a real palm's soft tissue.
+**PIP range (S1b).** The fist criterion depends on the flexion limits. With the PIP limit at 90 deg (S1)
+the fingertips landed farther from the bones than in a real fist and the palm pad took 19.1 mm. Since S1b
+the PIP limit is the measured maximum passive flexion, 115 deg (Leijnse et al. 2010; see
+`passive-moments-and-thenar.md`), and the palm pad is 8.0 mm, close to the hypothenar muscle thickness
+(8.4 ± 1.9 mm). Rerun `scripts/fit_hand_pads.py` whenever a finger flexion limit changes.
 
 ## Self-contact pairs
 
@@ -101,7 +104,7 @@ keeps stable at the 2 ms step, as for the grip dynamometer (`hand_function.json`
 | Check | Result |
 | --- | --- |
 | Active hand contacts at q = 0 (`myohand_r`, `myohands`, `myoarm_r`, `myoarms`, `myofullbody`) | none |
-| Active fist (FDS, FDP at 1, 1 s, wrist neutral, thumb locked) | penetration beyond each pair's margin ≤ 0.74 mm; digits 2, 4, 5 touch the palm (within 0.8 mm); digit 3 stops 18 mm short, held by its neighbours |
+| Active fist (FDS, FDP at 1, 1 s, wrist neutral, thumb locked) | penetration beyond each pair's margin ≤ 0.74 mm; digits 2, 4, 5 touch the palm (within 0.8 mm); digit 3 stops 14.4 mm short (18.5 mm before S1b), held by its neighbours |
 | 20 random-activation rollouts of `myohand_r` (1.5 s each) | deepest paired penetration beyond the margin 1.6 mm; up to 9 contacts; finite |
 | Unpaired penetrations in those rollouts | thumb proximal phalanx against the little finger's distal and middle phalanges (up to 14 mm: thumb-to-little opposition, below the 2 % scan threshold), the thenar pad against the MC2 capsule and the palm pad against the ring proximal phalanx near the MCP joint (pad-to-palm overlaps of one soft-tissue mass) |
 | CPU vs mujoco-warp, states from random-activation rollouts | same contacts, distances within 0.008 mm |

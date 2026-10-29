@@ -152,6 +152,35 @@ random-excitation rollouts of `myohand_r` and `myoarm_r` stay finite, with the s
 step-to-step velocity reversals as with 0.05 N m s/rad, and relaxed hands settle. This changes
 the dynamics of every downstream model with a hand.
 
+## PIP flexion range
+
+MyoHand's PIP joints stopped at 90 deg flexion, below the healthy range. Leijnse et al. 2010 (J Biomech
+43:2381, Table 1; 17 hands of 9 adults, goniometer, gentle force to the end of motion) measured a maximum
+passive PIP flexion of 115 ± 7 deg, pooled over digits 2-5 per hand. The four PIP rows carry it as a
+`range` entry (value, source, status, previous value), measured for the index and transferred to digits
+3-5 (`assumed`, as for their stiffness and damping); `fit_passive_moments.py` writes it as the joint
+`range` in `myoarm_r_chain.xml`. The extension limit stays at 0 deg (the same table gives 18 ± 13 deg of
+hyperextension, with large laxity differences); MCP (102 ± 11 deg) and DIP (87 ± 10 deg) are within about
+one SD of the model's 90 deg and unchanged.
+
+Kamper 2002 measured the PIP up to 60 deg, so the springs, fitted inside the measured range, change by
+less than 0.01 %. Beyond it the model's passive moment comes from the muscles: at 90 / 100 / 115 deg
+(other joints at 0) the index gives -0.08 / -0.11 / -0.14 N m and digits 3-4 -0.07 to -0.10 N m, against
+Kamper's -0.04 N m held from 60 deg; the excess comes from the interosseous and lumbrical bundles
+stretched over the PIP. Two path defects showed up in the new range:
+
+- **EDM** passed through `Fifthpm_wrap_r` (one end point inside the cylinder, so MuJoCo skipped the
+  wrap) until PIP5 reached about 108 deg, where the wrap switched on and the length jumped by 3.1 mm. The
+  same switching happened in some postures inside the old range (up to 2.8 mm with MCP abduction). EDM
+  now runs through its sites without that wrap, as RI2 does (below); EDC5 keeps its wrap with a side
+  site.
+- **LU_RB5** turns from a PIP extensor (4.4 mm) into a flexor (-4.0 mm) at 114-115 deg, where its wrap
+  over `Fifthpm_wrap_r` changes side, so the digit-5 passive total turns from -0.24 N m (100 deg) to
+  +0.16 N m at the limit. Left as it is: the lumbrical paths are rebuilt in step S5 of the hand rebuild.
+
+The palm pads are fitted to the fist at the flexion limits, so `scripts/fit_hand_pads.py` was rerun
+(`hand-contacts-and-pads.md`).
+
 ## RI2 path
 
 RI2's insertion (`RI2-P3_r`) lies on the surface of `2ndmcp_ellipsoid_wrap_r` at MCP 0 deg and

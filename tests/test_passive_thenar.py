@@ -171,7 +171,7 @@ def test_finger_damping_is_the_tabled_value(name: str) -> None:
     fit = _script("fit_passive_moments")
     table = load_passive_moment_table()
     text = compose.RIGHT_ARM_CHAIN_XML.read_text()
-    assert fit.chain_with_damping(text, table) == text
+    assert fit.chain_with_joint_attributes(text, table) == text
     rows = [r for r in table["joints"] if "damping" in r]
     assert len(rows) == 12
     model = myo_sim.load_spec(name).compile()
@@ -180,6 +180,20 @@ def test_finger_damping_is_the_tabled_value(name: str) -> None:
         for side in ("r",) if name == "myoarm_r" else ("r", "l"):
             dof = model.jnt_dofadr[_joint_id(model, row["names"]["r"], side)]
             assert model.dof_damping[dof] == row["damping"]["value"], (row["joint"], side)
+
+
+@pytest.mark.parametrize("name", MODELS)
+def test_tabled_joint_ranges_are_in_every_model(name: str) -> None:
+    """The PIP rows' measured range (Leijnse et al. 2010) is the joint range on both hands of every model."""
+    table = load_passive_moment_table()
+    rows = [r for r in table["joints"] if "range" in r]
+    assert {r["names"]["r"] for r in rows} == {f"pm{d}_flexion_r" for d in (2, 3, 4, 5)}
+    model = myo_sim.load_spec(name).compile()
+    for row in rows:
+        assert row["range"]["source"] in table["sources"]
+        for side in ("r",) if name == "myoarm_r" else ("r", "l"):
+            joint = _joint_id(model, row["names"]["r"], side)
+            np.testing.assert_allclose(np.degrees(model.jnt_range[joint]), row["range"]["value_deg"], atol=1e-4)
 
 
 def test_cpu_and_mujoco_warp_passive_moments_agree(fullbody: mujoco.MjModel) -> None:

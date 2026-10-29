@@ -1,8 +1,8 @@
 """The literature comparison page is generated from its data file and stays current with the model.
 
 ``docs/wiki/hand-literature-comparison.md`` is written by ``scripts/hand_literature_comparison.py`` from
-``build/data/hand_literature.json``. The geometric values of the latest recorded step (fingertip and palm
-soft tissue, active fist) are re-measured here on the importable model; the hand-function values (grip,
+``build/data/hand_literature.json``. The geometric values of the latest recorded step (joint limits, fingertip
+and palm soft tissue, active fist) are re-measured here on the importable model; the hand-function values (grip,
 pinch, tenodesis) are covered by their own tests.
 """
 
@@ -51,6 +51,12 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
             and recorded.keys() == measured.keys()
             and all(_close(recorded[k], measured[k], tol) for k in recorded)
         )
+    if isinstance(recorded, list):
+        return (
+            isinstance(measured, list)
+            and len(recorded) == len(measured)
+            and all(_close(r, m, tol) for r, m in zip(recorded, measured))
+        )
     if isinstance(recorded, str) or recorded is None:
         return recorded == measured
     return abs(float(recorded) - float(measured)) <= tol
@@ -58,7 +64,13 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
 
 @pytest.mark.parametrize(
     "key,tol",
-    [("fingertip_pad_thickness", 0.02), ("palm_pad_thickness", 0.02), ("fist_tip_to_palm", 0.1), ("fist_max_penetration", 0.1)],
+    [
+        ("pip_flexion_limit", 0.01),
+        ("fingertip_pad_thickness", 0.02),
+        ("palm_pad_thickness", 0.02),
+        ("fist_tip_to_palm", 0.1),
+        ("fist_max_penetration", 0.1),
+    ],
 )
 def test_latest_step_matches_the_current_model(key: str, tol: float) -> None:
     script = _script()

@@ -7,11 +7,13 @@ polynomial springs on each side of its equilibrium by non-negative least
 squares, and writes the spring segments and the fit error back into the row.
 It then rewrites its generated block in ``myoarm_r_tendon.xml`` (one fixed
 tendon per spring segment of every applied row), the model's source of truth,
-and the ``damping`` attribute of every joint whose row has a ``damping`` entry
-in ``myoarm_r_chain.xml``.
+and the ``damping`` and ``range`` attributes of every joint whose row has a
+``damping`` or ``range`` entry in ``myoarm_r_chain.xml``. The fit runs over the
+joint ranges of the model as it is, so after a ``range`` change write the XML
+first (``--xml-only``) and then refit.
 
 Run: ``uv run python scripts/fit_passive_moments.py`` (rewrites the JSON, the
-block and the damping); ``--xml-only`` rewrites the XML from the JSON as is.
+block and the joint attributes); ``--xml-only`` rewrites the XML from the JSON as is.
 """
 
 from __future__ import annotations
@@ -321,24 +323,33 @@ def write_block(table: dict[str, Any]) -> None:
     write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table), "</tendon>")
 
 
-def chain_with_damping(text: str, table: dict[str, Any]) -> str:
-    """*text* of ``myoarm_r_chain.xml`` with each tabled ``damping`` on its right-side joint, rest unchanged."""
+def chain_with_joint_attributes(text: str, table: dict[str, Any]) -> str:
+    """*text* of ``myoarm_r_chain.xml`` with each tabled ``damping`` and ``range`` on its right-side joint, rest unchanged."""
     for row in table["joints"]:
-        if "damping" not in row:
+        attributes = {}
+        if "damping" in row:
+            attributes["damping"] = _number(row["damping"]["value"])
+        if "range" in row:
+            attributes["range"] = " ".join(_number(round(np.radians(v), 6)) for v in row["range"]["value_deg"])
+        if not attributes:
             continue
         pattern = re.compile(rf'<joint\b[^>]*\bname="{re.escape(row["names"]["r"])}"[^>]*/>')
         tags = pattern.findall(text)
         if len(tags) != 1:
             raise ValueError(f"myoarm_r_chain.xml: expected one joint {row['names']['r']}, found {len(tags)}")
-        tag = re.sub(r'\s+damping="[^"]*"', "", tags[0])
-        tag = tag[:-2].rstrip() + f' damping="{_number(row["damping"]["value"])}"/>'
+        tag = tags[0]
+        for key, value in attributes.items():
+            if f' {key}="' in tag:
+                tag = re.sub(rf'\s{key}="[^"]*"', f' {key}="{value}"', tag)
+            else:
+                tag = tag[:-2].rstrip() + f' {key}="{value}"/>'
         text = text.replace(tags[0], tag)
     return text
 
 
-def write_damping(table: dict[str, Any]) -> None:
-    """Write the tabled joint damping into ``myoarm_r_chain.xml``."""
-    RIGHT_ARM_CHAIN_XML.write_text(chain_with_damping(RIGHT_ARM_CHAIN_XML.read_text(), table))
+def write_joint_attributes(table: dict[str, Any]) -> None:
+    """Write the tabled joint damping and ranges into ``myoarm_r_chain.xml``."""
+    RIGHT_ARM_CHAIN_XML.write_text(chain_with_joint_attributes(RIGHT_ARM_CHAIN_XML.read_text(), table))
 
 
 def main() -> None:
@@ -348,7 +359,7 @@ def main() -> None:
     table = json.loads(PASSIVE_DATA_PATH.read_text())
     if args.xml_only:
         write_block(table)
-        write_damping(table)
+        write_joint_attributes(table)
         return
     model = myo_sim.load_spec("myoarm_r").compile()
     for row in table["joints"]:
@@ -370,7 +381,7 @@ def main() -> None:
         )
     PASSIVE_DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
     write_block(table)
-    write_damping(table)
+    write_joint_attributes(table)
 
 
 if __name__ == "__main__":

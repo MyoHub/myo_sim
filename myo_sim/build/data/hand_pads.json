@@ -274,7 +274,7 @@
       "shape_note": "Central palm over metacarpals 2-4 (anchor midway between the MC2 and MC4 axes, 8 mm proximal of the MC3 centre), 40 mm across and 36 mm along the hand. Assumed.",
       "how_to_measure": "Ultrasound of the mid-palm soft tissue, or a 3-D hand surface scan registered to the skeleton",
       "fitted": {
-        "thickness_m": 0.019087,
+        "thickness_m": 0.007986,
         "method": "fist",
         "pos": [
           0.001269,
@@ -290,7 +290,7 @@
         "size": [
           0.02,
           0.018,
-          0.019087
+          0.007986
         ]
       }
     },
@@ -332,7 +332,7 @@
       "shape_note": "Over the proximal two thirds of MC5, 4 mm ulnar of its axis. Assumed.",
       "how_to_measure": "Ultrasound of the hypothenar soft tissue (skin to MC5)",
       "fitted": {
-        "thickness_m": 0.017035,
+        "thickness_m": 0.016839,
         "method": "fist",
         "pos": [
           -0.001408,
@@ -348,7 +348,7 @@
         "size": [
           0.01,
           0.018,
-          0.017035
+          0.016839
         ]
       }
     },

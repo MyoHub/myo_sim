@@ -134,6 +134,23 @@ below the experimental mean − 1 SD. With the hand's self-contacts kept in the 
 direction check fails (largest reversal 2.6 deg): with MCP abduction locked, digits 2-4 converge as they
 flex and push each other.
 
+## Hand rebuild S1b (PIP flexion range)
+
+The PIP flexion limit of digits 2-5 rises from 90 to 115 deg (Leijnse et al. 2010) and the palm pads are
+refitted to the fist at the new limits: palm pad 8.0 mm (was 19.1 mm), hypothenar pad 16.8 mm. The
+dynamometer, placed against the palm pad, sits 11 mm closer to the metacarpals again. Fresh optimum:
+
+| Quantity | S1 | S1b |
+| --- | --- | --- |
+| Grip, self-selected (N) | 232.5 (below the band) | 310.3 (inside the band, 270.7-533.5) |
+| Shares 2 / 3 / 4 / 5 (%) | 21 / 41 / 27 / 12 | 30 / 38 / 23 / 10 |
+| Grip, neutral / flexed wrist | -30 % / -68 % | -34 % / -68 % |
+| Settled grip, self-selected (N) | 133 | 283 |
+| Tenodesis | all checks pass | all checks pass (digit 5 PIP range 80 deg in trial A) |
+| Lateral pinch | 38.7 N | 38.7 N (unchanged) |
+
+`test_grip_at_the_cached_optimum` passes again with the S1b entry (fingerprint `palm_pad_m` 0.007986).
+
 ## Known issues
 
 - **The 0.15 s grip is not settled.** At fixed activation levels the grip keeps changing well after

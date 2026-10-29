@@ -443,7 +443,6 @@
             <site site="EDM-P6_r"/>
             <geom geom="5thmcp_ellipsoid_wrap_r" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
             <site site="EDM-P7_r"/>
-            <geom geom="Fifthpm_wrap_r"/>
             <site site="EDM-P8_r"/>
             <geom geom="Fifthmd_wrap_r" sidesite="Fifthmd_site_EDC5_side_r"/>
             <site site="EDM-P9_r"/>
@@ -681,13 +680,13 @@
             <joint joint="mcp2_flexion_r" coef="1"/>
         </fixed>
         <!-- digit2_pip_flexion (measured): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit2_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.03475760089466637 0 0">
+        <fixed name="passive_digit2_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.034757379336947024 0 0">
             <joint joint="pm2_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit2_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0 0 2.8470164853438105">
+        <fixed name="passive_digit2_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0 0 2.847060323162775">
             <joint joint="pm2_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit2_pip_flexion_neg1_r" springlength="0.02755783029464731 1000" stiffness="0.04316725586961137 0 0">
+        <fixed name="passive_digit2_pip_flexion_neg1_r" springlength="0.02755783029464731 1000" stiffness="0.04316630499274242 0 0">
             <joint joint="pm2_flexion_r" coef="1"/>
         </fixed>
         <!-- digit2_dip_flexion (measured): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
@@ -711,7 +710,7 @@
             <joint joint="mcp3_flexion_r" coef="1"/>
         </fixed>
         <!-- digit3_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit3_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.05285493049920378 0 0">
+        <fixed name="passive_digit3_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.05285491707323852 0 0">
             <joint joint="pm3_flexion_r" coef="1"/>
         </fixed>
         <!-- digit3_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
@@ -735,13 +734,13 @@
             <joint joint="mcp4_flexion_r" coef="1"/>
         </fixed>
         <!-- digit4_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit4_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.052110999711670276 0 0">
+        <fixed name="passive_digit4_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.05211097742603658 0 0">
             <joint joint="pm4_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit4_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0 0 4.604734972497101">
+        <fixed name="passive_digit4_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0 0 4.604773572543853">
             <joint joint="pm4_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit4_pip_flexion_neg1_r" springlength="0.04330516189158863 1000" stiffness="0.010109745084327043 0 0">
+        <fixed name="passive_digit4_pip_flexion_neg1_r" springlength="0.04330516189158863 1000" stiffness="0.010109474204792171 0 0">
             <joint joint="pm4_flexion_r" coef="1"/>
         </fixed>
         <!-- digit4_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
@@ -765,7 +764,7 @@
             <joint joint="mcp5_flexion_r" coef="1"/>
         </fixed>
         <!-- digit5_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit5_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.005844800740808168 0 0">
+        <fixed name="passive_digit5_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.005843249170721325 0 0">
             <joint joint="pm5_flexion_r" coef="1"/>
         </fixed>
         <!-- digit5_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
