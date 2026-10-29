@@ -1,6 +1,6 @@
 """Lateral pinch after McFarland et al. 2023 (``scripts/validate_hand_function.py``, ``build/data/hand_function.json``).
 
-Needs the thenar muscles (AdP, FPB, APB); skipped on a model without them.
+Needs the thenar muscles added by the hand rebuild (AdPt, AdPo, FPBs, FPBd, APB); skipped on a model without them.
 """
 
 from __future__ import annotations
@@ -18,7 +18,7 @@ import pytest
 import myo_sim
 from myo_sim.build.hand_function import load_hand_function_table
 
-THENAR = ("AdP", "FPB", "APB")
+THENAR = ("AdPt", "AdPo", "FPBs", "FPBd", "APB")
 
 
 @cache
@@ -36,7 +36,7 @@ def _has_thenar() -> bool:
     return all(f"{name}_r" in actuators for name in THENAR)
 
 
-pytestmark = pytest.mark.skipif(not _has_thenar(), reason="needs the thenar muscles AdP, FPB and APB")
+pytestmark = pytest.mark.skipif(not _has_thenar(), reason="needs the thenar muscles AdPt, AdPo, FPBs, FPBd and APB")
 
 
 @cache

@@ -448,19 +448,22 @@
                                                 <site name="EPB-P5_r" pos="0.0312 0.0026 -0.0033"/>
                                                 <!-- <site name="FPL-P5_r" pos="0.0179 0.0064 -0.0168"/> -->
                                                 <site name="FPL-P5_r" pos="0.0187 0.0088 -0.0155"/>
+                                                <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                <site name="AdPo-P1_r" pos="0.0014 -0.008 -0.0107"/>
+                                                <site name="FPBd-P1_r" pos="0.001891 -0.006796 -0.012734"/>
 
                                                 <body name="trapezium_r" pos="0.015293 -0.004569 -0.010308">
                                                     <geom mesh="trapezium_r" name="trapezium_r" type="mesh"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                     <!-- <geom name="Trpzm_wrap" pos="0.002 -0.003 0" quat="0.708942 0.660448 0.181023 0.16864" class="myoarm_wrap" size="0.011"/> -->
                                                     <site name="EPL-P7_r" pos="0.0081 -0.0046 0.0099"/>
-                                                    <site name="OP-P1_r" pos="-0.011 -0.005 -0.004"/>
+                                                    <site name="OP-P1_r" pos="-0.007946 -0.005375 -0.005827"/>
                                                     <site name="Trpzm_site_FPL_side_r" pos="0.0125474 -0.0222585 0.00136571"/>
                                                     <site name="Trpzm_site_OP_side_r" pos="0.0125474 -0.0222585 0.00136571"/>
                                                     <site name="S_grasp_r" pos="-0.011 -0.06 -0.03" size=".01" group="3"/>
-                                                    <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
-                                                    <site name="FPB-P1_r" pos="0 0 -0.006"/>
-                                                    <site name="APB-P1_r" pos="0 0 -0.006"/>
+                                                    <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="FPBs-P1_r" pos="-0.015138 -0.011605 -0.006701"/>
+                                                    <site name="APB-P1_r" pos="0.001973 0.00318 -0.010287"/>
                                                     <camera name="palm_lookat_r" pos="-0.011 -0.06 -0.5" euler="0 3.14 0"/>
 
                                                     <!-- THUMB FINGER -->
@@ -486,12 +489,15 @@
                                                         <site name="APL-P6_r" pos="0 0.006 -0.01"/>
                                                         <site name="APL-P7_r" pos="0.0063 0.0032 -0.0059"/>
                                                         <site name="APL-P8_r" pos="0.0083 -0.0059 -0.006"/>
-                                                        <site name="OP-P2_r" pos="0.011 -0.03 -0.016"/>
+                                                        <site name="OP-P2_r" pos="0.010241 -0.029625 -0.016801"/>
                                                         <!-- <site name="MPthumb_site_EPL_side_r" pos="0.0233473 -0.0173314 -0.02"/> -->
                                                         <site name="MPthumb_site_EPB_side_r" pos="0.0252901 -0.0179637 -0.00935966"/>
                                                         <site name="MPthumb_site_FPL_side_r" pos="0.0177 -0.0305 -0.0143"/>
-                                                        <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
-                                                        <site name="APB-P2_r" pos="0.015 -0.022 -0.02"/>
+                                                        <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                        <site name="FPBs-P2_r" pos="0.011426 -0.019752 -0.022168"/>
+                                                        <site name="FPBd-P2_r" pos="0.007937 -0.024286 -0.020612"/>
+                                                        <site name="APB-P2_r" pos="0.016 -0.021031 -0.019914"/>
+                                                        <site name="DI1s-P1_r" pos="0.000739 -0.008947 -0.001508"/>
                                                         <body name="proximal_thumb_r" pos="0.0165 -0.0292 -0.0127">
                                                             <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion_r" pos="0 0 0" range="-0.785398 0.698132"/>
                                                             <geom name="proximal_thumb_coll_r" class="myohand_coll" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
@@ -506,11 +512,12 @@
                                                             <site name="FPL-P10_r" pos="0.0059 -0.026 -0.0111"/>
                                                             <site name="IPthumb_site_EPL_side_r" pos="0.0167862 -0.030399 -0.0079041"/>
                                                             <site name="IPthumb_site_FPL_side_r" pos="0.00820158 -0.028993 -0.00586527"/>
-                                                            <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
-                                                            <site name="AdP-P2_r" pos="0 -0.012 0"/>
-                                                            <site name="FPB-P2_r" pos="-0.008 0 -0.007"/>
-                                                            <site name="FPB-P3_r" pos="0.002 -0.011 -0.007"/>
-                                                            <site name="APB-P3_r" pos="0.004 -0.002 -0.006"/>
+                                                            <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                            <site name="AdPt-P2_r" pos="5e-06 -0.002577 -0.003501"/>
+                                                            <site name="AdPo-P2_r" pos="-0.0037 -0.0086 -0.0026"/>
+                                                            <site name="FPBs-P3_r" pos="-0.008489 0.001458 -0.014157"/>
+                                                            <site name="FPBd-P3_r" pos="-0.009592 -0.001939 -0.010167"/>
+                                                            <site name="APB-P3_r" pos="-0.001417 0.002819 -0.006404"/>
 
                                                             <body name="distal_thumb_r" pos="0.014 -0.0259 -0.0101">
                                                                 <geom name="distal_thumb_coll_r" class="myohand_coll" size="0.0065" fromto="0 0 0 0.010 -0.018 -0.007"/>
@@ -549,8 +556,10 @@
                                                     <site name="EDC2-P4_r" pos="0.0031 -0.0295 0.0124"/>
                                                     <site name="EIP-P4_r" pos="-0.0108 0.0153 0.0068"/>
                                                     <site name="EIP-P5_r" pos="0.0044 -0.026 0.0128"/>
-                                                    <site name="RI2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
-                                                    <site name="RI2-P2_r" pos="0.0091 -0.02 -0.0049"/>
+                                                    <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="DI1d-P1_r" pos="0.0026 0.0039 -0.0038"/>
+                                                    <site name="DI1d-P2_r" pos="0.01124 -0.023842 -0.000266"/>
+                                                    <site name="DI1s-P2_r" pos="0.014611 -0.023658 -0.000698"/>
                                                     <site name="LU_RB2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
                                                     <site name="LU_RB2-P2_r" pos="0.0102 -0.0265 -0"/>
                                                     <site name="UI_UB2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
@@ -574,7 +583,9 @@
                                                         <site name="EDC2-P6_r" pos="0.007 -0.038 0.012"/>
                                                         <site name="EIP-P6_r" pos="0.0017 -0.0103 0.0095"/>
                                                         <site name="EIP-P7_r" pos="0.0071 -0.0413 0.0141"/>
-                                                        <site name="RI2-P3_r" pos="0.007 -0.0067 -0.0001"/>
+                                                        <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                        <site name="DI1d-P3_r" pos="0.007314 -0.014559 0.002259"/>
+                                                        <site name="DI1s-P3_r" pos="0.007474 -0.014303 0.002037"/>
                                                         <site name="LU_RB2-P3_r" pos="0.0084 -0.0083 -0"/>
                                                         <site name="LU_RB2-P4_r" pos="0.0113 -0.0339 0.0094"/>
                                                         <site name="UI_UB2-P3_r" pos="-0.0043 -0.0159 0.0024"/>
@@ -664,8 +675,8 @@
                                                     <site name="3rdmcp_ellipsoid_site_FDP3_side_r" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_EDC3_side_r" pos="0.0016 -0.0291 0.0081"/>
                                                     <site name="3rdmcp_ellipsoid_site_LU_RB3_side_r" pos="0 0 0"/>
-                                                    <!-- Thenar muscle sites: MUSIC (Xu et al. 2026), MIT licence in myo_sim/build/data/LICENSE-MUSIC.txt -->
-                                                    <site name="AdP-P1_r" pos="0.004 0.012 -0.009"/>
+                                                    <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="AdPt-P1_r" pos="-0.002311 -0.000437 -0.005792"/>
                                                     <body name="3proxph_r" pos="0.00024 -0.02629 0.001778">
                                                         <geom name="proxph3_coll_r" class="myohand_coll" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
                                                         <joint axis="0.980067 0 0.198669" name="mcp3_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0142"/>

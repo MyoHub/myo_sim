@@ -1,8 +1,8 @@
 """The literature comparison page is generated from its data file and stays current with the model.
 
 ``docs/wiki/hand-literature-comparison.md`` is written by ``scripts/hand_literature_comparison.py`` from
-``build/data/hand_literature.json``. The geometric values of the latest recorded step (joint limits, fingertip
-and palm soft tissue, active fist) are re-measured here on the importable model; the hand-function values (grip,
+``build/data/hand_literature.json``. The geometric values of the latest recorded step (joint limits, intrinsic moment arms,
+fingertip and palm soft tissue, active fist) are re-measured here on the importable model; the hand-function values (grip,
 pinch, tenodesis) are covered by their own tests.
 """
 

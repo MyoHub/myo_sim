@@ -99,8 +99,8 @@ def myohand() -> Hand:
         "FDS": muscles(*(f"FDS{d}" for d in DIGITS)),
         "FDP": muscles(*(f"FDP{d}" for d in DIGITS)),
         "EDC": muscles(*(f"EDC{d}" for d in DIGITS)),
-        "finger_intrinsic": muscles(*(f"{m}{d}" for d in DIGITS for m in ("RI", "LU_RB", "UI_UB"))),
-        "thumb_intrinsic": muscles("OP", "AdP", "FPB", "APB"),
+        "finger_intrinsic": muscles("DI1d", "DI1s", *(f"{m}{d}" for d in DIGITS for m in ("RI", "LU_RB", "UI_UB"))),
+        "thumb_intrinsic": muscles("OP", "AdPt", "AdPo", "FPBs", "FPBd", "APB"),
     }
     return Hand(
         load=lambda: myo_sim.load_spec("myoarm_r"),

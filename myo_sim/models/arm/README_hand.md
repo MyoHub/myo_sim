@@ -7,7 +7,7 @@ MyoHand is a MuJoCo musculoskeletal model of the right wrist and hand, derived f
 | Property | Value |
 |---|---|
 | Degrees of freedom | 23 |
-| Actuators (muscles) | 42 (39 + thenar AdP, FPB, APB) |
+| Actuators (muscles) | 45 (39 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s; RI2 is DI1d) |
 | Body segments | radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1-5), proximal/middle/distal phalanges (digits 2-5), thumb phalanges |
 | Primary joints | forearm pronation/supination, wrist flexion/deviation, thumb CMC/MCP/IP, finger MCP/PIP/DIP (digits 2-5) |
 
@@ -20,7 +20,7 @@ MyoHand is a MuJoCo musculoskeletal model of the right wrist and hand, derived f
 
 ![DELT1 left/right shoulder elevation relationship](../../../docs/images/RI2_RI2_l_mcp2_flexion_r.png)
 
-Example fidelity check (RI2 left/right moment-arm and force-length plot) for symmetry and muscle jumping for hand model. The full hand arm muscle check can be run with `tests/debug_muscle_bimanual.py`.
+Example fidelity check (RI2, now DI1d, left/right moment-arm and force-length plot) for symmetry and muscle jumping for hand model. The full hand arm muscle check can be run with `tests/debug_muscle_bimanual.py`.
 
 
 ## Known limitations
@@ -36,6 +36,8 @@ None currently tracked.
 - Contact properties optimized for contact-rich behaviors.
 
 ## Changelog
+
+**2026-10-29** — Thumb and first-dorsal-interosseous heads: `AdP` -> `AdPt` + `AdPo`, `FPB` -> `FPBs` + `FPBd`, `RI2` -> `DI1d` + `DI1s`; OP, APB, FPB and DI1 sites fitted to published moment arms, thumb intrinsic passive scales and springs refitted (+3 actuators per hand). See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-10-29** — PIP flexion limit of digits 2-5 raised from 90 to 115 deg (Leijnse et al. 2010), palm pads refitted (palm 8.0 mm), EDM without the `Fifthpm_wrap_r` wrap. See `docs/wiki/passive-moments-and-thenar.md`.
 

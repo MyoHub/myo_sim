@@ -46,6 +46,35 @@
       "citation": "Leijnse JNAL, Quesada PM, Spoor CW. Kinematic evaluation of the finger's interphalangeal joints coupling mechanism: variability, flexion-extension differences, triggers, locking swanneck deformities, anthropometric correlations. J Biomech 43(12):2381-2393, 2010.",
       "doi": "10.1016/j.jbiomech.2010.04.021",
       "note": "17 hands of 9 healthy adults (33 +- 11 years); maximum passive flexion and extension per joint with a goniometer, digits 2-5 pooled per hand (Table 1)."
+    },
+    "smutz1998": {
+      "short": "Smutz et al. 1998",
+      "citation": "Smutz WP, Kongsayreepong A, Hughes RE, Niebur G, Cooney WP, An KN. Mechanical advantage of the thumb muscles. J Biomech 31(6):565-570, 1998.",
+      "doi": "10.1016/s0021-9290(98)00043-8",
+      "note": "Seven fresh-frozen hands (mean age 77); tendon excursion slopes; neutral = mid-point of the CMC ranges. Tables 2 (MP flexion), 4 (CMC flexion), 5 (CMC abduction); positive = flexor / adductor."
+    },
+    "an1983": {
+      "short": "An et al. 1983",
+      "citation": "An KN, Ueba Y, Chao EY, Cooney WP, Linscheid RL. Tendon excursion and moment arm of index finger muscles. J Biomech 16:419-425, 1983.",
+      "doi": "10.1016/0021-9290(83)90074-X",
+      "note": "Seven index fingers (cadaver), tendon excursion; Table 3 moment arms averaged over the range (printed in cm under an mm header)."
+    },
+    "infantolino2014": {
+      "short": "Infantolino & Challis 2014",
+      "citation": "Infantolino BW, Challis JH. Measuring subject specific muscle model parameters of the first dorsal interosseous in vivo. Ann Biomed Eng 42:1331-1339, 2014.",
+      "doi": "10.1007/s10439-014-1002-z",
+      "note": "First dorsal interosseous of 4 subjects in vivo (ultrasound tendon excursion, Table 2)."
+    },
+    "mcgee2020": {
+      "short": "McGee et al. 2020",
+      "citation": "McGee C, Hoehn A, Hoenshell C, McIlrath S, Sterling H, Swan H. Age and gender stratified adult myometric reference values of isometric intrinsic hand strength. J Hand Ther 33(3):402-410.e2, 2020.",
+      "doi": "10.1016/j.jht.2019.03.005",
+      "note": "Rotterdam Intrinsic Hand Myometer norms, n = 607, dominant hand (Tables 2-5)."
+    },
+    "schreuders2006": {
+      "short": "Schreuders et al. 2006",
+      "citation": "Schreuders TAR, Selles RW, Roebroeck ME, Stam HJ. Strength measurements of the intrinsic hand muscles: a review of the development and evaluation of the Rotterdam Intrinsic Hand Myometer. J Hand Ther 19(4):393-402, 2006.",
+      "note": "RIHM protocols: the sling sits at the PIP joint (p. 397)."
     }
   },
   "quantities": {
@@ -279,6 +308,163 @@
           "kind": "in vivo, maximum passive flexion",
           "source": "leijnse2010",
           "protocol": "goniometer on the dorsum, gentle force to the end of motion; digits 2-5 pooled (Table 1)"
+        }
+      ]
+    },
+    "op_moment_arms": {
+      "label": "OP moment arm, CMC flexion / CMC abduction",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            12.9,
+            -4.8
+          ],
+          "spread": [
+            3.8,
+            5.0
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "smutz1998",
+          "protocol": "Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 4-5)"
+        }
+      ]
+    },
+    "adpt_moment_arms": {
+      "label": "AdPt moment arm, CMC flexion / CMC abduction / MP flexion",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            36.9,
+            20.6,
+            9.7
+          ],
+          "spread": [
+            5.8,
+            15.4,
+            5.2
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "smutz1998",
+          "protocol": "Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 2, 4, 5)"
+        }
+      ]
+    },
+    "adpo_moment_arms": {
+      "label": "AdPo moment arm, CMC flexion / CMC abduction / MP flexion",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            27.0,
+            17.0,
+            8.2
+          ],
+          "spread": [
+            10.5,
+            12.5,
+            3.9
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "smutz1998",
+          "protocol": "as above"
+        }
+      ]
+    },
+    "fpb_moment_arms": {
+      "label": "FPB moment arm (force-weighted heads), CMC flexion / CMC abduction / MP flexion",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            13.4,
+            -10.5,
+            8.8
+          ],
+          "spread": [
+            7.5,
+            6.8,
+            1.4
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, whole muscle",
+          "source": "smutz1998",
+          "protocol": "as above"
+        }
+      ]
+    },
+    "apb_moment_arms": {
+      "label": "APB moment arm, CMC flexion / CMC abduction / MP flexion",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            3.9,
+            -16.5,
+            2.6
+          ],
+          "spread": [
+            3.1,
+            7.0,
+            2.4
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "smutz1998",
+          "protocol": "as above"
+        }
+      ]
+    },
+    "di1_moment_arms": {
+      "label": "First dorsal interosseous moment arm (force-weighted heads), MCP2 flexion / radial abduction",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            3.7,
+            6.1
+          ],
+          "spread": [
+            1.4,
+            2.1
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "an1983",
+          "protocol": "averaged over the range (model: MCP2 flexion 0-90 deg, abduction -15 to 15 deg); magnitudes"
+        },
+        {
+          "value": "abduction 11.1",
+          "spread": 2.9,
+          "spread_kind": "SD",
+          "kind": "in vivo",
+          "source": "infantolino2014",
+          "protocol": "ultrasound tendon excursion, Table 2"
+        }
+      ]
+    },
+    "index_abduction_moment": {
+      "label": "Index MCP abduction moment, both DI1 heads at full activation",
+      "unit": "N m",
+      "literature": [
+        {
+          "value": [
+            2.71,
+            1.84
+          ],
+          "kind": "in vivo, men / women (RIHM break test x PP2 length 42.6 mm)",
+          "source": "mcgee2020",
+          "protocol": "RIHM index abduction, sling at the PIP (Schreuders 2006); model: index at rest, act = 1 on DI1s and DI1d"
+        },
+        {
+          "value": "about 1.0",
+          "kind": "in vivo (93.3 N x 11.1 mm)",
+          "source": "infantolino2014",
+          "protocol": "maximum FDI force and its in-vivo moment arm, Table 2"
         }
       ]
     }
@@ -682,6 +868,190 @@
         "Palm pad: 8.0 mm with the fingertips at the new flexion limits, close to the hypothenar muscle thickness of Misirlioglu (8.4 +- 1.9 mm); the hypothenar pad changes little (16.8 mm), as digit 5 lands on it with MCP and DIP, not PIP, setting the reach.",
         "Tenodesis passes all checks; trial A ROM of digit 5 PIP is 80 deg, the other values move by at most 2 deg. Lateral pinch is unchanged (no thumb change).",
         "Passive PIP moment near the new end range (muscles at act = 0 plus springs, other joints at 0): index -0.08 / -0.11 / -0.14 N m at 90 / 100 / 115 deg, digits 3-4 -0.07 to -0.10 N m; Kamper 2002 measured up to 60 deg (held at -0.04 N m beyond). The excess over the held value comes from the interosseous and lumbrical bundles stretched over the PIP (LU_RB, UI_UB), which a restoring spring cannot remove. Digit 5: -0.16 / -0.24 N m at 90 / 100 deg, but LU_RB5 turns into a PIP flexor at 114-115 deg (its wrap over Fifthpm_wrap_r switches side), so the total becomes +0.16 N m at the limit; the lumbrical paths are rebuilt in S5."
+      ]
+    },
+    {
+      "id": "s2",
+      "title": "S2: thumb and first-dorsal-interosseous heads, opponens fix",
+      "summary": "AdP split into AdPt and AdPo (Stamenkovic 2014 head ratio of Jacobson's PCSA), FPB into FPBs and FPBd and the first dorsal interosseous (RI2) into DI1s and DI1d (Mirakhorlo 2016 head ratios); one generalised intrinsic table and generator; OP, APB, the FPB heads and the DI1 heads fitted to published moment arms (Smutz 1998; An 1983), the AdP heads on their registered Mirakhorlo 2016 paths; passive scales of the thumb intrinsics fitted to the measured passive totals and the springs refitted. Before = S1b; the before columns of the moment arms are AdP, FPB and RI2 of S1b.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.34,
+          78.22,
+          73.38,
+          50.37
+        ],
+        "tenodesis_pip_rom": 29.89,
+        "tenodesis_index_gap": [
+          66.62,
+          81.84
+        ],
+        "tenodesis_release": [
+          77.65,
+          78.48,
+          73.99,
+          26.68
+        ],
+        "grip_self_selected": 334.84,
+        "grip_settled": 305.89,
+        "grip_shares": [
+          33.86,
+          34.99,
+          21.26,
+          9.89
+        ],
+        "grip_posture_change": [
+          -32.06,
+          -65.1
+        ],
+        "lateral_pinch": 52.9,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          19.35,
+          16.82,
+          2.57
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "di1_moment_arms": [
+          4.38,
+          8.06
+        ],
+        "index_abduction_moment": 1.05,
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.33,
+          "3": 14.36,
+          "4": -0.51,
+          "5": -0.27
+        },
+        "fist_max_penetration": 0.77
+      },
+      "before": {
+        "label": "s2",
+        "id": "s1b",
+        "values": {
+          "tenodesis_mcp_rom": [
+            77.34,
+            78.22,
+            73.38,
+            50.37
+          ],
+          "tenodesis_pip_rom": 29.89,
+          "tenodesis_index_gap": [
+            66.66,
+            81.84
+          ],
+          "tenodesis_release": [
+            77.65,
+            78.48,
+            73.99,
+            26.68
+          ],
+          "grip_self_selected": 310.32,
+          "grip_settled": 282.87,
+          "grip_shares": [
+            29.54,
+            37.97,
+            22.94,
+            9.54
+          ],
+          "grip_posture_change": [
+            -33.85,
+            -67.94
+          ],
+          "lateral_pinch": 38.69,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": -0.33,
+            "3": 14.36,
+            "4": -0.51,
+            "5": -0.27
+          },
+          "fist_max_penetration": 0.77,
+          "op_moment_arms": [
+            14.32,
+            -1.31
+          ],
+          "adpt_moment_arms": [
+            16.01,
+            14.94,
+            8.1
+          ],
+          "fpb_moment_arms": [
+            6.26,
+            -4.37,
+            8.29
+          ],
+          "apb_moment_arms": [
+            5.4,
+            -5.87,
+            -1.16
+          ],
+          "di1_moment_arms": [
+            6.03,
+            5.57
+          ],
+          "index_abduction_moment": 0.34
+        }
+      },
+      "notes": [
+        "Thumb CMC kinematics: with MyoHand's CMC axes no site shift reproduces Smutz's abduction trends: OP, AdP and FPB grow more adductor toward adduction in the model and more abductor in Smutz's specimens. The fits match the neutral values within one SD where reachable; the OP abduction arm stays at -2.4 mm (Smutz -4.8 +- 5.0).",
+        "AdP heads: fitted to Smutz's flexion arms they lose their adduction arm, and the lateral pinch then has no solution within its off-axis limit (best 20.5 N at 1.9 x off-axis). They keep the registered Mirakhorlo paths instead (moved only to keep AdPt below 1.6 normalised fibre length over the full thumb range): CMC flexion 19.4 / 14.7 mm (Smutz 36.9 / 27.0), adduction 16.8 / 1.4 mm (20.6 / 17.0).",
+        "Lateral pinch 38.7 -> 52.9 N, at the in-vivo mean (Valero-Cuevas 2003, 51.9 +- 20.4 N); below Mathiowetz's key pinch (women 72.1 +- 13.3 N, men 109.0 +- 20.5 N), as for the ARMS model.",
+        "Index MCP abduction moment with both DI1 heads active: 0.34 -> 1.05 N m (force 61.2 -> 129.4 N at the thenar precedent of 86.3 N/cm2, moment arm 5.6 -> 8.1 mm), equal to Infantolino & Challis's in-vivo FDI moment (about 1.0 N m) and 39-57 % of the RIHM norms.",
+        "Passive thumb moments: the passive scale (fpmax) of OP, AdPo and the FPB heads fits to near zero, AdPt 0.69, APB 0.44 (MuJoCo's curve is much stiffer than measured ones, as for the extrinsic muscles). Spring fits (RMS against the source): thumb CMC flexion 0.074 -> 0.009 N m, CMC abduction 0.128 -> 0.075 N m, MP 0.028 -> 0.010 N m (the MP excess of FPB and AdP is gone).",
+        "Grip: the intrinsics are inactive in the grip, but their passive forces change; self-selected grip 310.3 -> 334.8 N, settled 305.9 N. Tenodesis passes unchanged."
       ]
     }
   ]

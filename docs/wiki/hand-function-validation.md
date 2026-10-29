@@ -151,6 +151,24 @@ dynamometer, placed against the palm pad, sits 11 mm closer to the metacarpals a
 
 `test_grip_at_the_cached_optimum` passes again with the S1b entry (fingerprint `palm_pad_m` 0.007986).
 
+## Hand rebuild S2 (thumb and first-dorsal-interosseous heads)
+
+The pinch muscle set is OP, AdPt, AdPo, FPBs, FPBd, APB plus the extrinsics; DI1s and DI1d join the
+finger intrinsics. Fresh optimum (before = S1b):
+
+| Quantity | S1b | S2 |
+| --- | --- | --- |
+| Lateral pinch (N) | 38.7 | 52.9 (in vivo 51.9 ± 20.4; levels FPL 0.79, APL 1.0, AdPt 0.42, AdPo 1.0, FPBs 1.0, FPBd 1.0) |
+| Grip, self-selected (N) | 310.3 | 334.8 (the intrinsics are inactive; their passive forces changed) |
+| Shares 2 / 3 / 4 / 5 (%) | 30 / 38 / 23 / 10 | 34 / 35 / 21 / 10 |
+| Settled grip (N) | 283 | 306 |
+| Tenodesis | all checks pass | all checks pass |
+
+With the AdP heads fitted to Smutz's flexion arms the lateral pinch has no solution within its off-axis
+limit (best palmar force 20.5 N at 1.9 times off-axis), which is why they keep their registered paths
+(`passive-moments-and-thenar.md`). The grip cache fingerprint now also holds the actuator count and OP's
+passive scale, which tell S1b and S2 apart.
+
 ## Known issues
 
 - **The 0.15 s grip is not settled.** At fixed activation levels the grip keeps changing well after

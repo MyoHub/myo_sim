@@ -161,11 +161,63 @@ def pip_limits(model: mujoco.MjModel) -> list[float]:
     return [float(np.degrees(model.jnt_range[model.joint(f"pm{d}_flexion_r").id][1])) for d in DIGITS]
 
 
+def _arms(model: mujoco.MjModel, tendon: str, posture: dict[str, float], joints: tuple[str, ...]) -> list[float]:
+    """dL/dq (mm) of *tendon* about *joints* at *posture* (central differences)."""
+    data = mujoco.MjData(model)
+
+    def length(extra: dict[str, float]) -> float:
+        data.qpos[:] = model.qpos0
+        for joint, q in (posture | extra).items():
+            data.qpos[model.joint(joint).qposadr[0]] = q
+        mujoco.mj_kinematics(model, data)
+        mujoco.mj_comPos(model, data)
+        mujoco.mj_tendon(model, data)
+        return float(data.ten_length[model.tendon(tendon).id])
+
+    h = 1e-6
+    return [(length({j: posture.get(j, 0.0) + h}) - length({j: posture.get(j, 0.0) - h})) / (2 * h) * 1e3 for j in joints]
+
+
+def intrinsic_moment_arms(model: mujoco.MjModel) -> dict[str, Any]:
+    """Thumb intrinsic moment arms at the Smutz 1998 neutral and the first dorsal interosseous at MCP2 (mm)."""
+    out: dict[str, Any] = {}
+    names = {model.actuator(i).name for i in range(model.nu)}
+    if "AdPt_r" not in names:
+        return out
+    neutral = {j: float(np.mean(model.joint(j).range)) for j in ("cmc_flexion_r", "cmc_abduction_r")}
+    thumb = ("cmc_flexion_r", "cmc_abduction_r", "mp_flexion_r")
+    force = {m: float(model.actuator_gainprm[model.actuator(f"{m}_r").id][2]) for m in ("FPBs", "FPBd", "DI1s", "DI1d")}
+    out["op_moment_arms"] = _arms(model, "OP_r_tendon", neutral, thumb[:2])
+    out["adpt_moment_arms"] = _arms(model, "AdPt_r_tendon", neutral, thumb)
+    out["adpo_moment_arms"] = _arms(model, "AdPo_r_tendon", neutral, thumb)
+    heads = {m: np.array(_arms(model, f"{m}_r_tendon", neutral, thumb)) for m in ("FPBs", "FPBd")}
+    out["fpb_moment_arms"] = list(
+        (force["FPBs"] * heads["FPBs"] + force["FPBd"] * heads["FPBd"]) / (force["FPBs"] + force["FPBd"])
+    )
+    out["apb_moment_arms"] = _arms(model, "APB_r_tendon", neutral, thumb)
+    di1 = []
+    for joint, degs in (("mcp2_flexion_r", np.linspace(0.0, 90.0, 10)), ("mcp2_abduction_r", np.linspace(-15.0, 15.0, 7))):
+        mean = {
+            m: np.mean([_arms(model, f"{m}_r_tendon", {joint: float(np.radians(d))}, (joint,))[0] for d in degs])
+            for m in ("DI1s", "DI1d")
+        }
+        di1.append(-(force["DI1s"] * mean["DI1s"] + force["DI1d"] * mean["DI1d"]) / (force["DI1s"] + force["DI1d"]))
+    out["di1_moment_arms"] = di1
+    data = mujoco.MjData(model)
+    data.act[:] = 0.0
+    for m in ("DI1s", "DI1d"):
+        data.act[model.actuator(f"{m}_r").id] = 1.0
+    mujoco.mj_forward(model, data)
+    out["index_abduction_moment"] = float(data.qfrc_actuator[model.joint("mcp2_abduction_r").dofadr[0]])
+    return out
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
     model = myo_sim.load_model(model_name)
-    out: dict[str, Any] = {"pip_flexion_limit": pip_limits(model), "fingertip_pad_thickness": fingertip_pads(model)}
+    out: dict[str, Any] = {"pip_flexion_limit": pip_limits(model)} | intrinsic_moment_arms(model)
+    out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"
     f = fist(model_name)
