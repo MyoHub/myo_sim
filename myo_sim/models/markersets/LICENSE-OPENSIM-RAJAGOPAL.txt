@@ -1,0 +1,35 @@
+Third-party data: OpenSim Rajagopal 2016 scaling marker set
+
+Used in: opensim_rajagopal2016.xml
+
+Source file: Pipelines/Rajagopal/Scale/markerset_walk_preScale.xml of the opensim-models repository,
+https://github.com/opensim-org/opensim-models/blob/d9b05d470b1a481c222372c85b75772faf8f7792/Pipelines/Rajagopal/Scale/markerset_walk_preScale.xml
+(opensim-models commit d9b05d470b1a481c222372c85b75772faf8f7792). The model is distributed on SimTK under the MIT Use
+Agreement: https://simtk.org/projects/full_body
+
+Reference: Rajagopal A, Dembia CL, DeMers MS, Delp DD, Hicks JL, Delp SL (2016). Full-body musculoskeletal model for
+muscle-driven simulation of human gait. IEEE Transactions on Biomedical Engineering 63(10):2068-2079.
+https://doi.org/10.1109/TBME.2016.2586891
+
+Changes: converted to MJCF sites in the bodies of the same name; marker names, bodies and values unchanged except
+rounding.
+
+-------------------------------------------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2016 Apoorva Rajagopal, Christopher L. Dembia, Matthew S. DeMers, Denny D. Delp, Jennifer L. Hicks,
+Scott L. Delp, Stanford University
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
+rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
+persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
+Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

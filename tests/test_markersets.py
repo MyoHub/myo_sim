@@ -1,3 +1,8 @@
+import importlib.util
+import json
+import re
+from pathlib import Path
+
 import mujoco
 import numpy as np
 import pytest
@@ -54,3 +59,32 @@ def test_prefix_allows_two_sets_together():
     add_markerset(spec, "plug_in_gait")
     add_markerset(spec, "cmu_41", prefix="cmu_")
     spec.compile()
+
+
+def load_bath_fit_script():
+    path = Path(__file__).resolve().parents[1] / "scripts" / "fit_markersets_bath.py"
+    spec = importlib.util.spec_from_file_location("fit_markersets_bath", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_bath_generated_blocks_match_provenance_json():
+    """The generated blocks of bath_running.xml hold exactly the values of markersets_bath.json (no raw data needed)."""
+    fit = load_bath_fit_script()
+    record = json.loads(fit.JSON_PATH.read_text())
+    text = fit.XML_PATH.read_text()
+    assert fit.read_blocks(text) == fit.render_blocks(record)
+    assert fit.write_blocks(text, record) == text
+    overlay = mujoco.MjSpec.from_file(str(fit.XML_PATH))  # keep the spec alive while reading its sites
+    fitted = {s.name for s in overlay.sites if s.classname.name == "myomarker_fitted"}
+    assert fitted == set(record["markers"])  # no fitted site outside the generated blocks
+    assert record["source"]["doi"] == "10.15125/BATH-01341" and record["source"]["license"] == "CC BY 4.0"
+
+
+@pytest.mark.parametrize("name", list_markersets())
+def test_third_party_license_files_exist(name):
+    text = markerset_path(name).read_text()
+    assert "Copyright" in text.split("-->")[0]
+    for license_file in re.findall(r"LICENSE-[A-Z0-9-]+\.txt", text):
+        assert (markerset_path(name).parent / license_file).exists(), license_file

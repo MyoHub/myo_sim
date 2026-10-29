@@ -1,4 +1,12 @@
 <mujoco model="markerset_cmu_41">
+<!-- =================================================
+    Copyright 2026 Florian Fischer
+    Model	:: Marker set overlay: CMU Graphics Lab 41 markers (MuJoCoV3.4)
+    Author	:: Florian Fischer
+    source	:: https://github.com/MyoHub/myo_sim
+    License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+    Note	:: The CMU Graphics Lab Motion Capture Database was created with funding from NSF EIA-0196217.
+====================================================== -->
   <!-- CMU Graphics Lab 41-marker set (Vicon 512 layout plus forearm and shank markers). Names as in the CMU C3D files; the placement guide's figure labels the forearm and shank markers RARM/LARM and RLEG/LLEG. The finger markers are asymmetric (right index, left ring finger).
        Sources:
          CMU marker placement guide: http://mocap.cs.cmu.edu/markerPlacementGuide.pdf
@@ -43,11 +51,11 @@
       <site name="RWRB" class="myomarker_nominal" pos="-0.0167 -0.2416 0.0478"/>  <!-- technical; wrist bar, little-finger side, right -->
     </body>
     <body name="radius_r">
-      <site name="RFRM" class="myomarker_nominal" pos="0.0575 -0.1772 0.0274"/>  <!-- cluster; outer edge of the forearm near the outer bone (RARM in the guide figure), right -->
+      <site name="RFRM" class="myomarker_nominal" pos="0.0575 -0.1772 0.0274"/>  <!-- cluster; radial side of the distal forearm (RARM in the guide figure), right -->
       <site name="RWRA" class="myomarker_nominal" pos="0.0575 -0.2272 0.0274"/>  <!-- technical; wrist bar, thumb side, right -->
     </body>
     <body name="secondmc_r">
-      <site name="RFIN" class="myomarker_nominal" pos="0 0 0"/>  <!-- technical; base of the index finger, right -->
+      <site name="RFIN" class="myomarker_nominal" pos="0 0 0"/>  <!-- technical; hand marker on the second metacarpal (index finger ray), right -->
     </body>
     <body name="scapula_l">
       <site name="LSHO" class="myomarker_anatomical" pos="0.0014 -0.0015 -0.0137"/>  <!-- anatomical; acromioclavicular joint, left; on site Shoulder_marker_l -->
@@ -60,15 +68,15 @@
       <site name="LWRB" class="myomarker_nominal" pos="-0.0167 -0.2416 -0.0478"/>  <!-- technical; wrist bar, little-finger side, left -->
     </body>
     <body name="radius_l">
-      <site name="LFRM" class="myomarker_nominal" pos="0.0575 -0.1772 -0.0274"/>  <!-- cluster; outer edge of the forearm near the outer bone (LARM in the guide figure), left -->
+      <site name="LFRM" class="myomarker_nominal" pos="0.0575 -0.1772 -0.0274"/>  <!-- cluster; radial side of the distal forearm (LARM in the guide figure), left -->
       <site name="LWRA" class="myomarker_nominal" pos="0.0575 -0.2272 -0.0274"/>  <!-- technical; wrist bar, thumb side, left -->
     </body>
     <body name="fourthmc_l">
-      <site name="LFIN" class="myomarker_nominal" pos="-0.002 -0.024 -0.002"/>  <!-- technical; base of the ring finger, left -->
+      <site name="LFIN" class="myomarker_nominal" pos="-0.002 -0.024 -0.002"/>  <!-- technical; hand marker on the fourth metacarpal (ring finger ray), left -->
     </body>
     <body name="pelvis">
-      <site name="RFWT" class="myomarker_anatomical" pos="0.0095 0.0181 0.1285"/>  <!-- anatomical; front waist, most prominent point of the pelvis (anterior iliac spine), right; on site ASI_r -->
-      <site name="LFWT" class="myomarker_anatomical" pos="0.0095 0.0181 -0.1285"/>  <!-- anatomical; front waist, most prominent point of the pelvis (anterior iliac spine), left; on site ASI_l -->
+      <site name="RFWT" class="myomarker_anatomical" pos="0.0095 0.0181 0.1285"/>  <!-- anatomical; front waist, anterior superior iliac spine, right; on site ASI_r -->
+      <site name="LFWT" class="myomarker_anatomical" pos="0.0095 0.0181 -0.1285"/>  <!-- anatomical; front waist, anterior superior iliac spine, left; on site ASI_l -->
       <site name="RBWT" class="myomarker_anatomical" pos="-0.155 0.035 0.045"/>  <!-- anatomical; back waist, posterior iliac spine, right; on site PSI_r -->
       <site name="LBWT" class="myomarker_anatomical" pos="-0.155 0.035 -0.045"/>  <!-- anatomical; back waist, posterior iliac spine, left; on site PSI_l -->
     </body>
@@ -83,7 +91,7 @@
     <body name="calcn_r">
       <site name="RHEE" class="myomarker_anatomical" pos="-0.025 0.02 -0.005"/>  <!-- anatomical; calcaneus, right; on site CAL_r -->
       <site name="RTOE" class="myomarker_nominal" pos="0.155 0.0249 0.014"/>  <!-- anatomical; head of the second metatarsal, right -->
-      <site name="RMT5" class="myomarker_anatomical" pos="0.145 0.0249 0.059"/>  <!-- anatomical; outer edge of the foot just before the little toe (fifth metatarsal head), right; on site MT5_r -->
+      <site name="RMT5" class="myomarker_anatomical" pos="0.145 0.0249 0.059"/>  <!-- anatomical; head of the fifth metatarsal, lateral foot, right; on site MT5_r -->
     </body>
     <body name="femur_l">
       <site name="LTHI" class="myomarker_nominal" pos="0 -0.202 -0.065"/>  <!-- cluster; lateral mid-thigh (wand marker), left -->
@@ -96,7 +104,7 @@
     <body name="calcn_l">
       <site name="LHEE" class="myomarker_anatomical" pos="-0.025 0.02 0.005"/>  <!-- anatomical; calcaneus, left; on site CAL_l -->
       <site name="LTOE" class="myomarker_nominal" pos="0.155 0.0249 -0.014"/>  <!-- anatomical; head of the second metatarsal, left -->
-      <site name="LMT5" class="myomarker_anatomical" pos="0.145 0.0249 -0.059"/>  <!-- anatomical; outer edge of the foot just before the little toe (fifth metatarsal head), left; on site MT5_l -->
+      <site name="LMT5" class="myomarker_anatomical" pos="0.145 0.0249 -0.059"/>  <!-- anatomical; head of the fifth metatarsal, lateral foot, left; on site MT5_l -->
     </body>
   </worldbody>
 </mujoco>

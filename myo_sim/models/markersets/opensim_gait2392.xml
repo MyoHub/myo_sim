@@ -1,4 +1,12 @@
 <mujoco model="markerset_opensim_gait2392">
+<!-- =================================================
+    Copyright 2026 Florian Fischer
+    Model	:: Marker set overlay: OpenSim gait2392 scaling markers (MuJoCoV3.4)
+    Author	:: Florian Fischer
+    source	:: https://github.com/MyoHub/myo_sim
+    License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+    Data	:: © Delp, Loan, Hoy, Zajac, Topp, Rosen, Thelen, Anderson, Seth (CC BY 3.0), see LICENSE-OPENSIM-GAIT2392.txt
+====================================================== -->
   <!-- Scaling marker set of the OpenSim gait2392 model, copied in the model's body frames (gait2392 and Rajagopal share the Delp lower-limb frames; the torso frame differs slightly, so torso markers are approximate).
        Sources:
          OpenSim models, gait2392 pipeline: https://github.com/opensim-org/opensim-models/blob/master/Pipelines/Gait2392_Simbody/gait2392_Scale_MarkerSet.xml
