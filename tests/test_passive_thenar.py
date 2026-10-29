@@ -28,7 +28,7 @@ from myo_sim.build.hand_data import (
 MODELS = ("myofullbody", "myotorso_arms", "myohands", "myoarm_r")
 SCRIPTS = Path(__file__).parents[1] / "scripts"
 THUMB = {
-    "r": ("cmc_flexion", "cmc_abduction", "mp_flexion_r", "ip_flexion_r"),
+    "r": ("cmc_flexion_r", "cmc_abduction_r", "mp_flexion_r", "ip_flexion_r"),
     "l": ("cmc_flexion_l", "cmc_abduction_l", "mp_flexion_l", "ip_flexion_l"),
 }
 
@@ -88,7 +88,7 @@ def test_models_carry_the_thenar_muscles_and_every_applied_row(name: str) -> Non
     assert len(_passive_tendons(model)) == _tendon_count() * hands
     names = {model.actuator(i).name for i in range(model.nu)}
     for muscle in (m["name"] for m in load_thenar_table()["muscles"]):
-        assert muscle in names or f"{muscle}_r" in names, muscle
+        assert f"{muscle}_r" in names, muscle
         assert (f"{muscle}_l" in names) == (hands == 2), muscle
 
 
@@ -106,7 +106,7 @@ def test_both_sides_come_from_the_right_arm_files() -> None:
                 continue
             obj = mujoco.mjtObj.mjOBJ_ACTUATOR if element.tag == "muscle" else mujoco.mjtObj.mjOBJ_TENDON
             name = element.get("name")
-            left = f"{name[:-2]}_l" if name.endswith("_r") else f"{name}_l"
+            left = name.replace("_r_tendon", "_l_tendon") if name.endswith("_r_tendon") else f"{name[:-2]}_l"
             assert mujoco.mj_name2id(model, obj, name) >= 0 and mujoco.mj_name2id(model, obj, left) >= 0, name
 
 
@@ -215,13 +215,13 @@ def test_left_and_right_hands_are_symmetric(fullbody: mujoco.MjModel) -> None:
         mujoco.mj_forward(fullbody, data)
         np.testing.assert_allclose(data.qfrc_passive[left.dofadr[0]], data.qfrc_passive[right.dofadr[0]], atol=1e-9)
     for muscle in load_thenar_table()["muscles"]:
-        r, left = fullbody.actuator(muscle["name"]).id, fullbody.actuator(muscle["name"] + "_l").id
+        r, left = fullbody.actuator(muscle["name"] + "_r").id, fullbody.actuator(muscle["name"] + "_l").id
         np.testing.assert_allclose(fullbody.actuator_gainprm[left], fullbody.actuator_gainprm[r])
         np.testing.assert_allclose(fullbody.actuator_lengthrange[left], fullbody.actuator_lengthrange[r], atol=1e-9)
         for _ in range(5):  # same lengths and moment arms at the same thumb angles
             q = np.array([rng.uniform(*fullbody.jnt_range[fullbody.joint(j).id]) for j in THUMB["r"]])
-            right_geo = _tendon_geometry(fullbody, f"{muscle['name']}_tendon", THUMB["r"], q)
-            left_geo = _tendon_geometry(fullbody, f"{muscle['name']}_tendon_l", THUMB["l"], q)
+            right_geo = _tendon_geometry(fullbody, f"{muscle['name']}_r_tendon", THUMB["r"], q)
+            left_geo = _tendon_geometry(fullbody, f"{muscle['name']}_l_tendon", THUMB["l"], q)
             np.testing.assert_allclose(left_geo, right_geo, atol=1e-6)
 
 
@@ -294,12 +294,12 @@ def _tendon_geometry(model: mujoco.MjModel, tendon: str, joints: tuple[str, ...]
 
 def test_thenar_muscles_follow_jacobson_and_share_the_forearm_class() -> None:
     model = myo_sim.load_spec("myotorso_arms").compile()
-    reference = model.actuator("OP").id
+    reference = model.actuator("OP_r").id
     data = mujoco.MjData(model)
     data.qpos[:] = 0.0
     mujoco.mj_forward(model, data)
     for muscle in load_thenar_table()["muscles"]:
-        act = model.actuator(muscle["name"]).id
+        act = model.actuator(muscle["name"] + "_r").id
         assert model.actuator_gainprm[act][2] == pytest.approx(muscle["force_N"]["value"])
         np.testing.assert_array_equal(
             np.delete(model.actuator_gainprm[act][:9], 2), np.delete(model.actuator_gainprm[reference][:9], 2)
@@ -315,7 +315,7 @@ def test_thenar_moment_arms_act_as_named() -> None:
     """AdP adducts the CMC and flexes the MP joint; APB abducts the CMC (MyoHand signs: +abduction, -MP flexion)."""
     model = myo_sim.load_spec("myoarm_r").compile()
     q = np.zeros(4)
-    arm = {m: -_tendon_geometry(model, f"{m}_tendon", THUMB["r"], q)[1:] for m in ("AdP", "APB", "FPB")}
+    arm = {m: -_tendon_geometry(model, f"{m}_r_tendon", THUMB["r"], q)[1:] for m in ("AdP", "APB", "FPB")}
     assert arm["AdP"][1] < 0 and arm["AdP"][2] < 0
     assert arm["APB"][1] > 0
     assert arm["FPB"][2] < 0

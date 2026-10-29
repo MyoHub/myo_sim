@@ -72,7 +72,7 @@ def case(request: pytest.FixtureRequest) -> dict:
 
 def _side(name: str) -> str:
     """Side of an arm element: the mirrored left arm's names all end in _l; the right arm's may be unsuffixed."""
-    return "l" if name.endswith("_l") else "r"
+    return "l" if name.endswith(("_l", "_l_tendon")) else "r"
 
 
 def _hand_name(name: str, sides: str = "") -> str:

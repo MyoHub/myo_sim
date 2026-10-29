@@ -32,7 +32,8 @@ class MirrorRules:
     common_names: frozenset[str] = frozenset({"texgeom", "geom"})
     body_pos_x_mirror_names: frozenset[str] = frozenset()
     lowercase_geom_prefixes: tuple[str, ...] = ("Thorax_ellipsoid",)
-    replacements: tuple[tuple[str, str], ...] = ()
+    # Muscle tendons are named after their actuator (``OP_r`` -> ``OP_r_tendon``), so the side sits inside the name.
+    replacements: tuple[tuple[str, str], ...] = (("_r_tendon", "_l_tendon"),)
     prefix_replacements: tuple[tuple[str, str], ...] = ()
     mirror_file_attributes: bool = False
 

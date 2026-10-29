@@ -154,7 +154,7 @@ A frozen dataclass that controls how `mirror_element()` transforms the right-sid
 | `prefix_replacements` | `tuple[tuple[str, str], ...]` | Prefix substitutions applied to name references |
 | `mirror_file_attributes` | `bool` | Whether to apply mirroring to `file` attributes (mesh file names) |
 
-Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement. Override specific fields only when the default logic produces incorrect results for a new body part.
+Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement and the muscle-tendon infix `_r_tendon` → `_l_tendon`. Override specific fields only when the default logic produces incorrect results for a new body part.
 
 ### `add_contact_pairs(spec, contacts_xml, include_pair=None)`
 

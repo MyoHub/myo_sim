@@ -61,10 +61,10 @@ VALIDATION_SCRIPT = Path(__file__).with_name("validate_hand_function.py")
 MUSCLE_XML = myo_sim.MODELS_DIR / "arm" / "assets" / "myoarm_r_muscle.xml"
 
 KNUTSON_EXTRINSIC = {"A3": 1.2, "k3": 4.2e-2, "B3": -0.8, "phi3": 10.9, "A4": 0.8, "k4": 5.4e-2, "B4": -0.3, "phi4": 40.9}
-MUSCLES = ("FDS2", "FDP2", "EDC2", "EIP")
+MUSCLES = ("FDS2_r", "FDP2_r", "EDC2_r", "EIP_r")
 JOINT_MUSCLES = (
-    "FDS3", "FDS4", "FDS5", "FDP3", "FDP4", "FDP5", "EDC3", "EDC4", "EDC5", "EDM",
-    "FPL", "EPL", "EPB", "APL", "ECRB", "ECU",
+    "FDS3_r", "FDS4_r", "FDS5_r", "FDP3_r", "FDP4_r", "FDP5_r", "EDC3_r", "EDC4_r", "EDC5_r", "EDM_r",
+    "FPL_r", "EPL_r", "EPB_r", "APL_r", "ECRB_r", "ECU_r",
 )  # fmt: skip
 MCP_DEG = np.arange(0.0, 90.1, 5.0)  # MyoHand's MCP range (no hyperextension; Knutson measured from about -45 deg)
 WRIST_DEG = np.arange(-60.0, 60.1, 10.0)
@@ -475,8 +475,8 @@ def fit_joints(model: mujoco.MjModel, table: dict[str, Any]) -> None:
     for k, name in enumerate(JOINT_MUSCLES):
         crossed = [t for t in terms if np.any(np.abs(t["arms"][:, k]) > 1e-4)]
         rows[name] = {
-            "muscle": name,
-            "names": {"r": name, "l": f"{name}_l"},
+            "muscle": name.removesuffix("_r"),
+            "names": {"r": name, "l": f"{name.removesuffix('_r')}_l"},
             "status": "transferred target" if any(t["row"]["status"] == "transferred target" for t in crossed) else "measured",
             "source": "joint_targets",
             "targets": [t["row"]["row"] for t in crossed],

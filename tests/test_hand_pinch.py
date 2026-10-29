@@ -33,7 +33,7 @@ def _script() -> ModuleType:
 
 def _has_thenar() -> bool:
     actuators = {a.name for a in myo_sim.load_spec("myoarm_r").actuators}
-    return all(name in actuators for name in THENAR)
+    return all(f"{name}_r" in actuators for name in THENAR)
 
 
 pytestmark = pytest.mark.skipif(not _has_thenar(), reason="needs the thenar muscles AdP, FPB and APB")
@@ -44,7 +44,7 @@ def _pinch(without_thenar: bool = False) -> dict:
     v = _script()
     hand = v.myohand()
     if without_thenar:
-        kept = tuple(n for n in hand.muscles["thumb_intrinsic"] if n not in THENAR)
+        kept = tuple(n for n in hand.muscles["thumb_intrinsic"] if n.removesuffix("_r") not in THENAR)
         hand = v.Hand(
             hand.load, hand.joints, hand.segments, hand.metacarpal3, hand.thumb_distal, hand.muscles | {"thumb_intrinsic": kept}
         )

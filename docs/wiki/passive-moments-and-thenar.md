@@ -17,8 +17,8 @@ The left arm is mirrored from these files as usual. Hand models keep the thenar 
 and the springs through the arm-to-hand pruning in `build/hand.py` (see
 `build-and-composition.md`, *Hand models by pruning*).
 
-**Downstream changes.** The thenar muscles add 3 actuators per hand (`AdP`, `FPB`,
-`APB`; `_l` on the left, `_r` in hand-only models), after each arm's other muscles:
+**Downstream changes.** The thenar muscles add 3 actuators per hand (`AdP_r`, `FPB_r`,
+`APB_r`; `_l` on the left), after each arm's other muscles:
 `myoarm_r` 63 -> 66, `myoarms` 126 -> 132, `myohand_r` 39 -> 42, `myohands` 78 -> 84,
 `myofullbody` 416 -> 422. Left-arm and leg actuator indices shift by 3 or 6. The
 polynomial tendon stiffness needs MuJoCo >= 3.7, the package floor.
@@ -154,7 +154,7 @@ the dynamics of every downstream model with a hand.
 
 ## RI2 path
 
-RI2's insertion (`RI2-P3_r`) lies on the surface of `2ndmcp_ellipsoid_wrap` at MCP 0 deg and
+RI2's insertion (`RI2-P3_r`) lies on the surface of `2ndmcp_ellipsoid_wrap_r` at MCP 0 deg and
 inside it from about 10 deg flexion. MuJoCo skips a wrap whose end point is inside the
 cylinder, so the path snapped to the straight line and its length dropped by 7.1 mm between
 MCP 10 and 15 deg (and by up to 10 mm across MCP abduction). Below the jump the sidesite,

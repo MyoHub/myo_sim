@@ -645,7 +645,7 @@
     {
       "joint": "thumb_cmc_flexion",
       "names": {
-        "r": "cmc_flexion",
+        "r": "cmc_flexion_r",
         "l": "cmc_flexion_l"
       },
       "status": "measured",
@@ -664,7 +664,7 @@
           -14.799999999999997,
           40.1
         ],
-        "mapping": "Domalain's Mp is the external moment (negative = extension) in Chao et al. TMC coordinates with angles relative to each subject's maxima; the internal moment is -Mp. phi_max (maximal extension, -43.2 +- 16.0 deg) is aligned with MyoHand's cmc_flexion extension limit (+0.70 rad; +q = extension), as the paper prescribes relative-to-maximum use; fit over the measured range of motion (54.9 deg) from that limit.",
+        "mapping": "Domalain's Mp is the external moment (negative = extension) in Chao et al. TMC coordinates with angles relative to each subject's maxima; the internal moment is -Mp. phi_max (maximal extension, -43.2 +- 16.0 deg) is aligned with MyoHand's cmc_flexion_r extension limit (+0.70 rad; +q = extension), as the paper prescribes relative-to-maximum use; fit over the measured range of motion (54.9 deg) from that limit.",
         "segments": 3,
         "subtract_model_muscles": {
           "model": "myoarm_r",
@@ -937,7 +937,7 @@
     {
       "joint": "thumb_cmc_abduction",
       "names": {
-        "r": "cmc_abduction",
+        "r": "cmc_abduction_r",
         "l": "cmc_abduction_l"
       },
       "status": "measured",
@@ -959,7 +959,7 @@
           -2.5999999999999943,
           44.7
         ],
-        "mapping": "theta_max (maximal abduction, 7.4 +- 8.5 deg) aligned with MyoHand's cmc_abduction abduction limit (+0.78 rad); fit over the measured abduction-adduction span (7.4 - (-39.9) = 47.3 deg). MyoHand's range reaches 26 deg further into adduction, where the fitted cubic is extrapolated. The adduction side is a single linear spring: a cubic fitted inside the measured span extrapolates to 5.5-6.8 N m at MyoHand's adduction limit (the source exponential to 7.3 N m), the linear one to 1.8 N m, near Domalain's largest measured moment (141.7 +- 43.9 N cm at the subjects' maximal adduction).",
+        "mapping": "theta_max (maximal abduction, 7.4 +- 8.5 deg) aligned with MyoHand's cmc_abduction_r abduction limit (+0.78 rad); fit over the measured abduction-adduction span (7.4 - (-39.9) = 47.3 deg). MyoHand's range reaches 26 deg further into adduction, where the fitted cubic is extrapolated. The adduction side is a single linear spring: a cubic fitted inside the measured span extrapolates to 5.5-6.8 N m at MyoHand's adduction limit (the source exponential to 7.3 N m), the linear one to 1.8 N m, near Domalain's largest measured moment (141.7 +- 43.9 N cm at the subjects' maximal adduction).",
         "segments": {
           "positive": 3,
           "negative": 1
@@ -1812,9 +1812,9 @@
           "model": "myoarm_r",
           "posture_deg": {},
           "muscles": [
-            "RI2",
-            "LU_RB2",
-            "UI_UB2"
+            "RI2_r",
+            "LU_RB2_r",
+            "UI_UB2_r"
           ],
           "note": "Knutson's intrinsic component covers the joint structures and intrinsic muscles, not the extrinsic muscle-tendon units: only this digit's interossei and lumbrical are subtracted; the extrinsic part belongs to FDS/FDP/EDC/EI.",
           "baseline_Nm": {
@@ -2751,9 +2751,9 @@
           "model": "myoarm_r",
           "posture_deg": {},
           "muscles": [
-            "RI3",
-            "LU_RB3",
-            "UI_UB3"
+            "RI3_r",
+            "LU_RB3_r",
+            "UI_UB3_r"
           ],
           "note": "Knutson's intrinsic component covers the joint structures and intrinsic muscles, not the extrinsic muscle-tendon units: only this digit's interossei and lumbrical are subtracted; the extrinsic part belongs to FDS/FDP/EDC/EI.",
           "baseline_Nm": {
@@ -3306,7 +3306,7 @@
     {
       "joint": "digit3_dip_flexion",
       "names": {
-        "r": "md3_flexion",
+        "r": "md3_flexion_r",
         "l": "md3_flexion_l"
       },
       "status": "assumed",
@@ -3639,9 +3639,9 @@
           "model": "myoarm_r",
           "posture_deg": {},
           "muscles": [
-            "RI4",
-            "LU_RB4",
-            "UI_UB4"
+            "RI4_r",
+            "LU_RB4_r",
+            "UI_UB4_r"
           ],
           "note": "Knutson's intrinsic component covers the joint structures and intrinsic muscles, not the extrinsic muscle-tendon units: only this digit's interossei and lumbrical are subtracted; the extrinsic part belongs to FDS/FDP/EDC/EI.",
           "baseline_Nm": {
@@ -3913,7 +3913,7 @@
     {
       "joint": "digit4_pip_flexion",
       "names": {
-        "r": "pm4_flexion",
+        "r": "pm4_flexion_r",
         "l": "pm4_flexion_l"
       },
       "status": "assumed",
@@ -4545,9 +4545,9 @@
           "model": "myoarm_r",
           "posture_deg": {},
           "muscles": [
-            "RI5",
-            "LU_RB5",
-            "UI_UB5"
+            "RI5_r",
+            "LU_RB5_r",
+            "UI_UB5_r"
           ],
           "note": "Knutson's intrinsic component covers the joint structures and intrinsic muscles, not the extrinsic muscle-tendon units: only this digit's interossei and lumbrical are subtracted; the extrinsic part belongs to FDS/FDP/EDC/EI.",
           "baseline_Nm": {

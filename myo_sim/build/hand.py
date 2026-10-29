@@ -99,8 +99,9 @@ PHANTOM_SCAFFOLD_INERTIA_FLOOR = 0.0001
 
 
 def add_side_suffix(name: str, side: str) -> str:
+    """*name* with the side suffix, unless it already names the side (``x_r`` or a muscle tendon ``x_r_tendon``)."""
     suffix = f"_{side}"
-    return name if name.endswith(suffix) else f"{name}{suffix}"
+    return name if name.endswith(suffix) or name.endswith(f"{suffix}_tendon") else f"{name}{suffix}"
 
 
 def side_name(name: str, side: str) -> str:

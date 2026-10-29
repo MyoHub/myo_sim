@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-29 — Side suffix on every right-arm name
+Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml`, `myoarm_r_tendon.xml`, `myoarm_r_muscle.xml`, `myo_sim/build/utils.py` (mirror rule `_r_tendon` -> `_l_tendon`), `myo_sim/build/hand.py`, `myo_sim/build/data/muscle_passive.json`, `passive_joint_moments.json`, `thenar_muscles.json`, `hand_function.json`, `scripts/fit_muscle_passive.py`, `scripts/generate_thenar_muscles.py`, `scripts/validate_hand_function.py`, `scripts/compare_model_numerics.py`, `tests/test_naming.py` and the tests that name arm elements, `docs/wiki/model-authoring.md`, `build-and-composition.md`, `passive-moments-and-thenar.md`, `hand-function-validation.md`, `testing-guide.md`, `myo_sim/models/arm/README.md`, `CHANGELOG.md`
+Why: The right arm was the only part whose joints, actuators, tendons, geoms and cameras lacked `_r` (MoBL legacy), so the same muscle was `OP` in `myoarm_r` and `OP_r` in `myohand_r`. Every right-arm name now carries the side, muscle tendons follow their actuator (`OP_r_tendon`) as in the legs and torso, and a script proves the compiled numerics are unchanged.
+
 ## 2026-10-29 — Hand models by generic pruning; literature comparison page
 Changed: `myo_sim/build/hand.py`, `myo_sim/build/compose.py`, `myo_sim/models/contacts/myohand_contacts.xml`, `tests/test_hand_pruning.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_hand_literature.py`, `docs/wiki/hand-literature-comparison.md`, `docs/wiki/build-and-composition.md`, `docs/wiki/passive-moments-and-thenar.md`, `docs/wiki/testing-guide.md`, `docs/wiki/index.md`, `myo_sim/build/README.md`, `CHANGELOG.md`
 Why: The hand models stay removal-only derivations of the canonical arm, but the pruning now handles every reference MjSpec cannot follow (tendon paths, equalities, sensors, pairs) generically instead of case by case, and a test proves every surviving arm element is in the hand unchanged. The new page records the hand against published data after each step of the hand rebuild.

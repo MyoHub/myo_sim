@@ -135,7 +135,7 @@ def test_flexors_close_and_extensors_open_the_hand_actively(posture: str) -> Non
     mujoco.mj_forward(model, data)
     for name in spec["muscles"][posture]:
         for side in ("r", "l"):
-            act = _right(model, name) if side == "r" else model.actuator(f"{name}_l").id
+            act = _right(model, name) if side == "r" else model.actuator(f"{name.removesuffix('_r')}_l").id
             prm = model.actuator_gainprm[act]
             fl = (
                 -mujoco.mju_muscleGain(

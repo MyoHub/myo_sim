@@ -34,8 +34,8 @@ The script uses whichever `myo_sim` is importable, so another model version runs
 **Common.** Shoulder neutral, elbow 90 deg, forearm neutral. Locked joints are joint equalities to
 a constant (`simulation.lock`, timeconst 2 x timestep); the prescribed wrist is the same equality with
 its constant moved every step. Collisions are off except the explicit dynamometer pairs. Angles in the
-table are anatomical; the script maps them with a sign per joint (MyoHand's `cmc_flexion`,
-`mp_flexion` and `ip_flexion` are positive in extension, read from the muscle actions).
+table are anatomical; the script maps them with a sign per joint (MyoHand's `cmc_flexion_r`,
+`mp_flexion_r` and `ip_flexion_r` are positive in extension, read from the muscle actions).
 
 **Tenodesis.** All muscles at act = 0. Free: MCP, PIP and DIP flexion of digits 2-5; MCP abduction and
 the thumb locked at 0. Trial A holds the wrist at 60 deg flexion for 1 s and extends it to 60 deg at

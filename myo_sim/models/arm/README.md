@@ -35,6 +35,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 
 ## Changelog
 
+**2026-10-29** — Every right-arm joint, actuator, tendon, geom and camera name carries `_r` (`OP` -> `OP_r`, `cmc_flexion` -> `cmc_flexion_r`); muscle tendons are named after their actuator (`OP_r_tendon`, left `OP_l_tendon`); `plam_lookat` is `palm_lookat_r`. Names only: the compiled numerics are identical. See `CHANGELOG.md` for the downstream list.
+
 **2026-10-28** — Passive force scale (`fpmax`) of EDC3, EDC4, EDC5 and EDM raised from 0.002 to 0.0525 so that digits 3-5 open when the wrist flexes (McFarland et al. 2023 release trial); slack lengths unchanged. This changes the passive forces, and so the dynamics, of every model with a hand. See `docs/wiki/passive-muscles-tenodesis.md`.
 
 **2026-10-28** — Finger MCP, PIP and DIP damping set to Kamper et al. 2002 (0.0142, 0.0105, 0.0081 N m s/rad; was 0.05), and RI2 routed without the second-metacarpal wrap its insertion entered (its length jumped by 7 mm near 10 deg MCP flexion). Both change the dynamics of every model with a hand. See `docs/wiki/passive-moments-and-thenar.md`.

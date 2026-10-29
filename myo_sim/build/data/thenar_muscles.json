@@ -221,7 +221,7 @@
       }
     }
   ],
-  "joint_name_note": "MUSIC's thumb CMC joints have the same axes as MyoHand's but swapped names: MUSIC cmc_flexion = myo_sim cmc_abduction and vice versa. Sites are body-relative, so the geometry transfers unchanged (lengths and moment arms match MUSIC to 1e-11 m with the names mapped).",
+  "joint_name_note": "MUSIC's thumb CMC joints have the same axes as MyoHand's but swapped names: MUSIC cmc_flexion = myo_sim cmc_abduction_r and vice versa. Sites are body-relative, so the geometry transfers unchanged (lengths and moment arms match MUSIC to 1e-11 m with the names mapped).",
   "specific_tension": {
     "value_N_per_cm2": 86.3,
     "derivation": "least squares F = sigma x PCSA over MyoHand's OP (180 N), EPB (46.0 N) and APL (116.7 N) with Jacobson 1992 PCSA 1.02, 0.47, 1.93 cm2; per muscle 176.5, 97.9, 60.5 N/cm2, so MyoHand implies no single value and the fitted one is a compromise (forces scale linearly with it)."

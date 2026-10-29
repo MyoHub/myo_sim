@@ -52,14 +52,12 @@ EXPECTED_COLLISION_GEOM_COUNT_DELTA = -2
 def _ref_to_tgt_actuator(name: str) -> str:
     if name.endswith("_left"):
         return name[: -len("_left")] + "_l"
+    if name in _ARM_BASE_MUSCLES:  # myo_sim's right arm carries _r
+        return name + "_r"
     return name
 
 
 _JOINT_MAP_REF_TO_TGT = {
-    "cmc_abduction_r": "cmc_abduction",
-    "cmc_flexion_r": "cmc_flexion",
-    "md3_flexion_r": "md3_flexion",
-    "pm4_flexion_r": "pm4_flexion",
     "elbow_flex_r": "elbow_flexion_r",
     "elbow_flex_l": "elbow_flexion_l",
 }
@@ -204,10 +202,10 @@ _ARM_JOINT_PREFIXES = (
 )
 
 _ARM_JOINT_NAMES = {
-    "cmc_flexion",
-    "cmc_abduction",
-    "md3_flexion",
-    "pm4_flexion",
+    "cmc_flexion_r",
+    "cmc_abduction_r",
+    "md3_flexion_r",
+    "pm4_flexion_r",
 }
 
 _LEG_JOINT_PREFIXES = (

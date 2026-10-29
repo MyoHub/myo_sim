@@ -23,7 +23,7 @@ from myo_sim.build.hand_data import load_thenar_table, write_generated_block
 
 SCRIPT = "generate_thenar_muscles.py"
 MUSCLE_CLASS = "myoarm_forearm_muscle"
-CLASS_REFERENCE = "OP"  # existing muscle of MUSCLE_CLASS: source of the normalised fibre-length range
+CLASS_REFERENCE = "OP_r"  # existing muscle of MUSCLE_CLASS: source of the normalised fibre-length range
 
 
 def _cite(table: dict[str, Any], key: str) -> str:
@@ -38,7 +38,7 @@ def tendon_block(table: dict[str, Any]) -> str:
         lines.append(
             f"        <!-- {muscle['name']} ({muscle['anatomy']}): path from {_cite(table, muscle['source'])} (MIT) -->"
         )
-        lines.append(f'        <spatial name="{muscle["name"]}_tendon" class="{MUSCLE_CLASS}">')
+        lines.append(f'        <spatial name="{muscle["name"]}_r_tendon" class="{MUSCLE_CLASS}">')
         for i in range(1, len(muscle["sites"]) + 1):
             lines.append(f'            <site site="{muscle["name"]}-P{i}_r"/>')
         lines.append("        </spatial>")
@@ -74,8 +74,8 @@ def muscle_block(table: dict[str, Any], lengthranges: dict[str, tuple[float, flo
         )
         lo, hi = lengthranges[muscle["name"]]
         lines.append(
-            f'        <muscle name="{muscle["name"]}" force="{muscle["force_N"]["value"]:g}" class="{MUSCLE_CLASS}"'
-            f' tendon="{muscle["name"]}_tendon" lengthrange="{lo!r} {hi!r}"/>'
+            f'        <muscle name="{muscle["name"]}_r" force="{muscle["force_N"]["value"]:g}" class="{MUSCLE_CLASS}"'
+            f' tendon="{muscle["name"]}_r_tendon" lengthrange="{lo!r} {hi!r}"/>'
         )
     return "".join(f"{line}\n" for line in lines)
 

@@ -38,7 +38,7 @@
     {
       "muscle": "FDS2",
       "names": {
-        "r": "FDS2",
+        "r": "FDS2_r",
         "l": "FDS2_l"
       },
       "status": "measured",
@@ -65,7 +65,7 @@
     {
       "muscle": "FDP2",
       "names": {
-        "r": "FDP2",
+        "r": "FDP2_r",
         "l": "FDP2_l"
       },
       "status": "measured",
@@ -92,7 +92,7 @@
     {
       "muscle": "EDC2",
       "names": {
-        "r": "EDC2",
+        "r": "EDC2_r",
         "l": "EDC2_l"
       },
       "status": "measured",
@@ -119,7 +119,7 @@
     {
       "muscle": "EIP",
       "names": {
-        "r": "EIP",
+        "r": "EIP_r",
         "l": "EIP_l"
       },
       "status": "measured",
@@ -146,7 +146,7 @@
     {
       "muscle": "FDS3",
       "names": {
-        "r": "FDS3",
+        "r": "FDS3_r",
         "l": "FDS3_l"
       },
       "status": "transferred target",
@@ -179,7 +179,7 @@
     {
       "muscle": "FDS4",
       "names": {
-        "r": "FDS4",
+        "r": "FDS4_r",
         "l": "FDS4_l"
       },
       "status": "transferred target",
@@ -212,7 +212,7 @@
     {
       "muscle": "FDS5",
       "names": {
-        "r": "FDS5",
+        "r": "FDS5_r",
         "l": "FDS5_l"
       },
       "status": "transferred target",
@@ -245,7 +245,7 @@
     {
       "muscle": "FDP3",
       "names": {
-        "r": "FDP3",
+        "r": "FDP3_r",
         "l": "FDP3_l"
       },
       "status": "transferred target",
@@ -279,7 +279,7 @@
     {
       "muscle": "FDP4",
       "names": {
-        "r": "FDP4",
+        "r": "FDP4_r",
         "l": "FDP4_l"
       },
       "status": "transferred target",
@@ -313,7 +313,7 @@
     {
       "muscle": "FDP5",
       "names": {
-        "r": "FDP5",
+        "r": "FDP5_r",
         "l": "FDP5_l"
       },
       "status": "transferred target",
@@ -347,7 +347,7 @@
     {
       "muscle": "EDC3",
       "names": {
-        "r": "EDC3",
+        "r": "EDC3_r",
         "l": "EDC3_l"
       },
       "status": "transferred target",
@@ -383,7 +383,7 @@
     {
       "muscle": "EDC4",
       "names": {
-        "r": "EDC4",
+        "r": "EDC4_r",
         "l": "EDC4_l"
       },
       "status": "transferred target",
@@ -419,7 +419,7 @@
     {
       "muscle": "EDC5",
       "names": {
-        "r": "EDC5",
+        "r": "EDC5_r",
         "l": "EDC5_l"
       },
       "status": "transferred target",
@@ -455,7 +455,7 @@
     {
       "muscle": "EDM",
       "names": {
-        "r": "EDM",
+        "r": "EDM_r",
         "l": "EDM_l"
       },
       "status": "transferred target",
@@ -491,7 +491,7 @@
     {
       "muscle": "FPL",
       "names": {
-        "r": "FPL",
+        "r": "FPL_r",
         "l": "FPL_l"
       },
       "status": "transferred target",
@@ -524,7 +524,7 @@
     {
       "muscle": "EPL",
       "names": {
-        "r": "EPL",
+        "r": "EPL_r",
         "l": "EPL_l"
       },
       "status": "transferred target",
@@ -557,7 +557,7 @@
     {
       "muscle": "EPB",
       "names": {
-        "r": "EPB",
+        "r": "EPB_r",
         "l": "EPB_l"
       },
       "status": "transferred target",
@@ -589,7 +589,7 @@
     {
       "muscle": "APL",
       "names": {
-        "r": "APL",
+        "r": "APL_r",
         "l": "APL_l"
       },
       "status": "measured",
@@ -620,7 +620,7 @@
     {
       "muscle": "ECRB",
       "names": {
-        "r": "ECRB",
+        "r": "ECRB_r",
         "l": "ECRB_l"
       },
       "status": "measured",
@@ -651,7 +651,7 @@
     {
       "muscle": "ECU",
       "names": {
-        "r": "ECU",
+        "r": "ECU_r",
         "l": "ECU_l"
       },
       "status": "measured",
@@ -723,9 +723,9 @@
         "md2_flexion_r": 30.0,
         "mcp3_flexion_r": 45.0,
         "pm3_flexion_r": 60.0,
-        "md3_flexion": 30.0,
+        "md3_flexion_r": 30.0,
         "mcp4_flexion_r": 45.0,
-        "pm4_flexion": 60.0,
+        "pm4_flexion_r": 60.0,
         "md4_flexion_r": 30.0,
         "mcp5_flexion_r": 45.0,
         "pm5_flexion_r": 60.0,
@@ -963,7 +963,7 @@
       },
       {
         "row": "digit3_dip_flexion",
-        "joint": "md3_flexion",
+        "joint": "md3_flexion_r",
         "status": "transferred target",
         "source": "kamper2002",
         "model": "kamper2002_static",
@@ -996,7 +996,7 @@
       },
       {
         "row": "digit4_pip_flexion",
-        "joint": "pm4_flexion",
+        "joint": "pm4_flexion_r",
         "status": "transferred target",
         "source": "kamper2002",
         "model": "kamper2002_static",
@@ -1196,22 +1196,22 @@
   },
   "joint_fit": {
     "muscles": [
-      "FDS3",
-      "FDS4",
-      "FDS5",
-      "FDP3",
-      "FDP4",
-      "FDP5",
-      "EDC3",
-      "EDC4",
-      "EDC5",
-      "EDM",
-      "FPL",
-      "EPL",
-      "EPB",
-      "APL",
-      "ECRB",
-      "ECU"
+      "FDS3_r",
+      "FDS4_r",
+      "FDS5_r",
+      "FDP3_r",
+      "FDP4_r",
+      "FDP5_r",
+      "EDC3_r",
+      "EDC4_r",
+      "EDC5_r",
+      "EDM_r",
+      "FPL_r",
+      "EPL_r",
+      "EPB_r",
+      "APL_r",
+      "ECRB_r",
+      "ECU_r"
     ],
     "excess_weight": 100.0,
     "max_change": 0.1,
@@ -1225,53 +1225,53 @@
     "error_after": 16210.706094869482,
     "error_without_release": 7178.398380126078,
     "other_muscles": [
-      "DELT1",
-      "DELT2",
-      "DELT3",
-      "SUPSP",
-      "INFSP",
-      "SUBSC",
-      "TMIN",
-      "TMAJ",
-      "PECM1",
-      "PECM2",
-      "PECM3",
-      "LAT1",
-      "LAT2",
-      "LAT3",
-      "CORB",
-      "TRIlong",
-      "TRIlat",
-      "TRImed",
-      "ANC",
-      "SUP",
-      "BIClong",
-      "BICshort",
-      "BRA",
-      "BRD",
-      "ECRL",
-      "FCR",
-      "FCU",
-      "PL",
-      "PT",
-      "PQ",
-      "FDS2",
-      "FDP2",
-      "EDC2",
-      "EIP",
-      "OP",
-      "RI2",
-      "LU_RB2",
-      "UI_UB2",
-      "RI3",
-      "LU_RB3",
-      "UI_UB3",
-      "RI4",
-      "LU_RB4",
-      "UI_UB4",
-      "RI5",
-      "LU_RB5",
-      "UI_UB5"
+      "DELT1_r",
+      "DELT2_r",
+      "DELT3_r",
+      "SUPSP_r",
+      "INFSP_r",
+      "SUBSC_r",
+      "TMIN_r",
+      "TMAJ_r",
+      "PECM1_r",
+      "PECM2_r",
+      "PECM3_r",
+      "LAT1_r",
+      "LAT2_r",
+      "LAT3_r",
+      "CORB_r",
+      "TRIlong_r",
+      "TRIlat_r",
+      "TRImed_r",
+      "ANC_r",
+      "SUP_r",
+      "BIClong_r",
+      "BICshort_r",
+      "BRA_r",
+      "BRD_r",
+      "ECRL_r",
+      "FCR_r",
+      "FCU_r",
+      "PL_r",
+      "PT_r",
+      "PQ_r",
+      "FDS2_r",
+      "FDP2_r",
+      "EDC2_r",
+      "EIP_r",
+      "OP_r",
+      "RI2_r",
+      "LU_RB2_r",
+      "UI_UB2_r",
+      "RI3_r",
+      "LU_RB3_r",
+      "UI_UB3_r",
+      "RI4_r",
+      "LU_RB4_r",
+      "UI_UB4_r",
+      "RI5_r",
+      "LU_RB5_r",
+      "UI_UB5_r"
     ]
   },
   "active_constraint": {
@@ -1284,14 +1284,14 @@
         "md2_flexion_r": 90.0,
         "mcp3_flexion_r": 90.0,
         "pm3_flexion_r": 90.0,
-        "md3_flexion": 90.0,
+        "md3_flexion_r": 90.0,
         "mcp4_flexion_r": 90.0,
-        "pm4_flexion": 90.0,
+        "pm4_flexion_r": 90.0,
         "md4_flexion_r": 90.0,
         "mcp5_flexion_r": 90.0,
         "pm5_flexion_r": 90.0,
         "md5_flexion_r": 90.0,
-        "cmc_flexion": -44.69,
+        "cmc_flexion_r": -44.69,
         "mp_flexion_r": -45.0,
         "ip_flexion_r": -75.0,
         "flexion_r": 0.0
@@ -1302,14 +1302,14 @@
         "md2_flexion_r": 90.0,
         "mcp3_flexion_r": 90.0,
         "pm3_flexion_r": 90.0,
-        "md3_flexion": 90.0,
+        "md3_flexion_r": 90.0,
         "mcp4_flexion_r": 90.0,
-        "pm4_flexion": 90.0,
+        "pm4_flexion_r": 90.0,
         "md4_flexion_r": 90.0,
         "mcp5_flexion_r": 90.0,
         "pm5_flexion_r": 90.0,
         "md5_flexion_r": 90.0,
-        "cmc_flexion": -44.69,
+        "cmc_flexion_r": -44.69,
         "mp_flexion_r": -45.0,
         "ip_flexion_r": -75.0,
         "flexion_r": 30.0
@@ -1320,14 +1320,14 @@
         "md2_flexion_r": 0.0,
         "mcp3_flexion_r": 0.0,
         "pm3_flexion_r": 0.0,
-        "md3_flexion": 0.0,
+        "md3_flexion_r": 0.0,
         "mcp4_flexion_r": 0.0,
-        "pm4_flexion": 0.0,
+        "pm4_flexion_r": 0.0,
         "md4_flexion_r": 0.0,
         "mcp5_flexion_r": 0.0,
         "pm5_flexion_r": 0.0,
         "md5_flexion_r": 0.0,
-        "cmc_flexion": 40.11,
+        "cmc_flexion_r": 40.11,
         "mp_flexion_r": 40.0,
         "ip_flexion_r": 25.0,
         "flexion_r": -30.0
@@ -1335,37 +1335,37 @@
     },
     "muscles": {
       "fist_wrist_neutral": [
-        "FDS2",
-        "FDS3",
-        "FDS4",
-        "FDS5",
-        "FDP2",
-        "FDP3",
-        "FDP4",
-        "FDP5",
-        "FPL"
+        "FDS2_r",
+        "FDS3_r",
+        "FDS4_r",
+        "FDS5_r",
+        "FDP2_r",
+        "FDP3_r",
+        "FDP4_r",
+        "FDP5_r",
+        "FPL_r"
       ],
       "fist_wrist_flexed_30": [
-        "FDS2",
-        "FDS3",
-        "FDS4",
-        "FDS5",
-        "FDP2",
-        "FDP3",
-        "FDP4",
-        "FDP5",
-        "FPL"
+        "FDS2_r",
+        "FDS3_r",
+        "FDS4_r",
+        "FDS5_r",
+        "FDP2_r",
+        "FDP3_r",
+        "FDP4_r",
+        "FDP5_r",
+        "FPL_r"
       ],
       "extension_wrist_extended_30": [
-        "EDC2",
-        "EDC3",
-        "EDC4",
-        "EDC5",
-        "EDM",
-        "EIP",
-        "EPL",
-        "EPB",
-        "APL"
+        "EDC2_r",
+        "EDC3_r",
+        "EDC4_r",
+        "EDC5_r",
+        "EDM_r",
+        "EIP_r",
+        "EPL_r",
+        "EPB_r",
+        "APL_r"
       ]
     }
   },
@@ -1373,10 +1373,10 @@
     "description": "Release step, after the slack-length and fpmax fit: the slack lengths stay, and only the fpmax of these extensors is refit. Without it they sit at the fpmax floor and nothing but joint springs opens digits 3-5 when the wrist flexes. Lower bound: the smallest common fpmax at which, in tenodesis trial B of McFarland et al. 2023 (wrist from 60 deg extension to 60 deg flexion at 20 deg/s, all muscles at act = 0; scripts/validate_hand_function.py), the MCP of each listed digit extends by at least min_mcp_extension_deg (the lower edge of the protocol's MCP range-of-motion band, mirrored). Above the bound the fpmax are set by the same one-sided joint loss. Every joint_targets row records its maximum excess without this step (fit.max_excess_Nm_without_release): the price of the release is extension moment beyond the measured totals.",
     "source": "mcfarland2023",
     "muscles": [
-      "EDC3",
-      "EDC4",
-      "EDC5",
-      "EDM"
+      "EDC3_r",
+      "EDC4_r",
+      "EDC5_r",
+      "EDM_r"
     ],
     "digits": [
       3,
@@ -1387,10 +1387,10 @@
     "result": {
       "fpmax_lower_bound": 0.0525,
       "fpmax_before": {
-        "EDC3": 0.002,
-        "EDC4": 0.002,
-        "EDC5": 0.002,
-        "EDM": 0.002
+        "EDC3_r": 0.002,
+        "EDC4_r": 0.002,
+        "EDC5_r": 0.002,
+        "EDM_r": 0.002
       },
       "mcp_extension_deg_before": {
         "3": 2.1133136357873212,

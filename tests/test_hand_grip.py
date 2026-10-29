@@ -28,7 +28,7 @@ def _fingerprint(model: mujoco.MjModel) -> dict:
     return {
         "passive_springs": any(model.tendon(t).name.startswith("passive_") for t in range(model.ntendon)),
         "mcp2_flexion_damping": round(float(model.dof_damping[model.joint("mcp2_flexion_r").dofadr[0]]), 6),
-        "edc3_fpmax": round(float(model.actuator_gainprm[model.actuator("EDC3").id][7]), 6),
+        "edc3_fpmax": round(float(model.actuator_gainprm[model.actuator("EDC3_r").id][7]), 6),
     }
 
 

@@ -319,6 +319,109 @@
         "The grip is a fresh optimisation on this commit (balanced wrist, four restarts); its digit shares differ from the cached optimum in hand-function-validation.md (30 / 37 / 25 / 8 %) by up to 14 points.",
         "No contact pair of myoarm_r involves a finger: in the active fist the fingers pass into the palm geoms and each other (negative fingertip-to-palm distances)."
       ]
+    },
+    {
+      "id": "s0",
+      "title": "S0: side suffix on every right-arm name",
+      "summary": "Names only. scripts/compare_model_numerics.py finds every MjModel array, and the tendon lengths, actuator lengths and moments, passive forces and body positions at five random postures, identical to step 1 in myohand_r, myohands, myoarm_r, myoarms, myotorso_arms, myofullbody and both hand fragments. The hand-function protocols rerun on the renamed model give the same numbers to the last printed digit, so the model stands where it stood after step 1.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          77.35,
+          78.22,
+          73.4,
+          50.88
+        ],
+        "tenodesis_pip_rom": 28.21,
+        "tenodesis_index_gap": [
+          66.67,
+          77.26
+        ],
+        "tenodesis_release": [
+          77.66,
+          78.5,
+          74.01,
+          26.62
+        ],
+        "grip_self_selected": 287.85,
+        "grip_settled": 204.99,
+        "grip_shares": [
+          43.57,
+          25.67,
+          12.71,
+          18.05
+        ],
+        "grip_posture_change": [
+          -25.98,
+          -64.7
+        ],
+        "lateral_pinch": 38.69,
+        "fingertip_pad_thickness": {
+          "2": 5.87,
+          "3": 3.5,
+          "4": 3.13,
+          "5": 4.03,
+          "thumb": 6.83
+        },
+        "palm_pad_thickness": "no palm pads",
+        "fist_tip_to_palm": {
+          "2": -3.18,
+          "3": -1.68,
+          "4": 0.05,
+          "5": 2.27
+        },
+        "fist_max_penetration": "no hand pairs"
+      },
+      "before": {
+        "label": "s0",
+        "id": "step1",
+        "values": {
+          "tenodesis_mcp_rom": [
+            77.35,
+            78.22,
+            73.4,
+            50.88
+          ],
+          "tenodesis_pip_rom": 28.21,
+          "tenodesis_index_gap": [
+            66.67,
+            77.26
+          ],
+          "tenodesis_release": [
+            77.66,
+            78.5,
+            74.01,
+            26.62
+          ],
+          "grip_self_selected": 287.85,
+          "grip_settled": 204.99,
+          "grip_shares": [
+            43.57,
+            25.67,
+            12.71,
+            18.05
+          ],
+          "grip_posture_change": [
+            -25.98,
+            -64.7
+          ],
+          "lateral_pinch": 38.69,
+          "fingertip_pad_thickness": {
+            "2": 5.87,
+            "3": 3.5,
+            "4": 3.13,
+            "5": 4.03,
+            "thumb": 6.83
+          },
+          "palm_pad_thickness": "no palm pads",
+          "fist_tip_to_palm": {
+            "2": -3.18,
+            "3": -1.68,
+            "4": 0.05,
+            "5": 2.27
+          },
+          "fist_max_penetration": "no hand pairs"
+        }
+      }
     }
   ]
 }

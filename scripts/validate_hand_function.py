@@ -71,6 +71,10 @@ def myohand() -> Hand:
     def joint(base: str) -> str:
         return next(c for c in (f"{base}_r", base) if c in names)
 
+    def muscles(*bases: str) -> tuple[str, ...]:
+        """Actuator names of the muscles *bases* present in the model (right side, ``_r``)."""
+        return tuple(c for base in bases for c in (f"{base}_r", base) if c in actuators)
+
     signs = {"cmc_flexion": -1.0, "mp_flexion": -1.0, "ip_flexion": -1.0}  # MyoHand: +q extends these
     joints = {
         "elevation_plane": (joint("elv_angle"), 1.0),
@@ -88,15 +92,15 @@ def myohand() -> Hand:
         joints[f"pip_flexion{d}"] = (joint(f"pm{d}_flexion"), 1.0)
         joints[f"dip_flexion{d}"] = (joint(f"md{d}_flexion"), 1.0)
     groups = {
-        "wrist": ("ECRL", "ECRB", "ECU", "FCR", "FCU", "PL"),
-        "thumb_extrinsic": ("FPL", "EPL", "EPB", "APL"),
-        "EIP": ("EIP",),
-        "EDM": ("EDM",),
-        "FDS": tuple(f"FDS{d}" for d in DIGITS),
-        "FDP": tuple(f"FDP{d}" for d in DIGITS),
-        "EDC": tuple(f"EDC{d}" for d in DIGITS),
-        "finger_intrinsic": tuple(f"{m}{d}" for d in DIGITS for m in ("RI", "LU_RB", "UI_UB")),
-        "thumb_intrinsic": ("OP", "AdP", "FPB", "APB"),
+        "wrist": muscles("ECRL", "ECRB", "ECU", "FCR", "FCU", "PL"),
+        "thumb_extrinsic": muscles("FPL", "EPL", "EPB", "APL"),
+        "EIP": muscles("EIP"),
+        "EDM": muscles("EDM"),
+        "FDS": muscles(*(f"FDS{d}" for d in DIGITS)),
+        "FDP": muscles(*(f"FDP{d}" for d in DIGITS)),
+        "EDC": muscles(*(f"EDC{d}" for d in DIGITS)),
+        "finger_intrinsic": muscles(*(f"{m}{d}" for d in DIGITS for m in ("RI", "LU_RB", "UI_UB"))),
+        "thumb_intrinsic": muscles("OP", "AdP", "FPB", "APB"),
     }
     return Hand(
         load=lambda: myo_sim.load_spec("myoarm_r"),
@@ -105,7 +109,7 @@ def myohand() -> Hand:
         | {d: (f"{d}proxph_r", f"midph{d}_r", f"distph{d}_r") for d in (3, 4, 5)},
         metacarpal3="thirdmc_r",
         thumb_distal="distal_thumb_r",
-        muscles={k: tuple(n for n in v if n in actuators) for k, v in groups.items()},
+        muscles=groups,
     )
 
 
@@ -153,7 +157,11 @@ class Scene:
             data.qpos[self.qadr(key)] = self.joint(key)[1] * deg * DEG
 
     def actuator(self, name: str) -> int:
-        return self.model.actuator(name).id
+        """Id of actuator *name*, given as the model name or as the muscle name without the side suffix."""
+        try:
+            return self.model.actuator(name).id
+        except KeyError:
+            return self.model.actuator(f"{name}_r").id
 
 
 def build_scene(
@@ -609,7 +617,7 @@ def optimise_grip(gs: GripScene, table: dict[str, Any], balance: bool = True) ->
     levels = levels_of(np.array(key), r["wrist_levels"])
     final = grip_evaluate(gs, levels, table)
     final["levels"] = {grp: float(v) for grp, v in zip(outer, key)} | {
-        n: float(v) for n, v in zip(wrist_names, r["wrist_levels"])
+        n.removesuffix("_r"): float(v) for n, v in zip(wrist_names, r["wrist_levels"])
     }
     final["residual_Nm"] = r["residual_Nm"]
     final["evaluations"] = len(cache)
@@ -718,7 +726,7 @@ def pinch(hand: Hand, table: dict[str, Any], restarts: int = 24) -> dict[str, An
         "feasible": True,
         "force_N": float(palmar @ f),
         "off_axis": float(np.linalg.norm(off @ f) / (palmar @ f)),
-        "levels": {n: float(v) for n, v in zip(names, a)},
+        "levels": {n.removesuffix("_r"): float(v) for n, v in zip(names, a)},
         "muscles": list(names),
     }
     result |= _pinch_simulation(hand, table, held, angles, tip, f, names, a)

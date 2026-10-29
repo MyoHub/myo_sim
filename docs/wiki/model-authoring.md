@@ -122,7 +122,7 @@ Both the geom and sidesite must be on the same body (or a nearby body if the mus
 The codebase enforces a strict "right side is the source of truth" policy.
 
 - Never hand-edit a left-side XML. The left side is derived automatically by mirroring the right-side chain file in `myo_sim/build/compose.py` using `build_mirrored_child_xml()`.
-- Muscle names, site names, geom names, joint names, and body names all carry `_r` (right) or `_l` (left) suffixes. Always use `_r` in your source files.
+- Muscle names, site names, geom names, joint names, camera names and body names all carry `_r` (right) or `_l` (left) suffixes. Always use `_r` in your source files. A muscle's tendon is named after its actuator (`OP_r` -> `OP_r_tendon`); the mirroring turns `_r_tendon` into `_l_tendon`. `tests/test_naming.py` checks the arm.
 - The mirror arithmetic — z-axis position reflection, x/y axis negation, quaternion conjugate — is implemented by `MirrorRules` in `myo_sim/build/utils.py`. If a body has an unusual orientation that requires a different mirroring axis, add it to `MirrorRules.body_pos_x_mirror_names`.
 - Verify that left/right symmetry holds by running the symmetry analysis scripts:
 
