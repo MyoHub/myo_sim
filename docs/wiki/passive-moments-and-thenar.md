@@ -85,10 +85,10 @@ RI2 path (see below).
 | thumb CMC abduction | measured | Domalain 2010 | all | 3+1 | 1.384 | 0.364 | 0.128 | 0.075 |
 | thumb MP flexion | assumed | Barry 2018 (= index MCP, Kamper 2002) | all | 2+1 | 0.061 | 0.020 | 0.028 | 0.010 |
 | thumb IP flexion | assumed | Barry 2018 (= index PIP, Kamper 2002) | all | 4+4 | 0.052 | 0.038 | 0.0006 | 0.0006 |
-| index MCP flexion | measured | Knutson 2000, intrinsic | DI1s, DI1d, LU_RB2, UI_UB2 | 1+1 | 0.040 | 0.010 | 0.0128 | 0.0003 |
+| index MCP flexion | measured | Knutson 2000, intrinsic | DI1s, DI1d, LUM1, PI1 | 1+1 | 0.040 | 0.010 | 0.0128 | 0.0003 |
 | index PIP flexion | measured | Kamper 2002 | all | 4+4 | 0.052 | 0.031 | 0.0011 | 0.0011 |
 | index DIP flexion | measured | Kamper 2002 | all | 4+0 | 0.080 | 0.057 | 0.0032 | 0.0032 |
-| MCP 3-5 flexion | assumed | index curve (Knutson 2000) | that digit's RI, LU_RB, UI_UB | 1+1 | 0.040 | 0.010 | 0.0004 | 0.0004 |
+| MCP 3-5 flexion | assumed | index curve (Knutson 2000) | that digit's interossei and lumbrical | 1+1 | 0.040 | 0.010 | 0.0004 | 0.0004 |
 | PIP 3-4 flexion | assumed | index curve (Kamper 2002) | all | 4+4 | 0.052 | 0.039 | 0.0012 | 0.0012 |
 | PIP 5 flexion | assumed | index curve (Kamper 2002) | all | 0+1 | 0.052 | 0.042 | 0.0482 | 0.0431 |
 | DIP 3-5 flexion | assumed | index curve (Kamper 2002) | all | 4+0 | 0.080 | 0.057 | 0.0032 | 0.0032 |
@@ -181,9 +181,9 @@ stretched over the PIP. Two path defects showed up in the new range:
   same switching happened in some postures inside the old range (up to 2.8 mm with MCP abduction). EDM
   now runs through its sites without that wrap, as RI2 does (below); EDC5 keeps its wrap with a side
   site.
-- **LU_RB5** turns from a PIP extensor (4.4 mm) into a flexor (-4.0 mm) at 114-115 deg, where its wrap
+- **LU_RB5** (LUM4 since S5; fixed with the extensor mechanism in EM-a) turned from a PIP extensor (4.4 mm) into a flexor (-4.0 mm) at 114-115 deg, where its wrap
   over `Fifthpm_wrap_r` changes side, so the digit-5 passive total turns from -0.24 N m (100 deg) to
-  +0.16 N m at the limit. Left as it is: the lumbrical paths are rebuilt in step S5 of the hand rebuild.
+  +0.16 N m at the limit. Since EM-a its band branches wrap the PIP dorsally over the whole range.
 
 The palm pads are fitted to the fist at the flexion limits, so `scripts/fit_hand_pads.py` was rerun
 (`hand-contacts-and-pads.md`).
@@ -215,10 +215,11 @@ CPU / mujoco-warp differences in muscle length (below 0.5 mm here, larger on dev
 
 The intrinsic muscles defined from data, in the arm's `myoarm_forearm_muscle` class: the
 thenar muscles (OP, AdPt, AdPo, FPBs, FPBd, APB), the two heads of the first dorsal
-interosseous (DI1s, DI1d) and the hypothenar muscles (ADM, FDM, ODM).
+interosseous (DI1s, DI1d), the other interossei and the lumbricals (PI1-3, DI2-4, LUM1-4; step S5)
+and the hypothenar muscles (ADM, FDM, ODM).
 `scripts/generate_hand_intrinsic_muscles.py` writes the site positions into the chain and the
-tendons and muscles into generated blocks; OP, DI1d and ADM are written in labelled blocks
-where OP, RI2 and UI_UB5 stood. `--fit` refits the sites and the
+tendons and muscles into generated blocks; OP, DI1d, the ten interossei and lumbricals and ADM
+are written in labelled blocks where OP, RI2, the RI / LU_RB / UI_UB bundles and UI_UB5 stood. `--fit` refits the sites and the
 passive scales first.
 
 | Muscle | Replaces | PCSA (cm2) | Peak force (N) | L_fo (mm) | Pennation (deg) | Sites from | Fitted to |
@@ -231,6 +232,16 @@ passive scales first.
 | APB | APB | 0.68 | 58.7 | 41.6 | 4.6 | MUSIC | Smutz 1998 |
 | DI1d (deep head, from MC2) | RI2 | 0.96 | 82.8 | 31.7 | 9.2 | Mirakhorlo 2016 | An 1983 (both heads) |
 | DI1s (superficial head, from MC1) | – | 0.54 | 46.6 | 31.7 | 9.2 | Mirakhorlo 2016 | An 1983 (both heads), small CMC adduction arm |
+| PI1 (first palmar interosseous; hood, ulnar band) | UI_UB2 | 0.75 | 64.7 | 25.0 | 6.3 | MyoHand | An 1983 (UI) |
+| LUM1 (first lumbrical; radial band) | LU_RB2 | 0.11 | 9.5 | 55.4 | 1.2 | MyoHand | An 1983 (LU) |
+| DI2 (bony 0.52 + hood 0.48, radial band) | RI3 | 1.34 | 115.6 | 25.1 | 8.2 | MyoHand | An 1979 (MCP3, radial intrinsic) |
+| LUM2 | LU_RB3 | 0.08 | 6.9 | 55.5 | 1.6 | MyoHand | An 1979 (MCP3, lumbrical) |
+| DI3 (bony 0.07 + hood 0.93, ulnar band) | UI_UB3 | 0.95 | 82.0 | 25.8 | 9.8 | MyoHand | An 1979 (MCP3, ulnar intrinsic) |
+| PI2 (hood, radial band) | RI4 | 0.65 | 56.1 | 26.0 | 7.7 | MyoHand (origin on MC4) | An 1979 (MCP4, radial intrinsic) |
+| LUM3 | LU_RB4 | 0.08 | 6.9 | 56.2 | 1.1 | MyoHand | An 1979 (MCP4, lumbrical) |
+| DI4 (bony 0.34 + hood 0.66, ulnar band) | UI_UB4 | 0.91 | 78.5 | 25.8 | 9.4 | MyoHand (origin on MC4) | An 1979 (MCP4, ulnar intrinsic) |
+| PI3 (hood, radial band) | RI5 | 0.61 | 52.6 | 23.6 | 8.2 | MyoHand (origin on MC5) | An 1979 (MCP5, radial intrinsic) |
+| LUM4 | LU_RB5 | 0.06 | 5.2 | 50.1 | 0.7 | next to FDP5 at the MC5 base | An 1979 (MCP5, lumbrical) |
 | ADM (abductor digiti minimi) | UI_UB5 | 0.89 | 76.8 | 46.2 | 3.9 | Mirakhorlo 2016, via on MC5 | An 1979 (MCP5) |
 | FDM (flexor digiti minimi brevis) | – | 0.54 | 46.6 | 40.6 | 3.6 | Mirakhorlo 2016, via on MC5 | (sign checks only) |
 | ODM (opponens digiti minimi) | – | 1.10 | 94.9 | 19.5 | 7.7 | Mirakhorlo 2016 | (validated by active cupping) |
@@ -277,6 +288,27 @@ passive scales first.
   spread published). FDM (absent in a third of hands, Patil 2021; modelled as present) and ODM keep
   their registered paths; no moment arm of either is published. With ODM, FDM and ADM fully active the
   palm cups to CMC4 / CMC5 11.4 / 23.6 deg (in vivo maxima 12.2 ± 3.0 / 25.1 ± 3.5 deg).
+- **Interossei and lumbricals** (step S5): the RI / LU_RB / UI_UB bundles were placed by finger
+  side (radial = bony, band = ulnar), which inverted the anatomy for PI2, PI3, DI3 and DI4 (Ikebuchi
+  1988; DESIGN of the rebuild). Each is now one anatomical muscle with Jacobson's architecture at 86.3
+  N/cm2. Insertions: PI1-3 and the lumbricals end on a band junction of the extensor mechanism
+  (`extensor-mechanism.md`); DI2-4 split into a bony branch to the base of the proximal phalanx and a
+  hood branch to the band junction of their side, with Salsbury 1937's tendon shares to the expansion
+  (DI2 0.48, DI3 0.93, DI4 0.66; pending decision D6, the alternative is 0.5 each); DI1 stays bony.
+  A row's `insertion` gives the main path (`split`), the bony and hood branch sites and the junction;
+  the generator writes the pulley divisors 1 / (1 - f), 1 / f and 1 / (f x band fraction) and computes
+  the length range from MuJoCo's tendon length. The lumbricals keep a fixed origin next to their FDP
+  tendon in the palm (the moving origin follows in S6); LUM4's former origin lay 25 mm proximal of the
+  MC3 base and now starts next to FDP5 at the MC5 base. Path fit as above, with the MCP3/MCP4 boxes
+  added; targets An et al. 1983 Table 3 for the index (LU flexion 9.3 ± 2.1, radial 4.8 ± 1.6 mm; UI
+  flexion 6.6 ± 2.1, ulnar 5.8 ± 1.7 mm; averaged over the range) and An et al. 1979 Tables 4-6 for
+  digits 3-5 (moment potentials times MyoHand's middle-phalanx length, 29.1 / 24.9 / 21.0 mm; 2 mm
+  tolerance, no spread published). Fits (flexion / abduction, mm, dL/dq at rest; targets in brackets):
+  PI1 -6.0 / 5.9 (-6.6 / 5.8), LUM1 -8.2 / -4.9 (-9.3 / -4.8), DI2 -5.5 / -10.7 (-10.2 / -12.1),
+  LUM2 -11.4 / -10.0 (-13.4 / -10.6), DI3 -4.4 / 8.8 (-4.4 / 9.8), PI2 -3.4 / -8.2 (-3.5 / -8.7),
+  LUM3 -6.6 / -7.7 (-7.5 / -8.6), DI4 -4.9 / 7.6 (-5.4 / 8.2), PI3 -2.4 / -8.5 (-1.5 / -10.0), LUM4
+  -5.5 / -8.7 (-6.1 / -9.3). DI2 misses An 1979's flexion arm (z = -2.4): the fibre-length window
+  (0.5 at full MCP extension) holds its sites, as it does for PI2.
 - **Length range**: a rigid tendon of slack length `(L_MT(q = 0) - L_fo cos(alpha)) /
   1.033` (Barry et al. 2018, Eq. 1), so the class's normalised range 0.75-1.05 spans the
   same range of L_fo. OP's length range follows this rule since S2 (before: MyoHand's

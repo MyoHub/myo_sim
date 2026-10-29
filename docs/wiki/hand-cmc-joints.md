@@ -54,12 +54,13 @@ same world position at q = 0, so every path is unchanged with CMC4/5 at 0 (check
 | Site | From | To | Why |
 | --- | --- | --- | --- |
 | `FDS5-P4_r`, `FDP5-P4_r` | MC4 | MC5 | The digit-5 flexors would flex CMC4 (FDP5 16.9 mm) and FDP5 extend CMC5 (10.7 mm); on MC5 they flex CMC5 (9.3 and 6.4 mm). On the hamate the point lies distal of the CMC5 centre, and FDP5 would still extend CMC5. |
-| `RI4-P1_r`, `UI_UB4-P1_r` | MC3 | MC4 | These ring-finger interossei arise from MC4 (and MC5) and must not cross CMC4. |
-| `RI5-P1_r` | MC3 | MC5 | This little-finger interosseous arises from MC5; from MC3 it extended CMC5 (7.1 mm). |
+| `RI4-P1_r`, `UI_UB4-P1_r` (PI2, DI4 since S5) | MC3 | MC4 | These ring-finger interossei arise from MC4 (and MC5) and must not cross CMC4. |
+| `RI5-P1_r` (PI3 since S5) | MC3 | MC5 | This little-finger interosseous arises from MC5; from MC3 it extended CMC5 (7.1 mm). |
 
-`tests/test_cmc_joints.py` checks the sign of every crossing (FDS4, FDP4, LU_RB4 flex and EDC4 extends
+`tests/test_cmc_joints.py` checks the sign of every crossing (FDS4, FDP4, LUM3 flex and EDC4 extends
 CMC4; FDS5, FDP5, FCU, ADM, FDM, ODM flex and EDC5, EDM, ECU extend CMC5) and that the moved interossei cross
-neither joint. The anatomical origins of the interossei are rebuilt with their identities later.
+neither joint, nor does LUM4, whose origin moved next to FDP5 on MC5 in S5. Since S5 the three interosseous origins
+are start points of the intrinsic table (`hand_intrinsic_muscles.json`), not site moves of `cmc_joints.json`.
 
 ## Passive moments
 

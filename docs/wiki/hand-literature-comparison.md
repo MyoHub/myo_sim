@@ -352,9 +352,9 @@ EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal ph
 | ″ |  |  | 2.3 / 3.1 ± 1.1 / 1.2 (SD); cadaver, effective static moment arm | Lee et al. 2008b | mean of nine postures (Table 4, EDC) |
 | EIP extension moment arm, DIP / PIP (as above) (mm) | 1.9 / 2.6 | 2.9 / 4.9 | 1.9 / 2.6 ± 0.5 / 1.1 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (EI) |
 | ″ |  |  | 2.4 / 3.4; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (EIP) |
-| First lumbrical (LU_RB2) extension moment arm, DIP / PIP (as above) (mm) | 2.0 / 2.5 | 0.0 / 3.5 | 0.7 / 1.8 ± 0.6 / 1.3 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (LU) |
+| First lumbrical (LUM1; LU_RB2 before S5) extension moment arm, DIP / PIP (as above) (mm) | 2.0 / 2.5 | 0.0 / 3.5 | 0.7 / 1.8 ± 0.6 / 1.3 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (LU) |
 | ″ |  |  | 0.5 / -0.8; cadaver, effective static moment arm (negative = flexion) | Lee et al. 2008b | Table 4 (LUM) |
-| Index ulnar intrinsic (UI_UB2, first palmar interosseous) extension moment arm, DIP / PIP (as above) (mm) | 1.0 / 1.9 | 0.0 / 2.5 | 1.6 / 2.6; cadaver, tendon excursion | An et al. 1983 | Table 3 (UI) |
+| First palmar interosseous (PI1; UI_UB2 before S5) extension moment arm, DIP / PIP (as above) (mm) | 1.0 / 1.9 | 0.0 / 2.5 | 1.6 / 2.6; cadaver, tendon excursion | An et al. 1983 | Table 3 (UI) |
 | ″ |  |  | 0.9 / 0.1; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (FPI) |
 | Index ORL share of the passive DIP resistance at PIP 0 / 30 / 60 / 90 deg (%) | 23.7 / 0.0 / 0.0 / 0.0 | 0.0 / 0.0 / 0.0 / 0.0 | 25.0 / 31.0 / 18.0 / 3.0; cadaver, force drop after cutting the ORL | Ueba et al. 2011 | DIP 45 deg, MCP 0, 1.96 N on the extrinsic extensor; model: ORL moment over the total passive DIP moment with 1.96 N on EDC2 |
 | Intrinsic-plus test: index MCP / PIP / DIP after 1 s with the index intrinsics at full activation from a fist (deg) | 91.9 / -1.3 / -1.2 | 91.9 / -1.6 / -0.1 | MCP flexed, PIP and DIP extended; cadaver | Ranney & Wells 1988 | 5 N on the lumbrical; model: start MCP 90, PIP 100, DIP 70 deg, extrinsics at 0, wrist and MCP abduction held |
@@ -373,6 +373,84 @@ EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal ph
 - Intrinsic-plus: from the fist the index intrinsics reach MCP 92, PIP -1, DIP -1 deg in both models: the passive extensor tension (refitted since the proposal's prototype) already extended the DIP in S4. IP coupling under FDP2 alone: dDIP/dPIP 0.38 at PIP 70 deg (S4 0.52; Leijnse 1.0 +- 0.31); the ramp stalls at PIP 99 deg, so no slope at 100 deg.
 - Refits: extrinsic joint fit error 16211 -> 12271 (without the release step 7178 -> 1194), and test_joint_fit_matches_the_recorded_error passes again; the release bound of EDC3-5 and EDM rises from fpmax 0.0525 to 0.133 (smaller IP arms need more passive force to open the digits); every spring fit RMS is equal or smaller (digit-5 PIP 0.049 -> 0.022 N m).
 - Tenodesis passes; mean PIP range 19.7 -> 10.9 deg and the index-to-other-digit spread 70 / 37 -> 41 / 8 deg (ARMS 16.1 deg and 49 / 15 deg). Grip 377 -> 390 N, settled 340 -> 363 N; lateral pinch 52.9 -> 53.1 N.
+
+### S5: interossei and lumbricals by identity
+
+The finger-side bundles RI3-5, LU_RB2-5 and UI_UB2-4 become the anatomical muscles PI1-3, DI2-4 and LUM1-4 (same actuator indices): Jacobson 1992 architecture at 86.3 N/cm2; PI1-3 and the lumbricals end on a band junction of the extensor mechanism, DI2-4 split into a bony branch and a hood branch with Salsbury 1937's shares (DI2 0.48, DI3 0.93, DI4 0.66); paths fitted to An 1983 (index) and An 1979 (digits 3-5); lumbrical band fractions fitted to An 1983's IP arms (central 0.368, band 0.228). Intrinsic passive scales, extrinsic slack lengths and passive scales, and joint springs refitted. Before = EM-a; the before columns of the new muscles are the bundles they replace, measured on the EM-a model.
+
+| Quantity | Model (s5) | Model (before) | Literature (± spread) | Reference | Protocol / posture |
+| --- | --- | --- | --- | --- | --- |
+| Tenodesis: MCP flexion range per digit 2 / 3 / 4 / 5, trial A (deg) | 77.0 / 75.7 / 64.7 / 59.5 | 77.3 / 78.2 / 61.9 / 61.0 | mean 65.2; model (ARMS) | McFarland et al. 2023 | act = 0; wrist 60 deg flexion to 60 deg extension at 20 deg/s; elbow 90 deg, forearm neutral; thumb and MCP abduction locked |
+| Tenodesis: mean PIP flexion range, trial A (deg) | 16.1 | 10.9 | 16.1; model (ARMS) | McFarland et al. 2023 | as above |
+| Tenodesis: largest index-to-other-digit spread, MCP / PIP (deg) | 46.4 / 8.9 | 40.9 / 7.9 | 49.2 / 14.6; model (ARMS) | McFarland et al. 2023 | as above |
+| Release (trial B): MCP extension per digit 2 / 3 / 4 / 5 (deg) | 77.3 / 75.8 / 69.8 / 30.1 | 77.7 / 78.5 / 67.3 / 30.8 | digits extend; model (ARMS) | McFarland et al. 2023 | from the end of trial A: 60 deg extension back to 60 deg flexion |
+| Maximum power grip, self-selected wrist (N) | 335.4 | 389.5 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | dynamometer, self-selected wrist (35 deg extension, 7 deg ulnar deviation) |
+| ″ |  |  | 463.9 ± 125.9 (SD); in vivo, men | Mathiowetz et al. 1985 | Jamar, second handle position, seated, shoulder adducted, elbow 90 deg, forearm and wrist neutral, right hand (Table 2) |
+| ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
+| Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 266.6 | 362.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.2 / 29.7 / 18.1 / 22.9 | 28.1 / 33.0 / 17.0 / 21.9 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip change, neutral / flexed wrist against self-selected (%) | -29.0 / -61.7 | -33.8 / -62.1 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
+| Lateral (key) pinch force (N) | 51.5 | 53.1 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
+| ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
+| ″ |  |  | 72.1 ± 13.3 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| PIP flexion limit, digit 2 / 3 / 4 / 5 (deg) | 115.0 / 115.0 / 115.0 / 115.0 | 115.0 / 115.0 / 115.0 / 115.0 | 115.0 ± 7.0 (SD); in vivo, maximum passive flexion | Leijnse et al. 2010 | goniometer on the dorsum, gentle force to the end of motion; digits 2-5 pooled (Table 1) |
+| CMC4 / CMC5 flexion-extension arc (deg) | 21.0 / 43.3 | 21.0 / 43.3 | 20.0 / 44.0 ± 10.0 / 8.0 (SD); cadaver, passive | El-Shennawy et al. 2001 | 22 N on a pin through the metacarpal, relative to the hamate; CMC5 with CMC4 free (28 +- 3 deg with CMC4 pinned) |
+| ″ |  |  | 16.9 / 26.0 ± 0.7 / 1.4 (SEM); cadaver, passive (right hands) | Batmanabane & Malathi 1985 | total arc from full extension, Table 2 |
+| CMC4 / CMC5 flexion limit (model) against the active maximum (deg) | 16.0 / 33.0 | 16.0 / 33.0 | 12.2 / 25.1 ± 3.0 / 3.5 (SD); in vivo, active | Büren et al. 2020 | maximal little-finger opposition, relative to MC3, ultrasound (CMC4: Al Maktary 2019, same hands) |
+| Coupling CMC5 / CMC4 (ratio) | 2.1 | 2.1 | 2.1; in vivo, active maxima (25.1 / 12.2 deg) | Büren et al. 2020 | maximal little-finger opposition; CMC4 value of Al Maktary 2019 |
+| ″ |  |  | 2.0; in vivo, grasp | Shimawaki et al. 2019 | helical angles 9.0 / 4.4 deg, spheres of 40-97 mm |
+| ″ |  |  | 2.7; in vivo, one subject | Buffi et al. 2013 | equivalent-axis flexion, Table 1 |
+| OP moment arm, CMC flexion / CMC abduction (mm) | 13.4 / -2.4 | 13.4 / -2.4 | 12.9 / -4.8 ± 3.8 / 5.0 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 4-5) |
+| AdPt moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 19.4 / 16.8 / 2.6 | 19.4 / 16.8 / 2.6 | 36.9 / 20.6 / 9.7 ± 5.8 / 15.4 / 5.2 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 2, 4, 5) |
+| AdPo moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 14.7 / 1.4 / 8.3 | 14.7 / 1.4 / 8.3 | 27.0 / 17.0 / 8.2 ± 10.5 / 12.5 / 3.9 (SD); cadaver | Smutz et al. 1998 | as above |
+| FPB moment arm (force-weighted heads), CMC flexion / CMC abduction / MP flexion (mm) | 16.9 / -4.3 / 8.7 | 16.9 / -4.3 / 8.7 | 13.4 / -10.5 / 8.8 ± 7.5 / 6.8 / 1.4 (SD); cadaver, whole muscle | Smutz et al. 1998 | as above |
+| APB moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 4.1 / -9.7 / 2.0 | 4.1 / -9.7 / 2.0 | 3.9 / -16.5 / 2.6 ± 3.1 / 7.0 / 2.4 (SD); cadaver | Smutz et al. 1998 | as above |
+| First dorsal interosseous moment arm (force-weighted heads), MCP2 flexion / radial abduction (mm) | 4.4 / 8.1 | 4.4 / 8.1 | 3.7 / 6.1 ± 1.4 / 2.1 (SD); cadaver | An et al. 1983 | averaged over the range (model: MCP2 flexion 0-90 deg, abduction -15 to 15 deg); magnitudes |
+| ″ |  |  | abduction 11.1 ± 2.9 (SD); in vivo | Infantolino & Challis 2014 | ultrasound tendon excursion, Table 2 |
+| Index MCP abduction moment, both DI1 heads at full activation (N m) | 1.0 | 1.1 | 2.7 / 1.8; in vivo, men / women (RIHM break test x PP2 length 42.6 mm) | McGee et al. 2020 | RIHM index abduction, sling at the PIP (Schreuders 2006); model: index at rest, act = 1 on DI1s and DI1d |
+| ″ |  |  | about 1.0; in vivo (93.3 N x 11.1 mm) | Infantolino & Challis 2014 | maximum FDI force and its in-vivo moment arm, Table 2 |
+| ADM moment arm (UI_UB5 before S4), MCP5 flexion / ulnar abduction (mm) | 5.2 / 9.9 | 5.2 / 9.9 | 5.7 / 10.4; normative model (moment potentials 0.271 / 0.495 x MyoHand's middle-phalanx-5 length of 21.0 mm) | An et al. 1979 | MCP neutral; magnitudes |
+| ″ |  |  | 1.7 / 6.1; model fitted to An 1979 | Lee et al. 2015 | Table 6; magnitudes |
+| Little-finger MCP abduction moment, ADM and FDM (UI_UB5 before S4) at full activation (N m) | 1.0 | 1.0 | 1.6 / 0.9; in vivo, men / women (RIHM break test 43.1 / 26.4 N x PP5 length 36.1 mm) | McGee et al. 2020 | RIHM little-finger abduction, sling at the PIP (Schreuders 2006); model: hand at rest |
+| Active cupping: CMC4 / CMC5 flexion with ODM, FDM and ADM at full activation (deg) | 11.4 / 23.4 | 11.5 / 23.7 | 12.2 / 25.1 ± 3.0 / 3.5 (SD); in vivo, maximal little-finger opposition | Büren et al. 2020 | MC4 / MC5 relative to MC3 (CMC4: Al Maktary 2019); model: all other muscles at 0, 1 s, myoarm_r |
+| First palmar interosseous (PI1; UI_UB2 before S5), MCP2 flexion / ulnar abduction (mm) | 6.0 / 5.9 | 2.6 / 6.6 | 6.6 / 5.8 ± 2.1 / 1.7 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (UI), averaged over the range (model: MCP2 flexion 0-90 deg, abduction -15 to 15 deg) |
+| ″ |  |  | 4.6 / 3.9; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (FPI), mean of nine postures |
+| First lumbrical (LUM1; LU_RB2 before S5), MCP2 flexion / radial abduction (mm) | 8.2 / 4.9 | 3.2 / 6.5 | 9.3 / 4.8 ± 2.1 / 1.6 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (LU), averaged over the range |
+| ″ |  |  | 7.0 / 1.8; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (LUM), mean of nine postures |
+| Second dorsal interosseous (DI2; RI3 before S5), MCP3 flexion / radial abduction (mm) | 5.5 / 10.7 | 3.4 / 7.5 | 10.2 / 12.1; normative model (moment potentials x MyoHand's middle-phalanx-3 length of 29.1 mm) | An et al. 1979 | MP neutral, radial intrinsic (Tables 4-6); no spread published |
+| Second lumbrical (LUM2; LU_RB3 before S5), MCP3 flexion / radial abduction (mm) | 11.4 / 10.0 | 3.0 / 8.4 | 13.4 / 10.6; normative model (moment potentials x MyoHand's middle-phalanx-3 length of 29.1 mm) | An et al. 1979 | MP neutral, lumbrical (Tables 4-6); no spread published |
+| Third dorsal interosseous (DI3; UI_UB3 before S5), MCP3 flexion / ulnar abduction (mm) | 4.4 / 8.8 | 4.6 / 4.1 | 4.4 / 9.8; normative model (moment potentials x MyoHand's middle-phalanx-3 length of 29.1 mm) | An et al. 1979 | MP neutral, ulnar intrinsic (Tables 4-6); no spread published |
+| Second palmar interosseous (PI2; RI4 before S5), MCP4 flexion / radial abduction (mm) | 3.4 / 8.2 | 3.4 / 7.0 | 3.5 / 8.7; normative model (moment potentials x MyoHand's middle-phalanx-4 length of 24.9 mm) | An et al. 1979 | MP neutral, radial intrinsic (Tables 4-6); no spread published |
+| Third lumbrical (LUM3; LU_RB4 before S5), MCP4 flexion / radial abduction (mm) | 6.5 / 7.7 | 2.4 / 3.8 | 7.5 / 8.6; normative model (moment potentials x MyoHand's middle-phalanx-4 length of 24.9 mm) | An et al. 1979 | MP neutral, lumbrical (Tables 4-6); no spread published |
+| Fourth dorsal interosseous (DI4; UI_UB4 before S5), MCP4 flexion / ulnar abduction (mm) | 4.9 / 7.6 | 2.5 / 4.5 | 5.4 / 8.2; normative model (moment potentials x MyoHand's middle-phalanx-4 length of 24.9 mm) | An et al. 1979 | MP neutral, ulnar intrinsic (Tables 4-6); no spread published |
+| Third palmar interosseous (PI3; RI5 before S5), MCP5 flexion / radial abduction (mm) | 2.4 / 8.5 | 5.7 / 3.7 | 1.5 / 10.0; normative model (moment potentials x MyoHand's middle-phalanx-5 length of 21.0 mm) | An et al. 1979 | MP neutral, radial intrinsic (Tables 4-6); no spread published |
+| Fourth lumbrical (LUM4; LU_RB5 before S5), MCP5 flexion / radial abduction (mm) | 5.5 / 8.7 | 2.9 / 6.5 | 6.1 / 9.3; normative model (moment potentials x MyoHand's middle-phalanx-5 length of 21.0 mm) | An et al. 1979 | MP neutral, lumbrical (Tables 4-6); no spread published |
+| Index intrinsic peak forces: first dorsal interosseous (both heads) / first palmar interosseous / first lumbrical (N) | 129.4 / 64.7 / 9.5 | 129.4 / 61.2 / 61.2 | 53.4 / 27.2 / 19.9 ± 24.7 / 11.5 / 8.8 (SD); in vivo, nerve-block estimate (moment split by mass fractions; a weak check) | Ketchum et al. 1978 | maximal effort, index; model: peak isometric force (PCSA x 86.3 N/cm2, Jacobson 1992) |
+| EDC2 extension moment arm, DIP / PIP (index; model: averaged over DIP 0-60 / PIP 0-90 deg) (mm) | 1.9 / 2.6 | 1.9 / 2.6 | 2.2 / 2.8 ± 0.4 / 1.1 (SD); cadaver, tendon excursion | An et al. 1983 | averaged over the range, 5 N load (Table 3, EC) |
+| ″ |  |  | 2.3 / 3.1 ± 1.1 / 1.2 (SD); cadaver, effective static moment arm | Lee et al. 2008b | mean of nine postures (Table 4, EDC) |
+| EIP extension moment arm, DIP / PIP (as above) (mm) | 1.9 / 2.6 | 1.9 / 2.6 | 1.9 / 2.6 ± 0.5 / 1.1 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (EI) |
+| ″ |  |  | 2.4 / 3.4; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (EIP) |
+| First lumbrical (LUM1; LU_RB2 before S5) extension moment arm, DIP / PIP (as above) (mm) | 0.7 / 1.8 | 2.0 / 2.5 | 0.7 / 1.8 ± 0.6 / 1.3 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (LU) |
+| ″ |  |  | 0.5 / -0.8; cadaver, effective static moment arm (negative = flexion) | Lee et al. 2008b | Table 4 (LUM) |
+| First palmar interosseous (PI1; UI_UB2 before S5) extension moment arm, DIP / PIP (as above) (mm) | 1.0 / 1.9 | 1.0 / 1.9 | 1.6 / 2.6; cadaver, tendon excursion | An et al. 1983 | Table 3 (UI) |
+| ″ |  |  | 0.9 / 0.1; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (FPI) |
+| Index ORL share of the passive DIP resistance at PIP 0 / 30 / 60 / 90 deg (%) | 23.7 / 0.0 / 0.0 / 0.0 | 23.7 / 0.0 / 0.0 / 0.0 | 25.0 / 31.0 / 18.0 / 3.0; cadaver, force drop after cutting the ORL | Ueba et al. 2011 | DIP 45 deg, MCP 0, 1.96 N on the extrinsic extensor; model: ORL moment over the total passive DIP moment with 1.96 N on EDC2 |
+| Intrinsic-plus test: index MCP / PIP / DIP after 1 s with the index intrinsics at full activation from a fist (deg) | 91.6 / -0.3 / -0.3 | 91.9 / -1.3 / -1.2 | MCP flexed, PIP and DIP extended; cadaver | Ranney & Wells 1988 | 5 N on the lumbrical; model: start MCP 90, PIP 100, DIP 70 deg, extrinsics at 0, wrist and MCP abduction held |
+| DIP-PIP coupling with FDP2 alone: dDIP/dPIP at PIP 0 / 70 / 100 deg (ratio) | -0.0 / 0.3 / – | -0.0 / 0.4 / – | 0.2 / 1.0 / 0.5 ± 0.2 / 0.3 / 0.3 (SD); in vivo, unloaded, FDP-driven | Leijnse et al. 2010 | mean slope of the extension trajectories, MCP 0 (p. 2386, Fig. 4A); model: FDP2 ramp 0-1 over 3 s, MCP and wrist held, slope over +-5 deg (none if the PIP does not pass the window) |
+| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
+| Palmar soft tissue under the pads: palm / hypothenar / thenar (mm) | 8.0 / 16.8 / 26.7 | 8.0 / 16.8 / 26.7 | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | 26.7 ± 3.9 (SD); in vivo, whole thenar muscles (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | OP 9.7, APB 6.0, FPB 6.2; in vivo, single thenar muscles (medians, lower bounds) | Karademir et al. 2022 | water-bath ultrasound, healthy controls, Tables 2-3 |
+| Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration) (mm) | 0.3 / 10.1 / -0.7 / -0.3 | 0.3 / 10.8 / -1.4 / -0.4 | contact; functional criterion (no published distance used) | – | FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on |
+| Active fist: deepest penetration of any contact pair of the hand (mm) | 0.8 | 0.8 | < 1; model criterion | – | as above |
+
+- MCP moment arms after the fit (flexion / abduction, mm): every muscle within the 2 mm tolerance of An 1979 or one SD of An 1983 except DI2's flexion arm (5.5 against 10.2 mm; the fibre-length window, 0.5 at full MCP extension, holds its sites) and PI3's abduction arm (8.5 against 10.0 mm). The old bundles had the wrong side for DI3, DI4 and PI3 only in name, but their MCP arms were 1/3 to 1/2 of the targets (e.g. LU_RB3 flexion 3.0 against 13.4 mm).
+- Forces: the lumbricals fall from 48-98 N to 5.2-9.5 N (Jacobson PCSA 0.06-0.11 cm2), the interossei change to 52.6-115.6 N. Ketchum et al. 1978's in-vivo nerve-block estimates for the index (a weak check) are DI1 53 +- 25, first palmar interosseous 27 +- 12 and first lumbrical 20 +- 9 N; the model has 129, 65 and 9.5 N at 86.3 N/cm2.
+- Lumbrical band fractions: Chao & An's 2/3 terminal share gave LUM1 a DIP arm of 2.1 mm; fitted to An 1983 it is 0.70 / 1.80 mm (DIP / PIP) with central 0.368, band 0.228 and 0.405 on the proximal phalanx. At Lee 2008b's postures 0.77 / 2.03 mm (Lee: 0.53 / -0.84). The interossei keep Chao & An (PI1 1.0 / 1.9 mm, between An 1.6 / 2.6 and Lee 0.9 / 0.13). With the weaker lumbricals the FDP-alone coupling slope at PIP 70 deg falls from 0.38 to 0.26 (Leijnse 1.0 +- 0.31).
+- Hood fractions (decision D6 pending): replacing DI2-4's Salsbury shares by 0.5 each changes the grip by -1 % and the digit shares by at most 0.8 points.
+- Refits: intrinsic passive scales (thumb rows: OP 0.0035 -> 0.0065, APB 0.44 -> 0.58; PI3 and LUM4 stay at the class value 1.3), extrinsic joint-fit error 12271 -> 10569 (without release 1194 -> 1020; release bound of EDC3-5/EDM 0.133 -> 0.125), springs refitted.
+- Grip 390 -> 335 N, settled 363 -> 267 N; digit-3 share 33.0 -> 29.7 %, 0.5 points outside the protocol's 12-point band around ARMS's 42.2 % (test_grip_at_the_cached_optimum fails; the grip keeps every finger intrinsic at full activation, and the middle finger loses LU_RB3's 98 N MCP flexion). Tenodesis passes with a mean PIP range of 16.1 deg (ARMS 16.1); lateral pinch 53.1 -> 51.5 N.
 
 ### References
 
@@ -400,6 +478,8 @@ EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal ph
 - **Lee et al. 2008b**: Lee SW, Chen H, Towles JD, Kamper DG. Estimation of the effective static moment arms of the tendons in the index finger extensor mechanism. J Biomech 41(7):1567-1573, 2008. doi:10.1016/j.jbiomech.2008.02.008 Five fresh-frozen index fingers, nine postures (MCP 0/30/60 deg x PIP/DIP 0/0, 30/20, 45/30 deg); effective static moment arms (joint moment per unit tendon force, passive moments removed), means over postures and specimens (Table 4).
 - **Ueba et al. 2011**: Ueba H, Moradi N, Erne HC, Gardner TR, Strauch RJ. An anatomic and biomechanical study of the oblique retinacular ligament and its role in finger extension. J Hand Surg Am 36(12):1959-1964, 2011. doi:10.1016/j.jhsa.2011.09.033 40 fresh-frozen fingers; peak force to flex the DIP 0-45 deg with 1.96 N on the extrinsic extensor, MCP 0, before and after cutting the ORL (p. 1962).
 - **Ranney & Wells 1988**: Ranney DA, Wells RP. Lumbrical muscle function as revealed by a new and physiological approach. Anat Rec 222:110-114, 1988. doi:10.1002/ar.1092220116 Fresh index fingers; a 5 N lumbrical load produced the intrinsic-plus posture (p. 113).
+- **Ketchum et al. 1978**: Ketchum LD, Thompson D, Pocock G, Wallingford D. A clinical study of forces generated by the intrinsic muscles of the index finger and the extrinsic flexor and extensor muscles of the hand. J Hand Surg Am 3(6):571-578, 1978. Values as reported by Brand & Hollister, Clinical Mechanics of the Hand, 2nd ed. 1993, Table 14-4 p. 369 (kg x 9.81).
+- **Brand & Hollister 1993**: Brand PW, Hollister AM. Clinical Mechanics of the Hand, 2nd ed. St. Louis: Mosby, 1993.
 
 <!-- END generated -->
 
@@ -491,10 +571,23 @@ revised hand. Items that a later step resolved say so.
 - **Lumbrical path of digit 5:** LU_RB5 turned into a PIP flexor at 114-115 deg PIP flexion. Fixed by the
   extensor mechanism (EM-a): every band-inserting tendon now extends the PIP over its whole range.
 - **Extrinsic passive fit:** rerun after the extensor mechanism (EM-a): joint-fit error 16211 -> 12271, and
-  `test_joint_fit_matches_the_recorded_error` passes again. To be rerun after the later intrinsic steps.
-- **Lumbrical terminal share:** with Chao & An's 2/3 of the lumbrical force on the terminal tendon (Brook et
-  al. 1995), the first lumbrical's DIP extension arm is 2.1 mm, against 0.7 +- 0.6 mm (An et al. 1983) and
-  an effective 0.53 mm (Lee et al. 2008b). The share is to be reviewed with the lumbrical rebuild (S5/S6).
+  `test_joint_fit_matches_the_recorded_error` passes again; rerun after S5: 12271 -> 10569. To be rerun after
+  the later intrinsic steps.
+- **Lumbrical band fractions:** fitted in S5 to An et al. 1983's index arms (central 0.368, terminal band
+  0.228, 0.405 on the proximal phalanx; Chao & An's 1/3 / 2/3 gave a DIP arm of 2.1 mm against 0.7 +- 0.6
+  mm). Lee et al. 2008b's effective PIP arm is a small flexor (-0.84 mm), which no fixed fraction gives (the
+  model: 2.0 mm extensor at Lee's postures). Fitted on the index and applied to all four lumbricals.
+- **Dorsal-interosseous hood fractions (decision D6, pending):** DI2 0.48, DI3 0.93, DI4 0.66 from Salsbury
+  1937 (Table II, 28 hands; tendon share to the expansion, which includes the transverse hood fibres acting at
+  the MCP, so an upper bound for the band share). The alternative is 0.5 each (the middle of Ikebuchi 1988's
+  one to two thirds); it changes the grip by -1 % and the digit shares by < 1 point.
+- **DI2 and PI3 MCP arms:** DI2's flexion arm is 5.5 mm against An et al. 1979's 10.2 mm and PI3's
+  abduction arm 8.5 against 10.0 mm; the fibre-length window (0.5 at full MCP extension) holds their sites.
+  An 1979's digit 3-5 values are normative-model potentials without spread.
+- **Grip digit shares:** since S5 the middle finger's grip share is 29.7 %, 0.5 points outside the
+  protocol's band around ARMS's 42.2 % (`test_grip_at_the_cached_optimum` fails); the protocol keeps every
+  finger intrinsic at full activation, and LU_RB3's 98 N MCP flexion (1225 N/cm2 implied) is gone. The
+  settled grip is 267 N (in vivo 402 +- 131 N). ARMS's shares are model values, not measurements.
 - **ORL above PIP 0:** Ueba et al. 2011's ORL shares at PIP 30 / 60 / 90 deg (31 / 18 / 3 %) are not
   reproduced; the ORL stays slack there because Harris & Rutledge 1972's slack range is kept
   (`extensor-mechanism.md`).

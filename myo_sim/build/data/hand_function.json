@@ -446,6 +446,38 @@
       "APL": 0.0
      },
      "grip_N": 389.5
+    },
+    {
+     "model": "+ hand rebuild S5 (interossei and lumbricals by identity; intrinsic passive scales, extrinsic slack lengths and passive scales, springs refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.1248,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.006505
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9977,
+      "FDP": 0.4366,
+      "EDC": 0.5514,
+      "EIP": 0.5104,
+      "EDM": 0.9489,
+      "ECRL": 0.6305,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.652,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 335.4
     }
    ]
   }

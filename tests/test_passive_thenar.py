@@ -68,7 +68,10 @@ def test_generated_blocks_are_what_the_scripts_write() -> None:
     gen = _script("generate_hand_intrinsic_muscles")
     table = load_intrinsic_table()
     ranges = gen.architecture_lengthranges(table)
-    assert gen.block_labels(table) == [None, "OP", "DI1d", "ADM"]
+    assert gen.block_labels(table) == [
+        None,
+        *["OP", "DI1d", "PI1", "LUM1", "DI2", "LUM2", "DI3", "PI2", "LUM3", "DI4", "PI3", "LUM4", "ADM"],
+    ]
     for label in gen.block_labels(table):
         assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, gen.SCRIPT, label) == gen.tendon_block(table, label)
         assert read_generated_block(compose.RIGHT_ARM_MUSCLES_XML, gen.SCRIPT, label) == gen.muscle_block(table, ranges, label)
@@ -124,7 +127,7 @@ def test_models_carry_the_intrinsic_muscles_and_every_applied_row(name: str) -> 
 def test_both_sides_come_from_the_right_arm_files() -> None:
     """Every generated element appears on both arms; the left one through the mirroring."""
     model = myo_sim.load_model("myoarms")
-    labels = (None, "OP", "DI1d", "ADM")
+    labels = (None, *["OP", "DI1d", "PI1", "LUM1", "DI2", "LUM2", "DI3", "PI2", "LUM3", "DI4", "PI3", "LUM4", "ADM"])
     blocks = [read_generated_block(compose.RIGHT_ARM_TENDONS_XML, "fit_passive_moments.py")]
     blocks += [
         read_generated_block(path, "generate_hand_intrinsic_muscles.py", label)
@@ -398,6 +401,21 @@ def test_intrinsic_moment_arms_act_as_named() -> None:
         assert little[m][6] < 0 and little[m][7] > 0, m
     for m in ("ADM", "FDM", "ODM"):
         assert little[m][8] < 0, m
+    # Interossei and lumbricals (An 1979, An 1983; dL/dq, +q flexes the MCP and moves the digit radially):
+    # all flex the MCP; DI2, PI2, PI3 and the lumbricals abduct radially, PI1, DI3 and DI4 ulnarly.
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    moment = np.zeros((model.nu, model.nv))
+    mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
+    radial = {"PI1": False, "LUM1": True, "DI2": True, "LUM2": True, "DI3": False, "PI2": True, "LUM3": True, "DI4": False}
+    radial |= {"PI3": True, "LUM4": True}
+    digit = {"PI1": 2, "LUM1": 2, "DI2": 3, "LUM2": 3, "DI3": 3, "PI2": 4, "LUM3": 4, "DI4": 4, "PI3": 5, "LUM4": 5}
+    for m, is_radial in radial.items():
+        row = moment[model.actuator(f"{m}_r").id]
+        flexion = row[model.joint(f"mcp{digit[m]}_flexion_r").dofadr[0]]
+        abduction = row[model.joint(f"mcp{digit[m]}_abduction_r").dofadr[0]]
+        assert flexion < -1e-3, m  # actuator_moment = dL/dq: negative flexes
+        assert (abduction < 0) == is_radial and abs(abduction) > 1e-3, m
 
 
 def test_fitted_rows_reproduce_from_their_source_curves() -> None:

@@ -87,6 +87,9 @@
       "citation": "Lee JH, Asakawa DS, Dennerlein JT, Jindrich DL. Finger muscle attachments for an OpenSim upper-extremity model. PLoS ONE 10(4):e0121712, 2015; correction PLoS ONE 17:e0267620, 2022.",
       "doi": "10.1371/journal.pone.0121712",
       "location": "Methods (muscle list), Table 6 (moment arms), Table 10 (digit-5 tendon locations, from An et al. 1979)"
+    },
+    "eladoumikdachi2002": {
+      "citation": "Eladoumikdachi F, Valkov PL, Thomas J, Netscher DT. Anatomy of the intrinsic hand muscles revisited: part II. Lumbricals. Plast Reconstr Surg 110:1225-1231, 2002. doi:10.1097/01.PRS.0000024443.27141.1D"
     }
   },
   "specific_tension": {
@@ -253,7 +256,7 @@
         }
       },
       "fpmax": {
-        "value": 0.003488,
+        "value": 0.006505,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -426,7 +429,7 @@
         "pcsa_cm2": 0.533
       },
       "fpmax": {
-        "value": 0.6855,
+        "value": 0.6959,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -648,7 +651,7 @@
         }
       },
       "fpmax": {
-        "value": 0.01132,
+        "value": 0.02533,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -842,7 +845,7 @@
         }
       },
       "fpmax": {
-        "value": 0.4357,
+        "value": 0.5833,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1011,7 +1014,7 @@
         "pcsa_cm2": 1.293
       },
       "fpmax": {
-        "value": 0.0081,
+        "value": 0.01264,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1132,7 +1135,7 @@
         }
       },
       "fpmax": {
-        "value": 0.01912,
+        "value": 0.03075,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1407,6 +1410,1653 @@
               -9.52
             ]
           }
+        }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
+      }
+    },
+    {
+      "name": "PI1",
+      "group": "interosseous",
+      "anatomy": "first palmar interosseous (index, ulnar side): from MC2 to the ulnar lateral band",
+      "replaces": "UI_UB2",
+      "block": "PI1",
+      "digit": "2",
+      "sites": [
+        {
+          "body": "secondmc_r",
+          "pos": [
+            -0.0041,
+            -0.0002,
+            -0.0048
+          ],
+          "start": {
+            "pos": [
+              -0.0041,
+              -0.0002,
+              -0.0048
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "secondmc_r",
+          "pos": [
+            -0.002929,
+            -0.028225,
+            -0.003335
+          ],
+          "start": {
+            "pos": [
+              -0.0033,
+              -0.0294,
+              -0.0001
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "2proxph_r",
+          "pos": [
+            -0.004348,
+            -0.015692,
+            0.002833
+          ],
+          "start": {
+            "pos": [
+              -0.0043,
+              -0.0159,
+              0.0024
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 3,
+        "hood": {
+          "digit": "2",
+          "junction": "UB",
+          "sites": [],
+          "fraction": {
+            "value": 1.0,
+            "source": "salsbury1937",
+            "where": "Table II p. 400",
+            "note": "palmar interossei and lumbricals end in the expansion; the rare bony slips of the palmar interossei (Salsbury: up to 10.9 %) are omitted"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "PI1",
+      "pcsa_cm2": {
+        "value": 0.75,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 64.7,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.75 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.025,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 6.3,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "PI1",
+        "targets": {
+          "mcp2_flexion_r": {
+            "source": "an1983",
+            "where": "Table 3 (UI; averaged over the range)",
+            "mean_mm": -6.6,
+            "sd_mm": 2.1,
+            "over": "MCP2 flexion 0-90 deg"
+          },
+          "mcp2_abduction_r": {
+            "source": "an1983",
+            "where": "Table 3 (UI)",
+            "mean_mm": 5.8,
+            "sd_mm": 1.7,
+            "over": "MCP2 abduction -15 to 15 deg"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            3.46,
+            0.48
+          ],
+          "fibre_length_measurement_box": [
+            0.615,
+            1.113
+          ],
+          "fibre_length_full_range": [
+            0.615,
+            1.113
+          ],
+          "model_mm": {
+            "mcp2_flexion_r": [
+              -5.97
+            ],
+            "mcp2_abduction_r": [
+              5.86
+            ]
+          },
+          "start_mm": {
+            "mcp2_flexion_r": [
+              -2.63
+            ],
+            "mcp2_abduction_r": [
+              6.63
+            ]
+          },
+          "rms_z": 0.214
+        }
+      }
+    },
+    {
+      "name": "LUM1",
+      "group": "lumbrical",
+      "anatomy": "first lumbrical: from the radial side of FDP2 to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)",
+      "replaces": "LU_RB2",
+      "block": "LUM1",
+      "digit": "2",
+      "sites": [
+        {
+          "body": "secondmc_r",
+          "pos": [
+            -0.0041,
+            -0.0002,
+            -0.0048
+          ],
+          "start": {
+            "pos": [
+              -0.0041,
+              -0.0002,
+              -0.0048
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "secondmc_r",
+          "pos": [
+            0.010043,
+            -0.027072,
+            -0.005554
+          ],
+          "start": {
+            "pos": [
+              0.0102,
+              -0.0265,
+              -0.0
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "2proxph_r",
+          "pos": [
+            0.007508,
+            -0.008468,
+            -0.000502
+          ],
+          "start": {
+            "pos": [
+              0.0084,
+              -0.0083,
+              -0.0
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 3,
+        "hood": {
+          "digit": "2",
+          "junction": "RB",
+          "sites": [],
+          "fraction": {
+            "value": 1.0,
+            "source": "salsbury1937",
+            "where": "Table II p. 400",
+            "note": "palmar interossei and lumbricals end in the expansion; the rare bony slips of the palmar interossei (Salsbury: up to 10.9 %) are omitted"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "LU1",
+      "pcsa_cm2": {
+        "value": 0.11,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 9.5,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.11 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0554,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 1.2,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "LUM1",
+        "targets": {
+          "mcp2_flexion_r": {
+            "source": "an1983",
+            "where": "Table 3 (LU; averaged over the range)",
+            "mean_mm": -9.3,
+            "sd_mm": 2.1,
+            "over": "MCP2 flexion 0-90 deg"
+          },
+          "mcp2_abduction_r": {
+            "source": "an1983",
+            "where": "Table 3 (LU)",
+            "mean_mm": -4.8,
+            "sd_mm": 1.6,
+            "over": "MCP2 abduction -15 to 15 deg"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            5.59,
+            1.04
+          ],
+          "fibre_length_measurement_box": [
+            0.775,
+            1.033
+          ],
+          "fibre_length_full_range": [
+            0.775,
+            1.033
+          ],
+          "model_mm": {
+            "mcp2_flexion_r": [
+              -8.22
+            ],
+            "mcp2_abduction_r": [
+              -4.93
+            ]
+          },
+          "start_mm": {
+            "mcp2_flexion_r": [
+              -3.2
+            ],
+            "mcp2_abduction_r": [
+              -6.47
+            ]
+          },
+          "rms_z": 0.368
+        }
+      }
+    },
+    {
+      "name": "DI2",
+      "group": "interosseous",
+      "anatomy": "second dorsal interosseous (radial side of the middle finger): bony part to the PP base and hood part to the radial band (pulley branches)",
+      "replaces": "RI3",
+      "block": "DI2",
+      "digit": "3",
+      "sites": [
+        {
+          "body": "thirdmc_r",
+          "pos": [
+            0.000774,
+            0.006967,
+            -0.009643
+          ],
+          "start": {
+            "pos": [
+              0.0013,
+              0.0064,
+              -0.0095
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "thirdmc_r",
+          "pos": [
+            0.013791,
+            -0.007084,
+            -0.006105
+          ],
+          "start": {
+            "pos": [
+              0.0096,
+              -0.0027,
+              -0.0048
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "3proxph_r",
+          "pos": [
+            0.012239,
+            -0.0037,
+            -0.003578
+          ],
+          "start": {
+            "pos": [
+              0.0076,
+              -0.0117,
+              0.0005
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "3proxph_r",
+          "pos": [
+            0.008643,
+            -0.022563,
+            0.004193
+          ],
+          "start": {
+            "pos": [
+              0.007149,
+              -0.025843,
+              0.004026
+            ],
+            "source": "mid-way between the bony insertion and the radial band junction (assumed)"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 2,
+        "bony": {
+          "sites": [
+            2
+          ]
+        },
+        "hood": {
+          "digit": "3",
+          "junction": "RB",
+          "sites": [
+            3
+          ],
+          "fraction": {
+            "value": 0.48,
+            "source": "salsbury1937",
+            "where": "Table II p. 400: 48.4 % of the tendon to the expansion (28 hands)",
+            "status": "proposed; pending decision D6 (alternative 0.5, the middle of Ikebuchi 1988's one to two thirds)",
+            "note": "Salsbury's expansion includes the transverse hood fibres, which act at the MCP, so the share is an upper bound for the lateral-band share"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "DI2",
+      "pcsa_cm2": {
+        "value": 1.34,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 115.6,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "1.34 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0251,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 8.2,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "DI2",
+        "targets": {
+          "mcp3_abduction_r": {
+            "source": "an1979",
+            "where": "Table 4 p. 783-784, RA-I at the MP: radioulnar bending potential +0.414 x middle-phalanx length (MyoHand 29.14 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -12.06
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp3_flexion_r": {
+            "source": "an1979",
+            "where": "Table 4: flexion potential 0.351 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -10.23
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.79,
+            6.2,
+            10.11,
+            3.61
+          ],
+          "fibre_length_measurement_box": [
+            0.5,
+            1.138
+          ],
+          "fibre_length_full_range": [
+            0.5,
+            1.138
+          ],
+          "model_mm": {
+            "mcp3_abduction_r": [
+              -10.65
+            ],
+            "mcp3_flexion_r": [
+              -5.47
+            ]
+          },
+          "start_mm": {
+            "mcp3_abduction_r": [
+              -7.57
+            ],
+            "mcp3_flexion_r": [
+              -3.22
+            ]
+          },
+          "rms_z": 1.754
+        }
+      }
+    },
+    {
+      "name": "LUM2",
+      "group": "lumbrical",
+      "anatomy": "second lumbrical: from the radial side of FDP3 to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)",
+      "replaces": "LU_RB3",
+      "block": "LUM2",
+      "digit": "3",
+      "sites": [
+        {
+          "body": "thirdmc_r",
+          "pos": [
+            0.0013,
+            0.0064,
+            -0.0095
+          ],
+          "start": {
+            "pos": [
+              0.0013,
+              0.0064,
+              -0.0095
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "thirdmc_r",
+          "pos": [
+            0.014327,
+            -0.029085,
+            -0.007733
+          ],
+          "start": {
+            "pos": [
+              0.0102,
+              -0.0232,
+              -0.0008
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "3proxph_r",
+          "pos": [
+            0.007798,
+            -0.024009,
+            0.004754
+          ],
+          "start": {
+            "pos": [
+              0.0068,
+              -0.022,
+              0.0073
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 3,
+        "hood": {
+          "digit": "3",
+          "junction": "RB",
+          "sites": [],
+          "fraction": {
+            "value": 1.0,
+            "source": "salsbury1937",
+            "where": "Table II p. 400",
+            "note": "palmar interossei and lumbricals end in the expansion; the rare bony slips of the palmar interossei (Salsbury: up to 10.9 %) are omitted"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "LU2",
+      "pcsa_cm2": {
+        "value": 0.08,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 6.9,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.08 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0555,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 1.6,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "LUM2",
+        "targets": {
+          "mcp3_abduction_r": {
+            "source": "an1979",
+            "where": "Table 4 p. 783-784, LUMB at the MP: radioulnar bending potential +0.363 x middle-phalanx length (MyoHand 29.14 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -10.58
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp3_flexion_r": {
+            "source": "an1979",
+            "where": "Table 4: flexion potential 0.461 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -13.43
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            9.99,
+            3.39
+          ],
+          "fibre_length_measurement_box": [
+            0.706,
+            1.062
+          ],
+          "fibre_length_full_range": [
+            0.706,
+            1.062
+          ],
+          "model_mm": {
+            "mcp3_abduction_r": [
+              -9.96
+            ],
+            "mcp3_flexion_r": [
+              -11.38
+            ]
+          },
+          "start_mm": {
+            "mcp3_abduction_r": [
+              -8.42
+            ],
+            "mcp3_flexion_r": [
+              -2.99
+            ]
+          },
+          "rms_z": 0.756
+        }
+      }
+    },
+    {
+      "name": "DI3",
+      "group": "interosseous",
+      "anatomy": "third dorsal interosseous (ulnar side of the middle finger): bony part to the PP base and hood part to the ulnar band",
+      "replaces": "UI_UB3",
+      "block": "DI3",
+      "digit": "3",
+      "sites": [
+        {
+          "body": "thirdmc_r",
+          "pos": [
+            0.0013,
+            0.0064,
+            -0.0095
+          ],
+          "start": {
+            "pos": [
+              0.0013,
+              0.0064,
+              -0.0095
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "thirdmc_r",
+          "pos": [
+            -0.008063,
+            -0.02625,
+            -0.004751
+          ],
+          "start": {
+            "pos": [
+              -0.0031,
+              -0.0248,
+              -0.0034
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "3proxph_r",
+          "pos": [
+            -0.00437,
+            -0.011792,
+            0.000381
+          ],
+          "start": {
+            "pos": [
+              -0.004301,
+              -0.0117,
+              0.0005
+            ],
+            "source": "the radial bony insertion (RI3-P3) mirrored across the mid-plane of the proximal phalanx, between the band junctions (assumed)"
+          }
+        },
+        {
+          "body": "3proxph_r",
+          "pos": [
+            -0.00205,
+            -0.018627,
+            -0.008975
+          ],
+          "start": {
+            "pos": [
+              -0.0012,
+              -0.0183,
+              -0.0093
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 2,
+        "bony": {
+          "sites": [
+            2
+          ]
+        },
+        "hood": {
+          "digit": "3",
+          "junction": "UB",
+          "sites": [
+            3
+          ],
+          "fraction": {
+            "value": 0.93,
+            "source": "salsbury1937",
+            "where": "Table II p. 400: 93 % to the expansion (28 hands)",
+            "status": "proposed; pending decision D6 (alternative 0.5, the middle of Ikebuchi 1988's one to two thirds)",
+            "note": "Salsbury's expansion includes the transverse hood fibres, which act at the MCP, so the share is an upper bound for the lateral-band share"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "DI3",
+      "pcsa_cm2": {
+        "value": 0.95,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 82.0,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.95 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0258,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 9.8,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "DI3",
+        "targets": {
+          "mcp3_abduction_r": {
+            "source": "an1979",
+            "where": "Table 4 p. 783-784, UL-I at the MP: radioulnar bending potential -0.337 x middle-phalanx length (MyoHand 29.14 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              9.82
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp3_flexion_r": {
+            "source": "an1979",
+            "where": "Table 4: flexion potential 0.152 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -4.43
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            5.34,
+            0.17,
+            0.97
+          ],
+          "fibre_length_measurement_box": [
+            0.848,
+            1.137
+          ],
+          "fibre_length_full_range": [
+            0.831,
+            1.137
+          ],
+          "model_mm": {
+            "mcp3_abduction_r": [
+              8.79
+            ],
+            "mcp3_flexion_r": [
+              -4.44
+            ]
+          },
+          "start_mm": {
+            "mcp3_abduction_r": [
+              4.08
+            ],
+            "mcp3_flexion_r": [
+              -4.54
+            ]
+          },
+          "rms_z": 0.363
+        }
+      }
+    },
+    {
+      "name": "PI2",
+      "group": "interosseous",
+      "anatomy": "second palmar interosseous (radial side of the ring finger): from MC4 to the radial lateral band",
+      "replaces": "RI4",
+      "block": "PI2",
+      "digit": "4",
+      "sites": [
+        {
+          "body": "fourthmc_r",
+          "pos": [
+            0.003421,
+            0.006687,
+            -0.006938
+          ],
+          "start": {
+            "pos": [
+              0.003423,
+              0.00668,
+              -0.006936
+            ],
+            "source": "caggiano2022 (origin on MC4 since S3)"
+          }
+        },
+        {
+          "body": "fourthmc_r",
+          "pos": [
+            0.009179,
+            -0.01482,
+            0.000376
+          ],
+          "start": {
+            "pos": [
+              0.0079,
+              -0.0144,
+              -0.0003
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "4proxph_r",
+          "pos": [
+            0.003753,
+            -0.024429,
+            0.000359
+          ],
+          "start": {
+            "pos": [
+              0.0031,
+              -0.0243,
+              0.0001
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 3,
+        "hood": {
+          "digit": "4",
+          "junction": "RB",
+          "sites": [],
+          "fraction": {
+            "value": 1.0,
+            "source": "salsbury1937",
+            "where": "Table II p. 400",
+            "note": "palmar interossei and lumbricals end in the expansion; the rare bony slips of the palmar interossei (Salsbury: up to 10.9 %) are omitted"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "PI2",
+      "pcsa_cm2": {
+        "value": 0.65,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 56.1,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.65 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.026,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 7.7,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "PI2",
+        "targets": {
+          "mcp4_abduction_r": {
+            "source": "an1979",
+            "where": "Table 5 p. 783-784, RA-I at the MP: radioulnar bending potential +0.350 x middle-phalanx length (MyoHand 24.9 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -8.71
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp4_flexion_r": {
+            "source": "an1979",
+            "where": "Table 5: flexion potential 0.141 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -3.51
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.01,
+            1.51,
+            0.71
+          ],
+          "fibre_length_measurement_box": [
+            0.5,
+            1.119
+          ],
+          "fibre_length_full_range": [
+            0.5,
+            1.119
+          ],
+          "model_mm": {
+            "mcp4_abduction_r": [
+              -8.2
+            ],
+            "mcp4_flexion_r": [
+              -3.42
+            ]
+          },
+          "start_mm": {
+            "mcp4_abduction_r": [
+              -6.95
+            ],
+            "mcp4_flexion_r": [
+              -3.43
+            ]
+          },
+          "rms_z": 0.184
+        }
+      }
+    },
+    {
+      "name": "LUM3",
+      "group": "lumbrical",
+      "anatomy": "third lumbrical: from FDP4 (radial side) to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)",
+      "replaces": "LU_RB4",
+      "block": "LUM3",
+      "digit": "4",
+      "sites": [
+        {
+          "body": "thirdmc_r",
+          "pos": [
+            -0.0091,
+            0.0054,
+            -0.0108
+          ],
+          "start": {
+            "pos": [
+              -0.0091,
+              0.0054,
+              -0.0108
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "fourthmc_r",
+          "pos": [
+            0.008363,
+            -0.026018,
+            -0.002773
+          ],
+          "start": {
+            "pos": [
+              0.0032,
+              -0.0224,
+              -0.0008
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "4proxph_r",
+          "pos": [
+            0.001843,
+            -0.015723,
+            0.00011
+          ],
+          "start": {
+            "pos": [
+              0.0002,
+              -0.0146,
+              0.0006
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 3,
+        "hood": {
+          "digit": "4",
+          "junction": "RB",
+          "sites": [],
+          "fraction": {
+            "value": 1.0,
+            "source": "salsbury1937",
+            "where": "Table II p. 400",
+            "note": "palmar interossei and lumbricals end in the expansion; the rare bony slips of the palmar interossei (Salsbury: up to 10.9 %) are omitted"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "LU3",
+      "pcsa_cm2": {
+        "value": 0.08,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 6.9,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.08 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0562,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 1.1,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "LUM3",
+        "targets": {
+          "mcp4_abduction_r": {
+            "source": "an1979",
+            "where": "Table 5 p. 783-784, LUMB at the MP: radioulnar bending potential +0.346 x middle-phalanx length (MyoHand 24.9 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -8.62
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp4_flexion_r": {
+            "source": "an1979",
+            "where": "Table 5: flexion potential 0.303 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -7.54
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            6.61,
+            2.05
+          ],
+          "fibre_length_measurement_box": [
+            0.867,
+            1.055
+          ],
+          "fibre_length_full_range": [
+            0.851,
+            1.055
+          ],
+          "model_mm": {
+            "mcp4_abduction_r": [
+              -7.65
+            ],
+            "mcp4_flexion_r": [
+              -6.55
+            ]
+          },
+          "start_mm": {
+            "mcp4_abduction_r": [
+              -3.77
+            ],
+            "mcp4_flexion_r": [
+              -2.38
+            ]
+          },
+          "rms_z": 0.49
+        }
+      }
+    },
+    {
+      "name": "DI4",
+      "group": "interosseous",
+      "anatomy": "fourth dorsal interosseous (ulnar side of the ring finger): bony part to the PP base and hood part to the ulnar band",
+      "replaces": "UI_UB4",
+      "block": "DI4",
+      "digit": "4",
+      "sites": [
+        {
+          "body": "fourthmc_r",
+          "pos": [
+            0.003423,
+            0.00668,
+            -0.006936
+          ],
+          "start": {
+            "pos": [
+              0.003423,
+              0.00668,
+              -0.006936
+            ],
+            "source": "caggiano2022 (origin on MC4 since S3)"
+          }
+        },
+        {
+          "body": "fourthmc_r",
+          "pos": [
+            -0.006956,
+            -0.024899,
+            -0.008179
+          ],
+          "start": {
+            "pos": [
+              -0.0048,
+              -0.0241,
+              -0.0044
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "4proxph_r",
+          "pos": [
+            -0.008124,
+            -0.012093,
+            7.1e-05
+          ],
+          "start": {
+            "pos": [
+              -0.008394,
+              -0.0117,
+              0.0005
+            ],
+            "source": "ulnar base of the proximal phalanx, at the ulnar band junction's side and the level of the middle finger's bony insertion (assumed)"
+          }
+        },
+        {
+          "body": "4proxph_r",
+          "pos": [
+            -0.004191,
+            -0.021201,
+            -0.005511
+          ],
+          "start": {
+            "pos": [
+              -0.0042,
+              -0.0212,
+              -0.0055
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 2,
+        "bony": {
+          "sites": [
+            2
+          ]
+        },
+        "hood": {
+          "digit": "4",
+          "junction": "UB",
+          "sites": [
+            3
+          ],
+          "fraction": {
+            "value": 0.66,
+            "source": "salsbury1937",
+            "where": "Table II p. 400: 66.3 % to the expansion (28 hands)",
+            "status": "proposed; pending decision D6 (alternative 0.5, the middle of Ikebuchi 1988's one to two thirds)",
+            "note": "Salsbury's expansion includes the transverse hood fibres, which act at the MCP, so the share is an upper bound for the lateral-band share"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "DI4",
+      "pcsa_cm2": {
+        "value": 0.91,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 78.5,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.91 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0258,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 9.4,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "DI4",
+        "targets": {
+          "mcp4_abduction_r": {
+            "source": "an1979",
+            "where": "Table 5 p. 783-784, UL-I at the MP: radioulnar bending potential -0.328 x middle-phalanx length (MyoHand 24.9 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              8.17
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp4_flexion_r": {
+            "source": "an1979",
+            "where": "Table 5: flexion potential 0.218 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -5.43
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            4.42,
+            0.64,
+            0.01
+          ],
+          "fibre_length_measurement_box": [
+            0.792,
+            1.11
+          ],
+          "fibre_length_full_range": [
+            0.791,
+            1.11
+          ],
+          "model_mm": {
+            "mcp4_abduction_r": [
+              7.56
+            ],
+            "mcp4_flexion_r": [
+              -4.91
+            ]
+          },
+          "start_mm": {
+            "mcp4_abduction_r": [
+              4.21
+            ],
+            "mcp4_flexion_r": [
+              -2.44
+            ]
+          },
+          "rms_z": 0.284
+        }
+      }
+    },
+    {
+      "name": "PI3",
+      "group": "interosseous",
+      "anatomy": "third palmar interosseous (radial side of the little finger): from MC5 to the radial lateral band",
+      "replaces": "RI5",
+      "block": "PI3",
+      "digit": "5",
+      "sites": [
+        {
+          "body": "fifthmc_r",
+          "pos": [
+            0.013273,
+            0.000844,
+            0.000795
+          ],
+          "start": {
+            "pos": [
+              0.013273,
+              0.000844,
+              0.000795
+            ],
+            "source": "caggiano2022 (origin on MC5 since S3)"
+          }
+        },
+        {
+          "body": "fifthmc_r",
+          "pos": [
+            0.008179,
+            -0.014125,
+            0.000212
+          ],
+          "start": {
+            "pos": [
+              0.0061,
+              -0.0149,
+              -0.0066
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "5proxph_r",
+          "pos": [
+            0.006418,
+            -0.014107,
+            0.005166
+          ],
+          "start": {
+            "pos": [
+              0.0047,
+              -0.0143,
+              0.0023
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 3,
+        "hood": {
+          "digit": "5",
+          "junction": "RB",
+          "sites": [],
+          "fraction": {
+            "value": 1.0,
+            "source": "salsbury1937",
+            "where": "Table II p. 400",
+            "note": "palmar interossei and lumbricals end in the expansion; the rare bony slips of the palmar interossei (Salsbury: up to 10.9 %) are omitted"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "PI3",
+      "pcsa_cm2": {
+        "value": 0.61,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 52.6,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.61 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0236,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 8.2,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "PI3",
+        "targets": {
+          "mcp5_abduction_r": {
+            "source": "an1979",
+            "where": "Table 6 p. 783-784, RA-I at the MP: radioulnar bending potential +0.474 x middle-phalanx length (MyoHand 21.0 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -9.95
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp5_flexion_r": {
+            "source": "an1979",
+            "where": "Table 6: flexion potential 0.070 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -1.47
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            7.16,
+            3.35
+          ],
+          "fibre_length_measurement_box": [
+            0.579,
+            1.124
+          ],
+          "fibre_length_full_range": [
+            0.579,
+            1.124
+          ],
+          "model_mm": {
+            "mcp5_abduction_r": [
+              -8.54
+            ],
+            "mcp5_flexion_r": [
+              -2.43
+            ]
+          },
+          "start_mm": {
+            "mcp5_abduction_r": [
+              -3.74
+            ],
+            "mcp5_flexion_r": [
+              -5.71
+            ]
+          },
+          "rms_z": 0.603
+        }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
+      }
+    },
+    {
+      "name": "LUM4",
+      "group": "lumbrical",
+      "anatomy": "fourth lumbrical: from FDP5 (radial side) to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)",
+      "replaces": "LU_RB5",
+      "block": "LUM4",
+      "digit": "5",
+      "sites": [
+        {
+          "body": "fifthmc_r",
+          "pos": [
+            0.00595,
+            0.003064,
+            -0.001469
+          ],
+          "start": {
+            "pos": [
+              0.00595,
+              0.003064,
+              -0.001469
+            ],
+            "source": "radial side of FDP5 at the MC5 base: MyoHand FDP5-P4 moved 3 mm radially and 3 mm palmarly (the former origin lay 25 mm proximal of the MC3 base)"
+          }
+        },
+        {
+          "body": "fifthmc_r",
+          "pos": [
+            0.009603,
+            -0.021576,
+            -0.001054
+          ],
+          "start": {
+            "pos": [
+              0.0061,
+              -0.0199,
+              -0.0002
+            ],
+            "source": "caggiano2022"
+          }
+        },
+        {
+          "body": "5proxph_r",
+          "pos": [
+            0.004972,
+            -0.013799,
+            0.001703
+          ],
+          "start": {
+            "pos": [
+              0.0035,
+              -0.0131,
+              0.002
+            ],
+            "source": "caggiano2022"
+          }
+        }
+      ],
+      "insertion": {
+        "split": 3,
+        "hood": {
+          "digit": "5",
+          "junction": "RB",
+          "sites": [],
+          "fraction": {
+            "value": 1.0,
+            "source": "salsbury1937",
+            "where": "Table II p. 400",
+            "note": "palmar interossei and lumbricals end in the expansion; the rare bony slips of the palmar interossei (Salsbury: up to 10.9 %) are omitted"
+          }
+        }
+      },
+      "architecture_source": "jacobson1992",
+      "jacobson_name": "LU4",
+      "pcsa_cm2": {
+        "value": 0.06,
+        "scales_with": "mass",
+        "reference_segment": "hand"
+      },
+      "force_N": {
+        "value": 5.2,
+        "scales_with": "mass",
+        "reference_segment": "hand",
+        "derivation": "0.06 cm2 x 86.3 N/cm2"
+      },
+      "optimal_fiber_length_m": {
+        "value": 0.0501,
+        "scales_with": "length",
+        "reference_segment": "hand"
+      },
+      "pennation_deg": {
+        "value": 0.7,
+        "scales_with": "none"
+      },
+      "fit": {
+        "group": "LUM4",
+        "targets": {
+          "mcp5_abduction_r": {
+            "source": "an1979",
+            "where": "Table 6 p. 783-784, LUMB at the MP: radioulnar bending potential +0.441 x middle-phalanx length (MyoHand 21.0 mm); radial = negative dL/dq",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -9.26
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          },
+          "mcp5_flexion_r": {
+            "source": "an1979",
+            "where": "Table 6: flexion potential 0.291 x middle-phalanx length (a flexor: negative dL/dq)",
+            "posture_deg": [
+              0.0
+            ],
+            "mean_mm": [
+              -6.11
+            ],
+            "sd_mm": [
+              2.0
+            ],
+            "sd_note": "no spread published; 2 mm is a fit tolerance"
+          }
+        },
+        "result": {
+          "site_shift_mm": [
+            0.0,
+            3.98,
+            1.66
+          ],
+          "fibre_length_measurement_box": [
+            0.832,
+            1.05
+          ],
+          "fibre_length_full_range": [
+            0.832,
+            1.05
+          ],
+          "model_mm": {
+            "mcp5_abduction_r": [
+              -8.65
+            ],
+            "mcp5_flexion_r": [
+              -5.45
+            ]
+          },
+          "start_mm": {
+            "mcp5_abduction_r": [
+              -6.49
+            ],
+            "mcp5_flexion_r": [
+              -2.85
+            ]
+          },
+          "rms_z": 0.319
         }
       },
       "fpmax": {
@@ -1770,8 +3420,8 @@
     "fpmax_reference": 1.3,
     "penalty": 1.0,
     "result": {
-      "cost_before": 110911.467,
-      "cost_after": 6912.33
+      "cost_before": 108458.064,
+      "cost_after": 6201.194
     }
   }
 }

@@ -76,14 +76,73 @@
       }
     },
     "lumbrical": {
-      "radial_band": {
-        "value": 0.6667
-      },
       "central": {
-        "value": 0.3333
+        "value": 0.3678
       },
-      "source": "chaoan1978",
-      "where": "Brook et al. 1995, Eqs. 12a-d: F_RB = 2/3 F_LU + ..., F_ES = 1/3 F_LU + ..."
+      "band": {
+        "value": 0.2277
+      },
+      "previous": {
+        "central": 0.3333,
+        "band": 0.6667,
+        "source": "chaoan1978",
+        "where": "Brook et al. 1995, Eqs. 12a-d: F_RB = 2/3 F_LU + ..., F_ES = 1/3 F_LU + ...",
+        "note": "EM-a values; the 2/3 terminal share gave the first lumbrical a DIP extension arm of 2.1 mm against 0.7 +- 0.6 mm (An 1983) and an effective 0.53 mm (Lee 2008b)"
+      },
+      "targets": {
+        "dip": {
+          "source": "an1983",
+          "where": "Table 3 (LU; extension, averaged over DIP 0-60 deg)",
+          "mean_mm": 0.7,
+          "sd_mm": 0.6
+        },
+        "pip": {
+          "source": "an1983",
+          "where": "Table 3 (LU; extension, averaged over PIP 0-90 deg)",
+          "mean_mm": 1.8,
+          "sd_mm": 1.3
+        }
+      },
+      "method": "S5: both fractions solved from the two An 1983 arms of the index lumbrical with the model geometry (fit_extensor_mechanism.fit_lumbrical); the remainder ends on the proximal phalanx at the radial band junction (Eladoumikdachi 2002 II: bony insertion in 14 %, volar plate in 21-63 % of lumbricals); applied to all four lumbricals. The interossei keep the Chao & An fractions: their index arms (DIP 1.0, PIP 1.9 mm) lie between An 1983 (UI 1.6 +- 0.5 / 2.6 +- 0.8) and Lee 2008b (FPI 0.90 / 0.13).",
+      "result": {
+        "unit_arms_mm": {
+          "central": {
+            "dip": {
+              "an1983": 0.0,
+              "lee2008b": 0.0
+            },
+            "pip": {
+              "an1983": 3.718,
+              "lee2008b": 4.356
+            }
+          },
+          "band": {
+            "dip": {
+              "an1983": 3.074,
+              "lee2008b": 3.366
+            },
+            "pip": {
+              "an1983": 1.9,
+              "lee2008b": 1.9
+            }
+          }
+        },
+        "model_mm": {
+          "dip": {
+            "an1983": 0.7,
+            "lee2008b": 0.77
+          },
+          "pip": {
+            "an1983": 1.8,
+            "lee2008b": 2.03
+          }
+        },
+        "z_an1983": {
+          "dip": 0.0,
+          "pip": 0.0
+        },
+        "bone": 0.4045
+      }
     },
     "interosseous": {
       "band": {
@@ -94,7 +153,8 @@
       },
       "bone": 0.3333,
       "source": "chaoan1978",
-      "where": "Brook et al. 1995, Eqs. 12a-d: F_UB = 1/3 F_UI + ..., F_ES = ... + 1/3 F_UI; the remaining third ends on the proximal phalanx at the band site"
+      "where": "Brook et al. 1995, Eqs. 12a-d: F_UB = 1/3 F_UI + ..., F_ES = ... + 1/3 F_UI; the remaining third ends on the proximal phalanx at the band site",
+      "note": "kept at S5: the model's index arms (palmar interosseous: DIP 1.0, PIP 1.9 mm) lie between An 1983 (UI: 1.6 +- 0.5, 2.6 +- 0.8 mm) and Lee 2008b (FPI: 0.90, 0.13 mm)"
     }
   },
   "band_geometry": {
@@ -496,134 +556,6 @@
           0.4162509747052222
         ]
       }
-    },
-    {
-      "name": "LU_RB2",
-      "digit": 2,
-      "kind": "lumbrical",
-      "end": "RB",
-      "main_path": [
-        "site:LU_RB2-P1_r",
-        "site:LU_RB2-P2_r",
-        "site:LU_RB2-P3_r"
-      ],
-      "s4": {
-        "length_q0_m": 0.0973017564606162,
-        "lengthrange_m": [
-          0.0898587,
-          0.0998069
-        ]
-      }
-    },
-    {
-      "name": "UI_UB2",
-      "digit": 2,
-      "kind": "interosseous",
-      "end": "UB",
-      "main_path": [
-        "site:UI_UB2-P1_r",
-        "site:UI_UB2-P2_r",
-        "site:UI_UB2-P3_r"
-      ],
-      "s4": {
-        "length_q0_m": 0.09735968244691898,
-        "lengthrange_m": [
-          0.0913261,
-          0.105141
-        ]
-      }
-    },
-    {
-      "name": "LU_RB3",
-      "digit": 3,
-      "kind": "lumbrical",
-      "end": "RB",
-      "main_path": [
-        "site:LU_RB3-P1_r",
-        "site:LU_RB3-P2_r",
-        "site:LU_RB3-P3_r"
-      ],
-      "s4": {
-        "length_q0_m": 0.093321279528394,
-        "lengthrange_m": [
-          0.0827603,
-          0.0988323
-        ]
-      }
-    },
-    {
-      "name": "UI_UB3",
-      "digit": 3,
-      "kind": "interosseous",
-      "end": "UB",
-      "main_path": [
-        "site:UI_UB3-P1_r",
-        "site:UI_UB3-P2_r",
-        "site:UI_UB3-P3_r"
-      ],
-      "s4": {
-        "length_q0_m": 0.0925260240522141,
-        "lengthrange_m": [
-          0.0853434,
-          0.0997261
-        ]
-      }
-    },
-    {
-      "name": "LU_RB4",
-      "digit": 4,
-      "kind": "lumbrical",
-      "end": "RB",
-      "main_path": [
-        "site:LU_RB4-P1_r",
-        "site:LU_RB4-P2_r",
-        "site:LU_RB4-P3_r"
-      ],
-      "s4": {
-        "length_q0_m": 0.07707863341164933,
-        "lengthrange_m": [
-          0.0797904,
-          0.0909592
-        ]
-      }
-    },
-    {
-      "name": "UI_UB4",
-      "digit": 4,
-      "kind": "interosseous",
-      "end": "UB",
-      "main_path": [
-        "site:UI_UB4-P1_r",
-        "site:UI_UB4-P2_r",
-        "geom:4thmcp_ellipsoid_wrap_r:4thmcp_ellipsoid_site_UI_UB4_side_r",
-        "site:UI_UB4-P3_r"
-      ],
-      "s4": {
-        "length_q0_m": 0.07866341299119711,
-        "lengthrange_m": [
-          0.0819919,
-          0.0969029
-        ]
-      }
-    },
-    {
-      "name": "LU_RB5",
-      "digit": 5,
-      "kind": "lumbrical",
-      "end": "RB",
-      "main_path": [
-        "site:LU_RB5-P1_r",
-        "site:LU_RB5-P2_r",
-        "geom:5thmcp_ellipsoid_wrap_r:5thmcp_ellipsoid_site_LU_RB5_side_r",
-        "site:LU_RB5-P3_r"
-      ],
-      "s4": {
-        "length_q0_m": 0.09756173108536186,
-        "lengthrange_m": [
-          0.0970142,
-          0.100417
-        ]
-      }
     }
   ],
   "orl": {
@@ -775,7 +707,7 @@
     }
   },
   "checks": {
-    "LU_RB2": {
+    "LUM1": {
       "dip": [
         {
           "source": "an1983",
@@ -803,7 +735,7 @@
         }
       ]
     },
-    "UI_UB2": {
+    "PI1": {
       "dip": [
         {
           "source": "an1983",

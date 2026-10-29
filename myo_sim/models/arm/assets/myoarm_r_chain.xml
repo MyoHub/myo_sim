@@ -562,13 +562,13 @@
                                                     <site name="EIP-P4_r" pos="-0.0108 0.0153 0.0068"/>
                                                     <site name="EIP-P5_r" pos="0.0044 -0.026 0.0128"/>
                                                     <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="PI1-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
+                                                    <site name="PI1-P2_r" pos="-0.002929 -0.028225 -0.003335"/>
+                                                    <site name="LUM1-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
+                                                    <site name="LUM1-P2_r" pos="0.010043 -0.027072 -0.005554"/>
                                                     <site name="DI1d-P1_r" pos="0.0026 0.0039 -0.0038"/>
                                                     <site name="DI1d-P2_r" pos="0.01124 -0.023842 -0.000266"/>
                                                     <site name="DI1s-P2_r" pos="0.014611 -0.023658 -0.000698"/>
-                                                    <site name="LU_RB2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
-                                                    <site name="LU_RB2-P2_r" pos="0.0102 -0.0265 -0"/>
-                                                    <site name="UI_UB2-P1_r" pos="-0.0041 -0.0002 -0.0048"/>
-                                                    <site name="UI_UB2-P2_r" pos="-0.0033 -0.0294 -0.0001"/>
                                                     <site name="2ndmcp_ellipsoid_site_FDS2_side_r" pos="0 0 0"/>
                                                     <site name="2ndmcp_ellipsoid_site_FDP2_side_r" pos="0.0058 -0.0294 -0.0087"/>
                                                     <site name="2ndmcp_ellipsoid_site_EDC2_side_r" pos="0.0058 -0.0294 0.0087"/>
@@ -594,10 +594,10 @@
                                                         <site name="FDP2-P6_r" pos="0.0033 -0.0202 -0.005"/>
                                                         <site name="FDP2-P7_r" pos="0.0063 -0.0343 -0.0006"/>
                                                         <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                        <site name="PI1-P3_r" pos="-0.004348 -0.015692 0.002833"/>
+                                                        <site name="LUM1-P3_r" pos="0.007508 -0.008468 -0.000502"/>
                                                         <site name="DI1d-P3_r" pos="0.007314 -0.014559 0.002259"/>
                                                         <site name="DI1s-P3_r" pos="0.007474 -0.014303 0.002037"/>
-                                                        <site name="LU_RB2-P3_r" pos="0.0084 -0.0083 -0"/>
-                                                        <site name="UI_UB2-P3_r" pos="-0.0043 -0.0159 0.0024"/>
                                                         <site name="Secondpm_site_EDC2_side_r" pos="0.0075 -0.0407 0.0121"/>
                                                         <body name="midph2_r" pos="0.00751 -0.041273 0.007326">
                                                             <geom name="midph2_coll_r" class="myohand_coll" size="0.008 0.012" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
@@ -653,21 +653,18 @@
                                                     <!-- <site name="FDP3-P5_r" pos="0.0005 -0.019 -0.0031"/> -->
                                                     <site name="FDP3-P5_r" pos="0.0019 -0.0151 -0.0068"/>
                                                     <site name="EDC3-P4_r" pos="-0.0007 -0.0263 0.0112"/>
-                                                    <site name="RI3-P1_r" pos="0.0013 0.0064 -0.0095"/>
-                                                    <site name="RI3-P2_r" pos="0.0096 -0.0027 -0.0048"/>
-                                                    <site name="LU_RB3-P1_r" pos="0.0013 0.0064 -0.0095"/>
-                                                    <!-- <site name="LU_RB3-P2_r" pos="0.009 -0.019 -0.005"/> -->
-                                                    <site name="LU_RB3-P2_r" pos="0.0102 -0.0232 -0.0008"/>
-                                                    <site name="UI_UB3-P1_r" pos="0.0013 0.0064 -0.0095"/>
-                                                    <!-- <site name="UI_UB3-P2_r" pos="-0.0077 -0.0271 -0.004"/> -->
-                                                    <site name="UI_UB3-P2_r" pos="-0.0031 -0.0248 -0.0034"/>
-                                                    <site name="LU_RB4-P1_r" pos="-0.0091 0.0054 -0.0108"/>
-                                                    <site name="LU_RB5-P1_r" pos="-0.0091 0.0254 -0.0108"/>
+
                                                     <site name="3rdmcp_ellipsoid_site_FDS3_side_r" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_FDP3_side_r" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_EDC3_side_r" pos="0.0016 -0.0291 0.0081"/>
-                                                    <site name="3rdmcp_ellipsoid_site_LU_RB3_side_r" pos="0 0 0"/>
                                                     <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="DI2-P1_r" pos="0.000774 0.006967 -0.009643"/>
+                                                    <site name="DI2-P2_r" pos="0.013791 -0.007084 -0.006105"/>
+                                                    <site name="LUM2-P1_r" pos="0.0013 0.0064 -0.0095"/>
+                                                    <site name="LUM2-P2_r" pos="0.014327 -0.029085 -0.007733"/>
+                                                    <site name="DI3-P1_r" pos="0.0013 0.0064 -0.0095"/>
+                                                    <site name="DI3-P2_r" pos="-0.008063 -0.02625 -0.004751"/>
+                                                    <site name="LUM3-P1_r" pos="-0.0091 0.0054 -0.0108"/>
                                                     <site name="AdPt-P1_r" pos="-0.002311 -0.000437 -0.005792"/>
                                                     <body name="3proxph_r" pos="0.00024 -0.02629 0.001778">
                                                         <geom name="proxph3_coll_r" class="myohand_coll" size="0.009 0.022" pos="0.001 -0.022 0.004" euler="1.5 0.045 -.35"/>
@@ -690,20 +687,18 @@
                                                         <site name="FDP3-P6_r" pos="0.0006 -0.0146 -0.0088"/>
                                                         <site name="FDP3-P7_r" pos="0.0016 -0.0389 -0.0027"/>
                                                         <site name="EDC3-P5_r" pos="0 -0.013 0.01"/>
-                                                        <site name="EDC3-P6_r" pos="0.002 -0.043 0.013"/>
-                                                        <site name="RI3-P3_r" pos="0.0076 -0.0117 0.0005"/>
-                                                        <site name="LU_RB3-P3_r" pos="0.009 -0.004 -0.001"/>
-                                                        <site name="LU_RB3-P4_r" pos="0.009 -0.039 0.014"/>
-                                                        <site name="UI_UB3-P3_r" pos="-0.0074 -0.0117 -0.0018"/>
-                                                        <site name="UI_UB3-P4_r" pos="-0.0053 -0.0352 0.0116"/> -->
+                                                        <site name="EDC3-P6_r" pos="0.002 -0.043 0.013"/> -->
                                                         <site name="FDS3-P6_r" pos="0.0006 -0.0146 -0.0088"/>
                                                         <site name="FDS3-P7_r" pos="0.0045 -0.0376 -0.0021"/>
                                                         <site name="FDP3-P6_r" pos="0.0007 -0.0158 -0.0081"/>
                                                         <site name="FDP3-P7_r" pos="0.0024 -0.0364 -0.0005"/>
-                                                        <site name="RI3-P3_r" pos="0.0076 -0.0117 0.0005"/>
-                                                        <site name="LU_RB3-P3_r" pos="0.0068 -0.022 0.0073"/>
-                                                        <site name="UI_UB3-P3_r" pos="-0.0012 -0.0183 -0.0093"/>
                                                         <site name="Thirdpm_site_EDC3_side_r" pos="0.00155575 -0.04355 0.012991"/>
+                                                        <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MyoHand, MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                        <site name="DI2-P3_r" pos="0.012239 -0.0037 -0.003578"/>
+                                                        <site name="DI2-P4_r" pos="0.008643 -0.022563 0.004193"/>
+                                                        <site name="LUM2-P3_r" pos="0.007798 -0.024009 0.004754"/>
+                                                        <site name="DI3-P3_r" pos="-0.00437 -0.011792 0.000381"/>
+                                                        <site name="DI3-P4_r" pos="-0.00205 -0.018627 -0.008975"/>
                                                         <body name="midph3_r" pos="0.00165 -0.044211 0.00623">
                                                             <joint axis="1 0 0" name="pm3_flexion_r" pos="0 0 0" range="0 2.007129" damping="0.0105"/>
                                                             <geom name="midph3_coll_r" class="myohand_coll" size="0.008 0.014" pos="0.0012 -0.014 0.00" euler="1.55 0.06 -.35"/>
@@ -720,9 +715,7 @@
                                                             <site name="FDP3-P8_r" pos="-0.0001 -0.0103 -0.0072"/>
                                                             <site name="FDP3-P9_r" pos="0.0021 -0.0227 -0.0034"/>
                                                             <site name="EDC3-P7_r" pos="0.0006 -0.0037 0.0065"/>
-                                                            <site name="EDC3-P8_r" pos="0.0011 -0.029 0.0051"/>
-                                                            <site name="LU_RB3-P5_r" pos="0.006 -0.007 0.006"/>
-                                                            <site name="UI_UB3-P5_r" pos="-0.0055 -0.0088 0.0058"/> -->
+                                                            <site name="EDC3-P8_r" pos="0.0011 -0.029 0.0051"/> -->
                                                             <site name="FDS3-P8_r" pos="0.0002 -0.0107 -0.0054"/>
                                                             <site name="FDP3-P8_r" pos="0.0016 -0.0115 -0.0051"/>
                                                             <site name="FDP3-P9_r" pos="0.0021 -0.0214 -0.0021"/>
@@ -749,9 +742,7 @@
                                                     <!-- CMC joint: written by scripts/fit_cmc_joints.py from build/data/cmc_joints.json -->
                                                     <joint name="cmc4_flexion_r" pos="0.002396 0.025745 -0.002052" axis="0.988559 -0.008704 0.150584" range="-0.087266 0.279253" damping="0.0142"/>
                                                     <!-- Moved here from thirdmc_r (build/data/cmc_joints.json, site_moves) -->
-                                                    <site name="UI_UB4-P1_r" pos="0.003423 0.00668 -0.006936"/>
                                                     <!-- Moved here from thirdmc_r (build/data/cmc_joints.json, site_moves) -->
-                                                    <site name="RI4-P1_r" pos="0.003423 0.00668 -0.006936"/>
                                                     <geom name="4mcski_r" class="myohand_coll" size="0.0095 0.026" euler="1.55 -.08 0" pos=".001 0.002 -.00"/>
                                                     <geom mesh="4mc_r" name="4mc_r" type="mesh"/>
                                                     <!-- <geom name="4thmcp_ellipsoid_wrap" pos="-0.00413111 -0.0311007 0.00480312" quat="0.562021 -0.225806 -0.785857 0.124787" class="myoarm_wrap" size="0.00604155"/> -->
@@ -761,22 +752,20 @@
                                                     <site name="FDS4-P5_r" pos="-0.0005 -0.0104 -0.0089"/>
                                                     <site name="FDP5-P4_r" pos="-0.003 0.015 -0.013"/>
                                                     <site name="FDP4-P5_r" pos="-0.0005 -0.0105 -0.0083"/>
-                                                    <site name="EDC4-P4_r" pos="-0.002 -0.022 0.009"/>
-                                                    <site name="RI4-P2_r" pos="0.0079 -0.0144 -0.0003"/>
-                                                    <site name="LU_RB4-P2_r" pos="0.006 -0.0054 -0.0067"/>
-                                                    <site name="UI_UB4-P2_r" pos="-0.006 -0.021 -0.006"/> -->
+                                                    <site name="EDC4-P4_r" pos="-0.002 -0.022 0.009"/> -->
                                                     <site name="FDS4-P5_r" pos="0.002 -0.0138 -0.006"/>
                                                     <site name="FDP4-P5_r" pos="-0.0006 -0.0136 -0.0063"/>
                                                     <site name="EDC4-P4_r" pos="-0.0004 -0.0207 0.0095"/>
-                                                    <site name="RI4-P2_r" pos="0.0079 -0.0144 -0.0003"/>
-                                                    <site name="LU_RB4-P2_r" pos="0.0032 -0.0224 -0.0008"/>
-                                                    <site name="UI_UB4-P2_r" pos="-0.0048 -0.0241 -0.0044"/>
                                                     <site name="4thmcp_ellipsoid_site_FDS4_side_r" pos="-0.002 -0.024 0.002"/>
                                                     <site name="4thmcp_ellipsoid_site_FDP4_side_r" pos="-0.002 -0.024 0.002"/>
                                                     <site name="4thmcp_ellipsoid_site_EDC4_side_r" pos="-0.0003 -0.0254 0.0083"/>
-                                                    <!-- <site name="4thmcp_ellipsoid_site_LU_RB4_side_r" pos="0.00421203 -0.0190492 -0.00875925"/> -->
-                                                    <site name="4thmcp_ellipsoid_site_UI_UB4_side_r" pos="-0.0107758 -0.0261555 -0.00498369"/>
 
+                                                    <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MyoHand, MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="PI2-P1_r" pos="0.003421 0.006687 -0.006938"/>
+                                                    <site name="PI2-P2_r" pos="0.009179 -0.01482 0.000376"/>
+                                                    <site name="LUM3-P2_r" pos="0.008363 -0.026018 -0.002773"/>
+                                                    <site name="DI4-P1_r" pos="0.003423 0.00668 -0.006936"/>
+                                                    <site name="DI4-P2_r" pos="-0.006956 -0.024899 -0.008179"/>
                                                     <body name="4proxph_r" pos="-0.00183 -0.023689 -0.000173">
                                                         <joint axis="0.900447 0 0.434966" name="mcp4_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0142"/>
                                                         <joint axis="-0.434966 0 0.900447" name="mcp4_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
@@ -799,21 +788,18 @@
                                                         <site name="FDP4-P6_r" pos="0.0018 -0.0199 -0.004"/>
                                                         <site name="FDP4-P7_r" pos="-0.001 -0.034 -0.006"/>
                                                         <site name="EDC4-P5_r" pos="-0.002 -0.013 0.01"/>
-                                                        <site name="EDC4-P6_r" pos="-0.005 -0.042 0.009"/>
-                                                        <site name="RI4-P3_r" pos="0.0031 -0.0243 0.0001"/>
-                                                        <site name="LU_RB4-P3_r" pos="0.0049 -0.0105 0.0053"/>
-                                                        <site name="LU_RB4-P4_r" pos="0.0017 -0.0304 0.0059"/>
-                                                        <site name="UI_UB4-P3_r" pos="-0.009 -0.017 0.005"/>
-                                                        <site name="UI_UB4-P4_r" pos="-0.0086 -0.0401 0.0045"/> -->
+                                                        <site name="EDC4-P6_r" pos="-0.005 -0.042 0.009"/> -->
                                                         <site name="FDS4-P6_r" pos="0.0001 -0.0127 -0.0075"/>
                                                         <site name="FDS4-P7_r" pos="0.0006 -0.0361 -0.001"/>
                                                         <site name="FDP4-P6_r" pos="-0.0012 -0.012 -0.0088"/>
                                                         <site name="FDP4-P7_r" pos="-0.0034 -0.0332 -0.0019"/>
-                                                        <site name="RI4-P3_r" pos="0.0031 -0.0243 0.0001"/>
-                                                        <site name="LU_RB4-P3_r" pos="0.0002 -0.0146 0.0006"/>
-                                                        <site name="UI_UB4-P3_r" pos="-0.0042 -0.0212 -0.0055"/>
                                                         <site name="Fourthpm_site_EDC4_side_r" pos="0.00028232 -0.0402561 0.008299"/>
-                                                        <!-- <site name="Fourthpm_site_LU_RB4_side_r" pos="-0.00228232 -0.0322561 -0.001299"/> -->
+
+                                                        <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MyoHand, MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                        <site name="PI2-P3_r" pos="0.003753 -0.024429 0.000359"/>
+                                                        <site name="LUM3-P3_r" pos="0.001843 -0.015723 0.00011"/>
+                                                        <site name="DI4-P3_r" pos="-0.008124 -0.012093 7.1e-05"/>
+                                                        <site name="DI4-P4_r" pos="-0.004191 -0.021201 -0.005511"/>
                                                         <body name="midph4_r" pos="-0.003528 -0.040255 0.001345">
                                                             <joint axis="0.921061 0 0.389418" name="pm4_flexion_r" pos="0 0 0" range="0 2.007129" damping="0.0105"/>
                                                             <geom name="midph4_coll_r" class="myohand_coll" size="0.0075 0.01" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
@@ -830,9 +816,7 @@
                                                             <site name="FDP4-P8_r" pos="0.001 -0.009 -0.007"/>
                                                             <site name="FDP4-P9_r" pos="-0.001 -0.018 -0.003"/>
                                                             <site name="EDC4-P7_r" pos="-0.003 -0.015 0.006"/>
-                                                            <site name="EDC4-P8_r" pos="-0.004 -0.026 0.006"/>
-                                                            <site name="LU_RB4-P5_r" pos="0.0005 -0.0149 0.0048"/>
-                                                            <site name="UI_UB4-P5_r" pos="-0.005 -0.014 0.004"/> -->
+                                                            <site name="EDC4-P8_r" pos="-0.004 -0.026 0.006"/> -->
                                                             <site name="FDS4-P8_r" pos="0 -0.0119 -0.0018"/>
                                                             <site name="FDP4-P8_r" pos="0.0023 -0.0071 -0.006"/>
                                                             <site name="FDP4-P9_r" pos="-0.0007 -0.0197 -0.0013"/>
@@ -859,7 +843,6 @@
                                                     <!-- CMC joint: written by scripts/fit_cmc_joints.py from build/data/cmc_joints.json -->
                                                     <joint name="cmc5_flexion_r" pos="0.003835 0.022057 -6e-06" axis="0.964827 0.217961 0.146974" range="-0.179769 0.575959" damping="0.0142"/>
                                                     <!-- Moved here from thirdmc_r (build/data/cmc_joints.json, site_moves) -->
-                                                    <site name="RI5-P1_r" pos="0.013273 0.000844 0.000795"/>
                                                     <!-- Moved here from fourthmc_r (build/data/cmc_joints.json, site_moves) -->
                                                     <site name="FDP5-P4_r" pos="0.00295 0.003064 0.001531"/>
                                                     <!-- Moved here from fourthmc_r (build/data/cmc_joints.json, site_moves) -->
@@ -871,6 +854,10 @@
                                                     <geom name="5thmcp_ellipsoid_wrap_r" type="cylinder" size="0.0065 0.005" pos="-0.0004 -0.0218 -0.0037" euler="-2.67175002 -0.83479098 -2.4659757" class="myoarm_wrap"/>
                                                     <inertial pos="0 0 0" mass="0.02" fullinertia="0.0001 0.0001 0.0001 0 0 0"/>
                                                     <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                    <site name="PI3-P1_r" pos="0.013273 0.000844 0.000795"/>
+                                                    <site name="PI3-P2_r" pos="0.008179 -0.014125 0.000212"/>
+                                                    <site name="LUM4-P1_r" pos="0.00595 0.003064 -0.001469"/>
+                                                    <site name="LUM4-P2_r" pos="0.009603 -0.021576 -0.001054"/>
                                                     <site name="ADM-P2_r" pos="-0.006451 -0.018829 -0.011353"/>
                                                     <site name="FDM-P2_r" pos="-0.002 -0.02 -0.01"/>
                                                     <site name="ODM-P2_r" pos="-0.0163 -0.0152 -0.0042"/>
@@ -883,15 +870,10 @@
                                                     <site name="EDC5-P4_r" pos="-0.0013 -0.0182 0.0057"/>
                                                     <site name="EDM-P5_r" pos="0.0013 0.0244 0.0079"/>
                                                     <site name="EDM-P6_r" pos="-0.0054 -0.0185 0.0032"/>
-                                                    <!-- <site name="RI5-P2_r" pos="0.003 -0.0162 0.005"/>
-                                                    <site name="LU_RB5-P2_r" pos="0.0034 -0.0001 -0.0009"/>
-                                                    <site name="UI_UB5-P2_r" pos="-0.008 -0.019 -0.006"/> -->
-                                                    <site name="RI5-P2_r" pos="0.0061 -0.0149 -0.0066"/>
-                                                    <site name="LU_RB5-P2_r" pos="0.0061 -0.0199 -0.0002"/>
+
                                                     <site name="5thmcp_ellipsoid_site_FDS5_side_r" pos="0.00787277 -0.0230374 -0.0115918"/>
                                                     <site name="5thmcp_ellipsoid_site_FDP5_side_r" pos="-0.0107453 -0.0256233 -0.000443011"/>
                                                     <site name="5thmcp_ellipsoid_site_EDC5_side_r" pos="-0.0101211 -0.0279141 -0.00430677"/>
-                                                    <site name="5thmcp_ellipsoid_site_LU_RB5_side_r" pos="-0.00890322 -0.0194098 -0.0110643"/>
 
                                                     <body name="5proxph_r" pos="-0.001597 -0.021431 -0.001496">
                                                         <joint axis="0.825336 0 0.564642" name="mcp5_flexion_r" pos="0 0 0" range="0 1.5708" damping="0.0142"/>
@@ -910,6 +892,8 @@
         <site name="EM5_band_side_r" pos="-0.00753724 -0.035495 0.000421867"/>
         <!-- END generated by scripts/fit_extensor_mechanism.py (5proxph_r) -->
                                                         <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
+                                                        <site name="PI3-P3_r" pos="0.006418 -0.014107 0.005166"/>
+                                                        <site name="LUM4-P3_r" pos="0.004972 -0.013799 0.001703"/>
                                                         <site name="ADM-P3_r" pos="-0.007446 -0.008516 -0.011506"/>
                                                         <site name="FDM-P3_r" pos="-0.0045 -0.0138 -0.0128"/>
                                                         <!-- <site name="FDS5-P6_r" pos="0.0018 -0.0143 -0.0055"/>
@@ -918,17 +902,11 @@
                                                         <site name="FDP5-P7_r" pos="-0.001 -0.026 -0.007"/>
                                                         <site name="EDC5-P5_r" pos="-0.006 -0.018 0.004"/>
                                                         <site name="EDC5-P6_r" pos="-0.008 -0.034 0.001"/> -->
-                                                        <!-- <site name="RI5-P3_r" pos="0.003 -0.018 0.001"/>
-                                                        <site name="LU_RB5-P3_r" pos="0.0047 -0.01 0.0042"/>
-                                                        <site name="LU_RB5-P4_r" pos="-0.002 -0.034 0.002"/>
-                                                        <site name="UI_UB5-P3_r" pos="-0.0073 -0.0152 -0.0032"/>
-                                                        <site name="UI_UB5-P4_r" pos="-0.009 -0.034 -0.006"/> -->
+
                                                         <site name="FDS5-P6_r" pos="-0.0017 -0.0149 -0.0071"/>
                                                         <site name="FDS5-P7_r" pos="-0.0025 -0.0259 -0.0054"/>
                                                         <site name="FDP5-P6_r" pos="-0.001 -0.0137 -0.0051"/>
                                                         <site name="FDP5-P7_r" pos="-0.0005 -0.0291 -0.008"/>
-                                                        <site name="RI5-P3_r" pos="0.0047 -0.0143 0.0023"/>
-                                                        <site name="LU_RB5-P3_r" pos="0.0035 -0.0131 0.002"/>
 
                                                         <site name="Fifthpm_site_EDC5_side_r" pos="-0.0026 -0.0399 -0.0022"/>
 

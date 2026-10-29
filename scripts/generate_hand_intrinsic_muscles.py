@@ -9,8 +9,16 @@ to. This script writes
   rows without a ``block`` go to the script's main block, a row with a ``block`` label to its own block,
   which stands where the hand-written element it replaced stood (so actuator indices stay).
 
+A row with an ``insertion`` (the interossei and lumbricals of digits 2-5) is a branched tendon: its first
+``split`` sites are the main path; from the last of them an optional bony branch (fraction 1 - f) and the
+hood branch (fraction f, the row's hood fraction) continue, the hood branch to a band junction of the
+extensor mechanism (``EM{d}_RB_r`` / ``EM{d}_UB_r``, ``fit_extensor_mechanism.py``). From the junction the
+central-slip and lateral-band branches of ``build/data/extensor_mechanism.json`` follow, so each divisor is
+1 / (f x branch fraction) and this script stays the only writer of these tendons.
+
 The length range is a rigid tendon of slack length ``(L_MT(q = 0) - L_fo cos(alpha)) / 1.033`` (Barry et
-al. 2018, Eq. 1), so the muscle class's normalised fibre-length range spans the same range of ``L_fo``.
+al. 2018, Eq. 1), so the muscle class's normalised fibre-length range spans the same range of ``L_fo``; for a
+branched tendon L_MT is MuJoCo's tendon length (branches divided by their divisors).
 
 ``--fit`` first refits the sites to the rows' target moment arms (``path_fit`` in the table; ``fit.reference``
 targets are only reported), then the
@@ -33,7 +41,7 @@ import mujoco
 import numpy as np
 
 from myo_sim.build.compose import RIGHT_ARM_CHAIN_XML, RIGHT_ARM_MUSCLES_XML, RIGHT_ARM_TENDONS_XML, build_spec
-from myo_sim.build.hand_data import INTRINSIC_DATA_PATH, load_intrinsic_table, write_generated_block
+from myo_sim.build.hand_data import DATA_DIR, INTRINSIC_DATA_PATH, load_intrinsic_table, write_generated_block
 
 SCRIPT = "generate_hand_intrinsic_muscles.py"
 MUSCLE_CLASS = "myoarm_forearm_muscle"
@@ -43,12 +51,17 @@ PENALTY = 1000.0  # residual per unit of normalised fibre length outside the win
 # Anatomical offsets (deg; flexion, abduction positive) spanning the measurement box of Smutz et al. 1998.
 THUMB_BOX_DEG = {"cmc_flexion_r": (20.0, 0.0, -25.0), "cmc_abduction_r": (20.0, 0.0, -20.0), "mp_flexion_r": (-10.0, 0.0, 40.0)}
 INDEX_BOX_DEG = {"mcp2_flexion_r": (0.0, 45.0, 90.0), "mcp2_abduction_r": (-15.0, 0.0, 15.0)}
+FINGER_BOX_DEG = {f"mcp{d}_{j}_r": INDEX_BOX_DEG[f"mcp2_{j}_r"] for d in (3, 4) for j in ("flexion", "abduction")} | {
+    "cmc4_flexion_r": (-5.0, 0.0, 16.0)
+}
 LITTLE_BOX_DEG = {
     "mcp5_flexion_r": (0.0, 45.0, 90.0),
     "mcp5_abduction_r": (-15.0, 0.0, 15.0),
     "cmc5_flexion_r": (-10.3, 0.0, 33.0),
 }
 PROXIMAL_OF_MC5 = {"pisiform_r", "hamate_r", "capitate_r", "triquetrum_r", "lunate_r"}
+PROXIMAL_OF_MC4 = PROXIMAL_OF_MC5 | {"thirdmc_r", "secondmc_r", "trapezoid_r"}
+EM_DATA_PATH = DATA_DIR / "extensor_mechanism.json"
 
 
 def _cite(table: dict[str, Any], key: str) -> str:
@@ -69,6 +82,58 @@ def rows_in_block(table: dict[str, Any], label: str | None) -> list[dict[str, An
 def block_labels(table: dict[str, Any]) -> list[str | None]:
     """The main block (None) and every labelled block, in table order."""
     return [None] + list(dict.fromkeys(row["block"] for row in table["muscles"] if row.get("block")))
+
+
+# --- branched rows (interossei and lumbricals) ---------------------------------------------------------
+
+
+@cache
+def _em_script() -> Any:
+    import importlib.util
+    from pathlib import Path
+
+    path = Path(__file__).with_name("fit_extensor_mechanism.py")
+    spec = importlib.util.spec_from_file_location("fit_extensor_mechanism", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def em_table() -> dict[str, Any]:
+    return json.loads(EM_DATA_PATH.read_text())
+
+
+def junction(row: dict[str, Any]) -> str | None:
+    """Band junction site of a branched row (``None`` for a straight row)."""
+    if "insertion" not in row:
+        return None
+    hood = row["insertion"]["hood"]
+    return f"EM{hood['digit']}_{hood['junction']}_r"
+
+
+def hood_fraction(row: dict[str, Any]) -> float:
+    return float(row["insertion"]["hood"]["fraction"]["value"])
+
+
+def band_fractions(row: dict[str, Any], em: dict[str, Any]) -> dict[str, float]:
+    """Fractions of the muscle force on the central-slip and band branches from the junction."""
+    kind = "lumbrical" if row["group"] == "lumbrical" else "interosseous"
+    per = _em_script().intrinsic_fractions(em, kind, row["insertion"]["hood"]["junction"])
+    return {branch: hood_fraction(row) * f for branch, f in per.items()}
+
+
+def legs(row: dict[str, Any], points: list[Any], fixed: Any) -> Any:
+    """Weighted straight legs of *row* from its site *points* and the junction point *fixed* (proximal of the
+    junction only: the branches from the junction cross the interphalangeal joints, not MCP or CMC)."""
+    ins = row["insertion"]
+    split = ins["split"]
+    main, last = points[:split], points[split - 1]
+    out = [(1.0, main)]
+    f = hood_fraction(row)
+    if "bony" in ins:
+        out.append((1.0 - f, [last] + [points[i] for i in ins["bony"]["sites"]]))
+    out.append((f, [last] + [points[i] for i in ins["hood"]["sites"]] + [fixed]))
+    return out
 
 
 # --- XML ------------------------------------------------------------------------------------------------
@@ -101,9 +166,27 @@ def tendon_block(table: dict[str, Any], label: str | None = None) -> str:
         fitted = f", fitted to {' and '.join(targets)}" if targets else ""
         lines.append(f"        <!-- {row['name']} ({row['anatomy']}): sites from {' and '.join(starts)}{fitted} -->")
         lines.append(f'        <spatial name="{row["name"]}_r_tendon" class="{MUSCLE_CLASS}">')
-        lines += [f'            <site site="{site_name(row, i)}"/>' for i in range(len(row["sites"]))]
+        if "insertion" in row:
+            lines += [f"            {line}" for line in branched_path(row)]
+        else:
+            lines += [f'            <site site="{site_name(row, i)}"/>' for i in range(len(row["sites"]))]
         lines.append("        </spatial>")
     return "".join(f"{line}\n" for line in lines)
+
+
+def branched_path(row: dict[str, Any]) -> list[str]:
+    """Path elements of a branched row: main path, bony and hood branches, then the junction's branches."""
+    ins, em = row["insertion"], em_table()
+    site = [f'<site site="{site_name(row, i)}"/>' for i in range(len(row["sites"]))]
+    split, f = ins["split"], hood_fraction(row)
+    out = site[:split]
+    if "bony" in ins:
+        out += [f'<pulley divisor="{_number(1.0 / (1.0 - f))}"/>', site[split - 1]] + [site[i] for i in ins["bony"]["sites"]]
+    if "bony" in ins or f < 1.0:
+        out += [f'<pulley divisor="{_number(1.0 / f)}"/>', site[split - 1]]
+    out += [site[i] for i in ins["hood"]["sites"]] + [f'<site site="{junction(row)}"/>']
+    out += _em_script().junction_branches(em, ins["hood"]["digit"], junction(row), band_fractions(row, em))
+    return out
 
 
 def architecture_lengthranges(table: dict[str, Any]) -> dict[str, tuple[float, float]]:
@@ -112,11 +195,16 @@ def architecture_lengthranges(table: dict[str, Any]) -> dict[str, tuple[float, f
     data = mujoco.MjData(model)
     data.qpos[:] = 0.0
     mujoco.mj_kinematics(model, data)
+    mujoco.mj_comPos(model, data)
     lo, hi = model.actuator_gainprm[model.actuator(f"{table['template_muscle']}_r").id, :2]
     ranges = {}
     for row in table["muscles"]:
-        points = [data.site_xpos[model.site(site_name(row, i)).id] for i in range(len(row["sites"]))]
-        l_mt0 = float(sum(np.linalg.norm(b - a) for a, b in zip(points[:-1], points[1:])))
+        if "insertion" in row:  # MuJoCo's length of the branched tendon
+            mujoco.mj_tendon(model, data)
+            l_mt0 = float(data.ten_length[model.tendon(f"{row['name']}_r_tendon").id])
+        else:
+            points = [data.site_xpos[model.site(site_name(row, i)).id] for i in range(len(row["sites"]))]
+            l_mt0 = float(sum(np.linalg.norm(b - a) for a, b in zip(points[:-1], points[1:])))
         l_fo = row["optimal_fiber_length_m"]["value"]
         l_ts = (l_mt0 - l_fo * np.cos(np.radians(row["pennation_deg"]["value"]))) / 1.033
         ranges[row["name"]] = (float(l_ts + lo * l_fo), float(l_ts + hi * l_fo))
@@ -146,9 +234,10 @@ def muscle_block(table: dict[str, Any], lengthranges: dict[str, tuple[float, flo
 def write_xml(table: dict[str, Any]) -> dict[str, tuple[float, float]]:
     """Write the sites, then every tendon and muscle block (length ranges from the written sites)."""
     RIGHT_ARM_CHAIN_XML.write_text(chain_with_sites(RIGHT_ARM_CHAIN_XML.read_text(), table))
-    ranges = architecture_lengthranges(table)
     for label in block_labels(table):
         write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table, label), "</tendon>", label)
+    ranges = architecture_lengthranges(table)  # branched tendons: from the tendons just written
+    for label in block_labels(table):
         write_generated_block(RIGHT_ARM_MUSCLES_XML, SCRIPT, muscle_block(table, ranges, label), "</actuator>", label)
     return ranges
 
@@ -178,7 +267,12 @@ class Poses:
         self.pos, self.mat = np.array(pos), np.array(mat)
 
     def length(self, sites: list[tuple[str, np.ndarray]]) -> np.ndarray:
-        """Length (m) of the straight path through *sites* (body name, local position) in every posture."""
+        """Length (m) of the straight path through *sites* (body name, local position) in every posture.
+
+        *sites* may also be weighted legs ``[(weight, sites), ...]`` (a branched tendon): their weighted sum.
+        """
+        if sites and isinstance(sites[0][0], float):
+            return sum(w * self.length(leg) for w, leg in sites)
         model = _model()
         world = []
         for body, local in sites:
@@ -219,11 +313,18 @@ def joint_q(joint: str, deg: float) -> float:
 def crossed(row: dict[str, Any]) -> list[str]:
     """Joints of the box and range checks that *row* crosses (from the bodies of its sites)."""
     bodies = {s["body"] for s in row["sites"]}
+    if junction(row):
+        bodies.add(_model().body(_model().site_bodyid[_model().site(junction(row)).id]).name)
     joints = []
     if bodies & {"firstmc_r", "proximal_thumb_r"}:
         joints += ["cmc_flexion_r", "cmc_abduction_r"] + (["mp_flexion_r"] if "proximal_thumb_r" in bodies else [])
     if "2proxph_r" in bodies:
         joints += ["mcp2_flexion_r", "mcp2_abduction_r"]
+    for d in (3, 4):
+        if f"{d}proxph_r" in bodies:
+            joints += [f"mcp{d}_flexion_r", f"mcp{d}_abduction_r"]
+    if bodies & {"fourthmc_r", "4proxph_r"} and bodies & PROXIMAL_OF_MC4:
+        joints += ["cmc4_flexion_r"]
     if "5proxph_r" in bodies:
         joints += ["mcp5_flexion_r", "mcp5_abduction_r"]
     if bodies & {"fifthmc_r", "5proxph_r"} and bodies & PROXIMAL_OF_MC5:
@@ -242,7 +343,7 @@ def boxes(row: dict[str, Any]) -> tuple[Poses, Poses]:
     """Measurement box and full range of motion of the joints *row* crosses (``path_fit.measurement_box``)."""
     model = _model()
     joints = crossed(row)
-    box = {j: [joint_q(j, d) for d in (THUMB_BOX_DEG | INDEX_BOX_DEG | LITTLE_BOX_DEG)[j]] for j in joints}
+    box = {j: [joint_q(j, d) for d in (THUMB_BOX_DEG | INDEX_BOX_DEG | FINGER_BOX_DEG | LITTLE_BOX_DEG)[j]] for j in joints}
     full = {j: np.linspace(*model.joint(j).range, 5) for j in joints}
     return Poses(_grid(box)), Poses(_grid(full))
 
@@ -259,6 +360,12 @@ def average_sweep(joint: str) -> tuple[Sweep]:
     """MCP2 flexion 0-90 deg or abduction -15 to 15 deg, the other joints at 0."""
     values = np.radians(np.linspace(0.0, 90.0, 10) if joint == "mcp2_flexion_r" else np.linspace(-15.0, 15.0, 7))
     return (Sweep({}, joint, values),)
+
+
+def _junction_point(row: dict[str, Any]) -> tuple[str, np.ndarray]:
+    model = _model()
+    site = model.site(junction(row))
+    return model.body(model.site_bodyid[site.id]).name, model.site_pos[site.id].copy()
 
 
 def fit_group(table: dict[str, Any], group: str) -> None:
@@ -282,11 +389,14 @@ def fit_group(table: dict[str, Any], group: str) -> None:
     offsets = np.cumsum([0] + [3 * len(r["sites"]) for r in rows])
     rest = Poses([{}])
 
-    def paths(x: np.ndarray) -> list[list[tuple[str, np.ndarray]]]:
-        return [
-            [(s["body"], x[offsets[k] + 3 * i : offsets[k] + 3 * i + 3]) for i, s in enumerate(r["sites"])]
-            for k, r in enumerate(rows)
-        ]
+    fixed = {r["name"]: _junction_point(r) for r in rows if junction(r)}
+
+    def paths(x: np.ndarray) -> list[Any]:
+        out = []
+        for k, r in enumerate(rows):
+            points = [(s["body"], x[offsets[k] + 3 * i : offsets[k] + 3 * i + 3]) for i, s in enumerate(r["sites"])]
+            out.append(legs(r, points, fixed[r["name"]]) if junction(r) else points)
+        return out
 
     def normalised(path: list, poses: Poses, row: dict[str, Any]) -> np.ndarray:
         l_fo = row["optimal_fiber_length_m"]["value"]

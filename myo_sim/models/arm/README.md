@@ -7,7 +7,7 @@ MyoArm is a MuJoCo musculoskeletal model of the right upper extremity — should
 | Property | Value |
 |---|---|
 | Degrees of freedom | 38 |
-| Actuators (muscles) | 71 (63 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s, FDM, ODM; RI2 is DI1d, UI_UB5 is ADM) |
+| Actuators (muscles) | 71 (63 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s, FDM, ODM; RI2 is DI1d, UI_UB5 is ADM, and RI3-5 / LU_RB2-5 / UI_UB2-4 are DI2-4, PI1-3, LUM1-4) |
 | Body segments | clavicle, scapula, humerus, radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1–5), proximal/middle/distal phalanges (digits 2–5), thumb phalanges |
 | Primary joints | shoulder (sternoclavicular, acromioclavicular, glenohumeral, scapulothoracic constraints), elbow flexion, forearm pronation/supination, wrist flexion/deviation, finger MCP/PIP/DIP (digits 2–5), CMC4/5 flexion (coupled), thumb CMC/MCP/IP |
 
@@ -34,6 +34,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 - Muscle parameters updated during the 2026-05 refactor to improve force-length accuracy.
 
 ## Changelog
+
+**2026-10-29** — Interossei and lumbricals by identity: `LU_RB2-5` -> `LUM1-4`, `UI_UB2` -> `PI1`, `RI3` -> `DI2`, `UI_UB3` -> `DI3`, `RI4` -> `PI2`, `UI_UB4` -> `DI4`, `RI5` -> `PI3` (same indices); Jacobson 1992 forces, hood fractions after Salsbury 1937, paths fitted to An 1979/1983. See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-10-29** — Finger extensor mechanism (option a): EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal phalanx and branch (MuJoCo pulleys) into central slip and lateral bands; oblique retinacular ligaments `lig_ORL{2..5}_r` (+4 tendons per hand). See `docs/wiki/extensor-mechanism.md`.
 

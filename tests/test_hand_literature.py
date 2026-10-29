@@ -70,6 +70,8 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
         ("palm_pad_thickness", 0.02),
         ("fist_tip_to_palm", 0.1),
         ("fist_max_penetration", 0.1),
+        *((f"{m}_moment_arms", 0.05) for m in ("pi1", "lum1", "di2", "lum2", "di3", "pi2", "lum3", "di4", "pi3", "lum4")),
+        ("index_intrinsic_forces", 0.05),
     ],
 )
 def test_latest_step_matches_the_current_model(key: str, tol: float) -> None:

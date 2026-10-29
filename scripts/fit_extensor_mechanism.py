@@ -1,7 +1,8 @@
 """Write the finger extensor mechanism of ``build/data/extensor_mechanism.json`` into the right-arm XML.
 
 Option (a) of the extensor-mechanism proposal: every extensor (EDC2-5, EIP, EDM) and every intrinsic that
-inserts into a lateral band (LU_RB2-5, UI_UB2-4) keeps its actuator and its tendon. The tendon's main path
+inserts into a lateral band (PI1-3, DI2-4, LUM1-4; their tendons are written by
+``generate_hand_intrinsic_muscles.py`` from this table's fractions) keeps its actuator and its tendon. The tendon's main path
 ends at a junction site on the proximal phalanx (hood ``EM{d}_H_r``, radial band ``EM{d}_RB_r``, ulnar band
 ``EM{d}_UB_r``) and continues in MuJoCo pulley branches, each carrying the force fraction ``1 / divisor``:
 
@@ -16,14 +17,11 @@ ligament (``lig_ORL{d}_r``) is a tension-only fixed tendon over PIP and DIP.
 This script writes
 
 - the junction sites and band wraps into labelled blocks of their bodies in ``myoarm_r_chain.xml``;
-- each branched tendon into a labelled block where it stood in ``myoarm_r_tendon.xml`` (tendon order kept)
-  and the ligaments into its main block;
-- the ``lengthrange`` of the intrinsic bundles, shifted by the change of the tendon length at q = 0 so the
-  fibre length at rest is that of the S4 model (the extrinsic slack lengths belong to
-  ``fit_muscle_passive.py``).
+- each branched extensor tendon into a labelled block where it stood in ``myoarm_r_tendon.xml`` (tendon order
+  kept) and the ligaments into its main block (the extrinsic slack lengths belong to ``fit_muscle_passive.py``).
 
-``--fit`` first fits the extensor share ``c`` to the index moment arms and the ORL stiffness to Ueba et
-al. 2011, and records them in the table.
+``--fit`` first fits the lumbrical fractions and the extensor share ``c`` to the index moment arms and the
+ORL stiffness to Ueba et al. 2011, and records them in the table.
 
 Run: ``uv run python scripts/fit_extensor_mechanism.py [--fit]``.
 """
@@ -38,7 +36,7 @@ from typing import Any
 import mujoco
 import numpy as np
 
-from myo_sim.build.compose import RIGHT_ARM_CHAIN_XML, RIGHT_ARM_MUSCLES_XML, RIGHT_ARM_TENDONS_XML, build_spec
+from myo_sim.build.compose import RIGHT_ARM_CHAIN_XML, RIGHT_ARM_TENDONS_XML, build_spec
 from myo_sim.build.hand_data import DATA_DIR, SPRING_FAR, write_generated_block
 
 SCRIPT = "fit_extensor_mechanism.py"
@@ -156,15 +154,20 @@ def chain_blocks(table: dict[str, Any], model: mujoco.MjModel) -> dict[str, str]
 
 
 def branch_fractions(table: dict[str, Any], row: dict[str, Any]) -> dict[str, float]:
-    """Force fraction of each branch of *row* (central, radial_band, ulnar_band)."""
-    fr = table["fractions"]
-    if row["kind"] == "extensor":
-        c, r = fr["extensor"]["c"]["value"], fr["extensor"]["r"]["value"]
-        return {"central": c * (1.0 - r), "radial_band": 0.5 * c * r, "ulnar_band": 0.5 * c * r}
-    if row["kind"] == "lumbrical":
-        return {"central": fr["lumbrical"]["central"]["value"], "radial_band": fr["lumbrical"]["radial_band"]["value"]}
-    side = "radial_band" if row["end"] == "RB" else "ulnar_band"
-    return {"central": fr["interosseous"]["central"]["value"], side: fr["interosseous"]["band"]["value"]}
+    """Force fraction of each branch of extensor *row* (central, radial_band, ulnar_band)."""
+    c, r = table["fractions"]["extensor"]["c"]["value"], table["fractions"]["extensor"]["r"]["value"]
+    return {"central": c * (1.0 - r), "radial_band": 0.5 * c * r, "ulnar_band": 0.5 * c * r}
+
+
+def intrinsic_fractions(table: dict[str, Any], kind: str, junction: str) -> dict[str, float]:
+    """Fractions of the force reaching band junction *junction* (``RB`` / ``UB``) that go on to each branch.
+
+    *kind* is ``lumbrical`` or ``interosseous``; what the branches leave stays on the proximal phalanx at the
+    junction. ``generate_hand_intrinsic_muscles.py`` multiplies them by each muscle's hood fraction.
+    """
+    fr = table["fractions"][kind]
+    band = "radial_band" if junction == "RB" else "ulnar_band"
+    return {"central": fr["central"]["value"], band: fr["band"]["value"]}
 
 
 def _element(item: str) -> str:
@@ -174,35 +177,32 @@ def _element(item: str) -> str:
     return f'<geom geom="{rest[0]}" sidesite="{rest[1]}"/>'
 
 
-def tendon_block(table: dict[str, Any], row: dict[str, Any]) -> str:
-    """Labelled block of *row*'s branched tendon."""
-    key = str(row["digit"])
+def junction_branches(table: dict[str, Any], key: str, junction: str, fractions: dict[str, float]) -> list[str]:
+    """Pulley branches from junction site *junction* of digit *key*, each with divisor 1 / its force fraction."""
     digit = table["digits"][key]
-    junction = f"EM{key}_{'H' if row['kind'] == 'extensor' else row['end']}_r"
     pip = f'<geom geom="{digit["pip_wrap"]["geom"]}" sidesite="{digit["pip_wrap"]["sidesite"]}"/>'
     dip = f'<geom geom="{digit["dip_wrap"]["geom"]}" sidesite="{digit["dip_wrap"]["sidesite"]}"/>'
-    fractions = branch_fractions(table, row)
+    wrap = f'<geom geom="EM{key}_band_wrap_r" sidesite="EM{key}_band_side_r"/>'
     branches = {
         "central": [junction, f"EM{key}_CSP_r", pip, f"EM{key}_CS_r"],
-        "radial_band": [
-            junction,
-            f"EM{key}_RB_r",
-            f"EM{key}_band_wrap_r",
-            f"EM{key}_RBD_r",
-            f"EM{key}_T_r",
-            dip,
-            f"EM{key}_TI_r",
-        ],
-        "ulnar_band": [
-            junction,
-            f"EM{key}_UB_r",
-            f"EM{key}_band_wrap_r",
-            f"EM{key}_UBD_r",
-            f"EM{key}_T_r",
-            dip,
-            f"EM{key}_TI_r",
-        ],
+        "radial_band": [junction, f"EM{key}_RB_r", wrap, f"EM{key}_RBD_r", f"EM{key}_T_r", dip, f"EM{key}_TI_r"],
+        "ulnar_band": [junction, f"EM{key}_UB_r", wrap, f"EM{key}_UBD_r", f"EM{key}_T_r", dip, f"EM{key}_TI_r"],
     }
+    lines = []
+    for branch, fraction in fractions.items():
+        lines.append(f'<pulley divisor="{_number(1.0 / fraction)}"/>')
+        items = branches[branch]
+        if items[1] == junction:  # a band junction starts its band branch at itself
+            items = items[1:]
+        lines += [item if item.startswith("<") else f'<site site="{item}"/>' for item in items]
+    return lines
+
+
+def tendon_block(table: dict[str, Any], row: dict[str, Any]) -> str:
+    """Labelled block of extensor *row*'s branched tendon."""
+    key = str(row["digit"])
+    junction = f"EM{key}_H_r"
+    fractions = branch_fractions(table, row)
     rest = 1.0 - sum(fractions.values())
     summary = ", ".join(f"{b} {fractions[b]:.3f}" for b in fractions) + f", proximal phalanx {rest:.3f}"
     lines = [
@@ -211,18 +211,7 @@ def tendon_block(table: dict[str, Any], row: dict[str, Any]) -> str:
     ]
     lines += [f"    {_element(item)}" for item in row["main_path"]]
     lines.append(f'    <site site="{junction}"/>')
-    for branch, fraction in fractions.items():
-        lines.append(f'    <pulley divisor="{_number(1.0 / fraction)}"/>')
-        items = branches[branch]
-        if items[1] == junction:  # a band-inserting intrinsic starts its band branch at its own band site
-            items = items[1:]
-        for item in items:
-            if item.startswith("<"):
-                lines.append(f"    {item}")
-            elif item.endswith("_band_wrap_r"):
-                lines.append(f'    <geom geom="{item}" sidesite="EM{key}_band_side_r"/>')
-            else:
-                lines.append(f'    <site site="{item}"/>')
+    lines += [f"    {line}" for line in junction_branches(table, key, junction, fractions)]
     lines.append("</spatial>")
     return "".join(f"        {line}\n" for line in lines)
 
@@ -258,7 +247,7 @@ def skeleton() -> mujoco.MjModel:
 
 
 def write_xml(table: dict[str, Any]) -> None:
-    """Write the chain blocks, the tendon blocks and the intrinsic length ranges."""
+    """Write the chain blocks, the extensor tendon blocks and the ligaments."""
     model = skeleton()
     for body, block in chain_blocks(table, model).items():
         write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, block, "</body>", body)
@@ -266,31 +255,6 @@ def write_xml(table: dict[str, Any]) -> None:
         write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table, row), "</tendon>", row["name"])
     if "result" in table["orl"]:
         write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, ligament_block(table), "</tendon>")
-    write_lengthranges(table)
-
-
-def intrinsic_lengthranges(table: dict[str, Any], model: mujoco.MjModel) -> dict[str, list[float]]:
-    """S4 length range of each intrinsic bundle shifted by its tendon's length change at q = 0."""
-    data = mujoco.MjData(model)
-    mujoco.mj_forward(model, data)
-    out = {}
-    for row in table["muscles"]:
-        if row["kind"] == "extensor":
-            continue
-        shift = float(data.ten_length[model.tendon(f"{row['name']}_r_tendon").id]) - row["s4"]["length_q0_m"]
-        out[f"{row['name']}_r"] = [float(v + shift) for v in row["s4"]["lengthrange_m"]]
-    return out
-
-
-def write_lengthranges(table: dict[str, Any]) -> None:
-    ranges = intrinsic_lengthranges(table, build_spec("myoarm_r").compile())
-    text = RIGHT_ARM_MUSCLES_XML.read_text()
-    for name, (lo, hi) in ranges.items():
-        tags = re.findall(rf'<muscle name="{re.escape(name)}"[^>]*?/>', text)
-        if len(tags) != 1:
-            raise ValueError(f"expected one muscle {name}, found {len(tags)}")
-        text = text.replace(tags[0], re.sub(r'lengthrange="[^"]*"', f'lengthrange="{lo:.7g} {hi:.7g}"', tags[0]))
-    RIGHT_ARM_MUSCLES_XML.write_text(text)
 
 
 # --- moment arms and fits -------------------------------------------------------------------------------
@@ -311,10 +275,13 @@ def moment_arm(model: mujoco.MjModel, data: mujoco.MjData, tendon: str, joint: s
     return (lengths[0] - lengths[1]) / 2e-5 * 1e3
 
 
-def index_arms(model: mujoco.MjModel, table: dict[str, Any], name: str) -> dict[str, dict[str, float]]:
-    """DIP and PIP extension arms of index muscle *name*: An 1983 range average and Lee 2008b nine-posture mean."""
+def index_arms(
+    model: mujoco.MjModel, table: dict[str, Any], name: str, tendon: str | None = None
+) -> dict[str, dict[str, float]]:
+    """DIP and PIP extension arms of index muscle *name* (or of *tendon*): An 1983 range average and Lee 2008b
+    nine-posture mean."""
     data = mujoco.MjData(model)
-    tendon = f"{name}_r_tendon"
+    tendon = tendon or f"{name}_r_tendon"
     rng = table["ranges"]
     out: dict[str, dict[str, float]] = {}
     for key, joint, span in (("dip", "md2_flexion_r", rng["an1983_dip_deg"]), ("pip", "pm2_flexion_r", rng["an1983_pip_deg"])):
@@ -355,6 +322,51 @@ def fit_c(table: dict[str, Any]) -> None:
         "unbounded_value": round(num / den, 3),
         "z": z,
         "rms_z": round(float(np.sqrt(np.mean(np.square(list(z.values()))))), 3),
+    }
+
+
+def fit_lumbrical(table: dict[str, Any]) -> None:
+    """Central-slip and band fractions of the lumbricals from the index lumbrical's DIP and PIP arms.
+
+    A lumbrical's IP arms are linear in its two fractions: f_c times the central branch's arm plus f_b times
+    the band branch's arm (both branches start at the radial band junction ``EM2_RB_r``). Two targets (An et
+    al. 1983, Table 3: DIP and PIP extension arms of LU, averaged over the range) fix both fractions; the
+    effective arms of Lee et al. 2008b are reported as checks.
+    """
+    lum = table["fractions"]["lumbrical"]
+    spec = build_spec("myoarm_r")
+    pieces = {"central": [], "band": []}
+    for line in junction_branches(table, "2", "EM2_RB_r", {"central": 1.0, "radial_band": 1.0}):
+        if line.startswith("<pulley"):
+            current = "central" if not pieces["central"] else "band"
+            continue
+        pieces[current].append(line)
+    for branch, lines in pieces.items():
+        tendon = spec.add_tendon(name=f"unit_{branch}")
+        for line in lines:
+            if line.startswith("<site"):
+                tendon.wrap_site(re.search(r'site="([^"]+)"', line).group(1))
+            else:
+                geom, side = re.search(r'geom="([^"]+)" sidesite="([^"]+)"', line).groups()
+                tendon.wrap_geom(geom, side)
+    model = spec.compile()
+    unit = {b: index_arms(model, table, "", f"unit_{b}") for b in pieces}
+    targets = lum["targets"]
+    a = np.array([[unit["central"][k]["an1983"], unit["band"][k]["an1983"]] for k in ("dip", "pip")])
+    b = np.array([targets[k]["mean_mm"] for k in ("dip", "pip")])
+    fc, fb = np.clip(np.linalg.solve(a, b), 0.0, 1.0)
+    lum["central"]["value"], lum["band"]["value"] = round(float(fc), 4), round(float(fb), 4)
+    model_mm = {
+        k: {src: round(fc * unit["central"][k][src] + fb * unit["band"][k][src], 2) for src in ("an1983", "lee2008b")}
+        for k in ("dip", "pip")
+    }
+    lum["result"] = {
+        "unit_arms_mm": unit,
+        "model_mm": model_mm,
+        "z_an1983": {
+            k: round((model_mm[k]["an1983"] - targets[k]["mean_mm"]) / targets[k]["sd_mm"], 2) for k in ("dip", "pip")
+        },
+        "bone": round(1.0 - fc - fb, 4),
     }
 
 
@@ -417,6 +429,7 @@ def main() -> None:
     args = parser.parse_args()
     table = load_table()
     if args.fit:
+        fit_lumbrical(table)
         fit_c(table)
         write_xml(table)
         fit_orl(table)

@@ -220,3 +220,23 @@ ADM (was UI_UB5), FDM and ODM join the finger intrinsics; none is in the grip's 
 | Grip, neutral / flexed wrist | -32 % / -66 % | -37 % / -62 % |
 | Tenodesis | pass | pass; little-finger PIP range 80 -> 40 deg (ADM has no lateral-band insertion) |
 | Lateral pinch (N) | 52.9 | 52.9 |
+
+## Hand rebuild S5 (interossei and lumbricals)
+
+PI1-3, DI2-4 and LUM1-4 replace the RI / LU_RB / UI_UB bundles in the `finger_intrinsic` group, which the
+grip holds at full activation. Their forces follow Jacobson 1992 (lumbricals 5-10 N instead of 48-98 N).
+Fresh optimum (before = EM-a):
+
+| Quantity | EM-a | S5 |
+| --- | --- | --- |
+| Grip, self-selected (N) | 389.5 | 335.4 |
+| Shares 2 / 3 / 4 / 5 (%) | 28 / 33 / 17 / 22 | 29 / 30 / 18 / 23 |
+| Settled grip (N) | 363 | 267 |
+| Grip, neutral / flexed wrist | see EM-a | -29 % / -62 % |
+| Tenodesis | pass | pass; mean PIP range 10.9 -> 16.1 deg (ARMS 16.1) |
+| Lateral pinch (N) | 53.1 | 51.5 |
+
+The middle finger's share (29.7 %) is 0.5 points outside the 12-point band around ARMS's 42.2 %, so
+`test_grip_at_the_cached_optimum` fails since S5 (tolerance unchanged; listed under the open checks in
+`hand-literature-comparison.md`). Setting the dorsal-interosseous hood fractions to 0.5 each instead of
+Salsbury's shares moves the shares by less than one point.

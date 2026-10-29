@@ -44,9 +44,29 @@ def test_generated_blocks_are_what_the_script_writes() -> None:
     for row in table["muscles"]:
         assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, em.SCRIPT, row["name"]) == em.tendon_block(table, row)
     assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, em.SCRIPT) == em.ligament_block(table)
-    model = _model()
-    for name, (lo, hi) in em.intrinsic_lengthranges(table, model).items():
-        np.testing.assert_allclose(model.actuator_lengthrange[model.actuator(name).id], [lo, hi], rtol=1e-6, err_msg=name)
+
+
+def _band_muscles() -> dict[str, int]:
+    """Every muscle with a branched tendon (extensors and the band-inserting intrinsics) and its digit."""
+    from myo_sim.build.hand_data import load_intrinsic_table
+
+    out = {row["name"]: int(row["digit"]) for row in _script().load_table()["muscles"]}
+    for row in load_intrinsic_table()["muscles"]:
+        if "insertion" in row:
+            out[row["name"]] = int(row["insertion"]["hood"]["digit"])
+    return out
+
+
+def test_lumbrical_fractions_reproduce_the_recorded_fit() -> None:
+    """The index lumbrical's DIP and PIP arms (An 1983 range averages) are the recorded fit."""
+    em = _script()
+    table = em.load_table()
+    lum = table["fractions"]["lumbrical"]
+    arms = em.index_arms(_model(), table, "LUM1")
+    for key in ("dip", "pip"):
+        assert arms[key]["an1983"] == pytest.approx(lum["result"]["model_mm"][key]["an1983"], abs=0.02), key
+        assert abs(arms[key]["an1983"] - lum["targets"][key]["mean_mm"]) < 0.05 * lum["targets"][key]["sd_mm"] + 0.02, key
+    assert lum["central"]["value"] + lum["band"]["value"] <= 1.0
 
 
 def test_branches_carry_the_tabled_fractions() -> None:
@@ -82,13 +102,18 @@ def test_branched_tendons_extend_both_ip_joints_over_their_ranges(digit: int) ->
     em = _script()
     model = _model()
     data = mujoco.MjData(model)
-    for row in em.load_table()["muscles"]:
-        if row["digit"] != digit:
+    for name, row_digit in _band_muscles().items():
+        if row_digit != digit:
             continue
+        row = {"name": name}
+        # Extensors: at least 0.5 mm. The intrinsics carry only part of their force into the bands (S5: DI2 0.48 x
+        # 1/3 to the terminal tendon, the lumbricals 0.23 fitted to An 1983's DIP arm of 0.7 +- 0.6 mm), so their
+        # smallest DIP arms are 0.37-0.48 mm; for them the check is 0.25 mm, still an extensor everywhere.
+        least = 0.5 if name in {r["name"] for r in em.load_table()["muscles"]} else 0.25
         for joint in (f"pm{digit}_flexion_r", f"md{digit}_flexion_r"):
             hi = np.degrees(model.jnt_range[model.joint(joint).id][1])
             for deg in np.linspace(0.0, hi, 12):
-                assert em.moment_arm(model, data, f"{row['name']}_r_tendon", joint, {joint: deg}) > 0.5, (
+                assert em.moment_arm(model, data, f"{row['name']}_r_tendon", joint, {joint: deg}) > least, (
                     row["name"],
                     joint,
                     deg,
@@ -103,7 +128,7 @@ def test_left_hand_mirrors_the_mechanism() -> None:
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
     spec = myo_sim.load_spec("myoarms")
-    names = [f"{row['name']}_r_tendon" for row in table["muscles"]] + [f"lig_ORL{d}_r" for d in table["digits"]]
+    names = [f"{name}_r_tendon" for name in _band_muscles()] + [f"lig_ORL{d}_r" for d in table["digits"]]
     for right in names:
         left = right.replace("_r_tendon", "_l_tendon") if right.endswith("_r_tendon") else right[:-2] + "_l"
         assert data.ten_length[model.tendon(left).id] == pytest.approx(data.ten_length[model.tendon(right).id], abs=1e-9)

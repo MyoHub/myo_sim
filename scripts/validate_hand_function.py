@@ -100,7 +100,7 @@ def myohand() -> Hand:
         "FDP": muscles(*(f"FDP{d}" for d in DIGITS)),
         "EDC": muscles(*(f"EDC{d}" for d in DIGITS)),
         "finger_intrinsic": muscles(
-            "DI1d", "DI1s", "ADM", "FDM", "ODM", *(f"{m}{d}" for d in DIGITS for m in ("RI", "LU_RB", "UI_UB"))
+            "DI1d", "DI1s", "DI2", "DI3", "DI4", "PI1", "PI2", "PI3", "LUM1", "LUM2", "LUM3", "LUM4", "ADM", "FDM", "ODM"
         ),
         "thumb_intrinsic": muscles("OP", "AdPt", "AdPo", "FPBs", "FPBd", "APB"),
     }

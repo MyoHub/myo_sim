@@ -255,7 +255,7 @@ def _held(model: mujoco.MjModel, joints: tuple[str, ...]) -> None:
 def extensor_mechanism(model: mujoco.MjModel) -> dict[str, Any]:
     """Index extensor-mechanism quantities: IP moment arms, ORL shares, intrinsic-plus posture, IP coupling."""
     out: dict[str, Any] = {}
-    for key, tendon in (("edc_ip", "EDC2"), ("eip_ip", "EIP"), ("lumbrical_ip", "LU_RB2"), ("ui_ip", "UI_UB2")):
+    for key, tendon in (("edc_ip", "EDC2"), ("eip_ip", "EIP"), ("lumbrical_ip", "LUM1"), ("ui_ip", "PI1")):
         arms = []
         for joint, span in (("md2_flexion_r", (0.0, 60.0)), ("pm2_flexion_r", (0.0, 90.0))):
             arms.append(
@@ -276,11 +276,7 @@ def extensor_mechanism(model: mujoco.MjModel) -> dict[str, Any]:
     data = mujoco.MjData(m)
     for joint, deg in (("mcp2_flexion_r", 90.0), ("pm2_flexion_r", 100.0), ("md2_flexion_r", 70.0)):
         data.qpos[m.joint(joint).qposadr[0]] = np.radians(deg)
-    index = [
-        n
-        for n in ("DI1d_r", "DI1s_r", "RI2_r", "LU_RB2_r", "UI_UB2_r")
-        if mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_ACTUATOR, n) >= 0
-    ]
+    index = [n for n in ("DI1d_r", "DI1s_r", "LUM1_r", "PI1_r") if mujoco.mj_name2id(m, mujoco.mjtObj.mjOBJ_ACTUATOR, n) >= 0]
     for name in index:
         data.act[m.actuator(name).id] = data.ctrl[m.actuator(name).id] = 1.0
     for _ in range(int(round(1.0 / m.opt.timestep))):
@@ -340,6 +336,47 @@ def ip_coupling(model: mujoco.MjModel) -> list[float]:
     return out
 
 
+# Interossei and lumbricals (S5): muscle -> digit, side of its abduction arm (+1 = ulnar) and whether its target is
+# An 1983's range average (index) or An 1979's value at rest (digits 3-5).
+INTEROSSEI_LUMBRICALS = {
+    "PI1": (2, 1.0),
+    "LUM1": (2, -1.0),
+    "DI2": (3, -1.0),
+    "LUM2": (3, -1.0),
+    "DI3": (3, 1.0),
+    "PI2": (4, -1.0),
+    "LUM3": (4, -1.0),
+    "DI4": (4, 1.0),
+    "PI3": (5, -1.0),
+    "LUM4": (5, -1.0),
+}
+
+
+def interossei_lumbricals(model: mujoco.MjModel) -> dict[str, Any]:
+    """MCP flexion and abduction arms (mm, magnitudes in the muscle's direction) and the index intrinsic forces."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "LUM1_r") < 0:
+        return {}
+    out: dict[str, Any] = {}
+    for name, (digit, side) in INTEROSSEI_LUMBRICALS.items():
+        joints = (f"mcp{digit}_flexion_r", f"mcp{digit}_abduction_r")
+        if digit == 2:  # averaged over the range, as An 1983
+            flexion = np.mean(
+                [_arms(model, f"{name}_r_tendon", {joints[0]: q}, joints[:1])[0] for q in np.radians(np.linspace(0, 90, 10))]
+            )
+            abduction = np.mean(
+                [_arms(model, f"{name}_r_tendon", {joints[1]: q}, joints[1:])[0] for q in np.radians(np.linspace(-15, 15, 7))]
+            )
+        else:
+            flexion, abduction = _arms(model, f"{name}_r_tendon", {}, joints)
+        out[f"{name.lower()}_moment_arms"] = [float(-flexion), float(side * abduction)]
+    out["index_intrinsic_forces"] = [
+        float(sum(model.actuator_gainprm[model.actuator(n).id][2] for n in ("DI1d_r", "DI1s_r"))),
+        float(model.actuator_gainprm[model.actuator("PI1_r").id][2]),
+        float(model.actuator_gainprm[model.actuator("LUM1_r").id][2]),
+    ]
+    return out
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -347,6 +384,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out: dict[str, Any] = (
         {"pip_flexion_limit": pip_limits(model)} | cmc45(model) | intrinsic_moment_arms(model) | hypothenar(model)
     )
+    out |= interossei_lumbricals(model)
     out |= extensor_mechanism(model)
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)

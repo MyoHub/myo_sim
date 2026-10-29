@@ -209,40 +209,7 @@
         0.003064,
         0.001531
       ]
-    },
-    {
-      "site": "RI4-P1_r",
-      "from": "thirdmc_r",
-      "to": "fourthmc_r",
-      "reason": "this palmar interosseous of the ring finger arises from MC4, so it must not cross CMC4",
-      "pos": [
-        0.003423,
-        0.00668,
-        -0.006936
-      ]
-    },
-    {
-      "site": "UI_UB4-P1_r",
-      "from": "thirdmc_r",
-      "to": "fourthmc_r",
-      "reason": "this dorsal interosseous of the ring finger arises from MC4 and MC5",
-      "pos": [
-        0.003423,
-        0.00668,
-        -0.006936
-      ]
-    },
-    {
-      "site": "RI5-P1_r",
-      "from": "thirdmc_r",
-      "to": "fifthmc_r",
-      "reason": "this palmar interosseous of the little finger arises from MC5; from MC3 it extended CMC5 (7.1 mm)",
-      "pos": [
-        0.013273,
-        0.000844,
-        0.000795
-      ]
     }
   ],
-  "site_move_method": "Each moved site keeps its world position at q = 0 (its position is re-expressed in the new body's frame), so every path is unchanged with CMC4/5 at 0; the anatomical origins of the interossei are rebuilt with their identities later."
+  "site_move_method": "Each moved site keeps its world position at q = 0 (its position is re-expressed in the new body's frame), so every path is unchanged with CMC4/5 at 0; the anatomical origins of the interossei are rebuilt with their identities later. The three interosseous origins moved here in S3 (RI4-P1, UI_UB4-P1 to MC4, RI5-P1 to MC5) became the start points of PI2, DI4 and PI3 in S5 (build/data/hand_intrinsic_muscles.json)."
 }
