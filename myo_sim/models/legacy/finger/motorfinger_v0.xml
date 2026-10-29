@@ -8,10 +8,10 @@
 ====================================================== -->
 	<include file="finger_v0.xml"/>
 	<actuator>
-		<motor name="extn" tendon="extn" gear="20" ctrllimited="true" ctrlrange="-1 0"/>
-		<motor name="adabR" tendon="adabR" gear="5" ctrllimited="true" ctrlrange="-1 0"/>
-		<motor name="adabL" tendon="adabL" gear="5" ctrllimited="true" ctrlrange="-1 0"/>
-		<motor name="mflx" tendon="mflx" gear="10" ctrllimited="true" ctrlrange="-1 0"/>
-		<motor name="dflx" tendon="dflx" gear="10" ctrllimited="true" ctrlrange="-1 0"/>
+		<motor name="extn" tendon="extn" gear="160" ctrllimited="true" ctrlrange="-1 0"/>
+		<motor name="adabR" tendon="adabR" gear="80" ctrllimited="true" ctrlrange="-1 0"/>
+		<motor name="adabL" tendon="adabL" gear="80" ctrllimited="true" ctrlrange="-1 0"/>
+		<motor name="mflx" tendon="mflx" gear="160" ctrllimited="true" ctrlrange="-1 0"/>
+		<motor name="dflx" tendon="dflx" gear="160" ctrllimited="true" ctrlrange="-1 0"/>
 	</actuator>
 </mujoco>
