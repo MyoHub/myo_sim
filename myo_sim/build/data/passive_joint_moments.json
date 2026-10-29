@@ -617,7 +617,7 @@
       "where": "Table 2 (1-D protocol), mean of 10 healthy right-handed adults",
       "dof": "forearm pronation/supination (positive = pronation: shortens PT and PQ)",
       "valid_range": null,
-      "notes": "Not added. MyoHand's forearm muscles already supply most of Formica's value through their passive force-length curves, and that contribution depends on posture: 0.22 Nm/rad about pro_sup = 0 in a two-arm MyoHand model at elbow 90 deg (act = ctrl = 0), 0.056 Nm/rad in myoarm_r / myofullbody (myo_personalise measurement). Adding Formica on top would double-count; a pose-independent subtraction would be wrong. Revisit with an end-range source.",
+      "notes": "Not added. MyoHand's forearm muscles already supply most of Formica's value through their passive force-length curves, and that contribution depends on posture: 0.22 Nm/rad about pro_sup = 0 in a two-arm MyoHand model at elbow 90 deg (act = ctrl = 0), 0.056 Nm/rad in myoarm_r / myofullbody (measured in MuJoCo). Adding Formica on top would double-count; a pose-independent subtraction would be wrong. Revisit with an end-range source.",
       "reference": {
         "positive": {
           "direction": "pronation",
