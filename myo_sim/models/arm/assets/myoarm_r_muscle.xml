@@ -26,35 +26,35 @@
         <general name="BRA_r" tendon="BRA_r_tendon" biasprm="0.526201 1.21956 1168.76 1 0 1.8 10 0.920725 1.4 0" class="myoarm_upperarm_muscle" gainprm="0.526201 1.21956 1168.76 1 0 1.8 10 0.920725 1.4 0" lengthrange="0.105976 0.14593"/>
         <general name="BRD_r" tendon="BRD_r_tendon" biasprm="0.130305 1.37938 272.486 1 0 1.8 10 0.93764 1.4 0" class="myoarm_upperarm_muscle" gainprm="0.130305 1.37938 272.486 1 0 1.8 10 0.93764 1.4 0" lengthrange="0.200364 0.32774"/>
         <muscle name="ECRL_r" force = "337.3" class="myoarm_forearm_muscle" tendon="ECRL_r_tendon" lengthrange="0.313191 0.341072"/>
-        <muscle name="ECRB_r" force = "252.5000" range="0.814872 1.353761" class="myoarm_forearm_muscle" tendon="ECRB_r_tendon" lengthrange="0.27472800217113363 0.30625300217113366"/>
-        <muscle name="ECU_r"  force = "192.9000" range="0.812556 1.258103" fpmax="0.7072" class="myoarm_forearm_muscle" tendon="ECU_r_tendon" lengthrange="0.28347094052479327 0.31118394052479337"/>
+        <muscle name="ECRB_r" force = "252.5000" range="0.814872 1.353761" class="myoarm_forearm_muscle" tendon="ECRB_r_tendon" lengthrange="0.27482300217113365 0.30634800217113367"/>
+        <muscle name="ECU_r"  force = "192.9000" range="0.812556 1.258103" fpmax="0.7572" class="myoarm_forearm_muscle" tendon="ECU_r_tendon" lengthrange="0.2834689405247933 0.3111819405247934"/>
         <muscle name="FCR_r"  force = "407.9000" range="0.825892 1.393217" class="myoarm_forearm_muscle" tendon="FCR_r_tendon" lengthrange="0.295866 0.331494"/>
         <muscle name="FCU_r"  force = "479.8000" range="0.557112 1.330196" class="myoarm_forearm_muscle" tendon="FCU_r_tendon" lengthrange="0.2941859610366676 0.3335359610366676"/>
         <muscle name="PL_r"   force = "101.0000" range="0.661332 1.457618" class="myoarm_forearm_muscle" tendon="PL_r_tendon" lengthrange="0.311593 0.362396"/>
         <muscle name="PT_r"   force = "557.2000" range="1.000874 1.467561" class="myoarm_forearm_muscle" tendon="PT_r_tendon" lengthrange="0.147243 0.170204"/>
         <muscle name="PQ_r"   force = "284.7000" range="0.605645 1.140670" class="myoarm_forearm_muscle" tendon="PQ_r_tendon" lengthrange="0.0220792 0.0371669"/>
         <muscle name="FDS5_r" force="46.5000" lmin="0.267000" lmax="1.708000" range="0.316816 1.658097" fpmax="0.002" class="myoarm_forearm_muscle" tendon="FDS5_r_tendon" lengthrange="0.3539450307318153 0.4230210307318153"/>
-        <muscle name="FDS4_r" force = "171.2000" lmin="0.950000" lmax="2.118000" range="1.278370 2.068179" fpmax="0.0059" class="myoarm_forearm_muscle" tendon="FDS4_r_tendon" lengthrange="0.3996361252302771 0.45776612523027704"/>
+        <muscle name="FDS4_r" force = "171.2000" lmin="0.950000" lmax="2.118000" range="1.278370 2.068179" fpmax="0.0051" class="myoarm_forearm_muscle" tendon="FDS4_r_tendon" lengthrange="0.3996361252302771 0.45776612523027704"/>
         <muscle name="FDS3_r" force = "258.8000" lmin="0.397000" lmax="1.326000" range="0.447116 1.276222" fpmax="0.002" class="myoarm_forearm_muscle" tendon="FDS3_r_tendon" lengthrange="0.3065859671525716 0.3686859671525716"/>
         <!-- FDS2, FDP2, EDC2, EIP lengthrange: tendon slack lengths fitted to the extrinsic index MCP passive moment of Knutson et al. 2000 (method of Binder-Markey and Murray 2017); written by scripts/fit_muscle_passive.py from build/data/muscle_passive.json -->
         <muscle name="FDS2_r" force = "162.5000" range="0.660467 1.405162" fpmax="0.0261" class="myoarm_forearm_muscle" tendon="FDS2_r_tendon" lengthrange="0.3282449656758807 0.39042696567588064"/>
-        <muscle name="FDP5_r" force = "236.8000" lmin="0.950000" lmax="2.304000" range="1.406195 2.254272" fpmax="0.0224" class="myoarm_forearm_muscle" tendon="FDP5_r_tendon" lengthrange="0.37168205971981316 0.43520305971981316"/>
+        <muscle name="FDP5_r" force = "236.8000" lmin="0.950000" lmax="2.304000" range="1.406195 2.254272" fpmax="0.0217" class="myoarm_forearm_muscle" tendon="FDP5_r_tendon" lengthrange="0.3716820597198132 0.4352030597198132"/>
         <muscle name="FDP4_r" force = "172.9000" range="0.710075 1.584912" fpmax="0.002" class="myoarm_forearm_muscle" tendon="FDP4_r_tendon" lengthrange="0.348164 0.417976"/>
         <muscle name="FDP3_r" force = "212.4000" lmin="0.346000" lmax="1.196000" range="0.396144 1.145772" fpmax="0.002" class="myoarm_forearm_muscle" tendon="FDP3_r_tendon" lengthrange="0.31299305676415506 0.3755870567641551"/>
         <muscle name="FDP2_r" force = "197.3000" lmin="0.423000" lmax="1.400000" range="0.473338 1.349933" fpmax="0.0033" class="myoarm_forearm_muscle" tendon="FDP2_r_tendon" lengthrange="0.320749034829083 0.38640603482908303"/>
-        <muscle name="EDC5_r" force = "39.4000" range="0.718600 1.409108" fpmax="0.0377" class="myoarm_forearm_muscle" tendon="EDC5_r_tendon" lengthrange="0.3810679791863382 0.42595097918633823"/>
-        <muscle name="EDC4_r" force = "109.2000" lmin="0.377000" lmax="1.506000" range="0.426613 1.456134" fpmax="0.0377" class="myoarm_forearm_muscle" tendon="EDC4_r_tendon" lengthrange="0.3762369677500507 0.4406849677500507"/>
-        <muscle name="EDC3_r" force = "94.4000" lmin="0.430000" lmax="1.317000" range="0.480539 1.267058" fpmax="0.0377" class="myoarm_forearm_muscle" tendon="EDC3_r_tendon" lengthrange="0.37919303850765207 0.43613703850765206"/>
+        <muscle name="EDC5_r" force = "39.4000" range="0.718600 1.409108" fpmax="0.0391" class="myoarm_forearm_muscle" tendon="EDC5_r_tendon" lengthrange="0.3810679791863382 0.42595097918633823"/>
+        <muscle name="EDC4_r" force = "109.2000" lmin="0.377000" lmax="1.506000" range="0.426613 1.456134" fpmax="0.0391" class="myoarm_forearm_muscle" tendon="EDC4_r_tendon" lengthrange="0.3762369677500507 0.4406849677500507"/>
+        <muscle name="EDC3_r" force = "94.4000" lmin="0.430000" lmax="1.317000" range="0.480539 1.267058" fpmax="0.0391" class="myoarm_forearm_muscle" tendon="EDC3_r_tendon" lengthrange="0.37919303850765207 0.43613703850765206"/>
         <muscle name="EDC2_r" force = "48.8000" lmin="0.392000" lmax="1.343000" range="0.441629 1.292500" fpmax="0.1826" class="myoarm_forearm_muscle" tendon="EDC2_r_tendon" lengthrange="0.3780820455709502 0.43764304557095024"/>
-        <muscle name="EDM_r"  force = "72.4000" range="0.623259 1.222948" fpmax="0.0377" class="myoarm_forearm_muscle" tendon="EDM_r_tendon" lengthrange="0.37411497470522215 0.41459397470522213"/>
+        <muscle name="EDM_r"  force = "72.4000" range="0.623259 1.222948" fpmax="0.0391" class="myoarm_forearm_muscle" tendon="EDM_r_tendon" lengthrange="0.37411497470522215 0.41459397470522213"/>
         <muscle name="EIP_r"  force = "47.3000" range="0.607963 1.375993" fpmax="1.1831" class="myoarm_forearm_muscle" tendon="EIP_r_tendon" lengthrange="0.2267720468223898 0.27200904682238985"/>
-        <muscle name="EPL_r"  force = "88.3000" lmin="0.369000" lmax="1.846000" range="0.419389 1.795889" fpmax="0.0038" class="myoarm_forearm_muscle" tendon="EPL_r_tendon" lengthrange="0.25276700599999996 0.3270980059999999"/>
-        <muscle name="EPB_r"  force = "46.0000" lmin="0.406000" lmax="1.291000" range="0.456178 1.241126" fpmax="0.4315" class="myoarm_forearm_muscle" tendon="EPB_r_tendon" lengthrange="0.14425402081156968 0.19723802081156971"/>
-        <muscle name="FPL_r"  force = "201.0000" lmin="0.419000" lmax="1.548000" range="0.468659 1.497645" fpmax="0.0282" class="myoarm_forearm_muscle" tendon="FPL_r_tendon" lengthrange="0.22286996441156634 0.27966996441156633"/>
-        <muscle name="APL_r"  force = "116.7" class="myoarm_forearm_muscle" tendon="APL_r_tendon" lengthrange="0.20428800000000003 0.22791600000000004"/>
+        <muscle name="EPL_r"  force = "88.3000" lmin="0.369000" lmax="1.846000" range="0.419389 1.795889" fpmax="0.002" class="myoarm_forearm_muscle" tendon="EPL_r_tendon" lengthrange="0.25276700599999996 0.3270980059999999"/>
+        <muscle name="EPB_r"  force = "46.0000" lmin="0.406000" lmax="1.291000" range="0.456178 1.241126" fpmax="0.2784" class="myoarm_forearm_muscle" tendon="EPB_r_tendon" lengthrange="0.1442550208115697 0.19723902081156974"/>
+        <muscle name="FPL_r"  force = "201.0000" lmin="0.419000" lmax="1.548000" range="0.468659 1.497645" fpmax="0.0145" class="myoarm_forearm_muscle" tendon="FPL_r_tendon" lengthrange="0.22286996441156634 0.27966996441156633"/>
+        <muscle name="APL_r"  force = "116.7" fpmax="0.2925" class="myoarm_forearm_muscle" tendon="APL_r_tendon" lengthrange="0.21518800000000002 0.23881600000000003"/>
         <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (OP); do not edit by hand -->
         <!-- OP: force 180 N, MyoHand's value, kept until the intrinsic specific tension is decided (1.02 cm2 x 86.3 N/cm2 would give 88.0 N; 180 N implies 176.5 N/cm2); L_fo 0.0355 m, pennation 4.9 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
-        <muscle name="OP_r" force="180" class="myoarm_forearm_muscle" tendon="OP_r_tendon" lengthrange="0.03235922802347299 0.043009228023472984" fpmax="0.005824"/>
+        <muscle name="OP_r" force="180" class="myoarm_forearm_muscle" tendon="OP_r_tendon" lengthrange="0.03235922802347299 0.043009228023472984" fpmax="0.003392"/>
         <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (OP) -->
         <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (DI1d); do not edit by hand -->
         <!-- DI1d: force 1.5 cm2 x 0.64 (Mirakhorlo 2016 head ratio, n = 1) = 0.96 cm2 x 86.3 N/cm2; L_fo 0.0317 m, pennation 9.2 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
@@ -105,16 +105,16 @@
         <muscle name="ADM_r" force="76.8" class="myoarm_forearm_muscle" tendon="ADM_r_tendon" lengthrange="0.06163965521109094 0.07549965521109094" fpmax="1.3"/>
         <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (ADM) -->
         <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py; do not edit by hand -->
-        <!-- AdPt: force 1.94 cm2 x 1.18 / 3.19 (Stamenkovic 2014 head ratio) = 0.718 cm2 x 86.3 N/cm2; L_fo 0.034 m, pennation 17.3 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
-        <muscle name="AdPt_r" force="62" class="myoarm_forearm_muscle" tendon="AdPt_r_tendon" lengthrange="0.04350785276086189 0.05370785276086189" fpmax="0.695"/>
+        <!-- AdPt: force 1.94 cm2 x 1.18 / 3.19 (Stamenkovic 2014 head ratio) = 0.718 cm2 x 86.3 N/cm2; L_fo 0.0408 m, pennation 17.3 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
+        <muscle name="AdPt_r" force="62" class="myoarm_forearm_muscle" tendon="AdPt_r_tendon" lengthrange="0.04428069432063884 0.05652069432063884" fpmax="0.8926"/>
         <!-- FPBs: force 0.66 cm2 x 0.56 (Mirakhorlo 2016 head ratio, n = 1) = 0.37 cm2 x 86.3 N/cm2; L_fo 0.0415 m, pennation 6.2 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
-        <muscle name="FPBs_r" force="31.9" class="myoarm_forearm_muscle" tendon="FPBs_r_tendon" lengthrange="0.04002289857659641 0.05247289857659641" fpmax="0.02156"/>
+        <muscle name="FPBs_r" force="31.9" class="myoarm_forearm_muscle" tendon="FPBs_r_tendon" lengthrange="0.04002289857659641 0.05247289857659641" fpmax="0.01053"/>
         <!-- APB: force 0.68 cm2 x 86.3 N/cm2; L_fo 0.0416 m, pennation 4.6 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
-        <muscle name="APB_r" force="58.7" class="myoarm_forearm_muscle" tendon="APB_r_tendon" lengthrange="0.03354349645436169 0.04602349645436169" fpmax="0.5571"/>
+        <muscle name="APB_r" force="58.7" class="myoarm_forearm_muscle" tendon="APB_r_tendon" lengthrange="0.03354349645436169 0.04602349645436169" fpmax="0.5376"/>
         <!-- AdPo: force 1.94 cm2 x 2.01 / 3.19 (Stamenkovic 2014 head ratio) = 1.222 cm2 x 86.3 N/cm2; L_fo 0.034 m, pennation 17.3 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
-        <muscle name="AdPo_r" force="105.5" class="myoarm_forearm_muscle" tendon="AdPo_r_tendon" lengthrange="0.04739154390004818 0.057591543900048184" fpmax="0.01169"/>
+        <muscle name="AdPo_r" force="105.5" class="myoarm_forearm_muscle" tendon="AdPo_r_tendon" lengthrange="0.04739154390004818 0.057591543900048184" fpmax="0.006374"/>
         <!-- FPBd: force 0.66 cm2 x 0.44 (Mirakhorlo 2016 head ratio, n = 1) = 0.29 cm2 x 86.3 N/cm2; L_fo 0.0415 m, pennation 6.2 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
-        <muscle name="FPBd_r" force="25" class="myoarm_forearm_muscle" tendon="FPBd_r_tendon" lengthrange="0.04149393617519744 0.053943936175197445" fpmax="0.02833"/>
+        <muscle name="FPBd_r" force="25" class="myoarm_forearm_muscle" tendon="FPBd_r_tendon" lengthrange="0.04149393617519744 0.053943936175197445" fpmax="0.0228"/>
         <!-- DI1s: force 1.5 cm2 x 0.36 (Mirakhorlo 2016 head ratio, n = 1) = 0.54 cm2 x 86.3 N/cm2; L_fo 0.0317 m, pennation 9.2 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->
         <muscle name="DI1s_r" force="46.6" class="myoarm_forearm_muscle" tendon="DI1s_r_tendon" lengthrange="0.05828263978441171 0.06779263978441172" fpmax="1.3"/>
         <!-- FDM: force 0.54 cm2 x 86.3 N/cm2; L_fo 0.0406 m, pennation 3.6 deg (Jacobson et al. 1992); lengthrange from the rigid-tendon slack length of Barry et al. 2018 Eq. 1 -->

@@ -1,4 +1,4 @@
-# Extrinsic hand muscles: juncturae, FCU, FDS5, EDC2 wrap
+# Extrinsic hand muscles: juncturae, FCU, FDS5, EDC2 wrap, APL at the thumb CMC
 
 Revisions of the extrinsic hand muscles from the hand rebuild (S7, and the EDC2 wrist wrap after it). Data, sources and fit results are in
 `myo_sim/build/data/extrinsic_muscles.json`; `scripts/generate_extrinsic_muscles.py` writes them into the
@@ -155,6 +155,34 @@ spans the wrist only. EDC2's wrist arms now lie with EDC3's and EDC4's (24-25 mm
 The other side sites inside a wrap geom keep the inside wrap and the CPU-warp difference (same 512
 postures: PQ 1.40, ECRL 1.01, EDC5 0.72, EDM 0.65, EDC4 0.36, ECRB 0.16, FCR 0.07 mm; the deltoid and
 pectoral heads up to 3.3 mm); ECU's belongs to the forearm-rotation revision.
+
+## APL at the thumb CMC (S2c; FPL tried, not adopted)
+
+Barry et al. 2018's OpenSim model of the index finger and thumb (2020 revision on
+simtk.org/projects/thumbindexdynam, MIT Use Agreement, `build/data/LICENSE-Barry2018.txt`) uses MyoHand's
+bone meshes and body frames, so its path points apply in MyoHand's bodies unchanged (`thumb_extrinsics`
+in the data file).
+
+- **APL:** from its MC1-base via point `APL-P6_r` over a cylinder on the trapezium (`APL_cmc_wrap_r`) to
+  Barry's insertion on the MC1 base (`APL-P7_r`; `APL-P8_r` removed). MuJoCo has no ellipsoid wrap, so the
+  cylinder takes the centre and orientation of Barry's `THM_CMC1_APL` ellipsoid and its 6 mm semi-axis as
+  radius; Barry's trapezium point lies inside it and is not used. The side site sits two radii from the
+  axis, in the middle of the band of side directions (180-270 deg about the cylinder's axis) over which the
+  tendon wraps at every Smutz posture. The forearm and wrist part of the path is unchanged (wrist arms
+  unchanged). APL was a weak CMC flexor; it is now an extensor and abductor.
+- **FPL (not adopted):** Barry's trapezium point and first MC1 point raise FPL's CMC flexion arm from 4.2
+  to 14.3 mm (Smutz 14.3 ± 4.0; RMS z 2.50 -> 1.70), but the lateral pinch then has no solution within its
+  off-axis limit (best 3.6 N at 14 times the limit); the trapezium point alone (13.8 mm) fails the same way.
+  FPL keeps MyoHand's path (open check in `hand-literature-comparison.md`).
+
+| At Smutz et al. 1998's neutral (mm; + = flexor / adductor) | Before | After | Smutz 1998 (mean ± SD) |
+| --- | --- | --- | --- |
+| APL CMC flexion / CMC abduction | 1.4 / -2.6 | -7.1 / -11.3 | -7.1 ± 3.4 / -10.5 ± 3.3 |
+| APL RMS z (3 postures per joint) | 2.34 | 0.71 | 0 |
+| FPL CMC flexion / CMC abduction / MP flexion (unchanged) | 4.2 / -1.7 / 7.1 | 4.2 / -1.7 / 7.1 | 14.3 ± 4.0 / -0.2 ± 4.9 / 13.6 ± 2.2 |
+
+Barry's adductor-pollicis transverse-head insertion is used too (`passive-moments-and-thenar.md`); his
+oblique-head path is not (it makes the lateral pinch infeasible).
 
 ## Refits
 

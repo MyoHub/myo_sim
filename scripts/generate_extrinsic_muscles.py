@@ -13,6 +13,10 @@
 - **FDS5:** its force.
 - **EDC2 wrap side:** the side site of EDC2's wrist wrap (``edc2_wrap_side``), moved from the sphere's centre
   (inside wrap) to its dorsal side (ordinary side wrap).
+- **APL at the thumb CMC** (``thumb_extrinsics``): APL's MC1-base insertion from Barry et al. 2018 (site ``pos``
+  in the chain) over a cylinder on the trapezium (``APL_cmc_wrap_r`` and its side site in the chain block
+  ``thumb trapezium``) with the centre and orientation of Barry's ``THM_CMC1_APL`` ellipsoid (MuJoCo has no
+  ellipsoid wrap).
 
 ``--fit`` refits the FCU pisiform site to Horii 1993 and the junctura stiffness to von Schroeder & Botte
 1993 (``juncturae.fit``) and records both in the table.
@@ -168,12 +172,18 @@ def link_rest_lengths(table: dict[str, Any]) -> None:
 
 
 def chain_with_site(text: str, name: str, position: list[float]) -> str:
-    """Rewrite the ``pos`` of the one chain site *name*."""
-    tags = re.findall(rf'<site\b[^>]*\bname="{re.escape(name)}"[^>]*/>', text)
-    if len(tags) != 1:
+    """Rewrite the ``pos`` of the one chain site *name* (commented-out copies are left alone)."""
+    comments = [m.span() for m in re.finditer(r"<!--.*?-->", text, re.S)]
+    found = [
+        m
+        for m in re.finditer(rf'<site\b[^>]*\bname="{re.escape(name)}"[^>]*/>', text)
+        if not any(a <= m.start() < b for a, b in comments)
+    ]
+    if len(found) != 1:
         raise ValueError(f"expected one site {name}")
+    m = found[0]
     pos = " ".join(_number(v) for v in position)
-    return text.replace(tags[0], re.sub(r'\spos="[^"]*"', f' pos="{pos}"', tags[0]))
+    return text[: m.start()] + re.sub(r'\spos="[^"]*"', f' pos="{pos}"', m.group(0)) + text[m.end() :]
 
 
 def edc2_wrap_side(table: dict[str, Any]) -> None:
@@ -187,6 +197,38 @@ def edc2_wrap_side(table: dict[str, Any]) -> None:
     direction = np.asarray(side["direction_body"], float)
     pos = centre + side["distance_radii"] * radius * direction / np.linalg.norm(direction)
     side["pos"] = [round(float(v), 6) for v in pos]
+
+
+def apl_wrap(table: dict[str, Any]) -> tuple[list[float], list[float]]:
+    """Quaternion (w x y z) of the APL cylinder and position of its side site, both in ``trapezium_r``.
+
+    The orientation is Barry's body-fixed x-y-z rotation; the side site lies ``distance_radii`` radii from the
+    axis, at ``side_angle_deg`` from the cylinder's local x axis about its z axis (outside the cylinder).
+    """
+    w = table["thumb_extrinsics"]["apl_wrap"]
+    quat = np.zeros(4)
+    mujoco.mju_euler2Quat(quat, np.asarray(w["euler_xyz_body_rad"], float), "xyz")
+    rot = np.zeros(9)
+    mujoco.mju_quat2Mat(rot, quat)
+    rot = rot.reshape(3, 3)
+    angle = np.radians(w["side_angle_deg"]["value"])
+    offset = w["distance_radii"] * w["radius_m"]["value"] * (np.cos(angle) * rot[:, 0] + np.sin(angle) * rot[:, 1])
+    side = np.asarray(w["pos"], float) + offset
+    return [round(float(v), 6) for v in quat], [round(float(v), 6) for v in side]
+
+
+def thumb_block(table: dict[str, Any]) -> str:
+    """Generated chain block ``thumb trapezium``: the APL cylinder and its side site."""
+    w = table["thumb_extrinsics"]["apl_wrap"]
+    quat, side = apl_wrap(table)
+    ind = " " * 52
+    return (
+        f"{ind}<!-- APL cylinder over the thumb CMC (after Barry et al. 2018, MIT, build/data/LICENSE-Barry2018.txt);"
+        " extrinsic_muscles.json -->\n"
+        f'{ind}<geom name="{w["geom"]}" type="cylinder" size="{_number(w["radius_m"]["value"])} {_number(w["half_length_m"])}"'
+        f' pos="{" ".join(_number(v) for v in w["pos"])}" quat="{" ".join(_number(v) for v in quat)}" class="myoarm_wrap"/>\n'
+        f'{ind}<site name="{w["side_site"]}" pos="{" ".join(_number(v) for v in side)}"/>\n'
+    )
 
 
 def fcu_block(table: dict[str, Any]) -> str:
@@ -229,8 +271,11 @@ def write_xml(table: dict[str, Any]) -> None:
     for name, node in table["juncturae"]["nodes"].items():
         write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, chain_node_block(name, node), "", f"node {name}")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, fcu_block(table), "", "FCU hamate")
+    write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, thumb_block(table), "", "thumb trapezium")
     chain = chain_with_site(RIGHT_ARM_CHAIN_XML.read_text(), "FCU-P4_r", table["fcu"]["sites"]["FCU-P4_r"]["pos"])
     chain = chain_with_site(chain, table["edc2_wrap_side"]["site"], table["edc2_wrap_side"]["pos"])
+    for name, site in table["thumb_extrinsics"]["sites"].items():
+        chain = chain_with_site(chain, name, site["pos"])
     RIGHT_ARM_CHAIN_XML.write_text(chain)
     write_generated_block(RIGHT_ARM_ASSETS_XML, SCRIPT, equality_block(table), "", "juncturae ties")
     write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table), "</tendon>")

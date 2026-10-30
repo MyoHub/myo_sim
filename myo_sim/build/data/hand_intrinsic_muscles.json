@@ -11,8 +11,9 @@
     "barry2018": {
       "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
       "doi": "10.1016/j.jbiomech.2018.06.017",
-      "access": "OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)",
-      "note": "Eq. (1): tendon slack length = (L_MT with all crossed joints at 0 - L_fo cos(alpha)) / 1.033."
+      "access": "OpenSim model on simtk.org/projects/thumbindexdynam, file Finger_Thumb_Model_05032020.osim (2020 revision); bone meshes and body frames identical to MyoHand's, so its path points apply in MyoHand's body frames unchanged",
+      "note": "Eq. (1): tendon slack length = (L_MT with all crossed joints at 0 - L_fo cos(alpha)) / 1.033.",
+      "licence": "MIT Use Agreement of the SimTK project; text in myo_sim/build/data/LICENSE-Barry2018.txt"
     },
     "jacobson1992": {
       "citation": "Jacobson MD, Raab R, Fazeli BM, Abrams RA, Botte MJ, Lieber RL. Architectural design of the human intrinsic hand muscles. J Hand Surg Am 17(5):804-809, 1992.",
@@ -271,7 +272,7 @@
         }
       },
       "fpmax": {
-        "value": 0.005824,
+        "value": 0.003392,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -285,9 +286,9 @@
         {
           "body": "thirdmc_r",
           "pos": [
-            -0.002311,
-            -0.000437,
-            -0.005792
+            -0.002266,
+            -0.002354,
+            -0.00603
           ],
           "start": {
             "pos": [
@@ -301,17 +302,25 @@
         {
           "body": "proximal_thumb_r",
           "pos": [
-            5e-06,
-            -0.002577,
-            -0.003501
+            0.001027,
+            -0.008384,
+            -0.005311
           ],
           "start": {
             "pos": [
-              -0.0037,
-              -0.0086,
-              -0.0026
+              0.0,
+              -0.01,
+              -0.005
             ],
-            "source": "mirakhorlo2016"
+            "source": "barry2018",
+            "before": {
+              "pos": [
+                -0.0037,
+                -0.0086,
+                -0.0026
+              ],
+              "source": "mirakhorlo2016"
+            }
           }
         }
       ],
@@ -329,9 +338,11 @@
         "derivation": "1.94 cm2 x 1.18 / 3.19 (Stamenkovic 2014 head ratio) = 0.718 cm2 x 86.3 N/cm2"
       },
       "optimal_fiber_length_m": {
-        "value": 0.034,
+        "value": 0.0408,
         "scales_with": "length",
-        "reference_segment": "hand"
+        "reference_segment": "hand",
+        "source": "mirakhorlo2016",
+        "derivation": "Mirakhorlo 2016 Table 2, transverse head (n = 1). Jacobson 1992's 34 mm (whole adductor) puts Barry's insertion outside the fibre-length window (1.6 L_fo over the full ranges): the fit then pulls the insertion back 6 mm and the MP flexion arm to 4.1 mm; with 40.8 mm the insertion stays within 2 mm of Barry's point"
       },
       "pennation_deg": {
         "value": 17.3,
@@ -348,32 +359,32 @@
         "group": "AdPt",
         "result": {
           "site_shift_mm": [
-            2.99,
-            7.13
+            1.06,
+            1.94
           ],
           "fibre_length_measurement_box": [
-            0.564,
-            1.394
+            0.524,
+            1.379
           ],
           "fibre_length_full_range": [
-            0.101,
+            0.115,
             1.6
           ],
           "reference_mm": {
             "cmc_flexion_r": [
-              20.23,
-              19.35,
-              15.97
+              22.08,
+              21.62,
+              18.31
             ],
             "cmc_abduction_r": [
-              12.04,
-              16.82,
-              21.07
+              13.94,
+              18.94,
+              23.33
             ],
             "mp_flexion_r": [
-              2.47,
-              2.57,
-              2.18
+              6.44,
+              6.92,
+              6.78
             ]
           }
         },
@@ -436,7 +447,7 @@
             ]
           }
         },
-        "note": "Not fitted to Smutz 1998: with MyoHand's thumb CMC axes no site shift reproduces the Smutz adduction trend (model arms grow toward adduction, Smutz's shrink), and fitting the AdP heads to the Smutz flexion arms trades away their adduction arm, after which the lateral pinch of the hand-function validation has no solution within its off-axis limit (relaxed: 20.5 N at 1.9 x off-axis). The heads keep the registered Mirakhorlo 2016 paths, moved only as far as the fibre-length window requires; the Smutz values are reported in fit.result.reference_mm."
+        "note": "Not fitted to Smutz 1998: with MyoHand's thumb CMC axes no site shift reproduces the Smutz adduction trend (model arms grow toward adduction, Smutz's shrink), and fitting the AdP heads to the Smutz flexion arms trades away their adduction arm, after which the lateral pinch of the hand-function validation has no solution within its off-axis limit (relaxed: 20.5 N at 1.9 x off-axis). The heads keep the registered Mirakhorlo 2016 paths, moved only as far as the fibre-length window requires; the Smutz values are reported in fit.result.reference_mm. The insertion starts at Barry et al. 2018's point on the proximal phalanx (7 mm distal of Mirakhorlo's), with Mirakhorlo's transverse-head fibre length: the MP flexion arm rises from 2.6 to about 7 mm (Smutz 9.7 +- 5.2); Barry's AdPo path is not used (it makes the lateral pinch infeasible)."
       },
       "mirakhorlo2016_table2": {
         "optimal_fiber_length_mm": 40.8,
@@ -444,7 +455,7 @@
         "pcsa_cm2": 0.533
       },
       "fpmax": {
-        "value": 0.695,
+        "value": 0.8926,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -666,7 +677,7 @@
         }
       },
       "fpmax": {
-        "value": 0.02156,
+        "value": 0.01053,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -860,7 +871,7 @@
         }
       },
       "fpmax": {
-        "value": 0.5571,
+        "value": 0.5376,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1029,7 +1040,7 @@
         "pcsa_cm2": 1.293
       },
       "fpmax": {
-        "value": 0.01169,
+        "value": 0.006374,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1150,7 +1161,7 @@
         }
       },
       "fpmax": {
-        "value": 0.02833,
+        "value": 0.0228,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -3491,8 +3502,8 @@
     "fpmax_reference": 1.3,
     "penalty": 1.0,
     "result": {
-      "cost_before": 108783.019,
-      "cost_after": 6273.693
+      "cost_before": 98872.876,
+      "cost_after": 5906.652
     }
   },
   "lumbrical_nodes": {

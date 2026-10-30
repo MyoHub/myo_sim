@@ -213,7 +213,8 @@ def cmc45(model: mujoco.MjModel) -> dict[str, Any]:
 
 
 def intrinsic_moment_arms(model: mujoco.MjModel) -> dict[str, Any]:
-    """Thumb intrinsic moment arms at the Smutz 1998 neutral and the first dorsal interosseous at MCP2 (mm)."""
+    """Thumb intrinsic moment arms (and FPL's and APL's) at the Smutz 1998 neutral and the first dorsal interosseous at
+    MCP2 (mm)."""
     out: dict[str, Any] = {}
     names = {model.actuator(i).name for i in range(model.nu)}
     if "AdPt_r" not in names:
@@ -229,6 +230,8 @@ def intrinsic_moment_arms(model: mujoco.MjModel) -> dict[str, Any]:
         (force["FPBs"] * heads["FPBs"] + force["FPBd"] * heads["FPBd"]) / (force["FPBs"] + force["FPBd"])
     )
     out["apb_moment_arms"] = _arms(model, "APB_r_tendon", neutral, thumb)
+    out["fpl_moment_arms"] = _arms(model, "FPL_r_tendon", neutral, thumb)
+    out["apl_moment_arms"] = _arms(model, "APL_r_tendon", neutral, thumb[:2])
     di1 = []
     for joint, degs in (("mcp2_flexion_r", np.linspace(0.0, 90.0, 10)), ("mcp2_abduction_r", np.linspace(-15.0, 15.0, 7))):
         mean = {

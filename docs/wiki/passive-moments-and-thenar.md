@@ -226,7 +226,7 @@ passive scales first.
 | Muscle | Replaces | PCSA (cm2) | Peak force (N) | L_fo (mm) | Pennation (deg) | Sites from | Fitted to |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | OP | OP | 1.02 | 180 (MyoHand's, see below) | 35.5 | 4.9 | MyoHand | Smutz 1998 |
-| AdPt (transverse head) | AdP | 0.718 | 62.0 | 34.0 | 17.3 | Mirakhorlo 2016 | (reported only) |
+| AdPt (transverse head) | AdP | 0.718 | 62.0 | 40.8 (Mirakhorlo 2016) | 17.3 | Mirakhorlo 2016, insertion Barry 2018 | (reported only) |
 | AdPo (oblique head) | – | 1.222 | 105.5 | 34.0 | 17.3 | Mirakhorlo 2016 | (reported only) |
 | FPBs (superficial head) | FPB | 0.37 | 31.9 | 41.5 | 6.2 | Mirakhorlo 2016, MUSIC | Smutz 1998 (both heads) |
 | FPBd (deep head) | – | 0.29 | 25.0 | 41.5 | 6.2 | Mirakhorlo 2016 | Smutz 1998 (both heads) |
@@ -276,6 +276,14 @@ passive scales first.
   lateral pinch has no solution within its off-axis limit, so they keep their registered
   paths (moved only by the fibre-length constraint) and report Smutz's values instead
   (`fit.reference`): CMC flexion 19.4 / 14.7 mm against 36.9 / 27.0 mm.
+- **AdPt insertion (step S2c):** the transverse head's insertion starts at Barry et al. 2018's point on
+  the proximal phalanx, 7 mm distal of Mirakhorlo's (Barry's model uses MyoHand's bone frames; MIT,
+  `LICENSE-Barry2018.txt`), with Mirakhorlo's transverse-head fibre length (40.8 mm). With Jacobson's 34 mm
+  the fibre-length window (1.6 L_fo over the full ranges) pulls the insertion back 6 mm and the MP flexion
+  arm to 4.1 mm; with 40.8 mm the insertion stays within 2 mm of Barry's point and the arms at Smutz's
+  neutral are CMC flexion / abduction / MP flexion 21.6 / 18.9 / 6.9 mm (before 19.4 / 16.8 / 2.6; Smutz
+  36.9 ± 5.8 / 20.6 ± 15.4 / 9.7 ± 5.2). Barry's oblique-head path makes the lateral pinch infeasible (as
+  the S2 fit did) and is not used.
 - **Passive scale** (`passive_fit`): `fpmax` of every row that crosses the thumb is fitted
   with the extrinsic muscles' one-sided loss (`fit_muscle_passive.py`) to the measured
   passive totals of the thumb CMC and MP rows; then the springs are refitted. OP, AdPo and
@@ -366,4 +374,6 @@ Biomech 77:206), Jacobson et al. 1992 (J Hand Surg Am 17:804), Stamenkovic et al
 (Clinical Mechanics of the Hand), Salsbury 1937 (J Anat 71:395), Binder-Markey et al. 2021 (Front Neurol 12:687624; range-of-motion
 data for validation), McFarland et al. 2023 (IEEE TBME 70:1424; cited for its approach
 only: the ARMS model is non-commercial and nothing is taken from it). MUSIC's site
-coordinates are used under its MIT licence.
+coordinates are used under its MIT licence; Barry et al. 2018's path points (AdPt insertion; APL at the
+CMC, `hand-extrinsic-muscles.md`) under the SimTK project's MIT Use Agreement
+(`LICENSE-Barry2018.txt`).

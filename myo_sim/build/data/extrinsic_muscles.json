@@ -33,6 +33,15 @@
     "garciaelias1991b": {
       "citation": "Garcia-Elias M, An KN, Berglund LJ, Linscheid RL, Cooney WP, Chao EYS. Extensor mechanism of the fingers. II. Tensile properties of components. J Hand Surg Am 16(6):1136-1140, 1991. doi:10.1016/S0363-5023(10)80080-2",
       "location": "Table I: structural stiffness of the extensor-mechanism segments, 40-294 N/mm"
+    },
+    "barry2018": {
+      "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018. doi:10.1016/j.jbiomech.2018.06.017",
+      "model": "OpenSim model on simtk.org/projects/thumbindexdynam, file Finger_Thumb_Model_05032020.osim (2020 revision, Hand_model_20201204); its bone meshes and body frames are MyoHand's (identical after registration), so its path points are used in MyoHand's body frames unchanged",
+      "licence": "MIT Use Agreement of the SimTK project; text in myo_sim/build/data/LICENSE-Barry2018.txt"
+    },
+    "smutz1998": {
+      "citation": "Smutz WP, Kongsayreepong A, Hughes RE, Niebur G, Cooney WP, An KN. Mechanical advantage of the thumb muscles. J Biomech 31(6):565-570, 1998. doi:10.1016/s0021-9290(98)00043-8",
+      "location": "Tables 2, 4, 5: thumb MP and CMC moment arms (7 hands); positive = flexor / adductor"
     }
   },
   "juncturae": {
@@ -123,7 +132,7 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 1000.0,
+          "value": 997.8,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.020708
@@ -149,41 +158,41 @@
       "result": {
         "without_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": 0.72,
-            "mcp3_flexion": 13.05,
-            "mcp4_flexion": 70.9,
-            "mcp5_flexion": -0.12
+            "mcp2_flexion": 0.69,
+            "mcp3_flexion": 13.22,
+            "mcp4_flexion": 70.81,
+            "mcp5_flexion": -0.16
           },
           "EDC3_traction": {
-            "mcp2_flexion": 0.03,
-            "mcp3_flexion": 67.49,
-            "mcp4_flexion": 2.64,
-            "mcp5_flexion": 0.04
+            "mcp2_flexion": 0.02,
+            "mcp3_flexion": 67.44,
+            "mcp4_flexion": 2.82,
+            "mcp5_flexion": -0.01
           }
         },
         "with_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": 1.77,
-            "mcp3_flexion": 30.07,
-            "mcp4_flexion": 70.69,
-            "mcp5_flexion": 21.46
+            "mcp2_flexion": 1.5,
+            "mcp3_flexion": 30.76,
+            "mcp4_flexion": 70.6,
+            "mcp5_flexion": 21.83
           },
           "EDC3_traction": {
-            "mcp2_flexion": 0.03,
-            "mcp3_flexion": 67.49,
-            "mcp4_flexion": 2.64,
-            "mcp5_flexion": 0.04
+            "mcp2_flexion": 0.02,
+            "mcp3_flexion": 67.44,
+            "mcp4_flexion": 2.82,
+            "mcp5_flexion": -0.01
           }
         },
         "residual_deg": [
-          -0.98,
-          -0.42,
+          -0.46,
+          -0.01,
           -0.21,
           -8.0,
           -7.0,
           0.0
         ],
-        "rms_deg": 4.36
+        "rms_deg": 4.34
       },
       "own_finger_note": "mcp4 under EDC4 traction and mcp3 under EDC3 traction: target 0 deg change from the links (the pulled finger's own extension is the same with and without the juncturae: traction on one tendon or on all gave the same result, p. 643)",
       "stiffness_bounds_N_per_m": {
@@ -307,5 +316,58 @@
       -0.0149,
       0.0281
     ]
+  },
+  "thumb_extrinsics": {
+    "method": "APL crosses the thumb CMC on Barry et al. 2018's routing (their path points in MyoHand's identical bone frames); the forearm and wrist part of the path is unchanged: from its MC1-base via point APL-P6_r over a cylinder on the trapezium to Barry's insertion on the MC1 base (APL-P7_r, moved; APL-P8_r removed). The cylinder replaces Barry's THM_CMC1_APL ellipsoid (MuJoCo has no ellipsoid wrap): Barry's centre and orientation, radius = the ellipsoid's 6 mm semi-axis; Barry's trapezium point of APL lies inside it and is not used. Moment arms against Smutz et al. 1998 at their neutral (mid-point of the CMC ranges, MP 0).",
+    "sources": [
+      "barry2018",
+      "smutz1998"
+    ],
+    "sites": {
+      "APL-P7_r": {
+        "body": "firstmc_r",
+        "pos": [
+          0.013,
+          0.0,
+          -0.002
+        ],
+        "pos_before": [
+          0.0063,
+          0.0032,
+          -0.0059
+        ],
+        "source": "barry2018",
+        "note": "Barry's APL insertion on the MC1 base (was a via point before APL-P8_r)"
+      }
+    },
+    "apl_wrap": {
+      "geom": "APL_cmc_wrap_r",
+      "body": "trapezium_r",
+      "pos": [
+        0.006,
+        0.007,
+        0.005
+      ],
+      "euler_xyz_body_rad": [
+        -2.1,
+        0.36,
+        0.6
+      ],
+      "source": "barry2018 (THM_CMC1_APL: translation and body-fixed x-y-z rotation in the trapezium; semi-axes 6 / 3.5 / 14 mm)",
+      "radius_m": {
+        "value": 0.006,
+        "method": "the ellipsoid's larger cross-section semi-axis; 3.5-8 mm give the same arms within 0.6 mm"
+      },
+      "half_length_m": 0.014,
+      "side_site": "APL_cmc_site_APL_side_r",
+      "side_angle_deg": {
+        "value": 225.0,
+        "method": "middle of the band of side directions (180-270 deg from the cylinder's x axis) over which the tendon wraps the cylinder at every Smutz posture; outside the cylinder"
+      },
+      "distance_radii": 2.0
+    },
+    "not_adopted": {
+      "FPL": "Barry's FPL CMC routing (trapezium point and first MC1 point) raises FPL's CMC flexion arm at Smutz's neutral from 4.2 to 14.3 mm (Smutz 14.3 +- 4.0; RMS z 2.50 -> 1.70), but the lateral pinch then has no solution within its off-axis limit (best 3.6 N at 14x the limit); the trapezium point alone (13.8 mm) gives the same. Not adopted."
+    }
   }
 }

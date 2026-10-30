@@ -350,16 +350,18 @@ def _tendon_geometry(model: mujoco.MjModel, tendon: str, joints: tuple[str, ...]
 
 
 def test_intrinsic_muscles_follow_jacobson_and_share_the_forearm_class() -> None:
-    model = myo_sim.load_spec("myotorso_arms").compile()
+    spec = myo_sim.load_spec("myotorso_arms")
+    model = spec.compile()
     table = load_intrinsic_table()
     reference = model.actuator(f"{table['template_muscle']}_r").id
+    class_fpmax = spec.find_default("myoarm_forearm_muscle").actuator.gainprm[7]  # the template's own is fitted (S2c)
     data = mujoco.MjData(model)
     data.qpos[:] = 0.0
     mujoco.mj_forward(model, data)
     for muscle in table["muscles"]:
         act = model.actuator(muscle["name"] + "_r").id
         assert model.actuator_gainprm[act][2] == pytest.approx(muscle["force_N"]["value"])
-        fpmax = muscle["fpmax"]["value"] if "fpmax" in muscle else model.actuator_gainprm[reference][7]
+        fpmax = muscle["fpmax"]["value"] if "fpmax" in muscle else class_fpmax
         assert model.actuator_gainprm[act][7] == pytest.approx(fpmax)
         np.testing.assert_array_equal(
             np.delete(model.actuator_gainprm[act][:9], [2, 7]), np.delete(model.actuator_gainprm[reference][:9], [2, 7])

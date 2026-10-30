@@ -35,6 +35,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 
 ## Changelog
 
+**2026-10-30** — S2c: AdPt's insertion and APL's CMC routing (new trapezium cylinder `APL_cmc_wrap_r`, `APL-P8_r` removed) from Barry et al. 2018 (MIT, `build/data/LICENSE-Barry2018.txt`); thumb and extrinsic passive parameters, junctura links and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
+
 **2026-10-30** — Junctura node ties of JT3 and JT5: the tie helpers `node_JT{3,4,5}_edc_r` start at `EDC{d}-P4_r`, so the nodes move with their tendon over the MCP wrap (they moved 6-11 mm too far at MCP 90 deg); the unused sites `node_JT{d}_ref_r` are removed; junctura links (now slack with straight fingers too), extrinsic passive parameters and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
 
 **2026-10-30** — EDC2 wrist wrap: side site `EDCI_torus_site_EDC2_side_r` moved from the centre of its sphere (inside wrap) to its dorsal side (ordinary wrap; MuJoCo and mujoco-warp now agree on EDC2's length); extrinsic passive parameters, junctura links and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
