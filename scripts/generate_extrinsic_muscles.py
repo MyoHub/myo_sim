@@ -11,8 +11,9 @@
   ``FCU-P5_r`` (chain block ``FCU hamate``); FCU's ``lengthrange`` is shifted by its length change at q0,
   so its normalised fibre length at q0 is unchanged.
 - **FDS5:** its force.
-- **EDC2 wrap side:** the side site of EDC2's wrist wrap (``edc2_wrap_side``), moved from the sphere's centre
-  (inside wrap) to its dorsal side (ordinary side wrap).
+- **Wrap sides** (``wrap_sides``): the side sites of EDC2's, EDC4's, EDC5's, EDM's, ECRB's and FCR's wrist
+  wraps and of PQ's ulnar wrap, moved from inside their geoms (inside wrap) to outside (ordinary side wrap), and
+  where tabled the geom's centre and radius.
 - **APL at the thumb CMC** (``thumb_extrinsics``): APL's MC1-base insertion from Barry et al. 2018 (site ``pos``
   in the chain) over a cylinder on the trapezium (``APL_cmc_wrap_r`` and its side site in the chain block
   ``thumb trapezium``) with the centre and orientation of Barry's ``THM_CMC1_APL`` ellipsoid (MuJoCo has no
@@ -186,17 +187,38 @@ def chain_with_site(text: str, name: str, position: list[float]) -> str:
     return text[: m.start()] + re.sub(r'\spos="[^"]*"', f' pos="{pos}"', m.group(0)) + text[m.end() :]
 
 
-def edc2_wrap_side(table: dict[str, Any]) -> None:
-    """EDC2's wrap side site: ``distance_radii`` sphere radii from the sphere centre along ``direction_body``."""
-    side = table["edc2_wrap_side"]
-    tags = re.findall(rf'<geom\b[^>]*\bname="{re.escape(side["geom"])}"[^>]*/>', RIGHT_ARM_CHAIN_XML.read_text())
+def _geom_tag(text: str, name: str) -> str:
+    tags = re.findall(rf'<geom\b[^>]*\bname="{re.escape(name)}"[^>]*/>', text)
     if len(tags) != 1:
-        raise ValueError(f"expected one geom {side['geom']}")
-    centre = np.array([float(v) for v in re.search(r'\spos="([^"]*)"', tags[0]).group(1).split()])
-    radius = float(re.search(r'\ssize="([^"]*)"', tags[0]).group(1).split()[0])
-    direction = np.asarray(side["direction_body"], float)
-    pos = centre + side["distance_radii"] * radius * direction / np.linalg.norm(direction)
-    side["pos"] = [round(float(v), 6) for v in pos]
+        raise ValueError(f"expected one geom {name}")
+    return tags[0]
+
+
+def wrap_sides(table: dict[str, Any]) -> None:
+    """Side site of each tabled wrap: ``distance_radii`` radii from the geom's centre along ``direction_body``
+    (the geom's tabled centre and radius where given, else the chain's)."""
+    text = RIGHT_ARM_CHAIN_XML.read_text()
+    for side in table["wrap_sides"]["muscles"].values():
+        tag = _geom_tag(text, side["geom"])
+        centre = side.get("geom_pos") or [float(v) for v in re.search(r'\spos="([^"]*)"', tag).group(1).split()]
+        radius = side.get("radius_m") or float(re.search(r'\ssize="([^"]*)"', tag).group(1).split()[0])
+        direction = np.asarray(side["direction_body"], float)
+        pos = np.asarray(centre, float) + side["distance_radii"] * radius * direction / np.linalg.norm(direction)
+        side["pos"] = [round(float(v), 6) for v in pos]
+
+
+def chain_with_wrap_sides(text: str, table: dict[str, Any]) -> str:
+    """Side-site positions and, where tabled, the geoms' centres and radii (other attributes kept)."""
+    for side in table["wrap_sides"]["muscles"].values():
+        text = chain_with_site(text, side["site"], side["pos"])
+        if "geom_pos" in side:
+            tag = _geom_tag(text, side["geom"])
+            size = re.search(r'\ssize="([^"]*)"', tag).group(1).split()
+            size[0] = _number(side["radius_m"])
+            new = re.sub(r'\spos="[^"]*"', f' pos="{" ".join(_number(v) for v in side["geom_pos"])}"', tag)
+            new = re.sub(r'\ssize="[^"]*"', f' size="{" ".join(size)}"', new)
+            text = text.replace(tag, new)
+    return text
 
 
 def apl_wrap(table: dict[str, Any]) -> tuple[list[float], list[float]]:
@@ -273,7 +295,7 @@ def write_xml(table: dict[str, Any]) -> None:
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, fcu_block(table), "", "FCU hamate")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, thumb_block(table), "", "thumb trapezium")
     chain = chain_with_site(RIGHT_ARM_CHAIN_XML.read_text(), "FCU-P4_r", table["fcu"]["sites"]["FCU-P4_r"]["pos"])
-    chain = chain_with_site(chain, table["edc2_wrap_side"]["site"], table["edc2_wrap_side"]["pos"])
+    chain = chain_with_wrap_sides(chain, table)
     for name, site in table["thumb_extrinsics"]["sites"].items():
         chain = chain_with_site(chain, name, site["pos"])
     RIGHT_ARM_CHAIN_XML.write_text(chain)
@@ -434,7 +456,7 @@ def main() -> None:
     args = parser.parse_args()
     table = load_table()
     fds5_force(table)
-    edc2_wrap_side(table)
+    wrap_sides(table)
     if args.fit:
         for link in table["juncturae"]["links"].values():
             link.setdefault("stiffness_N_per_m", {"value": 300.0, "method": "start"})

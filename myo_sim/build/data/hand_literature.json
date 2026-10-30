@@ -1258,6 +1258,93 @@
           "protocol": "Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 4, 5)"
         }
       ]
+    },
+    "ecrl_moment_arms": {
+      "label": "ECRL moment arm at wrist neutral, extension (+) / ulnar deviation (+)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            7,
+            -19
+          ],
+          "spread": [
+            2,
+            2
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "horii1993",
+          "protocol": "Table II (n = 7), forearm neutral; model: dL/dq"
+        },
+        {
+          "value": [
+            10.0,
+            -23.0
+          ],
+          "kind": "cadaver",
+          "source": "loren1996",
+          "protocol": "appendix, moment-arm polynomials at 0 deg, forearm neutral"
+        }
+      ]
+    },
+    "ecrb_moment_arms": {
+      "label": "ECRB moment arm at wrist neutral, extension (+) / ulnar deviation (+)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            12,
+            -13
+          ],
+          "spread": [
+            2,
+            2
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "horii1993",
+          "protocol": "Table II (n = 7), forearm neutral; model: dL/dq"
+        },
+        {
+          "value": [
+            16.0,
+            -16.0
+          ],
+          "kind": "cadaver",
+          "source": "loren1996",
+          "protocol": "appendix, moment-arm polynomials at 0 deg, forearm neutral"
+        }
+      ]
+    },
+    "fcr_moment_arms": {
+      "label": "FCR moment arm at wrist neutral, extension (+) / ulnar deviation (+)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            -15,
+            -8
+          ],
+          "spread": [
+            3,
+            2
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver",
+          "source": "horii1993",
+          "protocol": "Table II (n = 7), forearm neutral; model: dL/dq"
+        },
+        {
+          "value": [
+            -15.0,
+            -5.7
+          ],
+          "kind": "cadaver",
+          "source": "loren1996",
+          "protocol": "appendix, moment-arm polynomials at 0 deg, forearm neutral"
+        }
+      ]
     }
   },
   "steps": [
@@ -5464,6 +5551,468 @@
         "Not adopted: Barry's FPL CMC routing (trapezium point and first MC1 point; CMC flexion arm 14.3 mm, RMS z 2.50 -> 1.70) and the trapezium point alone (13.8 mm): the lateral pinch has no solution within its off-axis limit (best 3.6 N). Barry's AdPo path likewise (earlier trial).",
         "Refits: thumb passive scales (cost 6274 -> 5907; AdPt 0.69 -> 0.89, APB 0.56 -> 0.54), extrinsic slack lengths and passive scales (joint-fit error 1127 -> 1050, without the release step 722 -> 672; APL slack +7.2 %, fpmax 1.3 -> 0.29; release bound 0.0377 -> 0.0391), junctura links (JT45 1000 -> 997.8 N/m), springs (thumb CMC flexion RMS 0.008 -> 0.015, CMC abduction 0.076 -> 0.081 N m).",
         "Lateral pinch 53.2 -> 67.5 N (in vivo 51.9 +- 20.4 N; off-axis 0.17), now with APL 0.46, OP 0.32 and APB 0.81 active; grip 328.0 -> 330.7 N (middle-finger share 29.6 -> 29.2 %); tenodesis passes. CPU and mujoco-warp agree on APL and AdPt (random wrist and thumb postures). CPU step within noise."
+      ]
+    },
+    {
+      "id": "wrap_sides",
+      "title": "Forearm wrap side sites outside their geoms",
+      "summary": "EDC4, EDC5, EDM, ECRB, FCR (wrist) and PQ (ulna) had their wrap side sites inside the sphere or cylinder (the inside wrap, solved differently by MuJoCo and mujoco-warp). Each side site moves two radii out on the side where the tendon runs (dorsal for the extensors, palmar for FCR and PQ); where the arm curves then jumped or left Horii 1993's bands the geom's centre and radius were refitted (bounded). ECRL keeps its inside wrap. Extrinsic slack lengths and passive scales, junctura links and springs refitted. Before = S2c.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          78.22,
+          66.03,
+          64.57,
+          59.52
+        ],
+        "tenodesis_pip_rom": 13.94,
+        "tenodesis_index_gap": [
+          32.12,
+          7.63
+        ],
+        "tenodesis_release": [
+          78.49,
+          65.44,
+          56.76,
+          30.02
+        ],
+        "grip_self_selected": 338.88,
+        "grip_settled": 263.79,
+        "grip_shares": [
+          30.01,
+          27.3,
+          18.98,
+          23.71
+        ],
+        "grip_posture_change": [
+          -28.58,
+          -60.75
+        ],
+        "lateral_pinch": 67.48,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          21.62,
+          18.94,
+          6.92
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "fpl_moment_arms": [
+          4.18,
+          -1.66,
+          7.12
+        ],
+        "apl_moment_arms": [
+          -7.06,
+          -11.3
+        ],
+        "di1_moment_arms": [
+          4.38,
+          8.06
+        ],
+        "index_abduction_moment": 1.04,
+        "adm_moment_arms": [
+          5.18,
+          9.92
+        ],
+        "little_abduction_moment": 1.0,
+        "hypothenar_cupping": [
+          15.8,
+          32.56
+        ],
+        "pi1_moment_arms": [
+          5.97,
+          5.86
+        ],
+        "lum1_moment_arms": [
+          8.22,
+          4.93
+        ],
+        "di2_moment_arms": [
+          5.47,
+          10.65
+        ],
+        "lum2_moment_arms": [
+          11.38,
+          9.96
+        ],
+        "di3_moment_arms": [
+          4.44,
+          8.79
+        ],
+        "pi2_moment_arms": [
+          3.42,
+          8.2
+        ],
+        "lum3_moment_arms": [
+          6.55,
+          7.65
+        ],
+        "di4_moment_arms": [
+          4.91,
+          7.56
+        ],
+        "pi3_moment_arms": [
+          2.43,
+          8.54
+        ],
+        "lum4_moment_arms": [
+          5.45,
+          8.65
+        ],
+        "index_intrinsic_forces": [
+          129.4,
+          64.7,
+          9.5
+        ],
+        "edc_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "eip_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "lumbrical_ip_moment_arms": [
+          0.7,
+          1.8
+        ],
+        "ui_ip_moment_arms": [
+          1.02,
+          1.87
+        ],
+        "orl_share": [
+          23.72,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intrinsic_plus": [
+          91.07,
+          -0.62,
+          -0.52
+        ],
+        "ip_coupling_slope": [
+          -0.01,
+          0.25,
+          null
+        ],
+        "lumbrical_excursion": [
+          31.93,
+          36.66,
+          36.46,
+          29.56
+        ],
+        "lum1_systemic_mcp_arm": 3.0,
+        "ecrl_moment_arms": [
+          11.66,
+          -23.64
+        ],
+        "ecrb_moment_arms": [
+          14.01,
+          -12.57
+        ],
+        "fcr_moment_arms": [
+          -16.41,
+          -6.41
+        ],
+        "juncturae_ring_traction": [
+          17.67,
+          21.35
+        ],
+        "juncturae_middle_traction": [
+          0.0,
+          0.0
+        ],
+        "fcu_moment_arms": [
+          14.66,
+          12.25
+        ],
+        "ecu_extension_rotation": [
+          7.55,
+          7.55,
+          7.55
+        ],
+        "fds5_force": [
+          46.5,
+          27.16
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.35,
+          "3": 13.3,
+          "4": -0.35,
+          "5": -0.36
+        },
+        "fist_max_penetration": 0.79
+      },
+      "before": {
+        "label": "wrap_sides",
+        "id": "s2c",
+        "values": {
+          "tenodesis_mcp_rom": [
+            78.22,
+            67.87,
+            64.17,
+            58.12
+          ],
+          "tenodesis_pip_rom": 13.91,
+          "tenodesis_index_gap": [
+            31.6,
+            7.65
+          ],
+          "tenodesis_release": [
+            78.49,
+            67.9,
+            57.76,
+            30.51
+          ],
+          "grip_self_selected": 330.67,
+          "grip_settled": 264.11,
+          "grip_shares": [
+            30.33,
+            29.17,
+            18.7,
+            21.8
+          ],
+          "grip_posture_change": [
+            -25.48,
+            -60.27
+          ],
+          "lateral_pinch": 67.47,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "cmc45_arc": [
+            21.0,
+            43.3
+          ],
+          "cmc45_active_flexion": [
+            16.0,
+            33.0
+          ],
+          "cmc45_coupling": 2.06,
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            21.62,
+            18.94,
+            6.92
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "fpl_moment_arms": [
+            4.18,
+            -1.66,
+            7.12
+          ],
+          "apl_moment_arms": [
+            -7.06,
+            -11.3
+          ],
+          "di1_moment_arms": [
+            4.38,
+            8.06
+          ],
+          "index_abduction_moment": 1.04,
+          "adm_moment_arms": [
+            5.18,
+            9.92
+          ],
+          "little_abduction_moment": 1.0,
+          "hypothenar_cupping": [
+            15.77,
+            32.5
+          ],
+          "pi1_moment_arms": [
+            5.97,
+            5.86
+          ],
+          "lum1_moment_arms": [
+            8.22,
+            4.93
+          ],
+          "di2_moment_arms": [
+            5.47,
+            10.65
+          ],
+          "lum2_moment_arms": [
+            11.38,
+            9.96
+          ],
+          "di3_moment_arms": [
+            4.44,
+            8.79
+          ],
+          "pi2_moment_arms": [
+            3.42,
+            8.2
+          ],
+          "lum3_moment_arms": [
+            6.55,
+            7.65
+          ],
+          "di4_moment_arms": [
+            4.91,
+            7.56
+          ],
+          "pi3_moment_arms": [
+            2.43,
+            8.54
+          ],
+          "lum4_moment_arms": [
+            5.45,
+            8.65
+          ],
+          "index_intrinsic_forces": [
+            129.4,
+            64.7,
+            9.5
+          ],
+          "edc_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "eip_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "lumbrical_ip_moment_arms": [
+            0.7,
+            1.8
+          ],
+          "ui_ip_moment_arms": [
+            1.02,
+            1.87
+          ],
+          "orl_share": [
+            23.72,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "intrinsic_plus": [
+            91.07,
+            -0.62,
+            -0.52
+          ],
+          "ip_coupling_slope": [
+            -0.01,
+            0.25,
+            null
+          ],
+          "lumbrical_excursion": [
+            31.93,
+            36.66,
+            36.46,
+            29.56
+          ],
+          "lum1_systemic_mcp_arm": 3.0,
+          "juncturae_ring_traction": [
+            17.62,
+            21.97
+          ],
+          "juncturae_middle_traction": [
+            0.0,
+            0.0
+          ],
+          "fcu_moment_arms": [
+            14.66,
+            12.25
+          ],
+          "ecu_extension_rotation": [
+            7.55,
+            7.55,
+            7.55
+          ],
+          "fds5_force": [
+            46.5,
+            27.16
+          ],
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": -0.15,
+            "3": 12.93,
+            "4": -0.28,
+            "5": -0.36
+          },
+          "fist_max_penetration": 0.79
+        }
+      },
+      "notes": [
+        "Arms at wrist neutral (mm, + = extensor / ulnar deviator): ECRB 15.3 / -14.2 -> 14.0 / -12.6 (Horii 12 +- 2 / -13 +- 2; sphere centre moved 5.2 mm, radius 2.0 -> 1.6 mm); FCR -18.5 / -4.0 -> -16.4 / -6.4 (Horii -15 +- 3 / -8 +- 2; centre 6.7 mm, radius 1.5 -> 1.2 mm); EDC5 extension arm at 60 deg extension / neutral / 60 deg flexion 21.1 / 11.1 / 1.4 -> 21.2 / 15.2 / 5.4 (geometry unchanged); EDC4 24.2 / 17.3 / 5.4 -> 25.4 / 17.8 / 8.0 (sphere 1.0 mm, radius 3.0 -> 2.8 mm); EDM unchanged (cylinder radius 14 -> 23.6 mm reproduces the inside wrap); PQ pronation arm within 1 mm (geometry unchanged). ECRL 11.7 / -23.6 unchanged (Horii 7 / -19, Loren 10 / -23): no outside wrap within the bounds keeps it an extensor beyond 45 deg extension.",
+        "CPU vs mujoco-warp lengths of EDC2, EDC4, EDC5, EDM, ECRB, FCR and PQ within 3e-7 m in 128 random arm postures (before: up to 1.4 mm; side sites back at the geom centres as negative control: 1e-4 to 1.4e-3 m for five of them).",
+        "Refits: extrinsic joint-fit error 1050 -> 866 (without the release step 672 -> 690), release bound 0.0391 -> 0.0261; junctura links at the bound; springs within 0.004 N m. Grip 330.7 -> 338.9 N (middle-finger share 29.2 -> 27.3 %); tenodesis passes; lateral pinch 67.5 N unchanged."
       ]
     }
   ]

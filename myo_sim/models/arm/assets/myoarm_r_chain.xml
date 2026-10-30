@@ -282,7 +282,7 @@
                                     <site name="EIP-P1_r" pos="-0.0039 -0.1665 0.0368"/>
                                     <site name="EIP-P2_r" pos="0.0017 -0.1747 0.0405"/>
                                     <site name="EPL-P1_r" pos="-0.0141 -0.0971 0.0295"/>
-                                    <site name="PQ2_site_PQ_side_r" pos="-0.0012 -0.2092 0.0428"/>
+                                    <site name="PQ2_site_PQ_side_r" pos="0.00082 -0.211535 0.029145"/>
                                     <site name="TRIlong_TRIlong-P5_r" pos="-0.0219 0.01046 -0.00078"/>
                                     <site name="TRIlat_TRIlat-P5_r" pos="-0.0219 0.01046 -0.00078"/>
                                     <site name="TRImed_TRImed-P5_r" pos="-0.0219 0.01046 -0.00078"/>
@@ -386,14 +386,14 @@
                                             <!-- <geom name="PL_ellipsoid_wrap" pos="0.0170362 -0.0128706 0.0101738" quat="0.998158 -0.0141897 0.050277 0.0308429" class="myoarm_wrap" size="0.0272385"/> -->
                                             <geom name="FDS_ellipsoid_wrap_r" type="cylinder" size="0.013 0.025" pos="0.0012 -0.0057 -0.0003" euler="0.00837758 1.48 -0.0171042" class="myoarm_wrap"/>
                                             <geom name="FDP_ellipsoid_wrap_r" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0032" euler="-1.46747 1.37 0.121824" class="myoarm_wrap"/>
-                                            <geom name="EDM_ellipsoid_wrap_r" type="cylinder" size="0.014 0.018" pos="-0.0167 -0.0022 0.0048" euler="2.9627 1.73 0.117984" class="myoarm_wrap"/>
+                                            <geom name="EDM_ellipsoid_wrap_r" type="cylinder" size="0.023627 0.018" pos="-0.016643 -0.001642 0.004331" euler="2.9627 1.73 0.117984" class="myoarm_wrap"/>
                                             <geom name="FPL_ellipsoid_wrap_r" type="sphere" size="0.015" pos="0.02 -0.025 -0.0033" class="myoarm_wrap"/>
                                             <geom name="ECRL_torus_wrap_r" pos="0.0222 -0.0096 0.0208" quat="0.637339 0.675155 -0.168467 0.331034" class="myoarm_wrap" size="0.008"/>
-                                            <geom name="ECRB_torus_wrap_r" pos="0.0126 -0.0095 0.0186" quat="0.78744 0.610837 -0.011177 -0.0818018" class="myoarm_wrap" size="0.002"/>
-                                            <geom name="FCR_torus_wrap_r" pos="0.0032 -0.0045 -0.019" quat="0.71204 -0.696183 -0.0894345 0.0181554" class="myoarm_wrap" size="0.0015"/>
+                                            <geom name="ECRB_torus_wrap_r" pos="0.011354 -0.009514 0.0136" quat="0.78744 0.610837 -0.011177 -0.0818018" class="myoarm_wrap" size="0.001647"/>
+                                            <geom name="FCR_torus_wrap_r" pos="0.0082 -0.005478 -0.014624" quat="0.71204 -0.696183 -0.0894345 0.0181554" class="myoarm_wrap" size="0.001164"/>
 
                                             <geom name="EDCL_torus_wrap_r" pos="-0.0098 -0.0133 0.0148" quat="0.386237 0.907673 0.159784 0.037683" class="myoarm_wrap" size="0.004"/>
-                                            <geom name="EDCR_torus_wrap_r" pos="-0.0098 -0.0137 0.0166" quat="0.516906 0.814718 -0.18962 0.1819" class="myoarm_wrap" size="0.003"/>
+                                            <geom name="EDCR_torus_wrap_r" pos="-0.010024 -0.014 0.015658" quat="0.516906 0.814718 -0.18962 0.1819" class="myoarm_wrap" size="0.0028"/>
                                             <geom name="EDCM_torus_wrap_r" pos="-0.0097 -0.0117 0.0191" quat="0.516192 0.831214 -0.100219 0.180516" class="myoarm_wrap" size="0.0035"/>
                                             <geom name="EDCI_torus_wrap_r" pos="0.009 -0.0149 0.0211" quat="0.660055 0.749868 0.0267535 0.0361877" class="myoarm_wrap" size="0.0035"/>
                                             <site name="ExtensorEllipse_ellipsoid_site_EIP_side_r" pos="-0.0195105 -0.00430577 0.0636576"/>
@@ -408,14 +408,14 @@
                                             <site name="FDP_ellipsoid_site_FDP4_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
                                             <site name="FDP_ellipsoid_site_FDP3_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
                                             <site name="FDP_ellipsoid_site_FDP2_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="EDM_ellipsoid_site_EDM_side_r" pos="-0.0167 0.0022 0.015"/>
+                                            <site name="EDM_ellipsoid_site_EDM_side_r" pos="-0.024029 -0.001198 0.051002"/>
                                             <site name="FPL_ellipsoid_site_FPL_side_r" pos="0.017 -0.025 -0.0033"/>
                                             <site name="ECRL_torus_site_ECRL_side_r" pos="0.0222 -0.0096 0.0208"/>
-                                            <site name="ECRB_torus_site_ECRB_side_r" pos="0.0126 -0.0095 0.0186"/>
-                                            <site name="FCR_torus_site_FCR_side_r" pos="0.0032 -0.0045 -0.019"/>
+                                            <site name="ECRB_torus_site_ECRB_side_r" pos="0.011911 -0.009554 0.016846"/>
+                                            <site name="FCR_torus_site_FCR_side_r" pos="0.006786 -0.003858 -0.015515"/>
 
-                                            <site name="EDCL_torus_site_EDC5_side_r" pos="-0.0128 -0.0133 0.0148"/>
-                                            <site name="EDCR_torus_site_EDC4_side_r" pos="-0.0098 -0.0137 0.0166"/>
+                                            <site name="EDCL_torus_site_EDC5_side_r" pos="-0.007941 -0.008591 0.020994"/>
+                                            <site name="EDCR_torus_site_EDC4_side_r" pos="-0.010175 -0.017156 0.020282"/>
                                             <site name="EDCM_torus_site_EDC3_side_r" pos="-0.0007 -0.0117 0.0191"/>
                                             <site name="EDCI_torus_site_EDC2_side_r" pos="0.009 -0.0149 0.0281"/>
 

@@ -7,8 +7,8 @@
   transfers.
 - FCU: neutral moment arms within Horii 1993's bands and independent of forearm rotation.
 - FDS5: force as derived in the table.
-- EDC2: the side site of its wrist wrap lies outside the sphere, as tabled, so MuJoCo and mujoco-warp resolve
-  the wrap alike (an inside wrap, side site at the centre, differs between them).
+- Wrap sides (EDC2, EDC4, EDC5, EDM, ECRB, FCR, PQ): each side site lies outside its geom, as tabled, so
+  MuJoCo and mujoco-warp resolve the wraps alike (an inside wrap, side site at the centre, differs between them).
 """
 
 from __future__ import annotations
@@ -167,33 +167,42 @@ def test_fds5_force_follows_its_group() -> None:
     assert force / model.actuator_gainprm[model.actuator("FDS4_r").id][2] == pytest.approx(0.40 / 1.61, abs=0.05)
 
 
-def test_edc2_wrap_side_site_is_tabled_and_outside_its_sphere() -> None:
-    gen = _script()
-    table = gen.load_table()
-    side = table["edc2_wrap_side"]
+WRAP_SIDES = ("EDC2", "EDC4", "EDC5", "EDM", "ECRB", "FCR", "PQ")
+
+
+@pytest.mark.parametrize("muscle", WRAP_SIDES)
+def test_wrap_side_site_is_tabled_and_outside_its_geom(muscle: str) -> None:
+    side = _script().load_table()["wrap_sides"]["muscles"][muscle]
     model = _model("myoarm_r")
     site, geom = model.site(side["site"]), model.geom(side["geom"])
     np.testing.assert_allclose(model.site_pos[site.id], side["pos"], atol=1e-9)
     assert model.site_bodyid[site.id] == model.geom_bodyid[geom.id] == model.body(side["body"]).id
-    assert np.linalg.norm(model.site_pos[site.id] - model.geom_pos[geom.id]) > 1.5 * model.geom_size[geom.id][0]
-    assert model.site_pos[site.id][2] > model.geom_pos[geom.id][2]  # dorsal (+z of the lunate)
+    offset = model.site_pos[site.id] - model.geom_pos[geom.id]
+    if geom.type[0] == mujoco.mjtGeom.mjGEOM_CYLINDER:  # distance from the axis
+        rot = np.zeros(9)
+        mujoco.mju_quat2Mat(rot, model.geom_quat[geom.id])
+        axis = rot.reshape(3, 3)[:, 2]
+        offset = offset - (offset @ axis) * axis
+    assert np.linalg.norm(offset) > 1.5 * model.geom_size[geom.id][0]
 
 
-def _edc2_cpu_warp_difference(model: mujoco.MjModel) -> float:
-    """Largest EDC2 length difference (m) between MuJoCo and mujoco-warp over random wrist and finger postures."""
+def _cpu_warp_differences(model: mujoco.MjModel) -> dict[str, float]:
+    """Largest length difference (m) per wrap-side muscle between MuJoCo and mujoco-warp over random arm postures."""
     mjw = pytest.importorskip("mujoco_warp")
     wp = pytest.importorskip("warp")
     data = mujoco.MjData(model)
     rng = np.random.default_rng(0)
-    joints = [model.joint(n) for n in ("flexion_r", "deviation_r", "mcp2_flexion_r", "mcp2_abduction_r", "pro_sup_r")]
+    names = ("flexion_r", "deviation_r", "pro_sup_r", "elbow_flexion_r", "mcp2_flexion_r", "mcp2_abduction_r", "mcp5_flexion_r")
+    joints = [model.joint(n) for n in names]
+    tendons = [model.tendon(f"{m}_r_tendon").id for m in WRAP_SIDES]
     qpos, lengths = [], []
-    for _ in range(64):
+    for _ in range(128):
         data.qpos[:] = model.qpos0
         for j in joints:
             data.qpos[j.qposadr[0]] = rng.uniform(*model.jnt_range[j.id])
         mujoco.mj_fwdPosition(model, data)
         qpos.append(data.qpos.copy())
-        lengths.append(data.ten_length[model.tendon("EDC2_r_tendon").id])
+        lengths.append(data.ten_length[tendons])
     with wp.ScopedDevice("cpu"):
         model_w = mjw.put_model(model)
         data_w = mjw.put_data(model, data, nworld=len(qpos), nconmax=64, njmax=256)
@@ -201,13 +210,16 @@ def _edc2_cpu_warp_difference(model: mujoco.MjModel) -> float:
         mjw.kinematics(model_w, data_w)
         mjw.com_pos(model_w, data_w)
         mjw.tendon(model_w, data_w)
-        warp_lengths = data_w.ten_length.numpy()[:, model.tendon("EDC2_r_tendon").id]
-    return float(np.max(np.abs(warp_lengths - np.array(lengths))))
+        warp_lengths = data_w.ten_length.numpy()[:, tendons]
+    return dict(zip(WRAP_SIDES, np.max(np.abs(warp_lengths - np.array(lengths)), axis=0).tolist()))
 
 
-def test_edc2_length_agrees_on_cpu_and_mujoco_warp() -> None:
+def test_wrap_side_lengths_agree_on_cpu_and_mujoco_warp() -> None:
     model = myo_sim.load_spec("myoarm_r").compile()
-    assert _edc2_cpu_warp_difference(model) < 1e-6
-    # Negative control: the side site at the sphere's centre (inside wrap) does not agree.
-    model.site_pos[model.site("EDCI_torus_site_EDC2_side_r").id] = model.geom_pos[model.geom("EDCI_torus_wrap_r").id]
-    assert _edc2_cpu_warp_difference(model) > 1e-5
+    assert max(_cpu_warp_differences(model).values()) < 1e-6
+    # Negative control: each side site at its geom's centre (inside wrap) does not agree.
+    table = _script().load_table()["wrap_sides"]["muscles"]
+    for side in table.values():
+        model.site_pos[model.site(side["site"]).id] = model.geom_pos[model.geom(side["geom"]).id]
+    worst = _cpu_warp_differences(model)
+    assert sum(v > 1e-5 for v in worst.values()) >= 5, worst

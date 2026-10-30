@@ -960,6 +960,99 @@ Barry et al. 2018's OpenSim thumb model (2020 revision; MyoHand's bone meshes an
 - Refits: thumb passive scales (cost 6274 -> 5907; AdPt 0.69 -> 0.89, APB 0.56 -> 0.54), extrinsic slack lengths and passive scales (joint-fit error 1127 -> 1050, without the release step 722 -> 672; APL slack +7.2 %, fpmax 1.3 -> 0.29; release bound 0.0377 -> 0.0391), junctura links (JT45 1000 -> 997.8 N/m), springs (thumb CMC flexion RMS 0.008 -> 0.015, CMC abduction 0.076 -> 0.081 N m).
 - Lateral pinch 53.2 -> 67.5 N (in vivo 51.9 +- 20.4 N; off-axis 0.17), now with APL 0.46, OP 0.32 and APB 0.81 active; grip 328.0 -> 330.7 N (middle-finger share 29.6 -> 29.2 %); tenodesis passes. CPU and mujoco-warp agree on APL and AdPt (random wrist and thumb postures). CPU step within noise.
 
+### Forearm wrap side sites outside their geoms
+
+EDC4, EDC5, EDM, ECRB, FCR (wrist) and PQ (ulna) had their wrap side sites inside the sphere or cylinder (the inside wrap, solved differently by MuJoCo and mujoco-warp). Each side site moves two radii out on the side where the tendon runs (dorsal for the extensors, palmar for FCR and PQ); where the arm curves then jumped or left Horii 1993's bands the geom's centre and radius were refitted (bounded). ECRL keeps its inside wrap. Extrinsic slack lengths and passive scales, junctura links and springs refitted. Before = S2c.
+
+| Quantity | Model (wrap_sides) | Model (before) | Literature (± spread) | Reference | Protocol / posture |
+| --- | --- | --- | --- | --- | --- |
+| Tenodesis: MCP flexion range per digit 2 / 3 / 4 / 5, trial A (deg) | 78.2 / 66.0 / 64.6 / 59.5 | 78.2 / 67.9 / 64.2 / 58.1 | mean 65.2; model (ARMS) | McFarland et al. 2023 | act = 0; wrist 60 deg flexion to 60 deg extension at 20 deg/s; elbow 90 deg, forearm neutral; thumb and MCP abduction locked |
+| Tenodesis: mean PIP flexion range, trial A (deg) | 13.9 | 13.9 | 16.1; model (ARMS) | McFarland et al. 2023 | as above |
+| Tenodesis: largest index-to-other-digit spread, MCP / PIP (deg) | 32.1 / 7.6 | 31.6 / 7.7 | 49.2 / 14.6; model (ARMS) | McFarland et al. 2023 | as above |
+| Release (trial B): MCP extension per digit 2 / 3 / 4 / 5 (deg) | 78.5 / 65.4 / 56.8 / 30.0 | 78.5 / 67.9 / 57.8 / 30.5 | digits extend; model (ARMS) | McFarland et al. 2023 | from the end of trial A: 60 deg extension back to 60 deg flexion |
+| Maximum power grip, self-selected wrist (N) | 338.9 | 330.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | dynamometer, self-selected wrist (35 deg extension, 7 deg ulnar deviation) |
+| ″ |  |  | 463.9 ± 125.9 (SD); in vivo, men | Mathiowetz et al. 1985 | Jamar, second handle position, seated, shoulder adducted, elbow 90 deg, forearm and wrist neutral, right hand (Table 2) |
+| ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
+| Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 263.8 | 264.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.0 / 27.3 / 19.0 / 23.7 | 30.3 / 29.2 / 18.7 / 21.8 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip change, neutral / flexed wrist against self-selected (%) | -28.6 / -60.8 | -25.5 / -60.3 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
+| Lateral (key) pinch force (N) | 67.5 | 67.5 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
+| ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
+| ″ |  |  | 72.1 ± 13.3 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
+| PIP flexion limit, digit 2 / 3 / 4 / 5 (deg) | 115.0 / 115.0 / 115.0 / 115.0 | 115.0 / 115.0 / 115.0 / 115.0 | 115.0 ± 7.0 (SD); in vivo, maximum passive flexion | Leijnse et al. 2010 | goniometer on the dorsum, gentle force to the end of motion; digits 2-5 pooled (Table 1) |
+| CMC4 / CMC5 flexion-extension arc (deg) | 21.0 / 43.3 | 21.0 / 43.3 | 20.0 / 44.0 ± 10.0 / 8.0 (SD); cadaver, passive | El-Shennawy et al. 2001 | 22 N on a pin through the metacarpal, relative to the hamate; CMC5 with CMC4 free (28 +- 3 deg with CMC4 pinned) |
+| ″ |  |  | 16.9 / 26.0 ± 0.7 / 1.4 (SEM); cadaver, passive (right hands) | Batmanabane & Malathi 1985 | total arc from full extension, Table 2 |
+| CMC4 / CMC5 flexion limit (model) against the active maximum (deg) | 16.0 / 33.0 | 16.0 / 33.0 | 12.2 / 25.1 ± 3.0 / 3.5 (SD); in vivo, active | Büren et al. 2020 | maximal little-finger opposition, relative to MC3, ultrasound (CMC4: Al Maktary 2019, same hands) |
+| Coupling CMC5 / CMC4 (ratio) | 2.1 | 2.1 | 2.1; in vivo, active maxima (25.1 / 12.2 deg) | Büren et al. 2020 | maximal little-finger opposition; CMC4 value of Al Maktary 2019 |
+| ″ |  |  | 2.0; in vivo, grasp | Shimawaki et al. 2019 | helical angles 9.0 / 4.4 deg, spheres of 40-97 mm |
+| ″ |  |  | 2.7; in vivo, one subject | Buffi et al. 2013 | equivalent-axis flexion, Table 1 |
+| OP moment arm, CMC flexion / CMC abduction (mm) | 13.4 / -2.4 | 13.4 / -2.4 | 12.9 / -4.8 ± 3.8 / 5.0 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 4-5) |
+| AdPt moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 21.6 / 18.9 / 6.9 | 21.6 / 18.9 / 6.9 | 36.9 / 20.6 / 9.7 ± 5.8 / 15.4 / 5.2 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 2, 4, 5) |
+| AdPo moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 14.7 / 1.4 / 8.3 | 14.7 / 1.4 / 8.3 | 27.0 / 17.0 / 8.2 ± 10.5 / 12.5 / 3.9 (SD); cadaver | Smutz et al. 1998 | as above |
+| FPB moment arm (force-weighted heads), CMC flexion / CMC abduction / MP flexion (mm) | 16.9 / -4.3 / 8.7 | 16.9 / -4.3 / 8.7 | 13.4 / -10.5 / 8.8 ± 7.5 / 6.8 / 1.4 (SD); cadaver, whole muscle | Smutz et al. 1998 | as above |
+| APB moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 4.1 / -9.7 / 2.0 | 4.1 / -9.7 / 2.0 | 3.9 / -16.5 / 2.6 ± 3.1 / 7.0 / 2.4 (SD); cadaver | Smutz et al. 1998 | as above |
+| FPL moment arm, CMC flexion / CMC abduction / MP flexion (mm) | 4.2 / -1.7 / 7.1 | 4.2 / -1.7 / 7.1 | 14.3 / -0.2 / 13.6 ± 4.0 / 4.9 / 2.2 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 2, 4, 5) |
+| APL moment arm, CMC flexion / CMC abduction (mm) | -7.1 / -11.3 | -7.1 / -11.3 | -7.1 / -10.5 ± 3.4 / 3.3 (SD); cadaver | Smutz et al. 1998 | Smutz neutral (mid-point of the CMC ranges, MP and IP at 0); dL/dq, positive = flexor / adductor (Tables 4, 5) |
+| First dorsal interosseous moment arm (force-weighted heads), MCP2 flexion / radial abduction (mm) | 4.4 / 8.1 | 4.4 / 8.1 | 3.7 / 6.1 ± 1.4 / 2.1 (SD); cadaver | An et al. 1983 | averaged over the range (model: MCP2 flexion 0-90 deg, abduction -15 to 15 deg); magnitudes |
+| ″ |  |  | abduction 11.1 ± 2.9 (SD); in vivo | Infantolino & Challis 2014 | ultrasound tendon excursion, Table 2 |
+| Index MCP abduction moment, both DI1 heads at full activation (N m) | 1.0 | 1.0 | 2.7 / 1.8; in vivo, men / women (RIHM break test x PP2 length 42.6 mm) | McGee et al. 2020 | RIHM index abduction, sling at the PIP (Schreuders 2006); model: index at rest, act = 1 on DI1s and DI1d |
+| ″ |  |  | about 1.0; in vivo (93.3 N x 11.1 mm) | Infantolino & Challis 2014 | maximum FDI force and its in-vivo moment arm, Table 2 |
+| ADM moment arm (UI_UB5 before S4), MCP5 flexion / ulnar abduction (mm) | 5.2 / 9.9 | 5.2 / 9.9 | 5.7 / 10.4; normative model (moment potentials 0.271 / 0.495 x MyoHand's middle-phalanx-5 length of 21.0 mm) | An et al. 1979 | MCP neutral; magnitudes |
+| ″ |  |  | 1.7 / 6.1; model fitted to An 1979 | Lee et al. 2015 | Table 6; magnitudes |
+| Little-finger MCP abduction moment, ADM and FDM (UI_UB5 before S4) at full activation (N m) | 1.0 | 1.0 | 1.6 / 0.9; in vivo, men / women (RIHM break test 43.1 / 26.4 N x PP5 length 36.1 mm) | McGee et al. 2020 | RIHM little-finger abduction, sling at the PIP (Schreuders 2006); model: hand at rest |
+| Active cupping: CMC4 / CMC5 flexion with ODM, FDM and ADM at full activation (deg) | 15.8 / 32.6 | 15.8 / 32.5 | 12.2 / 25.1 ± 3.0 / 3.5 (SD); in vivo, maximal little-finger opposition | Büren et al. 2020 | MC4 / MC5 relative to MC3 (CMC4: Al Maktary 2019); model: all other muscles at 0, 1 s, myoarm_r |
+| First palmar interosseous (PI1; UI_UB2 before S5), MCP2 flexion / ulnar abduction (mm) | 6.0 / 5.9 | 6.0 / 5.9 | 6.6 / 5.8 ± 2.1 / 1.7 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (UI), averaged over the range (model: MCP2 flexion 0-90 deg, abduction -15 to 15 deg) |
+| ″ |  |  | 4.6 / 3.9; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (FPI), mean of nine postures |
+| First lumbrical (LUM1; LU_RB2 before S5), MCP2 flexion / radial abduction (mm) | 8.2 / 4.9 | 8.2 / 4.9 | 9.3 / 4.8 ± 2.1 / 1.6 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (LU), averaged over the range |
+| ″ |  |  | 7.0 / 1.8; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (LUM), mean of nine postures |
+| Second dorsal interosseous (DI2; RI3 before S5), MCP3 flexion / radial abduction (mm) | 5.5 / 10.7 | 5.5 / 10.7 | 10.2 / 12.1; normative model (moment potentials x MyoHand's middle-phalanx-3 length of 29.1 mm) | An et al. 1979 | MP neutral, radial intrinsic (Tables 4-6); no spread published |
+| Second lumbrical (LUM2; LU_RB3 before S5), MCP3 flexion / radial abduction (mm) | 11.4 / 10.0 | 11.4 / 10.0 | 13.4 / 10.6; normative model (moment potentials x MyoHand's middle-phalanx-3 length of 29.1 mm) | An et al. 1979 | MP neutral, lumbrical (Tables 4-6); no spread published |
+| Third dorsal interosseous (DI3; UI_UB3 before S5), MCP3 flexion / ulnar abduction (mm) | 4.4 / 8.8 | 4.4 / 8.8 | 4.4 / 9.8; normative model (moment potentials x MyoHand's middle-phalanx-3 length of 29.1 mm) | An et al. 1979 | MP neutral, ulnar intrinsic (Tables 4-6); no spread published |
+| Second palmar interosseous (PI2; RI4 before S5), MCP4 flexion / radial abduction (mm) | 3.4 / 8.2 | 3.4 / 8.2 | 3.5 / 8.7; normative model (moment potentials x MyoHand's middle-phalanx-4 length of 24.9 mm) | An et al. 1979 | MP neutral, radial intrinsic (Tables 4-6); no spread published |
+| Third lumbrical (LUM3; LU_RB4 before S5), MCP4 flexion / radial abduction (mm) | 6.5 / 7.7 | 6.5 / 7.7 | 7.5 / 8.6; normative model (moment potentials x MyoHand's middle-phalanx-4 length of 24.9 mm) | An et al. 1979 | MP neutral, lumbrical (Tables 4-6); no spread published |
+| Fourth dorsal interosseous (DI4; UI_UB4 before S5), MCP4 flexion / ulnar abduction (mm) | 4.9 / 7.6 | 4.9 / 7.6 | 5.4 / 8.2; normative model (moment potentials x MyoHand's middle-phalanx-4 length of 24.9 mm) | An et al. 1979 | MP neutral, ulnar intrinsic (Tables 4-6); no spread published |
+| Third palmar interosseous (PI3; RI5 before S5), MCP5 flexion / radial abduction (mm) | 2.4 / 8.5 | 2.4 / 8.5 | 1.5 / 10.0; normative model (moment potentials x MyoHand's middle-phalanx-5 length of 21.0 mm) | An et al. 1979 | MP neutral, radial intrinsic (Tables 4-6); no spread published |
+| Fourth lumbrical (LUM4; LU_RB5 before S5), MCP5 flexion / radial abduction (mm) | 5.5 / 8.7 | 5.5 / 8.7 | 6.1 / 9.3; normative model (moment potentials x MyoHand's middle-phalanx-5 length of 21.0 mm) | An et al. 1979 | MP neutral, lumbrical (Tables 4-6); no spread published |
+| Index intrinsic peak forces: first dorsal interosseous (both heads) / first palmar interosseous / first lumbrical (N) | 129.4 / 64.7 / 9.5 | 129.4 / 64.7 / 9.5 | 53.4 / 27.2 / 19.9 ± 24.7 / 11.5 / 8.8 (SD); in vivo, nerve-block estimate (moment split by mass fractions; a weak check) | Ketchum et al. 1978 | maximal effort, index; model: peak isometric force (PCSA x 86.3 N/cm2, Jacobson 1992) |
+| EDC2 extension moment arm, DIP / PIP (index; model: averaged over DIP 0-60 / PIP 0-90 deg) (mm) | 1.9 / 2.6 | 1.9 / 2.6 | 2.2 / 2.8 ± 0.4 / 1.1 (SD); cadaver, tendon excursion | An et al. 1983 | averaged over the range, 5 N load (Table 3, EC) |
+| ″ |  |  | 2.3 / 3.1 ± 1.1 / 1.2 (SD); cadaver, effective static moment arm | Lee et al. 2008b | mean of nine postures (Table 4, EDC) |
+| EIP extension moment arm, DIP / PIP (as above) (mm) | 1.9 / 2.6 | 1.9 / 2.6 | 1.9 / 2.6 ± 0.5 / 1.1 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (EI) |
+| ″ |  |  | 2.4 / 3.4; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (EIP) |
+| First lumbrical (LUM1; LU_RB2 before S5) extension moment arm, DIP / PIP (as above) (mm) | 0.7 / 1.8 | 0.7 / 1.8 | 0.7 / 1.8 ± 0.6 / 1.3 (SD); cadaver, tendon excursion | An et al. 1983 | Table 3 (LU) |
+| ″ |  |  | 0.5 / -0.8; cadaver, effective static moment arm (negative = flexion) | Lee et al. 2008b | Table 4 (LUM) |
+| First palmar interosseous (PI1; UI_UB2 before S5) extension moment arm, DIP / PIP (as above) (mm) | 1.0 / 1.9 | 1.0 / 1.9 | 1.6 / 2.6; cadaver, tendon excursion | An et al. 1983 | Table 3 (UI) |
+| ″ |  |  | 0.9 / 0.1; cadaver, effective static moment arm | Lee et al. 2008b | Table 4 (FPI) |
+| Index ORL share of the passive DIP resistance at PIP 0 / 30 / 60 / 90 deg (%) | 23.7 / 0.0 / 0.0 / 0.0 | 23.7 / 0.0 / 0.0 / 0.0 | 25.0 / 31.0 / 18.0 / 3.0; cadaver, force drop after cutting the ORL | Ueba et al. 2011 | DIP 45 deg, MCP 0, 1.96 N on the extrinsic extensor; model: ORL moment over the total passive DIP moment with 1.96 N on EDC2 |
+| Intrinsic-plus test: index MCP / PIP / DIP after 1 s with the index intrinsics at full activation from a fist (deg) | 91.1 / -0.6 / -0.5 | 91.1 / -0.6 / -0.5 | MCP flexed, PIP and DIP extended; cadaver | Ranney & Wells 1988 | 5 N on the lumbrical; model: start MCP 90, PIP 100, DIP 70 deg, extrinsics at 0, wrist and MCP abduction held |
+| DIP-PIP coupling with FDP2 alone: dDIP/dPIP at PIP 0 / 70 / 100 deg (ratio) | -0.0 / 0.2 / – | -0.0 / 0.2 / – | 0.2 / 1.0 / 0.5 ± 0.2 / 0.3 / 0.3 (SD); in vivo, unloaded, FDP-driven | Leijnse et al. 2010 | mean slope of the extension trajectories, MCP 0 (p. 2386, Fig. 4A); model: FDP2 ramp 0-1 over 3 s, MCP and wrist held, slope over +-5 deg (none if the PIP does not pass the window) |
+| Lumbrical lengthening from the straight finger to the flexion limits, LUM1 / LUM2 / LUM3 / LUM4 (mm) | 31.9 / 36.7 / 36.5 / 29.6 | 31.9 / 36.7 / 36.5 / 29.6 | 31.0; cadaver, fresh index fingers (LUM1) | Ranney & Wells 1988 | lumbrical length 25 mm with the finger straight, 56 mm in full flexion (pp. 112-113); model: MCP, PIP and DIP at their flexion limits (90 / 115 / 90 deg), nodes on their ties |
+| First lumbrical, MCP2 flexion dL/dq at rest with its origin following the FDP (positive = lengthens, i.e. extensor) (mm) | 3.0 | 3.0 | 1.8 ± 2.4 (SD); derived: deep-flexor minus lumbrical MCP moment arm, cadaver tendon excursion | An et al. 1983 | FP 11.1 +- 1.1 minus LU 9.3 +- 2.1 mm (Table 3, averaged over the range); spread combined assuming independence. Leijnse & Kalker 1995: the difference is small |
+| ECRL moment arm at wrist neutral, extension (+) / ulnar deviation (+) (mm) | 11.7 / -23.6 | – | 7.0 / -19.0 ± 2.0 / 2.0 (SD); cadaver | Horii et al. 1993 | Table II (n = 7), forearm neutral; model: dL/dq |
+| ″ |  |  | 10.0 / -23.0; cadaver | Loren et al. 1996 | appendix, moment-arm polynomials at 0 deg, forearm neutral |
+| ECRB moment arm at wrist neutral, extension (+) / ulnar deviation (+) (mm) | 14.0 / -12.6 | – | 12.0 / -13.0 ± 2.0 / 2.0 (SD); cadaver | Horii et al. 1993 | Table II (n = 7), forearm neutral; model: dL/dq |
+| ″ |  |  | 16.0 / -16.0; cadaver | Loren et al. 1996 | appendix, moment-arm polynomials at 0 deg, forearm neutral |
+| FCR moment arm at wrist neutral, extension (+) / ulnar deviation (+) (mm) | -16.4 / -6.4 | – | -15.0 / -8.0 ± 3.0 / 2.0 (SD); cadaver | Horii et al. 1993 | Table II (n = 7), forearm neutral; model: dL/dq |
+| ″ |  |  | -15.0 / -5.7; cadaver | Loren et al. 1996 | appendix, moment-arm polynomials at 0 deg, forearm neutral |
+| Junctura share of the neighbour MP extension under 1.5 kg on the ring-finger EDC: middle / little finger (deg) | 17.7 / 21.4 | 17.6 / 22.0 | 18.0 / 22.0; cadaver, intact minus juncturae and fascia cut (38 -> 20, 44 -> 22 deg) | von Schroeder & Botte 1993 | palm down, wrist pinned neutral, 1.5 kg at the myotendinous junction (Fig. 5); model: myohand_r palm down, 14.7 N along EDC4, links minus no links |
+| Junctura share of the neighbour MP extension under 1.5 kg on the middle-finger EDC: ring / little finger (deg) | 0.0 / 0.0 | 0.0 / 0.0 | 8.0 / 7.0; cadaver, intact minus juncturae and fascia cut (26 -> 18, 16 -> 9 deg) | von Schroeder & Botte 1993 | as above, traction on EDC-long (Fig. 4) |
+| FCU moment arm at wrist neutral, flexion / ulnar deviation (mm) | 14.7 / 12.2 | 14.7 / 12.2 | 16.0 / 14.0 ± 3.0 / 3.0 (SD); cadaver | Horii et al. 1993 | Table II; no significant change with forearm rotation (Table III); model: dL/dq, forearm neutral |
+| ″ |  |  | 14.0 / 23.0; cadaver | Loren et al. 1996 | appendix, forearm neutral, wrist neutral |
+| ECU extension moment arm at wrist neutral in supination / neutral / pronation (mm) | 7.5 / 7.5 / 7.5 | 7.5 / 7.5 / 7.5 | 7.8 / 7.2 / 0.9; cadaver | Loren et al. 1996 | appendix p. 342; model: forearm at -90 / 0 / +90 deg |
+| ″ |  |  | 5.7 / 5.7 / 2.3; cadaver, mean over 100 deg of flexion-extension | Horii et al. 1993 | Table III excursion 10 / 10 / 4 mm over 100 deg |
+| FDS5 peak force; FDS5 force as a share of FDS4 (N; %) | 46.5 / 27.2 | 46.5 / 27.2 | 16.5 / 28.5; model at 45 N/cm2 | Holzbaur et al. 2005 | Table 1 (16.5 / 57.9 N); MyoHand's extrinsic forces are 2.7-3.0 x Holzbaur's for FDS2-4 |
+| ″ |  |  | – / 24.8; cadaver PCSA ratio (0.40 / 1.61 cm2) | Lieber et al. 1992 | Table I |
+| Fingertip soft tissue normal to the pad, digit 2 / 3 / 4 / 5 / thumb (mm) | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 / 6.6 / 6.7 / 6.1 / 7.9 | 6.4 ± 0.8 (SD); in vivo (index) | Dallard et al. 2018 | MRI, unloaded index fingertip, bone to skin normal to the pad (D_N0, Table 2) |
+| Palmar soft tissue under the pads: palm / hypothenar / thenar (mm) | 8.0 / 16.8 / 26.7 | 8.0 / 16.8 / 26.7 | 8.4 ± 1.9 (SD); in vivo, hypothenar muscles only (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | 26.7 ± 3.9 (SD); in vivo, whole thenar muscles (lower bound) | Ozekli Misirlioglu & Ozyemisci Taskiran 2018 | ultrasound, transverse, Table 2 |
+| ″ |  |  | OP 9.7, APB 6.0, FPB 6.2; in vivo, single thenar muscles (medians, lower bounds) | Karademir et al. 2022 | water-bath ultrasound, healthy controls, Tables 2-3 |
+| Active fist: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration) (mm) | -0.3 / 13.3 / -0.3 / -0.4 | -0.1 / 12.9 / -0.3 / -0.4 | contact; functional criterion (no published distance used) | – | FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on |
+| Active fist: deepest penetration of any contact pair of the hand (mm) | 0.8 | 0.8 | < 1; model criterion | – | as above |
+
+- Arms at wrist neutral (mm, + = extensor / ulnar deviator): ECRB 15.3 / -14.2 -> 14.0 / -12.6 (Horii 12 +- 2 / -13 +- 2; sphere centre moved 5.2 mm, radius 2.0 -> 1.6 mm); FCR -18.5 / -4.0 -> -16.4 / -6.4 (Horii -15 +- 3 / -8 +- 2; centre 6.7 mm, radius 1.5 -> 1.2 mm); EDC5 extension arm at 60 deg extension / neutral / 60 deg flexion 21.1 / 11.1 / 1.4 -> 21.2 / 15.2 / 5.4 (geometry unchanged); EDC4 24.2 / 17.3 / 5.4 -> 25.4 / 17.8 / 8.0 (sphere 1.0 mm, radius 3.0 -> 2.8 mm); EDM unchanged (cylinder radius 14 -> 23.6 mm reproduces the inside wrap); PQ pronation arm within 1 mm (geometry unchanged). ECRL 11.7 / -23.6 unchanged (Horii 7 / -19, Loren 10 / -23): no outside wrap within the bounds keeps it an extensor beyond 45 deg extension.
+- CPU vs mujoco-warp lengths of EDC2, EDC4, EDC5, EDM, ECRB, FCR and PQ within 3e-7 m in 128 random arm postures (before: up to 1.4 mm; side sites back at the geom centres as negative control: 1e-4 to 1.4e-3 m for five of them).
+- Refits: extrinsic joint-fit error 1050 -> 866 (without the release step 672 -> 690), release bound 0.0391 -> 0.0261; junctura links at the bound; springs within 0.004 N m. Grip 330.7 -> 338.9 N (middle-finger share 29.2 -> 27.3 %); tenodesis passes; lateral pinch 67.5 N unchanged.
+
 ### References
 
 - **McFarland et al. 2023**: McFarland et al. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023. doi:10.1109/TBME.2022.3217722 Protocols and results of its ARMS model are cited only; no ARMS file, parameter or coordinate is used.
@@ -1147,13 +1240,15 @@ revised hand. Items that a later step resolved say so.
   pronation (Loren 1996: 7.8 / 7.2 / 0.9 mm in supination / neutral / pronation). Putting its groove on
   the ulna overshoots (16 to -12.6 mm) because the model's forearm-rotation axis passes about 20 mm from
   the ulnar groove.
-- **Wrap side sites inside their wrap geom:** a side site inside its sphere or cylinder makes MuJoCo
-  apply the inside wrap (the tendon held within the geom's circle), whose iterative solution differs
-  between MuJoCo and mujoco-warp (float32) where the deflection is small, wherever inside the side site
-  sits. EDC2's side site now lies dorsal of its sphere (an ordinary wrap; `hand-extrinsic-muscles.md`), and
-  both engines agree on its length (below 1e-6 m in 512 random arm postures, 0.79 mm before). The others
-  keep the mechanism and the difference (PQ 1.40, ECRL 1.01, EDC5 0.72, EDM 0.65, EDC4 0.36, ECRB 0.16,
-  FCR 0.07 mm; deltoid and pectoral heads up to 3.3 mm); ECU belongs to the forearm-rotation revision.
+- **Wrap side sites inside their wrap geom (EDC2 and the wrap-side revision):** a side site inside its
+  sphere or cylinder makes MuJoCo apply the inside wrap (the tendon held within the geom's circle), whose
+  iterative solution differs between MuJoCo and mujoco-warp (float32) where the deflection is small. EDC2,
+  EDC4, EDC5, EDM, ECRB, FCR and PQ now wrap from outside (both engines agree within 3e-7 m; ECRB and FCR
+  moved into Horii 1993's bands, `hand-extrinsic-muscles.md`). Open: ECRL (no outside wrap keeps it an
+  extensor in deep wrist extension; difference about 1 mm), ECU (forearm-rotation revision), the deltoid and
+  pectoral heads (up to 3.3 mm), and the MCP side sites of FDP4 and FPL's MP wrap, which also lie inside
+  their cylinders. In one of 256 random arm postures mujoco-warp's EDC4 (and the JT4 tie helper) came out
+  17 mm longer than MuJoCo's although MuJoCo's length is smooth there; the same posture alone agrees.
 - **Junctura node ties of JT3 and JT5 (S7; resolved by the JT3/JT5 tie fix):** each node's tie measured
   the length change of a helper path that started at the node's rest point near the MC head (95 % of the
   segment from `EDC{d}-P4_r` toward the MCP wrap). Once the MCP flexes, the EDC wraps its MCP cylinder from

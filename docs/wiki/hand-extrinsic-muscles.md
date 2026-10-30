@@ -1,4 +1,4 @@
-# Extrinsic hand muscles: juncturae, FCU, FDS5, EDC2 wrap, APL at the thumb CMC
+# Extrinsic hand muscles: juncturae, FCU, FDS5, wrist wrap sides, APL at the thumb CMC
 
 Revisions of the extrinsic hand muscles from the hand rebuild (S7, and the EDC2 wrist wrap after it). Data, sources and fit results are in
 `myo_sim/build/data/extrinsic_muscles.json`; `scripts/generate_extrinsic_muscles.py` writes them into the
@@ -152,9 +152,33 @@ misses them by 1.2 mm RMS, so it was not used. EDC3 already wraps its torus sphe
 
 The finger moment arms, and with them the An 1983 and Lee 2008b comparisons, do not change: the wrap
 spans the wrist only. EDC2's wrist arms now lie with EDC3's and EDC4's (24-25 mm at 60 deg extension).
-The other side sites inside a wrap geom keep the inside wrap and the CPU-warp difference (same 512
-postures: PQ 1.40, ECRL 1.01, EDC5 0.72, EDM 0.65, EDC4 0.36, ECRB 0.16, FCR 0.07 mm; the deltoid and
-pectoral heads up to 3.3 mm); ECU's belongs to the forearm-rotation revision.
+### The other forearm wraps
+
+The same fix for the other forearm wraps whose side site sat inside the geom (`wrap_sides` in the data
+file; CPU-warp length differences before: PQ 1.40, ECRL 1.01, EDC5 0.72, EDM 0.65, EDC4 0.36, ECRB 0.16,
+FCR 0.07 mm). Each side site goes two radii out, on the side where the tendon runs: dorsal (+z of the
+lunate) for the extensors, palmar for FCR and PQ. Where the arm curves then jump or leave Horii 1993's
+bands, the geom's centre and radius were fitted (bounded: centre within 5 mm per axis, radius 0.5-2
+times) to Horii's neutral arms and to the arm curves of the inside wrap. Arms in mm, + = extensor /
+ulnar deviator (PQ: + = supinator), at wrist and forearm neutral unless stated:
+
+| Muscle | Change | Before | After | Literature |
+| --- | --- | --- | --- | --- |
+| PQ | palmar side site; geometry unchanged | pronation arm -2.0 / -7.0 / -4.9 (pronation 80 deg / neutral / supination 80 deg) | -3.0 / -7.3 / -4.9 | – |
+| EDC5 | dorsal side site; geometry unchanged | 21.1 / 11.1 / 1.4 (extension 60 / neutral / flexion 60); ulnar 9.9 | 21.2 / 15.2 / 5.4; ulnar 8.0 | – |
+| EDC4 | dorsal; sphere moved 1.0 mm, radius 3.0 -> 2.8 mm (continuous arms) | 24.2 / 17.3 / 5.4; ulnar 9.1 | 25.4 / 17.8 / 8.0; ulnar 8.7 | – |
+| EDM | dorsal; cylinder radius 14 -> 23.6 mm, centre 0.7 mm (reproduces the inside wrap's curves) | 17.9 / 9.5 / -1.9; ulnar 14.5 | unchanged | – |
+| ECRB | dorsal; sphere centre 5.2 mm, radius 2.0 -> 1.6 mm | 15.3 / -14.2 | 14.0 / -12.6 | 12 ± 2 / -13 ± 2 (Horii); 16 / -16 (Loren) |
+| FCR | palmar; sphere centre 6.7 mm, radius 1.5 -> 1.2 mm | -18.5 / -4.0 | -16.4 / -6.4 | -15 ± 3 / -8 ± 2 (Horii); -15 / -5.7 (Loren) |
+| ECRL | not changed (inside wrap kept) | 11.7 / -23.6 | – | 7 ± 2 / -19 ± 2 (Horii); 10 / -23 (Loren) |
+
+ECRL keeps its inside wrap: with the side site outside, no sphere within 8 mm of its place and 1/3-3 times
+its radius keeps ECRL an extensor beyond 45 deg of wrist extension (the tendon leaves the sphere and its
+straight path passes palmar of the axis); its CPU-warp difference (about 1 mm) stays. For the others CPU
+and mujoco-warp agree within 3e-7 m in 128 random arm postures (test with the inside wrap as negative
+control). EDM's cylinder is large for an anatomical surface; it is a wrapping surface only (no contact).
+ECU's wrap belongs to the forearm-rotation revision; the deltoid and pectoral heads (up to 3.3 mm) are a
+later step.
 
 ## APL at the thumb CMC (S2c; FPL tried, not adopted)
 

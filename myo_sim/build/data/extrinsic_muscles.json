@@ -119,7 +119,7 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 1000.0,
+          "value": 999.9,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.024459
@@ -132,7 +132,7 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 997.8,
+          "value": 1000.0,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.020708
@@ -158,41 +158,41 @@
       "result": {
         "without_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": 0.69,
-            "mcp3_flexion": 13.22,
-            "mcp4_flexion": 70.81,
-            "mcp5_flexion": -0.16
+            "mcp2_flexion": 0.79,
+            "mcp3_flexion": 12.65,
+            "mcp4_flexion": 70.7,
+            "mcp5_flexion": -0.09
           },
           "EDC3_traction": {
-            "mcp2_flexion": 0.02,
-            "mcp3_flexion": 67.44,
-            "mcp4_flexion": 2.82,
-            "mcp5_flexion": -0.01
+            "mcp2_flexion": 0.04,
+            "mcp3_flexion": 67.45,
+            "mcp4_flexion": 2.76,
+            "mcp5_flexion": 0.07
           }
         },
         "with_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": 1.5,
-            "mcp3_flexion": 30.76,
-            "mcp4_flexion": 70.6,
-            "mcp5_flexion": 21.83
+            "mcp2_flexion": 1.58,
+            "mcp3_flexion": 30.61,
+            "mcp4_flexion": 70.48,
+            "mcp5_flexion": 21.25
           },
           "EDC3_traction": {
-            "mcp2_flexion": 0.02,
-            "mcp3_flexion": 67.44,
-            "mcp4_flexion": 2.82,
-            "mcp5_flexion": -0.01
+            "mcp2_flexion": 0.04,
+            "mcp3_flexion": 67.45,
+            "mcp4_flexion": 2.76,
+            "mcp5_flexion": 0.07
           }
         },
         "residual_deg": [
-          -0.46,
-          -0.01,
+          -0.04,
+          -0.66,
           -0.21,
           -8.0,
           -7.0,
           0.0
         ],
-        "rms_deg": 4.34
+        "rms_deg": 4.35
       },
       "own_finger_note": "mcp4 under EDC4 traction and mcp3 under EDC3 traction: target 0 deg change from the links (the pulled finger's own extension is the same with and without the juncturae: traction on one tendon or on all gave the same result, p. 643)",
       "stiffness_bounds_N_per_m": {
@@ -294,29 +294,6 @@
       "derivation": "Holzbaur 2005 FDS5 x mean(MyoHand / Holzbaur, FDS2-4) = 16.5 x 2.819"
     }
   },
-  "edc2_wrap_side": {
-    "method": "EDC2 wraps the sphere EDCI_torus_wrap_r (MyoHand's stand-in for MoBL's EDC index torus, in lunate_r). Its side site sat at the sphere centre, so MuJoCo applied the inside wrap (the tendon held within the sphere's circle as in a ring), whose iterative solution differs between MuJoCo (float64) and mujoco-warp (float32) when the deflection is small (up to 0.8 mm of EDC2 length in random postures). The side site moves out of the sphere on its dorsal side, so the tendon wraps over the sphere's dorsal surface like the extensor tendons over the dorsal carpus (the ordinary side wrap, which both engines resolve alike). Dorsal is +z of lunate_r (the extensor wraps ECRL, ECRB and EDC lie at +z, FCR's at -z). The distance only has to place the site outside the sphere.",
-    "sources": [],
-    "site": "EDCI_torus_site_EDC2_side_r",
-    "geom": "EDCI_torus_wrap_r",
-    "body": "lunate_r",
-    "direction_body": [
-      0.0,
-      0.0,
-      1.0
-    ],
-    "distance_radii": 2.0,
-    "pos_before": [
-      0.009,
-      -0.0149,
-      0.0211
-    ],
-    "pos": [
-      0.009,
-      -0.0149,
-      0.0281
-    ]
-  },
   "thumb_extrinsics": {
     "method": "APL crosses the thumb CMC on Barry et al. 2018's routing (their path points in MyoHand's identical bone frames); the forearm and wrist part of the path is unchanged: from its MC1-base via point APL-P6_r over a cylinder on the trapezium to Barry's insertion on the MC1 base (APL-P7_r, moved; APL-P8_r removed). The cylinder replaces Barry's THM_CMC1_APL ellipsoid (MuJoCo has no ellipsoid wrap): Barry's centre and orientation, radius = the ellipsoid's 6 mm semi-axis; Barry's trapezium point of APL lies inside it and is not used. Moment arms against Smutz et al. 1998 at their neutral (mid-point of the CMC ranges, MP 0).",
     "sources": [
@@ -368,6 +345,301 @@
     },
     "not_adopted": {
       "FPL": "Barry's FPL CMC routing (trapezium point and first MC1 point) raises FPL's CMC flexion arm at Smutz's neutral from 4.2 to 14.3 mm (Smutz 14.3 +- 4.0; RMS z 2.50 -> 1.70), but the lateral pinch then has no solution within its off-axis limit (best 3.6 N at 14x the limit); the trapezium point alone (13.8 mm) gives the same. Not adopted."
+    }
+  },
+  "wrap_sides": {
+    "method": "Each wrist (and PQ's ulnar) wrap whose side site sat inside its geom (the inside wrap, which MuJoCo and mujoco-warp solve differently where the deflection is small) gets its side site outside the geom, distance_radii radii from the centre along direction_body, on the side where the tendon runs: dorsal (+z of lunate_r) for the extensors, palmar for FCR and PQ. Where the arm curves then jump or leave Horii 1993's bands, the geom's centre and radius are refitted (bounded) to Horii's neutral arms and the arm curves of the inside wrap. ECRL keeps its inside wrap: with its side site outside, no sphere within 8 mm of its place and 1/3-3 times its radius keeps ECRL an extensor beyond 45 deg wrist extension (open). ECU belongs to the forearm-rotation revision; the shoulder wraps are a later step.",
+    "sources": [
+      "horii1993"
+    ],
+    "muscles": {
+      "EDC2": {
+        "method": "EDC2 wraps the sphere EDCI_torus_wrap_r (MyoHand's stand-in for MoBL's EDC index torus, in lunate_r). Its side site sat at the sphere centre, so MuJoCo applied the inside wrap (the tendon held within the sphere's circle as in a ring), whose iterative solution differs between MuJoCo (float64) and mujoco-warp (float32) when the deflection is small (up to 0.8 mm of EDC2 length in random postures). The side site moves out of the sphere on its dorsal side, so the tendon wraps over the sphere's dorsal surface like the extensor tendons over the dorsal carpus (the ordinary side wrap, which both engines resolve alike). Dorsal is +z of lunate_r (the extensor wraps ECRL, ECRB and EDC lie at +z, FCR's at -z). The distance only has to place the site outside the sphere.",
+        "sources": [],
+        "site": "EDCI_torus_site_EDC2_side_r",
+        "geom": "EDCI_torus_wrap_r",
+        "body": "lunate_r",
+        "direction_body": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "distance_radii": 2.0,
+        "pos_before": [
+          0.009,
+          -0.0149,
+          0.0211
+        ],
+        "pos": [
+          0.009,
+          -0.0149,
+          0.0281
+        ]
+      },
+      "PQ": {
+        "method": "palmar of the ulna (the PQ wraps the ulna's palmar surface in pronation); geometry unchanged",
+        "site": "PQ2_site_PQ_side_r",
+        "geom": "PQ2_wrap_r",
+        "body": "ulna_r",
+        "geom_type": "cylinder",
+        "direction_body": [
+          0.1443,
+          -0.1668,
+          -0.9754
+        ],
+        "distance_radii": 2.0,
+        "geom_pos_before": [
+          -0.0012,
+          -0.2092,
+          0.0428
+        ],
+        "geom_pos": [
+          -0.0012,
+          -0.2092,
+          0.0428
+        ],
+        "radius_before_m": 0.007,
+        "radius_m": 0.007,
+        "pos_before": [
+          -0.0012,
+          -0.2092,
+          0.0428
+        ],
+        "fit": {
+          "rms_old": 0.55,
+          "jump": 0.47,
+          "z": null,
+          "neutral": null,
+          "centre_shift_mm": 0
+        },
+        "pos": [
+          0.00082,
+          -0.211535,
+          0.029145
+        ]
+      },
+      "EDC5": {
+        "method": "dorsal; geometry unchanged",
+        "site": "EDCL_torus_site_EDC5_side_r",
+        "geom": "EDCL_torus_wrap_r",
+        "body": "lunate_r",
+        "geom_type": "sphere",
+        "direction_body": [
+          0.2324,
+          0.5886,
+          0.7743
+        ],
+        "distance_radii": 2.0,
+        "geom_pos_before": [
+          -0.0098,
+          -0.0133,
+          0.0148
+        ],
+        "geom_pos": [
+          -0.0098,
+          -0.0133,
+          0.0148
+        ],
+        "radius_before_m": 0.004,
+        "radius_m": 0.004,
+        "pos_before": [
+          -0.0128,
+          -0.0133,
+          0.0148
+        ],
+        "fit": {
+          "rms_old": 3.01,
+          "jump": 0.72,
+          "z": null,
+          "neutral": null,
+          "centre_shift_mm": 0
+        },
+        "pos": [
+          -0.007941,
+          -0.008591,
+          0.020994
+        ]
+      },
+      "EDC4": {
+        "method": "dorsal; sphere moved 1.0 mm and radius 3.0 -> 2.8 mm so the arm curves stay continuous (2.2 mm per 2.5 deg step with the geometry unchanged)",
+        "site": "EDCR_torus_site_EDC4_side_r",
+        "geom": "EDCR_torus_wrap_r",
+        "body": "lunate_r",
+        "geom_type": "sphere",
+        "direction_body": [
+          -0.027,
+          -0.5635,
+          0.8257
+        ],
+        "distance_radii": 2.0,
+        "geom_pos_before": [
+          -0.0098,
+          -0.0137,
+          0.0166
+        ],
+        "geom_pos": [
+          -0.010024,
+          -0.014,
+          0.015658
+        ],
+        "radius_before_m": 0.003,
+        "radius_m": 0.0028,
+        "pos_before": [
+          -0.0098,
+          -0.0137,
+          0.0166
+        ],
+        "fit": {
+          "rms_old": 1.74,
+          "jump": 1.0,
+          "z": null,
+          "neutral": null,
+          "centre_shift_mm": 1.01
+        },
+        "pos": [
+          -0.010175,
+          -0.017156,
+          0.020282
+        ]
+      },
+      "ECRB": {
+        "method": "dorsal; sphere centre and radius fitted (bounded: centre within 5 mm per axis, radius x0.5-2) to Horii 1993 neutral arms and the earlier arm curves",
+        "site": "ECRB_torus_site_ECRB_side_r",
+        "geom": "ECRB_torus_wrap_r",
+        "body": "lunate_r",
+        "geom_type": "sphere",
+        "direction_body": [
+          0.169,
+          -0.0121,
+          0.9855
+        ],
+        "distance_radii": 2.0,
+        "geom_pos_before": [
+          0.0126,
+          -0.0095,
+          0.0186
+        ],
+        "geom_pos": [
+          0.011354,
+          -0.009514,
+          0.0136
+        ],
+        "radius_before_m": 0.002,
+        "radius_m": 0.001647,
+        "pos_before": [
+          0.0126,
+          -0.0095,
+          0.0186
+        ],
+        "fit": {
+          "rms_old": 1.96,
+          "jump": 0.38,
+          "z": [
+            1.0,
+            0.21
+          ],
+          "neutral": [
+            14.01,
+            -12.57
+          ],
+          "centre_shift_mm": 5.15
+        },
+        "pos": [
+          0.011911,
+          -0.009554,
+          0.016846
+        ]
+      },
+      "FCR": {
+        "method": "palmar; sphere centre and radius fitted (bounded as ECRB) to Horii 1993's neutral arms and the earlier arm curves",
+        "site": "FCR_torus_site_FCR_side_r",
+        "geom": "FCR_torus_wrap_r",
+        "body": "lunate_r",
+        "geom_type": "sphere",
+        "direction_body": [
+          -0.6075,
+          0.696,
+          -0.3828
+        ],
+        "distance_radii": 2.0,
+        "geom_pos_before": [
+          0.0032,
+          -0.0045,
+          -0.019
+        ],
+        "geom_pos": [
+          0.0082,
+          -0.005478,
+          -0.014624
+        ],
+        "radius_before_m": 0.0015,
+        "radius_m": 0.001164,
+        "pos_before": [
+          0.0032,
+          -0.0045,
+          -0.019
+        ],
+        "fit": {
+          "rms_old": 3.07,
+          "jump": 1.24,
+          "z": [
+            -0.47,
+            0.8
+          ],
+          "neutral": [
+            -16.41,
+            -6.41
+          ],
+          "centre_shift_mm": 6.72
+        },
+        "pos": [
+          0.006786,
+          -0.003858,
+          -0.015515
+        ]
+      },
+      "EDM": {
+        "method": "dorsal; the cylinder grows 14 -> 23.6 mm radius (centre 0.7 mm) so that the outside wrap reproduces the earlier arm curves (the inside wrap held the tendon within the 14 mm circle)",
+        "site": "EDM_ellipsoid_site_EDM_side_r",
+        "geom": "EDM_ellipsoid_wrap_r",
+        "body": "lunate_r",
+        "geom_type": "cylinder",
+        "direction_body": [
+          -0.1563,
+          0.0094,
+          0.9877
+        ],
+        "distance_radii": 2.0,
+        "geom_pos_before": [
+          -0.0167,
+          -0.0022,
+          0.0048
+        ],
+        "geom_pos": [
+          -0.016643,
+          -0.001642,
+          0.004331
+        ],
+        "radius_before_m": 0.014,
+        "radius_m": 0.023627,
+        "pos_before": [
+          -0.0167,
+          0.0022,
+          0.015
+        ],
+        "fit": {
+          "rms_old": 0.0,
+          "jump": 0.49,
+          "z": null,
+          "neutral": null,
+          "centre_shift_mm": 0.73
+        },
+        "pos": [
+          -0.024029,
+          -0.001198,
+          0.051002
+        ]
+      }
     }
   }
 }

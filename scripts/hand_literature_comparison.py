@@ -417,7 +417,8 @@ def lumbrical_nodes(model: mujoco.MjModel) -> dict[str, Any]:
 def extrinsic_revisions(model: mujoco.MjModel) -> dict[str, Any]:
     """S7: junctura share of the neighbour MP extension under 1.5 kg on EDC4 / EDC3 (deg, links minus no links,
     myohand_r protocol of ``generate_extrinsic_muscles.py``), FCU flexion / ulnar and ECU extension / ulnar
-    moment arms at wrist neutral (mm; ECU in supination / neutral / pronation) and FDS5 force (N, % of FDS4)."""
+    moment arms at wrist neutral (mm; ECU in supination / neutral / pronation), FDS5 force (N, % of FDS4) and the
+    ECRL, ECRB and FCR extension / ulnar-deviation arms at wrist neutral (mm; wrap-side revision)."""
     if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_TENDON, "lig_JT34_r") < 0:
         return {}
     gen = _load_script("generate_extrinsic_muscles")
@@ -435,7 +436,12 @@ def extrinsic_revisions(model: mujoco.MjModel) -> dict[str, Any]:
         posture = {"pro_sup_r": np.radians(deg)}
         ecu.append(gen._arm(model, data, t, "flexion_r", posture))
     force = {n: model.actuator_gainprm[model.actuator(f"{n}_r").id][2] for n in ("FDS4", "FDS5")}
-    return {
+    wrist = {}  # wrap-side revision: extension (+) and ulnar-deviation (+) arms at wrist and forearm neutral
+    for name in ("ECRL", "ECRB", "FCR"):
+        data = mujoco.MjData(model)
+        t = model.tendon(f"{name}_r_tendon").id
+        wrist[f"{name.lower()}_moment_arms"] = [gen._arm(model, data, t, j, {}) for j in ("flexion_r", "deviation_r")]
+    return wrist | {
         "juncturae_ring_traction": share["EDC4"],
         "juncturae_middle_traction": share["EDC3"],
         "fcu_moment_arms": list(gen.fcu_arms(model)),
