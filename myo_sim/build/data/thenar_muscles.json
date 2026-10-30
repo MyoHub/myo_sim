@@ -16,7 +16,7 @@
     "barry2018": {
       "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
       "doi": "10.1016/j.jbiomech.2018.06.017",
-      "access": "paper closed; OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)",
+      "access": "OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)",
       "note": "Eq. (1): tendon slack length = (L_MT with all crossed joints at 0 - L_fo cos(alpha)) / 1.033."
     },
     "mcfarland2023": {
