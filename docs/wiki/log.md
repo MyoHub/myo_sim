@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-30 — Shared terminal tendon of the lateral bands (step time)
+Changed: `myo_sim/models/arm/assets/myoarm_r_tendon.xml` (EDC2-5, EIP, EDM and the junctura tie helpers), `scripts/fit_extensor_mechanism.py` (`pulley_fractions`), `tests/test_extensor_mechanism.py`, `myo_sim/build/data/hand_literature.json`, `docs/wiki/extensor-mechanism.md`, `hand-literature-comparison.md` (also an open check on the JT3/JT5 node ties), `CHANGELOG.md`
+Why: A profile of the CPU step found the two band branches of each extensor computing the same terminal tendon and DIP wrap twice; one shared branch with both fractions gives the same lengths and moment arms at 1-2 % less step time.
+
 ## 2026-10-30 — EDC2 wrist wrap: side site dorsal of its sphere
 Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (`EDCI_torus_site_EDC2_side_r`), `myoarm_r_muscle.xml` (refitted passive parameters), `myoarm_r_tendon.xml` (junctura links, springs), `myo_sim/build/data/extrinsic_muscles.json` (`edc2_wrap_side`, junctura fit), `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache), `hand_literature.json`, `scripts/generate_extrinsic_muscles.py` (side site from the table; the table is written on every run), `tests/test_extrinsic_muscles.py` (side site, CPU vs mujoco-warp EDC2 length with a negative control), `docs/wiki/hand-extrinsic-muscles.md`, `hand-literature-comparison.md`, `passive-moments-and-thenar.md`, `index.md`, `myo_sim/models/arm/README.md`, `README_hand.md`, `CHANGELOG.md`
 Why: EDC2's side site sat at the centre of its wrap sphere, so MuJoCo applied the inside wrap, which MuJoCo and mujoco-warp solve differently; off-centre but inside changes nothing, so the site moved out of the sphere on its dorsal side.

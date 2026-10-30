@@ -70,13 +70,14 @@ def test_lumbrical_fractions_reproduce_the_recorded_fit() -> None:
 
 
 def test_branches_carry_the_tabled_fractions() -> None:
-    """Every branched tendon has one pulley per branch with divisor 1 / fraction, and nothing else changes counts."""
+    """Every branched tendon has one pulley per branch with divisor 1 / fraction (the bands' common terminal tendon
+    one branch), and nothing else changes counts."""
     em = _script()
     table = em.load_table()
     spec = myo_sim.load_spec("myoarm_r")
     for row in table["muscles"]:
         divisors = [w[4] for w in tendon_path(spec.tendon(f"{row['name']}_r_tendon")) if w[0] == mujoco.mjtWrap.mjWRAP_PULLEY]
-        expected = [1.0 / f for f in em.branch_fractions(table, row).values()]
+        expected = [1.0 / f for f in em.pulley_fractions(em.branch_fractions(table, row)).values()]
         np.testing.assert_allclose(divisors, expected, rtol=1e-5, err_msg=row["name"])
         assert sum(em.branch_fractions(table, row).values()) <= 1.0 + 1e-9
 

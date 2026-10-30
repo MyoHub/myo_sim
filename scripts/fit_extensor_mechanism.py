@@ -9,7 +9,8 @@ ends at a junction site on the proximal phalanx (hood ``EM{d}_H_r``, radial band
 - central slip: junction -> ``EM{d}_CSP_r`` -> PIP wrap -> ``EM{d}_CS_r`` (base of the middle phalanx);
 - lateral band: junction -> band site -> band wrap (coaxial with the PIP) -> band site over the PIP on the
   middle phalanx -> ``EM{d}_T_r`` (convergence on the middle phalanx) -> DIP wrap -> ``EM{d}_TI_r`` (base of
-  the distal phalanx).
+  the distal phalanx). With both bands, their common terminal tendon from ``EM{d}_T_r`` on is one branch
+  carrying both band fractions (same length and moment arms, one terminal wrap; ``pulley_fractions``).
 
 What the branches leave of the force stays on the proximal phalanx at the junction. The oblique retinacular
 ligament (``lig_ORL{d}_r``) is a tension-only fixed tendon over PIP and DIP.
@@ -177,22 +178,41 @@ def _element(item: str) -> str:
     return f'<geom geom="{rest[0]}" sidesite="{rest[1]}"/>'
 
 
+def pulley_fractions(fractions: dict[str, float]) -> dict[str, float]:
+    """Force fraction of each pulley branch for the junction *fractions*.
+
+    With both lateral bands, their common terminal tendon is one branch (``terminal``) carrying both band
+    fractions, and each band branch ends where the bands converge (``EM{d}_T_r``). The tendon length and
+    moment arms are those of two full band branches; the terminal wrap is computed once.
+    """
+    out = dict(fractions)
+    if "radial_band" in out and "ulnar_band" in out:
+        out["terminal"] = out["radial_band"] + out["ulnar_band"]
+    return out
+
+
 def junction_branches(table: dict[str, Any], key: str, junction: str, fractions: dict[str, float]) -> list[str]:
     """Pulley branches from junction site *junction* of digit *key*, each with divisor 1 / its force fraction."""
     digit = table["digits"][key]
     pip = f'<geom geom="{digit["pip_wrap"]["geom"]}" sidesite="{digit["pip_wrap"]["sidesite"]}"/>'
     dip = f'<geom geom="{digit["dip_wrap"]["geom"]}" sidesite="{digit["dip_wrap"]["sidesite"]}"/>'
     wrap = f'<geom geom="EM{key}_band_wrap_r" sidesite="EM{key}_band_side_r"/>'
+    terminal = [f"EM{key}_T_r", dip, f"EM{key}_TI_r"]
     branches = {
         "central": [junction, f"EM{key}_CSP_r", pip, f"EM{key}_CS_r"],
-        "radial_band": [junction, f"EM{key}_RB_r", wrap, f"EM{key}_RBD_r", f"EM{key}_T_r", dip, f"EM{key}_TI_r"],
-        "ulnar_band": [junction, f"EM{key}_UB_r", wrap, f"EM{key}_UBD_r", f"EM{key}_T_r", dip, f"EM{key}_TI_r"],
+        "radial_band": [junction, f"EM{key}_RB_r", wrap, f"EM{key}_RBD_r", *terminal],
+        "ulnar_band": [junction, f"EM{key}_UB_r", wrap, f"EM{key}_UBD_r", *terminal],
+        "terminal": terminal,
     }
+    pulleys = pulley_fractions(fractions)
+    if "terminal" in pulleys:  # the bands stop where they converge
+        for band in ("radial_band", "ulnar_band"):
+            branches[band] = branches[band][: 1 - len(terminal)]
     lines = []
-    for branch, fraction in fractions.items():
+    for branch, fraction in pulleys.items():
         lines.append(f'<pulley divisor="{_number(1.0 / fraction)}"/>')
         items = branches[branch]
-        if items[1] == junction:  # a band junction starts its band branch at itself
+        if len(items) > 1 and items[1] == junction:  # a band junction starts its band branch at itself
             items = items[1:]
         lines += [item if item.startswith("<") else f'<site site="{item}"/>' for item in items]
     return lines

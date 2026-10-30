@@ -30,6 +30,11 @@ its divisor is 1 / fraction:
 - central slip: junction -> `CSP` -> PIP wrap (the EDC's) -> `CS`;
 - lateral band: junction -> band site -> band wrap -> band via site -> `T` -> DIP wrap (the EDC's) -> `TI`.
 
+A tendon with both bands (EDC2-5, EIP, EDM) writes their common terminal tendon `T` -> DIP wrap -> `TI` as one
+branch with divisor 1 / (sum of both band fractions), and each band branch ends at `T`. Length and moment
+arms are those of two full band branches (to roundoff); MuJoCo computes the terminal wrap once instead of
+twice, about 1-2 % of the CPU step time (`pulley_fractions` in `scripts/fit_extensor_mechanism.py`).
+
 Whatever the branches do not carry stays on the proximal phalanx at the junction (for the extensors: the
 sagittal bands and capsule; for the interossei: the bony part).
 

@@ -4,6 +4,10 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Shared terminal tendon of the lateral bands (all models with a hand; step time).** See `docs/wiki/extensor-mechanism.md` (*Topology*) and `hand-literature-comparison.md` (terminal branch).
+  - **Paths:** in EDC2-5, EIP and EDM (and the junctura tie helpers `node_JT{3,4,5}_edc_r`, which copy EDC3-5) the two lateral-band branches now end at `EM{d}_T_r`, and their common terminal tendon `EM{d}_T_r` -> DIP wrap -> `EM{d}_TI_r` is one pulley branch with divisor 1 / (both band fractions) (1.5873). Tendon lengths, moment arms and dynamics are unchanged to roundoff (1e-16 m); no element added, removed or renamed; tendon and wrap counts unchanged.
+  - **Effect:** CPU step (one thread) -0.8 to -2.2 %: `myohand_r` -0.9 %, `myohands` -0.8 %, `myoarm_r` -2.2 %, `myoarms` -1.4 %, `myofullbody` -1.8 %.
+  - **Downstream (MyoSuite):** none; code that walks a tendon's wrap list sees one more pulley in these tendons.
 - **EDC2 wrist wrap: side site dorsal of its sphere (all models with an arm or hand).** See `docs/wiki/hand-extrinsic-muscles.md` (*EDC2 wrist wrap*) and `hand-literature-comparison.md` (EDC2 wrap).
   - **Moved site:** `EDCI_torus_site_EDC2_side_r` (`_l`) from the centre of `EDCI_torus_wrap_r` to 7 mm dorsal of it (two radii, +z of `lunate_r`). With the side site inside the sphere MuJoCo applied the inside wrap (the tendon held within the sphere's circle), which MuJoCo and mujoco-warp solve differently where the deflection is small (EDC2 length up to 0.79 mm apart); EDC2 now wraps over the sphere's dorsal surface, and both agree within 1e-6 m. No element added, removed or renamed; counts unchanged.
   - **Effect on EDC2:** wrist extension arm 17.3 -> 18.7 mm at neutral (20.2 -> 24.0 mm at 60 deg extension, 6.2 -> 9.5 mm at 60 deg flexion), ulnar-deviation arm 2.3 -> 4.9 mm, length at q0 +1.4 mm; finger moment arms unchanged.
