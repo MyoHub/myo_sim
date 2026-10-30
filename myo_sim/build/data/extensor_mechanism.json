@@ -1,0 +1,765 @@
+{
+  "format": 1,
+  "description": "Finger extensor mechanism, option (a) of the extensor-mechanism proposal: each extensor and band-inserting intrinsic keeps one actuator and one tendon whose path ends at a junction site on the proximal phalanx and continues in MuJoCo pulley branches (divisor = 1 / force fraction) to the central-slip and terminal-tendon insertions. Written into the right-arm XML by scripts/fit_extensor_mechanism.py.",
+  "sources": {
+    "lee2008a": {
+      "citation": "Lee SW, Chen H, Towles JD, Kamper DG. Effect of finger posture on the tendon force distribution within the finger extensor mechanism. J Biomech Eng 130(5):051014, 2008. doi:10.1115/1.2978983"
+    },
+    "lee2008b": {
+      "citation": "Lee SW, Chen H, Towles JD, Kamper DG. Estimation of the effective static moment arms of the tendons in the index finger extensor mechanism. J Biomech 41(7):1567-1573, 2008. doi:10.1016/j.jbiomech.2008.02.008"
+    },
+    "an1983": {
+      "citation": "An KN, Ueba Y, Chao EY, Cooney WP, Linscheid RL. Tendon excursion and moment arm of index finger muscles. J Biomech 16(6):419-425, 1983. doi:10.1016/0021-9290(83)90074-X"
+    },
+    "brook1995": {
+      "citation": "Brook N, Mizrahi J, Shoham M, Dayan J. A biomechanical model of index finger dynamics. Med Eng Phys 17(1):54-63, 1995. doi:10.1016/1350-4533(95)90378-O"
+    },
+    "chaoan1978": {
+      "citation": "Chao EY, An KN. Graphical interpretation of the solution to the redundant problem in biomechanics. J Biomech Eng 100:159-167, 1978. doi:10.1115/1.3426207 (coefficients as reproduced by Brook et al. 1995, Eqs. 12a-d)"
+    },
+    "garciaelias1991a": {
+      "citation": "Garcia-Elias M, An KN, Berglund L, Linscheid RL, Cooney WP, Chao EYS. Extensor mechanism of the fingers. I. A quantitative geometric study. J Hand Surg Am 16(6):1130-1136, 1991. doi:10.1016/S0363-5023(10)80079-6"
+    },
+    "ueba2011": {
+      "citation": "Ueba H, Moradi N, Erne HC, Gardner TR, Strauch RJ. An anatomic and biomechanical study of the oblique retinacular ligament and its role in finger extension. J Hand Surg Am 36(12):1959-1964, 2011. doi:10.1016/j.jhsa.2011.09.033"
+    },
+    "harrisrutledge1972": {
+      "citation": "Harris C, Rutledge GL. The functional anatomy of the extensor mechanism of the finger. J Bone Joint Surg Am 54(4):713-726, 1972. doi:10.2106/00004623-197254040-00003"
+    },
+    "landsmeer1949": {
+      "citation": "Landsmeer JMF. The anatomy of the dorsal aponeurosis of the human finger and its functional significance. Anat Rec 104(1):31-44, 1949. doi:10.1002/ar.1091040105"
+    },
+    "leijnse2010": {
+      "citation": "Leijnse JNAL, Quesada PM, Spoor CW. Kinematic evaluation of the finger's interphalangeal joints coupling mechanism. J Biomech 43(12):2381-2393, 2010. doi:10.1016/j.jbiomech.2010.04.021"
+    },
+    "leijnsespoor2012": {
+      "citation": "Leijnse JNAL, Spoor CW. Reverse engineering finger extensor apparatus morphology from measured coupled interphalangeal joint angle trajectories: a generic 2D kinematic model. J Biomech 45(3):569-578, 2012. doi:10.1016/j.jbiomech.2011.11.002"
+    },
+    "kamper2002": {
+      "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002."
+    },
+    "myohand": {
+      "citation": "MyoHand site positions of the S4 model (MyoSuite / MoBL-derived paths), re-used as junction sites."
+    }
+  },
+  "fractions": {
+    "extensor": {
+      "r": {
+        "value": 0.63,
+        "source": "lee2008a",
+        "where": "Table 5 (EDC 0.63 +- 0.10, EIP 0.64 +- 0.09; no IP-posture effect)",
+        "meaning": "terminal share of the force that reaches the slips"
+      },
+      "c": {
+        "value": 1.0,
+        "method": "least squares (weights 1/SD^2) of the index EDC2 and EIP DIP and PIP moment arms, linear in c, against An 1983 (averaged over PIP 0-90 / DIP 0-60 deg, other joints 0) and Lee 2008b (mean of the nine postures); one c for every extensor",
+        "meaning": "share of the extensor force that reaches the slips; 1 - c stays on the proximal phalanx at the hood (sagittal bands, capsule)",
+        "result": {
+          "unbounded_value": 1.088,
+          "z": {
+            "EDC2 dip an1983": -0.66,
+            "EDC2 dip lee2008b": -0.13,
+            "EDC2 pip an1983": -0.21,
+            "EDC2 pip lee2008b": -0.25,
+            "EIP dip an1983": 0.07,
+            "EIP dip lee2008b": -0.29,
+            "EIP pip an1983": -0.02,
+            "EIP pip lee2008b": -0.51
+          },
+          "rms_z": 0.337
+        }
+      },
+      "branches": {
+        "central": "c (1 - r)",
+        "radial_band": "c r / 2",
+        "ulnar_band": "c r / 2"
+      }
+    },
+    "lumbrical": {
+      "central": {
+        "value": 0.3678
+      },
+      "band": {
+        "value": 0.2277
+      },
+      "previous": {
+        "central": 0.3333,
+        "band": 0.6667,
+        "source": "chaoan1978",
+        "where": "Brook et al. 1995, Eqs. 12a-d: F_RB = 2/3 F_LU + ..., F_ES = 1/3 F_LU + ...",
+        "note": "EM-a values; the 2/3 terminal share gave the first lumbrical a DIP extension arm of 2.1 mm against 0.7 +- 0.6 mm (An 1983) and an effective 0.53 mm (Lee 2008b)"
+      },
+      "targets": {
+        "dip": {
+          "source": "an1983",
+          "where": "Table 3 (LU; extension, averaged over DIP 0-60 deg)",
+          "mean_mm": 0.7,
+          "sd_mm": 0.6
+        },
+        "pip": {
+          "source": "an1983",
+          "where": "Table 3 (LU; extension, averaged over PIP 0-90 deg)",
+          "mean_mm": 1.8,
+          "sd_mm": 1.3
+        }
+      },
+      "method": "S5: both fractions solved from the two An 1983 arms of the index lumbrical with the model geometry (fit_extensor_mechanism.fit_lumbrical); the remainder ends on the proximal phalanx at the radial band junction (Eladoumikdachi 2002 II: bony insertion in 14 %, volar plate in 21-63 % of lumbricals); applied to all four lumbricals. The interossei keep the Chao & An fractions: their index arms (DIP 1.0, PIP 1.9 mm) lie between An 1983 (UI 1.6 +- 0.5 / 2.6 +- 0.8) and Lee 2008b (FPI 0.90 / 0.13).",
+      "result": {
+        "unit_arms_mm": {
+          "central": {
+            "dip": {
+              "an1983": 0.0,
+              "lee2008b": 0.0
+            },
+            "pip": {
+              "an1983": 3.718,
+              "lee2008b": 4.356
+            }
+          },
+          "band": {
+            "dip": {
+              "an1983": 3.074,
+              "lee2008b": 3.366
+            },
+            "pip": {
+              "an1983": 1.9,
+              "lee2008b": 1.9
+            }
+          }
+        },
+        "model_mm": {
+          "dip": {
+            "an1983": 0.7,
+            "lee2008b": 0.77
+          },
+          "pip": {
+            "an1983": 1.8,
+            "lee2008b": 2.03
+          }
+        },
+        "z_an1983": {
+          "dip": 0.0,
+          "pip": 0.0
+        },
+        "bone": 0.4045
+      }
+    },
+    "interosseous": {
+      "band": {
+        "value": 0.3333
+      },
+      "central": {
+        "value": 0.3333
+      },
+      "bone": 0.3333,
+      "source": "chaoan1978",
+      "where": "Brook et al. 1995, Eqs. 12a-d: F_UB = 1/3 F_UI + ..., F_ES = ... + 1/3 F_UI; the remaining third ends on the proximal phalanx at the band site",
+      "note": "kept at S5: the model's index arms (palmar interosseous: DIP 1.0, PIP 1.9 mm) lie between An 1983 (UI: 1.6 +- 0.5, 2.6 +- 0.8 mm) and Lee 2008b (FPI: 0.90, 0.13 mm)"
+    }
+  },
+  "band_geometry": {
+    "dorsal_of_pip_axis_m": {
+      "value": 0.0019,
+      "source": "garciaelias1991a",
+      "where": "p. 1134: central band 7.1 mm dorsal of the PIP centre, lateral bands 5.2 mm palmar of it in extension",
+      "method": "7.1 - 5.2 mm; also the radius of the band wrap cylinder coaxial with the PIP axis, so the bands stay dorsal of the axis (option (a) keeps their force at any flexion; Garcia-Elias: the bands that move palmar in full flexion carry little tension)"
+    },
+    "proximal_of_pip_m": {
+      "value": 0.004,
+      "source": "judgement",
+      "method": "band sites near the PIP head, where the intrinsic tendons join the bands (Harris & Rutledge 1972 p. 717: the bands leave the mechanism 1-2 cm proximal of the PIP, which places the junction on the distal proximal phalanx)"
+    },
+    "lateral": {
+      "method": "half the bone width along the PIP axis over the last 8 mm of the proximal phalanx (mesh), per digit; radial = +PIP axis"
+    },
+    "band_side_m": {
+      "value": 0.004,
+      "method": "side site dorsal of the PIP axis for the band wrap"
+    },
+    "distal_band_site": {
+      "radius_m": {
+        "value": 0.0022
+      },
+      "angle_deg": {
+        "value": 60.0
+      },
+      "source": "judgement",
+      "method": "via site on the middle phalanx just distal and dorsal of the PIP axis (radius from the axis, angle from the distal toward the dorsal direction), lateral like the band sites: the band leaves the band wrap there, so it wraps the cylinder dorsally over the whole PIP range (MuJoCo drops a wrap whose straight segment misses the cylinder palmarly, which turned the bands into flexors beyond 95 deg)"
+    }
+  },
+  "digits": {
+    "2": {
+      "bodies": {
+        "proximal": "2proxph_r",
+        "middle": "midph2_r",
+        "distal": "distph2_r"
+      },
+      "joints": {
+        "pip": "pm2_flexion_r",
+        "dip": "md2_flexion_r"
+      },
+      "pip_wrap": {
+        "geom": "Secondpm_wrap_r",
+        "sidesite": "Secondpm_site_EDC2_side_r"
+      },
+      "dip_wrap": {
+        "geom": "Secondmd_wrap_r",
+        "sidesite": "Secondmd_site_EDC2_side_r"
+      },
+      "sites": {
+        "H": {
+          "pos": [
+            0.002,
+            -0.01,
+            0.007
+          ],
+          "source": "MyoHand EDC2-P5 (dorsal proximal phalanx, distal of the MCP wrap)"
+        },
+        "CSP": {
+          "pos": [
+            0.007,
+            -0.038,
+            0.012
+          ],
+          "source": "MyoHand EDC2-P6 (dorsal distal proximal phalanx)"
+        },
+        "CS": {
+          "pos": [
+            -0.0009,
+            -0.0046,
+            0.0074
+          ],
+          "source": "MyoHand EDC2-P7 (dorsal base of the middle phalanx)"
+        },
+        "T": {
+          "pos": [
+            0.003,
+            -0.0249,
+            0.0048
+          ],
+          "source": "MyoHand EDC2-P8 (dorsal distal middle phalanx)"
+        },
+        "TI": {
+          "pos": [
+            0.0,
+            -0.0056,
+            0.0034
+          ],
+          "source": "MyoHand EDC2-P9 (dorsal base of the distal phalanx)"
+        }
+      }
+    },
+    "3": {
+      "bodies": {
+        "proximal": "3proxph_r",
+        "middle": "midph3_r",
+        "distal": "distph3_r"
+      },
+      "joints": {
+        "pip": "pm3_flexion_r",
+        "dip": "md3_flexion_r"
+      },
+      "pip_wrap": {
+        "geom": "Thirdpm_wrap_r",
+        "sidesite": "Thirdpm_site_EDC3_side_r"
+      },
+      "dip_wrap": {
+        "geom": "Thirdmd_wrap_r",
+        "sidesite": "Thirdmd_site_EDC3_side_r"
+      },
+      "sites": {
+        "H": {
+          "pos": [
+            -0.0012,
+            -0.0122,
+            0.0107
+          ],
+          "source": "MyoHand EDC3-P5 (dorsal proximal phalanx, distal of the MCP wrap)"
+        },
+        "CSP": {
+          "pos": [
+            0.0017,
+            -0.0414,
+            0.0113
+          ],
+          "source": "MyoHand EDC3-P6 (dorsal distal proximal phalanx)"
+        },
+        "CS": {
+          "pos": [
+            0.0004,
+            -0.0042,
+            0.0062
+          ],
+          "source": "MyoHand EDC3-P7 (dorsal base of the middle phalanx)"
+        },
+        "T": {
+          "pos": [
+            0.0011,
+            -0.029,
+            0.0051
+          ],
+          "source": "MyoHand EDC3-P8 (dorsal distal middle phalanx)"
+        },
+        "TI": {
+          "pos": [
+            0.0008,
+            -0.0058,
+            0.0041
+          ],
+          "source": "MyoHand EDC3-P9 (dorsal base of the distal phalanx)"
+        }
+      }
+    },
+    "4": {
+      "bodies": {
+        "proximal": "4proxph_r",
+        "middle": "midph4_r",
+        "distal": "distph4_r"
+      },
+      "joints": {
+        "pip": "pm4_flexion_r",
+        "dip": "md4_flexion_r"
+      },
+      "pip_wrap": {
+        "geom": "Fourthpm_wrap_r",
+        "sidesite": "Fourthpm_site_EDC4_side_r"
+      },
+      "dip_wrap": {
+        "geom": "Fourthmd_wrap_r",
+        "sidesite": "Fourthmd_site_EDC4_side_r"
+      },
+      "sites": {
+        "H": {
+          "pos": [
+            -0.002,
+            -0.0084,
+            0.0088
+          ],
+          "source": "MyoHand EDC4-P5 (dorsal proximal phalanx, distal of the MCP wrap)"
+        },
+        "CSP": {
+          "pos": [
+            -0.0038,
+            -0.038,
+            0.0048
+          ],
+          "source": "MyoHand EDC4-P6 (dorsal distal proximal phalanx)"
+        },
+        "CS": {
+          "pos": [
+            -0.0019,
+            -0.0058,
+            0.0088
+          ],
+          "source": "MyoHand EDC4-P7 (dorsal base of the middle phalanx)"
+        },
+        "T": {
+          "pos": [
+            -0.004,
+            -0.026,
+            0.006
+          ],
+          "source": "MyoHand EDC4-P8 (dorsal distal middle phalanx)"
+        },
+        "TI": {
+          "pos": [
+            -0.001,
+            -0.008,
+            0.003
+          ],
+          "source": "MyoHand EDC4-P9 (dorsal base of the distal phalanx)"
+        }
+      }
+    },
+    "5": {
+      "bodies": {
+        "proximal": "5proxph_r",
+        "middle": "midph5_r",
+        "distal": "distph5_r"
+      },
+      "joints": {
+        "pip": "pm5_flexion_r",
+        "dip": "md5_flexion_r"
+      },
+      "pip_wrap": {
+        "geom": "Fifthpm_wrap_r",
+        "sidesite": "Fifthpm_site_EDC5_side_r"
+      },
+      "dip_wrap": {
+        "geom": "Fifthmd_wrap_r",
+        "sidesite": "Fifthmd_site_EDC5_side_r"
+      },
+      "sites": {
+        "H": {
+          "pos": [
+            -0.0045,
+            -0.0123,
+            0.0063
+          ],
+          "source": "MyoHand EDC5-P5 (dorsal proximal phalanx, distal of the MCP wrap)"
+        },
+        "CSP": {
+          "pos": [
+            -0.0079,
+            -0.0322,
+            0.0025
+          ],
+          "source": "MyoHand EDC5-P6 (dorsal distal proximal phalanx)"
+        },
+        "CS": {
+          "pos": [
+            -0.005,
+            -0.01,
+            0.002
+          ],
+          "source": "MyoHand EDC5-P7 (dorsal base of the middle phalanx)"
+        },
+        "T": {
+          "pos": [
+            -0.005,
+            -0.021,
+            0.0
+          ],
+          "source": "MyoHand EDC5-P8 (dorsal distal middle phalanx)"
+        },
+        "TI": {
+          "pos": [
+            -0.002,
+            -0.007,
+            0.0
+          ],
+          "source": "MyoHand EDC5-P9 (dorsal base of the distal phalanx)"
+        }
+      }
+    }
+  },
+  "muscles": [
+    {
+      "name": "EDC2",
+      "digit": 2,
+      "kind": "extensor",
+      "main_path": [
+        "site:EDC2-P1_r",
+        "site:EDC2-P2_r",
+        "site:EDC2-P3_r",
+        "geom:EDCI_torus_wrap_r:EDCI_torus_site_EDC2_side_r",
+        "site:EDC2-P4_r",
+        "geom:2ndmcp_ellipsoid_wrap_r:2ndmcp_ellipsoid_site_EDC2_side_r"
+      ],
+      "s4": {
+        "length_q0_m": 0.4162833053001095,
+        "lengthrange_m": [
+          0.38795204557095025,
+          0.4475130455709503
+        ]
+      }
+    },
+    {
+      "name": "EIP",
+      "digit": 2,
+      "kind": "extensor",
+      "main_path": [
+        "site:EIP-P1_r",
+        "site:EIP-P2_r",
+        "site:EIP-P3_r",
+        "geom:ExtensorEllipse_ellipsoid_wrap_r:ExtensorEllipse_ellipsoid_site_EIP_side_r",
+        "site:EIP-P4_r",
+        "site:EIP-P5_r",
+        "geom:2ndmcp_ellipsoid_wrap_r:2ndmcp_ellipsoid_site_EIP_side_r"
+      ],
+      "s4": {
+        "length_q0_m": 0.25843270919640476,
+        "lengthrange_m": [
+          0.2426210468223898,
+          0.28785804682238986
+        ]
+      }
+    },
+    {
+      "name": "EDC3",
+      "digit": 3,
+      "kind": "extensor",
+      "main_path": [
+        "site:EDC3-P1_r",
+        "site:EDC3-P2_r",
+        "site:EDC3-P3_r",
+        "geom:EDCM_torus_wrap_r:EDCM_torus_site_EDC3_side_r",
+        "site:EDC3-P4_r",
+        "geom:3rdmcp_ellipsoid_wrap_r:3rdmcp_ellipsoid_site_EDC3_side_r"
+      ],
+      "s4": {
+        "length_q0_m": 0.4179372736431405,
+        "lengthrange_m": [
+          0.3899130385076521,
+          0.44685703850765207
+        ]
+      }
+    },
+    {
+      "name": "EDC4",
+      "digit": 4,
+      "kind": "extensor",
+      "main_path": [
+        "site:EDC4-P1_r",
+        "site:EDC4-P2_r",
+        "site:EDC4-P3_r",
+        "geom:EDCR_torus_wrap_r:EDCR_torus_site_EDC4_side_r",
+        "site:EDC4-P4_r",
+        "geom:4thmcp_ellipsoid_wrap_r:4thmcp_ellipsoid_site_EDC4_side_r"
+      ],
+      "s4": {
+        "length_q0_m": 0.4137522487801881,
+        "lengthrange_m": [
+          0.38670996775005073,
+          0.45115796775005074
+        ]
+      }
+    },
+    {
+      "name": "EDC5",
+      "digit": 5,
+      "kind": "extensor",
+      "main_path": [
+        "site:EDC5-P1_r",
+        "site:EDC5-P2_r",
+        "site:EDC5-P3_r",
+        "geom:EDCL_torus_wrap_r:EDCL_torus_site_EDC5_side_r",
+        "site:EDC5-P4_r",
+        "geom:5thmcp_ellipsoid_wrap_r:5thmcp_ellipsoid_site_EDC5_side_r"
+      ],
+      "s4": {
+        "length_q0_m": 0.39610586142155985,
+        "lengthrange_m": [
+          0.3869689791863382,
+          0.4318519791863382
+        ]
+      }
+    },
+    {
+      "name": "EDM",
+      "digit": 5,
+      "kind": "extensor",
+      "main_path": [
+        "site:EDM-P1_r",
+        "site:EDM-P2_r",
+        "site:EDM-P3_r",
+        "site:EDM-P4_r",
+        "geom:EDM_ellipsoid_wrap_r:EDM_ellipsoid_site_EDM_side_r",
+        "site:EDM-P5_r",
+        "site:EDM-P6_r",
+        "geom:5thmcp_ellipsoid_wrap_r:5thmcp_ellipsoid_site_EDC5_side_r"
+      ],
+      "s4": {
+        "length_q0_m": 0.3905851242435442,
+        "lengthrange_m": [
+          0.3757719747052222,
+          0.4162509747052222
+        ]
+      }
+    }
+  ],
+  "orl": {
+    "method": "One fixed tendon per finger over PIP and DIP, tension-only (deadband spring): length = r (q_DIP - q_PIP) with equal moment arms r = the model's terminal-tendon DIP arm at q = 0 (judgement: Landsmeer 1949 places the ORL palmar of the PIP axis and in the terminal tendon at the DIP; no source gives the arms). Slack = r x 30 deg, so it never acts in unresisted flexion with PIP-DIP differences up to 30 deg (Harris & Rutledge 1972, Table I). Stiffness fitted so that its share of the DIP resistance at DIP 45 deg, PIP 0, MCP 0 with 1.96 N on the extensor is Ueba 2011's 25 %; the total there is the Kamper 2002 DIP static torque plus the preload moment.",
+    "targets": {
+      "source": "ueba2011",
+      "where": "p. 1962",
+      "pip_deg": [
+        0,
+        30,
+        60,
+        90
+      ],
+      "share_percent": [
+        25,
+        31,
+        18,
+        3
+      ],
+      "dip_deg": 45,
+      "preload_N": 1.96
+    },
+    "slack_difference_deg": {
+      "value": 30.0,
+      "source": "harrisrutledge1972",
+      "where": "Tables I-II, pp. 715-716"
+    },
+    "result": {
+      "2": {
+        "arm_m": 0.003575,
+        "slack_m": 0.0018716,
+        "stiffness_N_per_m": 3755.5,
+        "total_moment_Nm_at_target": 0.0503,
+        "share_percent": [
+          25.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "3": {
+        "arm_m": 0.003063,
+        "slack_m": 0.001604,
+        "stiffness_N_per_m": 5095.1,
+        "total_moment_Nm_at_target": 0.0501,
+        "share_percent": [
+          25.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "4": {
+        "arm_m": 0.005496,
+        "slack_m": 0.0028776,
+        "stiffness_N_per_m": 1644.0,
+        "total_moment_Nm_at_target": 0.052,
+        "share_percent": [
+          25.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "5": {
+        "arm_m": 0.002988,
+        "slack_m": 0.0015647,
+        "stiffness_N_per_m": 5332.4,
+        "total_moment_Nm_at_target": 0.0499,
+        "share_percent": [
+          25.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "ranges": {
+    "an1983_pip_deg": [
+      0,
+      90
+    ],
+    "an1983_dip_deg": [
+      0,
+      60
+    ]
+  },
+  "targets": {
+    "EDC2": {
+      "dip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (EC)",
+          "mean_mm": 2.2,
+          "sd_mm": 0.4
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (EDC)",
+          "mean_mm": 2.26,
+          "sd_mm": 1.08
+        }
+      ],
+      "pip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (EC)",
+          "mean_mm": 2.8,
+          "sd_mm": 1.1
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (EDC)",
+          "mean_mm": 3.1,
+          "sd_mm": 1.18
+        }
+      ]
+    },
+    "EIP": {
+      "dip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (EI)",
+          "mean_mm": 1.9,
+          "sd_mm": 0.5
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (EIP)",
+          "mean_mm": 2.41,
+          "sd_mm": 1.0
+        }
+      ],
+      "pip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (EI)",
+          "mean_mm": 2.6,
+          "sd_mm": 1.1
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (EIP)",
+          "mean_mm": 3.42,
+          "sd_mm": 1.2
+        }
+      ]
+    }
+  },
+  "checks": {
+    "LUM1": {
+      "dip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (LU)",
+          "mean_mm": 0.7,
+          "sd_mm": 0.6
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (LUM)",
+          "mean_mm": 0.53
+        }
+      ],
+      "pip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (LU)",
+          "mean_mm": 1.8,
+          "sd_mm": 1.3
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (LUM)",
+          "mean_mm": -0.84
+        }
+      ]
+    },
+    "PI1": {
+      "dip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (UI)",
+          "mean_mm": 1.6
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (FPI)",
+          "mean_mm": 0.9
+        }
+      ],
+      "pip": [
+        {
+          "source": "an1983",
+          "where": "Table 3 (UI)",
+          "mean_mm": 2.6
+        },
+        {
+          "source": "lee2008b",
+          "where": "Table 4 (FPI)",
+          "mean_mm": 0.13
+        }
+      ]
+    }
+  }
+}

@@ -1,278 +1,278 @@
 <mujocoinclude>
     <tendon>
-        <spatial name="s_glenohum_ligament" springlength="0.0448">
+        <spatial name="s_glenohum_ligament_r" springlength="0.0448">
             <site site="s_glenohum_s_glenohum-P1_r"/>
-            <geom geom="LIGhh_s_ellipsoid_s_glenohum" sidesite="LIGhh_s_ellipsoid_s_glenohum_1_sidesite_r"/>
+            <geom geom="LIGhh_s_ellipsoid_s_glenohum_r" sidesite="LIGhh_s_ellipsoid_s_glenohum_1_sidesite_r"/>
             <site site="s_glenohum_s_glenohum-P2_r"/>
         </spatial>
-        <spatial name="m_glenohum_ligament" springlength="0.0452">
+        <spatial name="m_glenohum_ligament_r" springlength="0.0452">
             <site site="m_glenohum_m_glenohum-P1_r"/>
-            <geom geom="LIGhh_mi_ellipsoid_m_glenohum" sidesite="LIGhh_mi_ellipsoid_m_glenohum_1_sidesite_r"/>
+            <geom geom="LIGhh_mi_ellipsoid_m_glenohum_r" sidesite="LIGhh_mi_ellipsoid_m_glenohum_1_sidesite_r"/>
             <site site="m_glenohum_m_glenohum-P2_r"/>
         </spatial>
-        <spatial name="i_glenohum_ligament" springlength="0.0421">
+        <spatial name="i_glenohum_ligament_r" springlength="0.0421">
             <site site="i_glenohum_i_glenohum-P1_r"/>
-            <geom geom="LIGhh_mi_ellipsoid_i_glenohum" sidesite="LIGhh_mi_ellipsoid_i_glenohum_1_sidesite_r"/>
+            <geom geom="LIGhh_mi_ellipsoid_i_glenohum_r" sidesite="LIGhh_mi_ellipsoid_i_glenohum_1_sidesite_r"/>
             <site site="i_glenohum_i_glenohum-P2_r"/>
         </spatial>
-        <spatial name="coracohum_ligament" springlength="0.0501">
+        <spatial name="coracohum_ligament_r" springlength="0.0501">
             <site site="coracohum_coracohum-P1_r"/>
-            <geom geom="LIGhh_s_ellipsoid_coracohum" sidesite="LIGhh_s_ellipsoid_coracohum_1_sidesite_r"/>
+            <geom geom="LIGhh_s_ellipsoid_coracohum_r" sidesite="LIGhh_s_ellipsoid_coracohum_1_sidesite_r"/>
             <site site="coracohum_coracohum-P2_r"/>
         </spatial>
-        <spatial name="DELT1_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="DELT1_r_tendon" class="myoarm_upperarm_muscle">
             <site site="DELT1_DELT1-P1_r"/>
             <site site="DELT1_DELT1-P2_r"/>
-            <geom geom="DELT1hh_ellipsoid_DELT1" sidesite="DELT1hh_ellipsoid_DELT1_2_sidesite_r"/>
+            <geom geom="DELT1hh_ellipsoid_DELT1_r" sidesite="DELT1hh_ellipsoid_DELT1_2_sidesite_r"/>
             <site site="DELT1_DELT1-P3_r"/>
             <site site="DELT1_DELT1-P4_r"/>
         </spatial>
-        <spatial name="DELT2_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="DELT2_r_tendon" class="myoarm_upperarm_muscle">
             <site site="DELT2_DELT2-P1_r"/>
-            <geom geom="delt2hum_cylinder" sidesite="delt2hum_cylinder_DELT2_1_sidesite_r"/>
+            <geom geom="delt2hum_cylinder_r" sidesite="delt2hum_cylinder_DELT2_1_sidesite_r"/>
             <site site="DELT2_DELT2-P2_r"/>
-            <geom geom="Deltoid2_ellipsoid_DELT2" sidesite="Deltoid2_ellipsoid_DELT2_2_sidesite_r"/>
+            <geom geom="Deltoid2_ellipsoid_DELT2_r" sidesite="Deltoid2_ellipsoid_DELT2_2_sidesite_r"/>
             <site site="DELT2_DELT2-P3_r"/>
             <site site="DELT2_DELT2-P4_r"/>
         </spatial>
-        <spatial name="DELT3_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="DELT3_r_tendon" class="myoarm_upperarm_muscle">
             <site site="DELT3_DELT3-P1_r"/>
-            <geom geom="Delt3_torus" sidesite="Delt3_torus_DELT3_1_sidesite_r"/>
+            <geom geom="Delt3_torus_r" sidesite="Delt3_torus_DELT3_1_sidesite_r"/>
             <site site="DELT3_DELT3-P2_r"/>
-            <geom geom="delt3hum_ellipsoid_DELT3" sidesite="delt3hum_ellipsoid_DELT3_2_sidesite_r"/>
+            <geom geom="delt3hum_ellipsoid_DELT3_r" sidesite="delt3hum_ellipsoid_DELT3_2_sidesite_r"/>
             <site site="DELT3_DELT3-P3_r"/>
         </spatial>
-        <spatial name="SUPSP_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="SUPSP_r_tendon" class="myoarm_upperarm_muscle">
             <site site="SUPSP_SUPSP-P1_r"/>
-            <geom geom="SUPSP_ellipsoid_SUPSP" sidesite="SUPSP_ellipsoid_SUPSP_1_sidesite_r"/>
+            <geom geom="SUPSP_ellipsoid_SUPSP_r" sidesite="SUPSP_ellipsoid_SUPSP_1_sidesite_r"/>
             <site site="SUPSP_SUPSP-P2_r"/>
             <site site="SUPSP_SUPSP-P3_r"/>
         </spatial>
-        <spatial name="INFSP_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="INFSP_r_tendon" class="myoarm_upperarm_muscle">
             <site site="INFSP_INFSP-P1_r"/>
-            <geom geom="infsp_new_cylinder" sidesite="infsp_new_sidesite_r"/>
+            <geom geom="infsp_new_cylinder_r" sidesite="infsp_new_sidesite_r"/>
             <site site="INFSP_INFSP-P2_r"/>
             <site site="INFSP_INFSP-P3_r"/>
         </spatial>
-        <spatial name="SUBSC_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="SUBSC_r_tendon" class="myoarm_upperarm_muscle">
             <site site="SUBSC_SUBSC-P1_r"/>
-            <geom geom="SUBSCAP_ellipsoid_SUBSC" sidesite="SUBSCAP_ellipsoid_SUBSC_1_sidesite_r"/>
+            <geom geom="SUBSCAP_ellipsoid_SUBSC_r" sidesite="SUBSCAP_ellipsoid_SUBSC_1_sidesite_r"/>
             <site site="SUBSC_SUBSC-P2_r"/>
             <site site="SUBSC_SUBSC-P3_r"/>
         </spatial>
-        <spatial name="TMIN_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="TMIN_r_tendon" class="myoarm_upperarm_muscle">
             <site site="TMIN_TMIN-P1_r"/>
             <!--<geom geom="INFSP_and_TMIN_hum_head_ellipsoid_TMIN" sidesite="INFSP_and_TMIN_hum_head_ellipsoid_TMIN_1_sidesite_r"/>-->
             <site site="TMIN_TMIN-P2_r"/>
             <site site="TMIN_TMIN-P3_r"/>
         </spatial>
-        <spatial name="TMAJ_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="TMAJ_r_tendon" class="myoarm_upperarm_muscle">
             <site site="TMAJ_TMAJ-P1_r"/>
-            <geom geom="TMAJ_LAThum_cylinder" sidesite="TMAJ_LAThum_cylinder_TMAJ_1_sidesite_r"/>
+            <geom geom="TMAJ_LAThum_cylinder_r" sidesite="TMAJ_LAThum_cylinder_TMAJ_1_sidesite_r"/>
             <site site="TMAJ_TMAJ-P2_r"/>
-            <geom geom="LAT_TMAJ2hh_sphere" sidesite="LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r"/>
+            <geom geom="LAT_TMAJ2hh_sphere_r" sidesite="LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r"/>
             <site site="TMAJ_TMAJ-P3_r"/>
             <site site="TMAJ_TMAJ-P4_r"/>
         </spatial>
-        <spatial name="PECM1_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="PECM1_r_tendon" class="myoarm_upperarm_muscle">
             <site site="PECM1_PECM1-P1_r"/>
             <site site="PECM1_PECM1-P2_r"/>
-            <geom geom="PEC1hh_ellipsoid_PECM1" sidesite="PEC1hh_ellipsoid_PECM1_2_sidesite_r"/>
+            <geom geom="PEC1hh_ellipsoid_PECM1_r" sidesite="PEC1hh_ellipsoid_PECM1_2_sidesite_r"/>
             <site site="PECM1_PECM1-P3_r"/>
             <site site="PECM1_PECM1-P4_r"/>
         </spatial>
-        <spatial name="PECM2_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="PECM2_r_tendon" class="myoarm_upperarm_muscle">
             <site site="PECM2_PECM2-P1_r"/>
-            <geom geom="PEC12hum_cylinder" sidesite="PEC12hum_cylinder_PECM2_1_sidesite_r"/>
+            <geom geom="PEC12hum_cylinder_r" sidesite="PEC12hum_cylinder_PECM2_1_sidesite_r"/>
             <site site="PECM2_PECM2-P2_r"/>
-            <geom geom="TMAJ_LAT_PEC_CORBhh_sphere" />
+            <geom geom="TMAJ_LAT_PEC_CORBhh_sphere_r" />
             <site site="PECM2_PECM2-P3_r"/>
             <geom geom="Thorax_ellipsoid_PECM2" sidesite="Thorax_ellipsoid_PECM2_3_sidesite_r"/>
             <site site="PECM2_PECM2-P4_r"/>
         </spatial>
-        <spatial name="PECM3_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="PECM3_r_tendon" class="myoarm_upperarm_muscle">
             <site site="PECM3_PECM3-P1_r"/>
             <site site="PECM3_PECM3-P2_r"/>
-            <geom geom="PEC23hh_sphere" />
+            <geom geom="PEC23hh_sphere_r" />
             <site site="PECM3_PECM3-P3_r"/>
             <geom geom="Thorax_ellipsoid_PECM3" sidesite="Thorax_ellipsoid_PECM3_3_sidesite_r"/>
             <site site="PECM3_PECM3-P4_r"/>
         </spatial>
-        <spatial name="LAT1_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="LAT1_r_tendon" class="myoarm_upperarm_muscle">
             <site site="LAT1_LAT1-P1_r"/>
-            <geom geom="TMAJ_LAThum_cylinder" sidesite="TMAJ_LAThum_cylinder_LAT1_1_sidesite_r"/>
+            <geom geom="TMAJ_LAThum_cylinder_r" sidesite="TMAJ_LAThum_cylinder_LAT1_1_sidesite_r"/>
             <site site="LAT1_LAT1-P2_r"/>
-            <geom geom="delt2hum_cylinder" sidesite="LAT_TMAJ2hh_sphere_LAT1_2_sidesite_r"/>
+            <geom geom="delt2hum_cylinder_r" sidesite="LAT_TMAJ2hh_sphere_LAT1_2_sidesite_r"/>
             <site site="LAT1_LAT1-P3_r"/>
             <site site="LAT1_LAT1-P4_r"/>
             <site site="LAT1_LAT1-P5_r"/>
             <site site="LAT1_LAT1-P6_r"/>
         </spatial>
-        <spatial name="LAT2_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="LAT2_r_tendon" class="myoarm_upperarm_muscle">
             <site site="LAT2_LAT2-P1_r"/>
-            <geom geom="TMAJ_LAThum_cylinder" sidesite="TMAJ_LAThum_cylinder_LAT2_1_sidesite_r"/>
+            <geom geom="TMAJ_LAThum_cylinder_r" sidesite="TMAJ_LAThum_cylinder_LAT2_1_sidesite_r"/>
             <site site="LAT2_LAT2-P2_r"/>
-            <geom geom="delt2hum_cylinder" />
+            <geom geom="delt2hum_cylinder_r" />
             <site site="LAT2_LAT2-P3_r"/>
             <site site="LAT2_LAT2-P4_r"/>
             <site site="LAT2_LAT2-P5_r"/>
             <site site="LAT2_LAT2-P6_r"/>
         </spatial>
-        <spatial name="LAT3_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="LAT3_r_tendon" class="myoarm_upperarm_muscle">
             <site site="LAT3_LAT3-P1_r"/>
-            <geom geom="TMAJ_LAThum_cylinder" sidesite="TMAJ_LAThum_cylinder_LAT3_1_sidesite_r"/>
+            <geom geom="TMAJ_LAThum_cylinder_r" sidesite="TMAJ_LAThum_cylinder_LAT3_1_sidesite_r"/>
             <site site="LAT3_LAT3-P2_r"/>
-            <geom geom="delt2hum_cylinder" sidesite="LAT_TMAJ2hh_sphere_LAT3_2_sidesite_r"/>
+            <geom geom="delt2hum_cylinder_r" sidesite="LAT_TMAJ2hh_sphere_LAT3_2_sidesite_r"/>
             <site site="LAT3_LAT3-P3_r"/>
             <site site="LAT3_LAT3-P4_r"/>
             <site site="LAT3_LAT3-P5_r"/>
             <site site="LAT3_LAT3-P6_r"/>
         </spatial>
-        <spatial name="CORB_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="CORB_r_tendon" class="myoarm_upperarm_muscle">
             <site site="CORB_CORB-P1_r"/>
             <site site="CORB_CORB-P2_r"/>
-            <geom geom="TMAJ_LAT_PEC_CORBhh_sphere" />
+            <geom geom="TMAJ_LAT_PEC_CORBhh_sphere_r" />
             <!--<geom geom="CORBhum_cylinder" sidesite="CORBhum_cylinder_CORB_2_sidesite_r"/>-->
             <site site="CORB_CORB-P3_r"/>
         </spatial>
-        <spatial name="TRIlong_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="TRIlong_r_tendon" class="myoarm_upperarm_muscle">
             <site site="TRIlong_TRIlong-P1_r"/>
-            <geom geom="TRIlonghh_ellipsoid_TRIlong" />
+            <geom geom="TRIlonghh_ellipsoid_TRIlong_r" />
             <site site="TRIlong_TRIlong-P1b_r" />
             <site site="TRIlong_TRIlong-P2_r"/>
             <site site="TRIlong_TRIlong-P3_r"/>
             <site site="TRIlong_TRIlong-P4_r"/>
-            <geom geom="TRI_cylinder" sidesite="TRI_cylinder_TRIlong_4_sidesite_r"/>
+            <geom geom="TRI_cylinder_r" sidesite="TRI_cylinder_TRIlong_4_sidesite_r"/>
             <site site="TRIlong_TRIlong-P5_r"/>
         </spatial>
-        <spatial name="TRIlat_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="TRIlat_r_tendon" class="myoarm_upperarm_muscle">
             <site site="TRIlat_TRIlat-P1_r"/>
             <site site="TRIlat_TRIlat-P2_r"/>
             <site site="TRIlat_TRIlat-P3_r"/>
             <site site="TRIlat_TRIlat-P4_r"/>
-            <geom geom="TRI_cylinder" sidesite="TRI_cylinder_TRIlat_4_sidesite_r"/>
+            <geom geom="TRI_cylinder_r" sidesite="TRI_cylinder_TRIlat_4_sidesite_r"/>
             <site site="TRIlat_TRIlat-P5_r"/>
         </spatial>
-        <spatial name="TRImed_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="TRImed_r_tendon" class="myoarm_upperarm_muscle">
             <site site="TRImed_TRImed-P1_r"/>
             <site site="TRImed_TRImed-P2_r"/>
             <site site="TRImed_TRImed-P3_r"/>
             <site site="TRImed_TRImed-P4_r"/>
-            <geom geom="TRI_cylinder" sidesite="TRI_cylinder_TRImed_4_sidesite_r"/>
+            <geom geom="TRI_cylinder_r" sidesite="TRI_cylinder_TRImed_4_sidesite_r"/>
             <site site="TRImed_TRImed-P5_r"/>
         </spatial>
-        <spatial name="ANC_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="ANC_r_tendon" class="myoarm_upperarm_muscle">
             <site site="ANC_ANC-P1_r"/>
-            <geom geom="ANC_ellipsoid_ANC" sidesite="ANC_ellipsoid_ANC_1_sidesite_r"/>
+            <geom geom="ANC_ellipsoid_ANC_r" sidesite="ANC_ellipsoid_ANC_1_sidesite_r"/>
             <site site="ANC_ANC-P2_r"/>
         </spatial>
-        <spatial name="SUP_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="SUP_r_tendon" class="myoarm_upperarm_muscle">
             <site site="SUP_SUP-P1_r"/>
             <site site="SUP_SUP-P2_r"/>
-            <geom geom="SUP_cylinder" sidesite="SUP_cylinder_SUP_2_sidesite_r"/>
+            <geom geom="SUP_cylinder_r" sidesite="SUP_cylinder_SUP_2_sidesite_r"/>
             <site site="SUP_SUP-P3_r"/>
         </spatial>
-        <spatial name="BIClong_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="BIClong_r_tendon" class="myoarm_upperarm_muscle">
             <site site="BIClong_BIClong-P1_r"/>
             <site site="BIClong_BIClong-P2_r"/>
-            <geom geom="BIClong_ellipsoid_BIClong" sidesite="BIClong_ellipsoid_BIClong_2_sidesite_r"/>
+            <geom geom="BIClong_ellipsoid_BIClong_r" sidesite="BIClong_ellipsoid_BIClong_2_sidesite_r"/>
             <site site="BIClong_BIClong-P3_r"/>
             <site site="BIClong_BIClong-P4_r"/>
             <site site="BIClong_BIClong-P5_r"/>
             <site site="BIClong_BIClong-P6_r"/>
             <site site="BIClong_BIClong-P7_r"/>
             <site site="BIClong_BIClong-P8_r"/>
-            <geom geom="Elbow_BIC_BRD_ellipsoid_BIClong" sidesite="Elbow_BIC_BRD_ellipsoid_BIClong_7_sidesite_r"/>
+            <geom geom="Elbow_BIC_BRD_ellipsoid_BIClong_r" sidesite="Elbow_BIC_BRD_ellipsoid_BIClong_7_sidesite_r"/>
             <site site="BIClong_BIClong-P10_r"/>
             <site site="BIClong_BIClong-P11_r"/>
         </spatial>
-        <spatial name="BICshort_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="BICshort_r_tendon" class="myoarm_upperarm_muscle">
             <site site="BICshort_BICshort-P1_r"/>
             <site site="BICshort_BICshort-P2_r"/>
             <site site="BICshort_BICshort-P3_r"/>
             <site site="BICshort_BICshort-P4_r"/>
             <site site="BICshort_BICshort-P5_r"/>
-            <geom geom="Elbow_BIC_BRD_ellipsoid_BICshort" sidesite="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite_r"/>
+            <geom geom="Elbow_BIC_BRD_ellipsoid_BICshort_r" sidesite="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite_r"/>
             <site site="BICshort_BICshort-P6_r"/>
             <site site="BICshort_BICshort-P7_r"/>
         </spatial>
-        <spatial name="BRA_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="BRA_r_tendon" class="myoarm_upperarm_muscle">
             <site site="BRA_BRA-P1_r"/>
-            <geom geom="TRI_cylinder" sidesite="TRI_site_BRA_side_r"></geom>
+            <geom geom="TRI_cylinder_r" sidesite="TRI_site_BRA_side_r"></geom>
             <site site="BRA_BRA-P4_r"/>
         </spatial>
-        <spatial name="BRD_tendon" class="myoarm_upperarm_muscle">
+        <spatial name="BRD_r_tendon" class="myoarm_upperarm_muscle">
             <site site="BRD_BRD-P1_r"/>
-            <geom geom="ElbowBICBRD_ellipsoid_wrap" sidesite="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite_r"/>
+            <geom geom="ElbowBICBRD_ellipsoid_wrap_r" sidesite="Elbow_BIC_BRD_ellipsoid_BICshort_5_sidesite_r"/>
             <site site="BRD_BRD-P2_r"/>
             <site site="BRD_BRD-P3_r"/>
         </spatial>
-        <spatial name="ECRL_tendon" class="myoarm_forearm_muscle">
+        <spatial name="ECRL_r_tendon" class="myoarm_forearm_muscle">
             <site site="ECRL-P1_r"/>
-            <geom geom="Elbow_PT_ECRL_wrap" sidesite="Elbow_PT_ECRL_site_ECRL_side_r"></geom>
+            <geom geom="Elbow_PT_ECRL_wrap_r" sidesite="Elbow_PT_ECRL_site_ECRL_side_r"></geom>
             <site site="ECRL-P2_r"/>
             <site site="ECRL-P3_r"/>
-            <geom geom="ECRL_torus_wrap" sidesite="ECRL_torus_site_ECRL_side_r"/>
+            <geom geom="ECRL_torus_wrap_r" sidesite="ECRL_torus_site_ECRL_side_r"/>
             <site site="ECRL-P4_r"/>
         </spatial>
-        <spatial name="ECRB_tendon" class="myoarm_forearm_muscle">
+        <spatial name="ECRB_r_tendon" class="myoarm_forearm_muscle">
             <site site="ECRB-P1_r"/>
             <site site="ECRB-P2_r"/>
             <site site="ECRB-P3_r"/>
-            <geom geom="ECRB_torus_wrap" sidesite="ECRB_torus_site_ECRB_side_r"/>
+            <geom geom="ECRB_torus_wrap_r" sidesite="ECRB_torus_site_ECRB_side_r"/>
             <site site="ECRB-P4_r"/>
         </spatial>
-        <spatial name="ECU_tendon" class="myoarm_forearm_muscle">
+        <spatial name="ECU_r_tendon" class="myoarm_forearm_muscle">
             <site site="ECU-P1_r"/>
             <site site="ECU-P2_r"/>
             <site site="ECU-P3_r"/>
             <site site="ECU-P4_r"/>
             <site site="ECU-P5_r"/>
-            <geom geom="ECU_torus_wrap" sidesite="ECU_torus_site_ECU_side_r"/>
             <site site="ECU-P6_r"/>
         </spatial>
-        <spatial name="FCR_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FCR_r_tendon" class="myoarm_forearm_muscle">
             <site site="FCR-P1_r"/>
-            <geom geom="Elbow_PT_FCU_wrap" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
+            <geom geom="Elbow_PT_FCU_wrap_r" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
             <site site="FCR-P2_r"/>
-            <geom geom="FCR_torus_wrap" sidesite="FCR_torus_site_FCR_side_r"/>
+            <geom geom="FCR_torus_wrap_r" sidesite="FCR_torus_site_FCR_side_r"/>
             <site site="FCR-P3_r"/>
         </spatial>
-        <spatial name="FCU_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FCU_r_tendon" class="myoarm_forearm_muscle">
             <site site="FCU-P1_r"/>
-            <geom geom="Elbow_PT_FCU_wrap" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
+            <geom geom="Elbow_PT_FCU_wrap_r" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
             <site site="FCU-P2_r"/>
             <site site="FCU-P3_r"/>
             <!-- <geom geom="FCU_torus_wrap" sidesite="FCU_torus_site_FCU_side"/> -->
             <site site="FCU-P4_r"/>
             <site site="FCU-P5_r"/>
+            <site site="FCU-P6_r"/>
         </spatial>
-        <spatial name="PL_tendon" class="myoarm_forearm_muscle">
+        <spatial name="PL_r_tendon" class="myoarm_forearm_muscle">
             <site site="PL-P1_r"/>
-            <geom geom="Elbow_PT_FCU_wrap" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
+            <geom geom="Elbow_PT_FCU_wrap_r" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
             <site site="PL-P2_r"/>
             <!-- <geom geom="PL_ellipsoid_wrap" sidesite="PL_ellipsoid_site_PL_side_r"/> -->
             <site site="PL-P3_r"/>
             <site site="PL-P4_r"/>
         </spatial>
-        <spatial name="PT_tendon" class="myoarm_forearm_muscle">
+        <spatial name="PT_r_tendon" class="myoarm_forearm_muscle">
             <site site="PT-P1_r"/>
-            <geom geom="Elbow_PT_FCU_wrap" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
+            <geom geom="Elbow_PT_FCU_wrap_r" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
             <site site="PT-P2_r"/>
             <site site="PT-P3_r"/>
             <site site="PT-P4_r"/>
             <site site="PT-P5_r"/>
         </spatial>
-        <spatial name="PQ_tendon" class="myoarm_forearm_muscle">
+        <spatial name="PQ_r_tendon" class="myoarm_forearm_muscle">
             <site site="PQ-P1_r"/>
-            <geom geom="PQ2_wrap" sidesite="PQ2_site_PQ_side_r"/>
+            <geom geom="PQ2_wrap_r" sidesite="PQ2_site_PQ_side_r"/>
             <site site="PQ-P2_r"/>
         </spatial>
-        <spatial name="FDS5_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDS5_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDS5-P1_r"/>
-            <geom geom="Elbow_PT_FCU_wrap" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
+            <geom geom="Elbow_PT_FCU_wrap_r" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
             <site site="FDS5-P2_r"/>
-            <geom geom="FDS_ellipsoid_wrap" sidesite="FDS_ellipsoid_site_FDS5_side_r"/>
+            <geom geom="FDS_ellipsoid_wrap_r" sidesite="FDS_ellipsoid_site_FDS5_side_r"/>
             <site site="FDS5-P3_r"/>
             <site site="FDS5-P4_r"/>
             <site site="FDS5-P5_r"/>
@@ -281,11 +281,11 @@
             <site site="FDS5-P7_r"/>
             <site site="FDS5-P8_r"/>
         </spatial>
-        <spatial name="FDS4_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDS4_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDS4-P1_r"/>
-            <geom geom="Elbow_PT_FCU_wrap" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
+            <geom geom="Elbow_PT_FCU_wrap_r" sidesite="Elbow_PT_FCU_site_FCU_side_r"></geom>
             <site site="FDS4-P2_r"/>
-            <geom geom="FDS_ellipsoid_wrap" sidesite="FDS_ellipsoid_site_FDS4_side_r"/>
+            <geom geom="FDS_ellipsoid_wrap_r" sidesite="FDS_ellipsoid_site_FDS4_side_r"/>
             <site site="FDS4-P3_r"/>
             <!-- <geom geom="4thmcp_ellipsoid_wrap" sidesite="4thmcp_ellipsoid_site_FDS4_side_r"/> -->
             <site site="FDS4-P4_r"/>
@@ -295,10 +295,10 @@
             <site site="FDS4-P7_r"/>
             <site site="FDS4-P8_r"/>
         </spatial>
-        <spatial name="FDS3_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDS3_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDS3-P1_r"/>
             <site site="FDS3-P2_r"/>
-            <geom geom="FDS_ellipsoid_wrap" sidesite="FDS_ellipsoid_site_FDS3_side_r"/>
+            <geom geom="FDS_ellipsoid_wrap_r" sidesite="FDS_ellipsoid_site_FDS3_side_r"/>
             <site site="FDS3-P3_r"/>
             <site site="FDS3-P4_r"/>
             <!-- <site site="FDS3-P5_r"/> -->
@@ -306,10 +306,10 @@
             <site site="FDS3-P7_r"/>
             <site site="FDS3-P8_r"/>
         </spatial>
-        <spatial name="FDS2_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDS2_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDS2-P1_r"/>
             <site site="FDS2-P2_r"/>
-            <geom geom="FDS_ellipsoid_wrap" sidesite="FDS_ellipsoid_site_FDS2_side_r"/>
+            <geom geom="FDS_ellipsoid_wrap_r" sidesite="FDS_ellipsoid_site_FDS2_side_r"/>
             <site site="FDS2-P3_r"/>
             <site site="FDS2-P4_r"/>
             <site site="FDS2-P5_r"/>
@@ -317,10 +317,10 @@
             <site site="FDS2-P7_r"/>
             <site site="FDS2-P8_r"/>
         </spatial>
-        <spatial name="FDP5_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDP5_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDP5-P1_r"/>
             <site site="FDP5-P2_r"/>
-            <geom geom="FDP_ellipsoid_wrap" sidesite="FDP_ellipsoid_site_FDP5_side_r"/>
+            <geom geom="FDP_ellipsoid_wrap_r" sidesite="FDP_ellipsoid_site_FDP5_side_r"/>
             <site site="FDP5-P3_r"/>
             <site site="FDP5-P4_r"/>
             <!-- <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_FDP5_side_r"/> -->
@@ -331,13 +331,13 @@
             <site site="FDP5-P9_r"/>
             <site site="FDP5-P10_r"/>
         </spatial>
-        <spatial name="FDP4_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDP4_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDP4-P1_r"/>
             <site site="FDP4-P2_r"/>
-            <geom geom="FDP_ellipsoid_wrap" sidesite="FDP_ellipsoid_site_FDP4_side_r"/>
+            <geom geom="FDP_ellipsoid_wrap_r" sidesite="FDP_ellipsoid_site_FDP4_side_r"/>
             <site site="FDP4-P3_r"/>
             <site site="FDP4-P4_r"/>
-            <geom geom="4thmcp_ellipsoid_wrap" sidesite="4thmcp_ellipsoid_site_FDP4_side_r"/>
+            <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_FDP4_side_r"/>
             <site site="FDP4-P5_r"/>
             <site site="FDP4-P6_r"/>
             <!-- <site site="FDP4-P7_r"/> -->
@@ -345,10 +345,10 @@
             <site site="FDP4-P9_r"/>
             <site site="FDP4-P10_r"/>
         </spatial>
-        <spatial name="FDP3_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDP3_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDP3-P1_r"/>
             <site site="FDP3-P2_r"/>
-            <geom geom="FDP_ellipsoid_wrap" sidesite="FDP_ellipsoid_site_FDP3_side_r"/>
+            <geom geom="FDP_ellipsoid_wrap_r" sidesite="FDP_ellipsoid_site_FDP3_side_r"/>
             <site site="FDP3-P3_r"/>
             <site site="FDP3-P4_r"/>
             <site site="FDP3-P5_r"/>
@@ -359,113 +359,222 @@
             <site site="FDP3-P9_r"/>
             <site site="FDP3-P10_r"/>
         </spatial>
-        <spatial name="FDP2_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FDP2_r_tendon" class="myoarm_forearm_muscle">
             <site site="FDP2-P1_r"/>
             <site site="FDP2-P2_r"/>
-            <geom geom="FDP_ellipsoid_wrap" sidesite="FDP_ellipsoid_site_FDP2_side_r"/>
+            <geom geom="FDP_ellipsoid_wrap_r" sidesite="FDP_ellipsoid_site_FDP2_side_r"/>
             <site site="FDP2-P3_r"/>
             <site site="FDP2-P4_r"/>
             <site site="FDP2-P5_r"/>
-            <geom geom="2ndmcp_ellipsoid_wrap" sidesite="2ndmcp_ellipsoid_site_FDP2_side_r"/>
+            <geom geom="2ndmcp_ellipsoid_wrap_r" sidesite="2ndmcp_ellipsoid_site_FDP2_side_r"/>
             <site site="FDP2-P6_r"/>
             <site site="FDP2-P7_r"/>
             <site site="FDP2-P8_r"/>
             <site site="FDP2-P9_r"/>
             <site site="FDP2-P10_r"/>
         </spatial>
-        <spatial name="EDC5_tendon" class="myoarm_forearm_muscle">
+        <!-- BEGIN generated by scripts/fit_extensor_mechanism.py (EDC5); do not edit by hand -->
+        <!-- EDC5: extensor mechanism option (a), force fractions central 0.370, radial_band 0.315, ulnar_band 0.315, proximal phalanx 0.000 (build/data/extensor_mechanism.json) -->
+        <spatial name="EDC5_r_tendon" class="myoarm_forearm_muscle">
             <site site="EDC5-P1_r"/>
             <site site="EDC5-P2_r"/>
             <site site="EDC5-P3_r"/>
-            <geom geom="EDCL_torus_wrap" sidesite="EDCL_torus_site_EDC5_side_r"/>
+            <geom geom="EDCL_torus_wrap_r" sidesite="EDCL_torus_site_EDC5_side_r"/>
             <site site="EDC5-P4_r"/>
-            <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
-            <site site="EDC5-P5_r"/>
-            <site site="EDC5-P6_r"/>
-            <geom geom="Fifthpm_wrap" sidesite="Fifthpm_site_EDC5_side_r"/>
-            <site site="EDC5-P7_r"/>
-            <site site="EDC5-P8_r"/>
-            <geom geom="Fifthmd_wrap" sidesite="Fifthmd_site_EDC5_side_r"/>
-            <site site="EDC5-P9_r"/>
+            <geom geom="5thmcp_ellipsoid_wrap_r" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
+            <site site="EM5_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_CSP_r"/>
+            <geom geom="Fifthpm_wrap_r" sidesite="Fifthpm_site_EDC5_side_r"/>
+            <site site="EM5_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_RB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_RBD_r"/>
+            <site site="EM5_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_UB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_UBD_r"/>
+            <site site="EM5_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM5_T_r"/>
+            <geom geom="Fifthmd_wrap_r" sidesite="Fifthmd_site_EDC5_side_r"/>
+            <site site="EM5_TI_r"/>
         </spatial>
-        <spatial name="EDC4_tendon" class="myoarm_forearm_muscle">
+        <!-- END generated by scripts/fit_extensor_mechanism.py (EDC5) -->
+        <!-- BEGIN generated by scripts/fit_extensor_mechanism.py (EDC4); do not edit by hand -->
+        <!-- EDC4: extensor mechanism option (a), force fractions central 0.370, radial_band 0.315, ulnar_band 0.315, proximal phalanx 0.000 (build/data/extensor_mechanism.json) -->
+        <spatial name="EDC4_r_tendon" class="myoarm_forearm_muscle">
             <site site="EDC4-P1_r"/>
             <site site="EDC4-P2_r"/>
             <site site="EDC4-P3_r"/>
-            <geom geom="EDCR_torus_wrap" sidesite="EDCR_torus_site_EDC4_side_r"/>
+            <geom geom="EDCR_torus_wrap_r" sidesite="EDCR_torus_site_EDC4_side_r"/>
             <site site="EDC4-P4_r"/>
-            <geom geom="4thmcp_ellipsoid_wrap" sidesite="4thmcp_ellipsoid_site_EDC4_side_r"/>
-            <site site="EDC4-P5_r"/>
-            <site site="EDC4-P6_r"/>
-            <geom geom="Fourthpm_wrap" sidesite="Fourthpm_site_EDC4_side_r"/>
-            <site site="EDC4-P7_r"/>
-            <site site="EDC4-P8_r"/>
-            <geom geom="Fourthmd_wrap" sidesite="Fourthmd_site_EDC4_side_r"/>
-            <site site="EDC4-P9_r"/>
+            <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_EDC4_side_r"/>
+            <site site="EM4_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM4_H_r"/>
+            <site site="EM4_CSP_r"/>
+            <geom geom="Fourthpm_wrap_r" sidesite="Fourthpm_site_EDC4_side_r"/>
+            <site site="EM4_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM4_H_r"/>
+            <site site="EM4_RB_r"/>
+            <geom geom="EM4_band_wrap_r" sidesite="EM4_band_side_r"/>
+            <site site="EM4_RBD_r"/>
+            <site site="EM4_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM4_H_r"/>
+            <site site="EM4_UB_r"/>
+            <geom geom="EM4_band_wrap_r" sidesite="EM4_band_side_r"/>
+            <site site="EM4_UBD_r"/>
+            <site site="EM4_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM4_T_r"/>
+            <geom geom="Fourthmd_wrap_r" sidesite="Fourthmd_site_EDC4_side_r"/>
+            <site site="EM4_TI_r"/>
         </spatial>
-        <spatial name="EDC3_tendon" class="myoarm_forearm_muscle">
+        <!-- END generated by scripts/fit_extensor_mechanism.py (EDC4) -->
+        <!-- BEGIN generated by scripts/fit_extensor_mechanism.py (EDC3); do not edit by hand -->
+        <!-- EDC3: extensor mechanism option (a), force fractions central 0.370, radial_band 0.315, ulnar_band 0.315, proximal phalanx 0.000 (build/data/extensor_mechanism.json) -->
+        <spatial name="EDC3_r_tendon" class="myoarm_forearm_muscle">
             <site site="EDC3-P1_r"/>
             <site site="EDC3-P2_r"/>
             <site site="EDC3-P3_r"/>
-            <geom geom="EDCM_torus_wrap" sidesite="EDCM_torus_site_EDC3_side_r"/>
+            <geom geom="EDCM_torus_wrap_r" sidesite="EDCM_torus_site_EDC3_side_r"/>
             <site site="EDC3-P4_r"/>
-            <geom geom="3rdmcp_ellipsoid_wrap" sidesite="3rdmcp_ellipsoid_site_EDC3_side_r"/>
-            <site site="EDC3-P5_r"/>
-            <site site="EDC3-P6_r"/>
-            <geom geom="Thirdpm_wrap" sidesite="Thirdpm_site_EDC3_side_r"/>
-            <site site="EDC3-P7_r"/>
-            <site site="EDC3-P8_r"/>
-            <geom geom="Thirdmd_wrap" sidesite="Thirdmd_site_EDC3_side_r"/>
-            <site site="EDC3-P9_r"/>
+            <geom geom="3rdmcp_ellipsoid_wrap_r" sidesite="3rdmcp_ellipsoid_site_EDC3_side_r"/>
+            <site site="EM3_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM3_H_r"/>
+            <site site="EM3_CSP_r"/>
+            <geom geom="Thirdpm_wrap_r" sidesite="Thirdpm_site_EDC3_side_r"/>
+            <site site="EM3_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM3_H_r"/>
+            <site site="EM3_RB_r"/>
+            <geom geom="EM3_band_wrap_r" sidesite="EM3_band_side_r"/>
+            <site site="EM3_RBD_r"/>
+            <site site="EM3_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM3_H_r"/>
+            <site site="EM3_UB_r"/>
+            <geom geom="EM3_band_wrap_r" sidesite="EM3_band_side_r"/>
+            <site site="EM3_UBD_r"/>
+            <site site="EM3_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM3_T_r"/>
+            <geom geom="Thirdmd_wrap_r" sidesite="Thirdmd_site_EDC3_side_r"/>
+            <site site="EM3_TI_r"/>
         </spatial>
-        <spatial name="EDC2_tendon" class="myoarm_forearm_muscle">
+        <!-- END generated by scripts/fit_extensor_mechanism.py (EDC3) -->
+        <!-- BEGIN generated by scripts/fit_extensor_mechanism.py (EDC2); do not edit by hand -->
+        <!-- EDC2: extensor mechanism option (a), force fractions central 0.370, radial_band 0.315, ulnar_band 0.315, proximal phalanx 0.000 (build/data/extensor_mechanism.json) -->
+        <spatial name="EDC2_r_tendon" class="myoarm_forearm_muscle">
             <site site="EDC2-P1_r"/>
             <site site="EDC2-P2_r"/>
             <site site="EDC2-P3_r"/>
-            <geom geom="EDCI_torus_wrap" sidesite="EDCI_torus_site_EDC2_side_r"/>
+            <geom geom="EDCI_torus_wrap_r" sidesite="EDCI_torus_site_EDC2_side_r"/>
             <site site="EDC2-P4_r"/>
-            <geom geom="2ndmcp_ellipsoid_wrap" sidesite="2ndmcp_ellipsoid_site_EDC2_side_r"/>
-            <site site="EDC2-P5_r"/>
-            <site site="EDC2-P6_r"/>
-            <geom geom="Secondpm_wrap" sidesite="Secondpm_site_EDC2_side_r"/>
-            <site site="EDC2-P7_r"/>
-            <site site="EDC2-P8_r"/>
-            <geom geom="Secondmd_wrap" sidesite="Secondmd_site_EDC2_side_r"/>
-            <site site="EDC2-P9_r"/>
+            <geom geom="2ndmcp_ellipsoid_wrap_r" sidesite="2ndmcp_ellipsoid_site_EDC2_side_r"/>
+            <site site="EM2_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM2_H_r"/>
+            <site site="EM2_CSP_r"/>
+            <geom geom="Secondpm_wrap_r" sidesite="Secondpm_site_EDC2_side_r"/>
+            <site site="EM2_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM2_H_r"/>
+            <site site="EM2_RB_r"/>
+            <geom geom="EM2_band_wrap_r" sidesite="EM2_band_side_r"/>
+            <site site="EM2_RBD_r"/>
+            <site site="EM2_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM2_H_r"/>
+            <site site="EM2_UB_r"/>
+            <geom geom="EM2_band_wrap_r" sidesite="EM2_band_side_r"/>
+            <site site="EM2_UBD_r"/>
+            <site site="EM2_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM2_T_r"/>
+            <geom geom="Secondmd_wrap_r" sidesite="Secondmd_site_EDC2_side_r"/>
+            <site site="EM2_TI_r"/>
         </spatial>
-        <spatial name="EDM_tendon" class="myoarm_forearm_muscle">
+        <!-- END generated by scripts/fit_extensor_mechanism.py (EDC2) -->
+        <!-- BEGIN generated by scripts/fit_extensor_mechanism.py (EDM); do not edit by hand -->
+        <!-- EDM: extensor mechanism option (a), force fractions central 0.370, radial_band 0.315, ulnar_band 0.315, proximal phalanx 0.000 (build/data/extensor_mechanism.json) -->
+        <spatial name="EDM_r_tendon" class="myoarm_forearm_muscle">
             <site site="EDM-P1_r"/>
             <site site="EDM-P2_r"/>
             <site site="EDM-P3_r"/>
             <site site="EDM-P4_r"/>
-            <geom geom="EDM_ellipsoid_wrap" sidesite="EDM_ellipsoid_site_EDM_side_r"/>
+            <geom geom="EDM_ellipsoid_wrap_r" sidesite="EDM_ellipsoid_site_EDM_side_r"/>
             <site site="EDM-P5_r"/>
             <site site="EDM-P6_r"/>
-            <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
-            <site site="EDM-P7_r"/>
-            <geom geom="Fifthpm_wrap"/>
-            <site site="EDM-P8_r"/>
-            <geom geom="Fifthmd_wrap" sidesite="Fifthmd_site_EDC5_side_r"/>
-            <site site="EDM-P9_r"/>
+            <geom geom="5thmcp_ellipsoid_wrap_r" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
+            <site site="EM5_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_CSP_r"/>
+            <geom geom="Fifthpm_wrap_r" sidesite="Fifthpm_site_EDC5_side_r"/>
+            <site site="EM5_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_RB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_RBD_r"/>
+            <site site="EM5_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_UB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_UBD_r"/>
+            <site site="EM5_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM5_T_r"/>
+            <geom geom="Fifthmd_wrap_r" sidesite="Fifthmd_site_EDC5_side_r"/>
+            <site site="EM5_TI_r"/>
         </spatial>
-        <spatial name="EIP_tendon" class="myoarm_forearm_muscle">
+        <!-- END generated by scripts/fit_extensor_mechanism.py (EDM) -->
+        <!-- BEGIN generated by scripts/fit_extensor_mechanism.py (EIP); do not edit by hand -->
+        <!-- EIP: extensor mechanism option (a), force fractions central 0.370, radial_band 0.315, ulnar_band 0.315, proximal phalanx 0.000 (build/data/extensor_mechanism.json) -->
+        <spatial name="EIP_r_tendon" class="myoarm_forearm_muscle">
             <site site="EIP-P1_r"/>
             <site site="EIP-P2_r"/>
             <site site="EIP-P3_r"/>
-            <geom geom="ExtensorEllipse_ellipsoid_wrap" sidesite="ExtensorEllipse_ellipsoid_site_EIP_side_r"/>
+            <geom geom="ExtensorEllipse_ellipsoid_wrap_r" sidesite="ExtensorEllipse_ellipsoid_site_EIP_side_r"/>
             <site site="EIP-P4_r"/>
             <site site="EIP-P5_r"/>
-            <geom geom="2ndmcp_ellipsoid_wrap" sidesite="2ndmcp_ellipsoid_site_EIP_side_r"/>
-            <site site="EIP-P6_r"/>
-            <site site="EIP-P7_r"/>
-            <geom geom="Secondpm_wrap" sidesite="Secondpm_site_EIP_side_r"/>
-            <site site="EIP-P8_r"/>
-            <site site="EIP-P9_r"/>
-            <geom geom="Secondmd_wrap" sidesite="Secondmd_site_EIP_side_r"/>
-            <site site="EIP-P10_r"/>
-            <site site="EIP-P11_r"/>
+            <geom geom="2ndmcp_ellipsoid_wrap_r" sidesite="2ndmcp_ellipsoid_site_EIP_side_r"/>
+            <site site="EM2_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM2_H_r"/>
+            <site site="EM2_CSP_r"/>
+            <geom geom="Secondpm_wrap_r" sidesite="Secondpm_site_EDC2_side_r"/>
+            <site site="EM2_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM2_H_r"/>
+            <site site="EM2_RB_r"/>
+            <geom geom="EM2_band_wrap_r" sidesite="EM2_band_side_r"/>
+            <site site="EM2_RBD_r"/>
+            <site site="EM2_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM2_H_r"/>
+            <site site="EM2_UB_r"/>
+            <geom geom="EM2_band_wrap_r" sidesite="EM2_band_side_r"/>
+            <site site="EM2_UBD_r"/>
+            <site site="EM2_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM2_T_r"/>
+            <geom geom="Secondmd_wrap_r" sidesite="Secondmd_site_EDC2_side_r"/>
+            <site site="EM2_TI_r"/>
         </spatial>
-        <spatial name="EPL_tendon" springlength="0.2305">
+        <!-- END generated by scripts/fit_extensor_mechanism.py (EIP) -->
+        <spatial name="EPL_r_tendon" springlength="0.2305">
             <site site="EPL-P1_r"/>
             <site site="EPL-P2_r"/>
             <site site="EPL-P3_r"/>
@@ -475,13 +584,13 @@
             <site site="EPL-P7_r"/>
             <site site="EPL-P8_r"/>
             <site site="EPL-P9_r"/>
-            <geom geom="MPthumb_wrap"/>
+            <geom geom="MPthumb_wrap_r"/>
             <site site="EPL-P10_r"/>
             <site site="EPL-P11_r"/>
-            <geom geom="IPthumb_wrap" sidesite="IPthumb_site_EPL_side_r"/>
+            <geom geom="IPthumb_wrap_r" sidesite="IPthumb_site_EPL_side_r"/>
             <site site="EPL-P12_r"/>
         </spatial>
-        <spatial name="EPB_tendon" class="myoarm_forearm_muscle">
+        <spatial name="EPB_r_tendon" class="myoarm_forearm_muscle">
             <site site="EPB-P1_r"/>
             <site site="EPB-P2_r"/>
             <site site="EPB-P3_r"/>
@@ -489,129 +598,686 @@
             <site site="EPB-P5_r"/>
             <site site="EPB-P6_r"/>
             <site site="EPB-P7_r"/>
-            <geom geom="MPthumb_wrap" sidesite="MPthumb_site_EPB_side_r"/>
+            <geom geom="MPthumb_wrap_r" sidesite="MPthumb_site_EPB_side_r"/>
             <site site="EPB-P8_r"/>
         </spatial>
-        <spatial name="FPL_tendon" class="myoarm_forearm_muscle">
+        <spatial name="FPL_r_tendon" class="myoarm_forearm_muscle">
             <site site="FPL-P1_r"/>
             <site site="FPL-P2_r"/>
             <site site="FPL-P3_r"/>
             <site site="FPL-P4_r"/>
             <site site="FPL-P5_r"/>
-            <geom geom="FPL_ellipsoid_wrap"/>
+            <geom geom="FPL_ellipsoid_wrap_r"/>
             <site site="FPL-P7_r"/>
             <site site="FPL-P8_r"/>
-            <geom geom="MPthumb_wrap" sidesite="MPthumb_site_FPL_side_r"/>
+            <geom geom="MPthumb_wrap_r" sidesite="MPthumb_site_FPL_side_r"/>
             <site site="FPL-P9_r"/>
             <site site="FPL-P10_r"/>
-            <geom geom="IPthumb_wrap" sidesite="IPthumb_site_FPL_side_r"/>
+            <geom geom="IPthumb_wrap_r" sidesite="IPthumb_site_FPL_side_r"/>
             <site site="FPL-P11_r"/>
         </spatial>
-        <spatial name="APL_tendon" class="myoarm_forearm_muscle">
+        <!-- APL: over the trapezium cylinder APL_cmc_wrap_r to its MC1-base insertion APL-P7_r, after Barry et al. 2018 (MIT, build/data/LICENSE-Barry2018.txt); extrinsic_muscles.json -->
+        <spatial name="APL_r_tendon" class="myoarm_forearm_muscle">
             <site site="APL-P1_r"/>
             <site site="APL-P2_r"/>
             <site site="APL-P3_r"/>
             <site site="APL-P4_r"/>
             <site site="APL-P5_r"/>
-            <!-- <geom geom="APL_torus_wrap" sidesite="APL_torus_site_APL_side_r"/> -->
             <site site="APL-P6_r"/>
+            <geom geom="APL_cmc_wrap_r" sidesite="APL_cmc_site_APL_side_r"/>
             <site site="APL-P7_r"/>
-            <site site="APL-P8_r"/>
         </spatial>
-        <spatial name="OP_tendon" class="myoarm_forearm_muscle">
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (OP); do not edit by hand -->
+        <!-- OP (opponens pollicis): sites from Caggiano et al. 2022, fitted to Smutz et al. 1998 -->
+        <spatial name="OP_r_tendon" class="myoarm_forearm_muscle">
             <site site="OP-P1_r"/>
             <site site="OP-P2_r"/>
         </spatial>
-        <spatial name="RI2_tendon" class="myoarm_forearm_muscle">
-            <site site="RI2-P1_r"/>
-            <site site="RI2-P2_r"/>
-            <geom geom="2ndmcp_ellipsoid_wrap" sidesite="2ndmcp_ellipsoid_site_RI2_side_r"/>
-            <site site="RI2-P3_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (OP) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (DI1d); do not edit by hand -->
+        <!-- DI1d (first dorsal interosseous, deep head (from the radial MC2 shaft); bony insertion on the PP2 base): sites from Mirakhorlo et al. 2016, fitted to An et al. 1983 and Brand et al. 1993 -->
+        <spatial name="DI1d_r_tendon" class="myoarm_forearm_muscle">
+            <site site="DI1d-P1_r"/>
+            <site site="DI1d-P2_r"/>
+            <site site="DI1d-P3_r"/>
         </spatial>
-        <spatial name="LU_RB2_tendon" class="myoarm_forearm_muscle">
-            <site site="LU_RB2-P1_r"/>
-            <site site="LU_RB2-P2_r"/>
-            <site site="LU_RB2-P3_r"/>
-            <site site="LU_RB2-P4_r"/>
-            <geom geom="Secondpm_wrap" sidesite="Secondpm_site_LU_RB2_side_r"/>
-            <site site="LU_RB2-P5_r"/>
-            <site site="LU_RB2-P6_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (DI1d) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (LUM1); do not edit by hand -->
+        <!-- LUM1 (first lumbrical: from the radial side of FDP2 to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)): sites from Caggiano et al. 2022, fitted to An et al. 1983 -->
+        <spatial name="LUM1_r_tendon" class="myoarm_forearm_muscle">
+            <site site="LUM1-P1_r"/>
+            <site site="LUM1-P2_r"/>
+            <site site="LUM1-P3_r"/>
+            <site site="EM2_RB_r"/>
+            <pulley divisor="2.71887"/>
+            <site site="EM2_RB_r"/>
+            <site site="EM2_CSP_r"/>
+            <geom geom="Secondpm_wrap_r" sidesite="Secondpm_site_EDC2_side_r"/>
+            <site site="EM2_CS_r"/>
+            <pulley divisor="4.39174"/>
+            <site site="EM2_RB_r"/>
+            <geom geom="EM2_band_wrap_r" sidesite="EM2_band_side_r"/>
+            <site site="EM2_RBD_r"/>
+            <site site="EM2_T_r"/>
+            <geom geom="Secondmd_wrap_r" sidesite="Secondmd_site_EDC2_side_r"/>
+            <site site="EM2_TI_r"/>
         </spatial>
-        <spatial name="UI_UB2_tendon" class="myoarm_forearm_muscle">
-            <site site="UI_UB2-P1_r"/>
-            <site site="UI_UB2-P2_r"/>
-            <site site="UI_UB2-P3_r"/>
-            <site site="UI_UB2-P4_r"/>
-            <geom geom="Secondpm_wrap" sidesite="Secondpm_site_UI_UB2_side_r"/>
-            <site site="UI_UB2-P5_r"/>
-            <site site="UI_UB2-P6_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (LUM1) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (PI1); do not edit by hand -->
+        <!-- PI1 (first palmar interosseous (index, ulnar side): from MC2 to the ulnar lateral band): sites from Caggiano et al. 2022, fitted to An et al. 1983 -->
+        <spatial name="PI1_r_tendon" class="myoarm_forearm_muscle">
+            <site site="PI1-P1_r"/>
+            <site site="PI1-P2_r"/>
+            <site site="PI1-P3_r"/>
+            <site site="EM2_UB_r"/>
+            <pulley divisor="3.0003"/>
+            <site site="EM2_UB_r"/>
+            <site site="EM2_CSP_r"/>
+            <geom geom="Secondpm_wrap_r" sidesite="Secondpm_site_EDC2_side_r"/>
+            <site site="EM2_CS_r"/>
+            <pulley divisor="3.0003"/>
+            <site site="EM2_UB_r"/>
+            <geom geom="EM2_band_wrap_r" sidesite="EM2_band_side_r"/>
+            <site site="EM2_UBD_r"/>
+            <site site="EM2_T_r"/>
+            <geom geom="Secondmd_wrap_r" sidesite="Secondmd_site_EDC2_side_r"/>
+            <site site="EM2_TI_r"/>
         </spatial>
-        <spatial name="RI3_tendon" class="myoarm_forearm_muscle">
-            <site site="RI3-P1_r"/>
-            <site site="RI3-P2_r"/>
-            <site site="RI3-P3_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (PI1) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (DI2); do not edit by hand -->
+        <!-- DI2 (second dorsal interosseous (radial side of the middle finger): bony part to the PP base and hood part to the radial band (pulley branches)): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="DI2_r_tendon" class="myoarm_forearm_muscle">
+            <site site="DI2-P1_r"/>
+            <site site="DI2-P2_r"/>
+            <pulley divisor="1.92308"/>
+            <site site="DI2-P2_r"/>
+            <site site="DI2-P3_r"/>
+            <pulley divisor="2.08333"/>
+            <site site="DI2-P2_r"/>
+            <site site="DI2-P4_r"/>
+            <site site="EM3_RB_r"/>
+            <pulley divisor="6.25063"/>
+            <site site="EM3_RB_r"/>
+            <site site="EM3_CSP_r"/>
+            <geom geom="Thirdpm_wrap_r" sidesite="Thirdpm_site_EDC3_side_r"/>
+            <site site="EM3_CS_r"/>
+            <pulley divisor="6.25063"/>
+            <site site="EM3_RB_r"/>
+            <geom geom="EM3_band_wrap_r" sidesite="EM3_band_side_r"/>
+            <site site="EM3_RBD_r"/>
+            <site site="EM3_T_r"/>
+            <geom geom="Thirdmd_wrap_r" sidesite="Thirdmd_site_EDC3_side_r"/>
+            <site site="EM3_TI_r"/>
         </spatial>
-        <spatial name="LU_RB3_tendon" class="myoarm_forearm_muscle">
-            <site site="LU_RB3-P1_r"/>
-            <site site="LU_RB3-P2_r"/>
-            <site site="LU_RB3-P3_r"/>
-            <!-- <geom geom="3rdmcp_ellipsoid_wrap" sidesite="3rdmcp_ellipsoid_site_LU_RB3_side_r"/> -->
-            <site site="LU_RB3-P4_r"/>
-            <geom geom="Thirdpm_wrap" sidesite="Thirdpm_site_LU_RB3_side_r"/>
-            <site site="LU_RB3-P5_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (DI2) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (LUM2); do not edit by hand -->
+        <!-- LUM2 (second lumbrical: from the radial side of FDP3 to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="LUM2_r_tendon" class="myoarm_forearm_muscle">
+            <site site="LUM2-P1_r"/>
+            <site site="LUM2-P2_r"/>
+            <site site="LUM2-P3_r"/>
+            <site site="EM3_RB_r"/>
+            <pulley divisor="2.71887"/>
+            <site site="EM3_RB_r"/>
+            <site site="EM3_CSP_r"/>
+            <geom geom="Thirdpm_wrap_r" sidesite="Thirdpm_site_EDC3_side_r"/>
+            <site site="EM3_CS_r"/>
+            <pulley divisor="4.39174"/>
+            <site site="EM3_RB_r"/>
+            <geom geom="EM3_band_wrap_r" sidesite="EM3_band_side_r"/>
+            <site site="EM3_RBD_r"/>
+            <site site="EM3_T_r"/>
+            <geom geom="Thirdmd_wrap_r" sidesite="Thirdmd_site_EDC3_side_r"/>
+            <site site="EM3_TI_r"/>
         </spatial>
-        <spatial name="UI_UB3_tendon" class="myoarm_forearm_muscle">
-            <site site="UI_UB3-P1_r"/>
-            <site site="UI_UB3-P2_r"/>
-            <site site="UI_UB3-P3_r"/>
-            <site site="UI_UB3-P4_r"/>
-            <geom geom="Thirdpm_wrap" sidesite="Thirdpm_site_UI_UB3_side_r"/>
-            <site site="UI_UB3-P5_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (LUM2) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (DI3); do not edit by hand -->
+        <!-- DI3 (third dorsal interosseous (ulnar side of the middle finger): bony part to the PP base and hood part to the ulnar band): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="DI3_r_tendon" class="myoarm_forearm_muscle">
+            <site site="DI3-P1_r"/>
+            <site site="DI3-P2_r"/>
+            <pulley divisor="14.2857"/>
+            <site site="DI3-P2_r"/>
+            <site site="DI3-P3_r"/>
+            <pulley divisor="1.07527"/>
+            <site site="DI3-P2_r"/>
+            <site site="DI3-P4_r"/>
+            <site site="EM3_UB_r"/>
+            <pulley divisor="3.22613"/>
+            <site site="EM3_UB_r"/>
+            <site site="EM3_CSP_r"/>
+            <geom geom="Thirdpm_wrap_r" sidesite="Thirdpm_site_EDC3_side_r"/>
+            <site site="EM3_CS_r"/>
+            <pulley divisor="3.22613"/>
+            <site site="EM3_UB_r"/>
+            <geom geom="EM3_band_wrap_r" sidesite="EM3_band_side_r"/>
+            <site site="EM3_UBD_r"/>
+            <site site="EM3_T_r"/>
+            <geom geom="Thirdmd_wrap_r" sidesite="Thirdmd_site_EDC3_side_r"/>
+            <site site="EM3_TI_r"/>
         </spatial>
-        <spatial name="RI4_tendon" class="myoarm_forearm_muscle">
-            <site site="RI4-P1_r"/>
-            <site site="RI4-P2_r"/>
-            <site site="RI4-P3_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (DI3) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (PI2); do not edit by hand -->
+        <!-- PI2 (second palmar interosseous (radial side of the ring finger): from MC4 to the radial lateral band): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="PI2_r_tendon" class="myoarm_forearm_muscle">
+            <site site="PI2-P1_r"/>
+            <site site="PI2-P2_r"/>
+            <site site="PI2-P3_r"/>
+            <site site="EM4_RB_r"/>
+            <pulley divisor="3.0003"/>
+            <site site="EM4_RB_r"/>
+            <site site="EM4_CSP_r"/>
+            <geom geom="Fourthpm_wrap_r" sidesite="Fourthpm_site_EDC4_side_r"/>
+            <site site="EM4_CS_r"/>
+            <pulley divisor="3.0003"/>
+            <site site="EM4_RB_r"/>
+            <geom geom="EM4_band_wrap_r" sidesite="EM4_band_side_r"/>
+            <site site="EM4_RBD_r"/>
+            <site site="EM4_T_r"/>
+            <geom geom="Fourthmd_wrap_r" sidesite="Fourthmd_site_EDC4_side_r"/>
+            <site site="EM4_TI_r"/>
         </spatial>
-        <spatial name="LU_RB4_tendon" class="myoarm_forearm_muscle">
-            <site site="LU_RB4-P1_r"/>
-            <site site="LU_RB4-P2_r"/>
-            <site site="LU_RB4-P3_r"/>
-            <site site="LU_RB4-P4_r"/>
-            <site site="LU_RB4-P5_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (PI2) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (LUM3); do not edit by hand -->
+        <!-- LUM3 (third lumbrical: from FDP4 (radial side) to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="LUM3_r_tendon" class="myoarm_forearm_muscle">
+            <site site="LUM3-P1_r"/>
+            <site site="LUM3-P2_r"/>
+            <site site="LUM3-P3_r"/>
+            <site site="EM4_RB_r"/>
+            <pulley divisor="2.71887"/>
+            <site site="EM4_RB_r"/>
+            <site site="EM4_CSP_r"/>
+            <geom geom="Fourthpm_wrap_r" sidesite="Fourthpm_site_EDC4_side_r"/>
+            <site site="EM4_CS_r"/>
+            <pulley divisor="4.39174"/>
+            <site site="EM4_RB_r"/>
+            <geom geom="EM4_band_wrap_r" sidesite="EM4_band_side_r"/>
+            <site site="EM4_RBD_r"/>
+            <site site="EM4_T_r"/>
+            <geom geom="Fourthmd_wrap_r" sidesite="Fourthmd_site_EDC4_side_r"/>
+            <site site="EM4_TI_r"/>
         </spatial>
-        <spatial name="UI_UB4_tendon" class="myoarm_forearm_muscle">
-            <site site="UI_UB4-P1_r"/>
-            <site site="UI_UB4-P2_r"/>
-            <geom geom="4thmcp_ellipsoid_wrap" sidesite="4thmcp_ellipsoid_site_UI_UB4_side_r"/>
-            <site site="UI_UB4-P3_r"/>
-            <site site="UI_UB4-P4_r"/>
-            <geom geom="Fourthpm_wrap" sidesite="Fourthpm_site_UI_UB4_side_r"/>
-            <site site="UI_UB4-P5_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (LUM3) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (DI4); do not edit by hand -->
+        <!-- DI4 (fourth dorsal interosseous (ulnar side of the ring finger): bony part to the PP base and hood part to the ulnar band): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="DI4_r_tendon" class="myoarm_forearm_muscle">
+            <site site="DI4-P1_r"/>
+            <site site="DI4-P2_r"/>
+            <pulley divisor="2.94118"/>
+            <site site="DI4-P2_r"/>
+            <site site="DI4-P3_r"/>
+            <pulley divisor="1.51515"/>
+            <site site="DI4-P2_r"/>
+            <site site="DI4-P4_r"/>
+            <site site="EM4_UB_r"/>
+            <pulley divisor="4.54591"/>
+            <site site="EM4_UB_r"/>
+            <site site="EM4_CSP_r"/>
+            <geom geom="Fourthpm_wrap_r" sidesite="Fourthpm_site_EDC4_side_r"/>
+            <site site="EM4_CS_r"/>
+            <pulley divisor="4.54591"/>
+            <site site="EM4_UB_r"/>
+            <geom geom="EM4_band_wrap_r" sidesite="EM4_band_side_r"/>
+            <site site="EM4_UBD_r"/>
+            <site site="EM4_T_r"/>
+            <geom geom="Fourthmd_wrap_r" sidesite="Fourthmd_site_EDC4_side_r"/>
+            <site site="EM4_TI_r"/>
         </spatial>
-        <spatial name="RI5_tendon" class="myoarm_forearm_muscle">
-            <site site="RI5-P1_r"/>
-            <site site="RI5-P2_r"/>
-            <site site="RI5-P3_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (DI4) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (PI3); do not edit by hand -->
+        <!-- PI3 (third palmar interosseous (radial side of the little finger): from MC5 to the radial lateral band): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="PI3_r_tendon" class="myoarm_forearm_muscle">
+            <site site="PI3-P1_r"/>
+            <site site="PI3-P2_r"/>
+            <site site="PI3-P3_r"/>
+            <site site="EM5_RB_r"/>
+            <pulley divisor="3.0003"/>
+            <site site="EM5_RB_r"/>
+            <site site="EM5_CSP_r"/>
+            <geom geom="Fifthpm_wrap_r" sidesite="Fifthpm_site_EDC5_side_r"/>
+            <site site="EM5_CS_r"/>
+            <pulley divisor="3.0003"/>
+            <site site="EM5_RB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_RBD_r"/>
+            <site site="EM5_T_r"/>
+            <geom geom="Fifthmd_wrap_r" sidesite="Fifthmd_site_EDC5_side_r"/>
+            <site site="EM5_TI_r"/>
         </spatial>
-        <spatial name="LU_RB5_tendon" class="myoarm_forearm_muscle">
-            <site site="LU_RB5-P1_r"/>
-            <site site="LU_RB5-P2_r"/>
-            <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_LU_RB5_side_r"/>
-            <site site="LU_RB5-P3_r"/>
-            <site site="LU_RB5-P4_r"/>
-            <geom geom="Fifthpm_wrap" sidesite="Fifthpm_site_LU_RB5_side_r"/>
-            <site site="LU_RB5-P5_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (PI3) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (LUM4); do not edit by hand -->
+        <!-- LUM4 (fourth lumbrical: from FDP5 (radial side) to the radial lateral band; lumbrical: fixed origin next to its FDP tendon in the palm (the moving origin on the tendon follows in S6); band-only insertion (Eladoumikdachi 2002 II: lateral band in 58/59)): sites from Caggiano et al. 2022, fitted to An et al. 1979 -->
+        <spatial name="LUM4_r_tendon" class="myoarm_forearm_muscle">
+            <site site="LUM4-P1_r"/>
+            <site site="LUM4-P2_r"/>
+            <site site="LUM4-P3_r"/>
+            <site site="EM5_RB_r"/>
+            <pulley divisor="2.71887"/>
+            <site site="EM5_RB_r"/>
+            <site site="EM5_CSP_r"/>
+            <geom geom="Fifthpm_wrap_r" sidesite="Fifthpm_site_EDC5_side_r"/>
+            <site site="EM5_CS_r"/>
+            <pulley divisor="4.39174"/>
+            <site site="EM5_RB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_RBD_r"/>
+            <site site="EM5_T_r"/>
+            <geom geom="Fifthmd_wrap_r" sidesite="Fifthmd_site_EDC5_side_r"/>
+            <site site="EM5_TI_r"/>
         </spatial>
-        <spatial name="UI_UB5_tendon" class="myoarm_forearm_muscle">
-            <site site="UI_UB5-P1_r"/>
-            <site site="UI_UB5-P2_r"/>
-            <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_UI_UB5_side_r"/>
-            <site site="UI_UB5-P3_r"/>
-            <site site="UI_UB5-P4_r"/>
-            <geom geom="Fifthpm_wrap" sidesite="Fifthpm_site_UI_UB5_side_r"/>
-            <site site="UI_UB5-P5_r"/>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (LUM4) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (ADM); do not edit by hand -->
+        <!-- ADM (abductor digiti minimi (from the pisiform; insertion on the ulnar base of the proximal phalanx)): sites from Mirakhorlo et al. 2016, fitted to An et al. 1979 -->
+        <spatial name="ADM_r_tendon" class="myoarm_forearm_muscle">
+            <site site="ADM-P1_r"/>
+            <site site="ADM-P2_r"/>
+            <site site="ADM-P3_r"/>
         </spatial>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (ADM) -->
+        <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py; do not edit by hand -->
+        <!-- AdPt (adductor pollicis, transverse head (from the palmar ridge of the MC3 shaft)): sites from Barry et al. 2018 and Mirakhorlo et al. 2016 -->
+        <spatial name="AdPt_r_tendon" class="myoarm_forearm_muscle">
+            <site site="AdPt-P1_r"/>
+            <site site="AdPt-P2_r"/>
+        </spatial>
+        <!-- FPBs (flexor pollicis brevis, superficial head (median nerve; from the flexor retinaculum and trapezium)): sites from Mirakhorlo et al. 2016, fitted to Smutz et al. 1998 -->
+        <spatial name="FPBs_r_tendon" class="myoarm_forearm_muscle">
+            <site site="FPBs-P1_r"/>
+            <site site="FPBs-P2_r"/>
+            <site site="FPBs-P3_r"/>
+        </spatial>
+        <!-- APB (abductor pollicis brevis): sites from Xu et al. 2026, fitted to Smutz et al. 1998 -->
+        <spatial name="APB_r_tendon" class="myoarm_forearm_muscle">
+            <site site="APB-P1_r"/>
+            <site site="APB-P2_r"/>
+            <site site="APB-P3_r"/>
+        </spatial>
+        <!-- AdPo (adductor pollicis, oblique head (from the capitate and the bases of MC2-3)): sites from Mirakhorlo et al. 2016 -->
+        <spatial name="AdPo_r_tendon" class="myoarm_forearm_muscle">
+            <site site="AdPo-P1_r"/>
+            <site site="AdPo-P2_r"/>
+        </spatial>
+        <!-- FPBd (flexor pollicis brevis, deep head (ulnar nerve; from the trapezoid and capitate)): sites from Mirakhorlo et al. 2016, fitted to Smutz et al. 1998 -->
+        <spatial name="FPBd_r_tendon" class="myoarm_forearm_muscle">
+            <site site="FPBd-P1_r"/>
+            <site site="FPBd-P2_r"/>
+            <site site="FPBd-P3_r"/>
+        </spatial>
+        <!-- DI1s (first dorsal interosseous, superficial head (from the ulnar MC1 shaft); crosses the thumb CMC): sites from Mirakhorlo et al. 2016, fitted to An et al. 1983 and Brand et al. 1993 -->
+        <spatial name="DI1s_r_tendon" class="myoarm_forearm_muscle">
+            <site site="DI1s-P1_r"/>
+            <site site="DI1s-P2_r"/>
+            <site site="DI1s-P3_r"/>
+        </spatial>
+        <!-- FDM (flexor digiti minimi brevis (from the hook of the hamate; insertion on the ulnar-palmar base of the proximal phalanx)): sites from Mirakhorlo et al. 2016 -->
+        <spatial name="FDM_r_tendon" class="myoarm_forearm_muscle">
+            <site site="FDM-P1_r"/>
+            <site site="FDM-P2_r"/>
+            <site site="FDM-P3_r"/>
+        </spatial>
+        <!-- ODM (opponens digiti minimi (from the hook of the hamate; insertion along the ulnar border of the MC5 shaft); crosses only CMC5): sites from Mirakhorlo et al. 2016 -->
+        <spatial name="ODM_r_tendon" class="myoarm_forearm_muscle">
+            <site site="ODM-P1_r"/>
+            <site site="ODM-P2_r"/>
+        </spatial>
+        <!-- node_LUM1_r: slide and FDP2 distal of the node (tendon equality node_LUM1_tie_r) -->
+        <fixed name="node_LUM1_slide_r">
+            <joint joint="node_LUM1_r" coef="1"/>
+        </fixed>
+        <spatial name="node_LUM1_fdp_r" rgba="0 0 0 0">
+            <site site="node_LUM1_ref_r"/>
+            <site site="FDP2-P5_r"/>
+            <geom geom="2ndmcp_ellipsoid_wrap_r" sidesite="2ndmcp_ellipsoid_site_FDP2_side_r"/>
+            <site site="FDP2-P6_r"/>
+            <site site="FDP2-P7_r"/>
+            <site site="FDP2-P8_r"/>
+            <site site="FDP2-P9_r"/>
+            <site site="FDP2-P10_r"/>
+        </spatial>
+        <!-- node_LUM2_r: slide and FDP3 distal of the node (tendon equality node_LUM2_tie_r) -->
+        <fixed name="node_LUM2_slide_r">
+            <joint joint="node_LUM2_r" coef="1"/>
+        </fixed>
+        <spatial name="node_LUM2_fdp_r" rgba="0 0 0 0">
+            <site site="node_LUM2_ref_r"/>
+            <site site="FDP3-P5_r"/>
+            <site site="FDP3-P6_r"/>
+            <site site="FDP3-P8_r"/>
+            <site site="FDP3-P9_r"/>
+            <site site="FDP3-P10_r"/>
+        </spatial>
+        <!-- node_LUM3_r: slide and FDP4 distal of the node (tendon equality node_LUM3_tie_r) -->
+        <fixed name="node_LUM3_slide_r">
+            <joint joint="node_LUM3_r" coef="1"/>
+        </fixed>
+        <spatial name="node_LUM3_fdp_r" rgba="0 0 0 0">
+            <site site="node_LUM3_ref_r"/>
+            <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_FDP4_side_r"/>
+            <site site="FDP4-P5_r"/>
+            <site site="FDP4-P6_r"/>
+            <site site="FDP4-P8_r"/>
+            <site site="FDP4-P9_r"/>
+            <site site="FDP4-P10_r"/>
+        </spatial>
+        <!-- node_LUM4_r: slide and FDP5 distal of the node (tendon equality node_LUM4_tie_r) -->
+        <fixed name="node_LUM4_slide_r">
+            <joint joint="node_LUM4_r" coef="1"/>
+        </fixed>
+        <spatial name="node_LUM4_fdp_r" rgba="0 0 0 0">
+            <site site="node_LUM4_ref_r"/>
+            <site site="FDP5-P5_r"/>
+            <site site="FDP5-P6_r"/>
+            <site site="FDP5-P7_r"/>
+            <site site="FDP5-P8_r"/>
+            <site site="FDP5-P9_r"/>
+            <site site="FDP5-P10_r"/>
+        </spatial>
+        <!-- END generated by scripts/generate_hand_intrinsic_muscles.py -->
+        <!-- BEGIN generated by scripts/fit_passive_moments.py; do not edit by hand -->
+        <!-- wrist_flexion (measured): Formica et al. 2012, doi:10.1152/jn.01014.2011 -->
+        <fixed name="passive_wrist_flexion_pos_r" springlength="-1000 -0.06559359682660054" stiffness="0.6268340098121676 0 0">
+            <joint joint="flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_wrist_flexion_neg_r" springlength="-0.06559359682660054 1000" stiffness="0.9364281405344517 0 0">
+            <joint joint="flexion_r" coef="1"/>
+        </fixed>
+        <!-- wrist_deviation (measured): Formica et al. 2012, doi:10.1152/jn.01014.2011 -->
+        <fixed name="passive_wrist_deviation_pos_r" springlength="-1000 0.009443716926197538" stiffness="0.8889063328957071 0 0">
+            <joint joint="deviation_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_wrist_deviation_neg_r" springlength="0.009443716926197538 1000" stiffness="0.4181302517419797 0 0">
+            <joint joint="deviation_r" coef="1"/>
+        </fixed>
+        <!-- thumb_cmc_flexion (measured): Domalain et al. 2010, doi:10.1115/1.4001397 -->
+        <fixed name="passive_thumb_cmc_flexion_pos_r" springlength="-1000 0.4529766514790465" stiffness="1.079300298501467 1.4645954419918572 49.19819069071867">
+            <joint joint="cmc_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_cmc_flexion_pos1_r" springlength="-1000 0.6830667535699912" stiffness="0.2145653920728128 10.725051056669933 0">
+            <joint joint="cmc_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_cmc_flexion_pos2_r" springlength="-1000 0.6854682216385246" stiffness="0.0002681344763885127 0 0">
+            <joint joint="cmc_flexion_r" coef="1"/>
+        </fixed>
+        <!-- thumb_cmc_abduction (measured): Domalain et al. 2010, doi:10.1115/1.4001397 -->
+        <fixed name="passive_thumb_cmc_abduction_pos_r" springlength="-1000 0.36212230517276495" stiffness="0 0 10.028602201435941">
+            <joint joint="cmc_abduction_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_cmc_abduction_pos1_r" springlength="-1000 0.7429197364146992" stiffness="5.537669959347157 152.91494281034701 517.7148973123599">
+            <joint joint="cmc_abduction_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_cmc_abduction_pos2_r" springlength="-1000 0.7739551024370044" stiffness="0 0 3990.6736491414404">
+            <joint joint="cmc_abduction_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_cmc_abduction_neg_r" springlength="0.36212230517276495 1000" stiffness="1.650841457804983 0 0">
+            <joint joint="cmc_abduction_r" coef="1"/>
+        </fixed>
+        <!-- thumb_mp_flexion (assumed): Barry et al. 2018, doi:10.1016/j.jbiomech.2018.06.017 -->
+        <fixed name="passive_thumb_mp_flexion_pos_r" springlength="-1000 -0.23393767253996847" stiffness="0.056763451551179275 0 0">
+            <joint joint="mp_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_mp_flexion_neg_r" springlength="-0.23393767253996847 1000" stiffness="0.06679083788822585 0 0">
+            <joint joint="mp_flexion_r" coef="1"/>
+        </fixed>
+        <!-- thumb_ip_flexion (assumed): Barry et al. 2018, doi:10.1016/j.jbiomech.2018.06.017 -->
+        <fixed name="passive_thumb_ip_flexion_pos_r" springlength="-1000 -0.11592625705491853" stiffness="0.03897656857249767 0 0">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_ip_flexion_pos1_r" springlength="-1000 -0.06670744634815429" stiffness="0.00022486245394098996 0 0">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_ip_flexion_neg_r" springlength="-0.11592625705491853 1000" stiffness="0.05723442920750294 0 0">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit2_mcp_flexion (measured): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
+        <fixed name="passive_digit2_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+            <joint joint="mcp2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_mcp_flexion_neg_r" springlength="0.9991015049004013 1000" stiffness="0.0007494104867666945 0 0">
+            <joint joint="mcp2_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit2_pip_flexion (measured): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit2_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.031464935384496566 0 0">
+            <joint joint="pm2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0 -0.7839950957230861 0">
+            <joint joint="pm2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_pip_flexion_neg1_r" springlength="0.08661032378317726 1000" stiffness="0.0011054150149020453 0 0">
+            <joint joint="pm2_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit2_dip_flexion (measured): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit2_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.05774477578944136 -0.010068861310224816 -0.006903808599409928">
+            <joint joint="md2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_dip_flexion_pos1_r" springlength="-1000 0.42517795311741563" stiffness="-0.0600912283629643 0.17497167055551752 -0.11428538275178668">
+            <joint joint="md2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_dip_flexion_pos2_r" springlength="-1000 0.9251557313203025" stiffness="0.08447383746371837 -0.43287681800760824 0.49899915098596526">
+            <joint joint="md2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.010430891245150651 -0.021964810884385903 0.01031578767031278">
+            <joint joint="md2_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit3_mcp_flexion (assumed): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
+        <fixed name="passive_digit3_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+            <joint joint="mcp3_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit3_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit3_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.02396765245247838 0 0">
+            <joint joint="pm3_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit3_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0.02859421486846762 -0.6132504381198127 0">
+            <joint joint="pm3_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit3_pip_flexion_neg1_r" springlength="0.09448398958164791 1000" stiffness="0.000825727818470871 0 0">
+            <joint joint="pm3_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit3_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit3_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.049897734664012865 -0.0009322592713716521 -0.010200340313050966">
+            <joint joint="md3_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit3_dip_flexion_pos1_r" springlength="-1000 0.4212411202181803" stiffness="-0.05671804296133156 0.1643300134435849 -0.10686806057915385">
+            <joint joint="md3_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit3_dip_flexion_pos2_r" springlength="-1000 0.9212188984210672" stiffness="0.08605220388774482 -0.4383361304529868 0.5022647040109985">
+            <joint joint="md3_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit3_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.010139513782654796 -0.021468722903881042 0.010111627151757355">
+            <joint joint="md3_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit4_mcp_flexion (assumed): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
+        <fixed name="passive_digit4_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+            <joint joint="mcp4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_mcp_flexion_neg_r" springlength="0.9991015049004013 1000" stiffness="0.0007930574290575076 0 0">
+            <joint joint="mcp4_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit4_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit4_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.026715178670934255 0 0">
+            <joint joint="pm4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0.1643302162715767 0 0">
+            <joint joint="pm4_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit4_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit4_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.03733134307635742 0.003240062053741221 -0.009742051049959113">
+            <joint joint="md4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_dip_flexion_pos1_r" springlength="-1000 0.44092528471435694" stiffness="-0.06062499367611792 0.17934118782487846 -0.11891500003704739">
+            <joint joint="md4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_dip_flexion_pos2_r" springlength="-1000 0.9251557313203025" stiffness="0.07880797558459723 -0.4031684438892987 0.4642781608213747">
+            <joint joint="md4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.010516097398669783 -0.02192847309270672 0.010244519291236553">
+            <joint joint="md4_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit5_mcp_flexion (assumed): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
+        <fixed name="passive_digit5_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+            <joint joint="mcp5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_mcp_flexion_neg_r" springlength="0.9991015049004013 1000" stiffness="0.003111605050847746 0 0">
+            <joint joint="mcp5_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit5_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit5_pip_flexion_pos_r" springlength="-1000 0.1159262570554155" stiffness="0.040199828338053294 0 0">
+            <joint joint="pm5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_pip_flexion_neg_r" springlength="0.1159262570554155 1000" stiffness="0 -0.3602101357966713 3.4455548762691266">
+            <joint joint="pm5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_pip_flexion_neg1_r" springlength="0.0787366579847066 1000" stiffness="0.002044831806896634 0 0">
+            <joint joint="pm5_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit5_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
+        <fixed name="passive_digit5_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.07100983200558085 -0.01970038886506673 -0.004981903339039817">
+            <joint joint="md5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_dip_flexion_pos1_r" springlength="-1000 0.417304287318945" stiffness="-0.057294797462162705 0.16544650461864024 -0.10723111400113221">
+            <joint joint="md5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_dip_flexion_pos2_r" springlength="-1000 0.9212188984210672" stiffness="0.08337724687490508 -0.4238127372506732 0.48499824646619955">
+            <joint joint="md5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.01007510120455326 -0.021348089163233303 0.010058010967389619">
+            <joint joint="md5_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit4_cmc_flexion (assumed): El-Shennawy et al. 2001, doi:10.1053/jhsu.2001.28761 -->
+        <fixed name="passive_digit4_cmc_flexion_pos_r" springlength="-1000 -0.00028661720343932585" stiffness="3.3624060559469537 0 0">
+            <joint joint="cmc4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_cmc_flexion_neg_r" springlength="-0.00028661720343932585 1000" stiffness="10.133747492609144 0 0">
+            <joint joint="cmc4_flexion_r" coef="1"/>
+        </fixed>
+        <!-- digit5_cmc_flexion (assumed): El-Shennawy et al. 2001, doi:10.1053/jhsu.2001.28761 -->
+        <fixed name="passive_digit5_cmc_flexion_pos_r" springlength="-1000 -0.006865613999906138" stiffness="0.11535786547854864 0 0">
+            <joint joint="cmc5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_cmc_flexion_neg_r" springlength="-0.006865613999906138 1000" stiffness="4.5389627978016005 0 0">
+            <joint joint="cmc5_flexion_r" coef="1"/>
+        </fixed>
+        <!-- END generated by scripts/fit_passive_moments.py -->
+        <!-- BEGIN generated by scripts/fit_extensor_mechanism.py; do not edit by hand -->
+        <!-- Oblique retinacular ligaments: tension-only, slack until DIP - PIP exceeds 30 deg (Harris & Rutledge 1972); stiffness from Ueba et al. 2011 -->
+        <fixed name="lig_ORL2_r" springlength="-1000 0.0018716" stiffness="3755.5 0 0">
+            <joint joint="md2_flexion_r" coef="0.003575"/>
+            <joint joint="pm2_flexion_r" coef="-0.003575"/>
+        </fixed>
+        <fixed name="lig_ORL3_r" springlength="-1000 0.001604" stiffness="5095.1 0 0">
+            <joint joint="md3_flexion_r" coef="0.003063"/>
+            <joint joint="pm3_flexion_r" coef="-0.003063"/>
+        </fixed>
+        <fixed name="lig_ORL4_r" springlength="-1000 0.0028776" stiffness="1644 0 0">
+            <joint joint="md4_flexion_r" coef="0.005496"/>
+            <joint joint="pm4_flexion_r" coef="-0.005496"/>
+        </fixed>
+        <fixed name="lig_ORL5_r" springlength="-1000 0.0015647" stiffness="5332.4 0 0">
+            <joint joint="md5_flexion_r" coef="0.002988"/>
+            <joint joint="pm5_flexion_r" coef="-0.002988"/>
+        </fixed>
+        <!-- END generated by scripts/fit_extensor_mechanism.py -->
+        <!-- BEGIN generated by scripts/generate_extrinsic_muscles.py; do not edit by hand -->
+        <!-- node_JT3_r: slide and EDC3 from EDC3-P4_r (node_JT3_tie_r) -->
+        <fixed name="node_JT3_slide_r">
+            <joint joint="node_JT3_r" coef="1"/>
+        </fixed>
+        <spatial name="node_JT3_edc_r" rgba="0 0 0 0">
+            <site site="EDC3-P4_r"/>
+            <geom geom="3rdmcp_ellipsoid_wrap_r" sidesite="3rdmcp_ellipsoid_site_EDC3_side_r"/>
+            <site site="EM3_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM3_H_r"/>
+            <site site="EM3_CSP_r"/>
+            <geom geom="Thirdpm_wrap_r" sidesite="Thirdpm_site_EDC3_side_r"/>
+            <site site="EM3_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM3_H_r"/>
+            <site site="EM3_RB_r"/>
+            <geom geom="EM3_band_wrap_r" sidesite="EM3_band_side_r"/>
+            <site site="EM3_RBD_r"/>
+            <site site="EM3_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM3_H_r"/>
+            <site site="EM3_UB_r"/>
+            <geom geom="EM3_band_wrap_r" sidesite="EM3_band_side_r"/>
+            <site site="EM3_UBD_r"/>
+            <site site="EM3_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM3_T_r"/>
+            <geom geom="Thirdmd_wrap_r" sidesite="Thirdmd_site_EDC3_side_r"/>
+            <site site="EM3_TI_r"/>
+        </spatial>
+        <!-- node_JT4_r: slide and EDC4 from EDC4-P4_r (node_JT4_tie_r) -->
+        <fixed name="node_JT4_slide_r">
+            <joint joint="node_JT4_r" coef="1"/>
+        </fixed>
+        <spatial name="node_JT4_edc_r" rgba="0 0 0 0">
+            <site site="EDC4-P4_r"/>
+            <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_EDC4_side_r"/>
+            <site site="EM4_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM4_H_r"/>
+            <site site="EM4_CSP_r"/>
+            <geom geom="Fourthpm_wrap_r" sidesite="Fourthpm_site_EDC4_side_r"/>
+            <site site="EM4_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM4_H_r"/>
+            <site site="EM4_RB_r"/>
+            <geom geom="EM4_band_wrap_r" sidesite="EM4_band_side_r"/>
+            <site site="EM4_RBD_r"/>
+            <site site="EM4_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM4_H_r"/>
+            <site site="EM4_UB_r"/>
+            <geom geom="EM4_band_wrap_r" sidesite="EM4_band_side_r"/>
+            <site site="EM4_UBD_r"/>
+            <site site="EM4_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM4_T_r"/>
+            <geom geom="Fourthmd_wrap_r" sidesite="Fourthmd_site_EDC4_side_r"/>
+            <site site="EM4_TI_r"/>
+        </spatial>
+        <!-- node_JT5_r: slide and EDC5 from EDC5-P4_r (node_JT5_tie_r) -->
+        <fixed name="node_JT5_slide_r">
+            <joint joint="node_JT5_r" coef="1"/>
+        </fixed>
+        <spatial name="node_JT5_edc_r" rgba="0 0 0 0">
+            <site site="EDC5-P4_r"/>
+            <geom geom="5thmcp_ellipsoid_wrap_r" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
+            <site site="EM5_H_r"/>
+            <pulley divisor="2.7027"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_CSP_r"/>
+            <geom geom="Fifthpm_wrap_r" sidesite="Fifthpm_site_EDC5_side_r"/>
+            <site site="EM5_CS_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_RB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_RBD_r"/>
+            <site site="EM5_T_r"/>
+            <pulley divisor="3.1746"/>
+            <site site="EM5_H_r"/>
+            <site site="EM5_UB_r"/>
+            <geom geom="EM5_band_wrap_r" sidesite="EM5_band_side_r"/>
+            <site site="EM5_UBD_r"/>
+            <site site="EM5_T_r"/>
+            <pulley divisor="1.5873"/>
+            <site site="EM5_T_r"/>
+            <geom geom="Fifthmd_wrap_r" sidesite="Fifthmd_site_EDC5_side_r"/>
+            <site site="EM5_TI_r"/>
+        </spatial>
+        <!-- Juncturae tendinum: tension-only, stiffness fitted to von Schroeder & Botte 1993 (extrinsic_muscles.json) -->
+        <spatial name="lig_JT34_r" springlength="0 0.024459" stiffness="1000" width="0.001">
+            <site site="node_JT4_link_r"/>
+            <site site="node_JT3_link_r"/>
+        </spatial>
+        <spatial name="lig_JT45_r" springlength="0 0.020708" stiffness="1000" width="0.001">
+            <site site="node_JT4_link_r"/>
+            <site site="node_JT5_link_r"/>
+        </spatial>
+        <!-- END generated by scripts/generate_extrinsic_muscles.py -->
     </tendon>
     
 </mujocoinclude>

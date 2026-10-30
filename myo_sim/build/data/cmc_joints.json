@@ -1,0 +1,215 @@
+{
+  "format": "myo_sim.cmc_joints/1",
+  "description": "Fourth and fifth carpometacarpal joints of the right hand (the left hand is mirrored): one hinge each in fourthmc_r and fifthmc_r (both bodies were fixed to capitate_r), coupled by a joint equality, and the site moves that keep muscles from crossing the new joints where they should not. scripts/fit_cmc_joints.py computes the centres and axes (--fit) and writes the joints into myoarm_r_chain.xml, the coupling equality into the generated block of myoarm_r_assets.xml and the moved sites. Angles in deg, positions in the body frame (m) unless noted; lunate frame = lunate_r at q = 0 (x radial, y proximal, z dorsal).",
+  "sources": {
+    "shimawaki2019": {
+      "citation": "Shimawaki S, Koya D, Nakabayashi M, Yoshida K, Sugimoto H, Toishi M. Influence of the diameter of grasped spheres on the rotation angle and axis of the second to fifth carpometacarpal joints. J Med Biol Eng 39:646-652, 2019.",
+      "doi": "10.1007/s40846-018-0448-0",
+      "location": "Table 2 p. 650 (axes), Figs. 3-4; frame p. 648 (X volar in the methods, X dorsal in the Fig. 2 caption)"
+    },
+    "batmanabane1985": {
+      "citation": "Batmanabane M, Malathi S. Movements at the carpometacarpal and metacarpophalangeal joints of the hand and their effect on the dimensions of the articular ends of the metacarpal bones. Anat Rec 213:102-110, 1985.",
+      "doi": "10.1002/ar.1092130114",
+      "location": "Tables 1-2 p. 105 (cadavers, n = 10), Tables 4-5 p. 106 (radiographs); mean +- SEM"
+    },
+    "aljasim2025": {
+      "citation": "Aljasim O, Yener C, Demirkoparan M, Vahabi A, Dastan AE, Kucuk L, Ozkayin N, Bilge O, Gunay H. Fifth carpometacarpal arthritis management: a comparative cadaver study of two arthrodesis methods. J Hand Microsurg 17:100256, 2025.",
+      "doi": "10.1016/j.jham.2025.100256",
+      "location": "Methods pp. 2-3 (100 N at the MC5 head), Table 1 (medians, IQR)"
+    },
+    "elshennawy2001": {
+      "citation": "El-Shennawy M, Nakamura K, Patterson RM, Viegas SF. Three-dimensional kinematic analysis of the second through fifth carpometacarpal joints. J Hand Surg Am 26(6):1030-1035, 2001.",
+      "doi": "10.1053/jhsu.2001.28761",
+      "location": "Table 1 p. 1032 (n = 5 fresh-frozen arms; passive arcs under 22 N on an intramedullary pin, other metacarpals pinned; angles relative to the hamate); axis locations pp. 1032-1033"
+    },
+    "buffi2013": {
+      "citation": "Buffi JH, Crisco JJ, Murray WM. A method for defining carpometacarpal joint kinematics from three-dimensional rotations of the metacarpal bones captured in vivo using computed tomography. J Biomech 46(12):2104-2108, 2013.",
+      "doi": "10.1016/j.jbiomech.2013.05.019",
+      "location": "Table 1 (one subject); equivalent-axis method; CMC centre from the metacarpal base"
+    },
+    "buren2020": {
+      "citation": "Büren C, Al Maktary A, Windolf J, Gehrmann SV. Metacarpal arc motion: comparison of different measurement methods. J Hand Microsurg 14(1):79-84, 2022 (online 2020).",
+      "doi": "10.1055/s-0040-1715918",
+      "location": "44 hands of 22 healthy adults; arc between MC3 and MC5 in maximal little-finger opposition: 25.1 +- 3.5 deg (ultrasound), 24.3 +- 3.6 (electrogoniometer), 24.9 +- 6.2 (photographs)"
+    },
+    "almaktary2019": {
+      "citation": "Al Maktary A. Doctoral thesis, Heinrich Heine University Duesseldorf, 2019 (same cohort as Büren et al.).",
+      "location": "MC4 flexion relative to MC3 in maximal little-finger opposition, 12.2 +- 3.0 deg (ultrasound, 44 hands)"
+    },
+    "kamper2002": {
+      "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002.",
+      "doi": "10.1016/S0021-9290(02)00229-4"
+    }
+  },
+  "centre_method": "Least-squares sphere through the vertices of the proximal 15 % of the metacarpal mesh along its principal axis (Buffi 2013's method); El-Shennawy 2001 places the flexion-extension axis within the metacarpal base.",
+  "joints": [
+    {
+      "name": "cmc4_flexion_r",
+      "body": "fourthmc_r",
+      "mesh_geom": "4mc_r",
+      "axis": {
+        "source": "shimawaki2019",
+        "status": "assumed",
+        "method": "CMC5 pattern: the CMC4 mean axis of Shimawaki 2019 Table 2 (mapped x = Z, y = Y, z = -X onto the lunate frame) with its dorsal-palmar component replaced by the CMC5 mean's ratio (z / x = 0.147 / 0.965), because the CMC4 dorsal-palmar tilt is not robust (inconsistent X sign in the paper, rotations of only 4.4 +- 1.4 deg, per-subject angles of Fig. 4b differ from the mean vector)",
+        "shimawaki_mean_lunate": [
+          0.795,
+          -0.007,
+          0.607
+        ],
+        "lunate": [
+          0.795,
+          -0.007,
+          0.1211
+        ]
+      },
+      "range_deg": {
+        "value": [
+          -5.0,
+          16.0
+        ],
+        "status": "assumed",
+        "source": "elshennawy2001",
+        "method": "arc 21 deg against El-Shennawy's passive CMC4 arc of 20 +- 10 deg (CMC5 pinned); the paper gives arcs only, so the split into extension and flexion is assumed. Active maximum 12.2 +- 3.0 deg (Al Maktary 2019) lies inside. Batmanabane 1985 (cadaver, n = 10): 14.6-16.9 deg arc."
+      },
+      "damping": {
+        "value": 0.0142,
+        "status": "assumed",
+        "source": "kamper2002",
+        "note": "as the finger MCP joints (Kamper et al. 2002 index MCP); no CMC damping measured"
+      },
+      "personalisable": true,
+      "fitted": {
+        "pos": [
+          0.002396,
+          0.025745,
+          -0.002052
+        ],
+        "axis": [
+          0.988559,
+          -0.008704,
+          0.150584
+        ],
+        "centre_lunate_mm": [
+          -5.66,
+          -29.83,
+          3.79
+        ],
+        "radius_mm": 5.21
+      }
+    },
+    {
+      "name": "cmc5_flexion_r",
+      "body": "fifthmc_r",
+      "mesh_geom": "5mc_r",
+      "axis": {
+        "source": "shimawaki2019",
+        "status": "measured",
+        "method": "mean of the three ball-size axes of Shimawaki 2019 Table 2 (n = 9, in vivo CT), mapped x = Z, y = Y, z = -X onto the lunate frame; oblique, so flexion carries some supination (Buffi 2013's equivalent-axis concept)",
+        "lunate": [
+          0.965,
+          0.218,
+          0.147
+        ]
+      },
+      "range_deg": {
+        "value": [
+          -10.3,
+          33.0
+        ],
+        "status": "assumed",
+        "source": "elshennawy2001",
+        "method": "the CMC4 range times the coupling ratio, so the joint limits never fight the equality: arc 43.3 deg against El-Shennawy's passive CMC5 arc of 44 +- 8 deg (CMC4 free). Active maximum 25.1 +- 3.5 deg (Büren et al. 2020) lies inside. Aljasim 2025 (100 N at the MC5 head, cadaver) gives more extension (about 24-26 deg) than flexion (13-14 deg) from the MC3 axis under load: the split is not settled."
+      },
+      "damping": {
+        "value": 0.0142,
+        "status": "assumed",
+        "source": "kamper2002",
+        "note": "as the finger MCP joints"
+      },
+      "personalisable": true,
+      "fitted": {
+        "pos": [
+          0.003835,
+          0.022057,
+          -6e-06
+        ],
+        "axis": [
+          0.964827,
+          0.217961,
+          0.146974
+        ],
+        "centre_lunate_mm": [
+          -14.07,
+          -27.68,
+          -1.9
+        ],
+        "radius_mm": 5.5
+      }
+    }
+  ],
+  "coupling": {
+    "name": "cmc45_coupling_r",
+    "joint1": "cmc5_flexion_r",
+    "joint2": "cmc4_flexion_r",
+    "ratio": 2.06,
+    "source": "buren2020",
+    "definition": "cmc5_flexion = 2.06 x cmc4_flexion (joint equality, polycoef 0 2.06 0 0 0)",
+    "method": "ratio of the active maxima in maximal little-finger opposition, relative to MC3: CMC5 25.1 deg (Büren et al. 2020, ultrasound) over CMC4 12.2 deg (Al Maktary 2019, same 44 hands); Shimawaki 2019 (grasp, n = 9) gives 2.05",
+    "alternatives": {
+      "shimawaki2019": 2.05,
+      "buffi2013_n1": 2.72,
+      "elshennawy2001_passive_bounds": "2.2 (44 / 20, isolated arcs) to 2.75 (additive reading); end-range, not a measured ratio"
+    },
+    "solimp": [
+      0.9999,
+      0.9999,
+      0.001,
+      0.5,
+      2.0
+    ],
+    "caveats": [
+      "The ratio is the mean of an active task; individual ratios are not reported and the SDs are 14 % (CMC5) and 25 % (CMC4) of the means.",
+      "Under passive loading (an object pressing on the palm) the ratio may differ; the equality imposes the active ratio there too.",
+      "CMC4 cannot stay still while CMC5 moves: El-Shennawy 2001 measured 28 +- 3 deg of CMC5 motion with CMC4 pinned, which the equality cannot reproduce (it gives 0 deg). Two free joints with an intermetacarpal spring or ligament replace the equality once stiffness data exist."
+    ],
+    "personalisable": true,
+    "sources": [
+      "buren2020",
+      "almaktary2019"
+    ],
+    "cite": "Büren et al. 2020; Al Maktary 2019"
+  },
+  "passive": {
+    "status": "gap",
+    "note": "No moment-angle data exist for CMC4/5, so no spring is added; the joint limits are the end stops and the crossing muscles give the passive moment. End-range points for a later fit: Aljasim 2025 (100 N at the MC5 head, about 4.4 N m on MyoHand's 43.8 mm CMC5-to-MCP5 lever, arc 38-41 deg) and El-Shennawy 2001 (22 N on a pin through the MC head, about 1 N m, arcs 20 / 44 deg).",
+    "candidate_sources": [
+      "aljasim2025",
+      "elshennawy2001"
+    ]
+  },
+  "site_moves": [
+    {
+      "site": "FDS5-P4_r",
+      "from": "fourthmc_r",
+      "to": "fifthmc_r",
+      "reason": "the digit-5 flexor's via point at the MC5 base level sat on MC4, so FDS5 would flex CMC4; on MC5 it flexes CMC5 (9.3 mm)",
+      "pos": [
+        0.00695,
+        0.002664,
+        -0.004369
+      ]
+    },
+    {
+      "site": "FDP5-P4_r",
+      "from": "fourthmc_r",
+      "to": "fifthmc_r",
+      "reason": "as FDS5: from MC4, FDP5 would flex CMC4 (16.9 mm) and extend CMC5 (10.7 mm); on MC5 it flexes CMC5 (6.4 mm). On the hamate (carpal tunnel) the point lies distal of the CMC5 centre and dorsal of the tendon's next site, so FDP5 would still extend CMC5",
+      "pos": [
+        0.00295,
+        0.003064,
+        0.001531
+      ]
+    }
+  ],
+  "site_move_method": "Each moved site keeps its world position at q = 0 (its position is re-expressed in the new body's frame), so every path is unchanged with CMC4/5 at 0; the anatomical origins of the interossei are rebuilt with their identities later. The three interosseous origins moved here in S3 (RI4-P1, UI_UB4-P1 to MC4, RI5-P1 to MC5) became the start points of PI2, DI4 and PI3 in S5 (build/data/hand_intrinsic_muscles.json)."
+}

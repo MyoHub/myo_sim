@@ -7,9 +7,9 @@ MyoHand is a MuJoCo musculoskeletal model of the right wrist and hand, derived f
 | Property | Value |
 |---|---|
 | Degrees of freedom | 23 |
-| Actuators (muscles) | 39 |
+| Actuators (muscles) | 47 (39 + intrinsic AdPt, AdPo, FPBs, FPBd, APB, DI1s, FDM, ODM; RI2 is DI1d, UI_UB5 is ADM, and RI3-5 / LU_RB2-5 / UI_UB2-4 are DI2-4, PI1-3, LUM1-4) |
 | Body segments | radius, ulna, carpals (scaphoid, lunate, triquetrum, pisiform, trapezium, trapezoid, capitate, hamate), metacarpals (1-5), proximal/middle/distal phalanges (digits 2-5), thumb phalanges |
-| Primary joints | forearm pronation/supination, wrist flexion/deviation, thumb CMC/MCP/IP, finger MCP/PIP/DIP (digits 2-5) |
+| Primary joints | forearm pronation/supination, wrist flexion/deviation, thumb CMC/MCP/IP, CMC4/5 flexion (coupled), finger MCP/PIP/DIP (digits 2-5); internal lumbrical and junctura node slides `node_LUM1-4_r`, `node_JT3-5_r` (tied by equalities, not controlled) |
 
 ## Reference model
 
@@ -20,7 +20,7 @@ MyoHand is a MuJoCo musculoskeletal model of the right wrist and hand, derived f
 
 ![DELT1 left/right shoulder elevation relationship](../../../docs/images/RI2_RI2_l_mcp2_flexion_r.png)
 
-Example fidelity check (RI2 left/right moment-arm and force-length plot) for symmetry and muscle jumping for hand model. The full hand arm muscle check can be run with `tests/debug_muscle_bimanual.py`.
+Example fidelity check (RI2, now DI1d, left/right moment-arm and force-length plot) for symmetry and muscle jumping for hand model. The full hand arm muscle check can be run with `tests/debug_muscle_bimanual.py`.
 
 
 ## Known limitations
@@ -32,10 +32,38 @@ None currently tracked.
 - Adjustments post conversion to optimize for kinematic and dynamic behaviors.
 - Inertial properties.
 - Dynamics properties of the joints.
-- Contact geometries manually designed with references.
+- Contact geometries manually designed with references; fingertip and palm pads fitted to Dallard et al. 2018 and to the fist, and 144 self-contact pairs per hand (`docs/wiki/hand-contacts-and-pads.md`).
 - Contact properties optimized for contact-rich behaviors.
 
 ## Changelog
+
+**2026-10-30** — ECU through the groove of the ulnar head: `ECU-P5_r` moves from the radius to the ulna (fitted to Horii 1993 and Loren 1996; its extension arm now falls in pronation), the ECU wrap sphere and side sites on the radius are removed; extrinsic passive parameters and springs refitted (new spring tendon `passive_wrist_deviation_pos_r`). The forearm rotation axis was checked against the radial and ulnar heads and is unchanged. See `docs/wiki/hand-extrinsic-muscles.md`.
+
+**2026-10-30** — Forearm wrap side sites: EDC4, EDC5, EDM, ECRB, FCR and PQ wrap from outside their geoms (ECRB and FCR spheres refitted to Horii 1993; MuJoCo and mujoco-warp now agree); passive parameters, junctura links and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
+
+**2026-10-30** — S2c: AdPt's insertion and APL's CMC routing (new trapezium cylinder `APL_cmc_wrap_r`, `APL-P8_r` removed) from Barry et al. 2018 (MIT, `build/data/LICENSE-Barry2018.txt`); thumb and extrinsic passive parameters, junctura links and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
+
+**2026-10-30** — Junctura node ties of JT3 and JT5: the tie helpers `node_JT{3,4,5}_edc_r` start at `EDC{d}-P4_r`, so the nodes move with their tendon over the MCP wrap (they moved 6-11 mm too far at MCP 90 deg); the unused sites `node_JT{d}_ref_r` are removed; junctura links (now slack with straight fingers too), extrinsic passive parameters and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
+
+**2026-10-30** — EDC2 wrist wrap: side site `EDCI_torus_site_EDC2_side_r` moved from the centre of its sphere (inside wrap) to its dorsal side (ordinary wrap; MuJoCo and mujoco-warp now agree on EDC2's length); extrinsic passive parameters, junctura links and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
+
+**2026-10-29** — Juncturae tendinum, FCU, FDS5: junction nodes on EDC3, EDC4 and EDC5 (slide joints `node_JT{3,4,5}_r` tied by tendon equalities, +3 joints/qpos and +3 equalities per hand) with tension-only links `lig_JT34_r`, `lig_JT45_r`; FCU over the pisiform and the hamate hook (`FCU-P5_r` new, the MC5 site renamed `FCU-P6_r`); FDS5 force 75.3 -> 46.5 N. See `docs/wiki/hand-extrinsic-muscles.md`.
+
+**2026-10-29** — Lumbrical junction nodes: each lumbrical arises from a node on its FDP tendon (slide joint `node_LUM{1..4}_r` tied by a tendon equality to the FDP's distal length), +4 joints/qpos and +4 equalities per hand. See `docs/wiki/passive-moments-and-thenar.md`.
+
+**2026-10-29** — Interossei and lumbricals by identity: `LU_RB2-5` -> `LUM1-4`, `UI_UB2` -> `PI1`, `RI3` -> `DI2`, `UI_UB3` -> `DI3`, `RI4` -> `PI2`, `UI_UB4` -> `DI4`, `RI5` -> `PI3` (same indices); Jacobson 1992 forces, hood fractions after Salsbury 1937, paths fitted to An 1979/1983. See `docs/wiki/passive-moments-and-thenar.md`.
+
+**2026-10-29** — Finger extensor mechanism (option a): EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal phalanx and branch (MuJoCo pulleys) into central slip and lateral bands; oblique retinacular ligaments `lig_ORL{2..5}_r` (+4 tendons per hand). See `docs/wiki/extensor-mechanism.md`.
+
+**2026-10-29** — Hypothenar muscles: `UI_UB5` re-routed as `ADM`, `FDM` and `ODM` added (+2 actuators per hand). See `docs/wiki/passive-moments-and-thenar.md`.
+
+**2026-10-29** — Fourth and fifth carpometacarpal joints `cmc4_flexion_r` / `cmc5_flexion_r`, coupled CMC5 = 2.06 x CMC4, with end-range springs; five sites moved to the bone they belong to. See `docs/wiki/hand-cmc-joints.md`.
+
+**2026-10-29** — Thumb and first-dorsal-interosseous heads: `AdP` -> `AdPt` + `AdPo`, `FPB` -> `FPBs` + `FPBd`, `RI2` -> `DI1d` + `DI1s`; OP, APB, FPB and DI1 sites fitted to published moment arms, thumb intrinsic passive scales and springs refitted (+3 actuators per hand). See `docs/wiki/passive-moments-and-thenar.md`.
+
+**2026-10-29** — PIP flexion limit of digits 2-5 raised from 90 to 115 deg (Leijnse et al. 2010), palm pads refitted (palm 8.0 mm), EDM without the `Fifthpm_wrap_r` wrap. See `docs/wiki/passive-moments-and-thenar.md`.
+
+**2026-10-28** — Finger MCP, PIP and DIP damping set to Kamper et al. 2002 (0.0142, 0.0105, 0.0081 N m s/rad; was 0.05), and RI2 routed without the second-metacarpal wrap its insertion entered (its length jumped by 7 mm near 10 deg MCP flexion). Both change the dynamics of every model with a hand. See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-06-17** — Moved the hand README under the arm model folder and refreshed it to the standard model README format.
 
