@@ -207,6 +207,24 @@
       "short": "Ejeskar & Ortengren 1981",
       "citation": "Ejeskar A, Ortengren R. Isolated finger flexion force - a methodological study. The Hand 13(3):223-230, 1981.",
       "note": "Table 2: force to pull each fingertip off a 20-35 mm cylinder gripped with maximal strength, one finger at a time, wrist in about 30 deg extension; 20 men and 20 women (men, right hand: 9.6 / 10.6 / 8.4 / 8.0 kp, i.e. 26 / 29 / 23 / 22 % of their sum); isolated finger forces, not shares of one grip"
+    },
+    "matsuki2010": {
+      "short": "Matsuki et al. 2010",
+      "citation": "Matsuki KO, Matsuki K, Mu S, Sasho T, Nakagawa K, Ochiai N, Takahashi K, Banks SA. In vivo 3D kinematics of normal forearms: analysis of dynamic forearm rotation. Clin Biomech 25(10):979-983, 2010.",
+      "doi": "10.1016/j.clinbiomech.2010.07.006",
+      "note": "10 forearms of 5 healthy men (mean age 37), fluoroscopy and 3D-2D registration from full supination to full pronation, elbow about 45 deg: the rotation axis passed through the centre of the radial head and 1.9 +- 0.7 mm posterior of the ulnar head's geometric centroid; the ulna translated 3.9 +- 1.5 mm dorsally."
+    },
+    "akhbari2021": {
+      "short": "Akhbari et al. 2021",
+      "citation": "Akhbari B, Shah KN, Morton AM, Moore DC, Weiss APC, Wolfe SW, Crisco JJ. Biomechanics of the distal radioulnar joint during in vivo forearm pronosupination. J Wrist Surg 10(3):208-215, 2021.",
+      "doi": "10.1055/s-0040-1722334",
+      "note": "Nine healthy subjects, biplanar videoradiography during active rotation; centre of rotation (helical axis on the distal ulnar surface) relative to the centre of the ulnar fovea: 0.5 +- 1.8 mm ulnar and 0.6 +- 0.8 mm volar at maximum pronation, 0.2 +- 0.6 mm radial and 2.0 +- 0.5 mm volar at maximum supination."
+    },
+    "haugstvedt2001": {
+      "short": "Haugstvedt et al. 2001",
+      "citation": "Haugstvedt JR, Berger RA, Berglund LJ. A mechanical study of the moment-forces of the supinators and pronators of the forearm. Acta Orthop Scand 72(6):629-634, 2001.",
+      "doi": "10.1080/000164701317269076",
+      "note": "8 fresh-frozen arms, humerus and ulna fixed, elbow 90 deg, wrist unconstrained; torque per tendon load (a moment arm) every 10 deg from 90 deg supination to 90 deg pronation, mean +- SD (Fig. 3a-g; values read from the figure, about +-0.5 mm; positive = supination)."
     }
   },
   "quantities": {
@@ -1413,6 +1431,220 @@
           "kind": "cadaver",
           "source": "loren1996",
           "protocol": "appendix, moment-arm polynomials at 0 deg, forearm neutral"
+        }
+      ]
+    },
+    "ecu_ulnar_rotation": {
+      "label": "ECU ulnar-deviation moment arm at wrist neutral in supination / neutral / pronation",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            16.0,
+            18.3,
+            19.5
+          ],
+          "kind": "cadaver, mean over 50 deg of radioulnar deviation",
+          "source": "horii1993",
+          "protocol": "Table III excursion 14 / 16 / 17 mm over 50 deg; Table II at neutral 17 +- 3 mm; model: forearm at -90 / 0 / +90 deg"
+        },
+        {
+          "value": [
+            21.0,
+            28.0,
+            28.0
+          ],
+          "kind": "cadaver",
+          "source": "loren1996",
+          "protocol": "appendix p. 342, wrist neutral"
+        }
+      ]
+    },
+    "forearm_axis_radial_head": {
+      "label": "Forearm rotation axis to the radial head centre",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": "through the centre",
+          "kind": "in vivo, 10 forearms",
+          "source": "matsuki2010",
+          "protocol": "3D-2D registration during active rotation; model: circle through the radius mesh's head rim (7 mm), normal to the axis"
+        }
+      ]
+    },
+    "forearm_axis_ulnar_head": {
+      "label": "Forearm rotation axis, posterior (dorsal) offset from the ulnar head centre",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": 1.9,
+          "spread": 0.7,
+          "spread_kind": "SD",
+          "kind": "in vivo, 10 forearms, from the head's geometric centroid",
+          "source": "matsuki2010",
+          "protocol": "3D-2D registration during active rotation; model: sphere through the ulna mesh's distal 22 mm (radius 9.6 mm, rms 1.8 mm)"
+        },
+        {
+          "value": [
+            -0.6,
+            -2.0
+          ],
+          "spread": [
+            0.8,
+            0.5
+          ],
+          "spread_kind": "SD",
+          "kind": "in vivo, nine subjects, centre of rotation from the ulnar fovea at maximum pronation / supination (negative = volar)",
+          "source": "akhbari2021",
+          "protocol": "biplanar videoradiography; another landmark (the fovea, at the base of the styloid), not located on the model's mesh"
+        }
+      ]
+    },
+    "prosup_moment_arms_biceps": {
+      "label": "Biceps (both heads, weighted by peak force) supination moment arm in supination / neutral / pronation (negative = pronator)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            0.7,
+            11.3,
+            9.3
+          ],
+          "spread": [
+            0.7,
+            1.8,
+            1.6
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, 8 arms",
+          "source": "haugstvedt2001",
+          "protocol": "elbow 90 deg, wrist free; Fig. 3, read at 90 deg supination / 0 / 90 deg pronation; model: dL/dq of pro_sup_r, elbow 90 deg, wrist neutral, forearm at -90 / 0 / +90 deg, positive = supinator"
+        }
+      ]
+    },
+    "prosup_moment_arms_supinator": {
+      "label": "Supinator supination moment arm in supination / neutral / pronation (negative = pronator)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            0.3,
+            2.0,
+            2.8
+          ],
+          "spread": [
+            0.2,
+            0.8,
+            "–"
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, 8 arms",
+          "source": "haugstvedt2001",
+          "protocol": "elbow 90 deg, wrist free; Fig. 3, read at 90 deg supination / 0 / 90 deg pronation; model: dL/dq of pro_sup_r, elbow 90 deg, wrist neutral, forearm at -90 / 0 / +90 deg, positive = supinator"
+        }
+      ]
+    },
+    "prosup_moment_arms_pt": {
+      "label": "Pronator teres supination moment arm in supination / neutral / pronation (negative = pronator)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            -4.4,
+            -6.7,
+            -0.6
+          ],
+          "spread": [
+            3.1,
+            2.4,
+            1.0
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, 8 arms",
+          "source": "haugstvedt2001",
+          "protocol": "elbow 90 deg, wrist free; Fig. 3, read at 90 deg supination / 0 / 90 deg pronation; model: dL/dq of pro_sup_r, elbow 90 deg, wrist neutral, forearm at -90 / 0 / +90 deg, positive = supinator"
+        }
+      ]
+    },
+    "prosup_moment_arms_pq": {
+      "label": "Pronator quadratus supination moment arm in supination / neutral / pronation (negative = pronator)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            -1.8,
+            -9.2,
+            -1.4
+          ],
+          "spread": [
+            1.6,
+            3.1,
+            "–"
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, 8 arms, superficial head",
+          "source": "haugstvedt2001",
+          "protocol": "elbow 90 deg, wrist free; Fig. 3, read at 90 deg supination / 0 / 90 deg pronation; model: dL/dq of pro_sup_r, elbow 90 deg, wrist neutral, forearm at -90 / 0 / +90 deg, positive = supinator"
+        },
+        {
+          "value": [
+            -2.0,
+            -5.4,
+            -0.7
+          ],
+          "spread": [
+            1.7,
+            2.1,
+            0.8
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, 8 arms, deep head",
+          "source": "haugstvedt2001",
+          "protocol": "as above (Fig. 3e)"
+        }
+      ]
+    },
+    "prosup_moment_arms_ecu": {
+      "label": "ECU supination moment arm in supination / neutral / pronation (negative = pronator)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            -4.7,
+            -2.1,
+            6.4
+          ],
+          "spread": [
+            1.7,
+            2.0,
+            4.8
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, 8 arms",
+          "source": "haugstvedt2001",
+          "protocol": "elbow 90 deg, wrist free; Fig. 3, read at 90 deg supination / 0 / 90 deg pronation; model: dL/dq of pro_sup_r, elbow 90 deg, wrist neutral, forearm at -90 / 0 / +90 deg, positive = supinator"
+        }
+      ]
+    },
+    "prosup_moment_arms_fcu": {
+      "label": "FCU supination moment arm in supination / neutral / pronation (negative = pronator)",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": [
+            -3.3,
+            -1.2,
+            6.0
+          ],
+          "spread": [
+            1.6,
+            2.2,
+            2.2
+          ],
+          "spread_kind": "SD",
+          "kind": "cadaver, 8 arms",
+          "source": "haugstvedt2001",
+          "protocol": "elbow 90 deg, wrist free; Fig. 3, read at 90 deg supination / 0 / 90 deg pronation; model: dL/dq of pro_sup_r, elbow 90 deg, wrist neutral, forearm at -90 / 0 / +90 deg, positive = supinator"
         }
       ]
     }
@@ -6083,6 +6315,518 @@
         "Arms at wrist neutral (mm, + = extensor / ulnar deviator): ECRB 15.3 / -14.2 -> 14.0 / -12.6 (Horii 12 +- 2 / -13 +- 2; sphere centre moved 5.2 mm, radius 2.0 -> 1.6 mm); FCR -18.5 / -4.0 -> -16.4 / -6.4 (Horii -15 +- 3 / -8 +- 2; centre 6.7 mm, radius 1.5 -> 1.2 mm); EDC5 extension arm at 60 deg extension / neutral / 60 deg flexion 21.1 / 11.1 / 1.4 -> 21.2 / 15.2 / 5.4 (geometry unchanged); EDC4 24.2 / 17.3 / 5.4 -> 25.4 / 17.8 / 8.0 (sphere 1.0 mm, radius 3.0 -> 2.8 mm); EDM unchanged (cylinder radius 14 -> 23.6 mm reproduces the inside wrap); PQ pronation arm within 1 mm (geometry unchanged). ECRL 11.7 / -23.6 unchanged (Horii 7 / -19, Loren 10 / -23): no outside wrap within the bounds keeps it an extensor beyond 45 deg extension.",
         "CPU vs mujoco-warp lengths of EDC2, EDC4, EDC5, EDM, ECRB, FCR and PQ within 3e-7 m in 128 random arm postures (before: up to 1.4 mm; side sites back at the geom centres as negative control: 1e-4 to 1.4e-3 m for five of them).",
         "Refits: extrinsic joint-fit error 1050 -> 866 (without the release step 672 -> 690), release bound 0.0391 -> 0.0261; junctura links at the bound; springs within 0.004 N m. Grip 330.7 -> 338.9 N (middle-finger share 29.2 -> 27.3 %); tenodesis passes; lateral pinch 67.5 N unchanged."
+      ]
+    },
+    {
+      "id": "ecu",
+      "title": "ECU: extensor carpi ulnaris through the ulnar groove; forearm rotation axis checked",
+      "summary": "ECU's wrist-crossing via point moves from the radius (19.6 mm from the forearm rotation axis, outside the ulnar head) to the ulna at the distal end of the groove of the ulnar head (5.2 mm from the axis), fitted within the head's surface to Horii 1993's and Loren 1996's moment arms in supination, neutral and pronation; the radius-fixed wrap sphere with its centred side site and two unused duplicates are removed. The forearm rotation axis passes through the radial and ulnar heads of the meshes and is not moved. Extrinsic slack lengths and passive scales, junctura links and springs refitted. Before = wrap sides.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          78.22,
+          66.03,
+          64.74,
+          59.97
+        ],
+        "tenodesis_pip_rom": 14.13,
+        "tenodesis_index_gap": [
+          34.0,
+          7.79
+        ],
+        "tenodesis_release": [
+          78.49,
+          65.41,
+          56.63,
+          30.0
+        ],
+        "grip_self_selected": 315.29,
+        "grip_settled": 241.74,
+        "grip_shares": [
+          31.29,
+          27.33,
+          20.4,
+          20.97
+        ],
+        "grip_posture_change": [
+          -32.13,
+          -64.16
+        ],
+        "lateral_pinch": 67.59,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          21.62,
+          18.94,
+          6.92
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "fpl_moment_arms": [
+          4.18,
+          -1.66,
+          7.12
+        ],
+        "apl_moment_arms": [
+          -7.06,
+          -11.3
+        ],
+        "di1_moment_arms": [
+          4.38,
+          8.06
+        ],
+        "index_abduction_moment": 1.04,
+        "adm_moment_arms": [
+          5.18,
+          9.92
+        ],
+        "little_abduction_moment": 1.0,
+        "hypothenar_cupping": [
+          15.75,
+          32.46
+        ],
+        "pi1_moment_arms": [
+          5.97,
+          5.86
+        ],
+        "lum1_moment_arms": [
+          8.22,
+          4.93
+        ],
+        "di2_moment_arms": [
+          5.47,
+          10.65
+        ],
+        "lum2_moment_arms": [
+          11.38,
+          9.96
+        ],
+        "di3_moment_arms": [
+          4.44,
+          8.79
+        ],
+        "pi2_moment_arms": [
+          3.42,
+          8.2
+        ],
+        "lum3_moment_arms": [
+          6.55,
+          7.65
+        ],
+        "di4_moment_arms": [
+          4.91,
+          7.56
+        ],
+        "pi3_moment_arms": [
+          2.43,
+          8.54
+        ],
+        "lum4_moment_arms": [
+          5.45,
+          8.65
+        ],
+        "index_intrinsic_forces": [
+          129.4,
+          64.7,
+          9.5
+        ],
+        "edc_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "eip_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "lumbrical_ip_moment_arms": [
+          0.7,
+          1.8
+        ],
+        "ui_ip_moment_arms": [
+          1.02,
+          1.87
+        ],
+        "orl_share": [
+          23.72,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intrinsic_plus": [
+          91.07,
+          -0.62,
+          -0.52
+        ],
+        "ip_coupling_slope": [
+          -0.01,
+          0.25,
+          null
+        ],
+        "lumbrical_excursion": [
+          31.93,
+          36.66,
+          36.46,
+          29.56
+        ],
+        "lum1_systemic_mcp_arm": 3.0,
+        "ecrl_moment_arms": [
+          11.66,
+          -23.64
+        ],
+        "ecrb_moment_arms": [
+          14.01,
+          -12.57
+        ],
+        "fcr_moment_arms": [
+          -16.41,
+          -6.41
+        ],
+        "juncturae_ring_traction": [
+          16.52,
+          20.3
+        ],
+        "juncturae_middle_traction": [
+          0.0,
+          0.0
+        ],
+        "fcu_moment_arms": [
+          14.66,
+          12.25
+        ],
+        "ecu_extension_rotation": [
+          5.71,
+          6.09,
+          0.13
+        ],
+        "ecu_ulnar_rotation": [
+          11.12,
+          17.36,
+          17.82
+        ],
+        "fds5_force": [
+          46.5,
+          27.16
+        ],
+        "forearm_axis_radial_head": 1.03,
+        "forearm_axis_ulnar_head": -0.71,
+        "prosup_moment_arms_biceps": [
+          6.31,
+          15.77,
+          -4.74
+        ],
+        "prosup_moment_arms_supinator": [
+          6.77,
+          7.88,
+          5.79
+        ],
+        "prosup_moment_arms_pt": [
+          -4.36,
+          -11.63,
+          6.41
+        ],
+        "prosup_moment_arms_pq": [
+          -2.1,
+          -7.29,
+          -0.99
+        ],
+        "prosup_moment_arms_ecu": [
+          0.19,
+          -1.21,
+          -0.2
+        ],
+        "prosup_moment_arms_fcu": [
+          -5.04,
+          -0.08,
+          5.05
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": -0.29,
+          "3": 13.08,
+          "4": -0.34,
+          "5": -0.36
+        },
+        "fist_max_penetration": 0.79
+      },
+      "before": {
+        "label": "ecu",
+        "id": "wrap_sides",
+        "values": {
+          "tenodesis_mcp_rom": [
+            78.22,
+            66.03,
+            64.57,
+            59.52
+          ],
+          "tenodesis_pip_rom": 13.94,
+          "tenodesis_index_gap": [
+            32.12,
+            7.63
+          ],
+          "tenodesis_release": [
+            78.49,
+            65.44,
+            56.76,
+            30.02
+          ],
+          "grip_self_selected": 338.88,
+          "grip_settled": 263.79,
+          "grip_shares": [
+            30.01,
+            27.3,
+            18.98,
+            23.71
+          ],
+          "grip_posture_change": [
+            -28.58,
+            -60.75
+          ],
+          "lateral_pinch": 67.48,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "cmc45_arc": [
+            21.0,
+            43.3
+          ],
+          "cmc45_active_flexion": [
+            16.0,
+            33.0
+          ],
+          "cmc45_coupling": 2.06,
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            21.62,
+            18.94,
+            6.92
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "fpl_moment_arms": [
+            4.18,
+            -1.66,
+            7.12
+          ],
+          "apl_moment_arms": [
+            -7.06,
+            -11.3
+          ],
+          "di1_moment_arms": [
+            4.38,
+            8.06
+          ],
+          "index_abduction_moment": 1.04,
+          "adm_moment_arms": [
+            5.18,
+            9.92
+          ],
+          "little_abduction_moment": 1.0,
+          "hypothenar_cupping": [
+            15.8,
+            32.56
+          ],
+          "pi1_moment_arms": [
+            5.97,
+            5.86
+          ],
+          "lum1_moment_arms": [
+            8.22,
+            4.93
+          ],
+          "di2_moment_arms": [
+            5.47,
+            10.65
+          ],
+          "lum2_moment_arms": [
+            11.38,
+            9.96
+          ],
+          "di3_moment_arms": [
+            4.44,
+            8.79
+          ],
+          "pi2_moment_arms": [
+            3.42,
+            8.2
+          ],
+          "lum3_moment_arms": [
+            6.55,
+            7.65
+          ],
+          "di4_moment_arms": [
+            4.91,
+            7.56
+          ],
+          "pi3_moment_arms": [
+            2.43,
+            8.54
+          ],
+          "lum4_moment_arms": [
+            5.45,
+            8.65
+          ],
+          "index_intrinsic_forces": [
+            129.4,
+            64.7,
+            9.5
+          ],
+          "edc_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "eip_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "lumbrical_ip_moment_arms": [
+            0.7,
+            1.8
+          ],
+          "ui_ip_moment_arms": [
+            1.02,
+            1.87
+          ],
+          "orl_share": [
+            23.72,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "intrinsic_plus": [
+            91.07,
+            -0.62,
+            -0.52
+          ],
+          "ip_coupling_slope": [
+            -0.01,
+            0.25,
+            null
+          ],
+          "lumbrical_excursion": [
+            31.93,
+            36.66,
+            36.46,
+            29.56
+          ],
+          "lum1_systemic_mcp_arm": 3.0,
+          "ecrl_moment_arms": [
+            11.66,
+            -23.64
+          ],
+          "ecrb_moment_arms": [
+            14.01,
+            -12.57
+          ],
+          "fcr_moment_arms": [
+            -16.41,
+            -6.41
+          ],
+          "juncturae_ring_traction": [
+            17.67,
+            21.35
+          ],
+          "juncturae_middle_traction": [
+            0.0,
+            0.0
+          ],
+          "fcu_moment_arms": [
+            14.66,
+            12.25
+          ],
+          "ecu_extension_rotation": [
+            7.55,
+            7.55,
+            7.55
+          ],
+          "fds5_force": [
+            46.5,
+            27.16
+          ],
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": -0.35,
+            "3": 13.3,
+            "4": -0.35,
+            "5": -0.36
+          },
+          "fist_max_penetration": 0.79
+        }
+      },
+      "notes": [
+        "ECU: extension arms 7.5 / 7.5 / 7.5 -> 5.7 / 6.1 / 0.1 mm in supination / neutral / pronation (Loren 7.8 / 7.2 / 0.9, Horii 5.7 / 5.7 / 2.3), ulnar arms 27.8 -> 11.1 / 17.4 / 17.8 mm (Horii 16.0 / 18.3 / 19.5 and 17 +- 3 at neutral, Loren 21 / 28 / 28); fit rms z 3.11 -> 2.02. A groove fixed to the ulna overshoots the measured trend, so the ulnar arm stays low in supination (hand-extrinsic-muscles.md).",
+        "Axis: 1.0 mm from the radial head centre and 0.7 mm from the ulnar head centre (0.7 mm anterior of it; Matsuki 2010: 1.9 +- 0.7 mm posterior), within the meshes' resolution (fit rms 1.8-2 mm): not moved. The pronator quadratus and FCU follow Haugstvedt's curves; the pronator teres and the biceps reverse sign in full pronation, from their paths rather than the axis.",
+        "Passive refit: joint-fit error 866 -> 1128 (without the release step 690 -> 908); ECU fpmax 0.83 -> 0.72, slack +2.1 -> +0.4 %; release bound 0.0261 -> 0.0259; a new spring segment (passive_wrist_deviation_pos) covers the muscles' deficit in radial deviation, so muscles and springs match Formica's wrist deviation stiffness with 0.010 N m rms (was 0.054).",
+        "Grip 338.9 -> 315.3 N: the ECU's smaller ulnar arm balances less of ECRL's radial moment, so the balanced optimum uses less ECRL (0.997 -> 0.22); the middle-finger share stays at 27.3 % (outside Kong 2011's band, as before). Tenodesis passes; lateral pinch 67.5 -> 67.6 N; junctura shares 17.7 / 21.4 -> 16.5 / 20.3 deg."
       ]
     }
   ]

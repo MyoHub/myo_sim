@@ -417,7 +417,7 @@ def lumbrical_nodes(model: mujoco.MjModel) -> dict[str, Any]:
 def extrinsic_revisions(model: mujoco.MjModel) -> dict[str, Any]:
     """S7: junctura share of the neighbour MP extension under 1.5 kg on EDC4 / EDC3 (deg, links minus no links,
     myohand_r protocol of ``generate_extrinsic_muscles.py``), FCU flexion / ulnar and ECU extension / ulnar
-    moment arms at wrist neutral (mm; ECU in supination / neutral / pronation), FDS5 force (N, % of FDS4) and the
+    moment arms at wrist neutral (mm; ECU in supination / neutral / pronation each), FDS5 force (N, % of FDS4) and the
     ECRL, ECRB and FCR extension / ulnar-deviation arms at wrist neutral (mm; wrap-side revision)."""
     if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_TENDON, "lig_JT34_r") < 0:
         return {}
@@ -429,12 +429,7 @@ def extrinsic_revisions(model: mujoco.MjModel) -> dict[str, Any]:
     for tendon, joints in (("EDC4", ("mcp3_flexion", "mcp5_flexion")), ("EDC3", ("mcp4_flexion", "mcp5_flexion"))):
         with_links, without = gen.traction_transfer(k, tendon, scene), gen.traction_transfer(None, tendon, scene)
         share[tendon] = [with_links[j] - without[j] for j in joints]
-    ecu = []
-    for deg in (-90.0, 0.0, 90.0):  # + = pronation
-        data = mujoco.MjData(model)
-        t = model.tendon("ECU_r_tendon").id
-        posture = {"pro_sup_r": np.radians(deg)}
-        ecu.append(gen._arm(model, data, t, "flexion_r", posture))
+    ecu_ext, ecu_uln = gen.ecu_rotation_arms(model, table)  # supination / neutral / pronation
     force = {n: model.actuator_gainprm[model.actuator(f"{n}_r").id][2] for n in ("FDS4", "FDS5")}
     wrist = {}  # wrap-side revision: extension (+) and ulnar-deviation (+) arms at wrist and forearm neutral
     for name in ("ECRL", "ECRB", "FCR"):
@@ -445,9 +440,49 @@ def extrinsic_revisions(model: mujoco.MjModel) -> dict[str, Any]:
         "juncturae_ring_traction": share["EDC4"],
         "juncturae_middle_traction": share["EDC3"],
         "fcu_moment_arms": list(gen.fcu_arms(model)),
-        "ecu_extension_rotation": ecu,
+        "ecu_extension_rotation": ecu_ext,
+        "ecu_ulnar_rotation": ecu_uln,
         "fds5_force": [force["FDS5"], 100.0 * force["FDS5"] / force["FDS4"]],
     }
+
+
+# Forearm rotators of Haugstvedt et al. 2001 (Fig. 3): model actuators and their weights (peak force).
+PROSUP_MUSCLES = {"biceps": ("BIClong_r", "BICshort_r"), "supinator": ("SUP_r",), "pt": ("PT_r",), "pq": ("PQ_r",)}
+PROSUP_MUSCLES |= {"ecu": ("ECU_r",), "fcu": ("FCU_r",)}
+
+
+def forearm_rotation(model: mujoco.MjModel) -> dict[str, Any]:
+    """Forearm rotation axis against the radial and ulnar heads (mm; ``generate_extrinsic_muscles.axis_offsets``)
+    and the rotators' supination moment arms at elbow 90 deg, wrist neutral, in supination / neutral / pronation
+    (mm, dL/dq of ``pro_sup_r``, + = pronation, so positive = supinator; heads weighted by peak force)."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "pro_sup_r") < 0:
+        return {}
+    gen = _load_script("generate_extrinsic_muscles")
+    table = gen.load_table()
+    offsets = gen.axis_offsets(model, table)
+    data = mujoco.MjData(model)
+    out: dict[str, Any] = {
+        "forearm_axis_radial_head": offsets["radial_head_mm"],
+        "forearm_axis_ulnar_head": offsets["ulnar_head_posterior_mm"],
+    }
+    for key, names in PROSUP_MUSCLES.items():
+        acts = [model.actuator(n).id for n in names]
+        weights = np.array([model.actuator_gainprm[a][2] for a in acts])
+        values = []
+        for deg in table["ecu"]["rotations_deg"]:
+            arms = []
+            for a in acts:
+                lengths = []
+                for h in (1e-5, -1e-5):
+                    data.qpos[:] = model.qpos0
+                    data.qpos[model.joint("elbow_flexion_r").qposadr[0]] = np.pi / 2
+                    data.qpos[model.joint("pro_sup_r").qposadr[0]] = np.radians(deg) + h
+                    mujoco.mj_fwdPosition(model, data)
+                    lengths.append(data.actuator_length[a])
+                arms.append((lengths[0] - lengths[1]) / 2e-5 * 1e3)
+            values.append(float(np.dot(weights, arms) / weights.sum()))
+        out[f"prosup_moment_arms_{key}"] = values
+    return out
 
 
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
@@ -461,6 +496,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= extensor_mechanism(model)
     out |= lumbrical_nodes(model)
     out |= extrinsic_revisions(model)
+    out |= forearm_rotation(model)
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

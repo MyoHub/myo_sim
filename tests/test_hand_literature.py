@@ -2,8 +2,8 @@
 
 ``docs/wiki/hand-literature-comparison.md`` is written by ``scripts/hand_literature_comparison.py`` from
 ``build/data/hand_literature.json``. The geometric values of the latest recorded step (joint limits, intrinsic moment arms,
-fingertip and palm soft tissue, active fist) are re-measured here on the importable model; the hand-function values (grip,
-pinch, tenodesis) are covered by their own tests.
+fingertip and palm soft tissue, active fist, forearm rotation axis and moment arms) are re-measured here on the importable
+model; the hand-function values (grip, pinch, tenodesis) are covered by their own tests.
 """
 
 from __future__ import annotations
@@ -79,6 +79,11 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
         ("ecrl_moment_arms", 0.05),
         ("ecrb_moment_arms", 0.05),
         ("fcr_moment_arms", 0.05),
+        ("ecu_extension_rotation", 0.05),
+        ("ecu_ulnar_rotation", 0.05),
+        ("forearm_axis_radial_head", 0.05),
+        ("forearm_axis_ulnar_head", 0.05),
+        *((f"prosup_moment_arms_{m}", 0.05) for m in ("biceps", "supinator", "pt", "pq", "ecu", "fcu")),
     ],
 )
 def test_latest_step_matches_the_current_model(key: str, tol: float) -> None:

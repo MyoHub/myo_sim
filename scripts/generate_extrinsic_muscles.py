@@ -18,11 +18,14 @@
   in the chain) over a cylinder on the trapezium (``APL_cmc_wrap_r`` and its side site in the chain block
   ``thumb trapezium``) with the centre and orientation of Barry's ``THM_CMC1_APL`` ellipsoid (MuJoCo has no
   ellipsoid wrap).
+- **ECU:** the groove via point ``ECU-P5_r`` on the ulna (chain block ``ECU groove``): the tendon's subsheath
+  holds it in the groove of the ulnar head, which does not turn with the radius.
 
-``--fit`` refits the FCU pisiform site to Horii 1993 and the junctura stiffness to von Schroeder & Botte
-1993 (``juncturae.fit``) and records both in the table.
+``--fit`` refits the FCU pisiform site to Horii 1993, the ECU groove site to Horii 1993 and Loren 1996, and
+the junctura stiffness to von Schroeder & Botte 1993 (``juncturae.fit``) and records them in the table;
+``--fit-ecu`` refits only the ECU groove site.
 
-Run: ``uv run python scripts/generate_extrinsic_muscles.py [--fit]``.
+Run: ``uv run python scripts/generate_extrinsic_muscles.py [--fit | --fit-ecu]``.
 """
 
 from __future__ import annotations
@@ -293,6 +296,7 @@ def write_xml(table: dict[str, Any]) -> None:
     for name, node in table["juncturae"]["nodes"].items():
         write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, chain_node_block(name, node), "", f"node {name}")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, fcu_block(table), "", "FCU hamate")
+    write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, ecu_block(table), "", "ECU groove")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, thumb_block(table), "", "thumb trapezium")
     chain = chain_with_site(RIGHT_ARM_CHAIN_XML.read_text(), "FCU-P4_r", table["fcu"]["sites"]["FCU-P4_r"]["pos"])
     chain = chain_with_wrap_sides(chain, table)
@@ -368,6 +372,160 @@ def fit_fcu(table: dict[str, Any]) -> None:
         "arms_before_mm": [round(v, 2) for v in before],
         "arms_after_mm": [round(v, 2) for v in after],
         "site_shift_mm": round(float(np.linalg.norm(r.x - start) * 1e3), 2),
+    }
+
+
+# --- ECU and the forearm rotation axis -----------------------------------------------------------------
+
+
+def _mesh_in_body(model: mujoco.MjModel, data: mujoco.MjData, geom: str, body: str) -> np.ndarray:
+    """Vertices of the mesh geom *geom* in the frame of *body* (current pose)."""
+    g = model.geom(geom)
+    mesh = g.dataid[0]
+    vert = model.mesh_vert[model.mesh_vertadr[mesh] : model.mesh_vertadr[mesh] + model.mesh_vertnum[mesh]]
+    world = data.geom_xpos[g.id] + vert @ data.geom_xmat[g.id].reshape(3, 3).T
+    b = model.body(body).id
+    return (world - data.xpos[b]) @ data.xmat[b].reshape(3, 3)
+
+
+def forearm_frame(model: mujoco.MjModel) -> dict[str, np.ndarray]:
+    """``pro_sup_r`` at q0 in the ulna frame: a point, the axis (proximal) and the ulna's posterior and lateral
+    directions perpendicular to it (the frame's -x and +z)."""
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    b = model.body("ulna_r").id
+    rot, origin = data.xmat[b].reshape(3, 3), data.xpos[b]
+    j = model.joint("pro_sup_r").id
+    axis = rot.T @ data.xaxis[j]
+    axis = axis if axis[1] > 0 else -axis
+    lateral = np.array([0.0, 0.0, 1.0]) - axis[2] * axis
+    lateral /= np.linalg.norm(lateral)
+    return {"point": rot.T @ (data.xanchor[j] - origin), "axis": axis, "posterior": np.cross(lateral, axis), "lateral": lateral}
+
+
+def ulnar_head(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray, float, float]:
+    """Sphere fitted (least squares) to the ulna mesh vertices of the ulnar head: centre (ulna frame), radius, rms."""
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    vert = _mesh_in_body(model, data, "ulna_r", "ulna_r")
+    head = vert[vert[:, 1] < vert[:, 1].min() + table["ecu"]["ulnar_head"]["length_m"]]
+    a = np.c_[2.0 * head, np.ones(len(head))]
+    c = np.linalg.lstsq(a, (head**2).sum(1), rcond=None)[0]
+    radius = float(np.sqrt(c[3] + c[:3] @ c[:3]))
+    rms = float(np.sqrt(np.mean((np.linalg.norm(head - c[:3], axis=1) - radius) ** 2)))
+    return c[:3], radius, rms
+
+
+def radial_head_centre(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray, float]:
+    """Centre (ulna frame, at q0) of the circle fitted to the radial head rim: the radius mesh vertices within
+    ``rim_m`` of its proximal end, projected on the plane normal to the rotation axis; and the circle's radius."""
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    frame = forearm_frame(model)
+    vert = _mesh_in_body(model, data, "radius_r", "ulna_r")
+    rim = vert[vert[:, 1] > vert[:, 1].max() - table["ecu"]["radial_head"]["rim_m"]]
+    e1, e2 = frame["lateral"], frame["posterior"]
+    q = rim - frame["point"]
+    xy = np.c_[q @ e1, q @ e2]
+    c = np.linalg.lstsq(np.c_[2.0 * xy, np.ones(len(xy))], (xy**2).sum(1), rcond=None)[0]
+    centre = frame["point"] + c[0] * e1 + c[1] * e2 + float(np.mean(q @ frame["axis"])) * frame["axis"]
+    return centre, float(np.sqrt(c[2] + c[0] ** 2 + c[1] ** 2))
+
+
+def axis_offsets(model: mujoco.MjModel, table: dict[str, Any]) -> dict[str, float]:
+    """Distance (mm) of the rotation axis from the radial head centre, and its offset from the ulnar head
+    centre: posterior (dorsal) and lateral components and the distance."""
+    frame = forearm_frame(model)
+
+    def perp(p: np.ndarray) -> np.ndarray:
+        q = frame["point"] - p
+        return q - (q @ frame["axis"]) * frame["axis"]  # from p to the axis
+
+    to_axis = perp(ulnar_head(model, table)[0])
+    return {
+        "radial_head_mm": float(np.linalg.norm(perp(radial_head_centre(model, table)[0])) * 1e3),
+        "ulnar_head_posterior_mm": float(to_axis @ frame["posterior"] * 1e3),
+        "ulnar_head_lateral_mm": float(to_axis @ frame["lateral"] * 1e3),
+        "ulnar_head_mm": float(np.linalg.norm(to_axis) * 1e3),
+    }
+
+
+def ecu_arms(model: mujoco.MjModel, posture: dict[str, float] | None = None) -> tuple[float, float]:
+    """ECU wrist extension and ulnar-deviation moment arms (mm, positive = extensor / ulnar deviator)."""
+    data = mujoco.MjData(model)
+    t = model.tendon("ECU_r_tendon").id
+    posture = posture or {}
+    return _arm(model, data, t, "flexion_r", posture), _arm(model, data, t, "deviation_r", posture)
+
+
+def ecu_rotation_arms(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[list[float], list[float]]:
+    """ECU extension and ulnar arms at wrist neutral in each forearm rotation of the table (supination first)."""
+    arms = [ecu_arms(model, {"pro_sup_r": np.radians(deg)}) for deg in table["ecu"]["rotations_deg"]]
+    return [a[0] for a in arms], [a[1] for a in arms]
+
+
+def ecu_residuals(model: mujoco.MjModel, table: dict[str, Any]) -> np.ndarray:
+    """(model - target) / sd for every source and forearm rotation, extension then ulnar deviation."""
+    targets = table["ecu"]["targets"]
+    out = []
+    for key, values in zip(("extension_mm", "ulnar_mm"), ecu_rotation_arms(model, table)):
+        for source in targets[key]["values"].values():
+            out += list((np.asarray(values) - source["mean"]) / targets[key]["sd"])
+    return np.asarray(out)
+
+
+def ecu_block(table: dict[str, Any]) -> str:
+    pos = " ".join(_number(v) for v in table["ecu"]["sites"]["ECU-P5_r"]["pos"])
+    ind = " " * 36
+    return (
+        f"{ind}<!-- ECU in the groove of the ulnar head (its subsheath); extrinsic_muscles.json -->\n"
+        f'{ind}<site name="ECU-P5_r" pos="{pos}"/>\n'
+    )
+
+
+def fit_ecu(table: dict[str, Any]) -> None:
+    """Groove via point on the ulnar head's posterior to lateral surface, just outside the sphere fitted to the
+    head, fitted to Horii 1993's and Loren 1996's extension and ulnar arms in supination, neutral and pronation."""
+    from scipy.optimize import least_squares
+
+    ecu = table["ecu"]
+    model = build_spec("myoarm_r").compile()
+    frame = forearm_frame(model)
+    centre, radius, rms = ulnar_head(model, table)
+    ecu["ulnar_head"] |= {
+        "centre_m": [round(float(v), 6) for v in centre],
+        "radius_m": round(radius, 6),
+        "rms_m": round(rms, 6),
+    }
+    bounds = ecu["fit"]["bounds"]
+    site = model.site("ECU-P5_r").id
+
+    def point(x: np.ndarray) -> np.ndarray:
+        alpha, theta, depth = np.radians(x[0]), np.radians(x[1]), x[2]
+        side = np.cos(alpha) * frame["posterior"] + np.sin(alpha) * frame["lateral"]
+        return centre + (radius + depth) * (np.cos(theta) * frame["axis"] + np.sin(theta) * side)
+
+    def res(x: np.ndarray) -> np.ndarray:
+        model.site_pos[site] = point(x)
+        return ecu_residuals(model, table)
+
+    lo = [bounds["posterior_to_lateral_deg"][0], bounds["from_proximal_deg"][0], bounds["outside_head_m"][0]]
+    hi = [bounds["posterior_to_lateral_deg"][1], bounds["from_proximal_deg"][1], bounds["outside_head_m"][1]]
+    starts = ([20.0, 90.0, 0.001], [45.0, 120.0, 0.001], [30.0, 145.0, 0.002])
+    best = min(
+        (least_squares(res, x0, bounds=(lo, hi), x_scale=[10.0, 10.0, 0.001], diff_step=1e-3) for x0 in starts),
+        key=lambda r: r.cost,
+    )
+    model.site_pos[site] = point(best.x)
+    after = ecu_rotation_arms(model, table)
+    ecu["sites"]["ECU-P5_r"]["pos"] = [round(float(v), 6) for v in point(best.x)]
+    ecu["fit"]["result"] = {
+        "posterior_to_lateral_deg": round(float(best.x[0]), 1),
+        "from_proximal_deg": round(float(best.x[1]), 1),
+        "outside_head_m": round(float(best.x[2]), 6),
+        "extension_mm": [round(v, 2) for v in after[0]],
+        "ulnar_mm": [round(v, 2) for v in after[1]],
+        "rms_z": round(float(np.sqrt(np.mean(ecu_residuals(model, table) ** 2))), 2),
     }
 
 
@@ -452,7 +610,8 @@ def fit_juncturae(table: dict[str, Any]) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--fit", action="store_true", help="refit the FCU site and the junctura stiffness first")
+    parser.add_argument("--fit", action="store_true", help="refit the FCU and ECU sites and the junctura stiffness first")
+    parser.add_argument("--fit-ecu", action="store_true", help="refit only the ECU groove site first")
     args = parser.parse_args()
     table = load_table()
     fds5_force(table)
@@ -468,11 +627,16 @@ def main() -> None:
         write_xml(table)
         fit_fcu(table)
         write_xml(table)
+        fit_ecu(table)
+        write_xml(table)
         fit_juncturae(table)
+    elif args.fit_ecu:
+        fit_ecu(table)
     DATA_PATH.write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n")
     write_xml(table)
     print(json.dumps({k: table["juncturae"]["links"][k] for k in table["juncturae"]["links"]}, indent=1))
     print(json.dumps(table["fcu"].get("fit"), indent=1), table["fds5"]["force_N"])
+    print(json.dumps(table["ecu"]["fit"].get("result"), indent=1))
 
 
 if __name__ == "__main__":

@@ -1,14 +1,15 @@
-# Extrinsic hand muscles: juncturae, FCU, FDS5, wrist wrap sides, APL at the thumb CMC
+# Extrinsic hand muscles: juncturae, FCU, FDS5, wrist wrap sides, APL at the thumb CMC, ECU
 
-Revisions of the extrinsic hand muscles from the hand rebuild (S7, and the EDC2 wrist wrap after it). Data, sources and fit results are in
-`myo_sim/build/data/extrinsic_muscles.json`; `scripts/generate_extrinsic_muscles.py` writes them into the
-right-arm XML (`--fit` refits). Tests: `tests/test_extrinsic_muscles.py`. Model values against the
-literature: `hand-literature-comparison.md` (S7).
+Revisions of the extrinsic hand muscles from the hand rebuild (S7 and the steps after it) and the ECU re-route
+that followed the rebuild. Data, sources and fit results are in `myo_sim/build/data/extrinsic_muscles.json`;
+`scripts/generate_extrinsic_muscles.py` writes them into the right-arm XML (`--fit` refits, `--fit-ecu` only the
+ECU site). Tests: `tests/test_extrinsic_muscles.py`. Model values against the literature:
+`hand-literature-comparison.md` (S7 and later steps, ECU).
 
 The fit was run once more after the passive refits below, again after the EDC2 wrap change and again
-after the JT3/JT5 tie fix; the table gives the model's values (`hand-literature-comparison.md`, S7, EDC2
-wrap and JT3/JT5 ties). The middle-finger share depends on the contact-driven transfer without links
-(25.7-27.0 deg over the S7 refits, 13.8 deg after the EDC2 wrap change, 13.1 deg after the tie fix), so it
+after the JT3/JT5 tie fix and the ECU re-route; the table gives the model's values (`hand-literature-comparison.md`, S7, EDC2
+wrap, JT3/JT5 ties, ECU). The middle-finger share depends on the contact-driven transfer without links
+(25.7-27.0 deg over the S7 refits, 13.8 deg after the EDC2 wrap change, 13.1 deg after the tie fix, 13.9 deg after the ECU re-route), so it
 moves with small changes.
 
 ## Juncturae tendinum
@@ -47,12 +48,12 @@ fascia coupling, so the model value is the extension with the links minus withou
 model: `myohand_r` palm down under gravity, wrist, forearm and thumb held, settled from the resting
 posture, then 14.7 N along the tendon for 1.5 s.
 
-| Traction on | Neighbour | Junctura share (deg), von Schroeder & Botte 1993 | Model, links minus none (deg): S7 / after the EDC2 wrap / after the tie fix |
+| Traction on | Neighbour | Junctura share (deg), von Schroeder & Botte 1993 | Model, links minus none (deg): S7 / after the EDC2 wrap / after the tie fix / after the ECU re-route |
 | --- | --- | --- | --- |
-| EDC-ring (EDC4) | middle MP | 18 (38 -> 20) | 6.2 / 17.1 / 17.0 |
-| EDC-ring (EDC4) | small MP | 22 (44 -> 22) | 22.3 / 21.7 / 21.6 |
-| EDC-long (EDC3) | ring MP | 8 (26 -> 18) | -0.9 / -1.4 / 0.0 |
-| EDC-long (EDC3) | small MP | 7 (16 -> 9) | 0.2 / 0.2 / 0.0 |
+| EDC-ring (EDC4) | middle MP | 18 (38 -> 20) | 6.2 / 17.1 / 17.0 / 16.5 |
+| EDC-ring (EDC4) | small MP | 22 (44 -> 22) | 22.3 / 21.7 / 21.6 / 20.3 |
+| EDC-long (EDC3) | ring MP | 8 (26 -> 18) | -0.9 / -1.4 / 0.0 / 0.0 |
+| EDC-long (EDC3) | small MP | 7 (16 -> 9) | 0.2 / 0.2 / 0.0 / 0.0 |
 
 Stiffness after the refit that followed the JT3/JT5 tie fix: both links at their upper bound of 1000 N/m
 (`lig_JT34_r` 1000, `lig_JT45_r` 1000 N/m; after the EDC2 wrap change 993 and 222 N/m, in S7 999.9 and
@@ -101,18 +102,79 @@ so its normalised fibre length at q0 is unchanged.
 | Ulnar-deviation moment arm (mm) | 10.6 | 12.2 | 14 ± 3 (Horii 1993); 23 (Loren 1996) |
 | CMC5 flexion moment arm (mm) | 4.6 | 3.1 | – |
 
-## Extensor carpi ulnaris (tried, not changed)
+## Extensor carpi ulnaris through the ulnar groove
 
-Horii 1993 (excursion over 100 deg of flexion-extension: 10 / 10 / 4 mm in supination / neutral /
-pronation) and Loren 1996 (extension moment arm 7.8 / 7.2 / 0.9 mm) show the ECU's extension arm falling
-in pronation, because the tendon is held in the groove of the ulnar head, which does not turn with the
-radius. In the model the ECU's wrist-crossing via point and wrap sphere sit on the radius, so its arms
-(7.5 mm extension, 27.8 mm ulnar deviation) do not change with rotation. Moving them to the ulna at their
-q0 position gives the right trend but far too much of it: at full pronation the ECU becomes a 12.6 mm
-flexor, and fitting the groove point (within 1 cm) to both sources still gives -4.7 mm in pronation and
-10 mm of ulnar arm in supination (Loren 21 mm). The cause is the forearm-rotation axis of the model, which
-passes about 20 mm from the ECU groove (anatomically it runs through the ulnar head), so the hand swings
-far around the groove. The ECU stays as it was; the rotation axis is a separate question.
+**Anatomy.** The ECU tendon runs in the groove on the dorsal surface of the ulnar head, radial to the
+styloid, held there by its own subsheath, which is fixed to the ulna. The ulna does not turn in forearm
+rotation, so the tendon changes its position relative to the wrist axes: Horii et al. 1993 found it the only
+wrist motor whose excursion changes with forearm rotation (flexion-extension excursion 10 / 10 / 4 mm in
+supination / neutral / pronation, radioulnar 14 / 16 / 17 mm), and Loren et al. 1996 measured its extension
+moment arm falling from 7.8 / 7.2 mm to 0.9 mm in pronation while its ulnar arm rose from 21 to 28 mm. In
+pronation the ECU is an ulnar deviator rather than an extensor.
+
+**Before.** The ECU's wrist-crossing via point and a wrap sphere sat on the radius, 20 mm from the rotation
+axis and 10 mm outside the ulnar head, so its arms did not change with rotation (7.5 mm extension, 27.8 mm
+ulnar deviation, against Horii's 6 ± 1 and 17 ± 3 mm at neutral). The wrap's side site sat at the sphere's
+centre. A trial in S7 put the groove on the ulna at that position and overshot (16 to -12.6 mm), which
+was then blamed on the rotation axis; the axis passes through the ulnar head (next section), and it was the
+groove's distance from the axis, 20 mm instead of about 10, that swung the arm.
+
+**Now.** `ECU-P5_r` sits on the ulna at the distal end of the groove; distal of it the tendon runs straight
+to the MC5 base (`ECU-P6_r`). The site is fitted in spherical coordinates about a sphere fitted to the ulnar
+head's mesh vertices (distal 22 mm of the ulna; radius 9.6 mm, rms 1.8 mm): on the posterior to lateral
+side of the head (between straight posterior and 60 deg toward the radioulnar joint), 0.5 to 3 mm outside
+the sphere, to Horii's and Loren's extension and ulnar arms at forearm -90 / 0 / +90 deg (SD 1 and 3 mm,
+Horii's Table II). It lands 55 deg from posterior toward lateral, 23 deg from the distal pole and 3 mm
+outside the sphere (a bound; across the groove's surface the fit's rms z ranges only 2.0-2.7): at the level
+of the ulna's distal end, 5.2 mm from the rotation axis (3.5 mm posterior, 3.8 mm lateral), where the tendon
+leaves the groove over the distal edge of the head. The old via point was 19.6 mm from the axis. The wrap
+sphere `ECU_torus_wrap_r`, its side site and the unused duplicates `ECU_torus_r` and `ECU_sidesite_r` are
+removed: with the groove on the ulna the tendon never reaches a sphere on the radius, and none on the ulna
+would be touched either (the groove site is the last point on the ulna). Over the forearm, flexion and
+deviation ranges (100 postures) the path stays outside the bones' convex hulls except at full flexion with
+30 deg radial deviation: up to 1.2 mm into the ulna's hull in pronation and 3.3 mm into the triquetrum's in
+supination (before: 2.8 mm into the ulna's). The ECU's passive parameters are refitted with the other
+extrinsics.
+
+| Quantity (forearm supination / neutral / pronation, wrist neutral) | Before | After | Literature |
+| --- | --- | --- | --- |
+| Extension moment arm (mm) | 7.5 / 7.5 / 7.5 | 5.7 / 6.1 / 0.1 | 7.8 / 7.2 / 0.9 (Loren 1996); 5.7 / 5.7 / 2.3 (Horii 1993, mean over 100 deg); 6 ± 1 at neutral (Horii, Table II) |
+| Ulnar-deviation moment arm (mm) | 27.8 / 27.8 / 27.8 | 11.1 / 17.4 / 17.8 | 21 / 28 / 28 (Loren); 16.0 / 18.3 / 19.5 (Horii, mean over 50 deg); 17 ± 3 at neutral (Horii, Table II) |
+| Fit to both sources (rms of (model - mean) / SD, 12 values) | 3.11 | 2.02 | 0 |
+| Supination moment arm, elbow 90 deg (mm) | -2.6 / 0.7 / 2.6 | 0.2 / -1.2 / -0.2 | -4.7 / -2.1 / 6.4 ± 1.7 / 2.0 / 4.8 (Haugstvedt 2001, wrist free) |
+
+**Limits.** The extension arm now falls in pronation and stays in supination, and the neutral ulnar arm is
+inside Horii's band, but a groove fixed to the ulna still overshoots the trend: the fit moves the groove's
+exit to the distal edge of the head, as close to the axis as its bounds allow, and in supination the ulnar
+arm still falls to 11 mm (Horii 16, Loren 21). In vivo the ulna also translates dorsally by 3.9 mm during
+pronation (Matsuki et al. 2010) and the subsheath lets the tendon move a little, neither of which a hinge
+with a fixed via point has. The ECU's pronation-supination arm near
+the end positions (Haugstvedt et al. 2001: a pronator in full supination, a supinator in full pronation,
+measured with the wrist free) is lost: with the groove near the axis the tendon's line passes close to it.
+Neither source states the angles of its supinated and pronated positions; the model uses ±90 deg.
+
+## Forearm rotation axis (checked, not moved)
+
+The radius turns about `pro_sup_r`, an axis through the centre of the radial head and the distal ulna (the
+MoBL-ARMS definition after Holzbaur et al. 2005 and Murray et al. 1995, cited only). In vivo the axis passes
+through the centre of the radial head and, distally, the ulnar head 1.9 ± 0.7 mm posterior of its geometric
+centroid (Matsuki et al. 2010, 10 forearms); Akhbari et al. 2021 place the distal centre of rotation within
+0.5-2 mm of the ulnar fovea (0.6 ± 0.8 mm volar at maximum pronation, 2.0 ± 0.5 mm volar at maximum
+supination). On the model's meshes (`generate_extrinsic_muscles.axis_offsets`):
+
+| Quantity | Model | Literature |
+| --- | --- | --- |
+| Axis to the radial head centre (circle through the head rim, 7 mm; radius 9 mm) (mm) | 1.0 | through the centre (Matsuki 2010) |
+| Axis to the ulnar head centre (sphere through the distal 22 mm; rms 1.8 mm) (mm) | 0.7 (0.7 anterior, 0.2 lateral) | 1.9 ± 0.7 posterior (Matsuki 2010) |
+
+Both are within the meshes' resolution (about 210 vertices per bone; the fits leave 1.8-2 mm rms). Moving
+the distal end 2.6 mm posterior to Matsuki's mean would change every arm model's forearm rotation for an
+offset below that resolution, and it helps the ECU only a little (refitted groove: rms z 2.02 -> 1.68, ulnar
+arm in supination 11.1 -> 13.5 mm), so the axis is unchanged. The rotators' moment arms about it are
+recorded against Haugstvedt et al. 2001 in `hand-literature-comparison.md` (ECU step): the pronator quadratus and FCU follow the measured curves; the
+pronator teres turns into a supinator (6.4 mm) and the biceps into a pronator (-4.7 mm) in full pronation,
+where the measured arms are -0.6 and 9.3 mm, which comes from their paths (no wrap around the radius), not
+from the axis.
 
 ## FDS5
 
@@ -177,7 +239,7 @@ its radius keeps ECRL an extensor beyond 45 deg of wrist extension (the tendon l
 straight path passes palmar of the axis); its CPU-warp difference (about 1 mm) stays. For the others CPU
 and mujoco-warp agree within 3e-7 m in 128 random arm postures (test with the inside wrap as negative
 control). EDM's cylinder is large for an anatomical surface; it is a wrapping surface only (no contact).
-ECU's wrap belongs to the forearm-rotation revision; the deltoid and pectoral heads (up to 3.3 mm) are a
+ECU's wrap sphere is gone with the ECU re-route (above); the deltoid and pectoral heads (up to 3.3 mm) are a
 later step.
 
 ## APL at the thumb CMC (S2c; FPL tried, not adopted)
@@ -213,15 +275,26 @@ oblique-head path is not (it makes the lateral pinch infeasible).
 Extrinsic slack lengths and passive scales (`fit_muscle_passive.py`), then the joint springs
 (`fit_passive_moments.py`); numbers in `hand-literature-comparison.md` (S7, EDC2 wrap) and the CHANGELOG.
 
+After the ECU re-route the same chain was run again (passive muscles, extrinsic fits, springs). The ECU's
+smaller ulnar arm leaves the muscles a larger deficit in radial-deviation stiffness, so a new spring segment
+(`passive_wrist_deviation_pos_r`) covers it: muscles and springs now match Formica's wrist deviation
+stiffness with 0.010 N m rms (0.054 before), wrist flexion 0.010 (0.011). The ECU's passive scale falls 0.83
+-> 0.72 (slack +2.1 -> +0.4 %); the joint-fit error of the muscles alone rises 866 -> 1128 (without the
+release step 690 -> 908), the deficit at the wrist; the release bound of EDC3-5 and EDM 0.0261 -> 0.0259.
+
 ## References
 
+- Akhbari B et al. Biomechanics of the distal radioulnar joint during in vivo forearm pronosupination. J Wrist Surg 10(3):208-215, 2021.
 - Garcia-Elias M et al. Extensor mechanism of the fingers. II. Tensile properties of components. J Hand Surg Am 16(6):1136-1140, 1991.
+- Haugstvedt JR, Berger RA, Berglund LJ. A mechanical study of the moment-forces of the supinators and pronators of the forearm. Acta Orthop Scand 72(6):629-634, 2001 (Fig. 3, read from the figure).
 - Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005 (Table 1). Cited only; no model file used.
 - Horii E, An KN, Linscheid RL. Excursion of prime wrist tendons. J Hand Surg Am 18(1):83-90, 1993.
 - Leijnse JNAL. Measuring force transfers in the deep flexors of the musician's hand: theoretical analysis, clinical examples. J Biomech 30:873, 1997.
 - Lieber RL et al. Architecture of selected muscles of the arm and forearm: anatomy and implications for tendon transfer. J Hand Surg Am 17(5):787-798, 1992 (Table I).
 - Loren GJ et al. Human wrist motors: biomechanical design and application to tendon transfers. J Biomech 29(3):331-342, 1996 (appendix).
+- Matsuki KO et al. In vivo 3D kinematics of normal forearms: analysis of dynamic forearm rotation. Clin Biomech 25(10):979-983, 2010.
 - Matsuzawa K et al. The origin structure of each finger in the flexor digitorum superficialis muscle. Surg Radiol Anat 43:3-10, 2021.
+- Murray WM, Delp SL, Buchanan TS. Variation of muscle moment arms with elbow and forearm position. J Biomech 28(5):513-525, 1995. Cited only (its forearm axis definition).
 - von Schroeder HP, Botte MJ. The functional significance of the long extensors and juncturae tendinum in finger extension. J Hand Surg Am 18(4):641-647, 1993.
 - Yammine K. The anatomy and prevalence of the juncturae tendinum in the hands. Eur J Anat 19(4):351-359, 2015.
 - Zatsiorsky VM, Li ZM, Latash ML. Enslaving effects in multi-finger force production. Exp Brain Res 131:187-195, 2000.

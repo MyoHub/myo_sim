@@ -706,6 +706,39 @@
       "APL": 0.0
      },
      "grip_N": 338.9
+    },
+    {
+     "model": "+ ECU through the groove of the ulnar head (wrap sphere on the radius removed); extrinsic slack lengths and passive scales, junctura links, springs refitted",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 47,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0259,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003392,
+      "jt45_stiffness": 1000.0
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9687,
+      "FDP": 0.5752,
+      "EDC": 0.7766,
+      "EIP": 0.1779,
+      "EDM": 0.9925,
+      "ECRL": 0.22336264780445234,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.0146554791855929,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 315.3
     }
    ]
   }

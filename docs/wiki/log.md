@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-30 — ECU through the groove of the ulnar head; forearm rotation axis checked
+Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (ECU groove block on the ulna; ECU via point, wrap sphere and side sites removed from the radius), `myoarm_r_tendon.xml` (ECU path, springs), `myoarm_r_muscle.xml` (refitted passive parameters), `myo_sim/build/data/extrinsic_muscles.json` (`ecu`), `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache), `hand_literature.json`, `scripts/generate_extrinsic_muscles.py` (`--fit-ecu`, forearm landmarks), `scripts/hand_literature_comparison.py` (forearm rotation), `tests/test_extrinsic_muscles.py`, `test_hand_literature.py`, `test_muscle_passive.py` (left/right settling compared at solver tolerance 1e-12), `docs/wiki/hand-extrinsic-muscles.md`, `hand-literature-comparison.md`, `hand-contacts-and-pads.md`, `index.md`, `repository-map.md`, `testing-guide.md`, `CHANGELOG.md`
+Why: The ECU crossed the wrist from a via point on the radius 20 mm from the rotation axis, so its arms ignored forearm rotation; it now leaves the groove of the ulnar head, as measured by Horii 1993 and Loren 1996, while the rotation axis already passes through the radial and ulnar heads and stays.
+
 ## 2026-10-30 — Grip digit shares: measured target
 Changed: `myo_sim/build/data/hand_function.json` (digit-share target and band, sources), `hand_literature.json` (grip-share literature rows, sources), `tests/test_hand_grip.py` (mean +- 1 SD band), `docs/wiki/hand-function-validation.md`, `hand-literature-comparison.md`
 Why: The grip test compared the digit shares with the ARMS model's own shares; it now uses measured shares during maximal power grip (Kong et al. 2011, 100 % MVC, mean +- 1 SD), with Amis 1987, Ohtsuki 1981 and Ejeskar & Ortengren 1981 as context. The model is outside the measured band for every finger, so the test keeps failing.
