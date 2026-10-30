@@ -37,6 +37,8 @@ None currently tracked.
 
 ## Changelog
 
+**2026-10-30** — ECU through the groove of the ulnar head: `ECU-P5_r` moves from the radius to the ulna (fitted to Horii 1993 and Loren 1996; its extension arm now falls in pronation), the ECU wrap sphere and side sites on the radius are removed; extrinsic passive parameters and springs refitted (new spring tendon `passive_wrist_deviation_pos_r`). The forearm rotation axis was checked against the radial and ulnar heads and is unchanged. See `docs/wiki/hand-extrinsic-muscles.md`.
+
 **2026-10-30** — Forearm wrap side sites: EDC4, EDC5, EDM, ECRB, FCR and PQ wrap from outside their geoms (ECRB and FCR spheres refitted to Horii 1993; MuJoCo and mujoco-warp now agree); passive parameters, junctura links and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
 
 **2026-11-03** — `vmax` of the forearm and hand muscles 1.5 -> 10 optimal fibre lengths/s and thumb CMC armature 2e-4 kg m2: removes a period-two oscillation at the 2 ms step; movement under the same activation is 2-5 times faster. See `docs/wiki/hand-literature-comparison.md`.

@@ -9,6 +9,9 @@
 - FDS5: force as derived in the table.
 - Wrap sides (EDC2, EDC4, EDC5, EDM, ECRB, FCR, PQ): each side site lies outside its geom, as tabled, so
   MuJoCo and mujoco-warp resolve the wraps alike (an inside wrap, side site at the centre, differs between them).
+- ECU: its groove via point is on the ulna in every arm, its moment arms reproduce the recorded fit and change
+  with forearm rotation as measured; its path has no wrap geom left.
+- The forearm rotation axis passes through the radial and ulnar heads of the meshes.
 """
 
 from __future__ import annotations
@@ -58,6 +61,7 @@ def test_generated_blocks_are_what_the_script_writes() -> None:
     for node_name, node in table["juncturae"]["nodes"].items():
         assert read_generated_block(RIGHT_ARM_CHAIN_XML, name, f"node {node_name}") == gen.chain_node_block(node_name, node)
     assert read_generated_block(RIGHT_ARM_CHAIN_XML, name, "FCU hamate") == gen.fcu_block(table)
+    assert read_generated_block(RIGHT_ARM_CHAIN_XML, name, "ECU groove") == gen.ecu_block(table)
     assert read_generated_block(RIGHT_ARM_ASSETS_XML, name, "juncturae ties") == gen.equality_block(table)
     assert read_generated_block(RIGHT_ARM_TENDONS_XML, name) == gen.tendon_block(table)
 
@@ -223,3 +227,52 @@ def test_wrap_side_lengths_agree_on_cpu_and_mujoco_warp() -> None:
         model.site_pos[model.site(side["site"]).id] = model.geom_pos[model.geom(side["geom"]).id]
     worst = _cpu_warp_differences(model)
     assert sum(v > 1e-5 for v in worst.values()) >= 5, worst
+
+
+@pytest.mark.parametrize("name", ["myoarm_r", "myoarms", "myofullbody"])
+def test_ecu_groove_is_on_the_ulna_without_a_wrap(name: str) -> None:
+    model = _model(name)
+    sides = ("r", "l") if name in ("myoarms", "myofullbody") else ("r",)
+    for side in sides:
+        assert model.body(model.site_bodyid[model.site(f"ECU-P5_{side}").id]).name == f"ulna_{side}"
+        t = model.tendon(f"ECU_{side}_tendon").id
+        adr, num = model.tendon_adr[t], model.tendon_num[t]
+        assert all(model.wrap_type[adr : adr + num] == mujoco.mjtWrap.mjWRAP_SITE)
+
+
+def test_ecu_moment_arms_follow_forearm_rotation() -> None:
+    """The recorded fit is reproduced; the extension arm falls in pronation (Horii 1993, Loren 1996) and stays in
+    supination, the neutral ulnar arm lies within Horii's band, and the fit beats the radius-fixed path."""
+    gen = _script()
+    table = gen.load_table()
+    model = _model("myoarm_r")
+    ext, uln = gen.ecu_rotation_arms(model, table)
+    result = table["ecu"]["fit"]["result"]
+    assert ext == pytest.approx(result["extension_mm"], abs=0.01)
+    assert uln == pytest.approx(result["ulnar_mm"], abs=0.01)
+    assert ext[1] - ext[2] > 4.0  # Horii 3.4 mm, Loren 6.3 mm
+    assert abs(ext[0] - ext[1]) < 1.0  # Horii 0, Loren 0.6 mm
+    assert abs(uln[1] - 17.0) <= 3.0  # Horii Table II, 17 +- 3 mm
+    assert np.sqrt(np.mean(gen.ecu_residuals(model, table) ** 2)) < table["ecu"]["before"]["rms_z"]
+
+
+def test_ecu_is_symmetric_left_to_right() -> None:
+    model = _model("myoarms")
+    data = mujoco.MjData(model)
+    for deg in (-90.0, 0.0, 90.0):
+        for flexion in (-0.6, 0.0, 0.6):
+            data.qpos[:] = model.qpos0
+            for side in ("r", "l"):
+                data.qpos[model.joint(f"pro_sup_{side}").qposadr[0]] = np.radians(deg)
+                data.qpos[model.joint(f"flexion_{side}").qposadr[0]] = flexion
+            mujoco.mj_fwdPosition(model, data)
+            r, left = model.tendon("ECU_r_tendon").id, model.tendon("ECU_l_tendon").id
+            assert data.ten_length[r] == pytest.approx(data.ten_length[left], abs=1e-7)
+
+
+def test_rotation_axis_passes_through_the_radial_and_ulnar_heads() -> None:
+    """Within 2 mm of the radial head centre and the ulnar head centre (the meshes fit them with 1.8-2 mm rms)."""
+    gen = _script()
+    offsets = gen.axis_offsets(_model("myoarm_r"), gen.load_table())
+    assert offsets["radial_head_mm"] < 2.0
+    assert offsets["ulnar_head_mm"] < 2.0
