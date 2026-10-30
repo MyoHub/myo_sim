@@ -10,22 +10,22 @@
     "knutson2000": {
       "citation": "Knutson JS, Kilgore KL, Mansour JM, Crago PE. Intrinsic and extrinsic contributions to the passive moment at the metacarpophalangeal joint. J Biomech 33(12):1675-1681, 2000.",
       "doi": "10.1016/S0021-9290(00)00159-7",
-      "access": "closed; equations (1)-(4) and Table 1 verified from the PDF"
+      "access": "equations (1)-(4) and Table 1 verified from the PDF"
     },
     "kamper2002": {
       "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002.",
       "doi": "10.1016/S0021-9290(02)00229-4",
-      "access": "closed; Table 2 (tau_s, K, B) and Eq. (1) verified from the PDF"
+      "access": "Table 2 (tau_s, K, B) and Eq. (1) verified from the PDF"
     },
     "li2006": {
       "citation": "Li ZM, Davis G, Gustafson NP, Goitz RJ. A robot-assisted study of intrinsic muscle regulation on proximal interphalangeal joint stiffness by varying metacarpophalangeal joint position. J Orthop Res 24(3):407-415, 2006.",
       "doi": "10.1002/jor.20046",
-      "access": "closed; Table 3 verified from the PDF"
+      "access": "Table 3 verified from the PDF"
     },
     "domalain2010": {
       "citation": "Domalain M, Vigouroux L, Berton E. Determination of passive moment-angle relationships at the trapeziometacarpal joint. J Biomech Eng 132(7):071009, 2010.",
       "doi": "10.1115/1.4001397",
-      "access": "closed; equations (2)-(3), Table 1 and Sec. 3.1 verified from the PDF"
+      "access": "equations (2)-(3), Table 1 and Sec. 3.1 verified from the PDF"
     },
     "barry2018": {
       "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
@@ -46,7 +46,7 @@
     "hollister1992": {
       "citation": "Hollister A, Buford WL, Myers LM, Giurintano DJ, Novick A. The axes of rotation of the thumb carpometacarpal joint. J Orthop Res 10(3):454-460, 1992.",
       "doi": "10.1002/jor.1100100319",
-      "access": "closed; verified from the PDF"
+      "access": "verified from the PDF"
     }
   },
   "joints": [

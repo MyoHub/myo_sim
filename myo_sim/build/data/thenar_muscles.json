@@ -27,13 +27,13 @@
     "jacobson1992": {
       "citation": "Jacobson MD, Raab R, Fazeli BM, Abrams RA, Botte MJ, Lieber RL. Architectural design of the human intrinsic hand muscles. J Hand Surg Am 17(5):804-809, 1992.",
       "doi": "10.1016/0363-5023(92)90446-V",
-      "access": "closed; Table I verified visually from the PDF",
+      "access": "Table I verified visually from the PDF",
       "note": "The text quotes AddP PCSA as 1.10 cm2; Table I gives 1.94 +- 0.39 cm2 (used)."
     },
     "stamenkovic2014": {
       "citation": "Stamenkovic A, Munro BJ, Peoples GE. Physiological cross-sectional area of the oblique head of the adductor pollicis is greater than its transverse counterpart: implications for functional testing. Muscle Nerve 49(3):405-412, 2014.",
       "doi": "10.1002/mus.23933",
-      "access": "closed; Table 1 verified visually from the PDF"
+      "access": "Table 1 verified visually from the PDF"
     }
   },
   "preferred_replacement": "Barry et al. 2018 model paths (MIT) for AdP (two heads) once available.",
