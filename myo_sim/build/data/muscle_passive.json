@@ -56,9 +56,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0289,
+        "value": 0.0261,
         "reference_value": 1.3,
-        "change_percent": -97.777,
+        "change_percent": -97.992,
         "at_bound": false
       }
     },
@@ -83,10 +83,10 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.002,
+        "value": 0.0033,
         "reference_value": 1.3,
-        "change_percent": -99.846,
-        "at_bound": true
+        "change_percent": -99.746,
+        "at_bound": false
       }
     },
     {
@@ -99,20 +99,20 @@
       "source": "knutson2000",
       "method": "binder_markey2017",
       "tendon_slack_m": {
-        "value": 0.347293,
+        "value": 0.347168,
         "reference_value_m": 0.355253,
-        "change_percent": -2.241,
+        "change_percent": -2.276,
         "active_window_percent": [
           -10.0,
-          -2.24
+          -2.275
         ],
         "scales_with": "length",
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.6216,
+        "value": 0.1826,
         "reference_value": 1.3,
-        "change_percent": -52.185,
+        "change_percent": -85.954,
         "at_bound": false
       }
     },
@@ -137,9 +137,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.7906,
+        "value": 1.1831,
         "reference_value": 1.3,
-        "change_percent": -39.185,
+        "change_percent": -8.992,
         "at_bound": false
       }
     },
@@ -203,9 +203,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0149,
+        "value": 0.006,
         "reference_value": 1.3,
-        "change_percent": -98.854,
+        "change_percent": -99.538,
         "at_bound": false
       }
     },
@@ -304,9 +304,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0025,
+        "value": 0.002,
         "reference_value": 1.3,
-        "change_percent": -99.808,
+        "change_percent": -99.846,
         "at_bound": true
       }
     },
@@ -338,9 +338,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0303,
+        "value": 0.0224,
         "reference_value": 1.3,
-        "change_percent": -97.669,
+        "change_percent": -98.277,
         "at_bound": false
       }
     },
@@ -372,11 +372,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.028,
+        "value": 0.0285,
         "reference_value": 1.3,
-        "change_percent": -97.846,
+        "change_percent": -97.808,
         "at_bound": true,
-        "lower_bound": 0.028,
+        "lower_bound": 0.0285,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -408,11 +408,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.028,
+        "value": 0.0285,
         "reference_value": 1.3,
-        "change_percent": -97.846,
+        "change_percent": -97.808,
         "at_bound": true,
-        "lower_bound": 0.028,
+        "lower_bound": 0.0285,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -444,11 +444,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.028,
+        "value": 0.0285,
         "reference_value": 1.3,
-        "change_percent": -97.846,
+        "change_percent": -97.808,
         "at_bound": true,
-        "lower_bound": 0.028,
+        "lower_bound": 0.0285,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -480,11 +480,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.028,
+        "value": 0.0285,
         "reference_value": 1.3,
-        "change_percent": -97.846,
+        "change_percent": -97.808,
         "at_bound": true,
-        "lower_bound": 0.028,
+        "lower_bound": 0.0285,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -504,9 +504,9 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.197,
+        "value": 0.197161,
         "reference_value_m": 0.197,
-        "change_percent": 0.0,
+        "change_percent": 0.082,
         "active_window_percent": [
           -10.0,
           1.201
@@ -515,9 +515,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0352,
+        "value": 0.0298,
         "reference_value": 1.3,
-        "change_percent": -97.292,
+        "change_percent": -97.708,
         "at_bound": false
       }
     },
@@ -548,10 +548,10 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.002,
+        "value": 0.0036,
         "reference_value": 1.3,
-        "change_percent": -99.846,
-        "at_bound": true
+        "change_percent": -99.723,
+        "at_bound": false
       }
     },
     {
@@ -580,9 +580,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.4305,
+        "value": 0.43,
         "reference_value": 1.3,
-        "change_percent": -66.885,
+        "change_percent": -66.923,
         "at_bound": false
       }
     },
@@ -631,9 +631,9 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.227566,
+        "value": 0.227065,
         "reference_value_m": 0.2223,
-        "change_percent": 2.369,
+        "change_percent": 2.143,
         "active_window_percent": [
           -10.0,
           10.0
@@ -662,9 +662,9 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.234306,
+        "value": 0.232832,
         "reference_value_m": 0.2285,
-        "change_percent": 2.541,
+        "change_percent": 1.896,
         "active_window_percent": [
           -10.0,
           10.0
@@ -673,9 +673,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 1.0358,
+        "value": 0.6777,
         "reference_value": 1.3,
-        "change_percent": -20.323,
+        "change_percent": -47.869,
         "at_bound": false
       }
     }
@@ -693,9 +693,9 @@
         10.0
       ]
     },
-    "rmse_Ncm_before": 98.39698757003688,
-    "rmse_Ncm_after": 3.3456760200730358,
-    "max_abs_err_Ncm_after": 10.97413713891884,
+    "rmse_Ncm_before": 98.37133479122517,
+    "rmse_Ncm_after": 3.4932733335659116,
+    "max_abs_err_Ncm_after": 10.6304506935555,
     "target_peak_Ncm": 30.36601987360585
   },
   "binder_markey2017_table2": {
@@ -761,12 +761,12 @@
         "posture": "formica2012_grip",
         "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
         "fit": {
-          "rmse_Nm_before": 0.3999117186319227,
-          "rmse_Nm_after": 0.12009226101275018,
-          "max_excess_Nm_before": 0.6116278667923638,
-          "max_excess_Nm_after": 0.047946846393680076,
+          "rmse_Nm_before": 0.3939076938138911,
+          "rmse_Nm_after": 0.12040099016788225,
+          "max_excess_Nm_before": 0.6121831199810244,
+          "max_excess_Nm_after": 0.0390109697675403,
           "target_peak_Nm": 0.30293679826865577,
-          "max_excess_Nm_without_release": 0.03167806113508806
+          "max_excess_Nm_without_release": 0.022707565305725118
         }
       },
       {
@@ -788,12 +788,12 @@
         "posture": "formica2012_grip",
         "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
         "fit": {
-          "rmse_Nm_before": 1.1967484238623458,
-          "rmse_Nm_after": 0.06454620723378227,
-          "max_excess_Nm_before": 2.6120202824357652,
-          "max_excess_Nm_after": 0.013632750417749369,
+          "rmse_Nm_before": 1.2005640209930857,
+          "rmse_Nm_after": 0.05619163508772224,
+          "max_excess_Nm_before": 2.6189241879223,
+          "max_excess_Nm_after": 0.008604054463083384,
           "target_peak_Nm": 0.5073672135547517,
-          "max_excess_Nm_without_release": 0.01878807501688612
+          "max_excess_Nm_without_release": 0.0037064146927330427
         }
       },
       {
@@ -833,7 +833,7 @@
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
           "rmse_Nm_before": 0.6456953059811833,
-          "rmse_Nm_after": 0.06843932330701692,
+          "rmse_Nm_after": 0.0684067490787703,
           "max_excess_Nm_before": 3.525436861172034,
           "max_excess_Nm_after": 0.024644533393426572,
           "target_peak_Nm": 0.3440783082622245,
@@ -877,11 +877,11 @@
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
           "rmse_Nm_before": 1.0992039852630868,
-          "rmse_Nm_after": 0.06881818985949616,
+          "rmse_Nm_after": 0.06852649636852333,
           "max_excess_Nm_before": 2.0052199710939935,
-          "max_excess_Nm_after": 0.012335946704461379,
+          "max_excess_Nm_after": 0.010114378254392082,
           "target_peak_Nm": 0.3440783082622245,
-          "max_excess_Nm_without_release": 0.012335948446617858
+          "max_excess_Nm_without_release": 0.010408703672765066
         }
       },
       {
@@ -921,11 +921,11 @@
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
           "rmse_Nm_before": 0.4214432528200883,
-          "rmse_Nm_after": 0.0731712048698804,
+          "rmse_Nm_after": 0.07210410380887335,
           "max_excess_Nm_before": 0.8866790652879801,
-          "max_excess_Nm_after": 0.023470223840958874,
+          "max_excess_Nm_after": 0.01753064865311593,
           "target_peak_Nm": 0.3440783082622245,
-          "max_excess_Nm_without_release": 0.0234702238409588
+          "max_excess_Nm_without_release": 0.017530648653115873
         }
       },
       {
@@ -1020,11 +1020,11 @@
         "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.9780345577916002,
-          "rmse_Nm_after": 0.027741016857167088,
+          "rmse_Nm_after": 0.026121033588623326,
           "max_excess_Nm_before": 1.240669410439776,
-          "max_excess_Nm_after": 0.0015535821250839636,
+          "max_excess_Nm_after": 0.0034503579444872976,
           "target_peak_Nm": 0.05167246107211147,
-          "max_excess_Nm_without_release": 0.0015535808939255791
+          "max_excess_Nm_without_release": 0.00345035695956059
         }
       },
       {
@@ -1053,7 +1053,7 @@
         "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.6457489101453635,
-          "rmse_Nm_after": 0.048704433433245375,
+          "rmse_Nm_after": 0.048491490340877394,
           "max_excess_Nm_before": 0.6707380104981253,
           "max_excess_Nm_after": 0.0,
           "target_peak_Nm": 0.07988195974879853,
@@ -1086,11 +1086,11 @@
         "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.2790385709731219,
-          "rmse_Nm_after": 0.038963927990572425,
+          "rmse_Nm_after": 0.03627165429390748,
           "max_excess_Nm_before": 0.3106373816833289,
-          "max_excess_Nm_after": 0.006820846049447755,
+          "max_excess_Nm_after": 0.0037586667735288373,
           "target_peak_Nm": 0.05167246107211147,
-          "max_excess_Nm_without_release": 0.006820846049447722
+          "max_excess_Nm_without_release": 0.0037586667735288164
         }
       },
       {
@@ -1119,11 +1119,11 @@
         "where": "Table 2, static index DIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.16366030593256412,
-          "rmse_Nm_after": 0.06212055069108939,
+          "rmse_Nm_after": 0.06004822262112926,
           "max_excess_Nm_before": 0.12693167026809898,
-          "max_excess_Nm_after": 0.006994640387919202,
+          "max_excess_Nm_after": 0.00460125201776232,
           "target_peak_Nm": 0.07988195974879853,
-          "max_excess_Nm_without_release": 0.006994640387919167
+          "max_excess_Nm_without_release": 0.004601252017762296
         }
       },
       {
@@ -1152,11 +1152,11 @@
         "where": "Barry et al. 2018 Sec. 2.1: thumb MCP passive moment set equal to the index MCP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
         "fit": {
           "rmse_Nm_before": 0.6207402563478978,
-          "rmse_Nm_after": 0.026422813794531947,
+          "rmse_Nm_after": 0.028540490481559343,
           "max_excess_Nm_before": 0.9784615655250518,
-          "max_excess_Nm_after": 0.01000022800444153,
+          "max_excess_Nm_after": 0.008153402560162474,
           "target_peak_Nm": 0.0606725000299487,
-          "max_excess_Nm_without_release": 0.010000294066543713
+          "max_excess_Nm_without_release": 0.008153395256501808
         }
       },
       {
@@ -1185,11 +1185,11 @@
         "where": "Barry et al. 2018 Sec. 2.1: thumb IP passive moment set equal to the index PIP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
         "fit": {
           "rmse_Nm_before": 0.5676229345486608,
-          "rmse_Nm_after": 0.03699688077947439,
+          "rmse_Nm_after": 0.03651315875701741,
           "max_excess_Nm_before": 1.1789421777231734,
-          "max_excess_Nm_after": 0.014530476172785271,
+          "max_excess_Nm_after": 0.011912648902798794,
           "target_peak_Nm": 0.05167246107211147,
-          "max_excess_Nm_without_release": 0.014530574014750799
+          "max_excess_Nm_without_release": 0.011912646301614609
         }
       }
     ]
@@ -1278,9 +1278,9 @@
     ],
     "fpmax_penalty": 1.0,
     "cost": "sum over rows of mean(excess_weight * excess^2 + deficit^2) (N cm^2) + (1/100) sum |slack change / slack| + fpmax_penalty sum |ln(fpmax / reference)|",
-    "error_before": 5371394.411103283,
-    "error_after": 1753.717474165301,
-    "error_without_release": 1017.2634395701941
+    "error_before": 5375457.863476163,
+    "error_after": 958.7951762994021,
+    "error_without_release": 727.0823836406671
   },
   "active_constraint": {
     "description": "Hard constraint on the fit: MuJoCo's active force-length factor (mju_muscleGain at zero velocity) of each listed muscle is at least min_fl in each posture, so the hand can still close and open actively. 0.5 is half the isometric force; on MuJoCo's curve it is reached at (lmin + 1) / 2 and (1 + lmax) / 2, so the constraint is a window on each slack length. Full fist: every finger and thumb joint at its MyoHand flexion limit (thumb CMC abduction neutral); full extension: the same joints at their extension limits.",
@@ -1393,7 +1393,7 @@
     ],
     "min_mcp_extension_deg": 30.0,
     "result": {
-      "fpmax_lower_bound": 0.028,
+      "fpmax_lower_bound": 0.0285,
       "fpmax_before": {
         "EDC3_r": 0.002,
         "EDC4_r": 0.002,
@@ -1406,9 +1406,9 @@
         "5": 1.039275590556528
       },
       "mcp_extension_deg_at_bound": {
-        "3": 59.579318719725826,
-        "4": 55.61749831083716,
-        "5": 30.03677765200215
+        "3": 59.09393102232859,
+        "4": 56.999207492540336,
+        "5": 30.022409429591363
       }
     }
   }

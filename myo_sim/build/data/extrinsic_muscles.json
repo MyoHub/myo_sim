@@ -110,7 +110,7 @@
           "method": "taut from its length in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force at rest"
         },
         "stiffness_N_per_m": {
-          "value": 999.9,
+          "value": 993.0,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.029423
@@ -123,7 +123,7 @@
           "method": "taut from its length in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force at rest"
         },
         "stiffness_N_per_m": {
-          "value": 263.0,
+          "value": 221.9,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.024248
@@ -149,41 +149,41 @@
       "result": {
         "without_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.87,
-            "mcp3_flexion": 26.98,
-            "mcp4_flexion": 72.94,
-            "mcp5_flexion": -0.04
+            "mcp2_flexion": 0.64,
+            "mcp3_flexion": 13.76,
+            "mcp4_flexion": 71.21,
+            "mcp5_flexion": -0.05
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.15,
-            "mcp3_flexion": 67.64,
-            "mcp4_flexion": 1.91,
+            "mcp2_flexion": 0.02,
+            "mcp3_flexion": 67.29,
+            "mcp4_flexion": 2.86,
             "mcp5_flexion": 0.03
           }
         },
         "with_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.3,
-            "mcp3_flexion": 32.0,
-            "mcp4_flexion": 74.1,
-            "mcp5_flexion": 22.32
+            "mcp2_flexion": 0.52,
+            "mcp3_flexion": 30.53,
+            "mcp4_flexion": 71.96,
+            "mcp5_flexion": 21.71
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.3,
-            "mcp3_flexion": 66.98,
-            "mcp4_flexion": 1.09,
-            "mcp5_flexion": 0.19
+            "mcp2_flexion": -0.15,
+            "mcp3_flexion": 66.3,
+            "mcp4_flexion": 1.53,
+            "mcp5_flexion": 0.29
           }
         },
         "residual_deg": [
-          -12.98,
-          0.35,
-          1.16,
-          -8.82,
-          -6.84,
-          -0.66
+          -1.23,
+          -0.24,
+          0.75,
+          -9.33,
+          -6.74,
+          -0.99
         ],
-        "rms_deg": 7.01
+        "rms_deg": 4.75
       },
       "own_finger_note": "mcp4 under EDC4 traction and mcp3 under EDC3 traction: target 0 deg change from the links (the pulled finger's own extension is the same with and without the juncturae: traction on one tendon or on all gave the same result, p. 643)",
       "stiffness_bounds_N_per_m": {
@@ -284,5 +284,28 @@
       "value": 46.5,
       "derivation": "Holzbaur 2005 FDS5 x mean(MyoHand / Holzbaur, FDS2-4) = 16.5 x 2.819"
     }
+  },
+  "edc2_wrap_side": {
+    "method": "EDC2 wraps the sphere EDCI_torus_wrap_r (MyoHand's stand-in for MoBL's EDC index torus, in lunate_r). Its side site sat at the sphere centre, so MuJoCo applied the inside wrap (the tendon held within the sphere's circle as in a ring), whose iterative solution differs between MuJoCo (float64) and mujoco-warp (float32) when the deflection is small (up to 0.8 mm of EDC2 length in random postures). The side site moves out of the sphere on its dorsal side, so the tendon wraps over the sphere's dorsal surface like the extensor tendons over the dorsal carpus (the ordinary side wrap, which both engines resolve alike). Dorsal is +z of lunate_r (the extensor wraps ECRL, ECRB and EDC lie at +z, FCR's at -z). The distance only has to place the site outside the sphere.",
+    "sources": [],
+    "site": "EDCI_torus_site_EDC2_side_r",
+    "geom": "EDCI_torus_wrap_r",
+    "body": "lunate_r",
+    "direction_body": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "distance_radii": 2.0,
+    "pos_before": [
+      0.009,
+      -0.0149,
+      0.0211
+    ],
+    "pos": [
+      0.009,
+      -0.0149,
+      0.0281
+    ]
   }
 }

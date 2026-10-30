@@ -1,13 +1,14 @@
-# Extrinsic hand muscles: juncturae, FCU, FDS5
+# Extrinsic hand muscles: juncturae, FCU, FDS5, EDC2 wrap
 
-Revisions of the extrinsic hand muscles from the hand rebuild (S7). Data, sources and fit results are in
+Revisions of the extrinsic hand muscles from the hand rebuild (S7, and the EDC2 wrist wrap after it). Data, sources and fit results are in
 `myo_sim/build/data/extrinsic_muscles.json`; `scripts/generate_extrinsic_muscles.py` writes them into the
 right-arm XML (`--fit` refits). Tests: `tests/test_extrinsic_muscles.py`. Model values against the
 literature: `hand-literature-comparison.md` (S7).
 
-The fit was run once more after the passive refits below; the table gives the final model's values
-(`hand-literature-comparison.md`, S7). The middle-finger share depends on the contact-driven transfer
-without links (25.7-27.0 deg over the last refits), so it moves by about a degree with small changes.
+The fit was run once more after the passive refits below, and again after the EDC2 wrap change; the table
+gives the model's values (`hand-literature-comparison.md`, S7 and EDC2 wrap). The middle-finger share
+depends on the contact-driven transfer without links (25.7-27.0 deg over the S7 refits, 13.8 deg after the
+EDC2 wrap change), so it moves with small changes.
 
 ## Juncturae tendinum
 
@@ -37,17 +38,19 @@ fascia coupling, so the model value is the extension with the links minus withou
 model: `myohand_r` palm down under gravity, wrist, forearm and thumb held, settled from the resting
 posture, then 14.7 N along the tendon for 1.5 s.
 
-| Traction on | Neighbour | Junctura share (deg), von Schroeder & Botte 1993 | Model, links minus none (deg) |
+| Traction on | Neighbour | Junctura share (deg), von Schroeder & Botte 1993 | Model, links minus none (deg): S7 / after the EDC2 wrap |
 | --- | --- | --- | --- |
-| EDC-ring (EDC4) | middle MP | 18 (38 -> 20) | 6.2 |
-| EDC-ring (EDC4) | small MP | 22 (44 -> 22) | 22.3 |
-| EDC-long (EDC3) | ring MP | 8 (26 -> 18) | -0.9 |
-| EDC-long (EDC3) | small MP | 7 (16 -> 9) | 0.2 |
+| EDC-ring (EDC4) | middle MP | 18 (38 -> 20) | 6.2 / 17.1 |
+| EDC-ring (EDC4) | small MP | 22 (44 -> 22) | 22.3 / 21.7 |
+| EDC-long (EDC3) | ring MP | 8 (26 -> 18) | -0.9 / -1.4 |
+| EDC-long (EDC3) | small MP | 7 (16 -> 9) | 0.2 / 0.2 |
 
-Stiffness: `lig_JT45_r` 263 N/m (fitted); `lig_JT34_r` 1000 N/m, at its upper bound. The bound is
+Stiffness after the refit that followed the EDC2 wrap change: `lig_JT45_r` 222 N/m (fitted; 263 in S7);
+`lig_JT34_r` 993 N/m, at its upper bound of 1000 N/m (999.9 in S7). The middle finger's share rose because
+its contact-driven extension without links fell (below). The bound is
 numerical: tendon springs are explicit in MuJoCo's Euler step, and with EDC4 and the middle-finger flexors
 fully active the link force changes from step to step by 0.17 N at 1000 N/m (5.5 N mean), 0.6 N at
-3000 N/m and 3.5 N at 10000 N/m. The transfer saturates anyway: 10000 N/m gives 6.1 deg and an
+3000 N/m and 3.5 N at 10000 N/m. In S7 the transfer saturated: 10000 N/m gave 6.1 deg and an
 almost rigid link (100000 N/m) 6.7 deg instead of 18, limited by the link's obliquity. The links are softer than the hood segments of Garcia-Elias et al.
 1991b (40-294 N/mm). The pulled finger's own extension changes by at most 1.2 deg with the links.
 
@@ -55,8 +58,9 @@ almost rigid link (100000 N/m) 6.7 deg instead of 18, limited by the link's obli
 - Traction on the middle-finger tendon does not reach the ring and little fingers: a tension-only link
   from the ring tendon slackens when the middle tendon moves proximally. Von Schroeder & Botte find 7-8
   deg there.
-- Without the links, ring traction already extends the middle MP by about 26 deg in the model (contact between
-  the proximal phalanges); the cadaver value after cutting the juncturae is 20 deg (fascia and web).
+- Without the links, ring traction already extends the middle MP in the model (contact between the proximal
+  phalanges): about 26 deg in S7, 13.8 deg after the EDC2 wrap change and its refits; the cadaver value after
+  cutting the juncturae is 20 deg (fascia and web). This contact-driven part moves with small model changes.
 - No index-middle link and no web: the radial coupling (32 % of the middle MP's range with EDC-index
   traction) is absent.
 
@@ -109,10 +113,41 @@ to a 2.7 um sarcomere (Holzbaur: 5.2 cm) and is kept. FDS2's 83.5 mm likewise eq
 bellies (32 + 38 mm, 68 mm) renormalised; Matsuzawa et al. 2021's 32.9 mm is one belly of the digastric
 muscle, so FDS2 is unchanged.
 
+## EDC2 wrist wrap
+
+EDC2 crosses the wrist over the sphere `EDCI_torus_wrap_r` (MyoHand's stand-in for MoBL's EDC index
+torus, in `lunate_r`). Its side site `EDCI_torus_site_EDC2_side_r` sat at the sphere's centre. A side site
+inside the geom makes MuJoCo apply the inside wrap: the tendon is held within the sphere's circle, like a
+ring. Over the wrist range the ring held EDC2 from its palmar edge in flexion (a floor) and from its ulnar
+edge in extension, never dorsally. The inside wrap is solved iteratively, and MuJoCo (float64) and
+mujoco-warp (float32) give different answers where the deflection is small: up to 0.79 mm of EDC2 length
+in 32 of 512 random arm postures (`myoarm_r`). Any side site inside the sphere gives the same result, so
+moving it off the centre but inside changes nothing.
+
+The side site now lies outside the sphere on its dorsal side (+z of `lunate_r`, two radii from the centre;
+`edc2_wrap_side` in the data file). The tendon wraps over the sphere's dorsal surface, as the extensor
+tendons glide over the dorsal carpus, and both engines resolve this ordinary side wrap alike (below 1e-6 m
+in the same 512 postures; `tests/test_extrinsic_muscles.py`). The sphere is unchanged; a fit of its centre,
+radius and side direction to the ring's moment arms collapses to a 1 mm sphere (a via point) and still
+misses them by 1.2 mm RMS, so it was not used. EDC3 already wraps its torus sphere from outside.
+
+| EDC2, `myoarm_r` | Side site at the centre (inside wrap) | Dorsal side site |
+| --- | --- | --- |
+| Wrist extension moment arm at 60 / 30 deg extension, neutral, 30 / 60 deg flexion (mm) | 20.2 / 22.1 / 17.3 / 12.0 / 6.2 | 24.0 / 22.9 / 18.7 / 15.2 / 9.5 |
+| Ulnar-deviation moment arm at neutral (mm) | 2.3 | 4.9 |
+| MCP2 / PIP / DIP extension moment arms at rest (mm) | 8.73 / 3.13 / 2.25 | 8.73 / 3.13 / 2.25 |
+| Length at q0 (mm) | 406.54 | 407.92 |
+
+The finger moment arms, and with them the An 1983 and Lee 2008b comparisons, do not change: the wrap
+spans the wrist only. EDC2's wrist arms now lie with EDC3's and EDC4's (24-25 mm at 60 deg extension).
+The other side sites inside a wrap geom keep the inside wrap and the CPU-warp difference (same 512
+postures: PQ 1.40, ECRL 1.01, EDC5 0.72, EDM 0.65, EDC4 0.36, ECRB 0.16, FCR 0.07 mm; the deltoid and
+pectoral heads up to 3.3 mm); ECU's belongs to the forearm-rotation revision.
+
 ## Refits
 
 Extrinsic slack lengths and passive scales (`fit_muscle_passive.py`), then the joint springs
-(`fit_passive_moments.py`); numbers in `hand-literature-comparison.md` (S7) and the CHANGELOG.
+(`fit_passive_moments.py`); numbers in `hand-literature-comparison.md` (S7, EDC2 wrap) and the CHANGELOG.
 
 ## References
 

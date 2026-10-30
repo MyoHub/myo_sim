@@ -37,6 +37,8 @@ None currently tracked.
 
 ## Changelog
 
+**2026-10-30** — EDC2 wrist wrap: side site `EDCI_torus_site_EDC2_side_r` moved from the centre of its sphere (inside wrap) to its dorsal side (ordinary wrap; MuJoCo and mujoco-warp now agree on EDC2's length); extrinsic passive parameters, junctura links and springs refitted. See `docs/wiki/hand-extrinsic-muscles.md`.
+
 **2026-10-29** — Juncturae tendinum, FCU, FDS5: junction nodes on EDC3, EDC4 and EDC5 (slide joints `node_JT{3,4,5}_r` tied by tendon equalities, +3 joints/qpos and +3 equalities per hand) with tension-only links `lig_JT34_r`, `lig_JT45_r`; FCU over the pisiform and the hamate hook (`FCU-P5_r` new, the MC5 site renamed `FCU-P6_r`); FDS5 force 75.3 -> 46.5 N. See `docs/wiki/hand-extrinsic-muscles.md`.
 
 **2026-10-29** — Lumbrical junction nodes: each lumbrical arises from a node on its FDP tendon (slide joint `node_LUM{1..4}_r` tied by a tendon equality to the FDP's distal length), +4 joints/qpos and +4 equalities per hand. See `docs/wiki/passive-moments-and-thenar.md`.

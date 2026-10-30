@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-30 — EDC2 wrist wrap: side site dorsal of its sphere
+Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (`EDCI_torus_site_EDC2_side_r`), `myoarm_r_muscle.xml` (refitted passive parameters), `myoarm_r_tendon.xml` (junctura links, springs), `myo_sim/build/data/extrinsic_muscles.json` (`edc2_wrap_side`, junctura fit), `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache), `hand_literature.json`, `scripts/generate_extrinsic_muscles.py` (side site from the table; the table is written on every run), `tests/test_extrinsic_muscles.py` (side site, CPU vs mujoco-warp EDC2 length with a negative control), `docs/wiki/hand-extrinsic-muscles.md`, `hand-literature-comparison.md`, `passive-moments-and-thenar.md`, `index.md`, `myo_sim/models/arm/README.md`, `README_hand.md`, `CHANGELOG.md`
+Why: EDC2's side site sat at the centre of its wrap sphere, so MuJoCo applied the inside wrap, which MuJoCo and mujoco-warp solve differently; off-centre but inside changes nothing, so the site moved out of the sphere on its dorsal side.
+
 ## 2026-10-29 — Release checks of the hand rebuild: open questions and accepted design choices
 Changed: `docs/wiki/hand-literature-comparison.md` (section "Open checks before release", new subsection "Accepted design choices")
 Why: Before the release of the revised hand, the adopted values that the literature questions are listed with their evidence (one specific tension for intrinsics and extrinsics, hood fractions, extensor share, ORL slack, IP coupling, FDP links), and the numerical settings kept as final (lumbrical node armature and damping, lumbrical slack rule, JT34 at its stiffness bound) are recorded as such.

@@ -10,6 +10,8 @@
   ``FCU-P5_r`` (chain block ``FCU hamate``); FCU's ``lengthrange`` is shifted by its length change at q0,
   so its normalised fibre length at q0 is unchanged.
 - **FDS5:** its force.
+- **EDC2 wrap side:** the side site of EDC2's wrist wrap (``edc2_wrap_side``), moved from the sphere's centre
+  (inside wrap) to its dorsal side (ordinary side wrap).
 
 ``--fit`` refits the FCU pisiform site to Horii 1993 and the junctura stiffness to von Schroeder & Botte
 1993 (``juncturae.fit``) and records both in the table.
@@ -157,13 +159,26 @@ def link_rest_lengths(table: dict[str, Any]) -> None:
 # --- FCU and FDS5 ---------------------------------------------------------------------------------------
 
 
-def chain_with_fcu(text: str, table: dict[str, Any]) -> str:
-    site = table["fcu"]["sites"]["FCU-P4_r"]
-    tags = re.findall(r'<site\b[^>]*\bname="FCU-P4_r"[^>]*/>', text)
+def chain_with_site(text: str, name: str, position: list[float]) -> str:
+    """Rewrite the ``pos`` of the one chain site *name*."""
+    tags = re.findall(rf'<site\b[^>]*\bname="{re.escape(name)}"[^>]*/>', text)
     if len(tags) != 1:
-        raise ValueError("expected one site FCU-P4_r")
-    pos = " ".join(_number(v) for v in site["pos"])
+        raise ValueError(f"expected one site {name}")
+    pos = " ".join(_number(v) for v in position)
     return text.replace(tags[0], re.sub(r'\spos="[^"]*"', f' pos="{pos}"', tags[0]))
+
+
+def edc2_wrap_side(table: dict[str, Any]) -> None:
+    """EDC2's wrap side site: ``distance_radii`` sphere radii from the sphere centre along ``direction_body``."""
+    side = table["edc2_wrap_side"]
+    tags = re.findall(rf'<geom\b[^>]*\bname="{re.escape(side["geom"])}"[^>]*/>', RIGHT_ARM_CHAIN_XML.read_text())
+    if len(tags) != 1:
+        raise ValueError(f"expected one geom {side['geom']}")
+    centre = np.array([float(v) for v in re.search(r'\spos="([^"]*)"', tags[0]).group(1).split()])
+    radius = float(re.search(r'\ssize="([^"]*)"', tags[0]).group(1).split()[0])
+    direction = np.asarray(side["direction_body"], float)
+    pos = centre + side["distance_radii"] * radius * direction / np.linalg.norm(direction)
+    side["pos"] = [round(float(v), 6) for v in pos]
 
 
 def fcu_block(table: dict[str, Any]) -> str:
@@ -206,7 +221,9 @@ def write_xml(table: dict[str, Any]) -> None:
     for name, node in table["juncturae"]["nodes"].items():
         write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, chain_node_block(name, node), "", f"node {name}")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, fcu_block(table), "", "FCU hamate")
-    RIGHT_ARM_CHAIN_XML.write_text(chain_with_fcu(RIGHT_ARM_CHAIN_XML.read_text(), table))
+    chain = chain_with_site(RIGHT_ARM_CHAIN_XML.read_text(), "FCU-P4_r", table["fcu"]["sites"]["FCU-P4_r"]["pos"])
+    chain = chain_with_site(chain, table["edc2_wrap_side"]["site"], table["edc2_wrap_side"]["pos"])
+    RIGHT_ARM_CHAIN_XML.write_text(chain)
     write_generated_block(RIGHT_ARM_ASSETS_XML, SCRIPT, equality_block(table), "", "juncturae ties")
     write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table), "</tendon>")
     model = build_spec("myoarm_r").compile()
@@ -364,6 +381,7 @@ def main() -> None:
     args = parser.parse_args()
     table = load_table()
     fds5_force(table)
+    edc2_wrap_side(table)
     if args.fit:
         for link in table["juncturae"]["links"].values():
             link.setdefault("stiffness_N_per_m", {"value": 300.0, "method": "start"})
@@ -376,7 +394,7 @@ def main() -> None:
         fit_fcu(table)
         write_xml(table)
         fit_juncturae(table)
-        DATA_PATH.write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n")
+    DATA_PATH.write_text(json.dumps(table, indent=2, ensure_ascii=False) + "\n")
     write_xml(table)
     print(json.dumps({k: table["juncturae"]["links"][k] for k in table["juncturae"]["links"]}, indent=1))
     print(json.dumps(table["fcu"].get("fit"), indent=1), table["fds5"]["force_N"])

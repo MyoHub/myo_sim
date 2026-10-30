@@ -417,7 +417,7 @@
                                             <site name="EDCL_torus_site_EDC5_side_r" pos="-0.0128 -0.0133 0.0148"/>
                                             <site name="EDCR_torus_site_EDC4_side_r" pos="-0.0098 -0.0137 0.0166"/>
                                             <site name="EDCM_torus_site_EDC3_side_r" pos="-0.0007 -0.0117 0.0191"/>
-                                            <site name="EDCI_torus_site_EDC2_side_r" pos="0.009 -0.0149 0.0211"/>
+                                            <site name="EDCI_torus_site_EDC2_side_r" pos="0.009 -0.0149 0.0281"/>
 
                                             <body name="scaphoid_r" pos="0.012345 -0.004464 -0.001254">
                                                 <geom mesh="scaphoid_r" name="scaphoid_r" type="mesh"/>

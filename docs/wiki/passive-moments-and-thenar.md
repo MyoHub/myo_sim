@@ -209,7 +209,8 @@ random-background sweeps of every joint) found no other jump above 0.2 mm. EDC2,
 EDC5 show steps of 0.15-0.22 mm against wrist deviation where their torus wraps engage; these
 torus wraps have their sidesite at the wrap centre, which MuJoCo treats as an inside wrap, a
 different mechanism, and they are left as they are. The same wraps account for the largest
-CPU / mujoco-warp differences in muscle length (below 0.5 mm here, larger on dev).
+CPU / mujoco-warp differences in muscle length (below 0.5 mm here, larger on dev). EDC2's side
+site was later moved dorsal of its sphere, an ordinary wrap (`hand-extrinsic-muscles.md`).
 
 ## Hand intrinsic muscles (`build/data/hand_intrinsic_muscles.json`)
 
