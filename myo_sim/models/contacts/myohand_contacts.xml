@@ -21,12 +21,7 @@
         <pair geom1="radius_coll_3_r" geom2="radius_coll_2_l" condim="3" />
         <pair geom1="radius_coll_3_r" geom2="radius_coll_3_l" condim="3" />
 
-        <!-- Inter-finger self-collision: adjacent digits at each phalanx level,
-             plus thumb-vs-index/middle for opposition. Prevents fingers from
-             passing through each other during grasp/reach policies. No such
-             pairs existed previously (only forearm-torso/forearm-forearm did),
-             which let trained policies interpenetrate fingers freely since
-             there was no physical penalty for it. -->
+        <!-- Inter-finger self-collision pairs. -->
         <pair geom1="proxph2_coll_r" geom2="proxph3_coll_r" condim="3" />
         <pair geom1="midph2_coll_r" geom2="midph3_coll_r" condim="3" />
         <pair geom1="distph2_coll_r" geom2="distph3_coll_r" condim="3" />
