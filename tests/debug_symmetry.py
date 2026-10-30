@@ -283,7 +283,7 @@ def print_pair(
         discrep = has_discrepancy(pos1, ori1, pos2, ori2, is_joint=is_joint)
 
         if discrep and (not is_joint) and name1 is not None:
-            base = name1[:-5] if name1.endswith("_left") else name1
+            base = name1[:-5] if name1.endswith("_left") else name1.removesuffix("_r")
             if base in GEOM_EULER_SIGNFLIP_EXCEPTIONS:
                 if euler_signflip_match(elem1, elem2):
                     discrep = False

@@ -21,6 +21,8 @@ NAME_REFERENCE_ATTRS = {
     "joint2",
     "joint",
     "tendon",
+    "tendon1",
+    "tendon2",
 }
 
 
@@ -32,7 +34,8 @@ class MirrorRules:
     common_names: frozenset[str] = frozenset({"texgeom", "geom"})
     body_pos_x_mirror_names: frozenset[str] = frozenset()
     lowercase_geom_prefixes: tuple[str, ...] = ("Thorax_ellipsoid",)
-    replacements: tuple[tuple[str, str], ...] = ()
+    # Muscle tendons are named after their actuator (``OP_r`` -> ``OP_r_tendon``), so the side sits inside the name.
+    replacements: tuple[tuple[str, str], ...] = (("_r_tendon", "_l_tendon"),)
     prefix_replacements: tuple[tuple[str, str], ...] = ()
     mirror_file_attributes: bool = False
 
@@ -307,7 +310,10 @@ def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
         elif attr_name in {"pos", "scale", "ipos"}:
             mirror_xyz_attribute(mirrored, attr_name, rules)
         elif attr_name == "axis":
-            mirror_axial_attribute(mirrored, attr_name)
+            if mirrored.tag == "joint" and mirrored.get("type") == "slide":
+                mirror_xyz_attribute(mirrored, attr_name, rules)  # a translation axis mirrors like a position
+            else:
+                mirror_axial_attribute(mirrored, attr_name)
         elif attr_name == "euler":
             if mirrored.tag != "body":
                 mirror_axial_attribute(mirrored, attr_name)

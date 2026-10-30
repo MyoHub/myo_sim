@@ -1,0 +1,753 @@
+{
+ "format": "myo_sim.hand_function/1",
+ "description": "Functional validation of the hand (right arm, myoarm_r): passive tenodesis, maximum power grip and lateral pinch, after the protocols of McFarland et al. 2023 (sections III-A, III-B, IV-B, V-A, V-B), reimplemented in MuJoCo by scripts/validate_hand_function.py and checked by tests/test_hand_grip.py, tests/test_hand_pinch.py and tests/test_hand_tenodesis.py. Angles are anatomical (deg): positive is flexion, abduction, radial deviation, forearm pronation, and the script maps them onto each model's joints with a sign (MyoHand: cmc_flexion_r, mp_flexion and ip_flexion are positive in extension). The paper's numbers are model results of the ARMS hand and wrist model unless marked experiment; ARMS is cited only (non-commercial): no file, parameter or coordinate of it is used. Values marked assumed are this reimplementation's choices where the paper's text gives none. Nothing here changes the model; scales_with is none throughout.",
+ "sources": {
+  "mcfarland2023": {
+   "citation": "McFarland et al. A musculoskeletal model of the hand and wrist capable of simulating functional tasks. IEEE Trans Biomed Eng 70(5):1424-1435, 2023.",
+   "doi": "10.1109/TBME.2022.3217722",
+   "access": "protocols and results summarised for this validation; the ARMS model (non-commercial) is cited only"
+  },
+  "odriscoll1992": {
+   "citation": "O'Driscoll SW et al. The relationship between wrist position, grasp size, and grip strength. J Hand Surg Am 17(1):169-177, 1992.",
+   "access": "numbers as reported by mcfarland2023"
+  },
+  "valerocuevas2003": {
+   "citation": "Valero-Cuevas FJ et al. Towards a realistic biomechanical model of the thumb: the choice of kinematic description may be more critical than the solution method or the variability/uncertainty of musculoskeletal parameters. J Biomech 36(7):1019-1030, 2003.",
+   "access": "numbers as reported by mcfarland2023"
+  },
+  "kong2011": {
+   "citation": "Kong YK, Lee KS, Kim DM, Jung MC. Individual finger contribution in submaximal voluntary contraction of gripping. Ergonomics 54(11):1072-1080, 2011.",
+   "doi": "10.1080/00140139.2011.620176",
+   "location": "Table 3, row 100 % MVC: finger contribution (%) to the total grip force, mean (SD); 72 right-handed men; seated, elbow 90 deg, forearm and wrist neutral, maximal power grip of a multi-finger handle (double frustum, grip spans 48 / 55 / 55 / 48 mm for index to little finger; Section 2.2)"
+  },
+  "amis1987": {
+   "citation": "Amis AA. Variation of finger forces in maximal isometric grasp tests on a range of cylinder diameters. J Biomed Eng 9(4):313-320, 1987.",
+   "location": "Abstract and Figure 6: mean contributions of the fingers to the summed normal grip force, 30 / 30 / 22 / 18 % (index to little), not varying significantly over cylinders of 31-116 mm; 17 subjects; one finger instrumented per trial; no SDs for the shares"
+  },
+  "ohtsuki1981": {
+   "citation": "Ohtsuki T. Inhibition of individual fingers during grip strength exertion. Ergonomics 24(1):21-36, 1981.",
+   "doi": "10.1080/00140138108924827",
+   "location": "Section 3 (Experiment I): share of each finger in the four-finger flexion force, right hand 24.7 +- 3.9 / 32.8 +- 3.4 / 27.0 +- 2.2 / 15.5 +- 2.0 % (mean +- SD; Experiment I, 10 subjects); fingers pulling on rings over the middle phalanges, hand and proximal phalanges fixed in a cast (extrinsic flexors only), not a handle grip"
+  },
+  "ejeskar1981": {
+   "citation": "Ejeskar A, Ortengren R. Isolated finger flexion force - a methodological study. The Hand 13(3):223-230, 1981.",
+   "location": "Table 2: force to pull each fingertip off a 20-35 mm cylinder gripped with maximal strength, one finger at a time, wrist in about 30 deg extension; 20 men and 20 women (men, right hand: 9.6 / 10.6 / 8.4 / 8.0 kp, i.e. 26 / 29 / 23 / 22 % of their sum); isolated finger forces, not shares of one grip"
+  }
+ },
+ "simulation": {
+  "lock": {
+   "solref": [
+    0.004,
+    1.0
+   ],
+   "solimp": [
+    0.95,
+    0.99,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "note": "Locked joints are joint equalities to a constant; the prescribed wrist is the same equality with its constant moved every step. timeconst = 2 x timestep, the stiffest MuJoCo keeps stable. Collisions are off in every scene except the explicit dynamometer pairs."
+  }
+ },
+ "tenodesis": {
+  "source": "mcfarland2023",
+  "posture_deg": {
+   "elbow_flexion": 90.0
+  },
+  "posture_note": "Shoulder neutral, elbow 90 deg, forearm neutral, all muscles at act = 0. Free: MCP, PIP and DIP flexion of digits 2-5. Locked: MCP abduction (0) and the four thumb DOFs (0). Gravity on (in the flexion plane it is negligible with the forearm neutral).",
+  "gravity": true,
+  "wrist_deg": 60.0,
+  "speed_deg_s": 20.0,
+  "hold_s": 1.0,
+  "sample_dt": 0.01,
+  "trials": "A: hold the wrist at 60 deg flexion for hold_s, then to 60 deg extension at speed_deg_s. B (release): from the end of A, hold at 60 deg extension for hold_s, then to 60 deg flexion. Metrics over each sweep (hold excluded).",
+  "targets": {
+   "mean_rom_mcp_deg": 65.2,
+   "mean_rom_pip_deg": 16.1,
+   "dip": "constant",
+   "index_gap_mcp_deg": 49.2,
+   "index_gap_pip_deg": 14.6,
+   "status": "model (ARMS)",
+   "note": "Average ROM over digits; the index differs most from the other digits, by up to index_gap at a given instant."
+  },
+  "tolerances": {
+   "max_reversal_deg": 2.0,
+   "mcp_rom_deg": [
+    30.0,
+    85.0
+   ],
+   "mean_pip_rom_deg": [
+    5.0,
+    40.0
+   ],
+   "max_dip_rom_deg": 5.0,
+   "release_min_mcp_extension_deg": 2.0,
+   "release_mean_mcp_extension_deg": 5.0,
+   "mcp_spread_deg": [
+    10.0,
+    80.0
+   ],
+   "justification": "Model-vs-model targets, so bands, not points. Trial A: every finger joint flexes monotonically as the wrist extends (no reversal beyond 2 deg); MCP ROM per digit 30-85 deg around the paper's 65.2 (a ROM at the 90 deg range means the digit was driven into its flexion limit); mean PIP ROM 5-40 deg (paper 16.1, factor 2.5 either way); DIP 'remained constant': at most 5 deg; inter-digit MCP spread 10-80 deg (paper up to 49.2). Trial B: each MCP ends at least 2 deg, and on average 5 deg, more extended than it started (the digits open as the wrist flexes). Negative controls that must fail: the passive springs removed and the extrinsic slack lengths and fpmax of the passive fit's starting point (the anatomical-parameter values)."
+  }
+ },
+ "grip": {
+  "source": "mcfarland2023",
+  "posture_deg": {
+   "elbow_flexion": 90.0
+  },
+  "posture_note": "Shoulder neutral, elbow 90 deg, forearm neutral; wrist held (joint equality) at the posture below; thumb locked at 0 with its intrinsics at 0 and no thumb contact pairs.",
+  "wrist_postures_deg": {
+   "self_selected": {
+    "wrist_flexion": -35.0,
+    "wrist_radial_deviation": -7.0
+   },
+   "neutral": {
+    "wrist_flexion": 0.0,
+    "wrist_radial_deviation": 0.0
+   },
+   "flexed": {
+    "wrist_flexion": 35.0,
+    "wrist_radial_deviation": 0.0
+   }
+  },
+  "wrist_postures_note": "Self-selected: 35 deg extension, 7 deg ulnar deviation (paper). The flexed angle is assumed (the mirror of the self-selected extension); the paper's value was not available.",
+  "dynamometer": {
+   "semi_axis_palmar_m": 0.024,
+   "semi_axis_distal_m": 0.016,
+   "length_m": 0.12,
+   "palm_gap_m": 0.0,
+   "centre_distal_m": -0.025,
+   "note": "Massless elliptical cylinder (convex mesh, 64-gon) in the third-metacarpal body (rigidly attached). 48 mm (Jamar setting II) is the palmar-dorsal span, the paper's value; the 32 mm proximal-distal span is assumed. Axis through the MCP 2 and MCP 5 joint centres; major axis along the palmar normal of the flat third digit; moved palmarly until it touches the palm skin or a flat proximal phalanx; centre_distal_m = -(16 mm + 9 mm), i.e. its distal face one proximal-phalanx skin radius proximal of MCP 3, so the proximal phalanges flexed about 90 deg lie along it (assumed; grip force depends strongly on this placement, see the wiki page)."
+  },
+  "contact": {
+   "friction": 0.29,
+   "solref": [
+    0.004,
+    1.0
+   ],
+   "solimp": [
+    0.95,
+    0.99,
+    0.001,
+    0.5,
+    2.0
+   ],
+   "condim": 3,
+   "note": "Paper: skin E 12.3 MPa, Poisson 0.48; dynamometer E 1.75 GPa, Poisson 0.43; friction 0.29. MuJoCo has no elastic moduli: friction 0.29 is used as given; the stiffest stable soft contact (timeconst 2 x timestep, critically damped, impedance 0.95 -> 0.99 over 1 mm) stands in for the near-rigid dynamometer against loaded skin. A Hertz line contact with the paper's moduli (E* about 16 MPa) indents about 0.1-1 mm at these loads; the protocol reports the largest penetration, which stays below 1 mm. At a quasi-static grip the force is set by the muscles and the contact geometry, not by the contact stiffness."
+  },
+  "closing": {
+   "start_deg": {
+    "mcp_flexion": 0.0,
+    "pip_flexion": 0.0,
+    "dip_flexion": 0.0
+   },
+   "level": 0.3,
+   "duration_s": 0.5,
+   "note": "Every evaluation starts from the hand closed on the dynamometer by FDS, FDP and the finger intrinsics at 0.3 for 0.5 s from the flat hand (assumed)."
+  },
+  "eval_s": 0.15,
+  "average_s": 0.05,
+  "settled": {
+   "settle_s": 2.0,
+   "check_s": 1.0,
+   "note": "Reported next to the eval_s grip, not tested: the optimum's levels held for settle_s from the same closed hand (force and lock moments averaged over the last average_s, as for eval_s), with the relative change of the grip since check_s. The optimisation and the tolerances use the paper's eval_s; at fixed levels the grip keeps changing well after it (see the wiki page)."
+  },
+  "activation": "Paper: 12 independent levels (wrist muscles, extrinsic thumb, EIP, EDM), one shared level each for the FDS, FDP and EDC slips, the finger intrinsics at 1 (ARMS: 14; MyoHand: 12, RI/LU_RB/UI_UB of digits 2-5), the thumb intrinsics at 0; activations set directly (steady state). Grip: contact force of the proximal and middle phalanges on the dynamometer, perpendicular to its axis (sum of magnitudes); distal contacts act but are not counted.",
+  "balance_weight_N_per_Nm": 1000.0,
+  "optimiser_restarts": 4,
+  "balance_note": "Penalty on wrist motion, implemented as a penalty on the moment the wrist lock has to supply (the wrist would move without it): grip - 1000 N/(N m) x |lock moment| (L1). 'held' runs drop the penalty (wrist rigidly held).",
+  "targets": {
+   "model_N": [
+    436.4,
+    6.9
+   ],
+   "experiment_N": [
+    402.1,
+    131.4
+   ],
+   "normative_male_20_30_N": [
+    355.0,
+    538.0
+   ],
+   "digit_share": {
+    "2": 0.211,
+    "3": 0.385,
+    "4": 0.255,
+    "5": 0.15
+   },
+   "posture_change": {
+    "neutral": -0.41,
+    "flexed": -0.46
+   },
+   "status": {
+    "model_N": "model (ARMS)",
+    "experiment_N": "experiment (odriscoll1992)",
+    "normative_male_20_30_N": "normative range as reported by mcfarland2023",
+    "digit_share": "experiment (kong2011, 100 % MVC; context: amis1987, ohtsuki1981, ejeskar1981)",
+    "posture_change": "model (ARMS), against the self-selected posture"
+   },
+   "digit_share_sd": {
+    "2": 0.047,
+    "3": 0.042,
+    "4": 0.047,
+    "5": 0.047
+   },
+   "digit_share_note": "Kong et al. 2011 match the protocol best: simultaneous four-finger forces during a maximal power grip of a handle whose 48-55 mm spans bracket the dynamometer's 48 mm, elbow 90 deg, wrist neutral, with per-finger SDs (n = 72). Amis 1987 (cylinders 31-116 mm) gives 30 / 30 / 22 / 18 % without SDs; Ohtsuki 1981's ring-pull protocol (24.7 / 32.8 / 27.0 / 15.5 %) excludes the intrinsics. The earlier target was the ARMS model's own shares (23.3 / 42.2 / 23.0 / 11.5 %, mcfarland2023)."
+  },
+  "tolerances": {
+   "grip_N": [
+    270.7,
+    533.5
+   ],
+   "posture_drop": [
+    0.2,
+    0.8
+   ],
+   "max_wrist_lock_Nm": 0.5,
+   "max_penetration_m": 0.001,
+   "justification": "Grip within the experimental mean +- 1 SD (O'Driscoll 1992). Digit shares within 1 SD of Kong et al. 2011's measured shares at 100 % MVC (as the grip force within 1 SD of O'Driscoll 1992). Neutral and flexed wrists each lose 20-80 % against the self-selected posture (paper 41 and 46 %), and the flexed loses at least as much as the neutral. With the balance penalty the wrist lock supplies at most 0.5 N m. Negative control: the flexors (FDS, FDP) at half their peak force must fall below the band.",
+   "digit_share_sd_band": 1.0
+  },
+  "cached": {
+   "note": "Optimum found by scripts/validate_hand_function.py for each model; tests/test_hand_grip.py re-evaluates the entry whose fingerprint matches the model (actuator and position counts, passive_* spring tendons present, damping of mcp2_flexion_r, fpmax of EDC3, palm pad thickness, fpmax of OP, stiffness of the EDC4-EDC5 junctura) and, with MYO_SIM_SLOW=1, re-optimises. The optimum depends on the model: the levels that balance the wrist of one leave a lock moment on the other.",
+   "entries": [
+    {
+     "model": "Vittorio-Caggiano/myo_sim#2 alone (anatomical parameters of #123, fitted extrinsic slack lengths and fpmax, release step)",
+     "fingerprint": {
+      "nu": 63,
+      "nq": 38,
+      "passive_springs": false,
+      "mcp2_flexion_damping": 0.05,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": null,
+      "op_fpmax": 1.3,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9825,
+      "FDP": 0.9311,
+      "EDC": 0.9532,
+      "EIP": 0.0338,
+      "EDM": 0.2611,
+      "ECRL": 0.9858,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.0307,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 374.5
+    },
+    {
+     "model": "#123 + #2 + MyoHub/myo_sim#139 (thenar muscles, springs refitted on #2's muscles, RI2 path, Kamper finger damping)",
+     "fingerprint": {
+      "nu": 66,
+      "nq": 38,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": null,
+      "op_fpmax": 1.3,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9759,
+      "FDP": 0.6601,
+      "EDC": 0.989,
+      "EIP": 0.586,
+      "EDM": 0.2989,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.843,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.3575,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 293.8
+    },
+    {
+     "model": "+ hand rebuild S1 (palmar fingertip pads, palm, thenar and hypothenar pads, hand self-contacts)",
+     "fingerprint": {
+      "nu": 66,
+      "nq": 38,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.019087,
+      "op_fpmax": 1.3,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9969,
+      "FDP": 0.6903,
+      "EDC": 0.9907,
+      "EIP": 0.9996,
+      "EDM": 0.1896,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.8233,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.2879,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 232.5
+    },
+    {
+     "model": "+ hand rebuild S1b (PIP flexion limit 115 deg, palm pads refitted)",
+     "fingerprint": {
+      "nu": 66,
+      "nq": 38,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 1.3,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9997,
+      "FDP": 0.6736,
+      "EDC": 0.9886,
+      "EIP": 1.0,
+      "EDM": 0.0001,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.8763,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.3162,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 310.3
+    },
+    {
+     "model": "+ hand rebuild S2 (thumb and first-dorsal-interosseous heads, intrinsic paths and passive scales fitted, springs refitted)",
+     "fingerprint": {
+      "nu": 69,
+      "nq": 38,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003492,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9942,
+      "FDP": 0.7377,
+      "EDC": 0.9699,
+      "EIP": 0.9933,
+      "EDM": 0.0052,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.9598,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.4722,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 334.8
+    },
+    {
+     "model": "+ hand rebuild S3 (CMC4/5 joints coupled 2.06, digit-5 flexor and interosseous sites moved, CMC springs)",
+     "fingerprint": {
+      "nu": 69,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003492,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9042,
+      "FDP": 0.6939,
+      "EDC": 0.9064,
+      "EIP": 0.9996,
+      "EDM": 0.0001,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.8987,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.4028,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 314.9
+    },
+    {
+     "model": "+ hand rebuild S4 (UI_UB5 re-routed as ADM, FDM and ODM added, hypothenar and thumb passive scales refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0525,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003488,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9966,
+      "FDP": 0.6154,
+      "EDC": 0.9012,
+      "EIP": 0.8213,
+      "EDM": 0.8369,
+      "ECRL": 0.0,
+      "ECRB": 1.0,
+      "ECU": 0.6035,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.1559,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 377.2
+    },
+    {
+     "model": "+ hand rebuild EM-a (extensor mechanism option a, ORL; extrinsic slack lengths, passive scales and springs refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.1328,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003488,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9998,
+      "FDP": 0.6723,
+      "EDC": 0.9759,
+      "EIP": 0.0004,
+      "EDM": 0.0226,
+      "ECRL": 0.1669,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.6319,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 389.5
+    },
+    {
+     "model": "+ hand rebuild S5 (interossei and lumbricals by identity; intrinsic passive scales, extrinsic slack lengths and passive scales, springs refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 40,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.1248,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.006505,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9977,
+      "FDP": 0.4366,
+      "EDC": 0.5514,
+      "EIP": 0.5104,
+      "EDM": 0.9489,
+      "ECRL": 0.6305,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.652,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 335.4
+    },
+    {
+     "model": "+ hand rebuild S6 (lumbrical junction nodes on the FDP tendons; intrinsic passive scales, extrinsic slack lengths and passive scales, springs refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 44,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.1265,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.005824,
+      "jt45_stiffness": null
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9967,
+      "FDP": 0.5732,
+      "EDC": 0.6845,
+      "EIP": 0.5069,
+      "EDM": 0.9353,
+      "ECRL": 0.6429,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.6418,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 331.5
+    },
+    {
+     "model": "+ hand rebuild S7 (juncturae tendinum on EDC3-5, FCU over the pisiform and hamate hook, FDS5 force; extrinsic slack lengths and passive scales, springs refitted)",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 47,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.028,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.005824,
+      "jt45_stiffness": 263.0
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9838,
+      "FDP": 0.7082,
+      "EDC": 0.7429,
+      "EIP": 0.0004,
+      "EDM": 0.9075,
+      "ECRL": 0.9984,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.4383,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 324.6
+    },
+    {
+     "model": "+ EDC2 wrist wrap: side site dorsal of its sphere (ordinary wrap instead of the inside wrap); extrinsic slack lengths and passive scales, junctura links, springs refitted",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 47,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0285,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.005824,
+      "jt45_stiffness": 221.9
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9923,
+      "FDP": 0.7638,
+      "EDC": 0.8178,
+      "EIP": 0.0009,
+      "EDM": 0.6551,
+      "ECRL": 0.9868368455283882,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.4035767740068533,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 345.0
+    },
+    {
+     "model": "+ JT3/JT5 node ties from EDC-P4 (the nodes move with the tendon over the MCP wrap), junctura links slack with straight fingers too; extrinsic slack lengths and passive scales, junctura links, springs refitted",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 47,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0377,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.005824,
+      "jt45_stiffness": 1000.0
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9737,
+      "FDP": 0.4216,
+      "EDC": 0.4766,
+      "EIP": 0.2802,
+      "EDM": 0.7645,
+      "ECRL": 0.9971438555512229,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.3748117231912587,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 328.0
+    },
+    {
+     "model": "+ S2c: AdPt insertion and APL CMC routing after Barry et al. 2018; thumb passive scales, extrinsic slack lengths and passive scales, junctura links, springs refitted",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 47,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0391,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003392,
+      "jt45_stiffness": 997.8
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9876,
+      "FDP": 0.5186,
+      "EDC": 0.6056,
+      "EIP": 0.1843,
+      "EDM": 0.7641,
+      "ECRL": 0.5094278399185638,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.6458265548648987,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 330.7
+    },
+    {
+     "model": "+ wrap sides: EDC4, EDC5, EDM, ECRB, FCR and PQ wrap from outside their geoms (ECRB and FCR spheres refitted to Horii 1993); extrinsic slack lengths and passive scales, junctura links, springs refitted",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 47,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0261,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003392,
+      "jt45_stiffness": 1000.0
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9872,
+      "FDP": 0.8228,
+      "EDC": 0.728,
+      "EIP": 0.5372,
+      "EDM": 0.9357,
+      "ECRL": 0.9972053970034802,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.42180477136600375,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 338.9
+    }
+   ]
+  }
+ },
+ "pinch": {
+  "source": "mcfarland2023",
+  "posture_deg": {
+   "elbow_flexion": 90.0,
+   "cmc_flexion": -15.0,
+   "cmc_abduction": -20.0,
+   "mp_flexion": 20.0,
+   "ip_flexion": 40.0
+  },
+  "posture_note": "Paper (lateral pinch): thumb CMC 15 deg extension and 20 deg adduction, MP 20 deg flexion, IP 40 deg flexion; wrist 0/0; fingers locked (at 0). Mapping onto MyoHand: MyoHand's thumb comes from the same MoBL-ARMS (Holzbaur 2005) kinematics; the anatomical sense of each joint was read from muscle actions at the posture (FPL, OP and the thenar muscles flex the CMC with negative cmc_flexion_r, EPL and EPB extend it with positive; APB abducts with positive cmc_abduction_r, AdP and EPL adduct with negative; FPL flexes the MP and IP with negative angles). So cmc_flexion_r = +15, cmc_abduction_r = -20, mp_flexion = -20, ip_flexion = -40 deg (joint values). Both models' CMC angles are measured from their own zero, which the paper's text does not relate to anatomical landmarks: this mapping is the largest uncertainty of the protocol (see the wiki page).",
+  "off_axis_max": 0.17,
+  "method": "Static, on the four thumb DOFs: the tip (the point of the distal-phalanx collision geometry farthest from the IP joint) presses on a sensor fixed to the ground. J^T F = tau(a) with J the 3 x 4 tip Jacobian needs tau along J's null space to vanish; F is maximised along the palmar normal of the distal phalanx (its tip's motion under IP flexion) with the off-axis part at most off_axis_max of it, over the extrinsic thumb muscles and the thumb intrinsics (OP, AdP, FPB, APB) in [0, 1] (SLSQP, deterministic restarts). The optimum is checked in MuJoCo with the sensor reaction applied at the tip (residual thumb moment).",
+  "targets": {
+   "model_N": [
+    66.3,
+    2.3
+   ],
+   "experiment_N": [
+    51.9,
+    20.4
+   ],
+   "normative_N": [
+    96.0,
+    116.0
+   ],
+   "status": {
+    "model_N": "model (ARMS)",
+    "experiment_N": "in vivo (valerocuevas2003)",
+    "normative_N": "reported only; no model reaches it"
+   }
+  },
+  "tolerances": {
+   "force_N": [
+    31.5,
+    72.3
+   ],
+   "max_residual_Nm": 1e-06,
+   "justification": "In vivo mean +- 1 SD (Valero-Cuevas 2003). Negative control: without the thenar muscles AdP, FPB and APB no force meets the off-axis limit."
+  }
+ }
+}

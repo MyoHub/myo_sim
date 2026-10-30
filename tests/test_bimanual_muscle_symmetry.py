@@ -24,7 +24,7 @@ def discovered_bimanual_pairs(bimanual_model_context):
         model,
         data,
         eq_map,
-        right_muscle_suffix="",
+        right_muscle_suffix="_r",
         left_muscle_suffix="_l",
         right_joint_suffix="_r",
         left_joint_suffix="_l",
