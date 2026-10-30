@@ -3,7 +3,8 @@
 - **Juncturae tendinum:** a junction node on EDC3, EDC4 and EDC5 (labelled chain blocks ``node JT<d>``:
   a light body on a slide joint ``node_JT<d>_r`` in the metacarpal, on the EDC path), a tendon equality
   ``node_JT<d>_tie_r`` (assets block ``juncturae ties``) that ties the slide to the EDC's branched path
-  distal of the node (``node_JT<d>_slide_r``, ``node_JT<d>_edc_r``), and the tension-only links
+  from its via point ``EDC<d>-P4_r`` proximal of the node (``node_JT<d>_slide_r``, ``node_JT<d>_edc_r``;
+  the same MCP wrap as the EDC, so the node moves with the tendon material), and the tension-only links
   ``lig_JT34_r`` and ``lig_JT45_r`` between the nodes (main tendon block). Same primitive and settings as
   the lumbrical nodes (``hand_intrinsic_muscles.json``, ``lumbrical_nodes``).
 - **FCU:** the pisiform via point ``FCU-P4_r`` (position rewritten) and the hamate-hook via point
@@ -92,13 +93,12 @@ def _settings() -> dict[str, Any]:
 
 
 def chain_node_block(name: str, node: dict[str, Any]) -> str:
-    """Generated chain block ``node <name>``: reference site, node body, slide and link site."""
+    """Generated chain block ``node <name>``: node body, slide and link site."""
     cfg = _settings()
     ind = " " * 52
     pos = " ".join(_number(v) for v in node["pos"])
     return (
         f"{ind}<!-- node_{name}_r: junctura node on {node['tendon']} (tendon equality node_{name}_tie_r) -->\n"
-        f'{ind}<site name="node_{name}_ref_r" pos="{pos}"/>\n'
         f'{ind}<body name="node_{name}_r" pos="{pos}">\n'
         f'{ind}    <inertial pos="0 0 0" mass="{cfg["mass_kg"]["value"]:g}" diaginertia="1e-09 1e-09 1e-09"/>\n'
         f'{ind}    <joint name="node_{name}_r" type="slide" axis="{" ".join(_number(v) for v in node["axis"])}"'
@@ -110,16 +110,18 @@ def chain_node_block(name: str, node: dict[str, Any]) -> str:
 
 
 def tendon_block(table: dict[str, Any]) -> str:
-    """Main generated block of the tendon file: node slides, EDC distal paths and the junctura links."""
+    """Main generated block of the tendon file: node slides, EDC paths from P4 and the junctura links."""
     jt = table["juncturae"]
     lines = []
     for name, node in jt["nodes"].items():
-        lines.append(f"        <!-- node_{name}_r: slide and {node['tendon']} distal of the node (node_{name}_tie_r) -->")
+        start = node["segment_start"]
+        lines.append(f"        <!-- node_{name}_r: slide and {node['tendon']} from {start} (node_{name}_tie_r) -->")
         lines.append(f'        <fixed name="node_{name}_slide_r">')
         lines.append(f'            <joint joint="node_{name}_r" coef="1"/>')
         lines.append("        </fixed>")
+        # From the EDC's own via point proximal of the node: the helper wraps the MCP as the tendon does.
         lines.append(f'        <spatial name="node_{name}_edc_r" rgba="0 0 0 0">')
-        lines.append(f'            <site site="node_{name}_ref_r"/>')
+        lines.append(f'            <site site="{start}"/>')
         lines += [f"            {e}" for e in _path_after(node["tendon"], node["segment_start"])]
         lines.append("        </spatial>")
     lines.append(
@@ -144,16 +146,22 @@ def equality_block(table: dict[str, Any]) -> str:
 
 
 def link_rest_lengths(table: dict[str, Any]) -> None:
-    """Rest length of each link in the relaxed resting posture of von Schroeder & Botte (nodes on their ties)."""
+    """Rest length of each link: the longer of its lengths with straight fingers (q0) and in the relaxed resting
+    posture of von Schroeder & Botte (nodes on their ties), so that neither posture loads it."""
     model = build_spec("myoarm_r").compile()
     data = mujoco.MjData(model)
-    for d in (2, 3, 4, 5):
-        for j, q in REST_DEG.items():
-            data.qpos[model.joint(f"{j}{d}_flexion_r").qposadr[0]] = q * DEG
-    place_tendon_nodes(model, data)
-    mujoco.mj_forward(model, data)
+    lengths: dict[str, float] = {}
+    for scale in (0.0, 1.0):
+        data.qpos[:] = model.qpos0
+        for d in (2, 3, 4, 5):
+            for j, q in REST_DEG.items():
+                data.qpos[model.joint(f"{j}{d}_flexion_r").qposadr[0]] = scale * q * DEG
+        place_tendon_nodes(model, data)
+        mujoco.mj_forward(model, data)
+        for name in table["juncturae"]["links"]:
+            lengths[name] = max(lengths.get(name, 0.0), float(data.ten_length[model.tendon(f"lig_{name}_r").id]))
     for name, link in table["juncturae"]["links"].items():
-        link["rest_length_m"] = round(float(data.ten_length[model.tendon(f"lig_{name}_r").id]), 6)
+        link["rest_length_m"] = round(lengths[name], 6)
 
 
 # --- FCU and FDS5 ---------------------------------------------------------------------------------------

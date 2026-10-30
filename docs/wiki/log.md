@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-30 — Junctura node ties of JT3 and JT5
+Changed: `scripts/generate_extrinsic_muscles.py` (helpers from `EDC{d}-P4_r`, no reference sites, link rest length over two postures), `myo_sim/models/arm/assets/myoarm_r_chain.xml`, `myoarm_r_tendon.xml`, `myoarm_r_muscle.xml`, `myo_sim/build/data/extrinsic_muscles.json`, `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache; fingerprint gains the EDC4-EDC5 junctura stiffness), `hand_literature.json`, source access notes in `hand_intrinsic_muscles.json`, `muscle_passive.json` and `passive_joint_moments.json` (wording), `tests/test_extrinsic_muscles.py` (node vs tendon excursion with a negative control), `tests/test_hand_grip.py` (fingerprint), `tests/test_muscle_passive.py` (left-right comparison at rest and solver tolerance 1e-12), `docs/wiki/hand-extrinsic-muscles.md`, `hand-literature-comparison.md` (also two open checks from Barry et al. 2018's distributed model), `myo_sim/models/arm/README.md`, `README_hand.md`, `CHANGELOG.md`
+Why: The JT3 and JT5 tie helpers started near the MC head and missed the MCP wrap the EDC takes from P4, so those nodes moved 6-11 mm more than the tendon material; starting the helpers at P4 makes every node follow its tendon.
+
 ## 2026-10-30 — Shared terminal tendon of the lateral bands (step time)
 Changed: `myo_sim/models/arm/assets/myoarm_r_tendon.xml` (EDC2-5, EIP, EDM and the junctura tie helpers), `scripts/fit_extensor_mechanism.py` (`pulley_fractions`), `tests/test_extensor_mechanism.py`, `myo_sim/build/data/hand_literature.json`, `docs/wiki/extensor-mechanism.md`, `hand-literature-comparison.md` (also an open check on the JT3/JT5 node ties), `CHANGELOG.md`
 Why: A profile of the CPU step found the two band branches of each extensor computing the same terminal tendon and DIP wrap twice; one shared branch with both fractions gives the same lengths and moment arms at 1-2 % less step time.

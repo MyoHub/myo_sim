@@ -11,19 +11,19 @@
     "barry2018": {
       "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
       "doi": "10.1016/j.jbiomech.2018.06.017",
-      "access": "paper closed; OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)",
+      "access": "OpenSim model on simtk.org/projects/thumbindexdynam (MIT licence, login required)",
       "note": "Eq. (1): tendon slack length = (L_MT with all crossed joints at 0 - L_fo cos(alpha)) / 1.033."
     },
     "jacobson1992": {
       "citation": "Jacobson MD, Raab R, Fazeli BM, Abrams RA, Botte MJ, Lieber RL. Architectural design of the human intrinsic hand muscles. J Hand Surg Am 17(5):804-809, 1992.",
       "doi": "10.1016/0363-5023(92)90446-V",
-      "access": "closed; Table I verified visually from the PDF",
+      "access": "Table I verified visually from the PDF",
       "note": "The text quotes AddP PCSA as 1.10 cm2; Table I gives 1.94 +- 0.39 cm2 (used)."
     },
     "stamenkovic2014": {
       "citation": "Stamenkovic A, Munro BJ, Peoples GE. Physiological cross-sectional area of the oblique head of the adductor pollicis is greater than its transverse counterpart: implications for functional testing. Muscle Nerve 49(3):405-412, 2014.",
       "doi": "10.1002/mus.23933",
-      "access": "closed; Table 1 verified visually from the PDF"
+      "access": "Table 1 verified visually from the PDF"
     },
     "caggiano2022": {
       "citation": "Caggiano V, Wang H, Durandau G, Sartori M, Kumar V. MyoSuite: a contact-rich simulation suite for musculoskeletal motor control. Proc Mach Learn Res 168:492-507, 2022.",

@@ -6,12 +6,12 @@
     "binder_markey2017": {
       "citation": "Binder-Markey BI, Murray WM. Incorporating the length-dependent passive-force generating muscle properties of the extrinsic finger muscles into a wrist and finger biomechanical musculoskeletal model. J Biomech 61:250-257, 2017.",
       "doi": "10.1016/j.jbiomech.2017.06.026",
-      "access": "closed; method (Eqs. 1-8) and Table 2 verified from the PDF"
+      "access": "method (Eqs. 1-8) and Table 2 verified from the PDF"
     },
     "knutson2000": {
       "citation": "Knutson JS, Kilgore KL, Mansour JM, Crago PE. Intrinsic and extrinsic contributions to the passive moment at the metacarpophalangeal joint. J Biomech 33(12):1675-1681, 2000.",
       "doi": "10.1016/S0021-9290(00)00159-7",
-      "access": "closed; equations (1)-(4) and Table 1 verified from the PDF"
+      "access": "equations (1)-(4) and Table 1 verified from the PDF"
     },
     "formica2012": {
       "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
@@ -21,7 +21,7 @@
     "kamper2002": {
       "citation": "Kamper DG, Hornby TG, Rymer WZ. Extrinsic flexor muscles generate concurrent flexion of all three finger joints. J Biomech 35(12):1581-1589, 2002.",
       "doi": "10.1016/S0021-9290(02)00229-4",
-      "access": "closed; Table 2 (tau_s, K, B) and Eq. (1) verified from the PDF"
+      "access": "Table 2 (tau_s, K, B) and Eq. (1) verified from the PDF"
     },
     "barry2018": {
       "citation": "Barry AJ, Murray WM, Kamper DG. Development of a dynamic index finger and thumb model to study impairment. J Biomech 77:206-210, 2018.",
@@ -203,9 +203,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.006,
+        "value": 0.0059,
         "reference_value": 1.3,
-        "change_percent": -99.538,
+        "change_percent": -99.546,
         "at_bound": false
       }
     },
@@ -372,11 +372,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0285,
+        "value": 0.0377,
         "reference_value": 1.3,
-        "change_percent": -97.808,
+        "change_percent": -97.1,
         "at_bound": true,
-        "lower_bound": 0.0285,
+        "lower_bound": 0.0377,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -408,11 +408,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0285,
+        "value": 0.0377,
         "reference_value": 1.3,
-        "change_percent": -97.808,
+        "change_percent": -97.1,
         "at_bound": true,
-        "lower_bound": 0.0285,
+        "lower_bound": 0.0377,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -444,11 +444,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0285,
+        "value": 0.0377,
         "reference_value": 1.3,
-        "change_percent": -97.808,
+        "change_percent": -97.1,
         "at_bound": true,
-        "lower_bound": 0.0285,
+        "lower_bound": 0.0377,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -480,11 +480,11 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0285,
+        "value": 0.0377,
         "reference_value": 1.3,
-        "change_percent": -97.808,
+        "change_percent": -97.1,
         "at_bound": true,
-        "lower_bound": 0.0285,
+        "lower_bound": 0.0377,
         "lower_bound_source": "release_constraint"
       }
     },
@@ -504,9 +504,9 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.197161,
+        "value": 0.197,
         "reference_value_m": 0.197,
-        "change_percent": 0.082,
+        "change_percent": 0.0,
         "active_window_percent": [
           -10.0,
           1.201
@@ -515,9 +515,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0298,
+        "value": 0.0282,
         "reference_value": 1.3,
-        "change_percent": -97.708,
+        "change_percent": -97.831,
         "at_bound": false
       }
     },
@@ -548,9 +548,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.0036,
+        "value": 0.0038,
         "reference_value": 1.3,
-        "change_percent": -99.723,
+        "change_percent": -99.708,
         "at_bound": false
       }
     },
@@ -580,9 +580,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.43,
+        "value": 0.4315,
         "reference_value": 1.3,
-        "change_percent": -66.923,
+        "change_percent": -66.808,
         "at_bound": false
       }
     },
@@ -631,9 +631,9 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.227065,
+        "value": 0.227058,
         "reference_value_m": 0.2223,
-        "change_percent": 2.143,
+        "change_percent": 2.14,
         "active_window_percent": [
           -10.0,
           10.0
@@ -662,9 +662,9 @@
       ],
       "method": "binder_markey2017_one_sided",
       "tendon_slack_m": {
-        "value": 0.232832,
+        "value": 0.23293,
         "reference_value_m": 0.2285,
-        "change_percent": 1.896,
+        "change_percent": 1.939,
         "active_window_percent": [
           -10.0,
           10.0
@@ -673,9 +673,9 @@
         "reference_segment": "forearm"
       },
       "fpmax": {
-        "value": 0.6777,
+        "value": 0.7072,
         "reference_value": 1.3,
-        "change_percent": -47.869,
+        "change_percent": -45.6,
         "at_bound": false
       }
     }
@@ -693,9 +693,9 @@
         10.0
       ]
     },
-    "rmse_Ncm_before": 98.37133479122517,
-    "rmse_Ncm_after": 3.4932733335659116,
-    "max_abs_err_Ncm_after": 10.6304506935555,
+    "rmse_Ncm_before": 98.37133479122568,
+    "rmse_Ncm_after": 3.493273333560436,
+    "max_abs_err_Ncm_after": 10.63045069355551,
     "target_peak_Ncm": 30.36601987360585
   },
   "binder_markey2017_table2": {
@@ -761,12 +761,12 @@
         "posture": "formica2012_grip",
         "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
         "fit": {
-          "rmse_Nm_before": 0.3939076938138911,
-          "rmse_Nm_after": 0.12040099016788225,
-          "max_excess_Nm_before": 0.6121831199810244,
-          "max_excess_Nm_after": 0.0390109697675403,
+          "rmse_Nm_before": 0.39390769381389107,
+          "rmse_Nm_after": 0.12226352340908934,
+          "max_excess_Nm_before": 0.6121831199810175,
+          "max_excess_Nm_after": 0.04452789017437298,
           "target_peak_Nm": 0.30293679826865577,
-          "max_excess_Nm_without_release": 0.022707565305725118
+          "max_excess_Nm_without_release": 0.02245817903682332
         }
       },
       {
@@ -788,12 +788,12 @@
         "posture": "formica2012_grip",
         "where": "Table 2 (1-D protocol), mean of 10 healthy adults; total passive wrist stiffness, linear about neutral over about +-17 deg",
         "fit": {
-          "rmse_Nm_before": 1.2005640209930857,
-          "rmse_Nm_after": 0.05619163508772224,
-          "max_excess_Nm_before": 2.6189241879223,
-          "max_excess_Nm_after": 0.008604054463083384,
+          "rmse_Nm_before": 1.2005640209930863,
+          "rmse_Nm_after": 0.05468023042843117,
+          "max_excess_Nm_before": 2.6189241879222944,
+          "max_excess_Nm_after": 0.009311586254810038,
           "target_peak_Nm": 0.5073672135547517,
-          "max_excess_Nm_without_release": 0.0037064146927330427
+          "max_excess_Nm_without_release": 0.0026029369267287494
         }
       },
       {
@@ -832,8 +832,8 @@
         "posture": "knutson2000",
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
-          "rmse_Nm_before": 0.6456953059811833,
-          "rmse_Nm_after": 0.0684067490787703,
+          "rmse_Nm_before": 0.6456953059811834,
+          "rmse_Nm_after": 0.0678092014422672,
           "max_excess_Nm_before": 3.525436861172034,
           "max_excess_Nm_after": 0.024644533393426572,
           "target_peak_Nm": 0.3440783082622245,
@@ -877,11 +877,11 @@
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
           "rmse_Nm_before": 1.0992039852630868,
-          "rmse_Nm_after": 0.06852649636852333,
+          "rmse_Nm_after": 0.06803878700292469,
           "max_excess_Nm_before": 2.0052199710939935,
-          "max_excess_Nm_after": 0.010114378254392082,
+          "max_excess_Nm_after": 0.01001063781575283,
           "target_peak_Nm": 0.3440783082622245,
-          "max_excess_Nm_without_release": 0.010408703672765066
+          "max_excess_Nm_without_release": 0.010407144024287697
         }
       },
       {
@@ -920,12 +920,12 @@
         "posture": "knutson2000",
         "where": "Eqs. (1)-(4), Table 1 medians (index finger): intrinsic plus extrinsic MCP moment, transferred to this digit (no data exist for digits 3-5)",
         "fit": {
-          "rmse_Nm_before": 0.4214432528200883,
-          "rmse_Nm_after": 0.07210410380887335,
-          "max_excess_Nm_before": 0.8866790652879801,
-          "max_excess_Nm_after": 0.01753064865311593,
+          "rmse_Nm_before": 0.42144325282008815,
+          "rmse_Nm_after": 0.07208383890470337,
+          "max_excess_Nm_before": 0.8866790652879785,
+          "max_excess_Nm_after": 0.017530648653115953,
           "target_peak_Nm": 0.3440783082622245,
-          "max_excess_Nm_without_release": 0.017530648653115873
+          "max_excess_Nm_without_release": 0.017530648653115898
         }
       },
       {
@@ -1020,11 +1020,11 @@
         "where": "Table 2, static index PIP torque (total), transferred unscaled to this digit as McFarland et al. 2023 did with scaled curves",
         "fit": {
           "rmse_Nm_before": 0.9780345577916002,
-          "rmse_Nm_after": 0.026121033588623326,
+          "rmse_Nm_after": 0.026106104057148756,
           "max_excess_Nm_before": 1.240669410439776,
-          "max_excess_Nm_after": 0.0034503579444872976,
+          "max_excess_Nm_after": 0.003466401967056443,
           "target_peak_Nm": 0.05167246107211147,
-          "max_excess_Nm_without_release": 0.00345035695956059
+          "max_excess_Nm_without_release": 0.0034664009821297357
         }
       },
       {
@@ -1152,11 +1152,11 @@
         "where": "Barry et al. 2018 Sec. 2.1: thumb MCP passive moment set equal to the index MCP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
         "fit": {
           "rmse_Nm_before": 0.6207402563478978,
-          "rmse_Nm_after": 0.028540490481559343,
+          "rmse_Nm_after": 0.028918796973289914,
           "max_excess_Nm_before": 0.9784615655250518,
-          "max_excess_Nm_after": 0.008153402560162474,
+          "max_excess_Nm_after": 0.00795821061523019,
           "target_peak_Nm": 0.0606725000299487,
-          "max_excess_Nm_without_release": 0.008153395256501808
+          "max_excess_Nm_without_release": 0.007958202905810598
         }
       },
       {
@@ -1185,11 +1185,11 @@
         "where": "Barry et al. 2018 Sec. 2.1: thumb IP passive moment set equal to the index PIP moment of Kamper et al. 2002 (Table 2); +q is thumb extension here",
         "fit": {
           "rmse_Nm_before": 0.5676229345486608,
-          "rmse_Nm_after": 0.03651315875701741,
+          "rmse_Nm_after": 0.03654592667415691,
           "max_excess_Nm_before": 1.1789421777231734,
-          "max_excess_Nm_after": 0.011912648902798794,
+          "max_excess_Nm_after": 0.011627743889703243,
           "target_peak_Nm": 0.05167246107211147,
-          "max_excess_Nm_without_release": 0.011912646301614609
+          "max_excess_Nm_without_release": 0.011627741144008824
         }
       }
     ]
@@ -1278,9 +1278,9 @@
     ],
     "fpmax_penalty": 1.0,
     "cost": "sum over rows of mean(excess_weight * excess^2 + deficit^2) (N cm^2) + (1/100) sum |slack change / slack| + fpmax_penalty sum |ln(fpmax / reference)|",
-    "error_before": 5375457.863476163,
-    "error_after": 958.7951762994021,
-    "error_without_release": 727.0823836406671
+    "error_before": 5375457.863476164,
+    "error_after": 1126.84678411981,
+    "error_without_release": 722.1817456260287
   },
   "active_constraint": {
     "description": "Hard constraint on the fit: MuJoCo's active force-length factor (mju_muscleGain at zero velocity) of each listed muscle is at least min_fl in each posture, so the hand can still close and open actively. 0.5 is half the isometric force; on MuJoCo's curve it is reached at (lmin + 1) / 2 and (1 + lmax) / 2, so the constraint is a window on each slack length. Full fist: every finger and thumb joint at its MyoHand flexion limit (thumb CMC abduction neutral); full extension: the same joints at their extension limits.",
@@ -1393,7 +1393,7 @@
     ],
     "min_mcp_extension_deg": 30.0,
     "result": {
-      "fpmax_lower_bound": 0.0285,
+      "fpmax_lower_bound": 0.0377,
       "fpmax_before": {
         "EDC3_r": 0.002,
         "EDC4_r": 0.002,
@@ -1406,9 +1406,9 @@
         "5": 1.039275590556528
       },
       "mcp_extension_deg_at_bound": {
-        "3": 59.09393102232859,
-        "4": 56.999207492540336,
-        "5": 30.022409429591363
+        "3": 67.72986205358984,
+        "4": 57.19934873087452,
+        "5": 30.01076900331791
       }
     }
   }

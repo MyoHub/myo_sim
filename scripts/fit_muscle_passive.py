@@ -305,7 +305,9 @@ def fitted_lengthranges(model: mujoco.MjModel, table: dict[str, Any]) -> dict[st
         name, slack = row["names"]["r"], row["tendon_slack_m"]
         shift = slack["value"] - implied_slack(model, name)
         lr = model.actuator_lengthrange[model.actuator(name).id]
-        unchanged = slack["value"] == slack["reference_value_m"]  # keep the XML value, not its 1 um rounding
+        # Back at the reference and the XML within its 1 um rounding: keep the XML value (a fit that returns
+        # to the reference from an earlier change still shifts).
+        unchanged = slack["value"] == slack["reference_value_m"] and abs(shift) <= 1e-6
         ranges[name] = [float(v) for v in lr] if unchanged or abs(shift) < 1e-12 else [float(v + shift) for v in lr]
     return ranges
 

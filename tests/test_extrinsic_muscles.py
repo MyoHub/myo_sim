@@ -1,8 +1,10 @@
 """Extrinsic-muscle revisions (S7, ``build/data/extrinsic_muscles.json``).
 
 - The generated blocks are what ``scripts/generate_extrinsic_muscles.py`` writes.
-- Juncturae: every hand has the EDC3-5 nodes, their ties and the two links, mirrored left to right; the links
-  carry no force at q0 or in the relaxed resting posture, and reproduce the recorded traction transfers.
+- Juncturae: every hand has the EDC3-5 nodes, their ties and the two links, mirrored left to right; each node
+  moves with its EDC over the MCP range (a helper from the node's rest point, which misses the MCP wrap, does
+  not); the links carry no force at q0 or in the relaxed resting posture, and reproduce the recorded traction
+  transfers.
 - FCU: neutral moment arms within Horii 1993's bands and independent of forearm rotation.
 - FDS5: force as derived in the table.
 - EDC2: the side site of its wrist wrap lies outside the sphere, as tabled, so MuJoCo and mujoco-warp resolve
@@ -11,6 +13,7 @@
 
 from __future__ import annotations
 
+import copy
 import importlib.util
 from functools import cache
 from pathlib import Path
@@ -70,6 +73,48 @@ def test_every_hand_carries_the_juncturae(name: str) -> None:
             assert model.tendon(tie.obj2id[0]).name == f"{node}_edc_{side}"
         for link in LINKS:
             assert model.tendon_stiffness[model.tendon(f"{link}_{side}").id] > 0.0
+
+
+def _node_excursion_error(model: mujoco.MjModel, node: str) -> float:
+    """Largest |node slide - EDC excursion| (m) over the MCP range, IPs straight and at von Schroeder & Botte's rest.
+
+    Wrist and CMC at 0, so the EDC's length change is all distal of P4: a rigid tendon's material moves by it.
+    """
+    gen = _script()
+    digit = int(node[-1])
+    data = mujoco.MjData(model)
+    slide = model.joint(f"node_{node}_r").qposadr[0]
+    edc = model.tendon(f"EDC{digit}_r_tendon").id
+    mcp = model.joint(f"mcp{digit}_flexion_r")
+    worst = 0.0
+    for ip in (0.0, 1.0):
+        for q in np.linspace(*model.jnt_range[mcp.id], 13):
+            data.qpos[:] = model.qpos0
+            data.qpos[mcp.qposadr[0]] = q
+            for j in ("pm", "md"):
+                data.qpos[model.joint(f"{j}{digit}_flexion_r").qposadr[0]] = ip * np.radians(gen.REST_DEG[j])
+            place_tendon_nodes(model, data)
+            mujoco.mj_tendon(model, data)
+            s = data.qpos[slide] - model.qpos0[slide]
+            worst = max(worst, abs(s - (data.ten_length[edc] - model.tendon_length0[edc])))
+    return worst
+
+
+@pytest.mark.parametrize("node", ["JT3", "JT4", "JT5"])
+def test_nodes_move_with_their_tendon_over_the_mcp_range(node: str) -> None:
+    assert _node_excursion_error(_model("myohand_r"), node) < 1e-6
+
+
+@pytest.mark.parametrize("node", ["JT3", "JT5"])
+def test_node_excursion_check_catches_a_helper_from_the_rest_point(node: str) -> None:
+    """Negative control: the S7 helper started at the node's rest point near the MC head (the link site at slide 0)."""
+    model = copy.deepcopy(_model("myohand_r"))
+    helper = model.tendon(f"node_{node}_edc_r").id
+    model.wrap_objid[model.tendon_adr[helper]] = model.site(f"node_{node}_link_r").id
+    data = mujoco.MjData(model)
+    mujoco.mj_tendon(model, data)  # qpos0: the link site at the rest point
+    model.tendon_length0[helper] = data.ten_length[helper]
+    assert _node_excursion_error(model, node) > 5e-3  # S7: 6-11 mm at MCP 90 deg
 
 
 def test_links_are_slack_at_rest_and_mirror_left_to_right() -> None:

@@ -5,10 +5,11 @@ Revisions of the extrinsic hand muscles from the hand rebuild (S7, and the EDC2 
 right-arm XML (`--fit` refits). Tests: `tests/test_extrinsic_muscles.py`. Model values against the
 literature: `hand-literature-comparison.md` (S7).
 
-The fit was run once more after the passive refits below, and again after the EDC2 wrap change; the table
-gives the model's values (`hand-literature-comparison.md`, S7 and EDC2 wrap). The middle-finger share
-depends on the contact-driven transfer without links (25.7-27.0 deg over the S7 refits, 13.8 deg after the
-EDC2 wrap change), so it moves with small changes.
+The fit was run once more after the passive refits below, again after the EDC2 wrap change and again
+after the JT3/JT5 tie fix; the table gives the model's values (`hand-literature-comparison.md`, S7, EDC2
+wrap and JT3/JT5 ties). The middle-finger share depends on the contact-driven transfer without links
+(25.7-27.0 deg over the S7 refits, 13.8 deg after the EDC2 wrap change, 13.1 deg after the tie fix), so it
+moves with small changes.
 
 ## Juncturae tendinum
 
@@ -22,14 +23,22 @@ links, EDC4-EDC3 (`lig_JT34_r`) and EDC4-EDC5 (`lig_JT45_r`).
 **Primitive.** Each of EDC3, EDC4 and EDC5 carries a junction node, the primitive of the lumbrical nodes
 (`passive-moments-and-thenar.md`, *Lumbrical junction nodes*): a light body on a slide joint
 `node_JT{3,4,5}_r` in its metacarpal, on the EDC path segment from the metacarpal via site to the MCP
-wrap, tied by a tendon equality `node_JT{d}_tie_r` to the tendon's branched path distal of the node
-(`node_JT{d}_edc_r`, which includes the extensor-mechanism pulley branches). Mass, armature, damping and
+wrap, tied by a tendon equality `node_JT{d}_tie_r` to the tendon's branched path from its via point
+`EDC{d}-P4_r`, proximal of the node (`node_JT{d}_edc_r`, which includes the extensor-mechanism pulley
+branches). The helper starts where the EDC's own segment to the MCP wrap starts, so it wraps the MCP as the
+tendon does and the node moves with the tendon material over the whole MCP range (rigid tendon: the
+material's excursion is the same anywhere along the segment). Until the tie fix the helpers of JT3 and JT5
+started at the node's rest point near the MC head, missed the MCP wrap the EDC takes from P4 and moved
+those nodes 6-11 mm more than the tendon at MCP 90 deg; `tests/test_extrinsic_muscles.py` checks node
+against tendon excursion over the MCP range, with that construction as its negative control. Mass, armature, damping and
 `solref` are the lumbrical nodes' (0.03 kg, 5 N s/m, 0.004 1). The links are tension-only spatial tendons
 from the ring tendon's node (mid-metacarpal) obliquely distally to the neighbours' nodes (at the
 metacarpal necks): the juncturae arise from the ring tendon and insert more distally on the neighbours.
 The node positions along the tendons are a judgement (no measured junctura coordinates were used). Each
-link is slack up to its length in the relaxed resting posture of the cadaver protocol (MP 56, PIP 35,
-DIP 17 deg), so it carries no force at rest or with the fingers extended.
+link is slack up to the longer of its lengths with straight fingers and in the relaxed resting posture of
+the cadaver protocol (MP 56, PIP 35, DIP 17 deg), so it carries no force in either. With the nodes on
+their tendons, `lig_JT45_r` is 1.1 mm longer with straight fingers than in the resting posture (before the
+tie fix the resting posture was the longer one for both links).
 
 **Fit.** Von Schroeder & Botte 1993 pulled one EDC tendon with 1.5 kg (palm down, wrist pinned neutral)
 and measured the MP extension of the neighbours before and after cutting the juncturae and the
@@ -38,16 +47,19 @@ fascia coupling, so the model value is the extension with the links minus withou
 model: `myohand_r` palm down under gravity, wrist, forearm and thumb held, settled from the resting
 posture, then 14.7 N along the tendon for 1.5 s.
 
-| Traction on | Neighbour | Junctura share (deg), von Schroeder & Botte 1993 | Model, links minus none (deg): S7 / after the EDC2 wrap |
+| Traction on | Neighbour | Junctura share (deg), von Schroeder & Botte 1993 | Model, links minus none (deg): S7 / after the EDC2 wrap / after the tie fix |
 | --- | --- | --- | --- |
-| EDC-ring (EDC4) | middle MP | 18 (38 -> 20) | 6.2 / 17.1 |
-| EDC-ring (EDC4) | small MP | 22 (44 -> 22) | 22.3 / 21.7 |
-| EDC-long (EDC3) | ring MP | 8 (26 -> 18) | -0.9 / -1.4 |
-| EDC-long (EDC3) | small MP | 7 (16 -> 9) | 0.2 / 0.2 |
+| EDC-ring (EDC4) | middle MP | 18 (38 -> 20) | 6.2 / 17.1 / 17.0 |
+| EDC-ring (EDC4) | small MP | 22 (44 -> 22) | 22.3 / 21.7 / 21.6 |
+| EDC-long (EDC3) | ring MP | 8 (26 -> 18) | -0.9 / -1.4 / 0.0 |
+| EDC-long (EDC3) | small MP | 7 (16 -> 9) | 0.2 / 0.2 / 0.0 |
 
-Stiffness after the refit that followed the EDC2 wrap change: `lig_JT45_r` 222 N/m (fitted; 263 in S7);
-`lig_JT34_r` 993 N/m, at its upper bound of 1000 N/m (999.9 in S7). The middle finger's share rose because
-its contact-driven extension without links fell (below). The bound is
+Stiffness after the refit that followed the JT3/JT5 tie fix: both links at their upper bound of 1000 N/m
+(`lig_JT34_r` 1000, `lig_JT45_r` 1000 N/m; after the EDC2 wrap change 993 and 222 N/m, in S7 999.9 and
+263 N/m). With the nodes on their tendons, ring-finger traction pulls JT4 further from the neighbours'
+nodes than the over-moving JT3/JT5 nodes allowed, so a stiffer EDC4-EDC5 link is needed for the same
+transfer. The middle finger's share rose after the EDC2 wrap change because its contact-driven extension
+without links fell (below). The bound is
 numerical: tendon springs are explicit in MuJoCo's Euler step, and with EDC4 and the middle-finger flexors
 fully active the link force changes from step to step by 0.17 N at 1000 N/m (5.5 N mean), 0.6 N at
 3000 N/m and 3.5 N at 10000 N/m. In S7 the transfer saturated: 10000 N/m gave 6.1 deg and an

@@ -36,7 +36,7 @@
     }
   },
   "juncturae": {
-    "method": "Junctura tendinum links between the extensor digitorum tendons of the ring and the middle finger (EDC4-EDC3) and of the ring and the little finger (EDC4-EDC5); the index-middle link is omitted (2nd interspace: 63 % prevalence, 95 % thin type 1, Yammine 2015; von Schroeder & Botte 1993 find the radial coupling carried by the intertendinous fascia and the web). Each tendon carries a junction node: a light body on a slide joint in its metacarpal, on the EDC path segment from the metacarpal via site to the MCP wrap, tied to the tendon's branched path distal of the node by a tendon equality (the S6 lumbrical-node primitive and settings). The links run from the ring tendon's node obliquely distally to the neighbours' nodes (the juncturae arise from the ring tendon and insert more distally on the neighbours) as tension-only spatial tendons, taut from their length in the relaxed resting posture. Stiffness fitted to von Schroeder & Botte 1993's junctura share of the neighbour MP extension under 1.5 kg traction (intact minus juncturae cut).",
+    "method": "Junctura tendinum links between the extensor digitorum tendons of the ring and the middle finger (EDC4-EDC3) and of the ring and the little finger (EDC4-EDC5); the index-middle link is omitted (2nd interspace: 63 % prevalence, 95 % thin type 1, Yammine 2015; von Schroeder & Botte 1993 find the radial coupling carried by the intertendinous fascia and the web). Each tendon carries a junction node: a light body on a slide joint in its metacarpal, on the EDC path segment from the metacarpal via site to the MCP wrap, tied by a tendon equality to the tendon's branched path from its via point proximal of the node (EDC-P4, so the helper takes the tendon's MCP wrap and the node moves with the tendon material; the S6 lumbrical-node primitive and settings). The links run from the ring tendon's node obliquely distally to the neighbours' nodes (the juncturae arise from the ring tendon and insert more distally on the neighbours) as tension-only spatial tendons, taut from the longer of their lengths with straight fingers and in the relaxed resting posture. Stiffness fitted to von Schroeder & Botte 1993's junctura share of the neighbour MP extension under 1.5 kg traction (intact minus juncturae cut).",
     "sources": [
       "vonschroeder1993",
       "yammine2015"
@@ -107,26 +107,26 @@
         "to": "JT3",
         "slack_m": {
           "value": 0.0,
-          "method": "taut from its length in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force at rest"
+          "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 993.0,
+          "value": 1000.0,
           "method": "fit (juncturae.fit)"
         },
-        "rest_length_m": 0.029423
+        "rest_length_m": 0.024459
       },
       "JT45": {
         "from": "JT4",
         "to": "JT5",
         "slack_m": {
           "value": 0.0,
-          "method": "taut from its length in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force at rest"
+          "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 221.9,
+          "value": 1000.0,
           "method": "fit (juncturae.fit)"
         },
-        "rest_length_m": 0.024248
+        "rest_length_m": 0.020708
       }
     },
     "fit": {
@@ -149,41 +149,41 @@
       "result": {
         "without_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": 0.64,
-            "mcp3_flexion": 13.76,
-            "mcp4_flexion": 71.21,
-            "mcp5_flexion": -0.05
+            "mcp2_flexion": 0.72,
+            "mcp3_flexion": 13.05,
+            "mcp4_flexion": 70.9,
+            "mcp5_flexion": -0.12
           },
           "EDC3_traction": {
-            "mcp2_flexion": 0.02,
-            "mcp3_flexion": 67.29,
-            "mcp4_flexion": 2.86,
-            "mcp5_flexion": 0.03
+            "mcp2_flexion": 0.03,
+            "mcp3_flexion": 67.49,
+            "mcp4_flexion": 2.64,
+            "mcp5_flexion": 0.04
           }
         },
         "with_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": 0.52,
-            "mcp3_flexion": 30.53,
-            "mcp4_flexion": 71.96,
-            "mcp5_flexion": 21.71
+            "mcp2_flexion": 1.77,
+            "mcp3_flexion": 30.07,
+            "mcp4_flexion": 70.69,
+            "mcp5_flexion": 21.46
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.15,
-            "mcp3_flexion": 66.3,
-            "mcp4_flexion": 1.53,
-            "mcp5_flexion": 0.29
+            "mcp2_flexion": 0.03,
+            "mcp3_flexion": 67.49,
+            "mcp4_flexion": 2.64,
+            "mcp5_flexion": 0.04
           }
         },
         "residual_deg": [
-          -1.23,
-          -0.24,
-          0.75,
-          -9.33,
-          -6.74,
-          -0.99
+          -0.98,
+          -0.42,
+          -0.21,
+          -8.0,
+          -7.0,
+          0.0
         ],
-        "rms_deg": 4.75
+        "rms_deg": 4.36
       },
       "own_finger_note": "mcp4 under EDC4 traction and mcp3 under EDC3 traction: target 0 deg change from the links (the pulled finger's own extension is the same with and without the juncturae: traction on one tendon or on all gave the same result, p. 643)",
       "stiffness_bounds_N_per_m": {

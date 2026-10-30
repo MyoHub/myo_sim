@@ -161,17 +161,20 @@ def _joint(model: mujoco.MjModel, base: str, side: str) -> int:
 
 
 @cache
-def _settle(wrist_deg: float) -> dict[str, tuple[float, float, float]]:
-    """Hand joint angles and limits (deg) after 3 s without gravity or excitation, both wrists held at *wrist_deg*."""
+def _settle(wrist_deg: float, tolerance: float | None = None, seconds: float = 3.0) -> dict[str, tuple[float, float, float]]:
+    """Hand joint angles and limits (deg) after *seconds* without gravity or excitation, both wrists held at
+    *wrist_deg* (*tolerance*: the solver tolerance, default MuJoCo's)."""
     model = myo_sim.load_spec("myofullbody").compile()
     model.opt.gravity[:] = 0.0
+    if tolerance is not None:
+        model.opt.tolerance = tolerance
     data = mujoco.MjData(model)
     for side in ("r", "l"):
         for name in (f"flexion_{side}", f"deviation_{side}", f"pro_sup_{side}"):
             dof = model.joint(name).dofadr[0]
             model.dof_armature[dof] = model.dof_damping[dof] = 1e4  # hold the wrist and forearm
         data.qpos[model.joint(f"flexion_{side}").qposadr[0]] = wrist_deg * DEG
-    for _ in range(int(3.0 / model.opt.timestep)):
+    for _ in range(int(seconds / model.opt.timestep)):
         mujoco.mj_step(model, data)
     out = {}
     for base in HAND:
@@ -214,14 +217,14 @@ def test_relaxed_hand_rests_off_its_limits(wrist_deg: float) -> None:
         finger = not name.startswith(("cmc", "mp_", "ip_"))
         assert name in allowed or q < hi - 1.0, f"{name} at its upper limit ({q:.1f} deg)"
         assert finger or q > lo + 1.0, f"{name} at its lower limit ({q:.1f} deg)"
-    # Where fingers touch at rest, static friction holds whatever posture the contact solver reaches. Both
-    # hands' pairs, parameters, geom roles and order are mirrored (test_hand_contacts.py), but at MuJoCo's
-    # default solver tolerance (1e-8, warm-started) the two hands can settle slightly apart; which joint and
-    # case shows it changes with small model changes (S4: MCP3/MCP4 with the wrists flexed 60 deg; EM-a: MCP4
-    # at 0 deg). Since S7 it is MCP4 with both wrists flexed 60 deg: 0.17 deg apart, 0.007 deg at tolerance
-    # 1e-12, 0.006 deg with frictionless pairs, 0.001 deg without contacts. A limit of the contact solution,
-    # not of the model; only this joint in this case gets 0.2 deg.
-    touching = {"mcp4_flexion"} if wrist_deg == 60.0 else set()
+    # Left / right symmetry. Where fingers touch, static friction holds whatever posture the contact solver
+    # reaches, and with the wrists extended the fingers still creep in stick-slip steps until about 8 s
+    # (MCP4 69 -> 71 deg). Both hands' pairs, parameters, geom roles and order are mirrored
+    # (test_hand_contacts.py), but during the creep the two hands are up to 0.26 deg apart at 3 s at MuJoCo's
+    # default solver tolerance (1e-8, warm-started) and up to 1.6 deg at tolerance 1e-12 (one hand slips a
+    # step earlier); the joint and case moved with small model changes from S4 on. At rest (10 s) and
+    # tolerance 1e-12 they agree within 0.04 deg (0.002 deg without contacts), so the comparison runs there
+    # and checks the model rather than where the solver stops.
+    tight = _settle(wrist_deg, 1e-12, 10.0)
     for base in HAND:
-        tol = 0.2 if base in touching else 0.1
-        assert _settle(wrist_deg)[f"{base}_r"][0] == pytest.approx(_settle(wrist_deg)[f"{base}_l"][0], abs=tol)
+        assert tight[f"{base}_r"][0] == pytest.approx(tight[f"{base}_l"][0], abs=0.05)
