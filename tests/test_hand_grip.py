@@ -103,8 +103,9 @@ def test_grip_at_the_cached_optimum() -> None:
     r = _cached_grip()
     assert tol["grip_N"][0] <= r["grip"] <= tol["grip_N"][1]
     assert r["grip"] == pytest.approx(CACHED["grip_N"], rel=0.02)
-    for digit, share in targets["digit_share"].items():
-        assert abs(r["share"][int(digit)] - share) <= tol["digit_share_abs"], (digit, r["share"])
+    for digit, share in targets["digit_share"].items():  # measured shares, mean +- 1 SD (Kong et al. 2011)
+        band = tol["digit_share_sd_band"] * targets["digit_share_sd"][digit]
+        assert abs(r["share"][int(digit)] - share) <= band, (digit, r["share"])
     assert max(abs(m) for m in r["wrist_lock_Nm"]) <= tol["max_wrist_lock_Nm"]
     assert r["penetration_m"] <= tol["max_penetration_m"]
 

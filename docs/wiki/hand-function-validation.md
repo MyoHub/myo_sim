@@ -238,5 +238,27 @@ Fresh optimum (before = EM-a):
 
 The middle finger's share (29.7 %) is 0.5 points outside the 12-point band around ARMS's 42.2 %, so
 `test_grip_at_the_cached_optimum` fails since S5 (tolerance unchanged; listed under the open checks in
-`hand-literature-comparison.md`). Setting the dorsal-interosseous hood fractions to 0.5 each instead of
+`hand-literature-comparison.md`). Since the measured-share revision the target is measured: Kong et al.
+2011's finger contributions at 100 % MVC (below). Setting the dorsal-interosseous hood fractions to 0.5 each instead of
 Salsbury's shares moves the shares by less than one point.
+
+## Digit shares: measured target
+
+The grip test's digit-share target was the ARMS model's own shares (23.3 / 42.2 / 23.0 / 11.5 %, within 12
+points). It is now a measurement with its spread, mean ± 1 SD as for the grip force:
+
+| Source | Protocol | Shares 2 / 3 / 4 / 5 (%) |
+| --- | --- | --- |
+| Kong et al. 2011 (test target) | maximal power grip of a multi-finger handle (spans 48 / 55 / 55 / 48 mm), seated, elbow 90 deg, forearm and wrist neutral; 72 men; Table 3, 100 % MVC | 21.1 ± 4.7 / 38.5 ± 4.2 / 25.5 ± 4.7 / 15.0 ± 4.7 |
+| Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, 17 subjects; abstract and Fig. 6 (no SDs; shares independent of diameter) | 30 / 30 / 22 / 18 |
+| Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand and proximal phalanges in a cast (extrinsic flexors only); right hand, Experiment I | 24.7 ± 3.9 / 32.8 ± 3.4 / 27.0 ± 2.2 / 15.5 ± 2.0 |
+| Ejeskar & Ortengren 1981 | force to pull each fingertip off a gripped 20-35 mm cylinder, one finger at a time; 20 men, right hand (Table 2), as shares of the four forces | 26 / 29 / 23 / 22 |
+
+Kong et al.'s protocol matches the model's best: simultaneous four-finger forces in a maximal grip of a
+handle whose spans bracket the dynamometer's 48 mm, elbow at 90 deg, with per-finger SDs. Amis's
+cylinder study is the closest in posture but reports no spread; the index and middle fingers share
+equally there, and the model (30 / 27 / 19 / 24 % after the wrap-side revision) lies close to it but
+outside Kong's band for every finger: the index and little fingers carry too much, the middle and ring
+fingers too little. The test fails on this until the model's grip changes; its tolerance is not widened.
+Kinoshita et al. 1996 (holding cylinders with a circular five-finger grip) and Radwin et al. 1992
+(submaximal five-finger pinch) measure other tasks and are not used.

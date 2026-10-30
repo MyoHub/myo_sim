@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-10-30 — Grip digit shares: measured target
+Changed: `myo_sim/build/data/hand_function.json` (digit-share target and band, sources), `hand_literature.json` (grip-share literature rows, sources), `tests/test_hand_grip.py` (mean +- 1 SD band), `docs/wiki/hand-function-validation.md`, `hand-literature-comparison.md`
+Why: The grip test compared the digit shares with the ARMS model's own shares; it now uses measured shares during maximal power grip (Kong et al. 2011, 100 % MVC, mean +- 1 SD), with Amis 1987, Ohtsuki 1981 and Ejeskar & Ortengren 1981 as context. The model is outside the measured band for every finger, so the test keeps failing.
+
 ## 2026-10-30 — Forearm wrap side sites outside their geoms
 Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (side sites and four wrap geoms), `myoarm_r_muscle.xml`, `myoarm_r_tendon.xml` (refitted parameters, springs), `myo_sim/build/data/extrinsic_muscles.json` (`wrap_sides` replaces `edc2_wrap_side`), `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache), `hand_literature.json` (ECRL, ECRB and FCR rows; step wrap_sides), `scripts/generate_extrinsic_muscles.py` (`wrap_sides`), `scripts/hand_literature_comparison.py`, `tests/test_extrinsic_muscles.py` (all wrap sides; CPU vs mujoco-warp with a negative control), `tests/test_hand_literature.py`, `docs/wiki/hand-extrinsic-muscles.md`, `hand-literature-comparison.md`, `myo_sim/models/arm/README.md`, `README_hand.md`, `CHANGELOG.md`
 Why: Side sites inside their geoms make MuJoCo apply the inside wrap, which MuJoCo and mujoco-warp solve differently; as for EDC2, the forearm wraps now wrap from outside, with ECRB and FCR moved into Horii 1993's bands. ECRL stays open.

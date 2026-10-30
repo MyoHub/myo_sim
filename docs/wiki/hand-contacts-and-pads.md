@@ -130,5 +130,9 @@ contacts). Before the extensor mechanism the same happened to MCP3/MCP4 with bot
 (0.10 / 0.15 deg); that case now settles within 0.02 deg. The solver options are shared by every model,
 so they stay at their defaults. Which joint and case shows the effect changes with small model changes:
 since S7 (juncturae) it is MCP4 with both wrists flexed 60 deg (0.17 deg; 0.007 deg at tolerance 1e-12,
-0.001 deg without contacts), while the wrist-0 case settles within 0.03 deg.
-`test_relaxed_hand_rests_off_its_limits` allows 0.2 deg for that joint in that case only.
+0.001 deg without contacts), while the wrist-0 case settles within 0.03 deg; after the JT3/JT5 tie fix MCP4
+with the wrists extended or flexed 60 deg (0.26 / 0.23 deg at 3 s). With the wrists extended the fingers
+still creep in stick-slip steps until about 8 s, during which even tolerance 1e-12 leaves the hands up to
+1.6 deg apart (one slips a step earlier). `test_relaxed_hand_rests_off_its_limits` therefore compares the
+two hands at rest (10 s) and tolerance 1e-12, where every case agrees within 0.04 deg, with 0.05 deg for
+every joint.

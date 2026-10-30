@@ -185,6 +185,28 @@
       "citation": "Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005.",
       "doi": "10.1007/s10439-005-3320-7",
       "note": "Table 1: peak forces at 45 N/cm2 (FDS4 57.9, FDS5 16.5 N). Cited only; no model file used."
+    },
+    "kong2011": {
+      "short": "Kong et al. 2011",
+      "citation": "Kong YK, Lee KS, Kim DM, Jung MC. Individual finger contribution in submaximal voluntary contraction of gripping. Ergonomics 54(11):1072-1080, 2011.",
+      "doi": "10.1080/00140139.2011.620176",
+      "note": "Table 3, row 100 % MVC: finger contribution (%) to the total grip force, mean (SD); 72 right-handed men; seated, elbow 90 deg, forearm and wrist neutral, maximal power grip of a multi-finger handle (double frustum, grip spans 48 / 55 / 55 / 48 mm for index to little finger; Section 2.2)"
+    },
+    "amis1987": {
+      "short": "Amis 1987",
+      "citation": "Amis AA. Variation of finger forces in maximal isometric grasp tests on a range of cylinder diameters. J Biomed Eng 9(4):313-320, 1987.",
+      "note": "Abstract and Figure 6: mean contributions of the fingers to the summed normal grip force, 30 / 30 / 22 / 18 % (index to little), not varying significantly over cylinders of 31-116 mm; 17 subjects; one finger instrumented per trial; no SDs for the shares"
+    },
+    "ohtsuki1981": {
+      "short": "Ohtsuki 1981",
+      "citation": "Ohtsuki T. Inhibition of individual fingers during grip strength exertion. Ergonomics 24(1):21-36, 1981.",
+      "doi": "10.1080/00140138108924827",
+      "note": "Section 3 (Experiment I): share of each finger in the four-finger flexion force, right hand 24.7 +- 3.9 / 32.8 +- 3.4 / 27.0 +- 2.2 / 15.5 +- 2.0 % (mean +- SD; Experiment I, 10 subjects); fingers pulling on rings over the middle phalanges, hand and proximal phalanges fixed in a cast (extrinsic flexors only), not a handle grip"
+    },
+    "ejeskar1981": {
+      "short": "Ejeskar & Ortengren 1981",
+      "citation": "Ejeskar A, Ortengren R. Isolated finger flexion force - a methodological study. The Hand 13(3):223-230, 1981.",
+      "note": "Table 2: force to pull each fingertip off a 20-35 mm cylinder gripped with maximal strength, one finger at a time, wrist in about 30 deg extension; 20 men and 20 women (men, right hand: 9.6 / 10.6 / 8.4 / 8.0 kp, i.e. 26 / 29 / 23 / 22 % of their sum); isolated finger forces, not shares of one grip"
     }
   },
   "quantities": {
@@ -292,10 +314,58 @@
       "unit": "%",
       "literature": [
         {
+          "value": [
+            21.1,
+            38.5,
+            25.5,
+            15.0
+          ],
+          "spread": [
+            4.7,
+            4.2,
+            4.7,
+            4.7
+          ],
+          "spread_kind": "SD",
+          "kind": "in vivo",
+          "source": "kong2011",
+          "protocol": "maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band)"
+        },
+        {
+          "value": "30 / 30 / 22 / 18",
+          "kind": "in vivo",
+          "source": "amis1987",
+          "protocol": "maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs)"
+        },
+        {
+          "value": [
+            24.7,
+            32.8,
+            27.0,
+            15.5
+          ],
+          "spread": [
+            3.9,
+            3.4,
+            2.2,
+            2.0
+          ],
+          "spread_kind": "SD",
+          "kind": "in vivo",
+          "source": "ohtsuki1981",
+          "protocol": "four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10"
+        },
+        {
+          "value": "26 / 29 / 23 / 22",
+          "kind": "in vivo",
+          "source": "ejeskar1981",
+          "protocol": "isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces)"
+        },
+        {
           "value": "23.3 / 42.2 / 23.0 / 11.5",
           "kind": "model (ARMS)",
           "source": "mcfarland2023",
-          "protocol": "self-selected wrist"
+          "protocol": "self-selected wrist (the earlier test target)"
         }
       ]
     },

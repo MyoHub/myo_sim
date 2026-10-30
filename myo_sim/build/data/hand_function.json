@@ -16,8 +16,22 @@
    "access": "numbers as reported by mcfarland2023"
   },
   "kong2011": {
-   "citation": "Kong et al. 2011, individual finger contributions to gripping (as cited by mcfarland2023).",
-   "access": "cited by mcfarland2023 as similar to its simulated digit shares"
+   "citation": "Kong YK, Lee KS, Kim DM, Jung MC. Individual finger contribution in submaximal voluntary contraction of gripping. Ergonomics 54(11):1072-1080, 2011.",
+   "doi": "10.1080/00140139.2011.620176",
+   "location": "Table 3, row 100 % MVC: finger contribution (%) to the total grip force, mean (SD); 72 right-handed men; seated, elbow 90 deg, forearm and wrist neutral, maximal power grip of a multi-finger handle (double frustum, grip spans 48 / 55 / 55 / 48 mm for index to little finger; Section 2.2)"
+  },
+  "amis1987": {
+   "citation": "Amis AA. Variation of finger forces in maximal isometric grasp tests on a range of cylinder diameters. J Biomed Eng 9(4):313-320, 1987.",
+   "location": "Abstract and Figure 6: mean contributions of the fingers to the summed normal grip force, 30 / 30 / 22 / 18 % (index to little), not varying significantly over cylinders of 31-116 mm; 17 subjects; one finger instrumented per trial; no SDs for the shares"
+  },
+  "ohtsuki1981": {
+   "citation": "Ohtsuki T. Inhibition of individual fingers during grip strength exertion. Ergonomics 24(1):21-36, 1981.",
+   "doi": "10.1080/00140138108924827",
+   "location": "Section 3 (Experiment I): share of each finger in the four-finger flexion force, right hand 24.7 +- 3.9 / 32.8 +- 3.4 / 27.0 +- 2.2 / 15.5 +- 2.0 % (mean +- SD; Experiment I, 10 subjects); fingers pulling on rings over the middle phalanges, hand and proximal phalanges fixed in a cast (extrinsic flexors only), not a handle grip"
+  },
+  "ejeskar1981": {
+   "citation": "Ejeskar A, Ortengren R. Isolated finger flexion force - a methodological study. The Hand 13(3):223-230, 1981.",
+   "location": "Table 2: force to pull each fingertip off a 20-35 mm cylinder gripped with maximal strength, one finger at a time, wrist in about 30 deg extension; 20 men and 20 women (men, right hand: 9.6 / 10.6 / 8.4 / 8.0 kp, i.e. 26 / 29 / 23 / 22 % of their sum); isolated finger forces, not shares of one grip"
   }
  },
  "simulation": {
@@ -157,10 +171,10 @@
     538.0
    ],
    "digit_share": {
-    "2": 0.233,
-    "3": 0.422,
-    "4": 0.23,
-    "5": 0.115
+    "2": 0.211,
+    "3": 0.385,
+    "4": 0.255,
+    "5": 0.15
    },
    "posture_change": {
     "neutral": -0.41,
@@ -170,23 +184,30 @@
     "model_N": "model (ARMS)",
     "experiment_N": "experiment (odriscoll1992)",
     "normative_male_20_30_N": "normative range as reported by mcfarland2023",
-    "digit_share": "model (ARMS); kong2011 similar",
+    "digit_share": "experiment (kong2011, 100 % MVC; context: amis1987, ohtsuki1981, ejeskar1981)",
     "posture_change": "model (ARMS), against the self-selected posture"
-   }
+   },
+   "digit_share_sd": {
+    "2": 0.047,
+    "3": 0.042,
+    "4": 0.047,
+    "5": 0.047
+   },
+   "digit_share_note": "Kong et al. 2011 match the protocol best: simultaneous four-finger forces during a maximal power grip of a handle whose 48-55 mm spans bracket the dynamometer's 48 mm, elbow 90 deg, wrist neutral, with per-finger SDs (n = 72). Amis 1987 (cylinders 31-116 mm) gives 30 / 30 / 22 / 18 % without SDs; Ohtsuki 1981's ring-pull protocol (24.7 / 32.8 / 27.0 / 15.5 %) excludes the intrinsics. The earlier target was the ARMS model's own shares (23.3 / 42.2 / 23.0 / 11.5 %, mcfarland2023)."
   },
   "tolerances": {
    "grip_N": [
     270.7,
     533.5
    ],
-   "digit_share_abs": 0.12,
    "posture_drop": [
     0.2,
     0.8
    ],
    "max_wrist_lock_Nm": 0.5,
    "max_penetration_m": 0.001,
-   "justification": "Grip within the experimental mean +- 1 SD (O'Driscoll 1992). Digit shares within 12 percentage points of the paper's (its own ARMS shares differ from Kong 2011 by several points). Neutral and flexed wrists each lose 20-80 % against the self-selected posture (paper 41 and 46 %), and the flexed loses at least as much as the neutral. With the balance penalty the wrist lock supplies at most 0.5 N m. Negative control: the flexors (FDS, FDP) at half their peak force must fall below the band."
+   "justification": "Grip within the experimental mean +- 1 SD (O'Driscoll 1992). Digit shares within 1 SD of Kong et al. 2011's measured shares at 100 % MVC (as the grip force within 1 SD of O'Driscoll 1992). Neutral and flexed wrists each lose 20-80 % against the self-selected posture (paper 41 and 46 %), and the flexed loses at least as much as the neutral. With the balance penalty the wrist lock supplies at most 0.5 N m. Negative control: the flexors (FDS, FDP) at half their peak force must fall below the band.",
+   "digit_share_sd_band": 1.0
   },
   "cached": {
    "note": "Optimum found by scripts/validate_hand_function.py for each model; tests/test_hand_grip.py re-evaluates the entry whose fingerprint matches the model (actuator and position counts, passive_* spring tendons present, damping of mcp2_flexion_r, fpmax of EDC3, palm pad thickness, fpmax of OP, stiffness of the EDC4-EDC5 junctura) and, with MYO_SIM_SLOW=1, re-optimises. The optimum depends on the model: the levels that balance the wrist of one leave a lock moment on the other.",

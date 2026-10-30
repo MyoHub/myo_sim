@@ -51,7 +51,11 @@ No arm model changes (every MjModel array of myoarm_r, myoarms, myotorso_arms an
 | ″ |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 205.0 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 43.6 / 25.7 / 12.7 / 18.1 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 43.6 / 25.7 / 12.7 / 18.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -26.0 / -64.7 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -82,7 +86,11 @@ Names only. scripts/compare_model_numerics.py finds every MjModel array, and the
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 205.0 | 205.0 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 43.6 / 25.7 / 12.7 / 18.1 | 43.6 / 25.7 / 12.7 / 18.1 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 43.6 / 25.7 / 12.7 / 18.1 | 43.6 / 25.7 / 12.7 / 18.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -26.0 / -64.7 | -26.0 / -64.7 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 38.7 | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -111,7 +119,11 @@ Fingertip pads moved to the palmar side and fitted to Dallard's D_N0 (6.4 mm, sc
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 132.8 | 295.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 20.8 / 40.7 / 27.0 / 11.5 | 44.7 / 27.9 / 12.3 / 15.1 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 20.8 / 40.7 / 27.0 / 11.5 | 44.7 / 27.9 / 12.3 / 15.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -29.6 / -68.3 | -26.1 / -64.3 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 38.7 | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -143,7 +155,11 @@ PIP flexion limit of digits 2-5 raised from 90 to 115 deg (Leijnse et al. 2010, 
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 282.9 | 132.8 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.5 / 38.0 / 22.9 / 9.5 | 20.8 / 40.7 / 27.0 / 11.5 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.5 / 38.0 / 22.9 / 9.5 | 20.8 / 40.7 / 27.0 / 11.5 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -33.9 / -67.9 | -29.6 / -68.3 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 38.7 | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -177,7 +193,11 @@ AdP split into AdPt and AdPo (Stamenkovic 2014 head ratio of Jacobson's PCSA), F
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 305.9 | 282.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 33.9 / 35.0 / 21.3 / 9.9 | 29.5 / 38.0 / 22.9 / 9.5 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 33.9 / 35.0 / 21.3 / 9.9 | 29.5 / 38.0 / 22.9 / 9.5 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -32.1 / -65.1 | -33.9 / -67.9 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 52.9 | 38.7 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -221,7 +241,11 @@ CMC4 and CMC5 hinges (centres sphere-fitted to the metacarpal bases; CMC5 axis f
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 277.9 | 305.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 34.3 / 34.0 / 19.7 / 12.0 | 33.9 / 35.0 / 21.3 / 9.9 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 34.3 / 34.0 / 19.7 / 12.0 | 33.9 / 35.0 / 21.3 / 9.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -32.5 / -66.4 | -32.1 / -65.1 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 52.9 | 52.9 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -270,7 +294,11 @@ UI_UB5 re-routed as ADM (pisiform to the ulnar base of the proximal phalanx, via
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 339.7 | 277.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.8 / 30.9 / 18.6 / 20.6 | 34.3 / 34.0 / 19.7 / 12.0 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.8 / 30.9 / 18.6 / 20.6 | 34.3 / 34.0 / 19.7 / 12.0 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -36.9 / -61.9 | -32.5 / -66.4 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 52.9 | 52.9 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -323,7 +351,11 @@ EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal ph
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 362.7 | 339.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 28.1 / 33.0 / 17.0 / 21.9 | 29.8 / 30.9 / 18.6 / 20.6 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 28.1 / 33.0 / 17.0 / 21.9 | 29.8 / 30.9 / 18.6 / 20.6 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -33.8 / -62.1 | -36.9 / -61.9 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 53.1 | 52.9 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -389,7 +421,11 @@ The finger-side bundles RI3-5, LU_RB2-5 and UI_UB2-4 become the anatomical muscl
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 266.6 | 362.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.2 / 29.7 / 18.1 / 22.9 | 28.1 / 33.0 / 17.0 / 21.9 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.2 / 29.7 / 18.1 / 22.9 | 28.1 / 33.0 / 17.0 / 21.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -29.0 / -61.7 | -33.8 / -62.1 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 51.5 | 53.1 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -467,7 +503,11 @@ Each lumbrical arises from a junction node on its own FDP tendon: a light body o
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 263.1 | 266.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.7 / 27.9 / 19.6 / 22.8 | 29.2 / 29.7 / 18.1 / 22.9 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.7 / 27.9 / 19.6 / 22.8 | 29.2 / 29.7 / 18.1 / 22.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -29.7 / -62.9 | -29.0 / -61.7 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 51.5 | 51.5 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -544,7 +584,11 @@ Junction nodes on EDC3, EDC4 and EDC5 with tension-only junctura links EDC4-EDC3
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 251.6 | 263.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 31.9 / 25.2 / 20.3 / 22.7 | 29.7 / 27.9 / 19.6 / 22.8 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 31.9 / 25.2 / 20.3 / 22.7 | 29.7 / 27.9 / 19.6 / 22.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -25.7 / -61.3 | -29.7 / -62.9 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 51.5 | 51.5 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -631,7 +675,11 @@ EDC2's wrist-wrap side site moves from the centre of its sphere (inside wrap: th
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 256.1 | 251.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 24.8 / 19.7 / 25.2 | 31.9 / 25.2 / 20.3 / 22.7 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 24.8 / 19.7 / 25.2 | 31.9 / 25.2 / 20.3 / 22.7 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -28.8 / -63.8 | -25.7 / -61.3 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 53.1 | 51.5 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -717,7 +765,11 @@ The extensors' two lateral-band branches end where the bands converge, and their
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 256.1 | 256.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 24.8 / 19.7 / 25.2 | 30.3 / 24.8 / 19.7 / 25.2 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 24.8 / 19.7 / 25.2 | 30.3 / 24.8 / 19.7 / 25.2 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -32.5 / -63.8 | -28.8 / -63.8 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 53.1 | 53.1 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -801,7 +853,11 @@ The tie helpers of the junctura nodes start at the EDC's via point EDC{d}-P4_r, 
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 266.5 | 256.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.9 / 29.6 / 17.9 / 22.6 | 30.3 / 24.8 / 19.7 / 25.2 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.9 / 29.6 / 17.9 / 22.6 | 30.3 / 24.8 / 19.7 / 25.2 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -24.3 / -59.5 | -32.5 / -63.8 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 53.2 | 53.1 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -887,7 +943,11 @@ Barry et al. 2018's OpenSim thumb model (2020 revision; MyoHand's bone meshes an
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 264.1 | 266.5 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 29.2 / 18.7 / 21.8 | 29.9 / 29.6 / 17.9 / 22.6 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 29.2 / 18.7 / 21.8 | 29.9 / 29.6 / 17.9 / 22.6 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -25.5 / -60.3 | -24.3 / -59.5 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 67.5 | 53.2 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -975,7 +1035,11 @@ EDC4, EDC5, EDM, ECRB, FCR (wrist) and PQ (ulna) had their wrap side sites insid
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 263.8 | 264.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.0 / 27.3 / 19.0 / 23.7 | 30.3 / 29.2 / 18.7 / 21.8 | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist |
+| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.0 / 27.3 / 19.0 / 23.7 | 30.3 / 29.2 / 18.7 / 21.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
+| ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
+| ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
+| ″ |  |  | 23.3 / 42.2 / 23.0 / 11.5; model (ARMS) | McFarland et al. 2023 | self-selected wrist (the earlier test target) |
 | Grip change, neutral / flexed wrist against self-selected (%) | -28.6 / -60.8 | -25.5 / -60.3 | -41 / -46; model (ARMS) | McFarland et al. 2023 | wrist 0 deg and 35 deg flexion |
 | Lateral (key) pinch force (N) | 67.5 | 67.5 | 51.9 ± 20.4 (SD); in vivo | Valero-Cuevas et al. 2003 | lateral pinch; model protocol: thumb CMC 15 deg extension, 20 deg adduction, MP 20 deg, IP 40 deg flexion, off-axis force at most 17 % |
 | ″ |  |  | 109.0 ± 20.5 (SD); in vivo, men | Mathiowetz et al. 1985 | B&L pinch gauge, key pinch, same seated posture, right hand (Table 4) |
@@ -1087,6 +1151,10 @@ EDC4, EDC5, EDM, ECRB, FCR (wrist) and PQ (ulna) had their wrap side sites insid
 - **Loren et al. 1996**: Loren GJ, Shoemaker SD, Burkholder TJ, Jacobson MD, Friden J, Lieber RL. Human wrist motors: biomechanical design and application to tendon transfers. J Biomech 29(3):331-342, 1996. doi:10.1016/0021-9290(95)00055-0 5 cadaver arms; appendix p. 342: moment arms against wrist angle in pronation, neutral and supination (wrist neutral values used).
 - **Lieber et al. 1992**: Lieber RL, Jacobson MD, Fazeli BM, Abrams RA, Botte MJ. Architecture of selected muscles of the arm and forearm: anatomy and implications for tendon transfer. J Hand Surg Am 17(5):787-798, 1992. doi:10.1016/0363-5023(92)90444-T Table I (mean +- SEM): PCSA FDS4 1.61 +- 0.18, FDS5 0.40 +- 0.05 cm2.
 - **Holzbaur et al. 2005**: Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005. doi:10.1007/s10439-005-3320-7 Table 1: peak forces at 45 N/cm2 (FDS4 57.9, FDS5 16.5 N). Cited only; no model file used.
+- **Kong et al. 2011**: Kong YK, Lee KS, Kim DM, Jung MC. Individual finger contribution in submaximal voluntary contraction of gripping. Ergonomics 54(11):1072-1080, 2011. doi:10.1080/00140139.2011.620176 Table 3, row 100 % MVC: finger contribution (%) to the total grip force, mean (SD); 72 right-handed men; seated, elbow 90 deg, forearm and wrist neutral, maximal power grip of a multi-finger handle (double frustum, grip spans 48 / 55 / 55 / 48 mm for index to little finger; Section 2.2)
+- **Amis 1987**: Amis AA. Variation of finger forces in maximal isometric grasp tests on a range of cylinder diameters. J Biomed Eng 9(4):313-320, 1987. Abstract and Figure 6: mean contributions of the fingers to the summed normal grip force, 30 / 30 / 22 / 18 % (index to little), not varying significantly over cylinders of 31-116 mm; 17 subjects; one finger instrumented per trial; no SDs for the shares
+- **Ohtsuki 1981**: Ohtsuki T. Inhibition of individual fingers during grip strength exertion. Ergonomics 24(1):21-36, 1981. doi:10.1080/00140138108924827 Section 3 (Experiment I): share of each finger in the four-finger flexion force, right hand 24.7 +- 3.9 / 32.8 +- 3.4 / 27.0 +- 2.2 / 15.5 +- 2.0 % (mean +- SD; Experiment I, 10 subjects); fingers pulling on rings over the middle phalanges, hand and proximal phalanges fixed in a cast (extrinsic flexors only), not a handle grip
+- **Ejeskar & Ortengren 1981**: Ejeskar A, Ortengren R. Isolated finger flexion force - a methodological study. The Hand 13(3):223-230, 1981. Table 2: force to pull each fingertip off a 20-35 mm cylinder gripped with maximal strength, one finger at a time, wrist in about 30 deg extension; 20 men and 20 women (men, right hand: 9.6 / 10.6 / 8.4 / 8.0 kp, i.e. 26 / 29 / 23 / 22 % of their sum); isolated finger forces, not shares of one grip
 
 <!-- END generated -->
 
@@ -1207,9 +1275,12 @@ revised hand. Items that a later step resolved say so.
   abduction arm 8.5 against 10.0 mm; the fibre-length window (0.5 at full MCP extension) holds their sites.
   An 1979's digit 3-5 values are normative-model potentials without spread.
 - **Grip digit shares:** since S5 the middle finger's grip share is 29.7 %, 0.5 points outside the
-  protocol's band around ARMS's 42.2 % (`test_grip_at_the_cached_optimum` fails); after S6 27.9 % (2.3
+  protocol's band around ARMS's 42.2 % (the earlier, model-based target) (`test_grip_at_the_cached_optimum` fails); after S6 27.9 % (2.3
   points outside); after S7 25.2 % (the junctura link holds the middle finger against the ring finger's
-  extensor); after the EDC2 wrap change 24.8 %; after the JT3/JT5 tie fix 29.6 %; the protocol keeps every
+  extensor); after the EDC2 wrap change 24.8 %; after the JT3/JT5 tie fix 29.6 %; after the wrap-side revision
+  27.3 %. Since the measured-share revision the band is Kong et al. 2011's measured shares at 100 % MVC
+  (21.1 ± 4.7 / 38.5 ± 4.2 / 25.5 ± 4.7 / 15.0 ± 4.7 %): the model's 30.0 / 27.3 / 19.0 / 23.7 % lies outside it
+  for every finger (Amis 1987, cylinder grasp without SDs: 30 / 30 / 22 / 18 %); the protocol keeps every
   finger intrinsic at full activation, and LU_RB3's 98 N MCP flexion (1225 N/cm2 implied) is gone. The
   settled grip is 267 N (in vivo 402 +- 131 N). ARMS's shares are model values, not measurements.
 - **Extensor share c = 1.0:** fitted by weighted least squares to the index EDC2 and EIP DIP and PIP
