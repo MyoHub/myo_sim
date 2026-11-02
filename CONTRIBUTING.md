@@ -55,8 +55,9 @@ uv run pytest tests/ -x -n auto \
   --ignore=tests/test_bimanual_muscle_symmetry.py \
   --ignore=tests/test_muscle_length_params.py
 
-# Manual muscle length / FL-bound audit
+# Manual muscle length / FL-bound audit report after muscle XML changes
 uv run pytest tests/test_muscle_length_params.py -v
+uv run python tests/recalc_from_fl_bounds.py --model myoarm_r --verify-only --json-out /tmp/myoarm_r_audit.json
 
 # Muscle symmetry analysis (standalone scripts, not pytest)
 cd tests && uv run python debug_muscle_leg.py

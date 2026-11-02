@@ -1,4 +1,14 @@
-"""Recalculate lengthrange + operating range from FL-curve bounds (lmin/lmax).
+"""Manual diagnostic report for muscle length parameters.
+
+Run this after changing muscle XML to audit what is still off in the model's
+``lengthrange``, operating range and force-length (FL) bounds. The script prints
+the same violation report used by ``test_muscle_length_params.py`` and can write
+that report as JSON for PR notes or follow-up issues.
+
+The optional recalc output is a heuristic diagnostic aid, not the canonical
+source for model edits. Use it to understand how the current path sample relates
+to FL bounds; justify committed XML changes through the model-specific
+conversion/reference pipeline.
 
 MuJoCo muscle ``gainprm`` / ``biasprm`` layout (relevant slots)::
 
@@ -14,12 +24,13 @@ Normalized length at musculotendon length ``L``::
     L0     = (LR1 - LR0) / (r1 - r0)
 
 Given new FL bounds ``(lmin, lmax)`` and a measured path ``[L_path_lo, L_path_hi]``,
-this utility places the operating band inside the FL curve and re-anchors
-``lengthrange`` so the path spans that band (mid-ROM at L_norm=1 by default).
+the heuristic proposal places the operating band inside the FL curve and
+re-anchors ``lengthrange`` so the path spans that band (mid-ROM at L_norm=1 by
+default).
 
 CLI::
 
-    uv run python tests/recalc_from_fl_bounds.py --model myoarm_r
+    uv run python tests/recalc_from_fl_bounds.py --model myoarm_r --verify-only --json-out /tmp/myoarm_audit.json
     uv run python tests/recalc_from_fl_bounds.py --model myoarm_r --muscle LAT1 --lmin 0.5 --lmax 1.6
     uv run python tests/recalc_from_fl_bounds.py --model myotorso --verify-only
 """
@@ -200,7 +211,12 @@ def recalc_from_fl_bounds(
     lmax: float | None = None,
     band_frac: float = DEFAULT_BAND_FRAC,
 ) -> RecalcProposal:
-    """Propose lengthrange + r0/r1 for target FL bounds (default: keep current lmin/lmax)."""
+    """Heuristically report lengthrange + r0/r1 for target FL bounds.
+
+    The proposal is for diagnosis and review discussion. It is intentionally
+    separate from the reference-specific conversion scripts that should drive
+    committed model XML updates.
+    """
     lmin_u = current.lmin if lmin is None else float(lmin)
     lmax_u = current.lmax if lmax is None else float(lmax)
     r0_t, r1_t = operating_band_from_fl(lmin_u, lmax_u, band_frac)
@@ -341,15 +357,17 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--model", default="myoarm_r", help="Registered myo_sim model name")
     ap.add_argument("--muscle", default=None, help="Single actuator; default=all")
-    ap.add_argument("--lmin", type=float, default=None, help="Target FL lmin (default: keep current)")
-    ap.add_argument("--lmax", type=float, default=None, help="Target FL lmax (default: keep current)")
-    ap.add_argument("--band-frac", type=float, default=DEFAULT_BAND_FRAC)
-    ap.add_argument("--verify-only", action="store_true", help="Only report violations")
-    ap.add_argument("--json-out", type=Path, default=None)
+    ap.add_argument("--lmin", type=float, default=None, help="Diagnostic target FL lmin (default: keep current)")
+    ap.add_argument("--lmax", type=float, default=None, help="Diagnostic target FL lmax (default: keep current)")
+    ap.add_argument("--band-frac", type=float, default=DEFAULT_BAND_FRAC, help="Inset fraction for heuristic proposals")
+    ap.add_argument("--verify-only", action="store_true", help="Only emit the audit report; skip heuristic proposals")
+    ap.add_argument("--json-out", type=Path, default=None, help="Write the audit/proposal report as JSON")
     args = ap.parse_args()
 
     diversity = fl_bound_diversity(args.model)
-    print(f"=== FL bound diversity ({args.model}) ===")
+    print(f"=== Manual muscle length audit ({args.model}) ===")
+    print("Run after model XML changes to report remaining lengthrange / FL-bound gaps.")
+    print("\n--- FL bound diversity ---")
     print(f"  unique (lmin,lmax) pairs: {diversity['n_unique_fl_bounds']} / {diversity['n_actuators']}")
     for k, n in list(diversity["counts"].items())[:5]:
         print(f"    ({k}): {n}")
@@ -358,7 +376,7 @@ def main() -> None:
     by_kind: dict[str, int] = {}
     for v in violations:
         by_kind[v.kind] = by_kind.get(v.kind, 0) + 1
-    print(f"\n=== Verify ({len(violations)} violations) ===")
+    print(f"\n--- Remaining violations ({len(violations)}) ---")
     for kind, n in sorted(by_kind.items(), key=lambda x: -x[1]):
         print(f"  {kind}: {n}")
     for v in violations[:20]:
@@ -370,7 +388,8 @@ def main() -> None:
 
     if not args.verify_only:
         props = propose_for_model(args.model, args.muscle, args.lmin, args.lmax, args.band_frac)
-        print(f"\n=== Recalc proposals ({len(props)}) ===")
+        print(f"\n--- Heuristic follow-up proposals ({len(props)}) ---")
+        print("  Diagnostic only: validate any XML change against the model-specific reference pipeline.")
         for p in props[:10]:
             c = p.current
             print(

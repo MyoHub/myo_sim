@@ -1,15 +1,17 @@
-"""Verify muscle lengthrange / operating range / FL bounds (lmin, lmax).
+"""Manual regression audit for muscle lengthrange / operating range / FL bounds.
 
-These tests document calibration consistency problems in the shipped models:
+Run these tests after model XML changes to report remaining calibration
+consistency problems:
 
 * ``gainprm[4]``/``[5]`` (FL ``lmin``/``lmax``) are often a shared default per model
   rather than per-muscle values (especially arm + torso).
 * ``gainprm[0]``/``[1]`` (operating range) can fall outside ``[lmin, lmax]``.
 * Measured musculotendon path can fall outside declared ``lengthrange``.
 
-**Not part of CI.** Run manually before cutting a release or when auditing calibration.
+**Not part of CI.** Run manually before cutting a release or when auditing
+muscle-parameter changes.
 
-Recalculation helper: ``tests/recalc_from_fl_bounds.py``.
+Diagnostic report helper: ``tests/recalc_from_fl_bounds.py``.
 """
 
 from __future__ import annotations
@@ -79,12 +81,12 @@ def test_fl_lmin_lmax_not_a_single_shared_default(model_name: str, min_unique: i
             f"{model_name}: only {n_unique} unique (lmin,lmax) pair(s) across "
             f"{summary['n_actuators']} actuators (need >= {min_unique}). "
             f"Top counts: {top}. "
-            "Use tests/recalc_from_fl_bounds.py after setting per-muscle FL bounds."
+            "Run tests/recalc_from_fl_bounds.py to report the remaining gaps."
         )
 
 
 def test_recalc_from_fl_bounds_places_operating_band_inside_fl():
-    """Unit check: proposed r0/r1 lie in [lmin,lmax] and LR spans the path."""
+    """Unit check: diagnostic proposal keeps r0/r1 in [lmin,lmax] and LR spans the path."""
     current = MuscleParams(
         name="dummy",
         lengthrange=(0.10, 0.20),

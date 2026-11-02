@@ -19,7 +19,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
-| `test_muscle_length_params.py` | `lengthrange` / operating range / FL `lmin`/`lmax` consistency | Manual only; use `tests/recalc_from_fl_bounds.py` to propose fixes |
+| `test_muscle_length_params.py` | `lengthrange` / operating range / FL `lmin`/`lmax` consistency | Manual only after muscle XML changes; use `tests/recalc_from_fl_bounds.py` to report remaining gaps |
 
 ## Fast Gate (Run Before Every PR)
 
@@ -33,6 +33,21 @@ uv run pytest tests/ -x -n auto \
 ```
 
 The `-x` flag stops on first failure. The `-n auto` flag runs in parallel across available CPUs.
+
+## Manual Muscle Length Audit
+
+When changing muscle XML, run the manual audit to document any remaining
+`lengthrange`, operating-range, or FL-bound gaps:
+
+```bash
+uv run pytest tests/test_muscle_length_params.py -v
+uv run python tests/recalc_from_fl_bounds.py --model myoarm_r --verify-only --json-out /tmp/myoarm_r_audit.json
+```
+
+`tests/recalc_from_fl_bounds.py` is diagnostic infrastructure. Its JSON/text
+report is useful PR evidence for what is still off after a model change. Any
+actual XML updates should still be justified by the model's reference data or
+conversion pipeline, not by the heuristic proposals alone.
 
 To run a single test file:
 

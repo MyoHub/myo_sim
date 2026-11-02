@@ -91,6 +91,14 @@ uv run pytest tests/ -x -n auto \
   --ignore=tests/test_muscle_length_params.py
 ```
 
+After changing muscle XML, run the manual audit report to show any remaining
+`lengthrange` / force-length-bound gaps:
+
+```bash
+uv run pytest tests/test_muscle_length_params.py -v
+uv run python tests/recalc_from_fl_bounds.py --model myoarm_r --verify-only --json-out /tmp/myoarm_r_audit.json
+```
+
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.
 
 ## Citation
