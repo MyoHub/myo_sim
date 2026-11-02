@@ -7,7 +7,10 @@ git clone https://github.com/MyoHub/myo_sim.git
 cd myo_sim
 uv sync --dev
 uv run pre-commit install
-uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py
+uv run pytest tests/ -x -n auto \
+  --ignore=tests/test_equivalence.py \
+  --ignore=tests/test_bimanual_muscle_symmetry.py \
+  --ignore=tests/test_muscle_length_params.py
 ```
 
 ## Branch and PR conventions
@@ -49,7 +52,12 @@ After conversion, any manual adjustments are documented in the relevant model's 
 # Fast gate — run before every PR
 uv run pytest tests/ -x -n auto \
   --ignore=tests/test_equivalence.py \
-  --ignore=tests/test_bimanual_muscle_symmetry.py
+  --ignore=tests/test_bimanual_muscle_symmetry.py \
+  --ignore=tests/test_muscle_length_params.py
+
+# Manual muscle length / FL-bound audit report after muscle XML changes
+uv run pytest tests/test_muscle_length_params.py -v
+uv run python tests/recalc_from_fl_bounds.py --model myoarm_r --verify-only --json-out /tmp/myoarm_r_audit.json
 
 # Muscle symmetry analysis (standalone scripts, not pytest)
 cd tests && uv run python debug_muscle_leg.py

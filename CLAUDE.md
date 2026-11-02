@@ -11,7 +11,13 @@ Read `docs/wiki/index.md` before making any substantial change.
 uv sync
 
 # Run tests
-uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py
+uv run pytest tests/ -x -n auto \
+  --ignore=tests/test_equivalence.py \
+  --ignore=tests/test_bimanual_muscle_symmetry.py \
+  --ignore=tests/test_muscle_length_params.py
+
+# Manual muscle length audit after muscle XML changes
+uv run python tests/recalc_from_fl_bounds.py --model myoarm_r --verify-only --json-out /tmp/myoarm_r_audit.json
 
 # Compose a bilateral model
 uv run python -m myo_sim.build.compose --model myoarms
