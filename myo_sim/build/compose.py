@@ -687,6 +687,9 @@ def build_spec(
         registration = replace(registration, build_kwargs={**registration.build_kwargs, **build_kwargs})
 
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
+    if registration.build_kwargs.get("disable_finger_collisions", False):
+        # Again on the composed spec: its explicit pairs are only added after the arms are built.
+        disable_finger_collision(spec)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
     return spec
