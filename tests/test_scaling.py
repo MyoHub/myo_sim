@@ -85,6 +85,7 @@ LEG_XML = """
 # arms), a spring on a joint angle, a spring tendon between two sites and a muscle that starts on the node.
 DIGIT_XML = """
 <mujoco>
+  <compiler angle="radian"/>
   <worldbody>
     <body name="base" pos="0 0 0.5">
       <geom type="box" size="0.02 0.02 0.05" mass="0.1"/>
@@ -352,6 +353,14 @@ def test_keyframe_speeds_of_slide_joints_scale() -> None:
     np.testing.assert_allclose(scaled.key_qvel, [[0.8, 1.5]])
 
 
+def test_partial_keyframe_scales_slide_values() -> None:
+    """A keyframe shorter than nq is padded with qpos0 and still scales its slides."""
+    xml = """<mujoco><worldbody><body name="parent"><geom size=".1"/>
+      <body name="child"><joint name="slide" type="slide" axis="1 0 0"/><joint name="hinge"/><geom size=".1"/></body>
+    </body></worldbody><keyframe><key qpos=".2"/></keyframe></mujoco>"""
+    np.testing.assert_allclose(scale_spec(mujoco.MjSpec.from_string(xml), {"parent": 2}).compile().key_qpos, [[0.4, 0]])
+
+
 @pytest.mark.parametrize("euler", ["0 0 0", "0 0 45", "20 35 10"])
 def test_sphere_radius_uses_opensim_mean_independent_of_orientation(euler: str) -> None:
     spec = mujoco.MjSpec.from_string(f"""<mujoco><worldbody><body name="body"><joint/>
@@ -431,6 +440,29 @@ def test_rotated_mesh_scale_is_exact_for_an_axis_permutation() -> None:
     np.testing.assert_allclose(extent(scaled), factors * extent(ref), rtol=1e-5)
 
 
+def test_a_recreated_mesh_keeps_its_authored_fields() -> None:
+    spec = _leg()
+    mesh = spec.mesh("cube")
+    mesh.refpos = [0.01, -0.02, 0.03]
+    mesh.refquat = [0.9238795325112867, 0.0, 0.0, 0.3826834323650898]
+    mesh.scale = [1.1, 0.9, 1.2]
+    mesh.smoothnormal = False
+    mesh.maxhullvert = 6
+    mesh.info = "authored mesh provenance"
+    fields = ("file", "content_type", "refpos", "refquat", "inertia", "smoothnormal", "maxhullvert", "uservert", "usernormal")
+    fields += ("userface", "usertexcoord", "userfacenormal", "userfacetexcoord", "material", "info")
+    before = {name: np.array(getattr(mesh, name), copy=True) for name in fields}
+    spec.compile()
+    scaled = scale_spec(spec, {"thigh": (0.8, 0.9, 1.1)})
+    copy = scaled.mesh("cube")
+    assert copy.classname.name == mesh.classname.name
+    assert scaled.geom("thigh_mesh").meshname == "cube"
+    for name in fields:
+        np.testing.assert_array_equal(getattr(copy, name), before[name], err_msg=name)
+    np.testing.assert_allclose(copy.scale, np.array([1.1, 0.9, 1.2]) * [0.8, 0.9, 1.1])
+    scaled.compile()
+
+
 @pytest.mark.parametrize("name", ["leg", "myolegs", "fullbody"])
 def test_a_compiled_spec_scales_as_a_fresh_one(name: str) -> None:
     """Attached components stay scaled: a compiled spec freezes frames, which scaling leaves alone."""
@@ -451,6 +483,62 @@ def test_attached_components_move_with_their_parent() -> None:
     scaled = scale_spec(spec, {b: 1.2 for b in _names(spec)}).compile()
     for body in ("myoarm_r_root", "myoarm_l_root", "myolegs_root", "femur_r", "humerus_l", "head"):
         np.testing.assert_allclose(scaled.body(body).pos, 1.2 * ref.body(body).pos, atol=1e-12, err_msg=body)
+
+
+TETRA_OBJ = "v 0 0 0\nv 1 0 0\nv 0 1 0\nv 0 0 1\nf 1 3 2\nf 1 2 4\nf 1 4 3\nf 2 3 4\n"
+
+# Radians, a zyx sequence and a meshdir of its own, unlike the empty MjSpec it is attached to.
+ATTACHED_XML = """<mujoco><compiler angle="radian" eulerseq="zyx" meshdir="{meshdir}"/>
+  <asset><mesh name="tetra" file="tetra.obj"/></asset>
+  <worldbody><body name="b" euler="0.1 0.2 0.3"><joint name="j"/>
+    <geom name="box" type="box" size=".1 .2 .3" euler="0.3 0 0.2"/><geom name="tetra" type="mesh" mesh="tetra"/>
+    <frame euler="0 0.4 0"><site name="s" pos=".1 0 0"/></frame>
+  </body></worldbody></mujoco>"""
+
+
+def _in_scene(child: mujoco.MjSpec) -> mujoco.MjSpec:
+    """``child`` attached to an empty MjSpec (degrees, xyz), as MyoSuite composes its scenes."""
+    scene = mujoco.MjSpec()
+    scene.attach(child, prefix="", suffix="", frame=scene.worldbody.add_frame())
+    return scene
+
+
+def test_an_attached_spec_scales_with_its_own_compiler(tmp_path: Path) -> None:
+    """Angle unit, euler sequence and meshdir are those of the attached spec, as MuJoCo compiles it."""
+    (tmp_path / "tetra.obj").write_text(TETRA_OBJ)
+    xml = ATTACHED_XML.format(meshdir=tmp_path.as_posix())
+    factors = {"b": (2.0, 1.0, 0.5)}
+    scene = _in_scene(mujoco.MjSpec.from_string(xml))
+    if not hasattr(scene.body("b"), "compiler"):  # MuJoCo < 3.6 hides it: refuse rather than misread
+        with pytest.raises(NotImplementedError, match="compiled orientation"):
+            scale_spec(scene, factors)
+        return
+    alone = scale_spec(mujoco.MjSpec.from_string(xml), factors).compile()
+    scaled = scale_spec(scene, factors).compile()
+    for attr in ("geom_size", "geom_pos", "geom_quat", "site_pos", "mesh_vert", "body_mass", "body_inertia"):
+        np.testing.assert_allclose(getattr(scaled, attr), getattr(alone, attr), atol=1e-9, err_msg=attr)
+
+
+def test_opensim_factors_land_on_the_same_axes_in_a_scene(tmp_path: Path) -> None:
+    spec = _in_scene(_myolegs())
+    if not hasattr(spec.body("pelvis"), "compiler"):
+        pytest.skip("MuJoCo < 3.6 refuses an attached spec with its own angle unit")
+    path = _scale_set(tmp_path / "scales.xml", {"pelvis": (1.1, 1.2, 1.3), "femur_r": (1.04, 1.08, 1.02)})
+    factors = scale_report(spec, path).factors
+    np.testing.assert_array_equal(factors["pelvis"], [1.1, 1.2, 1.3])
+    np.testing.assert_array_equal(factors["femur_r"], [1.04, 1.08, 1.02])
+    assert np.isfinite(scale_spec(spec, path).compile().body_mass).all()  # the legs' meshes are found
+
+
+def test_an_attached_spec_taking_inertia_from_geoms_is_refused() -> None:
+    scene = _in_scene(
+        mujoco.MjSpec.from_string("""<mujoco><compiler inertiafromgeom="true"/><worldbody><body name="a">
+        <inertial pos="0 0 0" mass="5" diaginertia="1 1 1"/><geom size=".1" mass="1"/></body></worldbody></mujoco>""")
+    )
+    if not hasattr(scene.body("a"), "compiler"):
+        pytest.skip("MuJoCo < 3.6 does not expose an attached spec's compiler")
+    with pytest.raises(NotImplementedError, match="inertiafromgeom"):
+        scale_spec(scene, {"a": 2})
 
 
 def _coupled_leg() -> mujoco.MjSpec:
@@ -607,6 +695,16 @@ def test_geom_bottom_is_the_support_of_each_shape(kind: str, size: str, euler: s
     assert _geom_bottom(model, data, 0) == pytest.approx(1 - extent)
 
 
+def test_geom_bottom_uses_the_transformed_mesh_vertices() -> None:
+    model = mujoco.MjModel.from_xml_string("""<mujoco><asset><mesh name="tetra" vertex="0 0 0 1 0 0 0 2 0 0 0 3"/></asset>
+        <worldbody><body pos="0 0 1"><freejoint/><geom type="mesh" mesh="tetra" pos="0 0 -.2" euler="0 45 0"/></body>
+        </worldbody></mujoco>""")
+    data = mujoco.MjData(model)
+    mujoco.mj_kinematics(model, data)
+    # The authored vertex (1, 0, 0) is lowest after the turn about y.
+    assert _geom_bottom(model, data, 0) == pytest.approx(1 - 0.2 - 1 / np.sqrt(2), abs=2e-7)
+
+
 def _leg_in_scene(with_agent: bool) -> mujoco.MjSpec:
     """The leg next to a heavy static prop and, optionally, a free-floating agent."""
     spec = _leg()
@@ -689,6 +787,13 @@ def test_refused_scaling_leaves_the_spec_unchanged(
         scale_spec(spec, scales, total_mass=total_mass)
     assert spec.to_xml() == xml
     assert _model_bytes(spec.copy().compile()) == before
+
+
+def test_refusals_name_what_they_refuse() -> None:
+    with pytest.raises(NotImplementedError, match="cube"):
+        scale_spec(_shared_mesh_leg(), {"thigh": 1.1})
+    with pytest.raises(NotImplementedError, match="connect/weld"):
+        scale_spec(_welded_leg(), {"shank": 1.1})
 
 
 def test_site_anchored_weld_follows_its_sites() -> None:
@@ -838,6 +943,19 @@ def test_read_opensim_scales(tmp_path: Path) -> None:
       <Body name="femur_r"><attached_geometry><Mesh name="g"><scale_factors>1.05 1.05 1.05</scale_factors></Mesh></attached_geometry></Body>
     </objects></BodySet></Model></OpenSimDocument>""")
     np.testing.assert_allclose(read_opensim_scales(scaled)["femur_r"], [1.05] * 3)
+
+
+def test_a_body_cannot_start_two_segments() -> None:
+    segments = {"a": (("thigh",), (0, 1, 2)), "b": (("thigh",), (0, 1, 2))}
+    with pytest.raises(ValueError, match="more than one segment"):
+        _body_factors(_leg(), {"a": np.full(3, 1.1), "b": np.full(3, 1.2)}, segments)
+
+
+@pytest.mark.parametrize("factor", [0.0, -1.0, np.nan, np.inf])
+def test_malformed_factors_are_refused_even_for_missing_segments(factor: float, tmp_path: Path) -> None:
+    path = _scale_set(tmp_path / "scales.xml", {"femur_r": (1.1, 1.1, 1.1), "humerus_r": (1.0, factor, 1.0)})
+    with pytest.raises(ValueError, match="finite and positive"):
+        scale_spec(_myolegs(), path)
 
 
 def _measured(points: np.ndarray, factors: float | np.ndarray) -> np.ndarray:

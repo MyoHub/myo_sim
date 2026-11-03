@@ -155,7 +155,8 @@ def scale_report(spec: mujoco.MjSpec, scales: Scales) -> ScaleReport:
         ValueError: For factors or points that :func:`scale_spec` refuses.
         NotImplementedError: For meshes shared by geoms needing different scales, connect or weld
             equalities anchored on scaled bodies, flexes, height fields, SDF and plugin meshes on
-            scaled bodies, and specs with ``fusestatic``.
+            scaled bodies, specs with ``fusestatic``, and attached specs that take a scaled body's
+            inertia from geoms or whose orientations do not resolve as compiled.
     """
     plan = _plan(spec, scales)
     _apply(spec.copy(), plan, None)
@@ -222,6 +223,7 @@ def _plan(spec: mujoco.MjSpec, scales: Scales) -> _Plan:
         raise NotImplementedError("Cannot scale a spec with fusestatic: it removes bodies when compiled.")
     _check_equalities(spec, report.factors)
     _check_flexes(spec, report.factors)
+    _check_inertia_from_geoms(spec, report.factors)
     mesh_scales = _mesh_scales(spec, report.factors)
     _list_approximations(spec, report)
     return _Plan(report.factors, subject, mesh_scales, report)
@@ -326,16 +328,25 @@ def _rotvec_to_mat(rotvec: np.ndarray) -> np.ndarray:
     return _rot(quat)
 
 
+def _compiler(spec: mujoco.MjSpec, element: Any) -> Any:
+    """Compiler settings ``element`` compiles with: those of its attached spec (MuJoCo 3.6+), else the root's.
+
+    They are shared with the spec it came from, so they are read here and never written.
+    """
+    return getattr(element, "compiler", None) or spec.compiler
+
+
 def _quat(spec: mujoco.MjSpec, element: Any) -> np.ndarray:
     """Orientation of ``element`` in its parent frame, resolving euler, axis-angle and the rest."""
     alt, quat = element.alt, np.zeros(4)
     kind = int(alt.type)
-    to_rad = np.pi / 180.0 if spec.compiler.degree else 1.0
+    compiler = _compiler(spec, element)
+    to_rad = np.pi / 180.0 if compiler.degree else 1.0
     if kind == int(_ORIENT.mjORIENTATION_QUAT):
         quat[:] = element.quat
         quat /= np.linalg.norm(quat)
     elif kind == int(_ORIENT.mjORIENTATION_EULER):
-        mujoco.mju_euler2Quat(quat, np.asarray(alt.euler, dtype=float) * to_rad, "".join(spec.compiler.eulerseq))
+        mujoco.mju_euler2Quat(quat, np.asarray(alt.euler, dtype=float) * to_rad, "".join(compiler.eulerseq))
     elif kind == int(_ORIENT.mjORIENTATION_AXISANGLE):
         axis = np.asarray(alt.axisangle[:3], dtype=float)
         mujoco.mju_axisAngle2Quat(quat, axis / np.linalg.norm(axis), alt.axisangle[3] * to_rad)
@@ -413,6 +424,45 @@ def _check_flexes(spec: mujoco.MjSpec, factors: Mapping[str, np.ndarray]) -> Non
     for flex in spec.flexes:
         if set(flex.vertbody) & set(factors):
             raise NotImplementedError(f"Cannot scale a body of flex {flex.name!r}.")
+
+
+def _check_inertia_from_geoms(spec: mujoco.MjSpec, factors: Mapping[str, np.ndarray]) -> None:
+    """An attached spec's ``inertiafromgeom="true"`` would overrule the scaled inertia, and its compiler is shared."""
+    true = int(mujoco.mjtInertiaFromGeom.mjINERTIAFROMGEOM_TRUE)
+    if int(spec.compiler.inertiafromgeom) == true:
+        return
+    for body in spec.bodies[1:]:
+        if body.name in factors and int(_compiler(spec, body).inertiafromgeom) == true:
+            raise NotImplementedError(
+                f"Body {body.name!r} comes from an attached spec with inertiafromgeom='true', which would overrule its scaled inertia."
+            )
+
+
+def _check_orientations(spec: mujoco.MjSpec, ref: mujoco.MjModel, ids: Sequence[int]) -> None:
+    """Refuse a spec whose bodies, sites or primitive geoms do not resolve as the compiler resolved them.
+
+    Before MuJoCo 3.6 an attached spec's own angle unit and euler sequence are not exposed, so its
+    elements would resolve with the root's: scaling would follow the wrong axes.
+    """
+    resolved = [
+        (b.name, _frame_rot(spec, b.frame) @ _rot(_quat(spec, b)), ref.body_quat[i]) for b, i in zip(spec.bodies[1:], ids[1:])
+    ]
+    resolved += [
+        (s.name, _frame_rot(spec, s.frame) @ _rot(_quat(spec, s)), ref.site(s.name).quat if s.name else ref.site_quat[k])
+        for k, s in enumerate(spec.sites)
+        if np.isnan(s.fromto[0])
+    ]
+    resolved += [
+        (g.name, _geom_rot(spec, g), ref.geom(g.name).quat)
+        for g in spec.geoms
+        if g.name and not g.meshname and np.isnan(g.fromto[0])
+    ]
+    for name, rot, quat in resolved:
+        if not np.allclose(rot, _rot(quat), atol=1e-6):
+            raise NotImplementedError(
+                f"{name!r} does not resolve to its compiled orientation, so its scaling axes are unknown; an attached spec "
+                "with its own angle unit or euler sequence needs MuJoCo 3.6 or later."
+            )
 
 
 def _mesh_scales(spec: mujoco.MjSpec, factors: Mapping[str, np.ndarray]) -> dict[str, np.ndarray]:
@@ -495,6 +545,8 @@ def _apply(spec: mujoco.MjSpec, plan: _Plan, total_mass: float | None) -> None:
     # Compile copies only: compiling ``spec`` itself would freeze its frames.
     ref = spec.copy().compile()
     ids = [ref.body(b.name).id if b.name else i for i, b in enumerate(spec.bodies)]
+    if factors:
+        _check_orientations(spec, ref, ids)
     rescaled = None
     if total_mass is not None:
         rescaled = _subject_bodies(spec, ref, ids, plan.subject)
@@ -763,6 +815,10 @@ def _rescale_mesh(spec: mujoco.MjSpec, name: str, scale: np.ndarray) -> None:
             value = getattr(mesh, key)
             attributes[key] = np.array(value, copy=True) if key in arrays else value
     attributes["scale"] *= scale
+    # The mesh found its file through its own spec's meshdir; the replacement lives in the root spec.
+    meshdir = getattr(_compiler(spec, mesh), "meshdir", "")
+    if meshdir and os.path.isabs(meshdir) and attributes.get("file") and not os.path.isabs(attributes["file"]):
+        attributes["file"] = os.path.join(meshdir, attributes["file"])
     classname = mesh.classname
     spec.delete(mesh)
     replacement = spec.add_mesh(**attributes)

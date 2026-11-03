@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-03 — Scaling attached specs, review tests
+Changed: myo_sim/scaling.py, tests/test_scaling.py, docs/wiki/model-scaling.md, docs/wiki/log.md
+Why: an attached spec's angle unit, euler sequence and meshdir were read from the root spec, so scaling a MyoSuite-style scene put factors on the wrong axes or lost its meshes; also carry over MyoSuite #525's remaining scaling tests and test the digit at real flexion.
+
 ## 2026-11-03 — Model scaling
 Changed: myo_sim/scaling.py, myo_sim/opensim_scales.py, myo_sim/scaling_checks.py, myo_sim/__init__.py, tests/test_scaling.py, tests/test_opensim_comparison.py, tests/data/opensim_scaling/, scripts/validate_opensim_scaling.py, docs/wiki/model-scaling.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, README.md, CHANGELOG.md
 Why: scale a model to known factors in myo_sim itself, compared with OpenSim's ModelScaler on Rajagopal2016. No model changes.
