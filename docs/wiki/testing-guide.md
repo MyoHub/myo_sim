@@ -17,6 +17,9 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |
 | `test_leg_muscle_symmetry.py` | Leg muscle moment arms are symmetric between left and right | After `myolegs` XML changes |
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
+| `test_scaling.py` | `scale_spec` rules on synthetic specs, `myolegs` and `myofullbody`: exact similarity, per-axis factors, refusals, couplings, ties, keyframes, OpenSim files, point fits, refit, checks | After `scaling*.py` or `opensim_scales.py` changes, and after adding bodies, joints or tendon types |
+| `test_opensim_comparison.py` | `scale_spec` on `myolegs` against stored OpenSim `ModelScaler` results on Rajagopal2016 (no OpenSim needed), with mutation checks of the bounds | After scaling or leg geometry changes; regenerate the reference with `scripts/validate_opensim_scaling.py` only if OpenSim's side changes |
+| `test_opensim_pose_comparison.py` | The same over a pose grid: moment arms, fibre length, tendon force and torque of six leg muscles, joint centres and sole points against a stored OpenSim half, with mutation checks of the bounds and a self-regression of the myo_sim half | After scaling or leg geometry changes; run `scripts/validate_opensim_scaling.py --refresh-myo-sim` after a deliberate change on the myo_sim side |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
 

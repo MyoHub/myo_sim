@@ -65,7 +65,7 @@ jobs:
           fi
 
       - name: Report versions under test
-        run: uv run python -c "import sys, mujoco; print('python', sys.version); print('mujoco', mujoco.__version__)"
+        run: uv run --no-sync python -c "import sys, mujoco; print('python', sys.version); print('mujoco', mujoco.__version__)"
 
       - name: Run tests
-        run: uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py -q
+        run: uv run --no-sync pytest tests/ -x -n auto --ignore=tests/test_equivalence.py -q
