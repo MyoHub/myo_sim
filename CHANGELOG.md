@@ -2,8 +2,11 @@
 
 Model changes that alter actuators, joints, sites or dynamics are breaking for downstream environments and trained policies. List them here; they ship together in the next release tag.
 
-## Unreleased
+## 0.2.4
 
+The body of 0.2.3 with fixes. Apart from the items below, every `myofullbody` model array is identical to 0.2.3, and tendon lengths and actuator forces match on 6000 random postures. Policies trained on 0.2.3 keep working: see the pull request of this release for the rollouts.
+
+- **`standing` keyframe (`myofullbody`, `myolegs`, `myolegs_abdomen`).** `myo_sim.load()` and `load_model()` now return `nkey == 1` for these models: the joint couplings hold, the feet are on the floor, and in `myofullbody` the arms clear the thorax by 6.2 mm. `qpos0` and every model parameter are unchanged. `load_spec()` and `build_spec()` leave the keyframe out unless asked, so joints can still be deleted from their specs. Downstream: code that reads `key_qpos[0]` when `nkey > 0` starts from this pose if its model comes from `load()` or `load_model()`. See `docs/wiki/standing-keyframe.md`.
 - **Abdomen variants, finger-collision option and mirrored cameras (#150).** Changes by part:
   - `myolegs_abdomen` and `myotorso_abdomen` no longer apply an extra −90° yaw at the root, so they face −y like every other model.
   - `myolegs_abdomen` gets the 26 leg-to-leg contact pairs of `myolegs`.

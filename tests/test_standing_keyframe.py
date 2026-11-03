@@ -175,6 +175,20 @@ def test_add_after_deleting_joints_matches_by_name():
     assert model.key_qpos[0][2] == pytest.approx(reference.key_qpos[0][2])
 
 
+def test_add_after_adding_a_joint_matches_by_name():
+    reference = myo_sim.load_model("myofullbody")
+    spec = myo_sim.load_spec("myofullbody")
+    body = spec.body("femur_r").add_body(name="extra")
+    body.add_joint(name="extra_hinge", axis=[1, 0, 0], type=mujoco.mjtJoint.mjJNT_HINGE, range=[-1, 1])
+    body.add_geom(type=mujoco.mjtGeom.mjGEOM_SPHERE, size=[0.01, 0, 0], mass=0.01)
+    myo_sim.add_standing_keyframe(spec, "myofullbody")
+    model = spec.compile()
+    want = _joint_values(reference, _standing_qpos(reference))
+    got = _joint_values(model, model.key_qpos[0])
+    assert got.pop("extra_hinge") == 0.0
+    assert all(got[name] == pytest.approx(want[name]) for name in want)
+
+
 def test_adding_twice_keeps_one_keyframe():
     spec = myo_sim.load_spec("myofullbody", build_kwargs={"standing_keyframe": True})
     myo_sim.add_standing_keyframe(spec, "myofullbody")

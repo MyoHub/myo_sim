@@ -32,6 +32,10 @@ This generates:
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
+## Keyframes
+
+`build_spec()` adds no keyframe unless called with `build_kwargs={"standing_keyframe": True}`; `myo_sim.load_model()` passes that for the models with a standing keyframe. See `docs/wiki/standing-keyframe.md`.
+
 ## MODEL_REGISTRY and BuildStrategy
 
 `BuildStrategy` is a `str` enum. Each value maps to one builder function in `SPEC_BUILDERS`. Every builder returns an `MjSpec`.

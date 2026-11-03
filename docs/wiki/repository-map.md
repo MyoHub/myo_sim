@@ -21,6 +21,8 @@ myo_sim/              # installable Python package
     compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
+    keyframes.py      # add_standing_keyframe(), reads data/standing_keyframes.json
+    data/             # tables written by scripts/, with provenance
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -31,6 +33,7 @@ tests/
   test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
+  test_standing_keyframe.py        # the standing keyframe: pose quality, attach, spec editing
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -47,4 +50,5 @@ docs/wiki/            # canonical wiki location
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
+| Change the standing pose | `scripts/generate_standing_keyframes.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |

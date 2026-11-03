@@ -42,7 +42,9 @@ def _joint_adr(model: mujoco.MjModel, name: str) -> int:
 def _floor_distance(model: mujoco.MjModel, data: mujoco.MjData, geom_name: str) -> float:
     """Distance of a geom to the nearest collidable world geom (the floor, or the stage of the default scene)."""
     geom = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, geom_name)
-    world = [g for g in range(model.ngeom) if model.geom_bodyid[g] == 0 and (model.geom_contype[g] or model.geom_conaffinity[g])]
+    world = [
+        g for g in range(model.ngeom) if model.geom_bodyid[g] == 0 and (model.geom_contype[g] or model.geom_conaffinity[g])
+    ]
     return min(mujoco.mj_geomDistance(model, data, g, geom, 3.0, np.zeros(6)) for g in world)
 
 
@@ -177,7 +179,9 @@ def rollout_extremes(model: mujoco.MjModel, qpos: np.ndarray, duration: float = 
 
 def report() -> None:
     """Print the measurements of the wiki page."""
-    print("| Model | Pose | Root z (m) | Coupling error (mm or mrad) | Contacts at t = 0 | Largest force (N) | Sum / weight | Deepest (mm) |")
+    print(
+        "| Model | Pose | Root z (m) | Coupling error (mm or mrad) | Contacts at t = 0 | Largest force (N) | Sum / weight | Deepest (mm) |"
+    )
     print("|---|---|---|---|---|---|---|---|")
     stored = []
     for name in MODELS:
@@ -210,7 +214,9 @@ def report() -> None:
             f"{off[0]:.2f} ({off[1]}) | {-slow[2] * 1e3:.2f} |"
         )
     print()
-    print("| Model | Pose | Shortest | Longest | Outside [lmin, lmax] | Over 1.2 | Largest passive force (N), muscle | Largest change from `qpos0` |")
+    print(
+        "| Model | Pose | Shortest | Longest | Outside [lmin, lmax] | Over 1.2 | Largest passive force (N), muscle | Largest change from `qpos0` |"
+    )
     print("|---|---|---|---|---|---|---|---|")
     at_qpos0 = {}
     for name, label, model, _, data in stored:
@@ -225,6 +231,18 @@ def report() -> None:
             f"| {name} | {label} | {lengths.min():.3f} | {lengths.max():.3f} | {outside} | {int((lengths > 1.2).sum())} | "
             f"{abs(data.actuator_force[strongest]):.0f}, {muscle} | {change.max():.3f}, {moved} |"
         )
+    print()
+    print("| Model | Heel share of foot load at t = 0 | Forefoot share | Centre of mass ahead of the ankle (cm) |")
+    print("|---|---|---|---|")
+    for name, label, model, _, data in stored:
+        if label != "`standing`":
+            continue
+        contacts, _ = t0_contacts(model, data)
+        heel = sum(force for geom1, geom2, force, _ in contacts if "bofoot" not in geom1 + geom2)
+        forefoot = sum(force for geom1, geom2, force, _ in contacts if "bofoot" in geom1 + geom2)
+        ankle = 0.5 * (data.body("talus_r").xpos[1] + data.body("talus_l").xpos[1])
+        ahead = ankle - data.subtree_com[0][1]  # the models face -y
+        print(f"| {name} | {heel / (heel + forefoot):.0%} | {forefoot / (heel + forefoot):.0%} | {ahead * 100:.1f} |")
 
 
 def main() -> None:
