@@ -663,10 +663,9 @@ FUSED_XML = """<mujoco><compiler fusestatic="true"/><worldbody>
 
 FLEX_XML = """<mujoco><worldbody><body name="a"><geom size=".1"/></body><body name="b" pos="1 0 0"><geom size=".1"/></body>
 <body name="c" pos="0 1 0"><geom size=".1"/></body></worldbody>
-<deformable><flex name="f" dim="2" body="a b c" vertex="0 0 0 0 0 0 0 0 0" element="0 1 2"/></deformable></mujoco>"""
+<deformable><flex name="f" dim="2" body="a b c" vertex="0 0 0 0 0 0 0 0 0" element="0 1 2"><edge damping="1"/></flex></deformable></mujoco>"""
 
 
-@pytest.mark.filterwarnings("ignore::UserWarning")
 @pytest.mark.parametrize(
     "make,scales,total_mass,error",
     [

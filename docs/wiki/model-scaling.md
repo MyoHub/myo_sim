@@ -30,7 +30,7 @@ checks = check_scaled_model(model, spec.copy().compile())         # checks.passe
 | `scale_report(spec, scales)` | `ScaleReport`: per-body factors, `approximated_geoms`, `skipped`. |
 | `fit_length_ranges(spec, reference, ...)` | Returns a new spec with refitted muscle ranges, and R² per muscle. |
 | `check_scaled_model(model, reference, ...)` | `operating_range`, `moment_arm_signs`, `stability`, `constraints`. |
-| `model_digest(model)` | SHA-256 of a compiled model, independent of where its assets are. |
+| `model_digest(model)` | SHA-256 of a compiled model, independent of where its assets are. It changes with the MuJoCo version. |
 
 A refused scaling (`KeyError`, `ValueError`, `NotImplementedError`) raises before any edit. Bodies, joints, tendons and actuators stay in their order, so an environment's observation and action spaces keep their shape.
 

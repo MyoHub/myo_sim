@@ -166,8 +166,8 @@ def model_digest(model: mujoco.MjModel) -> str:
     """Hex SHA-256 of a compiled model's contents, independent of where its assets are.
 
     Every array, size, name and option counts, except the asset file paths and the sizes that
-    depend on them, so the same model has the same digest on any machine. Floats are hashed
-    exactly.
+    depend on them, so the same model has the same digest on any machine with the same MuJoCo
+    version. Another MuJoCo version compiles a different digest. Floats are hashed exactly.
 
     Args:
         model: The compiled model.
