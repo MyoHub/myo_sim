@@ -4,6 +4,28 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+**Summary for MyoSuite (v0.3.0, every entry below in detail).**
+
+| Model | nq / nv / nu on `dev` | nq / nv / nu now |
+| --- | --- | --- |
+| `myohand_r` | 23 / 23 / 39 | 32 / 32 / 47 |
+| `myohands` | 46 / 46 / 78 | 64 / 64 / 94 |
+| `myoarm_r` | 38 / 38 / 63 | 47 / 47 / 71 |
+| `myoarms` | 76 / 76 / 126 | 94 / 94 / 142 |
+| `myotorso` | 18 / 18 / 210 | unchanged |
+| `myotorso_arm_r` | 56 / 56 / 273 | 65 / 65 / 281 |
+| `myotorso_arms` | 94 / 94 / 336 | 112 / 112 / 352 |
+| `myolegs` | 35 / 34 / 80 | 35 / 34 / 86 |
+| `myolegs_abdomen` | 38 / 37 / 86 | 38 / 37 / 92 |
+| `myolegs26` | 47 / 46 / 26 | unchanged |
+| `myofullbody` | 129 / 128 / 416 | 171 / 170 / 510 |
+| `myohead` (new) | – | 24 / 24 / 72 |
+
+- **Renamed:** `_r` on every right-arm joint, actuator, tendon, geom and camera; `AdP` -> `AdPt`, `FPB` -> `FPBs`, `RI2` -> `DI1d`, `UI_UB5` -> `ADM`, `LU_RB2-5` -> `LUM1-4`, `UI_UB2` -> `PI1`, `RI3` -> `DI2`, `UI_UB3` -> `DI3`, `RI4` -> `PI2`, `UI_UB4` -> `DI4`, `RI5` -> `PI3`.
+- **New actuators:** per hand `AdPo`, `FPBd`, `DI1s`, `FDM`, `ODM`; per leg `pect`, `quad_fem`, `gem`; in `myofullbody` the 72 neck muscles, last.
+- **New joints:** per hand `cmc4_flexion`, `cmc5_flexion`, `node_LUM1-4`, `node_JT3-5`; in `myofullbody` 24 neck joints after the lumbar joints, so every arm and leg index moves. Build joint lists by name; filter `node_` joints and `lig_`, `node_`, `passive_` tendons from observations.
+- **Dynamics:** `vmax` 10 on the forearm and hand muscles makes hand movement 2-5 times faster for the same activation; rigid-tendon maps change leg and upper-arm fibre lengths and forces. All hand, arm, leg and full-body checkpoints need retraining and parity baselines regenerating. mujoco-warp needs `nconmax` >= 64 for hand models.
+
 - **Deep hip muscles (`myolegs`, `myolegs_abdomen`, `myofullbody`).** See `docs/wiki/hand-literature-comparison.md` (deep hip step) and the leg README.
   - **New actuators, tendons and sites:** `pect_r`, `quad_fem_r`, `gem_r`, `pect_l`, `quad_fem_l`, `gem_l`, tendons `<muscle>_r_tendon`, sites `<muscle>-P1_r` (pelvis) and `-P2_r` (femur), `_l` mirrored; from Gait2392 (Delp et al. 1990; CC BY 3.0, `build/data/LICENSE-Gait2392.txt`). `myolegs26` is unchanged. Joints, qpos and equalities unchanged.
   - **Counts:** `myolegs` nu 80 -> 86, `myolegs_abdomen` 86 -> 92, `myofullbody` 504 -> 510; appended after the other leg muscles, so neck actuator indices move by 6 in `myofullbody` and other actuator indices stay.

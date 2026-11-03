@@ -11,6 +11,7 @@ reference passive moment of a table row.
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -41,6 +42,19 @@ def read_generated_block(path: Path, script: str, label: str | None = None) -> s
     if begin not in text:
         return None
     return text.split(begin, 1)[1].split(end, 1)[0]
+
+
+def blocks_match(written: str | None, expected: str, tol: float = 1e-8) -> bool:
+    """Whether two generated blocks agree: the same text apart from numbers within *tol*.
+
+    Scripts derive some values from the compiled model, whose last digits differ between MuJoCo versions.
+    """
+    if written is None:
+        return False
+    pattern = re.compile(r"-?\d+\.?\d*(?:[eE][-+]?\d+)?")
+    if pattern.sub("#", written) != pattern.sub("#", expected):
+        return False
+    return all(abs(float(a) - float(b)) <= tol for a, b in zip(pattern.findall(written), pattern.findall(expected)))
 
 
 def write_generated_block(path: Path, script: str, block: str, closing_tag: str, label: str | None = None) -> None:

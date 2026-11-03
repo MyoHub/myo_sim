@@ -12,12 +12,12 @@ MuJoCo musculoskeletal models for [MyoSuite](https://github.com/facebookresearch
 | [**MyoLeg**](myo_sim/models/leg/README.md)<br>`myolegs` | [**MyoArm**](myo_sim/models/arm/README.md)<br>`myoarms` | [**MyoTorso**](myo_sim/models/torso/README.md)<br>`myotorso` |
 |:---:|:---:|:---:|
 | <img src="docs/images/models/myolegs.png" alt="MyoLeg" width="280"> | <img src="docs/images/models/myoarm_r.png" alt="MyoArm" width="280"> | <img src="docs/images/models/myotorso.png" alt="MyoTorso" width="280"> |
-| 29 DoF · 80 muscles | 38 DoF · 63 muscles | 18 DoF · 210 muscles |
+| 34 DoF · 86 muscles | 47 DoF · 71 muscles | 18 DoF · 210 muscles |
 
 | [**MyoHand**](myo_sim/models/arm/README.md)<br>`myohands` | [**MyoFullBody**](docs/wiki/build-and-composition.md)<br>`myofullbody` | [**MyoHead**](myo_sim/models/head/README.md)<br>`myohead` |
 |:---:|:---:|:---:|
 | <img src="docs/images/models/myohand_r.png" alt="MyoHand" width="280"> | <img src="docs/images/models/myofullbody.png" alt="MyoFullBody" width="280"> | <img src="docs/images/models/myohead.png" alt="MyoHead" width="280"> |
-| 23 DoF · 39 muscles | 147 DoF · 488 muscles | 24 DoF · 72 muscles |
+| 32 DoF · 47 muscles | 170 DoF · 510 muscles | 24 DoF · 72 muscles |
 
 | [**MyoLeg26**](myo_sim/models/leg/README.md)<br>`myolegs26` |
 |:---:|

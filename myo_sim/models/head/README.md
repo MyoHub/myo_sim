@@ -16,7 +16,7 @@ Head-and-neck geometry from the existing HAT segment, with a muscular cervical c
 | Primary joints | myohead_pitch1, myohead_roll1, myohead_yaw1, myohead_pitch2, myohead_roll2, myohead_yaw2 |
 
 Use `myo_sim.load("myohead")` for the fixed standalone neck. `myo_sim.load("myofullbody")`
-has 147 joints and 488 actuators, including the neck's 24 joints and 72 actuators.
+has 165 joints and 510 actuators, including the neck's 24 joints and 72 actuators.
 The neck actuators are the last 72 actuators; the neck joints follow the lumbar
 joints, so arm and leg `qpos`/`qvel` indices move by 24. Controllers and
 checkpoints trained on the former rigid-head model (123 joints, 416 actuators)
@@ -48,7 +48,7 @@ and the precise scope of acceptance. <!-- TODO: review fidelity against measured
 
 ## Mass and inertia
 
-- **Head and neck mass.** The skull and the seven cervical segments together carry 6.94 % of body mass, the de Leva (1996) male head-and-neck share; in `myofullbody` that is 5.829 kg of 83.99 kg. The skull keeps the source mass of 4.30 kg. The cervical segments share the remaining 1.529 kg in the source proportions (each source mass × 0.4473; the source gives 3.42 kg in total). The torso body carries 14.897 kg, the OpenSim trunk mass without the head it already contained, so head and neck mass is not counted twice.
+- **Head and neck mass.** The skull and the seven cervical segments together carry 6.94 % of body mass, the de Leva (1996) male head-and-neck share; in `myofullbody` that is 5.829 kg of 84.08 kg (6.93 %). The skull keeps the source mass of 4.30 kg. The cervical segments share the remaining 1.529 kg in the source proportions (each source mass × 0.4473; the source gives 3.42 kg in total). The torso body carries 14.897 kg, the OpenSim trunk mass without the head it already contained, so head and neck mass is not counted twice.
 - **Rigid head.** The part models keep the rigid head; its `head` body carries 5.848 kg, 6.94 % of the 84.26 kg body with the rigid head (the convention of MyoHub/myo_sim#138), with the same torso mass.
 - **Cervical inertias.** The source inertias are placeholders (0.02, 0.08, 0.02 kg·m², which violate the triangle inequality), and the converter had replaced them with 0.04 kg·m². Each segment is now a slice of a solid circular cylinder of neck tissue with radius r = 0.06 m (neck circumference about 38 cm) and height h equal to its vertical spacing in the chain (15–19 mm): I_axial = m r²/2 about the neck axis and I_transverse = m (3 r² + h²)/12, giving 1.7–4.7·10⁻⁴ kg·m². As a check, such a cylinder of tissue (1050 kg/m³) over the 118 mm chain weighs 1.40 kg, against the 1.53 kg assigned.
 - **Joint armature.** With the physical inertias, muscle force-velocity damping on the light segments makes explicit Euler ring at the 2 ms step, so the neck joints use `armature="0.01"`, the value of the torso and leg joints (previously 1e-5). This is a numerical setting, not anatomy.

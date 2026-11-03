@@ -18,7 +18,7 @@ import pytest
 import myo_sim
 from myo_sim.build import compose
 from myo_sim.build.hand import tendon_path
-from myo_sim.build.hand_data import read_generated_block
+from myo_sim.build.hand_data import blocks_match, read_generated_block
 
 SCRIPTS = Path(__file__).resolve().parents[1] / "scripts"
 
@@ -40,10 +40,12 @@ def test_generated_blocks_are_what_the_script_writes() -> None:
     em = _script()
     table = em.load_table()
     for body, block in em.chain_blocks(table, em.skeleton()).items():
-        assert read_generated_block(compose.RIGHT_ARM_CHAIN_XML, em.SCRIPT, body) == block, body
+        assert blocks_match(read_generated_block(compose.RIGHT_ARM_CHAIN_XML, em.SCRIPT, body), block), body
     for row in table["muscles"]:
-        assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, em.SCRIPT, row["name"]) == em.tendon_block(table, row)
-    assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, em.SCRIPT) == em.ligament_block(table)
+        assert blocks_match(
+            read_generated_block(compose.RIGHT_ARM_TENDONS_XML, em.SCRIPT, row["name"]), em.tendon_block(table, row)
+        )
+    assert blocks_match(read_generated_block(compose.RIGHT_ARM_TENDONS_XML, em.SCRIPT), em.ligament_block(table))
 
 
 def _band_muscles() -> dict[str, int]:

@@ -16,6 +16,7 @@ import myo_sim
 from myo_sim.build import compose
 from myo_sim.build.hand_data import (
     APPLIED_STATUSES,
+    blocks_match,
     load_intrinsic_table,
     load_passive_moment_table,
     passive_moment,
@@ -65,7 +66,9 @@ def fullbody() -> mujoco.MjModel:
 def test_generated_blocks_are_what_the_scripts_write() -> None:
     """The generated blocks of the arm tendon and muscle files are the scripts' output from the JSON tables."""
     fit = _script("fit_passive_moments")
-    assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, fit.SCRIPT) == fit.tendon_block(load_passive_moment_table())
+    assert blocks_match(
+        read_generated_block(compose.RIGHT_ARM_TENDONS_XML, fit.SCRIPT), fit.tendon_block(load_passive_moment_table())
+    )
     gen = _script("generate_hand_intrinsic_muscles")
     table = load_intrinsic_table()
     ranges = gen.architecture_lengthranges(table)
@@ -74,8 +77,12 @@ def test_generated_blocks_are_what_the_scripts_write() -> None:
         *["OP", "DI1d", "PI1", "LUM1", "DI2", "LUM2", "DI3", "PI2", "LUM3", "DI4", "PI3", "LUM4", "ADM"],
     ]
     for label in gen.block_labels(table):
-        assert read_generated_block(compose.RIGHT_ARM_TENDONS_XML, gen.SCRIPT, label) == gen.tendon_block(table, label)
-        assert read_generated_block(compose.RIGHT_ARM_MUSCLES_XML, gen.SCRIPT, label) == gen.muscle_block(table, ranges, label)
+        assert blocks_match(
+            read_generated_block(compose.RIGHT_ARM_TENDONS_XML, gen.SCRIPT, label), gen.tendon_block(table, label)
+        )
+        assert blocks_match(
+            read_generated_block(compose.RIGHT_ARM_MUSCLES_XML, gen.SCRIPT, label), gen.muscle_block(table, ranges, label)
+        )
     text = compose.RIGHT_ARM_CHAIN_XML.read_text()
     assert gen.chain_with_sites(text, table) == text
 
@@ -431,6 +438,13 @@ def test_intrinsic_moment_arms_act_as_named() -> None:
         assert (abduction < 0) == is_radial and abs(abduction) > 1e-3, m
 
 
+def test_block_comparison_rejects_a_real_difference() -> None:
+    block = '<site name="a" pos="0.1 -0.2 3e-05"/>'
+    assert blocks_match(block, '<site name="a" pos="0.1 -0.2 3.00001e-05"/>')
+    assert not blocks_match(block, '<site name="a" pos="0.1 -0.2 3.1e-05"/>')
+    assert not blocks_match(block, '<site name="b" pos="0.1 -0.2 3e-05"/>')
+
+
 def test_fitted_rows_reproduce_from_their_source_curves() -> None:
     """The stored springs are what scripts/fit_passive_moments.py fits from each row's source curve."""
     pytest.importorskip("scipy")
@@ -443,6 +457,7 @@ def test_fitted_rows_reproduce_from_their_source_curves() -> None:
         refit = copy.deepcopy(row)
         fit.fit_row(refit, joint_range)
         q = np.linspace(*joint_range, 50)
-        np.testing.assert_allclose(passive_moment(refit, q), passive_moment(row, q), atol=1e-9, err_msg=row["joint"])
+        # 1e-7 N m: the fit sees muscle forces whose last digits differ between MuJoCo versions (fit errors are 1e-2 N m).
+        np.testing.assert_allclose(passive_moment(refit, q), passive_moment(row, q), atol=1e-7, err_msg=row["joint"])
         if "rmse_Nm" in row["fit"]:  # the springs never make the total (muscles + springs) worse than the muscles alone
             assert row["fit"]["rmse_Nm"] <= row["fit"]["rmse_without_spring_Nm"], row["joint"]

@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import copy
+import importlib.metadata
 import importlib.util
 from functools import cache
 from pathlib import Path
@@ -28,7 +29,7 @@ import pytest
 
 import myo_sim
 from myo_sim.build.compose import RIGHT_ARM_ASSETS_XML, RIGHT_ARM_CHAIN_XML, RIGHT_ARM_TENDONS_XML
-from myo_sim.build.hand_data import place_tendon_nodes, read_generated_block
+from myo_sim.build.hand_data import blocks_match, place_tendon_nodes, read_generated_block
 
 SCRIPT = Path(__file__).parents[1] / "scripts" / "generate_extrinsic_muscles.py"
 NODES = ("node_JT3", "node_JT4", "node_JT5")
@@ -59,11 +60,13 @@ def test_generated_blocks_are_what_the_script_writes() -> None:
     gen.fds5_force(table)
     name = gen.SCRIPT
     for node_name, node in table["juncturae"]["nodes"].items():
-        assert read_generated_block(RIGHT_ARM_CHAIN_XML, name, f"node {node_name}") == gen.chain_node_block(node_name, node)
-    assert read_generated_block(RIGHT_ARM_CHAIN_XML, name, "FCU hamate") == gen.fcu_block(table)
-    assert read_generated_block(RIGHT_ARM_CHAIN_XML, name, "ECU groove") == gen.ecu_block(table)
-    assert read_generated_block(RIGHT_ARM_ASSETS_XML, name, "juncturae ties") == gen.equality_block(table)
-    assert read_generated_block(RIGHT_ARM_TENDONS_XML, name) == gen.tendon_block(table)
+        assert blocks_match(
+            read_generated_block(RIGHT_ARM_CHAIN_XML, name, f"node {node_name}"), gen.chain_node_block(node_name, node)
+        )
+    assert blocks_match(read_generated_block(RIGHT_ARM_CHAIN_XML, name, "FCU hamate"), gen.fcu_block(table))
+    assert blocks_match(read_generated_block(RIGHT_ARM_CHAIN_XML, name, "ECU groove"), gen.ecu_block(table))
+    assert blocks_match(read_generated_block(RIGHT_ARM_ASSETS_XML, name, "juncturae ties"), gen.equality_block(table))
+    assert blocks_match(read_generated_block(RIGHT_ARM_TENDONS_XML, name), gen.tendon_block(table))
 
 
 @pytest.mark.parametrize("name", ["myohand_r", "myohands", "myoarm_r", "myoarms", "myofullbody"])
@@ -221,6 +224,8 @@ def _cpu_warp_differences(model: mujoco.MjModel) -> dict[str, float]:
 def test_wrap_side_lengths_agree_on_cpu_and_mujoco_warp() -> None:
     model = myo_sim.load_spec("myoarm_r").compile()
     assert max(_cpu_warp_differences(model).values()) < 1e-6
+    if tuple(int(x) for x in importlib.metadata.version("mujoco-warp").split(".")[:2]) >= (3, 16):
+        return  # mujoco-warp 3.16 fixed the inside wrap (mujoco_warp#1713), so there is no difference left to detect
     # Negative control: each side site at its geom's centre (inside wrap) does not agree.
     table = _script().load_table()["wrap_sides"]["muscles"]
     for side in table.values():

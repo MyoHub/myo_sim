@@ -1987,11 +1987,27 @@ revised hand. Items that a later step resolved say so.
   points outside); after S7 25.2 % (the junctura link holds the middle finger against the ring finger's
   extensor); after the EDC2 wrap change 24.8 %; after the JT3/JT5 tie fix 29.6 %; after the wrap-side revision
   27.3 %. Since the measured-share revision the band is Kong et al. 2011's measured shares at 100 % MVC
-  (21.1 ± 4.7 / 38.5 ± 4.2 / 25.5 ± 4.7 / 15.0 ± 4.7 %): the model's 30.0 / 27.3 / 19.0 / 23.7 % lies outside it
-  for every finger (Amis 1987, cylinder grasp without SDs: 30 / 30 / 22 / 18 %); after the ECU re-route
-  31.3 / 27.3 / 20.4 / 21.0 %; the protocol keeps every
+  (21.1 ± 4.7 / 38.5 ± 4.2 / 25.5 ± 4.7 / 15.0 ± 4.7 %). The model's shares at 0.15 s moved 30.0 / 27.3 / 19.0 / 23.7 % (wrap
+  sides) -> 31.0 / 17.2 / 20.8 / 30.9 % (force-velocity step: the faster muscles reach the settled distribution sooner, settled
+  middle finger 16.3 %) -> 35.9 / 10.3 / 13.9 / 39.8 % (ECU), outside the band for every finger (Amis 1987, cylinder grasp without
+  SDs: 30 / 30 / 22 / 18 %). The middle finger carries a quarter of the measured share. The landscape is flat: a second optimisation of
+  the same hand gave 319.0 N and 30.1 / 16.3 / 22.1 / 31.5 %, with 1.17 mm penetration, so differences of up to 7 points
+  between steps are not model changes. The grip itself depends on the MuJoCo version (cached optimum 313.8 N on 3.17, 328.1 N on
+  3.9). the protocol keeps every
   finger intrinsic at full activation, and LU_RB3's 98 N MCP flexion (1225 N/cm2 implied) is gone. The
   settled grip is 267 N (in vivo 402 +- 131 N). ARMS's shares are model values, not measurements.
+- **Free speed (force-velocity step):** with `vmax` 10 peak free speeds under full activation of one joint's flexors, wrist / thumb CMC /
+  middle-finger MCP, are 14.2 / 12.2 / 18.9 rad/s, against 6.5 / 6.8 / 9.1 on dev (table row). No published target is used, and
+  movement under a given activation is 2-5 times faster than on the earlier models. Check against measured peak speeds and in tasks.
+- **Mass of wrap geoms in the hand (found with the neck step):** wrap geoms of the class `myoarm_wrap` carry mass through the default
+  density (also on dev), so the resized EDM cylinder adds 40.9 g to each lunate (163.8 -> 204.7 g). `myofullbody` is 84.08 kg. The torso
+  and its wrap geoms were fixed earlier (`mass="0"`); the arm's are not changed here.
+- **Falling-head comparison of the neck:** recorded with the source masses, the 0.04 kg m2 cervical inertias and armature 1e-5, not re-run
+  (`docs/validation/neck/README.md`). The neutral strength is re-measured.
+- **Deep hip muscles in walking:** static tests pass (deep hip step); a comparison of walking with trained policies is still open. Their
+  peak forces are Gait2392's; Rajagopal's would be larger.
+- **Gallery images:** `docs/images/models/` were rendered before the hand rebuild and the deep hip muscles came in; regenerate with
+  `scripts/render_composed_models.py` before the release.
 - **Extensor share c = 1.0:** fitted by weighted least squares to the index EDC2 and EIP DIP and PIP
   moment arms (An et al. 1983; Lee et al. 2008b; unbounded optimum 1.09, `extensor-mechanism.md`). Lee et
   al. 2008a measured a nine-posture mean of 0.39 (0.72 with the finger extended, 0.25-0.31 with the IP
