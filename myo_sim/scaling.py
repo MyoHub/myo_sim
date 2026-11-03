@@ -531,7 +531,9 @@ def _shape_is_approximate(geom: Any, s: np.ndarray, rot: np.ndarray) -> bool:
     scaled = np.diag(s) @ rot
     metric = scaled.T @ scaled
     if geom.type == mujoco.mjtGeom.mjGEOM_CYLINDER:
-        return not (np.isclose(metric[0, 0], metric[1, 1]) and np.allclose(metric[:2, 2], 0.0, atol=1e-12))
+        # Turned about its own axis, its section can stretch equally along both axes and still be an ellipse.
+        circular = np.isclose(metric[0, 0], metric[1, 1]) and np.isclose(metric[0, 1], 0.0, atol=1e-12)
+        return not (circular and np.allclose(metric[:2, 2], 0.0, atol=1e-12))
     if geom.type == mujoco.mjtGeom.mjGEOM_PLANE:
         return False
     return not np.allclose(metric - np.diag(np.diag(metric)), 0.0, atol=1e-12)

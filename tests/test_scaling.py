@@ -851,6 +851,22 @@ def test_report_lists_what_is_approximated_and_skipped(tmp_path: Path) -> None:
     assert any("unknown_segment" in item for item in scale_report(_myolegs(), path).skipped)
 
 
+@pytest.mark.parametrize(
+    "euler,factors,approximate",
+    [
+        ("0 0 45", (1.2, 1.0, 0.9), True),  # both radial factors are equal, but the section is an ellipse
+        ("0 0 30", (1.2, 1.0, 0.9), True),
+        ("0 0 0", (1.2, 1.0, 0.9), True),
+        ("0 0 45", (1.1, 1.1, 0.9), False),  # a circle stays a circle
+        ("0 30 0", (1.1, 1.1, 0.9), True),
+    ],
+)
+def test_report_lists_a_cylinder_whose_section_stops_being_a_circle(euler: str, factors: tuple, approximate: bool) -> None:
+    spec = mujoco.MjSpec.from_string(f"""<mujoco><worldbody><body name="b"><joint/>
+        <geom name="g" type="cylinder" size=".1 .2" euler="{euler}"/></body></worldbody></mujoco>""")
+    assert scale_report(spec, {"b": factors}).approximated_geoms == (["g"] if approximate else [])
+
+
 def test_rajagopal_segments_map_onto_myofullbody(tmp_path: Path) -> None:
     spec = _fullbody()
     assert _segments_for(spec).keys() == _COMPOSED_SEGMENTS.keys()
