@@ -76,6 +76,38 @@ Differences, and why they stay:
 - **Inertia under per-axis factors.** OpenSim models a body as a cylinder along its smallest principal moment; here the mass distribution stretches. A 10 kg body with moments (0.1, 0.2, 0.25) kg m² and factors (1.2, 0.8, 1.1) gives (0.0929, 0.2746, 0.2746) in OpenSim and (0.0826, 0.2981, 0.3168) here; both have mass 10.56 kg. The test in `test_scaling.py` checks the rule against a directly built stretched box.
 - **Muscle model.** These are the scaling ratios of two different muscle models, and they do not show that the models are equivalent or accurate for a measured person.
 
+**Over a pose grid.** `tests/test_opensim_pose_comparison.py`, adapted from MyoSuite PR #564, follows six right-leg muscles over twelve hip, knee and ankle poses (`pose_fixture.json`):
+- iliacus
+- rectus femoris
+- vastus medialis
+- soleus
+- medial gastrocnemius
+- tibialis anterior
+
+It also follows joint centres and sole points. Every muscle is at full activation, in each program's isometric state.
+
+`pose_reference.json` stores OpenSim's half, unchanged from PR #564, and a myo_sim half that the test uses as a baseline within 1e-7 relative.
+
+The table gives the largest scaling discrepancy over the grid, with its bound from `pose_tolerances.json` in brackets. The discrepancy is `(m_s - o_s) - s^k (m_n - o_n)` for one factor and `(m_s - m_n) - (o_s - o_n)` otherwise. Mass scaled with volume and mass kept at the nominal total give the same values. OpenSim's case with per-axis factors and kept mass has no counterpart here, because `total_mass` keeps no per-body mass distribution.
+
+| Quantity (12 poses, 6 muscles) | 1.1 everywhere | Per-axis factors (PR #564's set) |
+|---|---:|---:|
+| Joint centres, sole points and floor offset | 6e-16 m (1 nm) | 0.357 mm (0.40 mm) |
+| Moment arms | 2.4e-6 m (3.7e-6 m) | 0.74 mm (0.83 mm) |
+| Normalised fibre length | 5.2e-6 (7.8e-6) | 0.0193 (0.022) |
+| Normalised tendon force | 9.2e-6 (1.4e-5) | 0.0164 (0.0184) |
+| Torque of the six muscles | 0.0074 N m (0.012 N m) | 3.19 N m (3.6 N m) |
+
+The bounds follow PR #564's rule:
+- Under one factor, about 1.5 times the largest value, with a 1 nm floor for positions.
+- Under per-axis factors, 8 to 16 % above the largest value.
+
+The values are the same on MuJoCo 3.4, 3.9 and 3.17.
+
+Each bound rejects by at least 25 % the 5 % factor errors listed for it under `covers`. No cross-model bound sees the torso's factors, nor the z factors of the leg segments under per-axis factors; the self-regression catches those errors.
+
+`scripts/validate_opensim_scaling.py --refresh-myo-sim` remeasures the myo_sim half after a deliberate change.
+
 Effect of the refit on `myolegs`, as the 99th percentile of the normalised length difference from the unscaled model over 200 poses (R² of the fits in brackets):
 
 | Factors | After `scale_spec` | After `fit_length_ranges` | R², median and lowest |
@@ -96,7 +128,14 @@ Effect of the refit on `myolegs`, as the 99th percentile of the normalised lengt
 
 ## Tests
 
-`tests/test_scaling.py` runs on synthetic specs (nested rotated frames, every orientation type, a wrapping tendon, a coupled slide, a tied slide node, ligaments, an automatic peak force), `myolegs` and `myofullbody`. One factor must be an exact similarity: every site, spatial tendon and muscle length grows by `s`, muscle forces stay, mass grows by `s^3` and inertia by `s^5`. `tests/test_opensim_comparison.py` holds the table above to its bounds, and each bound must fail on a known-bad factor.
+`tests/test_scaling.py` runs on synthetic specs (nested rotated frames, every orientation type, a wrapping tendon, a coupled slide, a tied slide node, ligaments, an automatic peak force), `myolegs` and `myofullbody`. One factor must be an exact similarity: every site, spatial tendon and muscle length grows by `s`, muscle forces stay, mass grows by `s^3` and inertia by `s^5`. `tests/test_opensim_comparison.py` holds the first table of the comparison to its bounds, and each bound must fail on a known-bad factor.
+
+`tests/test_opensim_pose_comparison.py` does three things for the pose grid:
+- It holds the grid to its bounds.
+- It checks each bound against the mutations it covers.
+- It holds the myo_sim half to its stored baseline.
+
+Its OpenSim test runs only with `OPENSIM_PYTHON` set.
 
 ## References
 
