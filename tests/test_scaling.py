@@ -85,6 +85,7 @@ LEG_XML = """
 # arms), a spring on a joint angle, a spring tendon between two sites and a muscle that starts on the node.
 DIGIT_XML = """
 <mujoco>
+  <compiler angle="radian"/>
   <worldbody>
     <body name="base" pos="0 0 0.5">
       <geom type="box" size="0.02 0.02 0.05" mass="0.1"/>
