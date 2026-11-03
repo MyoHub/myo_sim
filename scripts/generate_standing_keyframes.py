@@ -94,7 +94,7 @@ def solve_pose(model: mujoco.MjModel) -> np.ndarray:
 
     low, high = -0.1, 0.1
     if heel_minus_forefoot(low) * heel_minus_forefoot(high) > 0:
-        raise ValueError(f"{model.names[:20]!r}: heel and forefoot do not level within +-0.1 rad")
+        raise ValueError("Heel and forefoot do not level within +-0.1 rad of ankle angle")
     for _ in range(50):
         mid = 0.5 * (low + high)
         if heel_minus_forefoot(low) * heel_minus_forefoot(mid) <= 0:
@@ -122,6 +122,10 @@ def model_entry(model: mujoco.MjModel, qpos: np.ndarray) -> dict:
 
 def build_table() -> dict:
     """The complete table as written to the data file."""
+    models = {}
+    for name in MODELS:
+        model = build_spec(name).compile()
+        models[name] = model_entry(model, solve_pose(model))
     return {
         "provenance": {
             "script": "scripts/generate_standing_keyframes.py",
@@ -135,7 +139,7 @@ def build_table() -> dict:
             ),
             "documentation": "docs/wiki/standing-keyframe.md",
         },
-        "models": {name: model_entry(model := build_spec(name).compile(), solve_pose(model)) for name in MODELS},
+        "models": models,
     }
 
 
@@ -253,7 +257,7 @@ def main() -> None:
         report()
         return
     STANDING_KEYFRAME_PATH.parent.mkdir(exist_ok=True)
-    STANDING_KEYFRAME_PATH.write_text(json.dumps(build_table(), indent=2, sort_keys=False) + "\n")
+    STANDING_KEYFRAME_PATH.write_text(json.dumps(build_table(), indent=2) + "\n")
     print(f"wrote {STANDING_KEYFRAME_PATH}")
 
 
