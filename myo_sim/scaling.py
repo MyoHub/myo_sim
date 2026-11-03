@@ -422,6 +422,40 @@ def _check_equalities(spec: mujoco.MjSpec, factors: Mapping[str, np.ndarray]) ->
             raise NotImplementedError(
                 f"Scaling a body of the connect/weld equality {eq.name!r} is not supported; anchor it on sites."
             )
+    explicit = [
+        eq
+        for eq in spec.equalities
+        if eq.type == mujoco.mjtEq.mjEQ_WELD and eq.objtype == mujoco.mjtObj.mjOBJ_BODY and np.any(np.asarray(eq.data)[6:10])
+    ]
+    if factors and explicit:
+        ref = spec.copy().compile()
+        for eq in explicit:
+            if _relative_pose_changes(ref, ref.body(eq.name1).id, ref.body(eq.name2).id if eq.name2 else 0, factors):
+                raise NotImplementedError(
+                    f"Scaling moves the bodies of the weld {eq.name!r} relative to each other, but its relpose is fixed; "
+                    "anchor it on sites, or leave relpose out so that it comes from the default pose."
+                )
+
+
+def _relative_pose_changes(ref: mujoco.MjModel, first: int, second: int, factors: Mapping[str, np.ndarray]) -> bool:
+    """Whether scaling changes the default-pose offset between two bodies neither of which is scaled."""
+
+    def chain(body: int) -> set[int]:
+        bodies = set()
+        while body:
+            bodies.add(body)
+            body = int(ref.body_parentid[body])
+        return bodies
+
+    scaled = {ref.body(name).id for name in factors}
+    # A body's position takes its parent's factors, so the path between the two must avoid scaled parents.
+    if any(ref.body_parentid[body] in scaled for body in chain(first) ^ chain(second)):
+        return True
+    # Root alignment moves a free-floating tree that holds a scaled body, relative to everything else.
+    roots = {int(ref.body_rootid[first]), int(ref.body_rootid[second])}
+    free = {int(ref.jnt_bodyid[j]) for j in range(ref.njnt) if int(ref.jnt_type[j]) == int(mujoco.mjtJoint.mjJNT_FREE)}
+    moved = {int(ref.body_rootid[body]) for body in scaled} & free
+    return len(roots) > 1 and bool(roots & moved)
 
 
 def _check_flexes(spec: mujoco.MjSpec, factors: Mapping[str, np.ndarray]) -> None:

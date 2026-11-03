@@ -857,6 +857,63 @@ def test_refused_scaling_leaves_the_spec_unchanged(
     assert _model_bytes(spec.copy().compile()) == before
 
 
+WELD_XML = """<mujoco><worldbody>
+<body name="arm" pos="0 0 1"><joint axis="0 1 0"/><geom size=".05"/>
+  <body name="forearm" pos="0 0 -.4"><geom size=".01"/>
+    <body name="hand" pos=".1 0 0"><joint axis="1 0 0"/><geom size=".01"/></body>
+    <body name="thumb" pos="0 .1 0"><geom size=".01"/></body>
+  </body>
+  <body name="other" pos="0 .2 0"><geom size=".01"/></body>
+</body>
+<body name="tool" pos="0 0 .6"><freejoint/><geom size=".05"/></body>
+</worldbody><equality><weld name="grip" {weld}/></equality></mujoco>"""
+
+
+def _equality_residual(model: mujoco.MjModel) -> float:
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    return float(np.abs(data.efc_pos[data.efc_type == mujoco.mjtConstraint.mjCNSTR_EQUALITY]).max())
+
+
+@pytest.mark.parametrize(
+    "bodies,scales",
+    [
+        ('body1="forearm" body2="tool"', {"arm": 2.0}),  # an unscaled child of a scaled body
+        ('body1="hand" body2="tool"', {"arm": 2.0}),
+        ('body1="hand" body2="other"', {"arm": 2.0}),
+    ],
+    ids=["child", "grandchild", "across-the-scaled-body"],
+)
+def test_a_weld_with_a_relpose_is_refused_when_the_scaling_moves_it(bodies: str, scales: dict) -> None:
+    spec = mujoco.MjSpec.from_string(WELD_XML.format(weld=f'{bodies} relpose="0 0 0 1 0 0 0"'))
+    with pytest.raises(NotImplementedError, match="grip.*relpose"):
+        scale_spec(spec, scales)
+
+
+def test_an_explicit_weld_below_the_scaled_bodies_stays() -> None:
+    """Both bodies follow the unscaled forearm, so their relative pose does not change."""
+    spec = mujoco.MjSpec.from_string(WELD_XML.format(weld='body1="hand" body2="thumb" relpose="-.1 .1 0 1 0 0 0"'))
+    scaled = scale_spec(spec, {"arm": 2.0}).compile()
+    np.testing.assert_allclose(_equality_residual(scaled), 0.0, atol=1e-12)
+
+
+def test_a_weld_without_a_relpose_starts_satisfied() -> None:
+    spec = mujoco.MjSpec.from_string(WELD_XML.format(weld='body1="forearm" body2="tool"'))
+    scaled = scale_spec(spec, {"arm": 2.0}).compile()
+    np.testing.assert_allclose(_equality_residual(scaled), 0.0, atol=1e-12)
+
+
+def test_a_root_lifted_by_scaling_refuses_an_explicit_weld_to_another_tree() -> None:
+    """Root alignment moves a free-floating subject, so a weld fixed to the world would start off."""
+    xml = """<mujoco><worldbody><body name="root" pos="0 0 1"><freejoint/><geom size=".1"/>
+    <body name="foot" pos="0 0 -.5"><joint axis="0 1 0"/><geom size=".1"/></body></body></worldbody>
+    <equality><weld name="pin" body1="root" {relpose}/></equality></mujoco>"""
+    with pytest.raises(NotImplementedError, match="pin.*relpose"):
+        scale_spec(mujoco.MjSpec.from_string(xml.format(relpose='relpose="0 0 1 1 0 0 0"')), {"foot": 1.2})
+    scaled = scale_spec(mujoco.MjSpec.from_string(xml.format(relpose="")), {"foot": 1.2}).compile()
+    np.testing.assert_allclose(_equality_residual(scaled), 0.0, atol=1e-12)
+
+
 def test_refusals_name_what_they_refuse() -> None:
     with pytest.raises(NotImplementedError, match="cube"):
         scale_spec(_shared_mesh_leg(), {"thigh": 1.1})
