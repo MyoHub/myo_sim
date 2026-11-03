@@ -5,49 +5,26 @@
 [![Python](https://img.shields.io/badge/python-%3E%3D3.10-blue.svg)](pyproject.toml)
 [![PyPI](https://img.shields.io/pypi/v/myo-sim)](https://pypi.org/project/myo-sim/)
 
-MyoSim is the MuJoCo musculoskeletal model library used by [MyoSuite](https://github.com/facebookresearch/myoSuite).
-It provides anatomically detailed XML models of the human arm, leg, torso, and hand,
-plus a Python package for loading and composing them.
+MuJoCo musculoskeletal models for [MyoSuite](https://github.com/facebookresearch/myoSuite) — arm, leg, torso, hand, neck, and full body.
 
 ## Models
 
-| Model | DoF | Muscles | Preview | Version |
-|---|---:|---:|---|---|
-| [**MyoLeg**](myo_sim/models/leg/README.md) | 29 | 80 | <img width="160" alt="Screenshot 2026-08-07 at 9 00 43 AM" src="https://github.com/user-attachments/assets/687308a3-29f0-4dfd-853f-5765e242dd62" />| stable |
-| [**MyoArm**](myo_sim/models/arm/README.md) | 38 | 63 | <img alt="myoarm_demo" src="https://github.com/user-attachments/assets/eab77a8b-18af-445c-826f-b050b2a6ed7d" width="160"/> | stable |
-| [**MyoTorso**](myo_sim/models/torso/README.md) (MyoBack) | 18 | 210 | <img src="https://github.com/cherylwang20/myo_sim/blob/cec3ce211a516a8798ed2edf9486a0814a0965da/MyoBack.png?raw=true" width="160"> | stable |
-| [**MyoHand**](myo_sim/models/arm/README.md) | 23 | 39 | <img src="https://user-images.githubusercontent.com/23240128/232323950-39552200-614b-4c73-aab5-8a78daa0f5f3.png" width="160"> | stable |
-| [**MyoFullBody**](docs/wiki/build-and-composition.md) | 123 | 416 | <img src="https://github.com/user-attachments/assets/37976636-1952-48a6-83c4-506722db4c82" width="160"/> | stable |
-| [**MyoLeg26**](myo_sim/models/leg/README.md) | 18 | 26 | <img width="160" alt="Screenshot 2026-08-07 at 8 56 17 AM" src="https://github.com/user-attachments/assets/26b733d5-e47f-4d70-b2cc-b9e6f0fd1e7c" /> |beta |
-| [**MyoFinger**](myo_sim/models/legacy/README.md) | 4 | 5 | <img src="https://user-images.githubusercontent.com/23240128/232323930-d1721f87-731b-432d-bafd-8c818ab4bbfe.png" width="160"> | legacy |
-| [**MyoElbow**](myo_sim/models/legacy/README.md) | 2 | 6 | <img src="https://user-images.githubusercontent.com/23240128/232323890-6a601a82-1d3c-4e12-901c-0fd9cf232691.png" width="160"> | legacy |
+| [**MyoLeg**](myo_sim/models/leg/README.md)<br>`myolegs` | [**MyoArm**](myo_sim/models/arm/README.md)<br>`myoarms` | [**MyoTorso**](myo_sim/models/torso/README.md)<br>`myotorso` |
+|:---:|:---:|:---:|
+| <img src="docs/images/models/myolegs.png" alt="MyoLeg" width="280"> | <img src="docs/images/models/myoarm_r.png" alt="MyoArm" width="280"> | <img src="docs/images/models/myotorso.png" alt="MyoTorso" width="280"> |
+| 29 DoF · 80 muscles | 38 DoF · 63 muscles | 18 DoF · 210 muscles |
 
-Legacy models ship in the pip package under `myo_sim/models/legacy/` and load via registry names such as `myoelbow`, `myofinger`, and `osl`. They are maintained for backwards compatibility only — see `myo_sim/models/legacy/README.md`.
+| [**MyoHand**](myo_sim/models/arm/README.md)<br>`myohands` | [**MyoFullBody**](docs/wiki/build-and-composition.md)<br>`myofullbody` | [**MyoHead**](myo_sim/models/head/README.md)<br>`myohead` |
+|:---:|:---:|:---:|
+| <img src="docs/images/models/myohand_r.png" alt="MyoHand" width="280"> | <img src="docs/images/models/myofullbody.png" alt="MyoFullBody" width="280"> | <img src="docs/images/models/myohead.png" alt="MyoHead" width="280"> |
+| 23 DoF · 39 muscles | 147 DoF · 488 muscles | 24 DoF · 72 muscles |
 
-## Buildable Models
+| [**MyoLeg26**](myo_sim/models/leg/README.md)<br>`myolegs26` |
+|:---:|
+| <img src="docs/images/models/myolegs26.png" alt="MyoLeg26" width="280"> |
+| 18 DoF · 26 muscles · beta |
 
-The following registered models can be compiled with `myo_sim.load_model("<name>")`:
-
-- `myotorso` — torso scaffold with torso muscles.
-- `myotorso_abdomen` — simple abdomen scaffold.
-- `myotorso_arm_r` — torso with the right arm only.
-- `myotorso_arms` — torso with the right arm plus a mirrored-left arm.
-- `myoarm_r` — passive anatomical torso scaffold with the right arm.
-- `myoarms` — passive anatomical torso scaffold with mirrored arms.
-- `myohand_r` — passive anatomical torso scaffold with the right hand derived from the pruned right arm.
-- `myohands` — passive anatomical torso scaffold with right and mirrored-left hands derived from pruned arms.
-- `myolegs` — passive anatomical torso scaffold with legs.
-- `myolegs26` — passive anatomical torso scaffold with reduced-muscle legs and simplified kinematic chain.
-- `myolegs_abdomen` — simple abdomen scaffold with legs.
-- `myofullbody` — full body with torso, mirrored arms, and legs.
-
-To generate compiled MuJoCo XML files for the primary composed assemblies, run:
-
-```bash
-uv run python -m myo_sim.build.compose --generate
-```
-
-This writes loadable XML files for `myoarms`, `myotorso`, `myolegs`, `myolegs26`, and `myofullbody` under `myo_sim/models/`. Treat these as generated snapshots for GUI viewing and compatibility; for source edits, update the component XML files and `myo_sim/build/compose.py`, then regenerate. Those downstream XMLs are not actively maintained.
+Legacy (`myofinger`, `myoelbow`, `osl`) ships under [`myo_sim/models/legacy/`](myo_sim/models/legacy/README.md) for backwards compatibility only.
 
 ## Install
 
@@ -58,24 +35,19 @@ pip install myo-sim
 ## Quickstart
 
 ```python
-import mujoco
 import myo_sim
 
-# Load a model by registry name
 model, data = myo_sim.load("myolegs")
 print(f"Joints: {model.njnt}, Muscles: {model.nu}")
 
-# Or compose another registered model
-model, data = myo_sim.load("myotorso")
-
-# Legacy models (backwards compatibility)
-model, data = myo_sim.load("myoelbow")
+model = myo_sim.load_model("myofullbody")  # includes the muscular neck
 ```
 
-```python
-# Compose a full-body MjSpec model
-model = myo_sim.load_model("myofullbody")
-print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")
+Other registered assemblies: `myotorso`, `myotorso_arms`, `myoarms`, `myohands`, `myolegs`, `myolegs26`, …
+See [`docs/wiki/build-and-composition.md`](docs/wiki/build-and-composition.md).
+
+```bash
+uv run python -m myo_sim.build.compose --generate   # write XML snapshots under myo_sim/models/
 ```
 
 ## Development
@@ -87,11 +59,9 @@ uv sync --dev
 uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full contributor guide.
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Citation
-
-If you find this repository useful in your research, please cite the following works:
 
 ```bibtex
 @misc{MyoSuite2022,

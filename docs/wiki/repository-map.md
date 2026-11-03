@@ -13,7 +13,7 @@ myo_sim/              # installable Python package
                       # (_tendon/_muscle hold script-generated blocks: hand intrinsic muscles, passive joint springs)
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
     torso/assets/     # myotorso_chain.xml (+abdomen variant), myotorso_muscle.xml, _tendon.xml, _assets.xml
-    head/assets/      # myohead_rigid_chain.xml, myohead_simple_assets.xml
+    head/assets/      # myohead_chain.xml, myohead_r_muscle.xml, myohead_r_tendon.xml, myohead_assets.xml, myohead_simple_assets.xml, myohead_rigid_chain.xml
     meshes/           # 127 shared STL files
     contacts/         # myoarm_contacts.xml, myolegs_contacts.xml, myofullbody_contacts.xml, myohand_self_contacts.xml (generated)
     scene/            # scene wrapper XMLs for rendering
@@ -52,6 +52,7 @@ tests/
   muscle_analysis_utils.py / muscle_symmetry_checks.py
   debug_muscle_leg.py / debug_muscle_torso.py / debug_muscle_bimanual.py
 docs/wiki/            # canonical wiki location
+docs/validation/      # concise literature validation reports and figures; not packaged
 ```
 
 ## Where to make each kind of change

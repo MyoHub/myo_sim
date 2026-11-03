@@ -63,7 +63,14 @@ def _character_forward_azimuth(model: mujoco.MjModel, data: mujoco.MjData) -> fl
     return float(np.degrees(np.arctan2(forward[1], forward[0])))
 
 
-def render_model(model: mujoco.MjModel, out_path: Path, key_name: str | None = None) -> None:
+def render_model(
+    model: mujoco.MjModel,
+    out_path: Path,
+    key_name: str | None = None,
+    *,
+    transparent: bool = False,
+    crop: bool = False,
+) -> None:
     data = mujoco.MjData(model)
     if key_name is not None:
         key_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_KEY, key_name)
@@ -85,8 +92,32 @@ def render_model(model: mujoco.MjModel, out_path: Path, key_name: str | None = N
     opt.sitegroup[:] = False  # hide muscle wrap-point/attachment sites -- clutter for a gallery snapshot
 
     with mujoco.Renderer(model, height=HEIGHT, width=WIDTH) as renderer:
-        renderer.update_scene(data, camera=cam, scene_option=opt)
-        pixels = renderer.render()
+        groups = model.geom_group.copy()
+        try:
+            if transparent:
+                model.geom_group[model.geom_bodyid == 0] = 5
+                opt.geomgroup[5] = False
+            renderer.update_scene(data, camera=cam, scene_option=opt)
+            if transparent:
+                renderer.scene.flags[mujoco.mjtRndFlag.mjRND_REFLECTION] = False
+                renderer.scene.flags[mujoco.mjtRndFlag.mjRND_SHADOW] = False
+            pixels = renderer.render()
+            if transparent:
+                renderer.enable_depth_rendering()
+                depth = renderer.render()
+                alpha = (depth < model.vis.map.zfar * model.stat.extent * 0.99).astype(np.uint8) * 255
+                pixels = np.dstack((pixels, alpha))
+                pixels[alpha == 0, :3] = 0  # black under transparency
+        finally:
+            model.geom_group[:] = groups
+
+    if crop and pixels.ndim == 3 and pixels.shape[2] == 4:
+        ys, xs = np.where(pixels[:, :, 3] > 0)
+        if len(xs):
+            pad = 28
+            x0, x1 = max(0, xs.min() - pad), min(pixels.shape[1], xs.max() + 1 + pad)
+            y0, y1 = max(0, ys.min() - pad), min(pixels.shape[0], ys.max() + 1 + pad)
+            pixels = pixels[y0:y1, x0:x1]
 
     from PIL import Image
 
@@ -105,7 +136,8 @@ def main() -> None:
             print(f"SKIP {name}: {exc}")
             continue
         out_path = OUT_DIR / f"{name}.png"
-        render_model(model, out_path)
+        plate = name in {"myohead", "myofullbody"}
+        render_model(model, out_path, transparent=plate, crop=name == "myofullbody")
         print(f"wrote {out_path}")
 
     for name, (xml_path, key_name) in sorted(STATIC_XML_TARGETS.items()):

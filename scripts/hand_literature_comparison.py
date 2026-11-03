@@ -530,6 +530,71 @@ def forearm_rotation(model: mujoco.MjModel) -> dict[str, Any]:
     return out
 
 
+def neck_strength() -> list[float]:
+    """Neutral strength of ``myohead``, flexion / extension / lateral bending / axial rotation (N m): the largest load the
+    muscles (activation in [0, 1]) balance on the six coordinates with gravity and passive force. The load is horizontal, 20 cm
+    above the skull-C1 joint and reported with the 32 cm C7-T1 lever of Vasavada et al. 2001; axial rotation is a pure moment."""
+    from scipy.optimize import linprog
+
+    import myo_sim
+
+    model = myo_sim.load_model("myohead")
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    coordinates = [f"myohead_{axis}{level}" for level in (1, 2) for axis in ("pitch", "roll", "yaw")]
+    couple = np.zeros((model.nv, 6))
+    for k, name in enumerate(coordinates):
+        couple[model.joint(name).dofadr[0], k] = 1.0
+    for e in range(model.neq):
+        j1, j2 = int(model.eq_obj1id[e]), int(model.eq_obj2id[e])
+        couple[model.jnt_dofadr[j1], coordinates.index(model.joint(j2).name)] = model.eq_data[e][1]
+    moment = np.zeros((model.nu, model.nv))
+    mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
+    lengthrange, acc0, length = model.actuator_lengthrange, model.actuator_acc0, data.actuator_length
+    gain = [
+        mujoco.mju_muscleGain(length[a], 0.0, lengthrange[a], acc0[a], model.actuator_gainprm[a][:9]) for a in range(model.nu)
+    ]
+    bias = [mujoco.mju_muscleBias(length[a], lengthrange[a], acc0[a], model.actuator_biasprm[a][:9]) for a in range(model.nu)]
+    active = couple.T @ (moment.T * np.array(gain))
+    rest = couple.T @ (moment.T @ np.array(bias) - data.qfrc_bias)
+    frame = data.xmat[model.body("neck").id].reshape(3, 3)
+    anterior, up, lateral = frame[:, 0], frame[:, 1], frame[:, 2]
+    joint = model.joint("myohead_pitch1").id
+    translation, rotation = np.zeros((3, model.nv)), np.zeros((3, model.nv))
+    mujoco.mj_jac(model, data, translation, rotation, data.xanchor[joint] + 0.20 * up, model.body("head").id)
+
+    def largest(load: np.ndarray) -> float:
+        cost = np.r_[np.zeros(model.nu), -1.0]
+        result = linprog(
+            cost,
+            A_eq=np.c_[active, couple.T @ load],
+            b_eq=-rest,
+            bounds=[(0.0, 1.0)] * model.nu + [(0.0, None)],
+            method="highs",
+        )
+        return float(result.x[-1])
+
+    lever = 0.32
+    return [
+        lever * largest(translation.T @ -anterior),
+        lever * largest(translation.T @ anterior),
+        lever * largest(translation.T @ lateral),
+        largest(rotation.T @ up),
+    ]
+
+
+def head_and_neck() -> dict[str, Any]:
+    """Head-and-neck mass share of ``myofullbody`` and the neck's neutral strength."""
+    import myo_sim
+    from myo_sim.build.mass import subtree_mass
+
+    model = myo_sim.load_model("myofullbody")
+    return {
+        "head_neck_mass_share": 100.0 * subtree_mass(model, "myohead_base") / float(model.body_mass.sum()),
+        "neck_strength": neck_strength(),
+    }
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -543,6 +608,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= extrinsic_revisions(model)
     out |= force_velocity(model)
     out |= forearm_rotation(model)
+    out |= head_and_neck()
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

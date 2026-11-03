@@ -84,6 +84,8 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
         ("force_velocity_rate", 0.05),
         ("period_two_share", 3.0),
         ("free_peak_speed", 0.5),
+        ("head_neck_mass_share", 0.01),
+        ("neck_strength", 0.1),
         ("ecu_extension_rotation", 0.05),
         ("ecu_ulnar_rotation", 0.05),
         ("forearm_axis_radial_head", 0.05),

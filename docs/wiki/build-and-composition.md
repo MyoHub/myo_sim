@@ -45,6 +45,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `RIGHT_HAND` | `build_right_hand_from_arm_spec` |
 | `BOTH_HANDS` | `build_both_hands_from_arm_spec` |
 | `FULLBODY` | `build_fullbody_spec` |
+| `HEAD` | `build_standalone_head_spec` |
 | `LEGS_BODY` | `build_legs_body_spec` |
 | `LEGS26_BODY` | `build_legs26_body_spec` |
 | `TORSO_ABDOMEN` | `build_torso_abdomen_spec` |
@@ -65,7 +66,8 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `myolegs` | `LEGS_BODY` | Passive anatomical torso scaffold + legs |
 | `myolegs26` | `LEGS26_BODY` | Passive anatomical torso scaffold + reduced 26-muscle legs (see [MyoLeg26](../../myo_sim/models/leg/README.md#myoleg26-reduced-26-muscle-legs-only)) |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
-| `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
+| `myofullbody` | `FULLBODY` | Full body: torso + muscular neck + mirrored arms + legs; free-floating root |
+| `myohead` | `HEAD` | Fixed HYOID cervical chain; six independent coordinates and 72 muscles |
 
 `ModelRegistration` fields that control composition:
 
@@ -76,6 +78,20 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 - `add_root_freejoint`: adds a free joint to the root body (needed for locomotion models).
 - `root_pos`: initial position of the root body in world space.
 - `mirror_rules`: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
+
+`myofullbody` carries the muscular neck; there is no switch for it.
+`compose.attach_neck()` runs last in its builder: it deletes the rigid head
+subtree and attaches `build/head.py`'s spec to the existing `head_attach` frame,
+so the neck's tendons, actuators and equalities follow those of the arms and legs.
+The neck joints sit in the torso subtree, before the arm and leg joints.
+The midline skeleton is authored once; only right muscle sites, tendons and
+actuators are mirrored with `MirrorRules`. The existing `neck`, `head` and head
+collision names are preserved. All part models (`myotorso`, `myotorso_arms`,
+`myotorso_arm_r`, `myoarms`, `myohands`, `myolegs`, ...) keep the rigid head
+(`myohead_rigid_chain.xml`), which has no joints or muscles. Whether the torso
+part models should also carry the neck depends on the simple-versus-full model
+strategy of the model policy, which is still open.
+See `docs/validation/neck/README.md` for source and acceptance scope.
 
 ## How to Add a New Composed Model
 
