@@ -90,6 +90,7 @@ Effect of the refit on `myolegs`, as the 99th percentile of the normalised lengt
 - A length ratio from a wrap's changed path is corrected, but the path itself still jumps in those poses. Example: with a pelvis 1 % wider along x, `glmax3` goes the long way around `Gmax3_at_pelvis_wrap` in the default pose. Shoulder muscles with sphere wraps, such as `INFSP`, are sensitive in the same way under per-axis humerus factors. A similarity has no such jumps.
 - Hinge joint stiffness, damping and armature, angle springs, contact margins and control ranges are not scaled. The report lists angle springs and the actuators whose units would need it.
 - Connect and weld equalities anchored on scaled bodies, meshes shared by bodies needing different scales, flexes, height fields, SDF and plugin meshes on scaled bodies, and specs with `fusestatic` are refused. Site-anchored equalities follow their sites.
+- An attached spec compiles with its own angle unit, euler sequence and meshdir. From MuJoCo 3.6 scaling follows them, and refuses a scaled body whose attached spec takes its inertia from geoms; older versions refuse a spec whose orientations do not resolve as compiled.
 - A scaled model is a different model. A policy trained on the original is not validated for it, and `model_digest` identifies a model, not its accuracy.
 - Fitting a person's factors, inverse kinematics, retargeting, environments, skins and checkpoints are not part of this package. MyoSuite can call `scale_spec` from its model builders; `make_env(scales=...)` and IK stay there.
 

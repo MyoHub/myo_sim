@@ -485,6 +485,62 @@ def test_attached_components_move_with_their_parent() -> None:
         np.testing.assert_allclose(scaled.body(body).pos, 1.2 * ref.body(body).pos, atol=1e-12, err_msg=body)
 
 
+TETRA_OBJ = "v 0 0 0\nv 1 0 0\nv 0 1 0\nv 0 0 1\nf 1 3 2\nf 1 2 4\nf 1 4 3\nf 2 3 4\n"
+
+# Radians, a zyx sequence and a meshdir of its own, unlike the empty MjSpec it is attached to.
+ATTACHED_XML = """<mujoco><compiler angle="radian" eulerseq="zyx" meshdir="{meshdir}"/>
+  <asset><mesh name="tetra" file="tetra.obj"/></asset>
+  <worldbody><body name="b" euler="0.1 0.2 0.3"><joint name="j"/>
+    <geom name="box" type="box" size=".1 .2 .3" euler="0.3 0 0.2"/><geom name="tetra" type="mesh" mesh="tetra"/>
+    <frame euler="0 0.4 0"><site name="s" pos=".1 0 0"/></frame>
+  </body></worldbody></mujoco>"""
+
+
+def _in_scene(child: mujoco.MjSpec) -> mujoco.MjSpec:
+    """``child`` attached to an empty MjSpec (degrees, xyz), as MyoSuite composes its scenes."""
+    scene = mujoco.MjSpec()
+    scene.attach(child, prefix="", suffix="", frame=scene.worldbody.add_frame())
+    return scene
+
+
+def test_an_attached_spec_scales_with_its_own_compiler(tmp_path: Path) -> None:
+    """Angle unit, euler sequence and meshdir are those of the attached spec, as MuJoCo compiles it."""
+    (tmp_path / "tetra.obj").write_text(TETRA_OBJ)
+    xml = ATTACHED_XML.format(meshdir=tmp_path.as_posix())
+    factors = {"b": (2.0, 1.0, 0.5)}
+    scene = _in_scene(mujoco.MjSpec.from_string(xml))
+    if not hasattr(scene.body("b"), "compiler"):  # MuJoCo < 3.6 hides it: refuse rather than misread
+        with pytest.raises(NotImplementedError, match="compiled orientation"):
+            scale_spec(scene, factors)
+        return
+    alone = scale_spec(mujoco.MjSpec.from_string(xml), factors).compile()
+    scaled = scale_spec(scene, factors).compile()
+    for attr in ("geom_size", "geom_pos", "geom_quat", "site_pos", "mesh_vert", "body_mass", "body_inertia"):
+        np.testing.assert_allclose(getattr(scaled, attr), getattr(alone, attr), atol=1e-9, err_msg=attr)
+
+
+def test_opensim_factors_land_on_the_same_axes_in_a_scene(tmp_path: Path) -> None:
+    spec = _in_scene(_myolegs())
+    if not hasattr(spec.body("pelvis"), "compiler"):
+        pytest.skip("MuJoCo < 3.6 refuses an attached spec with its own angle unit")
+    path = _scale_set(tmp_path / "scales.xml", {"pelvis": (1.1, 1.2, 1.3), "femur_r": (1.04, 1.08, 1.02)})
+    factors = scale_report(spec, path).factors
+    np.testing.assert_array_equal(factors["pelvis"], [1.1, 1.2, 1.3])
+    np.testing.assert_array_equal(factors["femur_r"], [1.04, 1.08, 1.02])
+    assert np.isfinite(scale_spec(spec, path).compile().body_mass).all()  # the legs' meshes are found
+
+
+def test_an_attached_spec_taking_inertia_from_geoms_is_refused() -> None:
+    scene = _in_scene(
+        mujoco.MjSpec.from_string("""<mujoco><compiler inertiafromgeom="true"/><worldbody><body name="a">
+        <inertial pos="0 0 0" mass="5" diaginertia="1 1 1"/><geom size=".1" mass="1"/></body></worldbody></mujoco>""")
+    )
+    if not hasattr(scene.body("a"), "compiler"):
+        pytest.skip("MuJoCo < 3.6 does not expose an attached spec's compiler")
+    with pytest.raises(NotImplementedError, match="inertiafromgeom"):
+        scale_spec(scene, {"a": 2})
+
+
 def _coupled_leg() -> mujoco.MjSpec:
     """The leg with a knee coupling that ``qpos0`` violates, like the patella of MyoLeg."""
     spec = _leg()
