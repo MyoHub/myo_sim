@@ -411,6 +411,31 @@ def test_per_axis_factors_move_everything_with_its_body(name: str) -> None:
             np.testing.assert_allclose(scaled.geom_pos[g], s(ref.geom_bodyid[g]) * ref.geom_pos[g], atol=1e-12)
 
 
+@pytest.mark.parametrize(
+    "site,factors,expected",
+    [
+        ('type="box" size=".1 .01 .055"', (1.08, 0.98, 0.98), (0.108, 0.0098, 0.0539)),
+        ('type="box" size=".1 .01 .055" euler="0 0 90"', (1.08, 0.98, 0.9), (0.098, 0.0108, 0.0495)),
+        ('type="ellipsoid" size=".1 .2 .3"', (1.2, 1.0, 0.8), (0.12, 0.2, 0.24)),
+        ('type="cylinder" size=".1 .2"', (1.2, 1.0, 0.8), (0.11, 0.16)),
+        ('type="capsule" fromto="0 0 0 0 0 .4" size=".1"', (1.2, 1.0, 0.8), (0.11, 0.16)),
+        ('type="sphere" size=".1"', (1.2, 1.0, 0.8), (0.1,)),
+    ],
+    ids=["box", "turned-box", "ellipsoid", "cylinder", "fromto", "sphere"],
+)
+def test_site_sizes_follow_the_axes_like_geoms(site: str, factors: tuple, expected: tuple) -> None:
+    spec = mujoco.MjSpec.from_string(f'''<mujoco><worldbody><body name="b"><joint/><geom size=".1"/>
+        <site name="s" {site}/></body></worldbody></mujoco>''')
+    scaled = scale_spec(spec, {"b": factors}).compile()
+    np.testing.assert_allclose(scaled.site("s").size[: len(expected)], expected, atol=1e-12)
+
+
+def test_a_foot_touch_site_follows_its_segment() -> None:
+    spec = _myolegs()
+    scaled = scale_spec(spec, {"calcn_r": segment_factors("x", 1.08, 0.98)}).compile()
+    np.testing.assert_allclose(scaled.site("foot_touch_r").size, [0.108, 0.0098, 0.0539], atol=1e-12)
+
+
 def test_inertia_is_the_exact_affine_transform() -> None:
     """A box's inertia after stretching is that of the stretched box."""
     xml = """<mujoco><worldbody><body name="b"><freejoint/>

@@ -742,11 +742,8 @@ def _scale_geometry(
             continue
         for element in (*body.joints, *body.cameras, *body.lights):
             element.pos = _scaled_point(spec, element.frame, s, element.pos)
-        for site in body.sites:
-            _scale_placement(spec, site, s)
-            site.size = np.asarray(site.size) * float(np.prod(s) ** (1 / 3))
-        for geom in body.geoms:
-            _scale_geom(spec, geom, s)
+        for shape in (*body.sites, *body.geoms):
+            _scale_geom(spec, shape, s)
     for name, scale in mesh_scales.items():
         _rescale_mesh(spec, name, scale)
     _scale_keyframes(spec, ref, slide)
@@ -840,26 +837,26 @@ def _scale_placement(spec: mujoco.MjSpec, element: Any, s: np.ndarray) -> None:
         element.fromto = np.concatenate([_scaled_point(spec, element.frame, s, end) for end in ends])
 
 
-def _scale_geom(spec: mujoco.MjSpec, geom: Any, s: np.ndarray) -> None:
-    """Scale a primitive's size and place; meshes are rescaled by :func:`_rescale_mesh`."""
-    frame_rot = _frame_rot(spec, geom.frame)
-    kind = geom.type
-    if not np.isnan(geom.fromto[0]):
-        ends = np.asarray(geom.fromto, dtype=float).reshape(2, 3)
-        geom.size[0] *= _radial_factor(s, ends[0] - ends[1], frame_rot)
-        _scale_placement(spec, geom, s)
+def _scale_geom(spec: mujoco.MjSpec, shape: Any, s: np.ndarray) -> None:
+    """Scale the size and place of a geom or site; meshes are rescaled by :func:`_rescale_mesh`."""
+    frame_rot = _frame_rot(spec, shape.frame)
+    kind = shape.type
+    if not np.isnan(shape.fromto[0]):
+        ends = np.asarray(shape.fromto, dtype=float).reshape(2, 3)
+        shape.size[0] *= _radial_factor(s, ends[0] - ends[1], frame_rot)
+        _scale_placement(spec, shape, s)
         return
-    _scale_placement(spec, geom, s)
-    scale = _axis_factors(s, frame_rot @ _rot(_quat(spec, geom)))
+    _scale_placement(spec, shape, s)
+    scale = _axis_factors(s, frame_rot @ _rot(_quat(spec, shape)))
     if kind == mujoco.mjtGeom.mjGEOM_SPHERE:
-        geom.size[0] *= float(np.mean(s))
+        shape.size = np.asarray(shape.size) * float(np.mean(s))
     elif kind in (mujoco.mjtGeom.mjGEOM_CAPSULE, mujoco.mjtGeom.mjGEOM_CYLINDER):
-        geom.size[0] *= float(np.mean(scale[:2]))
-        geom.size[1] *= float(scale[2])
+        shape.size[0] *= float(np.mean(scale[:2]))
+        shape.size[1] *= float(scale[2])
     elif kind in (mujoco.mjtGeom.mjGEOM_BOX, mujoco.mjtGeom.mjGEOM_ELLIPSOID):
-        geom.size = np.asarray(geom.size) * scale
+        shape.size = np.asarray(shape.size) * scale
     elif kind == mujoco.mjtGeom.mjGEOM_PLANE:
-        geom.size[:2] = np.asarray(geom.size[:2]) * scale[:2]
+        shape.size[:2] = np.asarray(shape.size[:2]) * scale[:2]
 
 
 def _radial_factor(s: np.ndarray, axis: np.ndarray, frame_rot: np.ndarray) -> float:
