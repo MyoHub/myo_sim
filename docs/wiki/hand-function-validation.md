@@ -262,3 +262,27 @@ outside Kong's band for every finger: the index and little fingers carry too muc
 fingers too little. The test fails on this until the model's grip changes; its tolerance is not widened.
 Kinoshita et al. 1996 (holding cylinders with a circular five-finger grip) and Radwin et al. 1992
 (submaximal five-finger pinch) measure other tasks and are not used.
+
+## Force-velocity step: grip at 0.15 s and settled
+
+`vmax` 10 and the thumb CMC armature (`hand-literature-comparison.md`) leave the tenodesis (activation 0) and the
+lateral pinch (static) unchanged to the printed digit. The grip protocol reads the force at 0.15 s, a transient, and the
+faster muscles reach the settled state sooner:
+
+| Quantity | Before | Now |
+| --- | --- | --- |
+| Grip, self-selected wrist, balanced (N) | 338.9 | 333.7 |
+| Shares 2 / 3 / 4 / 5 at 0.15 s (%) | 30 / 27 / 19 / 24 | 31 / 17 / 21 / 31 |
+| Settled grip (N) | 263.8 | 264.1 |
+| Settled shares (%) | 39 / 17 / 17 / 27 | 40 / 16 / 15 / 29 |
+| Grip with the wrist held (N) | 455.9 | 454.8 |
+| Neutral / flexed wrist against self-selected (%) | -28 / -61 | -32 / -58 |
+| Lateral pinch (N) | 67.5 | 67.5 |
+
+At the old optimum's levels the new model gives 323.8 N with shares 31 / 18 / 21 / 30 %, so the change in shares is the
+muscles, not the optimiser. The middle-finger share at 0.15 s moves further from Kong et al. 2011's 38.5 %; the settled
+share has been that low since before this step. `test_grip_at_the_cached_optimum` keeps failing on the shares.
+
+The optimiser's random starts went from 4 to 8. The objective is flat near its top and multi-modal (ten starts on this
+model: 254-334 N); the two fixed and first four random starts reached at best 327.2 N with a 1.32 mm transient
+penetration, above the test's 1 mm, and the eighth start 333.7 N with 0.04 mm.

@@ -934,7 +934,15 @@
             0.0
           ]
         }
-      ]
+      ],
+      "armature": {
+        "value": 0.0002,
+        "unit": "kg m2",
+        "status": "numerical",
+        "previous_value": 0.0001,
+        "method": "Smallest value (of 1e-4, 2e-4, 3e-4 on each CMC axis) with no period-2 oscillation over 120 random thumb poses and random subsets of the thumb muscles at activation 1 at the 2 ms Euler step. Worst force-velocity damping with all muscles at 1 over random hand poses is D = 0.64 N m s/rad on CMC flexion and 0.33 on CMC abduction; h D / (M + h B) falls from 5.2 / 2.8 to 3.7 / 2.0 at this value.",
+        "implied": "Joint inertia of the thumb without armature: 4.7e-5 (flexion) / 3.6e-5 (abduction) kg m2 with the segment masses of Barry et al. 2018 (16, 7.9, 3 g), 9.2e-5 / 7.1e-5 with Mirakhorlo et al. 2016's masses (18.6, 8.8, 10.1 g). With 2e-4 the total is 2.5e-4 / 2.4e-4: about 2.7 to 3.4 times the anthropometric value, equal to 16 g more at 8 cm from the CMC. Finger MCP joints carry 4.2e-4. A numerical setting, not a tissue value."
+      }
     },
     {
       "joint": "thumb_cmc_abduction",
@@ -1236,6 +1244,14 @@
           0.0,
           0.0
         ]
+      },
+      "armature": {
+        "value": 0.0002,
+        "unit": "kg m2",
+        "status": "numerical",
+        "previous_value": 0.0001,
+        "method": "Smallest value (of 1e-4, 2e-4, 3e-4 on each CMC axis) with no period-2 oscillation over 120 random thumb poses and random subsets of the thumb muscles at activation 1 at the 2 ms Euler step. Worst force-velocity damping with all muscles at 1 over random hand poses is D = 0.64 N m s/rad on CMC flexion and 0.33 on CMC abduction; h D / (M + h B) falls from 5.2 / 2.8 to 3.7 / 2.0 at this value.",
+        "implied": "Joint inertia of the thumb without armature: 4.7e-5 (flexion) / 3.6e-5 (abduction) kg m2 with the segment masses of Barry et al. 2018 (16, 7.9, 3 g), 9.2e-5 / 7.1e-5 with Mirakhorlo et al. 2016's masses (18.6, 8.8, 10.1 g). With 2e-4 the total is 2.5e-4 / 2.4e-4: about 2.7 to 3.4 times the anthropometric value, equal to 16 g more at 8 cm from the CMC. Finger MCP joints carry 4.2e-4. A numerical setting, not a tissue value."
       }
     },
     {

@@ -79,6 +79,10 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
         ("ecrl_moment_arms", 0.05),
         ("ecrb_moment_arms", 0.05),
         ("fcr_moment_arms", 0.05),
+        ("forearm_vmax", 0.0),
+        ("thumb_cmc_inertia", 0.01),
+        ("force_velocity_rate", 0.05),
+        ("period_two_share", 3.0),
     ],
 )
 def test_latest_step_matches_the_current_model(key: str, tol: float) -> None:

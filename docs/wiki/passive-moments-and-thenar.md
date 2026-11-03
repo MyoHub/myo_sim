@@ -159,6 +159,10 @@ random-excitation rollouts of `myohand_r` and `myoarm_r` stay finite, with the s
 step-to-step velocity reversals as with 0.05 N m s/rad, and relaxed hands settle. This changes
 the dynamics of every downstream model with a hand.
 
+At activation 0 this holds. Under load the muscles' own force-velocity damping dominates: it set the force-velocity
+step (`hand-literature-comparison.md`), which also moved the armature of the two thumb CMC joints to 2e-4 kg m2 (`armature`
+rows of `passive_joint_moments.json`, written by `fit_passive_moments.py`). The damping values here are unchanged.
+
 ## PIP flexion range
 
 MyoHand's PIP joints stopped at 90 deg flexion, below the healthy range. Leijnse et al. 2010 (J Biomech

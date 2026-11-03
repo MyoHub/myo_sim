@@ -161,11 +161,15 @@ def _joint(model: mujoco.MjModel, base: str, side: str) -> int:
 
 
 @cache
-def _settle(wrist_deg: float, tolerance: float | None = None, seconds: float = 3.0) -> dict[str, tuple[float, float, float]]:
+def _settle(
+    wrist_deg: float, tolerance: float | None = None, seconds: float = 3.0, contacts: bool = True
+) -> dict[str, tuple[float, float, float]]:
     """Hand joint angles and limits (deg) after *seconds* without gravity or excitation, both wrists held at
     *wrist_deg* (*tolerance*: the solver tolerance, default MuJoCo's)."""
     model = myo_sim.load_spec("myofullbody").compile()
     model.opt.gravity[:] = 0.0
+    if not contacts:
+        model.opt.disableflags |= int(mujoco.mjtDisableBit.mjDSBL_CONTACT)
     if tolerance is not None:
         model.opt.tolerance = tolerance
     data = mujoco.MjData(model)
@@ -222,9 +226,13 @@ def test_relaxed_hand_rests_off_its_limits(wrist_deg: float) -> None:
     # (MCP4 69 -> 71 deg). Both hands' pairs, parameters, geom roles and order are mirrored
     # (test_hand_contacts.py), but during the creep the two hands are up to 0.26 deg apart at 3 s at MuJoCo's
     # default solver tolerance (1e-8, warm-started) and up to 1.6 deg at tolerance 1e-12 (one hand slips a
-    # step earlier); the joint and case moved with small model changes from S4 on. At rest (10 s) and
-    # tolerance 1e-12 they agree within 0.04 deg (0.002 deg without contacts), so the comparison runs there
-    # and checks the model rather than where the solver stops.
+    # step earlier); the joint and case moved with small model changes from S4 on. Static friction leaves several
+    # rest states: at 10 s and tolerance 1e-12 the hands agreed within 0.04 deg before the thumb CMC armature of 2e-4,
+    # and differ by up to 0.58 deg (MCP3, then the thumb on the little finger) with it, 0.22 deg on MuJoCo 3.17 before
+    # it. Without contacts they agree within 0.002 deg: that comparison checks the model, the other only bounds the
+    # friction states.
+    free = _settle(wrist_deg, 1e-12, 10.0, contacts=False)
     tight = _settle(wrist_deg, 1e-12, 10.0)
     for base in HAND:
-        assert tight[f"{base}_r"][0] == pytest.approx(tight[f"{base}_l"][0], abs=0.05)
+        assert free[f"{base}_r"][0] == pytest.approx(free[f"{base}_l"][0], abs=0.05)
+        assert tight[f"{base}_r"][0] == pytest.approx(tight[f"{base}_l"][0], abs=1.0)

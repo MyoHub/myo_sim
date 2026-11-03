@@ -155,7 +155,7 @@
   },
   "activation": "Paper: 12 independent levels (wrist muscles, extrinsic thumb, EIP, EDM), one shared level each for the FDS, FDP and EDC slips, the finger intrinsics at 1 (ARMS: 14; MyoHand: 12, RI/LU_RB/UI_UB of digits 2-5), the thumb intrinsics at 0; activations set directly (steady state). Grip: contact force of the proximal and middle phalanges on the dynamometer, perpendicular to its axis (sum of magnitudes); distal contacts act but are not counted.",
   "balance_weight_N_per_Nm": 1000.0,
-  "optimiser_restarts": 4,
+  "optimiser_restarts": 8,
   "balance_note": "Penalty on wrist motion, implemented as a penalty on the moment the wrist lock has to supply (the wrist would move without it): grip - 1000 N/(N m) x |lock moment| (L1). 'held' runs drop the penalty (wrist rigidly held).",
   "targets": {
    "model_N": [
@@ -210,7 +210,7 @@
    "digit_share_sd_band": 1.0
   },
   "cached": {
-   "note": "Optimum found by scripts/validate_hand_function.py for each model; tests/test_hand_grip.py re-evaluates the entry whose fingerprint matches the model (actuator and position counts, passive_* spring tendons present, damping of mcp2_flexion_r, fpmax of EDC3, palm pad thickness, fpmax of OP, stiffness of the EDC4-EDC5 junctura) and, with MYO_SIM_SLOW=1, re-optimises. The optimum depends on the model: the levels that balance the wrist of one leave a lock moment on the other.",
+   "note": "Optimum found by scripts/validate_hand_function.py for each model; tests/test_hand_grip.py re-evaluates the entry whose fingerprint matches the model (actuator and position counts, passive_* spring tendons present, damping of mcp2_flexion_r, fpmax of EDC3, palm pad thickness, fpmax of OP, stiffness of the EDC4-EDC5 junctura, vmax of the forearm muscles) and, with MYO_SIM_SLOW=1, re-optimises. The optimum depends on the model: the levels that balance the wrist of one leave a lock moment on the other.",
    "entries": [
     {
      "model": "Vittorio-Caggiano/myo_sim#2 alone (anatomical parameters of #123, fitted extrinsic slack lengths and fpmax, release step)",
@@ -706,6 +706,40 @@
       "APL": 0.0
      },
      "grip_N": 338.9
+    },
+    {
+     "model": "+ force-velocity: vmax 10 optimal fibre lengths/s on the forearm and hand muscles (MuJoCo default 1.5 before), thumb CMC armature 2e-4 kg m2",
+     "fingerprint": {
+      "nu": 71,
+      "nq": 47,
+      "passive_springs": true,
+      "mcp2_flexion_damping": 0.0142,
+      "edc3_fpmax": 0.0261,
+      "palm_pad_m": 0.007986,
+      "op_fpmax": 0.003392,
+      "jt45_stiffness": 1000.0,
+      "fds3_vmax": 10.0
+     },
+     "posture": "self_selected",
+     "mode": "balanced",
+     "levels": {
+      "FDS": 0.9873,
+      "FDP": 0.8555,
+      "EDC": 0.8536,
+      "EIP": 0.22,
+      "EDM": 0.6393,
+      "ECRL": 0.03518351520926575,
+      "ECRB": 1.0,
+      "ECU": 1.0,
+      "FCR": 0.0,
+      "FCU": 0.0,
+      "PL": 0.0,
+      "FPL": 0.0,
+      "EPL": 0.8911553312050835,
+      "EPB": 0.0,
+      "APL": 0.0
+     },
+     "grip_N": 333.7
     }
    ]
   }

@@ -475,8 +475,8 @@
 
                                                     <!-- THUMB FINGER -->
                                                     <body name="firstmc_r" pos="0.0072 -0.0054 -0.0025">
-                                                        <joint axis="-0.042399 -0.665286 0.745384" name="cmc_flexion_r" pos="0 0 0" range="-0.78 0.7"/>
-                                                        <joint axis="0.495557 0.731736 0.467959"  name="cmc_abduction_r" pos="0 0 0" range="-0.5 0.78"/>
+                                                        <joint axis="-0.042399 -0.665286 0.745384" name="cmc_flexion_r" pos="0 0 0" range="-0.78 0.7" armature="0.0002"/>
+                                                        <joint axis="0.495557 0.731736 0.467959"  name="cmc_abduction_r" pos="0 0 0" range="-0.5 0.78" armature="0.0002"/>
                                                         <geom name="1mcskin_r" class="myohand_coll" size="0.0095" fromto="-.002 0.004 0.003 0.0165 -0.0292 -0.0127"/>
                                                         <geom name="thenar_pad_r" class="myohand_coll" type="ellipsoid" size="0.012 0.018 0.0267" pos="0.006918 -0.010823 -0.008989" rgba="1 1 1 .8" quat="-0.205044 0.950468 0.232972 0.017094"/>
                                                         <geom mesh="1mc_r" name="1mc_r" type="mesh"/>

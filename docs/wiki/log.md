@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-03 — Numerical stability: vmax and thumb CMC armature
+Changed: `myo_sim/models/arm/assets/myoarm_r_assets.xml` (`vmax` of `myoarm_forearm_muscle`), `myoarm_r_chain.xml` (CMC armature), `myo_sim/build/data/muscle_passive.json` (`force_velocity`), `passive_joint_moments.json` (`armature`), `hand_function.json` (grip optimum, optimiser starts), `hand_literature.json`, `myo_sim/build/stability.py`, `tests/test_numerical_stability.py`, `scripts/fit_muscle_passive.py`, `scripts/fit_passive_moments.py`, `scripts/hand_literature_comparison.py`, `docs/wiki/hand-literature-comparison.md`, `hand-function-validation.md`, `passive-moments-and-thenar.md`, `testing-guide.md`, `CHANGELOG.md`
+Why: The wrist and digit joints alternated velocity sign at 2 ms from activation 0.3 because the muscles' force-velocity damping, explicit under Euler, exceeded the stability limit once fibre lengths were anatomical with `vmax` at MuJoCo's default; `vmax` 10 and a CMC armature of 2e-4 kg m2 remove it and leave the static results unchanged.
+
 ## 2026-10-30 — Grip digit shares: measured target
 Changed: `myo_sim/build/data/hand_function.json` (digit-share target and band, sources), `hand_literature.json` (grip-share literature rows, sources), `tests/test_hand_grip.py` (mean +- 1 SD band), `docs/wiki/hand-function-validation.md`, `hand-literature-comparison.md`
 Why: The grip test compared the digit shares with the ARMS model's own shares; it now uses measured shares during maximal power grip (Kong et al. 2011, 100 % MVC, mean +- 1 SD), with Amis 1987, Ohtsuki 1981 and Ejeskar & Ortengren 1981 as context. The model is outside the measured band for every finger, so the test keeps failing.

@@ -42,6 +42,7 @@ LONG_FLEXORS = {**{d: f"FDP{d}_r" for d in DIGITS}, "thumb": "FPL_r"}
 PALM_PADS = ("palm_pad_r", "thenar_pad_r", "hypothenar_pad_r")
 METACARPAL_BODIES = ("firstmc_r", "secondmc_r", "thirdmc_r", "fourthmc_r", "fifthmc_r")
 FIST_SECONDS = 1.0
+STABILITY_LEVELS = (0.05, 0.1, 0.3, 0.5, 1.0)
 
 
 def load_data(path: Path = DATA_PATH) -> dict[str, Any]:
@@ -450,6 +451,27 @@ def extrinsic_revisions(model: mujoco.MjModel) -> dict[str, Any]:
     }
 
 
+def force_velocity(model: mujoco.MjModel) -> dict[str, Any]:
+    """Force-velocity parameter, thumb inertia and numerical stability under Euler at the model's own timestep."""
+    from myo_sim.build.stability import alternation_share, force_velocity_rate, mass_matrix
+
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    mass = mass_matrix(model, data)
+    inertia = [1e4 * mass[v, v] for v in (model.joint(f"cmc_{k}_r").dofadr[0] for k in ("flexion", "abduction"))]
+    shares = []
+    for level in STABILITY_LEVELS:
+        run = mujoco.MjData(model)
+        run.ctrl[:] = level
+        shares.append(100.0 * float(alternation_share(model, run, 1000).max()))
+    return {
+        "forearm_vmax": float(model.actuator_gainprm[model.actuator("FDS3_r").id][6]),
+        "thumb_cmc_inertia": inertia,
+        "force_velocity_rate": force_velocity_rate(model, data, np.ones(model.nu))[0],
+        "period_two_share": shares,
+    }
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -461,6 +483,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= extensor_mechanism(model)
     out |= lumbrical_nodes(model)
     out |= extrinsic_revisions(model)
+    out |= force_velocity(model)
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

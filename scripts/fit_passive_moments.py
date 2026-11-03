@@ -347,11 +347,13 @@ def write_block(table: dict[str, Any]) -> None:
 
 
 def chain_with_joint_attributes(text: str, table: dict[str, Any]) -> str:
-    """*text* of ``myoarm_r_chain.xml`` with each tabled ``damping`` and ``range`` on its right-side joint, rest unchanged."""
+    """*text* of ``myoarm_r_chain.xml`` with each tabled ``damping``, ``armature`` and ``range`` on its right-side joint, rest unchanged."""
     for row in table["joints"]:
         attributes = {}
         if "damping" in row:
             attributes["damping"] = _number(row["damping"]["value"])
+        if "armature" in row:
+            attributes["armature"] = _number(row["armature"]["value"])
         if "range" in row:
             attributes["range"] = " ".join(_number(round(np.radians(v), 6)) for v in row["range"]["value_deg"])
         if not attributes:
@@ -371,7 +373,7 @@ def chain_with_joint_attributes(text: str, table: dict[str, Any]) -> str:
 
 
 def write_joint_attributes(table: dict[str, Any]) -> None:
-    """Write the tabled joint damping and ranges into ``myoarm_r_chain.xml``."""
+    """Write the tabled joint damping, armature and ranges into ``myoarm_r_chain.xml``."""
     RIGHT_ARM_CHAIN_XML.write_text(chain_with_joint_attributes(RIGHT_ARM_CHAIN_XML.read_text(), table))
 
 

@@ -32,7 +32,8 @@ digits open when the wrist flexes (McFarland et al. 2023 tenodesis trial B, run 
 It writes the values (and the references they change) to
 ``build/data/muscle_passive.json`` and the ``lengthrange`` and ``fpmax`` of each
 muscle to ``myoarm_r_muscle.xml``, the model's source of truth (the left arm is
-mirrored from it).
+mirrored from it). The tabled ``force_velocity.vmax`` goes to the forearm muscle class
+in ``myoarm_r_assets.xml``; the fit itself does not depend on it.
 
 Run: ``uv run python scripts/fit_muscle_passive.py`` (refits, rewrites the JSON and
 the XML attributes); ``--release-only`` reruns only the release step from the tabled
@@ -60,6 +61,7 @@ from myo_sim.build.hand_data import fold_node_forces, place_tendon_nodes
 DATA_PATH = Path(__file__).parents[1] / "myo_sim" / "build" / "data" / "muscle_passive.json"
 VALIDATION_SCRIPT = Path(__file__).with_name("validate_hand_function.py")
 MUSCLE_XML = myo_sim.MODELS_DIR / "arm" / "assets" / "myoarm_r_muscle.xml"
+ASSETS_XML = myo_sim.MODELS_DIR / "arm" / "assets" / "myoarm_r_assets.xml"
 
 KNUTSON_EXTRINSIC = {"A3": 1.2, "k3": 4.2e-2, "B3": -0.8, "phi3": 10.9, "A4": 0.8, "k4": 5.4e-2, "B4": -0.3, "phi4": 40.9}
 MUSCLES = ("FDS2_r", "FDP2_r", "EDC2_r", "EIP_r")
@@ -331,6 +333,16 @@ def write_muscle_xml(ranges: dict[str, list[float]], fpmax: dict[str, float], pa
             tag = tag.replace(' class="', f' fpmax="{fpmax[name]!r}" class="', 1)
         text = text.replace(tags[0], tag)
     path.write_text(text)
+
+
+def write_force_velocity(table: dict[str, Any], path: Path = ASSETS_XML) -> None:
+    """Set ``vmax`` of the forearm muscle class in *path* from *table*, rest unchanged."""
+    text = path.read_text()
+    pattern = re.compile(r'(<default class="myoarm_forearm_muscle">\s*<muscle\b[^>]*?)(?: vmax="[^"]*")?\s*/>')
+    if len(pattern.findall(text)) != 1:
+        raise ValueError(f"{path.name}: expected one myoarm_forearm_muscle default")
+    vmax = table["force_velocity"]["vmax"]["value"]
+    path.write_text(pattern.sub(rf'\g<1> vmax="{vmax:g}"/>', text))
 
 
 def _minimize(cost: Callable[[np.ndarray], float], starts: list[np.ndarray], bounds: list[tuple[float, float]]) -> np.ndarray:
@@ -647,6 +659,7 @@ def main() -> None:
     args = parser.parse_args()
     model = myo_sim.load_spec("myoarm_r").compile()
     table = load_table()
+    write_force_velocity(table)
     if args.xml_only:
         write_muscle_xml(fitted_lengthranges(model, table), fitted_fpmax(table))
         return

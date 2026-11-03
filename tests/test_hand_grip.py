@@ -25,7 +25,7 @@ SLOW = pytest.mark.skipif(os.environ.get("MYO_SIM_SLOW") != "1", reason="grip op
 
 def _fingerprint(model: mujoco.MjModel) -> dict:
     """What tells the tabled models apart: actuator and position counts, passive springs, the index MCP damping, EDC3's passive
-    scale, the palm pad, the passive scale of the opponens pollicis and the EDC4-EDC5 junctura stiffness."""
+    scale, the palm pad, the passive scale of the opponens pollicis, the EDC4-EDC5 junctura stiffness and FDS3's vmax."""
     return {
         "nu": int(model.nu),
         "nq": int(model.nq),
@@ -40,6 +40,7 @@ def _fingerprint(model: mujoco.MjModel) -> dict:
         "jt45_stiffness": round(float(model.tendon_stiffness[model.tendon("lig_JT45_r").id]), 3)
         if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_TENDON, "lig_JT45_r") >= 0
         else None,
+        "fds3_vmax": float(model.actuator_gainprm[model.actuator("FDS3_r").id][6]),
     }
 
 
