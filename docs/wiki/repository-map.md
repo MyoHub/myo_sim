@@ -36,12 +36,13 @@ tests/
   test_passive_torso_build.py / test_legs_abdomen_build.py
   test_scaling.py                  # scale_spec rules, refit, checks, OpenSim file route
   test_opensim_comparison.py       # scale_spec against stored OpenSim ModelScaler results (data/opensim_scaling/)
+  test_opensim_pose_comparison.py  # the same over a pose grid: moment arms, fibre length, force and torque
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
   debug_muscle_leg.py / debug_muscle_torso.py / debug_muscle_bimanual.py
 scripts/
-  validate_opensim_scaling.py      # regenerates tests/data/opensim_scaling/reference.json with OpenSim
+  validate_opensim_scaling.py      # regenerates tests/data/opensim_scaling/ with OpenSim, or remeasures the myo_sim pose half
 docs/wiki/            # canonical wiki location
 ```
 
