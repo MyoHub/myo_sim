@@ -21,7 +21,7 @@ import os
 import sys
 import time
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from pathlib import Path
 from typing import Any, Literal, Optional
@@ -682,8 +682,9 @@ def build_spec(
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
 
-    build_kwargs = build_kwargs or {}
-    registration.build_kwargs.update(build_kwargs)
+    if build_kwargs:
+        # A copy: the registry entry is shared by every later build and alias.
+        registration = replace(registration, build_kwargs={**registration.build_kwargs, **build_kwargs})
 
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
     if inertia_floor is not None:
