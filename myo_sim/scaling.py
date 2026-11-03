@@ -583,8 +583,9 @@ def _apply(spec: mujoco.MjSpec, plan: _Plan, total_mass: float | None) -> None:
     # Compile copies only: compiling ``spec`` itself would freeze its frames.
     ref = spec.copy().compile()
     ids = [ref.body(b.name).id if b.name else i for i, b in enumerate(spec.bodies)]
+    authored = _without_free_alignment(spec, ref)
     if factors:
-        _check_orientations(spec, ref, ids)
+        _check_orientations(spec, authored, ids)
     rescaled = None
     if total_mass is not None:
         rescaled = _subject_bodies(spec, ref, ids, plan.subject)
@@ -596,7 +597,7 @@ def _apply(spec: mujoco.MjSpec, plan: _Plan, total_mass: float | None) -> None:
     peak_force = _peak_force(ref)
 
     slide, hinge = _scale_geometry(spec, ref, factors, plan.mesh_scales)
-    _scale_inertia(spec, ref, ids, factors, total_mass, rescaled)
+    _scale_inertia(spec, authored, ids, factors, total_mass, rescaled)
     _scale_joint_couplings(spec, ref, slide)
 
     scaled = spec.copy().compile()
@@ -607,6 +608,22 @@ def _apply(spec: mujoco.MjSpec, plan: _Plan, total_mass: float | None) -> None:
     _scale_tendons(spec, ref, ratio, _moment_arm_factors(ref, hinge))
     _scale_muscles(spec, ref, ref_data, data, ratio, peak_force)
     _align_roots(spec, ref, scaled, factors)
+
+
+def _without_free_alignment(spec: mujoco.MjSpec, ref: mujoco.MjModel) -> mujoco.MjModel:
+    """``ref``, or a compiled copy whose frames are the authored ones if ``ref`` aligned a free body.
+
+    Aligned, a free body's frame is its inertial frame: ``body_ipos`` is zero and ``body_iquat``
+    the identity, and neither says where the mass lies in the frame the spec's elements are given in.
+    """
+    free = (int(ref.jnt_bodyid[j]) for j in range(ref.njnt) if int(ref.jnt_type[j]) == int(mujoco.mjtJoint.mjJNT_FREE))
+    if not any(not np.any(ref.body_ipos[b]) and ref.body_iquat[b, 0] == 1.0 for b in free):
+        return ref
+    copy = spec.copy()
+    for joint in copy.joints:
+        if joint.type == mujoco.mjtJoint.mjJNT_FREE:
+            joint.align = mujoco.mjtAlignFree.mjALIGNFREE_FALSE
+    return copy.compile()
 
 
 def assemble_qpos(model: mujoco.MjModel, data: mujoco.MjData, qpos: np.ndarray | None = None) -> np.ndarray:

@@ -661,6 +661,44 @@ def test_compiler_total_mass_is_resolved_before_scaling(total: float | None, exp
     np.testing.assert_allclose(scale_spec(spec, {"a": 2}, total_mass=total).compile().body_mass[1:], expected)
 
 
+ALIGNED_XML = """<mujoco><compiler {compiler}/><worldbody><body name="b" pos="0 0 1"><freejoint {joint}/>
+<inertial mass="1" pos=".1 .2 .3" diaginertia=".1 .2 .25" {iquat}/><geom name="g" type="box" size=".1 .2 .3" pos=".1 0 0"/><site name="s" pos="0 0 .1"/>
+</body></worldbody></mujoco>"""
+
+
+def _world_state(model: mujoco.MjModel) -> dict[str, np.ndarray]:
+    """Where the mass and the shapes of body ``b`` are, whichever frame the compiler chose for it."""
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    rot = data.ximat[1].reshape(3, 3)
+    return {
+        "mass": model.body_mass[1],
+        "com": data.xipos[1],
+        "inertia": rot @ np.diag(model.body_inertia[1]) @ rot.T,
+        "geom": data.geom_xpos[0],
+        "site": data.site_xpos[0],
+    }
+
+
+@pytest.mark.parametrize("iquat", ["", 'euler="20 30 40"'])
+@pytest.mark.parametrize(
+    "aligned",
+    [{"compiler": 'alignfree="true"', "joint": ""}, {"compiler": "", "joint": 'align="true"'}],
+    ids=["compiler", "joint"],
+)
+@pytest.mark.parametrize("scales,total_mass", [({"b": (1.2, 1.0, 0.8)}, None), ({"b": 1.5}, None), ({}, 3.0)])
+def test_alignfree_scales_like_the_unaligned_body(iquat: str, aligned: dict, scales: dict, total_mass: float | None) -> None:
+    """An aligned body's compiled inertial frame is its own frame; scaling must use the authored one."""
+    spec = mujoco.MjSpec.from_string(ALIGNED_XML.format(iquat=iquat, **aligned))
+    twin = mujoco.MjSpec.from_string(ALIGNED_XML.format(iquat=iquat, compiler="", joint=""))
+    assert not np.any(spec.copy().compile().body_ipos[1]) and np.any(twin.copy().compile().body_ipos[1])
+    model = scale_spec(spec, scales, total_mass=total_mass).compile()
+    assert not np.any(model.body_ipos[1])  # still aligned
+    state, expected = _world_state(model), _world_state(scale_spec(twin, scales, total_mass=total_mass).compile())
+    for key in expected:
+        np.testing.assert_allclose(state[key], expected[key], atol=1e-9, err_msg=key)
+
+
 def test_inertia_from_geoms_cannot_overrule_the_scaled_inertia() -> None:
     xml = """<mujoco><compiler inertiafromgeom="true"/><worldbody><body name="a"><inertial pos="0 0 0" mass="5" diaginertia="1 1 1"/>
       <geom size=".1" mass="1"/></body></worldbody></mujoco>"""
