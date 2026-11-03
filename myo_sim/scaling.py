@@ -76,6 +76,14 @@ class ScaleReport:
 
 
 @dataclass
+class _TendonPath:
+    """What a tendon's path runs over in one pose: its wrap objects, and the side of each wrap geom."""
+
+    objects: np.ndarray
+    sides: np.ndarray
+
+
+@dataclass
 class _Plan:
     """A checked scaling: everything known before the first edit."""
 
@@ -1051,8 +1059,9 @@ def _tendon_ratios(
     coordinates: it takes the mean factor of its slide joints, and hinge angles do not scale.
 
     A small change of a wrapped path can send it the long way around a wrap geom. A length change
-    in that pose says nothing about the muscle, so a ratio far from the median over other poses
-    gives way to that median, among poses where both paths have the same wrap points.
+    in that pose says nothing about the muscle. So if the two paths differ in the default pose and
+    the ratio is far from the median over other poses where they do not differ, that median
+    replaces it. If they differ in every pose, the ratio stays and the report names the tendon.
     """
     ratio = np.ones(ref.ntendon)
     spatial = np.array(
@@ -1068,32 +1077,87 @@ def _tendon_ratios(
             ratio[tendon] = sum(c * slide.get(int(ref.wrap_objid[w]), 1.0) for c, w in zip(weights, wraps)) / sum(weights)
     if not moved.any():
         return ratio
+    default_paths = _same_paths([_tendon_paths(ref, ref_data)], [_tendon_paths(scaled, data)])[0]
+    changed = moved & ~default_paths
+    if not changed.any():
+        return ratio
     ref_poses, poses = matched_poses(ref, scaled, _BRANCH_POSES, seed=0)
-    lengths_ref, wraps_ref = _tendon_states(ref, ref_poses)
-    lengths, wraps = _tendon_states(scaled, poses)
-    for tendon in np.flatnonzero(moved):
-        same = (wraps[:, tendon] == wraps_ref[:, tendon]) & (np.abs(lengths_ref[:, tendon]) > mujoco.mjMINVAL)
-        if not same.any():
+    lengths_ref, paths_ref = _tendon_states(ref, ref_poses)
+    lengths, paths = _tendon_states(scaled, poses)
+    same = _same_paths(paths_ref, paths)
+    for tendon in np.flatnonzero(changed):
+        usable = same[:, tendon] & (np.abs(lengths_ref[:, tendon]) > mujoco.mjMINVAL)
+        name = ref.tendon(int(tendon)).name
+        if not usable.any():
+            report.skipped.append(
+                f"tendon {name}: no sampled pose has its unscaled wrap path, so the default pose sets its length ratio"
+            )
             continue
-        median = float(np.median(lengths[same, tendon] / lengths_ref[same, tendon]))
+        median = float(np.median(lengths[usable, tendon] / lengths_ref[usable, tendon]))
         if abs(ratio[tendon] / median - 1.0) > _BRANCH_TOL:
             report.skipped.append(
-                f"tendon {ref.tendon(int(tendon)).name}: a wrap changes its path in the default pose; the length ratio is the median over {int(same.sum())} poses"
+                f"tendon {name}: a wrap changes its path in the default pose; the length ratio is the median over {int(usable.sum())} poses"
             )
             ratio[tendon] = median
     return ratio
 
 
-def _tendon_states(model: mujoco.MjModel, poses: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Tendon lengths and numbers of wrap points over poses."""
+def _tendon_states(model: mujoco.MjModel, poses: np.ndarray) -> tuple[np.ndarray, list[list[_TendonPath]]]:
+    """Tendon lengths and paths over poses."""
     data = mujoco.MjData(model)
     lengths = np.empty((len(poses), model.ntendon))
-    wraps = np.empty((len(poses), model.ntendon), dtype=int)
+    paths = []
     for k, q in enumerate(poses):
         data.qpos[:] = q
         _forward_tendons(model, data)
-        lengths[k], wraps[k] = data.ten_length, data.ten_wrapnum
-    return lengths, wraps
+        lengths[k] = data.ten_length
+        paths.append(_tendon_paths(model, data))
+    return lengths, paths
+
+
+def _tendon_paths(model: mujoco.MjModel, data: mujoco.MjData) -> list[_TendonPath]:
+    """The path of every tendon: its objects, and the side each wrap geom is passed on.
+
+    Needs up-to-date tendons. A side is the direction from the wrap geom's centre to the middle of
+    the arc, in the geom's frame (and in its plane for a cylinder). Between the arc's end points
+    that is their mean direction, unless the arc spans more than half a turn, which the path's
+    direction of arrival tells.
+    """
+    objects = data.wrap_obj.ravel()
+    points = data.wrap_xpos.reshape(-1, 3)
+    cylinder = int(mujoco.mjtGeom.mjGEOM_CYLINDER)
+    paths = []
+    for tendon in range(model.ntendon):
+        start, stop = data.ten_wrapadr[tendon], data.ten_wrapadr[tendon] + data.ten_wrapnum[tendon]
+        path = objects[start:stop].copy()
+        sides = np.empty((0, 3))
+        # A geom's two points are consecutive and follow a site, so the previous point always exists.
+        arcs = np.flatnonzero(path >= 0)[::2]
+        if len(arcs):
+            sides = np.empty((len(arcs), 3))
+            for row, k in enumerate(arcs):
+                geom = path[k]
+                frame = data.geom_xmat[geom].reshape(3, 3)
+                first = (points[start + k] - data.geom_xpos[geom]) @ frame
+                second = (points[start + k + 1] - data.geom_xpos[geom]) @ frame
+                arrival = (points[start + k] - points[start + k - 1]) @ frame
+                if int(model.geom_type[geom]) == cylinder:
+                    first[2] = second[2] = arrival[2] = 0.0
+                middle = first + second
+                if np.cross(first, arrival) @ np.cross(first, second) < 0:
+                    middle = -middle
+                sides[row] = middle
+        paths.append(_TendonPath(path, sides))
+    return paths
+
+
+def _same_paths(paths_ref: Sequence[Sequence[_TendonPath]], paths: Sequence[Sequence[_TendonPath]]) -> np.ndarray:
+    """Per pose and tendon, whether two models' paths have the same objects, each passed on the same side."""
+    same = np.empty((len(paths), len(paths[0])), dtype=bool)
+    for k, (pose_ref, pose) in enumerate(zip(paths_ref, paths)):
+        for tendon, (a, b) in enumerate(zip(pose_ref, pose)):
+            same[k, tendon] = np.array_equal(a.objects, b.objects) and bool(np.all(np.sum(a.sides * b.sides, axis=1) > 0))
+    return same
 
 
 def _moment_arm_factors(ref: mujoco.MjModel, hinge: Mapping[int, float]) -> np.ndarray:

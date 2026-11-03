@@ -12,7 +12,7 @@ from dataclasses import asdict, dataclass, field
 import mujoco
 import numpy as np
 
-from .scaling import _tendon_states, assemble_qpos, free_joints, matched_poses
+from .scaling import _same_paths, _tendon_states, assemble_qpos, free_joints, matched_poses
 
 
 @dataclass
@@ -63,7 +63,7 @@ def fit_length_ranges(
 ) -> tuple[mujoco.MjSpec, dict[str, float]]:
     """Return a copy of a scaled spec whose muscles keep the reference's normalised lengths.
 
-    Over shared random poses where both paths have the same wrap points, each muscle's reference
+    Over shared random poses where both paths run the same way, each muscle's reference
     length is regressed on its scaled length, ``L_ref = a + b L_scaled``, and its range becomes
     ``(range_ref - a) / b``. That is exact whenever the path scaled affinely. MuJoCo derives
     optimal fibre and tendon slack length from ``lengthrange``, so this refits both. A muscle
@@ -175,12 +175,11 @@ def _actuator_lengths(model: mujoco.MjModel, poses: np.ndarray) -> np.ndarray:
 
 
 def _same_wrap_points(reference: mujoco.MjModel, model: mujoco.MjModel, ref_poses: np.ndarray, poses: np.ndarray) -> np.ndarray:
-    """Per pose and actuator, whether the paths of both models have the same wrap points."""
-    wraps_ref, wraps = _tendon_states(reference, ref_poses)[1], _tendon_states(model, poses)[1]
+    """Per pose and actuator, whether a muscle's path runs the same way in both models."""
+    paths = _same_paths(_tendon_states(reference, ref_poses)[1], _tendon_states(model, poses)[1])
     same = np.ones((len(poses), reference.nu), dtype=bool)
     on_tendon = np.flatnonzero(reference.actuator_trntype == mujoco.mjtTrn.mjTRN_TENDON)
-    tendons = reference.actuator_trnid[on_tendon, 0]
-    same[:, on_tendon] = wraps[:, tendons] == wraps_ref[:, tendons]
+    same[:, on_tendon] = paths[:, reference.actuator_trnid[on_tendon, 0]]
     return same
 
 

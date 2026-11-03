@@ -32,7 +32,18 @@ from myo_sim.opensim_scales import (
     _segments_for,
     read_opensim_scales,
 )
-from myo_sim.scaling import _fit_points, _frame_rot, _geom_bottom, _peak_force, _quat, _rot, assemble_qpos, matched_poses
+from myo_sim.scaling import (
+    _fit_points,
+    _frame_rot,
+    _geom_bottom,
+    _peak_force,
+    _quat,
+    _rot,
+    _same_paths,
+    _tendon_paths,
+    assemble_qpos,
+    matched_poses,
+)
 
 LEG_XML = """
 <mujoco>
@@ -639,6 +650,73 @@ def test_a_wrap_that_changes_its_path_does_not_set_the_length_ratio() -> None:
     muscle = ref.actuator("glmax3_r").id
     np.testing.assert_allclose(model.actuator_lengthrange[muscle] / ref.actuator_lengthrange[muscle], 1.0, atol=0.02)
     assert any("glmax3_r_tendon" in item for item in scale_report(spec, factors).skipped)
+
+
+WRAP_XML = """<mujoco><worldbody><geom name="wrap" type="{kind}" size=".05 .2"/>
+<site name="a" pos="{a}"/><site name="b" pos="{b}"/><site name="side" pos="{side}"/></worldbody>
+<tendon><spatial name="t"><site site="a"/><geom geom="wrap" sidesite="side"/><site site="b"/></spatial></tendon></mujoco>"""
+
+
+def _same_path(first: dict[str, str], second: dict[str, str]) -> bool:
+    paths = []
+    for sites in (first, second):
+        model = mujoco.MjSpec.from_string(WRAP_XML.format(**sites)).compile()
+        data = mujoco.MjData(model)
+        mujoco.mj_forward(model, data)
+        assert data.ten_wrapnum[0] == 4
+        paths.append([_tendon_paths(model, data)])
+    return bool(_same_paths(*paths)[0, 0])
+
+
+@pytest.mark.parametrize("kind", ["cylinder", "sphere"])
+def test_a_path_round_the_other_side_of_a_wrap_is_another_path(kind: str) -> None:
+    """Both have the same number of points, so counting them cannot tell."""
+    top = {"kind": kind, "a": "-.2 0 0", "b": ".2 0 0", "side": "0 .1 0"}
+    assert _same_path(top, {**top, "a": "-.21 .01 0"})
+    assert not _same_path(top, {**top, "side": "0 -.1 0"})
+
+
+@pytest.mark.parametrize("kind", ["cylinder", "sphere"])
+def test_the_long_way_round_is_another_path_in_the_same_direction(kind: str) -> None:
+    """The end points of an arc over half a turn lie on the side away from its middle."""
+    short = {"kind": kind, "a": "-.04 -.2 0", "b": "-.04 .2 0", "side": "-.1 0 0"}
+    long = {"kind": kind, "a": "-.15 .02 0", "b": "-.15 -.02 0", "side": ".1 0 0"}
+    assert not _same_path(short, long)
+    assert _same_path(long, {**long, "a": "-.16 .02 0"})
+
+
+def _per_body_factors(spec: mujoco.MjSpec, seed: int) -> dict[str, np.ndarray]:
+    rng = np.random.default_rng(seed)
+    return {name: rng.uniform(0.9, 1.1, 3) for name in _names(spec)}
+
+
+def test_a_median_over_other_paths_does_not_replace_a_smooth_ratio() -> None:
+    """The ratio of PECM1 changes smoothly with the factors, and its one pose with the same point count takes another way."""
+    spec = _fullbody()
+    factors = _per_body_factors(spec, seed=0)
+    skipped = scale_report(spec, factors).skipped
+    assert not any("PECM1_tendon:" in item and "changes its path" in item for item in skipped)
+    assert any("PECM1_tendon:" in item and "no sampled pose" in item for item in skipped)
+    # A real change of path in the default pose still gives way to the median.
+    assert any("RI2_tendon_l:" in item and "changes its path" in item for item in skipped)
+    reference = spec.copy().compile()
+    model = scale_spec(spec, factors).compile()
+    data, scaled_data = mujoco.MjData(reference), mujoco.MjData(model)
+    assemble_qpos(reference, data)
+    assemble_qpos(model, scaled_data)
+    tendon, muscle = reference.tendon("PECM1_tendon").id, reference.actuator("PECM1").id
+    np.testing.assert_allclose(
+        model.actuator_lengthrange[muscle] / reference.actuator_lengthrange[muscle],
+        scaled_data.ten_length[tendon] / data.ten_length[tendon],
+        rtol=1e-9,
+    )
+
+
+def test_the_report_names_tendons_with_no_matching_pose() -> None:
+    spec = _fullbody()
+    skipped = scale_report(spec, _per_body_factors(spec, seed=2)).skipped
+    named = {item.split()[1].rstrip(":") for item in skipped if "no sampled pose" in item}
+    assert {f"LTpT_T{i}_{side}_tendon" for i in range(1, 6) for side in "rl"} <= named
 
 
 def test_mass_scales_with_volume_and_strength_is_kept() -> None:
