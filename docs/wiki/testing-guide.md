@@ -44,7 +44,7 @@ uv run pytest tests/test_build_registry.py -v
 
 **New static XML entry point** (a standalone model loaded via `mujoco.MjModel.from_xml_path`): add its path (relative to `MODELS_DIR`) to the `model_paths` list in `tests/test_sims.py`.
 
-**New composed model** (built via `build_model()`): add an entry to the `expected` dict in `test_every_registered_model_has_build_strategy` in `tests/test_build_registry.py`. If the model is bilateral (has left and right arms), also add its name to the `@pytest.mark.parametrize` decorator in `tests/test_mirror_symmetry.py`.
+**New composed model** (built via `build_spec()`): add an entry to the `expected` dict in `test_every_registered_model_has_build_strategy` in `tests/test_build_registry.py`. If the model is bilateral (has left and right arms), also add its name to the `@pytest.mark.parametrize` decorator in `tests/test_mirror_symmetry.py`.
 
 **New muscle symmetry check**: use `discover_bilateral_suffix_pairs()` from `tests/muscle_symmetry_checks.py` to find left/right muscle pairs automatically. Do not hardcode pairs in the test — that will cause the test to silently miss new muscles.
 
