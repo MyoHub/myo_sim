@@ -1,6 +1,8 @@
 import re
 from pathlib import Path
 
+import pytest
+
 import myo_sim
 from myo_sim.build.utils import add_contact_pairs
 
@@ -116,3 +118,12 @@ def test_no_static_xml_combines_conflicting_asset_files():
                 f"Multi-part assemblies must use build_model() in compose.py "
                 f"to keep contact pairs and bilateral symmetry centralised."
             )
+
+
+@pytest.mark.parametrize("model_name", ("myoarms", "myohands", "myofullbody"))
+def test_disabled_finger_collisions_leave_no_pairs_on_disabled_geoms(model_name):
+    """Explicit pairs bypass contype/conaffinity, so they must go with the geoms they name."""
+    model = myo_sim.load_spec(model_name, build_kwargs={"disable_finger_collisions": True}).compile()
+    disabled = {g for g in range(model.ngeom) if model.geom_contype[g] == 0 and model.geom_conaffinity[g] == 0}
+    stale = [k for k in range(model.npair) if model.pair_geom1[k] in disabled or model.pair_geom2[k] in disabled]
+    assert not stale, [(model.geom(model.pair_geom1[k]).name, model.geom(model.pair_geom2[k]).name) for k in stale]
