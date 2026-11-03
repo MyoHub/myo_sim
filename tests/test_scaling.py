@@ -685,6 +685,23 @@ def test_the_long_way_round_is_another_path_in_the_same_direction(kind: str) -> 
     assert _same_path(long, {**long, "a": "-.16 .02 0"})
 
 
+def test_a_path_over_another_wrap_geom_is_another_path() -> None:
+    """Each path engages one geom, passes it on the same side and has five points."""
+    xml = """<mujoco><worldbody><geom name="one" type="cylinder" size=".05 .2" pos="-.2 0 0"/>
+    <geom name="two" type="cylinder" size=".05 .2" pos=".2 0 0"/>
+    <site name="a" pos="-.4 {a} 0"/><site name="m" pos="0 -.01 0"/><site name="c" pos=".4 {c} 0"/></worldbody>
+    <tendon><spatial name="t"><site site="a"/><geom geom="one"/><site site="m"/><geom geom="two"/><site site="c"/></spatial></tendon></mujoco>"""
+    paths = []
+    for a, c in ((-0.01, 0.2), (0.2, -0.01)):
+        model = mujoco.MjSpec.from_string(xml.format(a=a, c=c)).compile()
+        data = mujoco.MjData(model)
+        mujoco.mj_forward(model, data)
+        assert data.ten_wrapnum[0] == 5
+        paths.append([_tendon_paths(model, data)])
+    assert not _same_paths(*paths)[0, 0]
+    assert _same_paths(paths[0], paths[0])[0, 0]
+
+
 def _per_body_factors(spec: mujoco.MjSpec, seed: int) -> dict[str, np.ndarray]:
     rng = np.random.default_rng(seed)
     return {name: rng.uniform(0.9, 1.1, 3) for name in _names(spec)}
@@ -710,6 +727,25 @@ def test_a_median_over_other_paths_does_not_replace_a_smooth_ratio() -> None:
         scaled_data.ten_length[tendon] / data.ten_length[tendon],
         rtol=1e-9,
     )
+
+
+def test_an_unchanged_path_keeps_its_ratio_however_far_from_other_poses() -> None:
+    """Without a wrap, this ratio is 1.6 in the default pose and about 1.3 in the others, and all are right."""
+    spec = mujoco.MjSpec.from_string("""<mujoco><compiler angle="radian"/><worldbody><body name="p"><geom size=".01"/><site name="a" pos=".5 0 0"/>
+        <body name="c"><joint axis="0 0 1" range="1.2 2"/><geom size=".01"/><site name="b" pos=".5 .2 0"/></body>
+        </body></worldbody><tendon><spatial name="t"><site site="a"/><site site="b"/></spatial></tendon></mujoco>""")
+    reference = spec.copy().compile()
+    data = mujoco.MjData(reference)
+    scaled = scale_spec(spec, {"p": (1.5, 1.0, 1.0)}).compile()
+    scaled_data = mujoco.MjData(scaled)
+    ratios = []
+    for q in (0.0, 1.6):
+        data.qpos[0] = scaled_data.qpos[0] = q
+        mujoco.mj_forward(reference, data)
+        mujoco.mj_forward(scaled, scaled_data)
+        ratios.append(scaled_data.ten_length[0] / data.ten_length[0])
+    assert ratios[0] > 1.1 * ratios[1]
+    assert not scale_report(spec, {"p": (1.5, 1.0, 1.0)}).skipped
 
 
 def test_the_report_names_tendons_with_no_matching_pose() -> None:
