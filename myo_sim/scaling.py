@@ -33,6 +33,8 @@ _ORIENT = mujoco.mjtOrientation
 _UNIT = np.ones(3)
 # Fitted factors outside this range usually mean wrong units or correspondences.
 _FIT_BOUNDS = (0.5, 2.0)
+# The point fit stops here: mismatched points can otherwise shrink a factor until it underflows.
+_FIT_LOG_LIMIT = float(np.log(100.0))
 # A hinge coefficient of a fixed tendon at or above this size is a plain angle, not a moment arm (in m).
 _ANGLE_COEF = 0.2
 # Poses and relative deviation that tell a wrap's change of path from a muscle's length change.
@@ -294,8 +296,10 @@ def _fit_axes(body: str, local: np.ndarray, target: np.ndarray) -> np.ndarray:
         gradient, hessian = jacobian.T @ residual, jacobian.T @ jacobian
         step = np.linalg.solve(hessian + damping * np.diag(np.diag(hessian).clip(1e-12)), -gradient)
         new_s, new_rot = log_s + step[:3], _rotvec_to_mat(step[3:]) @ rot
-        new_residual, new_jacobian = residual_jacobian(new_s, new_rot)
-        new_cost = float(new_residual @ new_residual)
+        new_cost = np.inf
+        if np.all(np.abs(new_s) <= _FIT_LOG_LIMIT):
+            new_residual, new_jacobian = residual_jacobian(new_s, new_rot)
+            new_cost = float(new_residual @ new_residual)
         if new_cost <= cost:
             log_s, rot, residual, jacobian = new_s, new_rot, new_residual, new_jacobian
             done = cost - new_cost <= 1e-14 * max(cost, 1e-30) or np.linalg.norm(step) < 1e-12

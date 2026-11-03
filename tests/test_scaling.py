@@ -1051,6 +1051,21 @@ def test_missing_points_are_skipped_and_unfit_points_refused() -> None:
         scale_spec(_leg(), {"thigh": (points, np.where(missing > 0, np.inf, 0.0))})
 
 
+@pytest.mark.filterwarnings("error::RuntimeWarning")
+@pytest.mark.parametrize("seed", range(40))
+def test_swapped_points_fit_or_raise_a_value_error(seed: int) -> None:
+    """Mismatched points can send the fit to zero factors, which must not surface as ``LinAlgError``."""
+    rng = np.random.default_rng(seed)
+    points = rng.normal(size=(int(rng.integers(4, 9)), 3)) * 0.1
+    mismatched = points[::-1] if seed % 2 else points[rng.permutation(len(points))]
+    try:
+        factors = _fit_points("b", points, mismatched)
+    except ValueError as error:
+        assert "b:" in str(error)
+    else:
+        assert np.all((factors >= 0.5) & (factors <= 2.0))
+
+
 def test_model_digest_tracks_the_model() -> None:
     source = mujoco.MjSpec.from_string(GROUND_XML)
     scaled = model_digest(scale_spec(source, {"root": 1.1, "foot": 1.2}).compile())
