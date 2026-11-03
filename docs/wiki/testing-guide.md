@@ -16,6 +16,9 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_passive_torso_build.py` | Passive torso scaffold builds without error | After torso XML or compose changes |
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |
 | `test_leg_muscle_symmetry.py` | Leg muscle moment arms are symmetric between left and right | After `myolegs` XML changes |
+| `test_arm_rigid_conversion.py` | Adopted arm maps match the published MoBL-ARMS rigid-tendon fibre length | After `myoarm_r_muscle.xml` or `scripts/fit_arm_rigid_maps.py` changes |
+| `test_leg_passive.py` | Leg passive moments reproduce the recorded fit to Silder et al. (2007); active-strength constraint; L/R identical | After `myolegs_muscle.xml` or `build/leg_passive.py` changes |
+| `test_leg_rigid_conversion.py` | Adopted leg maps match the published Rajagopal rigid-tendon fibre lengths over the full joint range | After `myolegs_muscle.xml` or `scripts/fit_leg_rigid_maps.py` changes |
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |

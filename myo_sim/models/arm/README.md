@@ -18,6 +18,13 @@ MyoArm is a MuJoCo musculoskeletal model of the right upper extremity — should
 
 ## Fidelity
 
+<!-- TODO: review (quantitative fidelity claims; reproduce with the commands below) -->
+Ten arm muscles use maps converted directly from MoBL-ARMS
+([Holzbaur et al. 2005](https://doi.org/10.1007/s10439-005-3320-7);
+`scripts/fit_arm_rigid_maps.py`, `status: adopted` in `myo_sim/build/references.py`).
+The regression test (`tests/test_arm_rigid_conversion.py`) checks the published rigid-tendon fibre length.
+
+
 ![DELT1 left/right shoulder elevation relationship](../../../docs/images/DELT1_DELT1_l_shoulder_elv_r.png)
 
 Example fidelity check (DELT1 left/right moment-arm and force-length plot) for symmetry and muscle jumping for upper limb. The full bimanual arm muscle check can be run with `tests/debug_muscle_bimanual.py`.
@@ -72,6 +79,12 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 **2026-10-28** — Finger MCP, PIP and DIP damping set to Kamper et al. 2002 (0.0142, 0.0105, 0.0081 N m s/rad; was 0.05), and RI2 routed without the second-metacarpal wrap its insertion entered (its length jumped by 7 mm near 10 deg MCP flexion). Both change the dynamics of every model with a hand. See `docs/wiki/passive-moments-and-thenar.md`.
 
 **2026-08-02** — Restored anatomical optimal fiber length (`L0`), tendon slack length (`LT`), and peak isometric force (`Fmax`) from the MoBL-ARMS reference for 7 of 8 inflated shoulder muscles (`TMIN`, `LAT2`, `INFSP`, `BICshort`, `TRIlong`, `SUPSP`, `PECM1`; `CORB` left unfixed pending a proper functional-ROM audit — its excursion/`L0` ratio matches the pattern that predicted a force-accuracy regression for 4 leg muscles) and all 24 inflated hand-extrinsic muscles (finger/wrist flexors and extensors), which had never received per-muscle calibration at all — every one compiled against MuJoCo's raw default `range="0.75 1.05"`. Also incidentally corrected a pre-existing `SUPSP` inconsistency where `gainprm` and `biasprm` held different values from each other. No arm/hand equivalent of the leg's gait-ROM force-accuracy cross-check exists yet, so these fixes are `L0`-matched-only, not independently force-validated the way the leg fixes are. Verified against `myoElbowPose1D6MRandom-v0` and `myoHandReachRandom-v0` in myosuite4 (random-action rollouts, no NaN/instability). See `docs/wiki/log.md` (2026-08-02 entries) for full detail.
+**2026-10-31** — Rigid-tendon maps of DELT2, DELT3, TMAJ, PECM3, LAT1, LAT2, LAT3, SUBSC, ANC and BRA derived directly from
+MoBL-ARMS optimal fibre length, tendon slack length and pennation (`myo_sim/build/rigid_conversion.py --region arm`). Selected
+by two checks decided beforehand: fibre length along the measured shoulder motions of Seth et al. (2019) for the muscles its model
+tracks, and path agreement plus OpenSim fibre length and force for the others. The rotator cuff (scapular kinematics differ from
+Seth's), TRIlong and the forearm/hand extrinsics keep their maps.
+
 
 **2026-06-29** — Compared MyoArm-derived full-body geoms against the previous MuscleMimic full-body model. The old reference contained non-collision wrap geoms `APL_torus_wrap_left` on `hamate_l`, `FCU_wrap_left` on `pisiform_l`, and `Trpzm_wrap_left` on `trapezium_l`; these are intentionally absent from the current MyoArm XML as they were never used. Removed `distph2_r_coll_2` from the required parity list because it duplicated the unnamed ellipsoid already present on `distph2_r`.
 

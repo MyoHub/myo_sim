@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-03 — Merge #123's rigid-tendon maps into the hand rebuild
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml` (ten arm maps on the `_r` actuators), `myo_sim/models/leg/assets/myolegs_muscle.xml`, `myo_sim/build/rigid_conversion.py` (arm region's actuator suffix), `tests/test_arm_rigid_conversion.py`, `hand_literature.json`, `hand-literature-comparison.md`, `CHANGELOG.md`
+Why: #123's follow-up maps had to come into the rebuild; the arm table keeps MoBL-ARMS' names and the fit now targets the suffixed actuators. No forearm or hand muscle changes, and the refit confirms it.
+
 ## 2026-11-03 — ECU through the groove of the ulnar head; forearm rotation axis checked
 Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (ECU groove block on the ulna; ECU via point, wrap sphere and side sites removed from the radius), `myoarm_r_tendon.xml` (ECU path, springs), `myoarm_r_muscle.xml` (refitted passive parameters), `myo_sim/build/data/extrinsic_muscles.json` (`ecu`), `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json` (grip cache), `hand_literature.json`, `scripts/generate_extrinsic_muscles.py` (`--fit-ecu`, forearm landmarks), `scripts/hand_literature_comparison.py` (forearm rotation), `tests/test_extrinsic_muscles.py`, `test_hand_literature.py`, `test_muscle_passive.py` (left/right settling compared at solver tolerance 1e-12), `docs/wiki/hand-extrinsic-muscles.md`, `hand-literature-comparison.md`, `hand-contacts-and-pads.md`, `index.md`, `repository-map.md`, `testing-guide.md`, `CHANGELOG.md`
 Why: The ECU crossed the wrist from a via point on the radius 20 mm from the rotation axis, so its arms ignored forearm rotation; it now leaves the groove of the ulnar head, as measured by Horii 1993 and Loren 1996, while the rotation axis already passes through the radial and ulnar heads and stays.
@@ -90,6 +94,34 @@ Why: The right arm was the only part whose joints, actuators, tendons, geoms and
 ## 2026-10-29 — Hand models by generic pruning; literature comparison page
 Changed: `myo_sim/build/hand.py`, `myo_sim/build/compose.py`, `myo_sim/models/contacts/myohand_contacts.xml`, `tests/test_hand_pruning.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_hand_literature.py`, `docs/wiki/hand-literature-comparison.md`, `docs/wiki/build-and-composition.md`, `docs/wiki/passive-moments-and-thenar.md`, `docs/wiki/testing-guide.md`, `docs/wiki/index.md`, `myo_sim/build/README.md`, `CHANGELOG.md`
 Why: The hand models stay removal-only derivations of the canonical arm, but the pruning now handles every reference MjSpec cannot follow (tendon paths, equalities, sensors, pairs) generically instead of case by case, and a test proves every surviving arm element is in the hand unchanged. The new page records the hand against published data after each step of the hand rebuild.
+
+## 2026-11-01 — Drop build/data
+Changed: removed `myo_sim/build/data/` (JSON and LICENSE-*.txt); citations live in `myo_sim/build/references.py`
+Why: no data directory; the committed product is the XML and cited table constants sit next to the fit code.
+
+## 2026-11-01 — No JSON in build/data
+Changed: removed `build/data/*.json`; cited table values moved to `myo_sim/build/references.py`; `build/data/` keeps `LICENSE-*.txt` only
+Why: model policy: raw datasets stay out of the repo; the committed product is the XML; cited numbers are code constants, not data files.
+
+## 2026-11-01 — Provenance JSON is cited tables only
+Changed: slimmed `build/data/*.json` to citation/DOI/licence plus table rows; moved fit grids out of JSON; dropped `scripts/debug_leg_physiology.py`; `--write` no longer dumps fit logs back into JSON
+Why: model policy (MyoHub/myo_sim#140): `build/data/<topic>.json` holds one row per element, not optimizer output, posture grids or analysis scripts.
+
+## 2026-11-01 — Rigid-map follow-up follows model-policy provenance
+Changed: removed `tests/data/*.npz`; fit CLIs under `scripts/fit_*.py`; `LICENSE-*.txt` next to `build/data`; CHANGELOG; `docs/wiki/model-authoring.md`
+Why: model policy (MyoHub/myo_sim#140): raw datasets and papers are never committed; derived table values live in `build/data/<topic>.json` with citation, DOI and licence; fit scripts are `scripts/fit_*.py` and run only at development time.
+
+## 2026-10-31 — Arm rigid-tendon maps from MoBL-ARMS, checked along measured shoulder motion
+Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `myo_sim/build/rigid_conversion.py` (regions), `myo_sim/build/data/mobl_arm_muscles.json`, `tests/test_arm_rigid_conversion.py`, `tests/data/seth2019_shoulder_motion.npz`, `myo_sim/models/arm/README.md`
+Why: Along the measured shoulder motions of Seth et al. (2019), LAT1, LAT3 and PECM3 operated outside 0.5-1.5 L0 in 100 %, 64 % and 56 % of frames. Ten muscles now use maps converted directly from MoBL-ARMS (0-5 % of frames outside, closer to the Seth model's fibre lengths); the selection rules are recorded in the data file.
+
+## 2026-10-31 — Leg passive force calibrated to measured passive joint moments
+Changed: `myo_sim/models/leg/assets/myolegs_muscle.xml`, `myo_sim/build/leg_passive.py`, `myo_sim/build/data/leg_passive.json`, `tests/test_leg_passive.py`, `tests/test_leg_rigid_conversion.py`, `tests/data/rajagopal2016_leg_opensim.npz`, `tests/debug_leg_physiology.py`, `myo_sim/models/leg/README.md`
+Why: With the converted maps the hamstrings still gave 19-41 Nm of passive knee moment where people show 6-30 Nm, and MuJoCo's default passive scale did not reflect measured passive moments anywhere. Tendon slack length and fpmax per muscle are fitted to Silder et al. (2007), keeping the gastrocnemius at Narici et al. (1996) fascicle lengths and each muscle at half its active force or more at Anderson et al. (2007) strength angles; hip/knee/ankle RMS 19.8/11.2/2.6 -> 11.0/8.4/2.1 N m. Torques in the physiology script now use effective moment arms (knee translations and patella resolved), which changes the knee numbers reported on this date.
+
+## 2026-10-31 — Leg rigid-tendon muscle maps derived directly from the Rajagopal reference
+Changed: `myo_sim/models/leg/assets/myolegs_muscle.xml`, `myo_sim/build/rigid_conversion.py`, `myo_sim/build/data/rajagopal2016_leg_muscles.json`, `tests/test_leg_rigid_conversion.py`, `tests/debug_leg_physiology.py`, `docs/wiki/model-authoring.md`, `docs/wiki/testing-guide.md`, `docs/wiki/repository-map.md`, `myo_sim/models/leg/README.md`
+Why: The 2026-08-02 leg refit kept anatomical optimal fibre lengths but anchored them to a gait-range `lengthrange`; outside it MuJoCo extrapolates, and semimembranosus reached ln ~2.9 with the hip flexed (161 Nm passive knee moment). Fitting MuJoCo's linear map to the reference's rigid-tendon fibre length over the full joint range reproduces OpenSim's fibre lengths (median RMSE 0.02, max 0.10, over 400 postures) and was adopted for the 24 muscles where it raises the isometric force error by at most 2 % of Fmax; checked against cadaver fibre lengths, ultrasound fascicle lengths and dynamometry.
 
 ## 2026-10-27 — Head and trunk mass convention
 Changed: myo_sim/models/head/assets/myohead_rigid_chain.xml, myo_sim/models/torso/assets/myotorso_chain.xml, myo_sim/build/mass.py, tests/test_mass_convention.py, CHANGELOG.md
