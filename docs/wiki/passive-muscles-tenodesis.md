@@ -142,8 +142,7 @@ The extensors are at 0.50 or more in full extension with the wrist extended 30 d
 excursion from the wrist-flexed fist to the flat hand (0.55-0.67 L0) does not fit in one
 window for FDS3, FDS5, FDP2, FDP3 and FDP4, so these flexors lose force with the hand flat
 (FDS3, FDP2 and FDP3: none). In the same way EDC3, EPL and EPB have less than half their
-force in a fist. Compliant tendons would change these operating ranges, so the windows and
-the slack-length fit are left as they are until the tendons are compliant.
+force in a fist. Compliant tendons would change these operating ranges; compliant tendons are planned as a later step.
 
 The fitted values are for MuJoCo's rigid-tendon muscle: its active and passive force-length
 curves, with the whole muscle-tendon excursion in the fibres. With compliant tendons the fit
@@ -171,7 +170,7 @@ test asks for 10 deg. The thumb rests inside its range at all three wrist angles
 `build/data/muscle_passive.json` is the provenance and fitting input: absolute slack
 lengths (m) and `fpmax` with the values they change and the percent change, the slack
 window allowed by the active constraint, tagged `scales_with: length` (reference segment:
-forearm) for personalisation pipelines; `joint_targets` holds the source curves, postures
+forearm) for later refits; `joint_targets` holds the source curves, postures
 and per-row errors of the joint fit, `active_constraint` the postures and muscles of the
 constraint, and each muscle row the rows it is constrained by and its status
 (`transferred target` when a curve measured on another digit constrains it).

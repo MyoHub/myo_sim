@@ -38,7 +38,7 @@ hands), both relative to MC3, in maximal little-finger opposition. Shimawaki et 
 
 - **Inter-subject variability.** The ratio is a ratio of means. Individual ratios are not reported; the
   SDs alone are 14 % (CMC5) and 25 % (CMC4) of the means, so the ratio of a given hand can differ widely.
-  It is a personalisation parameter (`cmc_joints.json`, `coupling.personalisable`).
+  It varies between subjects (`cmc_joints.json`, `coupling.subject_specific`).
 - **Task.** It was measured in active opposition. Under passive loading (an object pressing on the palm)
   the ratio may differ, and the equality imposes the active ratio there too. El-Shennawy's passive arcs
   bound a passive end-range ratio at about 2.2-2.75.

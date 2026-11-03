@@ -77,7 +77,7 @@
         "source": "kamper2002",
         "note": "as the finger MCP joints (Kamper et al. 2002 index MCP); no CMC damping measured"
       },
-      "personalisable": true,
+      "subject_specific": true,
       "fitted": {
         "pos": [
           0.002396,
@@ -126,7 +126,7 @@
         "source": "kamper2002",
         "note": "as the finger MCP joints"
       },
-      "personalisable": true,
+      "subject_specific": true,
       "fitted": {
         "pos": [
           0.003835,
@@ -172,7 +172,7 @@
       "Under passive loading (an object pressing on the palm) the ratio may differ; the equality imposes the active ratio there too.",
       "CMC4 cannot stay still while CMC5 moves: El-Shennawy 2001 measured 28 +- 3 deg of CMC5 motion with CMC4 pinned, which the equality cannot reproduce (it gives 0 deg). Two free joints with an intermetacarpal spring or ligament replace the equality once stiffness data exist."
     ],
-    "personalisable": true,
+    "subject_specific": true,
     "sources": [
       "buren2020",
       "almaktary2019"

@@ -185,7 +185,7 @@ passive scale, which tell S1b and S2 apart.
   alone, where the release bound was found): the digit-5 joint springs of the integration hold it back.
 - **Active force-length windows.** With #123's per-muscle windows, FDS4 and FDP5 (`lmin` 0.95) lose all
   active force below 0.95 L0: FDS4 has none in the flexed-wrist grip, part of why that grip drops about
-  65 % against the paper's 46 %. Widening these windows waits for compliant tendons, which change the
+  65 % against the paper's 46 %. Widening these windows would change the
   operating ranges themselves.
 - **Grip geometry.** The grip depends on the dynamometer placement much more than on the contact
   parameters: with FDS and FDP at full activation the self-selected grip was 391, 1101, 335 and 45 N with
