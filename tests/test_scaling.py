@@ -772,10 +772,11 @@ FLEX_XML = """<mujoco><worldbody><body name="a"><geom size=".1"/></body><body na
         (_welded_leg, {"shank": 1.1}, None, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(HFIELD_XML), {"a": 1.1, "b": 1.1}, None, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(FUSED_XML), {"a": 1.1}, None, NotImplementedError),
+        (lambda: mujoco.MjSpec.from_string(FUSED_XML), {}, 5.0, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(FLEX_XML), {"a": 1.1}, None, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(TWO_AGENTS_XML), {}, 50.0, ValueError),
     ],
-    ids=["mesh-also-unscaled", "mesh-scaled-twice", "connect", "height-field", "fusestatic", "flex", "ambiguous-mass"],
+    ids=["mesh-also-unscaled", "mesh-scaled-twice", "connect", "height-field", "fusestatic", "fusestatic-total-mass", "flex", "ambiguous-mass"],
 )
 def test_refused_scaling_leaves_the_spec_unchanged(
     make: Callable[[], mujoco.MjSpec], scales: dict, total_mass: float | None, error: type[Exception]

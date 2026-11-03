@@ -134,7 +134,7 @@ def scale_spec(spec: mujoco.MjSpec, scales: Scales, *, total_mass: float | None 
     """
     if total_mass is not None and (not np.isfinite(total_mass) or total_mass <= 0):
         raise ValueError(f"total_mass must be finite and positive, got {total_mass}.")
-    plan = _plan(spec, scales)
+    plan = _plan(spec, scales, total_mass)
     scaled = spec.copy()
     _apply(scaled, plan, total_mass)
     return scaled
@@ -202,7 +202,7 @@ def _model_fields(obj: Any, prefix: str = "") -> Iterator[tuple[str, bytes]]:
             yield from _model_fields(value, f"{prefix}{name}.")
 
 
-def _plan(spec: mujoco.MjSpec, scales: Scales) -> _Plan:
+def _plan(spec: mujoco.MjSpec, scales: Scales, total_mass: float | None = None) -> _Plan:
     """Resolve the factors and refuse what cannot be scaled. Edits nothing."""
     report = ScaleReport()
     if isinstance(scales, (str, os.PathLike)):
@@ -219,7 +219,7 @@ def _plan(spec: mujoco.MjSpec, scales: Scales) -> _Plan:
         raise KeyError(f"Bodies not in the model: {sorted(unknown)}")
     resolved = {name: _factors(value) for name, value in factors.items()}
     report.factors = {name: s for name, s in resolved.items() if not np.array_equal(s, _UNIT)}
-    if report.factors and spec.compiler.fusestatic:
+    if (report.factors or total_mass is not None) and spec.compiler.fusestatic:
         raise NotImplementedError("Cannot scale a spec with fusestatic: it removes bodies when compiled.")
     _check_equalities(spec, report.factors)
     _check_flexes(spec, report.factors)
