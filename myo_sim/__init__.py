@@ -1,3 +1,4 @@
+from importlib import import_module
 from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Optional
@@ -9,6 +10,13 @@ if TYPE_CHECKING:
     import mujoco
 
     from myo_sim.build.compose import CollisionMode as CollisionMode
+    from myo_sim.scaling import ScaleReport as ScaleReport
+    from myo_sim.scaling import model_digest as model_digest
+    from myo_sim.scaling import scale_report as scale_report
+    from myo_sim.scaling import scale_spec as scale_spec
+    from myo_sim.scaling import segment_factors as segment_factors
+    from myo_sim.scaling_checks import check_scaled_model as check_scaled_model
+    from myo_sim.scaling_checks import fit_length_ranges as fit_length_ranges
 
 try:
     __version__ = version("myo-sim")
@@ -65,11 +73,26 @@ def _composed_models() -> frozenset[str]:
     return frozenset(MODEL_REGISTRY) | frozenset(ALIASES)
 
 
+# Public names of the scaling modules, imported on first use so that ``import myo_sim``
+# stays free of a MuJoCo dependency.
+_LAZY_EXPORTS: dict[str, str] = {
+    "ScaleReport": "scaling",
+    "model_digest": "scaling",
+    "scale_report": "scaling",
+    "scale_spec": "scaling",
+    "segment_factors": "scaling",
+    "check_scaled_model": "scaling_checks",
+    "fit_length_ranges": "scaling_checks",
+}
+
+
 def __getattr__(name: str):
     # Preserve the historical ``myo_sim._COMPOSED_MODELS`` attribute while keeping
     # its contents derived from the compose registry instead of a hand-kept copy.
     if name == "_COMPOSED_MODELS":
         return _composed_models()
+    if name in _LAZY_EXPORTS:
+        return getattr(import_module(f"myo_sim.{_LAZY_EXPORTS[name]}"), name)
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 

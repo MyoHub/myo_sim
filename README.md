@@ -79,6 +79,17 @@ model = build_model("myofullbody")
 print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")
 ```
 
+```python
+# Scale a model to known factors (OpenSim Scale Tool rules); returns a new spec
+import myo_sim
+from myo_sim import scale_spec
+
+spec = myo_sim.load_spec("myolegs")
+model = scale_spec(spec, {"femur_r": 1.08, "tibia_r": (1.0, 0.96, 1.0)}, total_mass=72.0).compile()
+```
+
+See [model scaling](docs/wiki/model-scaling.md) for the rules, an operating-curve refit of the muscles, checks of a scaled model, OpenSim scale files and the comparison with OpenSim.
+
 ## Development
 
 ```bash
