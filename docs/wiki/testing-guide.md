@@ -20,6 +20,9 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_leg_passive.py` | Leg passive moments reproduce the recorded fit to Silder et al. (2007); active-strength constraint; L/R identical | After `myolegs_muscle.xml` or `build/leg_passive.py` changes |
 | `test_leg_rigid_conversion.py` | Adopted leg maps match the published Rajagopal rigid-tendon fibre lengths over the full joint range | After `myolegs_muscle.xml` or `scripts/fit_leg_rigid_maps.py` changes |
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
+| `test_model_stability.py` | Every composed model steps without going non-finite; `myofullbody` survives random-activation rollouts (3 seeds) from qpos0 and from a stored state where BIClong grazed its former elbow wrap | After XML, tendon or wrap changes |
+| `test_tendon_path_continuity.py` | No arm tendon length jumps by more than 1 mm per 1e-3 rad over the elbow range plus 0.13 rad past each limit, for 9 forearm rotations | After arm tendon, wrap or sidesite changes |
+| `test_warp_parity.py` | Every tendon length in `myohands` and `myoarms` matches between CPU MuJoCo and mujoco-warp over random postures (to 1e-5 m) | After tendon or wrap changes; skipped without mujoco-warp|
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
 | `test_passive_thenar.py` | Passive joint moments and hand intrinsic muscles: generated XML blocks (main and labelled) equal what the scripts write from the JSON, chain sites match the table, the intrinsic path and passive-scale fit reproduces the table and keeps its fibre-length window, intrinsic moment-arm signs (Smutz 1998, An 1983), PIP ranges as tabled, every applied row and the intrinsic muscles on myofullbody / torso_arms / hands / arm_r, both arms from the right-arm files, finger damping as tabled on both hands, springs plus muscles against Formica's wrist stiffness, CPU vs mujoco-warp (with joint velocities), left/right symmetry, relaxed settling, rows refit from their sources (springs never worsen the total) | After arm tendon/muscle/chain, `build/hand.py`, `build/hand_data.py`, `scripts/fit_passive_moments.py` or `scripts/generate_hand_intrinsic_muscles.py` changes |
@@ -60,7 +63,7 @@ uv run pytest tests/test_build_registry.py -v
 
 **New static XML entry point** (a standalone model loaded via `mujoco.MjModel.from_xml_path`): add its path (relative to `MODELS_DIR`) to the `model_paths` list in `tests/test_sims.py`.
 
-**New composed model** (built via `build_model()`): add an entry to the `expected` dict in `test_every_registered_model_has_build_strategy` in `tests/test_build_registry.py`. If the model is bilateral (has left and right arms), also add its name to the `@pytest.mark.parametrize` decorator in `tests/test_mirror_symmetry.py`.
+**New composed model** (built via `build_spec()`): add an entry to the `expected` dict in `test_every_registered_model_has_build_strategy` in `tests/test_build_registry.py`. If the model is bilateral (has left and right arms), also add its name to the `@pytest.mark.parametrize` decorator in `tests/test_mirror_symmetry.py`.
 
 **New muscle symmetry check**: use `discover_bilateral_suffix_pairs()` from `tests/muscle_symmetry_checks.py` to find left/right muscle pairs automatically. Do not hardcode pairs in the test — that will cause the test to silently miss new muscles.
 

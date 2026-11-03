@@ -19,7 +19,7 @@ myo_sim/              # installable Python package
     scene/            # scene wrapper XMLs for rendering
     textures/         # shared textures
   build/
-    compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec()/build_model(), SPEC_BUILDERS
+    compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
     hand_data.py      # intrinsic-muscle / passive-moment tables, passive tendon names, generated-block read/write, lumbrical node placement (place_tendon_nodes, fold_node_forces)

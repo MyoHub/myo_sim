@@ -26,7 +26,7 @@ Legacy models ship in the pip package under `myo_sim/models/legacy/` and load vi
 
 ## Buildable Models
 
-The following registered models can be compiled with `myo_sim.build.compose.build_model("<name>")`:
+The following registered models can be compiled with `myo_sim.load_model("<name>")`:
 
 - `myotorso` — torso scaffold with torso muscles.
 - `myotorso_abdomen` — simple abdomen scaffold.
@@ -74,8 +74,7 @@ model, data = myo_sim.load("myoelbow")
 
 ```python
 # Compose a full-body MjSpec model
-from myo_sim.build.compose import build_model
-model = build_model("myofullbody")
+model = myo_sim.load_model("myofullbody")
 print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")
 ```
 
