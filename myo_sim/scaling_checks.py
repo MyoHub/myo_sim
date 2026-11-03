@@ -14,6 +14,9 @@ import numpy as np
 
 from .scaling import _same_paths, _tendon_states, assemble_qpos, free_joints, matched_poses
 
+# Muscles named in a check's detail.
+_MAX_NAMED = 10
+
 
 @dataclass
 class CheckResult:
@@ -129,7 +132,8 @@ def check_scaled_model(
     poses matches the reference), ``moment_arm_signs`` (where the reference's moment arm exceeds
     5 mm, the scaled model's has the same sign), ``stability`` (a passive and lightly activated
     rollout stays finite and slow) and ``constraints`` (the equality residuals in that rollout,
-    joint couplings and tendon ties, stay small).
+    joint couplings and tendon ties, stay small). The first two hold for each muscle, and each
+    ``value`` is that of the worst muscle, so a single wrong muscle fails them.
 
     Args:
         model: The compiled scaled model.
@@ -137,8 +141,11 @@ def check_scaled_model(
         n: Number of sampled poses.
         seed: Seed of the pose sampler and the rollout.
         steps: Number of steps of the rollout.
-        operating_tol: Limit on the 99th percentile of the normalised length difference.
-        min_sign_agreement: Smallest fraction of moment arms with the reference's sign.
+        operating_tol: Limit on each muscle's 99th percentile, over the poses, of the normalised
+            length difference. That is a fraction of the muscle's own range: 0.05 moves its active
+            force by at most 6 % of its peak in the median muscle of ``myofullbody``, and 18 % in the worst.
+        min_sign_agreement: Smallest fraction of each muscle's moment arms with the reference's
+            sign. A muscle crosses far fewer than 100 joints, so the default allows no flip.
         max_speed: Limit on the largest joint speed in the rollout (rad/s or m/s).
         max_constraint: Limit on the largest equality residual in the rollout's second half,
             beyond the reference's (m or rad).
@@ -197,10 +204,13 @@ def _check_operating_range(model: mujoco.MjModel, reference: mujoco.MjModel, n: 
         _normalised(model, _actuator_lengths(model, q_model), ids)
         - _normalised(reference, _actuator_lengths(reference, q_ref), ids)
     )
-    value = float(np.quantile(difference, 0.99))
-    worst = ids[int(np.argmax(difference.max(axis=0)))]
-    detail = f"99th percentile of |normalised length difference|; worst muscle {reference.actuator(worst).name} ({difference.max():.3f})"
-    return CheckResult("operating_range", value <= tol, value, tol, detail)
+    per_muscle = np.quantile(difference, 0.99, axis=0)
+    order = np.argsort(-per_muscle)
+    above = [f"{reference.actuator(ids[i]).name} ({per_muscle[i]:.3f})" for i in order if per_muscle[i] > tol]
+    shown = ", ".join(above[:_MAX_NAMED]) + (f" and {len(above) - _MAX_NAMED} more" if len(above) > _MAX_NAMED else "")
+    detail = f"each muscle's 99th percentile of |normalised length difference|; {len(above)} of {len(ids)} muscles above {tol}"
+    value = float(per_muscle[order[0]])
+    return CheckResult("operating_range", value <= tol, value, tol, f"{detail}: {shown}" if above else detail)
 
 
 def _moment_arms(model: mujoco.MjModel, eps: float = 1e-6) -> np.ndarray:
@@ -227,9 +237,13 @@ def _check_moment_arm_signs(
     arms, arms_ref = _moment_arms(model)[ids], _moment_arms(reference)[ids]
     large = np.abs(arms_ref) > min_arm
     agree = np.sign(arms) == np.sign(arms_ref)
-    fraction = float(np.mean(agree[large])) if large.any() else 1.0
+    counted = np.flatnonzero(large.any(axis=1))
+    per_muscle = (large & agree)[counted].sum(axis=1) / large[counted].sum(axis=1)
+    fraction = float(per_muscle.min()) if counted.size else 1.0
     flipped = sorted({reference.actuator(ids[i]).name for i in np.flatnonzero(np.any(large & ~agree, axis=1))})
-    detail = f"{int(large.sum())} muscle-joint pairs above {min_arm * 1000:.0f} mm; flipped: {flipped or 'none'}"
+    detail = (
+        f"worst muscle of {int(large.sum())} muscle-joint pairs above {min_arm * 1000:.0f} mm; flipped: {flipped or 'none'}"
+    )
     return CheckResult("moment_arm_signs", fraction >= min_fraction, fraction, min_fraction, detail)
 
 

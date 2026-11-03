@@ -1348,14 +1348,24 @@ FEMUR_TIBIA = {
 def test_refit_improves_the_normalised_length_match() -> None:
     spec = _myolegs()
     reference = spec.copy().compile()
-    scaled = scale_spec(spec, FEMUR_TIBIA)
-    before = check_scaled_model(scaled.copy().compile(), reference)["operating_range"].value
+    scaled = scale_spec(spec, {"femur_r": 1.12, "femur_l": 1.12, "tibia_r": 0.95, "tibia_l": 0.95})
+    before = check_scaled_model(scaled.copy().compile(), reference)["operating_range"]
     refitted, r2 = fit_length_ranges(scaled, reference)
-    after = check_scaled_model(refitted.compile(), reference)["operating_range"].value
-    assert after < 0.6 * before
-    assert after < 0.05
+    after = check_scaled_model(refitted.compile(), reference)["operating_range"]
+    assert not before.passed and after.passed
+    assert after.value < 0.6 * before.value
     assert set(r2) == {reference.actuator(i).name for i in range(reference.nu)}
     assert np.median(list(r2.values())) > 0.99
+
+
+def test_refit_leaves_a_changed_wrap_path_to_the_check() -> None:
+    """glmax3 takes the long way round in most poses here, which a range cannot repair."""
+    spec = _myolegs()
+    reference = spec.copy().compile()
+    refitted, _ = fit_length_ranges(scale_spec(spec, FEMUR_TIBIA), reference)
+    result = check_scaled_model(refitted.compile(), reference)["operating_range"]
+    assert not result.passed and result.value > 0.5
+    assert "glmax3_r" in result.detail and "glmax3_l" in result.detail
 
 
 def test_refit_leaves_a_similarity_alone_and_the_input_unchanged() -> None:
@@ -1415,6 +1425,36 @@ def test_checks_catch_a_bad_model() -> None:
         eq.solref = [2.0, 1.0]
     result = check_scaled_model(loose.compile(), reference, max_constraint=1e-4)
     assert not result["constraints"].passed
+
+
+def _similarity_of_the_full_body() -> tuple[mujoco.MjModel, mujoco.MjModel]:
+    spec = _fullbody()
+    return scale_spec(spec, {b: 1.1 for b in _names(spec)}).compile(), spec.copy().compile()
+
+
+@pytest.mark.parametrize("shift,passes", [(0.5, False), (0.06, False), (0.04, True)])
+def test_one_muscle_off_fails_the_operating_range(shift: float, passes: bool) -> None:
+    """IO5_l is one of 416 muscles; the bound sits at 5 % of its own range."""
+    model, reference = _similarity_of_the_full_body()
+    muscle = model.actuator("IO5_l").id
+    model.actuator_lengthrange[muscle] += shift * np.ptp(model.actuator_lengthrange[muscle])
+    result = check_scaled_model(model, reference, n=40, steps=2)["operating_range"]
+    assert result.passed == passes
+    np.testing.assert_allclose(result.value, shift, rtol=0.02)
+    assert ("IO5_l" in result.detail) == (not passes)
+
+
+def test_one_flipped_muscle_fails_the_moment_arm_signs() -> None:
+    """glmax3 flips on two of 944 pairs of the full body under PR #564's factors, which a pooled fraction hides."""
+    spec = _fullbody()
+    reference = spec.copy().compile()
+    factors = {"pelvis": (1.03, 0.98, 1.04)}
+    result = check_scaled_model(scale_spec(spec, factors).compile(), reference, n=2, steps=2)["moment_arm_signs"]
+    assert not result.passed
+    assert "glmax3_r" in result.detail and "glmax3_l" in result.detail
+    np.testing.assert_allclose(result.value, 2 / 3)  # one of the three joints it crosses with a large arm
+    good = check_scaled_model(scale_spec(spec, {b: 1.1 for b in _names(spec)}).compile(), reference, n=2, steps=2)
+    assert good["moment_arm_signs"].passed and good["moment_arm_signs"].value == 1.0
 
 
 def test_checks_of_a_model_without_a_limited_undriven_hinge() -> None:
