@@ -218,7 +218,7 @@ def _moment_arms(model: mujoco.MjModel, eps: float = 1e-6) -> np.ndarray:
             q[adr] += sign * eps
             lengths.append(_actuator_lengths(model, assemble_qpos(model, data, q)[None])[0])
         columns.append((lengths[0] - lengths[1]) / (2 * eps))
-    return np.array(columns).T
+    return np.stack(columns, axis=1) if columns else np.empty((model.nu, 0))
 
 
 def _check_moment_arm_signs(

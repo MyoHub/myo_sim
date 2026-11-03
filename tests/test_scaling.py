@@ -1162,6 +1162,18 @@ def test_checks_catch_a_bad_model() -> None:
     assert not result["constraints"].passed
 
 
+def test_checks_of_a_model_without_a_limited_undriven_hinge() -> None:
+    """Moment arms have no joint to be measured on, so that check holds vacuously."""
+    spec = mujoco.MjSpec.from_string("""<mujoco><worldbody><site name="fixed" pos="-1 0 0"/>
+        <body name="b"><joint type="slide" axis="1 0 0" range="-.1 .1"/><geom size=".1"/><site name="s"/>
+        <body name="c" pos="0 0 1"><joint axis="0 1 0"/><geom size=".1"/></body></body></worldbody>
+        <tendon><spatial name="t"><site site="fixed"/><site site="s"/></spatial></tendon>
+        <actuator><muscle tendon="t"/></actuator></mujoco>""")
+    reference = spec.copy().compile()
+    result = check_scaled_model(scale_spec(spec, {"b": 1.1}).compile(), reference, steps=4)
+    assert result["moment_arm_signs"].passed and result["moment_arm_signs"].value == 1.0
+
+
 def test_imports_are_lazy() -> None:
     code = "import sys, myo_sim; print('myo_sim.scaling' in sys.modules, 'mujoco' in sys.modules)"
     result = subprocess.run([sys.executable, "-c", code], text=True, capture_output=True, check=True)
