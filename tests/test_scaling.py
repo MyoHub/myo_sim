@@ -424,8 +424,8 @@ def test_per_axis_factors_move_everything_with_its_body(name: str) -> None:
     ids=["box", "turned-box", "ellipsoid", "cylinder", "fromto", "sphere"],
 )
 def test_site_sizes_follow_the_axes_like_geoms(site: str, factors: tuple, expected: tuple) -> None:
-    spec = mujoco.MjSpec.from_string(f'''<mujoco><worldbody><body name="b"><joint/><geom size=".1"/>
-        <site name="s" {site}/></body></worldbody></mujoco>''')
+    spec = mujoco.MjSpec.from_string(f"""<mujoco><worldbody><body name="b"><joint/><geom size=".1"/>
+        <site name="s" {site}/></body></worldbody></mujoco>""")
     scaled = scale_spec(spec, {"b": factors}).compile()
     np.testing.assert_allclose(scaled.site("s").size[: len(expected)], expected, atol=1e-12)
 
@@ -445,6 +445,21 @@ def test_inertia_is_the_exact_affine_transform() -> None:
     direct = mujoco.MjSpec.from_string(xml.format(*(np.array([0.1, 0.2, 0.3]) * factors))).compile()
     np.testing.assert_allclose(scaled.body_mass, direct.body_mass, rtol=1e-12)
     np.testing.assert_allclose(np.sort(scaled.body_inertia[1]), np.sort(direct.body_inertia[1]), rtol=1e-12)
+
+
+@pytest.mark.parametrize("compiled_first", [False, True])
+def test_a_primitive_fitted_to_a_mesh_follows_the_mesh(compiled_first: bool) -> None:
+    spec = mujoco.MjSpec.from_string(FITTED_XML.format(other=""))
+    reference = spec.copy().compile()
+    if compiled_first:
+        spec.compile()
+    scaled = scale_spec(spec, {"b": (1.2, 1.0, 0.8)}).compile()
+    np.testing.assert_allclose(reference.geom("fit").size, [0.1, 0.2, 0.3], rtol=1e-6)
+    np.testing.assert_allclose(scaled.geom("fit").size, [0.12, 0.2, 0.24], rtol=1e-6)
+    np.testing.assert_allclose(scaled.body("b").mass, reference.body("b").mass * 0.96, rtol=1e-9)
+    similarity = scale_spec(spec, {"b": 2.0}).compile()
+    np.testing.assert_allclose(similarity.geom("fit").size, 2 * reference.geom("fit").size, rtol=1e-9)
+    np.testing.assert_allclose(similarity.body("b").mass, 8 * reference.body("b").mass, rtol=1e-9)
 
 
 def test_rotated_mesh_scale_is_exact_for_an_axis_permutation() -> None:
@@ -772,6 +787,11 @@ def _welded_leg() -> mujoco.MjSpec:
     return spec
 
 
+FITTED_XML = """<mujoco><asset><mesh name="cube" vertex="-.1 -.2 -.3 .1 -.2 -.3 .1 .2 -.3 -.1 .2 -.3 -.1 -.2 .3 .1 -.2 .3 .1 .2 .3 -.1 .2 .3"/></asset>
+<worldbody><body name="b"><joint axis="0 1 0"/><geom name="fit" type="box" mesh="cube"/></body>{other}</worldbody></mujoco>"""
+FITTED_AND_MESH = '<body name="c" pos="1 0 0"><joint axis="0 1 0"/><geom type="mesh" mesh="cube"/></body>'
+TWO_FITTED = '<body name="c" pos="1 0 0"><joint axis="0 1 0"/><geom type="ellipsoid" mesh="cube"/></body>'
+
 HFIELD_XML = """<mujoco><asset><hfield name="h" nrow="3" ncol="3" size="1 1 .1 .1"/></asset>
 <worldbody><body name="a"><geom size=".1"/></body>
 <body name="b" pos="0 0 1"><geom type="hfield" hfield="h"/></body></worldbody></mujoco>"""
@@ -796,12 +816,34 @@ FLEX_XML = """<mujoco><worldbody><body name="a"><geom size=".1"/></body><body na
         (_shared_mesh_leg, {"thigh": 1.1, "shank": 1.2}, None, NotImplementedError),
         (_welded_leg, {"shank": 1.1}, None, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(HFIELD_XML), {"a": 1.1, "b": 1.1}, None, NotImplementedError),
+        (lambda: mujoco.MjSpec.from_string(FITTED_XML.format(other=FITTED_AND_MESH)), {"b": 1.1}, None, NotImplementedError),
+        (lambda: mujoco.MjSpec.from_string(FITTED_XML.format(other=FITTED_AND_MESH)), {"c": 1.1}, None, NotImplementedError),
+        (lambda: mujoco.MjSpec.from_string(FITTED_XML.format(other=TWO_FITTED)), {"b": 1.1}, None, NotImplementedError),
+        (
+            lambda: mujoco.MjSpec.from_string(FITTED_XML.format(other=TWO_FITTED)),
+            {"b": 1.1, "c": 1.2},
+            None,
+            NotImplementedError,
+        ),
         (lambda: mujoco.MjSpec.from_string(FUSED_XML), {"a": 1.1}, None, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(FUSED_XML), {}, 5.0, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(FLEX_XML), {"a": 1.1}, None, NotImplementedError),
         (lambda: mujoco.MjSpec.from_string(TWO_AGENTS_XML), {}, 50.0, ValueError),
     ],
-    ids=["mesh-also-unscaled", "mesh-scaled-twice", "connect", "height-field", "fusestatic", "fusestatic-total-mass", "flex", "ambiguous-mass"],
+    ids=[
+        "mesh-also-unscaled",
+        "mesh-scaled-twice",
+        "connect",
+        "height-field",
+        "fitted-mesh-also-unscaled",
+        "mesh-of-a-fitted-geom-also-unscaled",
+        "two-fitted-one-unscaled",
+        "two-fitted-scaled-differently",
+        "fusestatic",
+        "fusestatic-total-mass",
+        "flex",
+        "ambiguous-mass",
+    ],
 )
 def test_refused_scaling_leaves_the_spec_unchanged(
     make: Callable[[], mujoco.MjSpec], scales: dict, total_mass: float | None, error: type[Exception]

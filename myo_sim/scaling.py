@@ -478,15 +478,13 @@ def _mesh_scales(spec: mujoco.MjSpec, factors: Mapping[str, np.ndarray]) -> dict
             continue
         if geom.type in (mujoco.mjtGeom.mjGEOM_HFIELD, mujoco.mjtGeom.mjGEOM_SDF):
             raise NotImplementedError(f"Cannot scale geom {geom.name!r} of type {geom.type}.")
-        if geom.type == mujoco.mjtGeom.mjGEOM_MESH:
+        if geom.meshname:  # a primitive with a mesh is fitted to it when compiled
             scale = _axis_factors(s, _geom_rot(spec, geom))
             if not np.allclose(mesh_scales.setdefault(geom.meshname, scale), scale):
                 raise NotImplementedError(
                     f"Mesh {geom.meshname!r} is shared by geoms needing different scales; give each its own mesh asset."
                 )
-    shared = {g.meshname for g in spec.geoms if g.type == mujoco.mjtGeom.mjGEOM_MESH and g.parent.name not in factors} & set(
-        mesh_scales
-    )
+    shared = {g.meshname for g in spec.geoms if g.meshname and g.parent.name not in factors} & set(mesh_scales)
     if shared:
         raise NotImplementedError(f"Meshes {sorted(shared)} are also used by unscaled bodies; give each its own mesh asset.")
     for name in mesh_scales:
@@ -847,6 +845,8 @@ def _scale_geom(spec: mujoco.MjSpec, shape: Any, s: np.ndarray) -> None:
         _scale_placement(spec, shape, s)
         return
     _scale_placement(spec, shape, s)
+    if getattr(shape, "meshname", ""):  # a primitive fitted to a mesh takes its size from the scaled mesh
+        return
     scale = _axis_factors(s, frame_rot @ _rot(_quat(spec, shape)))
     if kind == mujoco.mjtGeom.mjGEOM_SPHERE:
         shape.size = np.asarray(shape.size) * float(np.mean(s))
