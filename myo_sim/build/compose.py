@@ -97,7 +97,6 @@ LEGS26_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs26_chain.xml"
 TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
 LEFT_ARM_ATTACH_SITE = "arm_attach_l"
-TORSO_ABDOMEN_ROOT_QUAT = (0.707388, 0, 0, -0.706825)
 ROOT_POS = (0, 0, 1)
 
 LEFT_ARM_STRATEGY_MIRROR_RIGHT = "mirror_right_to_left"
@@ -511,7 +510,6 @@ def build_torso_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     abdomen = _build_torso_abdomen_from_xml(registration)
     root_body = find_body(abdomen, "root")
     root_body.pos = registration.build_kwargs.get("root_pos", ROOT_POS)
-    root_body.quat = TORSO_ABDOMEN_ROOT_QUAT
     return abdomen
 
 
@@ -521,6 +519,7 @@ def build_legs_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
     abdomen.attach(build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    add_contact_pairs(abdomen, LEG_CONTACTS_XML)
 
     return abdomen
 
