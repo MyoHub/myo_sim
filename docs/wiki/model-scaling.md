@@ -39,13 +39,14 @@ A refused scaling (`KeyError`, `ValueError`, `NotImplementedError`) raises befor
 Each body has factors `(sx, sy, sz)` along its own axes, the convention of OpenSim's Scale Tool.
 
 - **Bodies.** Everything a body carries scales with its factors: geoms, meshes, sites, joint anchors, cameras, lights and its inertial frame. A child body's position scales with its parent's factors. Frames of any nesting and every orientation type are resolved as MuJoCo resolves them. Joint axes do not change. The world is not scaled.
+- **Shapes.** Sites and primitive geoms take the factors along their own axes, with OpenSim's arithmetic mean across a cylinder's axis and over all axes for a sphere. A primitive fitted to a mesh (`type="box" mesh=...`) is refitted to the scaled mesh, and counts as a user of that mesh.
 - **Slide joints.** Translations, ranges, `ref`, `springref`, keyframe values and speeds scale with the parent's factor along the joint axis. Polynomial joint couplings `y1 = sum c_k y2^k` become `a c_k / b^k`. Stiffness and damping divide by the factor, so the same relative motion gives the same force.
 - **Muscles.** Optimal fibre and tendon slack length follow the muscle-tendon length in the default pose: `qpos0` with every joint coupling and slide tie assembled, as OpenSim assembles it. MuJoCo derives both from `lengthrange`, which takes the ratio. Peak force is kept, automatic peak forces included.
 - **Spatial tendons.** Range, margin and spring lengths take the tendon's own length ratio. Stiffness and damping divide by it, so a ligament keeps its force at the same strain.
 - **Fixed tendons.** A slide coordinate scales with its joint. A hinge coefficient below 0.2 is taken as a moment arm in metres. `MjSpec` cannot edit the coefficients of a fixed tendon, so the spring's stiffness and damping take the moment arm's factor (the mean factor across the hinge axis in the joint's body): the tendon's length stays in joint coordinates and its joint torque grows with the moment arm. A larger coefficient is a plain joint angle; such a spring keeps its torque and is listed in the report.
 - **Tendon equalities.** `L1 = sum c_k L2^k` becomes `a c_k / b^k` for `k != 1`, with `a` and `b` the tendons' ratios. The slope `c_1` is a kinematic ratio and stays: a slide node tied to a tendon follows that tendon's excursion, however much of the tendon was scaled.
-- **Wraps.** A small change of a path can send it the long way around a wrap geom. If a length ratio in the default pose is more than 10 % from the median over 32 other poses with the same wrap points, the median is used and the report names the tendon.
-- **Mass.** Mass scales with volume, and inertia by the exact affine transform of the mass distribution. `total_mass` then rescales the subject's kinematic trees (those holding a body named in `scales`, or else the one articulated tree); scenery and other agents keep their mass.
+- **Wraps.** A small change of a path can send it the long way around a wrap geom. Two paths are the same if they run over the same objects and pass each wrap geom on the same side: the middle of the arc, seen from the geom's centre, lies on the same side in both. If a path differs from the unscaled one in the default pose, and its length ratio there is more than 10 % from the median over 32 other poses where the paths are the same, the median is used and the report names the tendon. If they differ in every one of those poses, the ratio stays and the report names the tendon too.
+- **Mass.** Mass scales with volume, and inertia by the exact affine transform of the mass distribution. An `alignfree` body scales from its authored inertial frame, and is aligned again when compiled. `total_mass` then rescales the subject's kinematic trees (those holding a body named in `scales`, or else the one articulated tree); scenery and other agents keep their mass.
 - **Ground.** A free-floating subject is raised or lowered in `qpos0` and in each keyframe separately, so that its lowest collision point keeps its unscaled height in that pose.
 - **OpenSim files.** A ScaleSet or a scaled `.osim`. The file's Rajagopal segments are mapped onto the composed models (`Full Body` root) or the stand-alone leg (`root`, `torso`). A model takes the segments it has; a body takes the factors of its nearest mapped ancestor. During parsing the factors are converted between the axis conventions of OpenSim (y-up) and of each body, since most bodies kept OpenSim's frames and a few are z-up.
 - **Point correspondences.** `(model_points, measured_points)`: points on the body in its frame and the same points measured in metres in any right-handed frame, NaN rows ignored. Points spanning all three directions (at least four) give three factors by least squares with a nuisance rotation; two points or points on a plane give one factor, the ratio of their spreads. A fit outside 0.5 to 2 is refused, since it usually means millimetres or mismatched points.
@@ -53,6 +54,37 @@ Each body has factors `(sx, sy, sz)` along its own axes, the convention of OpenS
 ## Operating-curve refit
 
 The rule above sets each muscle's lengths from one pose. Under per-axis or per-segment factors a muscle's excursion does not change as its length does, so its normalised operating curve drifts. `fit_length_ranges` is a separate step, adapted from the idea of Modenese et al. (2016) of preserving the normalised operating curve over the joint ranges: over random poses, `L_ref = a + b L_scaled`, and the muscle's `lengthrange` becomes `(range_ref - a) / b`. MuJoCo derives optimal fibre length and tendon slack length from that range, so both are refitted. Poses where a wrap changes its path are left out. A muscle with R² below `min_r2` (default 0.9) keeps its range.
+
+## Checks
+
+`check_scaled_model` measures a scaled model against its reference. `operating_range` and `moment_arm_signs` hold for each muscle, and each `value` is that of the worst muscle, so one wrong muscle among hundreds fails.
+
+- **`operating_range`** is each muscle's 99th percentile over 200 poses of the normalised length difference, against 0.05. That is 5 % of the muscle's own range. At the steepest point of its force-length curve this moves active force by up to 6 % of peak in the median muscle of `myofullbody`, and 18 % in the worst. The percentile leaves out a pose or two per muscle, close to a wrap's change of path. The detail names the muscles above the limit.
+- **`moment_arm_signs`** is each muscle's fraction of moment arms with the reference's sign, in the assembled default pose, where the reference's arm exceeds 5 mm. No muscle crosses 100 joints, so the limit of 0.99 allows no flip.
+- **`stability`** and **`constraints`** bound the largest joint speed and equality residual of a rollout.
+
+Each bound fails on a deliberate error: a range shifted by 6 % of its width on one of 416 muscles (it passes at 4 %), `glmax3` flipping on its own among 944 muscle-joint pairs, an oversized timestep, loose constraints.
+
+A similarity passes them all. Other factors usually fail `operating_range` before the refit, since a muscle's excursion does not change as its length does, and a changed wrap path fails after the refit too. A failed check does not by itself make a model unusable, but it says which muscles to look at. On the default models, with three draws each of per-axis factors in [0.9, 1.1], either per OpenSim segment or per body:
+
+| Model, factors | `operating_range`, before / after the refit | Muscles above 0.05, before / after | `moment_arm_signs`, flipped |
+|---|---:|---:|---|
+| `myolegs`, 1.1 everywhere | 0.000 / 0.000 | 0 / 0 | none |
+| `myolegs`, PR #564's per-axis set | 1.185 / 1.193 | 9 / 2 | `glmax3` |
+| `myolegs`, femur 1.12, tibia 0.95 | 0.101 / 0.026 | 18 / 0 | none |
+| `myolegs`, per segment | 0.11 to 1.20 / 0.08 to 1.20 | 9 to 18 / 1 to 9 | `glmax3` in one draw |
+| `myolegs`, per body | 0.15 to 1.18 / 0.08 to 1.20 | 26 to 30 / 7 to 11 | `glmax3` in one draw |
+| `myofullbody`, 1.1 everywhere | 0.000 / 0.000 | 0 / 0 | none |
+| `myofullbody`, PR #564's per-axis set | 1.174 / 1.185 | 16 / 8 | `glmax3` |
+| `myofullbody`, femur 1.12, tibia 0.95 | 0.102 / 0.026 | 19 / 0 | none |
+| `myofullbody`, per segment | 1.14 to 2.80 / 1.22 to 2.84 | 102 to 200 / 27 to 36 | `glmax3`, `IL_R7`, `IL_R9`, `TRIlong`, `SUP` |
+| `myofullbody`, per body | 1.03 to 1.70 / 1.04 to 1.73 | 80 to 107 / 21 to 32 | `IL_R7`, `TRIlong_l` |
+| `myoarm_r`, per segment | 0.55 to 2.03 / 0.57 to 2.03 | 13 to 23 / 2 to 3 | `TRIlong`, `SUP` |
+| `myoarm_r`, per body | 0.97 to 1.71 / 1.04 to 1.75 | 10 to 21 / 3 to 6 | none |
+| `myohand_r`, per segment | 0.73 to 0.74 / 0.69 to 0.73 | 5 to 17 / 1 to 2 | none |
+| `myohand_r`, per body | 0.20 to 1.71 / 0.03 to 1.74 | 3 to 7 / 0 to 2 | none |
+
+The muscles that stay high after the refit are mostly those whose path changes (`glmax3`, `INFSP`, `PECM1`, `RI2`, `EIP`, `SUP`, `DELT2`, `IL_L1`), and under independent factors some foot muscles such as `tibpost` and `perbrev`.
 
 ## Comparison with OpenSim
 
@@ -108,20 +140,21 @@ Each bound rejects by at least 25 % the 5 % factor errors listed for it under `c
 
 `scripts/validate_opensim_scaling.py --refresh-myo-sim` remeasures the myo_sim half after a deliberate change.
 
-Effect of the refit on `myolegs`, as the 99th percentile of the normalised length difference from the unscaled model over 200 poses (R² of the fits in brackets):
+Effect of the refit on `myolegs`, as the 99th percentile over all muscles and 200 poses of the normalised length difference from the unscaled model, and the same for its worst muscle (R² of the fits in brackets):
 
-| Factors | After `scale_spec` | After `fit_length_ranges` | R², median and lowest |
+| Factors | All muscles, `scale_spec` / `fit_length_ranges` | Worst muscle, `scale_spec` / `fit_length_ranges` | R², median and lowest |
 |---|---:|---:|---:|
-| Per-axis (PR #564's set) | 0.067 | 0.026 | 0.9996, 0.989 |
-| Femur 1.12, tibia 0.95 | 0.083 | 0.015 | 1.000, 0.996 |
-| 1.1 everywhere | 0.000 | 0.000 | 1.000, 1.000 |
+| Per-axis (PR #564's set) | 0.067 / 0.026 | 1.185 / 1.193 (`glmax3`, others 0.076 / 0.035) | 0.9996, 0.989 |
+| Femur 1.12, tibia 0.95 | 0.083 / 0.015 | 0.101 / 0.026 | 1.000, 0.996 |
+| 1.1 everywhere | 0.000 / 0.000 | 0.000 / 0.000 | 1.000, 1.000 |
 
 ## Limits
 
 - Anisotropic factors on a rotated primitive can require shear, and spheres and capsules cannot follow them exactly. `scale_report` lists these geoms. Radii use OpenSim's arithmetic mean of the factors across the axis. Under such factors, a muscle's wrapping may change a little and a wrapped path may change branch; `check_scaled_model` shows the effect.
-- A length ratio from a wrap's changed path is corrected, but the path itself still jumps in those poses. Example: with a pelvis 1 % wider along x, `glmax3` goes the long way around `Gmax3_at_pelvis_wrap` in the default pose. Shoulder muscles with sphere wraps, such as `INFSP`, are sensitive in the same way under per-axis humerus factors. A similarity has no such jumps.
+- A length ratio from a wrap's changed path is corrected, but the path itself still jumps in those poses. Example: with a pelvis 1 % wider along x, `glmax3` goes the long way around `Gmax3_at_pelvis_wrap` in the default pose, and on PR #564's per-axis set it fails both `operating_range` (1.19, after the refit too) and `moment_arm_signs` (on one of its three joints). Shoulder muscles with sphere wraps, such as `INFSP`, `PECM1` and `DELT2`, are sensitive in the same way under per-axis humerus factors. A similarity has no such jumps.
+- A tendon whose path differs from the unscaled one in every sampled pose keeps its default-pose ratio, and the report names it. Most of these change smoothly, as a wrap geom engages or disengages (`LTpT` in some draws of factors), but on `myofullbody` a `DELT2` then keeps a ratio about 0.17 too high in 6 of 20 draws of independent factors per body in [0.9, 1.1].
 - Hinge joint stiffness, damping and armature, angle springs, contact margins and control ranges are not scaled. The report lists angle springs and the actuators whose units would need it.
-- Connect and weld equalities anchored on scaled bodies, meshes shared by bodies needing different scales, flexes, height fields, SDF and plugin meshes on scaled bodies, and specs with `fusestatic` are refused. Site-anchored equalities follow their sites.
+- Connect and weld equalities anchored on scaled bodies, welds with an explicit `relpose` whose bodies the scaling moves relative to each other (an unscaled child of a scaled body, or a free-floating subject that root alignment moves), meshes shared by bodies needing different scales, flexes, height fields, SDF and plugin meshes on scaled bodies, and specs with `fusestatic` are refused. Site-anchored equalities follow their sites.
 - An attached spec compiles with its own angle unit, euler sequence and meshdir. From MuJoCo 3.6 scaling follows them, and refuses a scaled body whose attached spec takes its inertia from geoms; older versions refuse a spec whose orientations do not resolve as compiled.
 - A scaled model is a different model. A policy trained on the original is not validated for it, and `model_digest` identifies a model, not its accuracy.
 - Fitting a person's factors, inverse kinematics, retargeting, environments, skins and checkpoints are not part of this package. MyoSuite can call `scale_spec` from its model builders; `make_env(scales=...)` and IK stay there.

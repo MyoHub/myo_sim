@@ -164,9 +164,10 @@ def scale_report(spec: mujoco.MjSpec, scales: Scales) -> ScaleReport:
         KeyError: If a body is not in the model.
         ValueError: For factors or points that :func:`scale_spec` refuses.
         NotImplementedError: For meshes shared by geoms needing different scales, connect or weld
-            equalities anchored on scaled bodies, flexes, height fields, SDF and plugin meshes on
-            scaled bodies, specs with ``fusestatic``, and attached specs that take a scaled body's
-            inertia from geoms or whose orientations do not resolve as compiled.
+            equalities anchored on scaled bodies, welds with an explicit ``relpose`` whose bodies
+            the scaling moves relative to each other, flexes, height fields, SDF and plugin meshes
+            on scaled bodies, specs with ``fusestatic``, and attached specs that take a scaled
+            body's inertia from geoms or whose orientations do not resolve as compiled.
     """
     plan = _plan(spec, scales)
     _apply(spec.copy(), plan, None)
