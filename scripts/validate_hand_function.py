@@ -659,9 +659,9 @@ def _thumb_tip(scene: Scene, data: mujoco.MjData) -> np.ndarray:
     points = []
     for g in scene.collision_geoms(scene.hand.thumb_distal):
         rot, pos = data.geom_xmat[g].reshape(3, 3), data.geom_xpos[g]
-        if m.geom_type[g] in (mujoco.mjtGeom.mjGEOM_CAPSULE, mujoco.mjtGeom.mjGEOM_CYLINDER):
+        if m.geom_type[g] in (int(mujoco.mjtGeom.mjGEOM_CAPSULE), int(mujoco.mjtGeom.mjGEOM_CYLINDER)):
             points += [pos + rot[:, 2] * m.geom_size[g][1], pos - rot[:, 2] * m.geom_size[g][1]]
-        elif m.geom_type[g] == mujoco.mjtGeom.mjGEOM_MESH:
+        elif m.geom_type[g] == int(mujoco.mjtGeom.mjGEOM_MESH):
             mesh = m.geom_dataid[g]
             v = m.mesh_vert[m.mesh_vertadr[mesh] : m.mesh_vertadr[mesh] + m.mesh_vertnum[mesh]]
             points += list(pos + v @ rot.T)
