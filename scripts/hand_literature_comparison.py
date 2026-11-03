@@ -595,6 +595,30 @@ def head_and_neck() -> dict[str, Any]:
     }
 
 
+def deep_hip() -> dict[str, Any]:
+    """Moment arms of the deep hip muscles of ``myolegs`` at neutral: flexion / adduction / rotation (mm, dL/dq, sign of Gait2392)."""
+    import myo_sim
+
+    model = myo_sim.load_spec("myolegs").compile()
+    data = mujoco.MjData(model)
+    out: dict[str, Any] = {}
+    for muscle in ("pect", "quad_fem", "gem"):
+        tendon = model.tendon(f"{muscle}_r_tendon").id
+        arms = []
+        for axis in ("flexion", "adduction", "rotation"):
+            adr = model.joint(f"hip_{axis}_r").qposadr[0]
+            lengths = []
+            for h in (1e-5, -1e-5):
+                data.qpos[:] = model.qpos0
+                data.qpos[adr] += h
+                mujoco.mj_kinematics(model, data)
+                mujoco.mj_tendon(model, data)
+                lengths.append(data.ten_length[tendon])
+            arms.append(-(lengths[0] - lengths[1]) / 2e-5 * 1e3)
+        out[f"{muscle}_hip_moment_arms"] = arms
+    return out
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -609,6 +633,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= force_velocity(model)
     out |= forearm_rotation(model)
     out |= head_and_neck()
+    out |= deep_hip()
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"

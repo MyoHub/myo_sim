@@ -1,0 +1,157 @@
+{
+  "format": "myo_sim.deep_hip_muscles/1",
+  "description": "Deep hip muscles missing from the Rajagopal-derived legs. scripts/generate_deep_hip_muscles.py writes their sites, tendons and actuators into the leg XML from this table; tests/test_deep_hip_muscles.py checks them.",
+  "source": {
+    "citation": "Delp SL, Loan JP, Hoy MG, Zajac FE, Topp EL, Rosen JM. An interactive graphics-based model of the lower extremity to study orthopaedic surgical procedures. IEEE Trans Biomed Eng 37(8):757-767, 1990; OpenSim model Gait2392 (Seth, Anderson, Delp), CC BY 3.0, https://github.com/opensim-org/opensim-models",
+    "license": "CC BY 3.0"
+  },
+  "method": "Femur points, peak force, optimal fibre length and tendon slack length are Gait2392's; femur frames coincide between the models. Pelvis points are mapped into the Rajagopal pelvis frame with a similarity transform fitted on 27 points of 21 muscles present in both models (leave-one-muscle-out error about 11 mm). The attachment points lie 2 to 10 mm from the nearest vertex of their bone mesh. Peak forces stay at Gait2392's values, smaller than the Rajagopal forces of the neighbouring muscles (piriformis 1030 N here, 444 N in Gait2392).",
+  "curve": {
+    "lmin": 0.05,
+    "lmax": 3.5,
+    "vmax": 10,
+    "fpmax": 1.5,
+    "fvmax": 1.4,
+    "note": "the leg muscles' default curve with lmin and lmax of the piriformis"
+  },
+  "fit": {
+    "method": "range and lengthrange: MuJoCo's linear map fitted to the rigid-tendon fibre length (L - L_ts) / L_fo over the full hip range (myo_sim.build.rigid_conversion.fit_rigid_muscle_map; random postures plus each hip joint swept alone)",
+    "postures": 400,
+    "seed": 123
+  },
+  "muscles": [
+    {
+      "name": "pect",
+      "long_name": "pectineus",
+      "pelvis_pos": [
+        -0.0261,
+        -0.0808,
+        0.0455
+      ],
+      "femur_pos": [
+        -0.0122,
+        -0.0822,
+        0.0253
+      ],
+      "optimal_fibre_m": 0.1,
+      "tendon_slack_m": 0.033,
+      "force_N": 266.0,
+      "range": [
+        0.244339,
+        0.935823
+      ],
+      "lengthrange_m": [
+        0.057434,
+        0.126582
+      ],
+      "gait2392_neutral_moment_arms_mm": [
+        23.1,
+        33.0,
+        2.2
+      ]
+    },
+    {
+      "name": "quad_fem",
+      "long_name": "quadratus femoris",
+      "pelvis_pos": [
+        -0.0896,
+        -0.1251,
+        0.0455
+      ],
+      "femur_pos": [
+        -0.0381,
+        -0.0359,
+        0.0366
+      ],
+      "optimal_fibre_m": 0.054,
+      "tendon_slack_m": 0.024,
+      "force_N": 381.0,
+      "range": [
+        0.07,
+        1.846542
+      ],
+      "lengthrange_m": [
+        0.02778,
+        0.123713
+      ],
+      "gait2392_neutral_moment_arms_mm": [
+        4.3,
+        42.0,
+        -40.2
+      ]
+    },
+    {
+      "name": "gem",
+      "long_name": "gemelli",
+      "pelvis_pos": [
+        -0.0942,
+        -0.0936,
+        0.0637
+      ],
+      "femur_pos": [
+        -0.0142,
+        -0.0033,
+        0.0443
+      ],
+      "optimal_fibre_m": 0.024,
+      "tendon_slack_m": 0.039,
+      "force_N": 164.0,
+      "range": [
+        0.07,
+        1.916511
+      ],
+      "lengthrange_m": [
+        0.040641,
+        0.085017
+      ],
+      "gait2392_neutral_moment_arms_mm": [
+        1.3,
+        11.6,
+        -32.0
+      ]
+    }
+  ],
+  "comparison_with_gait2392": {
+    "protocol": "OpenSim 4.6 on gait2392_thelen2003muscle.osim against this model on 45 hip postures (flexion -20, 0, 25, 50, 90; adduction -15, 0, 15; rotation -20, 0, 20 deg)",
+    "moment_arm_rms_mm": {
+      "pect": [
+        5.5,
+        7.1,
+        2.4
+      ],
+      "quad_fem": [
+        4.4,
+        2.9,
+        3.5
+      ],
+      "gem": [
+        0.9,
+        1.5,
+        2.0
+      ]
+    },
+    "moment_arm_max_mm": {
+      "pect": [
+        11.5,
+        9.1,
+        4.1
+      ],
+      "quad_fem": [
+        10.6,
+        4.5,
+        5.9
+      ],
+      "gem": [
+        1.9,
+        2.5,
+        2.7
+      ]
+    },
+    "axes": "hip flexion, adduction, rotation",
+    "length_rms_mm": {
+      "pect": 3.8,
+      "quad_fem": 3.3,
+      "gem": 0.7
+    }
+  }
+}

@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-03 — Deep hip muscles part of the leg model
+Changed: `myo_sim/models/leg/assets/myolegs_chain.xml`, `myolegs_tendon.xml`, `myolegs_muscle.xml` (generated blocks), `myo_sim/build/data/deep_hip_muscles.json`, `LICENSE-Gait2392.txt`, `scripts/generate_deep_hip_muscles.py`, `scripts/hand_literature_comparison.py`, `tests/test_deep_hip_muscles.py`, `test_sims.py`, `test_head_build.py`, `test_hand_literature.py`, `myo_sim/models/leg/README.md`, `CHANGELOG.md`
+Why: The Rajagopal legs lack pectineus, quadratus femoris and the gemelli. The opt-in branch (`hip_synergists=True`, Python-built) becomes XML without a flag under the model policy (#140), because the static tests pass and the step cost is within 2 %. The length maps follow #123's rule over the full hip range.
+
 ## 2026-11-03 — The muscular neck merged into the rebuilt myofullbody
 Changed: `tests/test_head_build.py`, `test_mass_convention.py`, `test_chest_ownership.py` (merged counts and total mass), `scripts/hand_literature_comparison.py` (`neck_strength`, head-and-neck share), `tests/test_hand_literature.py`, `hand_literature.json`, `hand-literature-comparison.md`, `docs/validation/neck/README.md`, `CHANGELOG.md`
 Why: The neck branch brings Vittorio's neck into the full body only; its counts and the 84.0 kg total predate the rebuilt hand. Strength is re-measured here on the masses and inertias now in the model, which the earlier recording could not show.

@@ -34,6 +34,7 @@ scripts/
   fit_extensor_mechanism.py    # fits (--fit) and writes the extensor-mechanism sites, branched tendons and ORL ligaments
   generate_extrinsic_muscles.py # fits (--fit, --fit-ecu) and writes the juncturae nodes and links, the FCU via points, the ECU groove site and FDS5's force
   fit_leg_rigid_maps.py / fit_arm_rigid_maps.py / fit_leg_passive.py
+  generate_deep_hip_muscles.py # fits (--fit) and writes pectineus, quadratus femoris and gemelli into the leg XML
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -44,6 +45,7 @@ tests/
   test_leg_rigid_conversion.py     # adopted leg maps vs published rigid-tendon fibre lengths
   test_arm_rigid_conversion.py     # adopted arm maps vs published MoBL-ARMS rigid-tendon fibre lengths
   test_leg_passive.py              # leg passive moments vs the recorded fit to Silder et al. 2007
+  test_deep_hip_muscles.py         # deep hip muscles: generated blocks, order, Gait2392 moment arms, mirroring, rollout
   test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
