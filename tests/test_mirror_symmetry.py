@@ -88,7 +88,7 @@ def test_mirrored_arm_joint_axes_reflect_across_sagittal_plane(model_name):
         )
 
 
-CAMERA_PAIRS = ("hand_top", "hand_bottom", "hand_side_inter", "hand_side_exter", "plam_lookat")
+CAMERA_PAIRS = ("hand_top", "hand_bottom", "hand_side_inter", "hand_side_exter", "palm_lookat")
 
 
 @pytest.mark.parametrize("model_name", ("myoarms", "myofullbody"))
@@ -100,12 +100,12 @@ def test_mirrored_arm_cameras_look_at_the_mirrored_view(model_name):
     reflect = np.diag([-1.0, 1.0, 1.0])
 
     for base_name in CAMERA_PAIRS:
-        right = data.cam_xmat[model.camera(base_name).id].reshape(3, 3)
+        right = data.cam_xmat[model.camera(f"{base_name}_r").id].reshape(3, 3)
         left = data.cam_xmat[model.camera(f"{base_name}_l").id].reshape(3, 3)
         for column, label in ((2, "view axis"), (1, "up axis")):
             np.testing.assert_allclose(
                 left[:, column],
                 reflect @ right[:, column],
                 atol=1e-6,
-                err_msg=f"{model_name}: {base_name}_l {label} is not the reflection of {base_name}'s",
+                err_msg=f"{model_name}: {base_name}_l {label} is not the reflection of {base_name}_r's",
             )

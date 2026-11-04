@@ -2681,6 +2681,8 @@ MCP abduction of 10-17 deg in a fist where the collaterals would forbid it, whic
 Adopted values that the literature questions, to be checked once more before the release of the
 revised hand. Items that a later step resolved say so.
 
+- **After the knee, pelvis and head steps (open, limits unchanged).** The knee hinges (#153) move the knee's passive fit and one length range: knee passive moment error 8.47 N m rms against Silder et al. 2007 (recorded 8.38 + 0.05, `tests/test_leg_passive.py`), and `vasint_r` reaches 0.3514 m over its 0.3509 m length range (`tests/test_leg_rigid_conversion.py`); the leg fits have not been rerun on the new knee. The left-right gap of the relaxed index PIP in `myofullbody`, wrist 60 deg extended, is 0.23 deg against 0.1 deg (`tests/test_muscle_passive.py`): it went 0.04 / 0.14 / 0.07 / 0.23 deg through the pelvis, knee-range and head steps, and the knee-range step changes no mass, so it reads as solver sensitivity rather than an asymmetry of the model. The 50 ms speed checks of the `standing` keyframe: `standing-keyframe.md`.
+
 - **Reference subject is male; female reference subject is a proposal, not built.** The model is an adult male reference: strength fitted to men's norms (`build/data/specific_tension.json`) and the head sized with de Leva's male share. `myofullbody` totals 76.51 kg; that total follows from the segment masses of its sources and was not chosen (the Rajagopal OpenSim model the legs come from totals 75.34 kg; the earlier 84 kg came from counting the pelvis twice). A female model would be a post-processing step, not a build flag (model policy, MyoHub/myo_sim#140): a function such as `myo_sim.postprocess.reference_subject(spec, "female")` that rescales peak forces with the same fit against women's norms (grip 279.3 ± 75.6 N and key pinch 72.1 ± 13.3 N, Mathiowetz et al. 1985; index and little-finger abduction 1.8 and 0.9 N m, McGee et al. 2020), and optionally applies female segment proportions through `scale_spec` (MyoHub/myo_sim#149) with de Leva's female mass shares. Policies trained on one reference subject need re-evaluating on the other.
 
 - **One specific tension (decisions D4 and D7; resolved by the specific-tension step, but outside the published range):** every wrist and hand muscle now has
@@ -2742,7 +2744,7 @@ revised hand. Items that a later step resolved say so.
   movement under a given activation is 2-5 times faster than on the earlier models. Check against measured peak speeds and in tasks.
 - **Mass of wrap geoms in the hand (found with the neck step; resolved by the wrap-mass step):** wrap geoms of the class `myoarm_wrap` carried
   mass through the default density (also on dev), so the resized EDM cylinder added 40.9 g to each lunate. The class now has mass 0 and the lunate an
-  explicit inertial with its dev values (163.8 g); `myofullbody` is 84.00 kg.
+  explicit inertial with its dev values (163.8 g); `myofullbody` was then 84.00 kg (76.51 kg since the pelvis is counted once).
 - **Falling-head comparison of the neck:** recorded with the source masses, the 0.04 kg m2 cervical inertias and armature 1e-5, not re-run
   (`docs/validation/neck/README.md`). The neutral strength is re-measured.
 - **Deep hip muscles in walking:** static tests pass (deep hip step); a comparison of walking with trained policies is still open. Their
