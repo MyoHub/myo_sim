@@ -11,7 +11,8 @@
     - Added collision geometry for torso self-contact
   ====================================================== -->
     <body name="sacrum" pos="0 0 0" euler="1.57079632679 -1.57079632679 0" childclass="myotorso">
-      <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="7.486" diaginertia="0.08 0.075 0.03"/>
+      <!-- massless: with the legs, their pelvis carries the pelvis mass (the torso ends at the sacrum, #48); in torso-only models the sacrum is welded to the world -->
+      <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0" diaginertia="0 0 0"/>
 
       <!-- pelvis sites -->
       <site name="Ps_L1_VB_Ps_L1_VB-P2_r" pos="-0.0238 -0.008000 0.0759"/>

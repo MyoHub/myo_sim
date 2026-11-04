@@ -4,7 +4,7 @@ import pytest
 from myo_sim import load_spec
 from myo_sim.build.mass import audit_mass
 
-FULLBODY_MASS = 84.3
+FULLBODY_MASS = 76.8
 DE_LEVA_HEAD_NECK = (0.055, 0.085)
 
 
@@ -27,6 +27,7 @@ def test_only_attachment_frames_are_massless(fullbody_model):
     }
     assert massless == {
         "Full Body",
+        "sacrum",
         "head_attach",
         "Arm_attachment",
         "cervical_spine",
@@ -37,7 +38,7 @@ def test_only_attachment_frames_are_massless(fullbody_model):
 
 
 def test_head_carries_de_leva_fraction(fullbody_model):
-    """The OpenSim torso mass was reduced so the head body holds about 6.9 % of body mass."""
+    """The OpenSim torso mass was reduced so the head body holds about 7.6 % of body mass."""
     assert DE_LEVA_HEAD_NECK[0] < audit_mass(fullbody_model)["head_fraction"] < DE_LEVA_HEAD_NECK[1]
 
 
