@@ -34,7 +34,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 
 ## Keyframes
 
-`build_spec()` adds no keyframe unless called with `build_kwargs={"standing_keyframe": True}`; `myo_sim.load_model()` passes that for the models with a standing keyframe. See `docs/wiki/standing-keyframe.md`.
+`build_spec()` adds no keyframe unless called with `build_kwargs={"postures": True}` (or a list of names); `myo_sim.load_model()` passes that for every model with postures. `{"standing_keyframe": True}` still adds `standing` alone. See `docs/wiki/postures.md`.
 
 ## MODEL_REGISTRY and BuildStrategy
 

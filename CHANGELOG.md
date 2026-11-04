@@ -2,6 +2,10 @@
 
 Model changes that alter actuators, joints, sites or dynamics are breaking for downstream environments and trained policies. List them here; they ship together in the next release tag.
 
+## Unreleased
+
+- **Named starting postures (all arm, hand, leg and whole-body models).** `myo_sim.load()` and `load_model()` now include a set of keyframes per model: `standing`, `ready`, `staggered`, `seat_off`, `squat` in `myofullbody`, `myolegs` and `myolegs_abdomen`; `standing`, `ready`, `staggered` in `myolegs26`; `arms_at_side`, `forearm_raised`, `reach` in the arm models; `relaxed`, `open` in the hand models. `standing` stays first with unchanged values, and `qpos0` and every model parameter are unchanged. New API: `list_postures()`, `add_posture_keyframe()`, `add_posture_keyframes()`, `build_kwargs={"postures": True}` or a list of names. `add_standing_keyframe()` and `build_kwargs={"standing_keyframe": True}` keep working. Renamed: `build/data/standing_keyframes.json` to `postures.json`, `scripts/generate_standing_keyframes.py` to `generate_postures.py`; `load_standing_table()` and `has_standing_keyframe()` are gone, use `load_posture_table()` and `list_postures()`. Downstream: `nkey` goes from 1 to 5 in the models that had `standing`, and from 0 to 3 (`myolegs26`, arm models) or 2 (hand models). Code that reads `key_qpos[0]` when `nkey > 0` now starts arm and hand models from `arms_at_side` and `relaxed` and `myolegs26` from `standing`, instead of `qpos0`; code that assumes `nkey == 1` needs a look. See `docs/wiki/postures.md`.
+
 ## 0.2.4
 
 The body of 0.2.3 with fixes. Apart from the items below, every `myofullbody` model array is identical to 0.2.3, and tendon lengths and actuator forces match on 6000 random postures.

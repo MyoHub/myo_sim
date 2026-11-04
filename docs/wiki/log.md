@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-04 — Named starting postures
+Changed: scripts/generate_postures.py (was generate_standing_keyframes.py), myo_sim/build/keyframes.py, myo_sim/build/data/postures.json (was standing_keyframes.json), myo_sim/build/compose.py, myo_sim/__init__.py, tests/test_postures.py (was test_standing_keyframe.py), docs/wiki/postures.md (was standing-keyframe.md), docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, docs/wiki/build-and-composition.md, CHANGELOG.md
+Why: review of the 0.2.4 standing keyframe asked for a set of stable natural starting postures on all model families, through one mechanism, instead of a single standing keyframe.
+
 ## 2026-11-03 — Standing keyframe, 0.2.4
 Changed: scripts/generate_standing_keyframes.py, myo_sim/build/keyframes.py, myo_sim/build/data/standing_keyframes.json, myo_sim/build/compose.py, myo_sim/__init__.py, tests/test_standing_keyframe.py, docs/wiki/standing-keyframe.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, docs/wiki/build-and-composition.md, CHANGELOG.md, pyproject.toml, uv.lock
 Why: qpos0 of the free-standing models violates the knee couplings and overlaps the arms with the thorax, so they had no clean start pose; the keyframe adds one without changing any model parameter.
