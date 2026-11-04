@@ -500,7 +500,7 @@
                 <site name="MF_m1t.3_MF_m1t.3-P2_l" pos="-0.04094 -0.016 -0.0031"/>
                 <site name="MF_m1.laminar_MF_m1.laminar-P2_l" pos="-0.0341019 -0.00560525 -0.00619"/>
                 <body name="torso" pos="0.0025 -0.089 0">
-                  <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
+                  <inertial pos="0.0046 0.246 0" mass="14.897" diaginertia="0.132 0.12 0.1"/>
                   <site name="clavicle_l" pos="0.021 .390 -.058" class="myotorso_marker"/>
                   <site name="clavicle_r" pos="0.021 .390 0.058" class="myotorso_marker"/>
                   <site name="clavicle_spine" pos="-.01 .4 0" class="myotorso_marker"/>
