@@ -2550,6 +2550,8 @@ MCP abduction of 10-17 deg in a fist where the collaterals would forbid it, whic
 Adopted values that the literature questions, to be checked once more before the release of the
 revised hand. Items that a later step resolved say so.
 
+- **Reference subject is male; female reference subject is a proposal, not built.** The model represents an adult man (84 kg, de Leva's male shares; strength fitted to men's norms, `build/data/specific_tension.json`). A female model would be a post-processing step, not a build flag (model policy, MyoHub/myo_sim#140): a function such as `myo_sim.postprocess.reference_subject(spec, "female")` that rescales peak forces with the same fit against women's norms (grip 279.3 ± 75.6 N and key pinch 72.1 ± 13.3 N, Mathiowetz et al. 1985; index and little-finger abduction 1.8 and 0.9 N m, McGee et al. 2020), and optionally applies female segment proportions through `scale_spec` (MyoHub/myo_sim#149) with de Leva's female mass shares. Policies trained on one reference subject need re-evaluating on the other.
+
 - **One specific tension (decisions D4 and D7; resolved by the specific-tension step, but outside the published range):** every wrist and hand muscle now has
   F = PCSA x 166 N/cm2, fitted to measured strength of an adult man (`build/data/specific_tension.json`, `hand-function-validation.md`). 166 N/cm2 is three times O'Brien et al. 2010's 55 N/cm2, and
   above every published value but Holzbaur et al. 2005's 140 N/cm2 for the arm. Read it as a correction of the cadaver PCSA, not a tissue property: Linscheid et al. 1991's PCSA of the same intrinsics are about
