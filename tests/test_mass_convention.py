@@ -7,10 +7,10 @@ from myo_sim.build.mass import audit_mass, subtree_mass
 # With the neck, the 14 x 0.1 g nodes of the hand and massless wraps; the pelvis counted once (#155).
 FULLBODY_MASS = 76.51
 DE_LEVA_HEAD_NECK = 0.0694  # de Leva (1996) head-and-neck share of body mass
-TORSO_MASS = 14.897  # OpenSim trunk minus the head it contained (#138)
-# Part models keep the rigid head at the de Leva share of the 84.26 kg rigid-head body (#138).
-RIGID_HEAD_MASS = 5.848
-RIGID_HEAD_BODY_MASS = 84.26
+TORSO_MASS = 15.4164  # OpenSim trunk minus the head it contained (#138), plus what the head gave back after #155
+# Part models keep the rigid head at the de Leva share of the 76.78 kg rigid-head body.
+RIGID_HEAD_MASS = 5.3286
+RIGID_HEAD_BODY_MASS = 76.78
 RIGID_HEAD_MODELS = (
     "myotorso",
     "myotorso_arms",

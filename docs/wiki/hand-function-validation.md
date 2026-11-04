@@ -247,7 +247,7 @@ middle finger's recorded share falls 40.7 (S1) -> 38.0 (S1b) -> 35.0 (S2) -> 34.
 
 ## Strength: one specific tension
 
-**Reference subject.** An adult man, right or dominant hand, mean over all ages: the model's body is an 84 kg man (de Leva's male shares), and these are the largest cohorts with SDs. Women's norms and the mixed cohorts stay as context. The hand-function bands now follow this subject: grip 338.0-589.8 N (Mathiowetz 1985, was 270.7-533.5 N, O'Driscoll 1992), lateral pinch 88.5-129.5 N (was 31.5-72.3 N, Valero-Cuevas 2003); each is the source's mean ± 1 SD. The grip's negative control (flexors at half force below the band) still holds.
+**Reference subject.** An adult man, right or dominant hand, mean over all ages: the strength targets are men's norms and the head is sized with de Leva's male share, and these are the largest cohorts with SDs. `myofullbody` totals 76.51 kg, which follows from the segment masses of its sources and was not chosen (the Rajagopal OpenSim model the legs come from totals 75.34 kg). Women's norms and the mixed cohorts stay as context. The hand-function bands now follow this subject: grip 338.0-589.8 N (Mathiowetz 1985, was 270.7-533.5 N, O'Driscoll 1992), lateral pinch 88.5-129.5 N (was 31.5-72.3 N, Valero-Cuevas 2003); each is the source's mean ± 1 SD. The grip's negative control (flexors at half force below the band) still holds.
 
 **Fit.** Peak force = PCSA x one value for every wrist and hand muscle (Holzbaur 2005's Table 1 for the extrinsics, Jacobson 1992 for the intrinsics, `build/data/specific_tension.json`). Weighted least squares over the four functional targets, at a grid of values with each muscle's passive force kept:
 

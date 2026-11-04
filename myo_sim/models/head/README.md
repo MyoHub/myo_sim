@@ -48,9 +48,9 @@ and the precise scope of acceptance. <!-- TODO: review fidelity against measured
 
 ## Mass and inertia
 
-- **Head and neck mass.** The skull and the seven cervical segments together carry 6.94 % of body mass, the de Leva (1996) male head-and-neck share; in `myofullbody` that is 5.829 kg of 84.08 kg (6.93 %). The skull keeps the source mass of 4.30 kg. The cervical segments share the remaining 1.529 kg in the source proportions (each source mass × 0.4473; the source gives 3.42 kg in total). The torso body carries 14.897 kg, the OpenSim trunk mass without the head it already contained, so head and neck mass is not counted twice.
-- **Rigid head.** The part models keep the rigid head; its `head` body carries 5.848 kg, 6.94 % of the 84.26 kg body with the rigid head (the convention of MyoHub/myo_sim#138), with the same torso mass.
-- **Cervical inertias.** The source inertias are placeholders (0.02, 0.08, 0.02 kg·m², which violate the triangle inequality), and the converter had replaced them with 0.04 kg·m². Each segment is now a slice of a solid circular cylinder of neck tissue with radius r = 0.06 m (neck circumference about 38 cm) and height h equal to its vertical spacing in the chain (15–19 mm): I_axial = m r²/2 about the neck axis and I_transverse = m (3 r² + h²)/12, giving 1.7–4.7·10⁻⁴ kg·m². As a check, such a cylinder of tissue (1050 kg/m³) over the 118 mm chain weighs 1.40 kg, against the 1.53 kg assigned.
+- **Head and neck mass.** The skull and the seven cervical segments together carry 6.94 % of body mass, the de Leva (1996) male head-and-neck share; in `myofullbody` that is 5.310 kg of 76.51 kg. The skull keeps the source mass of 4.30 kg. The cervical segments share the remaining 1.010 kg in the source proportions (each source mass × 0.2953; the source gives 3.42 kg in total). The torso body carries 15.416 kg: the OpenSim trunk mass without the head it already contained (14.897 kg, #138) plus the 0.519 kg the head gave back when the total fell with the pelvis counted once (#155). So head and neck mass is not counted twice.
+- **Rigid head.** The part models keep the rigid head; its `head` body carries 5.329 kg, 6.94 % of the 76.78 kg body with the rigid head (the convention of MyoHub/myo_sim#138; 5.848 kg of 84.26 kg before the pelvis was counted once), with the same torso mass. Mass and inertia scaled together, so the principal inertias fall by the same 8.9 %.
+- **Cervical inertias.** The source inertias are placeholders (0.02, 0.08, 0.02 kg·m², which violate the triangle inequality), and the converter had replaced them with 0.04 kg·m². Each segment is now a slice of a solid circular cylinder of neck tissue with radius r = 0.06 m (neck circumference about 38 cm) and height h equal to its vertical spacing in the chain (15–19 mm): I_axial = m r²/2 about the neck axis and I_transverse = m (3 r² + h²)/12, giving 1.1–3.1·10⁻⁴ kg·m². As a check, such a cylinder of tissue (1050 kg/m³) over the 118 mm chain weighs 1.40 kg, against the 1.01 kg assigned: the 6.94 % share leaves the neck lighter than this estimate because the skull keeps its source mass.
 - **Joint armature.** With the physical inertias, muscle force-velocity damping on the light segments makes explicit Euler ring at the 2 ms step, so the neck joints use `armature="0.01"`, the value of the torso and leg joints (previously 1e-5). This is a numerical setting, not anatomy.
 
 ## Manual adjustments
@@ -60,6 +60,8 @@ and the precise scope of acceptance. <!-- TODO: review fidelity against measured
 - Geniohyoid's negative-slack conversion fit is replaced with source physical length/slack/force values and the standard MuJoCo muscle curve, without fitting to acceptance measurements.
 
 ## Changelog
+
+**2026-11-04** — Head and neck resized to 6.94 % of the total after the pelvis was counted once (#155): cervical segments 1.529 -> 1.010 kg, rigid head 5.848 -> 5.329 kg, torso 14.897 -> 15.416 kg, inertias with the masses. The skull stays at 4.30 kg.
 
 **2026-10-28** — Head and neck at the de Leva mass share (torso without the head it contained), cylinder-slice cervical inertias, neck armature 0.01; commented-out rigid-head joints removed.
 **2026-10-28** — The muscular neck is part of `myofullbody`; the `include_neck` build flag and the `myofullbody_neck` model are removed.

@@ -15,7 +15,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_knee_coupling_ranges.py` | Every coordinate the knee drives stays inside its declared range along its coupling polynomial | After knee chain XML or coupling changes |
 | `test_knee_joint_centre.py` | The femur's origin seen from the tibia against stored OpenSim values on both knees, with the knee's couplings active | After knee chain XML changes |
 | `test_pelvis_mass_once.py` | In the four models with legs the sacrum is massless beside the legs' pelvis; the sacrum moves only in those models | After torso or leg chain mass changes |
-| `test_mass_convention.py` | `myofullbody` total mass (76.5 kg) and inertia sanity, only attachment frames massless, skull and cervical chain (`myohead_base` subtree) hold 6.94 % of body mass; part models keep the rigid head at 5.848 kg | After mass, inertia or head/torso changes |
+| `test_mass_convention.py` | `myofullbody` total mass (76.5 kg) and inertia sanity, only attachment frames massless, skull and cervical chain (`myohead_base` subtree) hold 6.94 % of body mass; part models keep the rigid head at 5.329 kg | After mass, inertia or head/torso changes |
 | `test_fragment_registry.py` | FragmentRegistry legacy entries and all composed `myo_sim.load()` names build and forward | After `__init__.py` changes |
 | `test_passive_torso_build.py` | Passive torso scaffold builds without error | After torso XML or compose changes |
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |

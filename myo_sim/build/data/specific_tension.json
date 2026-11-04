@@ -53,7 +53,7 @@
   },
   "reference_subject": {
     "choice": "adult man, right or dominant hand, mean over all ages",
-    "why": "The model's body is an 84 kg man (de Leva 1996's male segment shares), and McGee's and Mathiowetz's all-age male means are the largest cohorts with SDs (n = 256; n = 628 men and women). O'Driscoll 1992 (402.1 +- 131.4 N) and Valero-Cuevas 2003 (51.9 +- 20.4 N) are mixed cohorts and stay as protocol checks in hand_function.json."
+    "why": "The model is an adult male reference (de Leva 1996's male head-and-neck share; myofullbody totals 76.51 kg, which follows from its sources' segment masses and was not chosen), and McGee's and Mathiowetz's all-age male means are the largest cohorts with SDs (n = 256; n = 628 men and women). O'Driscoll 1992 (402.1 +- 131.4 N) and Valero-Cuevas 2003 (51.9 +- 20.4 N) are mixed cohorts and stay as protocol checks in hand_function.json."
   },
   "targets": {
     "index_abduction": {

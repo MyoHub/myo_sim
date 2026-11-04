@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Head at 6.94 % of the total after the pelvis was counted once
+Changed: `myo_sim/models/head/assets/myohead_chain.xml`, `myohead_rigid_chain.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `tests/test_mass_convention.py`, `myo_sim/build/data/specific_tension.json`, `myo_sim/models/head/README.md`, `docs/wiki/hand-function-validation.md`, `hand-literature-comparison.md`, `testing-guide.md`, `CHANGELOG.md`
+Why: Decision: #155 itself left the head unchanged, which left it at 7.62 % of the new 76.51 kg. The head goes back to de Leva's 6.94 % (head and neck 5.310 kg, rigid head 5.329 kg) and the 0.519 kg to the torso (15.416 kg), inertias with the masses as #138 did; no total changes. The text "84 kg man" goes: that mass came from the pelvis counted twice and was never chosen; the model stays an adult male reference.
+
 ## 2026-11-04 — CMC4/5 springs to active cupping, ORL to Ueba's shares, EDC2's wrist sphere
 Changed: `scripts/fit_cmc_joints.py`, `scripts/fit_extensor_mechanism.py`, `build/data/cmc_joints.json`, `extensor_mechanism.json`, `extrinsic_muscles.json`, `passive_joint_moments.json`, `muscle_passive.json`, `myoarm_r_chain.xml`, `myoarm_r_tendon.xml`, `myoarm_r_muscle.xml`, `tests/test_extensor_mechanism.py`, `hand-cmc-joints.md`, `extensor-mechanism.md`, `hand-literature-comparison.md`, `CHANGELOG.md`
 Why: Active cupping overshot its measured maxima, the ORL carried nothing above PIP 0 against Ueba's shares, and EDC2 ran clear of the dorsal wrist; springs, ligament and sphere are refitted and every passive fit rerun.
