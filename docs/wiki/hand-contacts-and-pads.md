@@ -100,10 +100,16 @@ overlaps left in active fists (wrist neutral, 30 deg flexed or extended, with or
 most 3.3 mm (the little finger's distal phalanx on its own proximal phalanx, which folds within one soft-tissue
 mass; ring against index and middle phalanges up to 3.0 mm).
 
-**Rest overlaps.** `proxph3_coll_r`–`proxph4_coll_r` (−1.5 mm) and `proxph4_coll_r`–`5proxph_coll_r`
-(−0.2 mm) overlap at q = 0. They keep their geometry and get `margin = -0.002`: the contact starts only
-beyond 2 mm of penetration (side-by-side fingers touch and compress slightly at rest). MuJoCo clamps
-`margin - gap` at zero, so a `gap` cannot do this.
+**Adjacent digits.** The capsules are rigid, but side by side the fingers meet through soft tissue. The
+proximal capsule radius (9 mm) exceeds the half width of the bone mesh (6.75 mm), so 4.5 mm of the overlap of
+two fingers is compressible; Dallard's fingertip pad deflects about half its thickness at 4 N alone. Every pair
+between adjacent digits (40 per hand) therefore has `margin = -0.004`: contact starts 4 mm into the capsules, at
+the bones just meeting (MuJoCo clamps `margin - gap` at zero, so a `gap` cannot do this). This also keeps
+`proxph3_coll_r`–`proxph4_coll_r` (−1.5 mm) and `proxph4_coll_r`–`5proxph_coll_r` (−0.2 mm), which overlap at
+q = 0, inactive at rest. Without the margin the middle finger wedges between its neighbours: at their flexion
+limits the proximal capsules overlap 8.7 mm (digits 2-3) and 6.0 mm (digits 3-4). Mean middle-finger gap to the
+palm over 14 activation and wrist cases: 12.5 / 9.9 / 7.8 / 5.3 / 3.7 mm at margin 0 / -2 / -3 / -4 / -5 mm;
+worst case 19.1 -> 10.0 mm at -4 mm.
 
 **Parameters.** `condim` 3, 4 for the pulp-to-pulp pairs (torsional friction, so a pinched pad does not
 spin). Friction is MuJoCo's default (1, 0.005, 0.0001), as in the earlier finger pairs; no skin-on-skin
@@ -116,7 +122,7 @@ keeps stable at the 2 ms step, as for the grip dynamometer (`hand_function.json`
 | Check | Result |
 | --- | --- |
 | Active hand contacts at q = 0 (`myohand_r`, `myohands`, `myoarm_r`, `myoarms`, `myofullbody`) | none |
-| Active fist (FDS, FDP at 1, 1 s, wrist neutral, thumb locked) | penetration beyond each pair's margin ≤ 0.7 mm; digits 2, 4, 5 touch the palm (within 0.4 mm); digit 3 stops 4.0 mm short (18.5 mm before S1b, 12.9 mm before the active fist pairs), held by its neighbours |
+| Active fist (FDS, FDP at 1, 1 s, wrist neutral, thumb locked) | penetration beyond each pair's margin ≤ 0.7 mm; digits 2, 4, 5 touch the palm (within 0.4 mm); digit 3 stops 5.1 mm short (18.5 mm before S1b, 12.9 mm before the active fist pairs, 4.0 mm before the adjacent-digit margin; over 14 activation and wrist cases the mean falls from 12.5 to 5.3 mm), held by its neighbours |
 | 20 random-activation rollouts of `myohand_r` (1.5 s each) | deepest paired penetration beyond the margin 1.6 mm; up to 9 contacts; finite |
 | Unpaired penetrations in those rollouts | thumb proximal phalanx against the little finger's distal and middle phalanges (up to 14 mm: thumb-to-little opposition, below the 2 % scan threshold), the thenar pad against the MC2 capsule and the palm pad against the ring proximal phalanx near the MCP joint (pad-to-palm overlaps of one soft-tissue mass) |
 | CPU vs mujoco-warp, states from random-activation rollouts | same contacts, distances within 0.008 mm |

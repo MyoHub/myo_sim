@@ -14,8 +14,9 @@ geoms on bodies that are not the same or parent and child, the signed distance (
 and ``fist_mm`` the distance at q = 0 and in the fist.
 
 **Selection.** Pairs that overlap at rest are not paired (a pair active at rest pushes the digits apart),
-except the existing pairs, which get a negative ``margin``: their contact starts only beyond that
-penetration (MuJoCo clamps ``margin - gap`` at zero, so a ``gap`` cannot do this). Otherwise a pair is kept when ``pen_frac`` reaches
+except the existing pairs. Every pair between adjacent digits gets the negative ``margin``
+``adjacent_digit_margin_m``: its contact starts only beyond that penetration, for the soft tissue the capsules cannot
+compress (MuJoCo clamps ``margin - gap`` at zero, so a ``gap`` cannot do this). Otherwise a pair is kept when ``pen_frac`` reaches
 ``min_pen_frac``, or when it is functional: thumb pulp against a fingertip pad (pinch), and any finger or
 thumb geom against a palm geom that it penetrates somewhere in the scan or comes within
 ``fist_reach_mm`` of in the fist, and always the pairs listed under ``selection.always`` (the
@@ -28,6 +29,7 @@ from __future__ import annotations
 import argparse
 import itertools
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -129,6 +131,17 @@ def scan(table: dict[str, Any]) -> dict[str, dict[str, float]]:
     return out
 
 
+def finger_digit(name: str) -> int | None:
+    """Digit (2-5) of a finger phalanx geom, else None."""
+    digits = re.findall(r"\d", name)
+    return int(digits[0]) if digits and "thumb" not in name and re.search("prox|mid|dist", name) else None
+
+
+def adjacent_digits(a: str, b: str) -> bool:
+    da, db = finger_digit(a), finger_digit(b)
+    return da is not None and db is not None and abs(da - db) == 1
+
+
 def select(table: dict[str, Any], stats: dict[str, dict[str, float]]) -> list[dict[str, Any]]:
     rules, roles = table["selection"], table["roles"]
     existing = {" ".join(sorted(p)) for p in table["existing_pairs"]}
@@ -168,8 +181,8 @@ def select(table: dict[str, Any], stats: dict[str, dict[str, float]]) -> list[di
             continue
         pair = {"geom1": a, "geom2": b, "group": group, **s}
         pair["condim"] = rules["condim_pulp"] if group == "thumb_pad_vs_finger_pads" else rules["condim"]
-        if key in existing and at_rest:
-            pair["margin_m"] = rules["rest_margin_m"]
+        if adjacent_digits(a, b):
+            pair["margin_m"] = rules["adjacent_digit_margin_m"]
         pairs.append(pair)
     return pairs
 

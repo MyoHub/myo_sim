@@ -13,9 +13,8 @@
     "rest_clearance_mm": 0.0,
     "condim": 3,
     "condim_pulp": 4,
-    "rule": "Not paired when the geoms overlap at rest (q = 0), except the existing pairs, which get margin = rest_margin_m: their contact starts only beyond 2 mm of penetration, so they stay inactive at rest (side-by-side fingers touch and compress slightly at rest). Finger-finger and thumb-finger pairs with pen_frac >= min_pen_frac. Functional pairs regardless of frequency: thumb pulp against every fingertip pad (pinch; condim 4, torsional friction, so a pinched pad does not spin), and every finger or thumb geom against a palm geom that it penetrates somewhere in the scan or comes within fist_reach_mm of in the fist (the palm pads are fitted to just touch the fingertips there). Always paired unless they overlap at rest: the groups under 'always'.",
-    "parameters": "condim 3 (condim 4 for pulp-to-pulp pairs, torsional friction 0.005). friction: MuJoCo's default (sliding 1, torsional 0.005, rolling 0.0001), as in the earlier finger pairs; no skin-on-skin coefficient is sourced. solref 0.004 1 and solimp 0.95 0.99 0.001 0.5 2: the stiffest contact MuJoCo keeps stable at the 2 ms step (time constant 2 x timestep), as for the grip dynamometer in hand_function.json; with MuJoCo's softer defaults (solref 0.02) a fist at full FDS and FDP activation pushes the fingertips 3-8 mm into the palm. margin 0 (-2 mm for the two pairs that overlap at rest). The pads are not given Dallard 2018's fingertip compliance (3.1 mm at 4 N): MuJoCo's soft-contact penetration scales with the effective inverse mass of each contact, so one solref cannot reproduce a force-deflection curve across contacts.",
-    "rest_margin_m": -0.002,
+    "rule": "Not paired when the geoms overlap at rest (q = 0), except the existing pairs. Every pair between adjacent digits gets margin = adjacent_digit_margin_m, so the pairs that overlap at rest stay inactive there (side-by-side fingers touch and compress slightly at rest). Finger-finger and thumb-finger pairs with pen_frac >= min_pen_frac. Functional pairs regardless of frequency: thumb pulp against every fingertip pad (pinch; condim 4, torsional friction, so a pinched pad does not spin), and every finger or thumb geom against a palm geom that it penetrates somewhere in the scan or comes within fist_reach_mm of in the fist (the palm pads are fitted to just touch the fingertips there). Always paired unless they overlap at rest: the groups under 'always'.",
+    "parameters": "condim 3 (condim 4 for pulp-to-pulp pairs, torsional friction 0.005). friction: MuJoCo's default (sliding 1, torsional 0.005, rolling 0.0001), as in the earlier finger pairs; no skin-on-skin coefficient is sourced. solref 0.004 1 and solimp 0.95 0.99 0.001 0.5 2: the stiffest contact MuJoCo keeps stable at the 2 ms step (time constant 2 x timestep), as for the grip dynamometer in hand_function.json; with MuJoCo's softer defaults (solref 0.02) a fist at full FDS and FDP activation pushes the fingertips 3-8 mm into the palm. margin 0 (adjacent_digit_margin_m for pairs between adjacent digits). The pads are not given Dallard 2018's fingertip compliance (3.1 mm at 4 N): MuJoCo's soft-contact penetration scales with the effective inverse mass of each contact, so one solref cannot reproduce a force-deflection curve across contacts.",
     "fist_reach_mm": 1.0,
     "friction": [
       1.0,
@@ -101,7 +100,9 @@
         "group": "active_fist",
         "note": "middle fingertip against the ring finger's proximal phalanx: 12 mm in the active fist once the ring finger stops on its metacarpal"
       }
-    ]
+    ],
+    "adjacent_digit_margin_m": -0.004,
+    "adjacent_digit_margin_note": "Pairs between phalanges of adjacent digits: contact starts 4 mm into the capsules. Side by side, fingers meet through their soft tissue, which the rigid capsules cannot compress: the proximal capsule radius (9 mm) exceeds the half width of the bone mesh (6.75 mm), so 4.5 mm of the overlap of two fingers is compressible tissue, and Dallard 2018's fingertip pad deflects about half its thickness at 4 N alone. With the digits at their flexion limits the proximal capsules overlap 8.7 mm (digits 2-3) and 6.0 mm (digits 3-4). Tested in the active fist: margin 0 / -2 / -3 / -4 / -5 mm gave a mean middle-finger gap of 12.5 / 9.9 / 7.8 / 5.3 / 3.7 mm over 14 activation and wrist cases. -4 mm is the bones just meeting."
   },
   "roles": {
     "finger": [
@@ -207,7 +208,7 @@
       "rest_mm": -1.47,
       "fist_mm": -6.01,
       "condim": 3,
-      "margin_m": -0.002
+      "margin_m": -0.004
     },
     {
       "geom1": "proxph2_coll_r",
@@ -217,7 +218,8 @@
       "min_mm": -17.99,
       "rest_mm": 0.47,
       "fist_mm": -8.68,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5proxph_coll_r",
@@ -228,7 +230,7 @@
       "rest_mm": -0.22,
       "fist_mm": -0.99,
       "condim": 3,
-      "margin_m": -0.002
+      "margin_m": -0.004
     },
     {
       "geom1": "midph2_coll_r",
@@ -238,7 +240,8 @@
       "min_mm": -15.96,
       "rest_mm": 6.73,
       "fist_mm": -10.24,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "midph3_coll_r",
@@ -248,7 +251,8 @@
       "min_mm": -15.47,
       "rest_mm": 7.08,
       "fist_mm": -5.47,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "midph2_coll_r",
@@ -258,7 +262,8 @@
       "min_mm": -16.57,
       "rest_mm": 5.7,
       "fist_mm": -8.35,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "midph3_coll_r",
@@ -268,7 +273,8 @@
       "min_mm": -16.92,
       "rest_mm": 5.69,
       "fist_mm": -7.87,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "midph4_coll_r",
@@ -278,7 +284,8 @@
       "min_mm": -16.34,
       "rest_mm": 5.41,
       "fist_mm": -4.31,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5midph_coll_r",
@@ -288,7 +295,8 @@
       "min_mm": -14.17,
       "rest_mm": 5.72,
       "fist_mm": -4.02,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph2_coll_r",
@@ -298,7 +306,8 @@
       "min_mm": -14.8,
       "rest_mm": 9.82,
       "fist_mm": -9.26,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5midph_coll_r",
@@ -308,7 +317,8 @@
       "min_mm": -15.21,
       "rest_mm": 3.81,
       "fist_mm": 1.33,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "midph3_coll_r",
@@ -318,7 +328,8 @@
       "min_mm": -12.16,
       "rest_mm": 6.74,
       "fist_mm": -5.51,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph4_coll_r",
@@ -328,7 +339,8 @@
       "min_mm": -14.74,
       "rest_mm": 11.49,
       "fist_mm": -4.05,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph3_coll_r",
@@ -338,7 +350,8 @@
       "min_mm": -13.65,
       "rest_mm": 14.73,
       "fist_mm": -3.26,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph2_coll_r",
@@ -348,7 +361,8 @@
       "min_mm": -13.98,
       "rest_mm": 11.1,
       "fist_mm": -4.34,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5proxph_coll_r",
@@ -358,7 +372,8 @@
       "min_mm": -13.2,
       "rest_mm": 8.6,
       "fist_mm": -5.64,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5distph_coll_r",
@@ -368,7 +383,8 @@
       "min_mm": -13.15,
       "rest_mm": 7.4,
       "fist_mm": 1.39,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph3_coll_r",
@@ -378,7 +394,8 @@
       "min_mm": -14.93,
       "rest_mm": 10.56,
       "fist_mm": -4.88,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5distph_coll_r",
@@ -388,7 +405,8 @@
       "min_mm": -12.42,
       "rest_mm": 9.61,
       "fist_mm": -0.42,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph2_coll_2_r",
@@ -398,7 +416,8 @@
       "min_mm": -13.04,
       "rest_mm": 12.47,
       "fist_mm": -2.14,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph3_coll_r",
@@ -408,7 +427,8 @@
       "min_mm": -14.44,
       "rest_mm": 15.38,
       "fist_mm": -4.31,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph4_coll_2_r",
@@ -418,7 +438,8 @@
       "min_mm": -12.87,
       "rest_mm": 11.59,
       "fist_mm": 0.32,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5midph_coll_r",
@@ -428,7 +449,8 @@
       "min_mm": -13.37,
       "rest_mm": 14.38,
       "fist_mm": -3.35,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph2_coll_r",
@@ -468,7 +490,8 @@
       "min_mm": -13.18,
       "rest_mm": 18.47,
       "fist_mm": -2.18,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distal_thumb_coll_r",
@@ -498,7 +521,8 @@
       "min_mm": -12.8,
       "rest_mm": 13.76,
       "fist_mm": -1.03,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph3_coll_2_r",
@@ -508,7 +532,8 @@
       "min_mm": -12.56,
       "rest_mm": 16.38,
       "fist_mm": -3.88,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph4_coll_r",
@@ -528,7 +553,8 @@
       "min_mm": -10.7,
       "rest_mm": 14.35,
       "fist_mm": 2.87,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph2_coll_2_r",
@@ -538,7 +564,8 @@
       "min_mm": -11.57,
       "rest_mm": 13.2,
       "fist_mm": 5.58,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph2_coll_r",
@@ -548,7 +575,8 @@
       "min_mm": -10.12,
       "rest_mm": 14.38,
       "fist_mm": -4.23,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5midph_coll_r",
@@ -568,7 +596,8 @@
       "min_mm": -12.77,
       "rest_mm": 20.24,
       "fist_mm": 0.45,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5distph_coll_2_r",
@@ -578,7 +607,8 @@
       "min_mm": -11.91,
       "rest_mm": 11.33,
       "fist_mm": 2.79,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5distph_coll_r",
@@ -628,7 +658,8 @@
       "min_mm": -11.19,
       "rest_mm": 14.36,
       "fist_mm": 0.96,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph2_coll_r",
@@ -688,7 +719,8 @@
       "min_mm": -13.62,
       "rest_mm": 18.7,
       "fist_mm": 5.57,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distal_thumb_coll_r",
@@ -708,7 +740,8 @@
       "min_mm": -10.49,
       "rest_mm": 11.83,
       "fist_mm": 7.39,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distal_thumb_coll_r",
@@ -818,7 +851,8 @@
       "min_mm": -11.56,
       "rest_mm": 26.75,
       "fist_mm": 5.56,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "midph4_coll_r",
@@ -938,7 +972,8 @@
       "min_mm": -12.01,
       "rest_mm": 22.78,
       "fist_mm": 14.03,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph4_coll_r",
@@ -948,7 +983,8 @@
       "min_mm": -11.19,
       "rest_mm": 16.95,
       "fist_mm": 16.43,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distal_thumb_coll_r",
@@ -1068,7 +1104,8 @@
       "min_mm": -6.35,
       "rest_mm": 12.68,
       "fist_mm": 0.05,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "5midph_coll_r",
@@ -1678,7 +1715,8 @@
       "min_mm": null,
       "rest_mm": null,
       "fist_mm": null,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     },
     {
       "geom1": "distph3_coll_2_r",
@@ -1688,7 +1726,8 @@
       "min_mm": null,
       "rest_mm": null,
       "fist_mm": null,
-      "condim": 3
+      "condim": 3,
+      "margin_m": -0.004
     }
   ]
 }

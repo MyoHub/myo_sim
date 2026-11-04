@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Contact margin between adjacent digits
+Changed: `myo_sim/build/data/hand_contact_pairs.json`, `scripts/generate_hand_contacts.py`, `myo_sim/models/contacts/myohand_self_contacts.xml`, `hand-contacts-and-pads.md`, `hand_literature.json`, `hand-literature-comparison.md`, `CHANGELOG.md`
+Why: Rigid capsules of adjacent fingers overlap by up to 8.7 mm at the flexion limits, so the middle finger wedged between its neighbours in a fist; contact now starts where the bones would meet.
+
 ## 2026-11-04 — Hand contact pairs from the active fist
 Changed: `myo_sim/build/data/hand_contact_pairs.json`, `scripts/generate_hand_contacts.py` (group label per `selection.always` entry), `myo_sim/models/contacts/myohand_self_contacts.xml`, `hand-contacts-and-pads.md`, `arm/README_hand.md`, `hand_literature.json`, `hand-literature-comparison.md`, `CHANGELOG.md`
 Why: The static scan cannot see postures past a soft joint limit, so the ring fingertip entered its own metacarpal skin in the active fist and held the middle finger back; five pairs close this.
