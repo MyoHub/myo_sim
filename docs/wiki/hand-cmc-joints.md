@@ -64,12 +64,7 @@ are start points of the intrinsic table (`hand_intrinsic_muscles.json`), not sit
 
 ## Passive moments
 
-No moment-angle curve of these joints is published. The end-range load of El-Shennawy et al. 2001 (22 N on
-a pin through the metacarpal, about 0.96 N m on MyoHand's 43.8 mm CMC5-to-MCP5 lever) defines an `assumed`
-row per joint: a linear stiffness reaching that moment at the flexion and extension limits, fitted to the
-residual over the muscles' passive moment like every other row. Without it the muscles' passive tension
-(mostly FDP5) cupped the relaxed hand to 10 / 21 deg; with it the hand rests within 0.2 deg of neutral.
-Aljasim et al. 2025 (100 N at the MC5 head, about 4.4 N m) is a stiffer second point for a later fit.
+No moment-angle curve of these joints is published. Each joint has an `assumed` spring row, linear from neutral, fitted to the residual over the muscles' passive moment like every other row. On the extension side it reaches El-Shennawy et al. 2001's end-range load (22 N on a pin through the metacarpal, about 0.96 N m on MyoHand's 43.8 mm CMC5-to-MCP5 lever) at the limit. On the flexion side (`scripts/fit_cmc_joints.py --fit-cupping`, `active_cupping` in the table) it is fitted so that ODM, FDM and ADM at full activation reach Büren et al. 2020's active maximum, 12.2 / 25.1 deg against 17.0 / 35.0 deg before (past the limits). That takes about 3 N m at both flexion limits, between El-Shennawy's load, a lower bound because the paper doesn't give its lever, and Aljasim et al. 2025's (100 N at the MC5 head, about 4.4 N m). The CMC5 limit is then reached under about 70 N at the MC5 head, while 0.96 N m flexes it 10 deg: El-Shennawy's arc needs a longer lever than the metacarpal. Without any spring the muscles' passive tension (mostly FDP5) cupped the relaxed hand to 10 / 21 deg.
 
 **Not checked against data:** the hinge location. El-Shennawy's normalised distance from the hamate to the
 CMC5 axis (0.60 with CMC4 free) is larger than the model's (0.35 with its axis), so the hinge passes 2-6 mm

@@ -180,8 +180,8 @@
     "cite": "Büren et al. 2020; Al Maktary 2019"
   },
   "passive": {
-    "status": "gap",
-    "note": "No moment-angle data exist for CMC4/5, so no spring is added; the joint limits are the end stops and the crossing muscles give the passive moment. End-range points for a later fit: Aljasim 2025 (100 N at the MC5 head, about 4.4 N m on MyoHand's 43.8 mm CMC5-to-MCP5 lever, arc 38-41 deg) and El-Shennawy 2001 (22 N on a pin through the MC head, about 1 N m, arcs 20 / 44 deg).",
+    "status": "assumed",
+    "note": "No moment-angle curve of these joints is published. Springs in passive_joint_moments.json (rows digit4_cmc_flexion, digit5_cmc_flexion): linear from neutral; on the extension side reaching El-Shennawy 2001's end-range load at the limit, on the flexion side fitted to active_cupping. End-range points: Aljasim 2025 (100 N at the MC5 head, about 4.4 N m on MyoHand's 43.8 mm CMC5-to-MCP5 lever, arc 38-41 deg) and El-Shennawy 2001 (22 N on a pin through the MC head, about 1 N m, arcs 20 / 44 deg).",
     "candidate_sources": [
       "aljasim2025",
       "elshennawy2001"
@@ -211,5 +211,24 @@
       ]
     }
   ],
-  "site_move_method": "Each moved site keeps its world position at q = 0 (its position is re-expressed in the new body's frame), so every path is unchanged with CMC4/5 at 0; the anatomical origins of the interossei are rebuilt with their identities later. The three interosseous origins moved here in S3 (RI4-P1, UI_UB4-P1 to MC4, RI5-P1 to MC5) became the start points of PI2, DI4 and PI3 in S5 (build/data/hand_intrinsic_muscles.json)."
+  "site_move_method": "Each moved site keeps its world position at q = 0 (its position is re-expressed in the new body's frame), so every path is unchanged with CMC4/5 at 0; the anatomical origins of the interossei are rebuilt with their identities later. The three interosseous origins moved here in S3 (RI4-P1, UI_UB4-P1 to MC4, RI5-P1 to MC5) became the start points of PI2, DI4 and PI3 in S5 (build/data/hand_intrinsic_muscles.json).",
+  "active_cupping": {
+    "target_deg": [
+      12.2,
+      25.1
+    ],
+    "source": "buren2020",
+    "method": "The moment at the flexion limit (the same at both limits, linear from neutral) at which ODM, FDM and ADM at full activation for 1 s (the literature page's protocol) reach Büren et al. 2020's CMC5 maximum; the coupling sets CMC4 (Al Maktary 2019).",
+    "bounds_Nm": [
+      0.5,
+      40.0
+    ],
+    "result": {
+      "limit_moment_Nm": 3.038,
+      "cupping_deg": [
+        12.17,
+        25.1
+      ]
+    }
+  }
 }

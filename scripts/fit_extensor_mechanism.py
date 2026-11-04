@@ -240,8 +240,8 @@ def ligament_block(table: dict[str, Any]) -> str:
     """Main block: one tension-only ORL fixed tendon per finger."""
     orl = table["orl"]
     lines = [
-        "<!-- Oblique retinacular ligaments: tension-only, slack until DIP - PIP exceeds "
-        f"{orl['slack_difference_deg']['value']:g} deg (Harris & Rutledge 1972); stiffness from Ueba et al. 2011 -->"
+        "<!-- Oblique retinacular ligaments: tension-only, slack with the PIP extended until the DIP passes "
+        f"{orl['slack_difference_deg']['value']:g} deg (Harris & Rutledge 1972); PIP arm and stiffness from Ueba et al. 2011 -->"
     ]
     for key, digit in table["digits"].items():
         res = orl["result"][key]
@@ -250,7 +250,7 @@ def ligament_block(table: dict[str, Any]) -> str:
             f'<fixed name="lig_ORL{key}_r" springlength="{_number(-SPRING_FAR)} {_number(slack)}" stiffness="{_number(k)} 0 0">'
         )
         lines.append(f'    <joint joint="{digit["joints"]["dip"]}" coef="{_number(arm)}"/>')
-        lines.append(f'    <joint joint="{digit["joints"]["pip"]}" coef="{_number(-arm)}"/>')
+        lines.append(f'    <joint joint="{digit["joints"]["pip"]}" coef="{_number(-res.get("pip_arm_m", arm))}"/>')
         lines.append("</fixed>")
     return "".join(f"        {line}\n" for line in lines)
 
@@ -427,15 +427,18 @@ def fit_orl(table: dict[str, Any]) -> None:
             )
         )
         preload = tg["preload_N"] * abs(moment_arm(model, data, f"{extensor[key]}_r_tendon", dip, {dip: tg["dip_deg"]})) * 1e-3
-        share = tg["share_percent"][tg["pip_deg"].index(0)] / 100.0
-        stretch = arm * tg["dip_deg"] * DEG - slack
-        k = share * (kamper + preload) / (stretch * arm)
+        # A stretch linear in the PIP angle gives shares on a straight line: least squares over Ueba's four points.
+        slope, intercept = np.polyfit(tg["pip_deg"], tg["share_percent"], 1)
+        taut = tg["dip_deg"] - orl["slack_difference_deg"]["value"]
+        pip_arm = arm * taut * -slope / intercept
+        k = intercept / 100.0 * (kamper + preload) / (arm * taut * DEG * arm)
         shares = []
         for pip in tg["pip_deg"]:
-            s = max(0.0, arm * (tg["dip_deg"] - pip) * DEG - slack)
+            s = max(0.0, (arm * tg["dip_deg"] - pip_arm * pip) * DEG - slack)
             shares.append(round(100.0 * k * s * arm / (kamper + preload), 1))
         result[key] = {
             "arm_m": round(arm, 6),
+            "pip_arm_m": round(pip_arm, 6),
             "slack_m": round(slack, 7),
             "stiffness_N_per_m": round(float(k), 1),
             "total_moment_Nm_at_target": round(kamper + preload, 4),

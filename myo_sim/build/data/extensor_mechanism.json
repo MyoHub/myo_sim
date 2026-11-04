@@ -559,7 +559,7 @@
     }
   ],
   "orl": {
-    "method": "One fixed tendon per finger over PIP and DIP, tension-only (deadband spring): length = r (q_DIP - q_PIP) with equal moment arms r = the model's terminal-tendon DIP arm at q = 0 (judgement: Landsmeer 1949 places the ORL palmar of the PIP axis and in the terminal tendon at the DIP; no source gives the arms). Slack = r x 30 deg, so it never acts in unresisted flexion with PIP-DIP differences up to 30 deg (Harris & Rutledge 1972, Table I). Stiffness fitted so that its share of the DIP resistance at DIP 45 deg, PIP 0, MCP 0 with 1.96 N on the extensor is Ueba 2011's 25 %; the total there is the Kamper 2002 DIP static torque plus the preload moment.",
+    "method": "One fixed tendon per finger over PIP and DIP, tension-only (deadband spring): length = r_d q_DIP - r_p q_PIP. r_d = the model's terminal-tendon DIP arm at q = 0 (judgement: Landsmeer 1949 places the ORL in the terminal tendon at the DIP). Slack = r_d x 30 deg, so the ligament is slack in unresisted DIP flexion with the PIP extended (Harris & Rutledge 1972). r_p and the stiffness are the least-squares line through Ueba 2011's four shares at DIP 45 deg, MCP 0, 1.96 N on the extensor; the total there is the Kamper 2002 DIP static torque plus the preload moment. A stretch linear in the PIP angle cannot rise from PIP 0 to 30 as Ueba's mean does. r_p comes out near a tenth of r_d: the ORL lies close to the PIP axis (Landsmeer 1949: palmar of it; Ueba: not investigated).",
     "targets": {
       "source": "ueba2011",
       "where": "p. 1962",
@@ -586,50 +586,54 @@
     "result": {
       "2": {
         "arm_m": 0.003575,
+        "pip_arm_m": 0.000454,
         "slack_m": 0.0018716,
-        "stiffness_N_per_m": 3755.5,
+        "stiffness_N_per_m": 4671.9,
         "total_moment_Nm_at_target": 0.0503,
         "share_percent": [
-          25.0,
-          0.0,
-          0.0,
-          0.0
+          31.1,
+          23.2,
+          15.3,
+          7.4
         ]
       },
       "3": {
         "arm_m": 0.003063,
+        "pip_arm_m": 0.000389,
         "slack_m": 0.001604,
-        "stiffness_N_per_m": 5095.1,
+        "stiffness_N_per_m": 6338.3,
         "total_moment_Nm_at_target": 0.0501,
         "share_percent": [
-          25.0,
-          0.0,
-          0.0,
-          0.0
+          31.1,
+          23.2,
+          15.3,
+          7.4
         ]
       },
       "4": {
         "arm_m": 0.005496,
+        "pip_arm_m": 0.000698,
         "slack_m": 0.0028776,
-        "stiffness_N_per_m": 1644.0,
+        "stiffness_N_per_m": 2045.1,
         "total_moment_Nm_at_target": 0.052,
         "share_percent": [
-          25.0,
-          0.0,
-          0.0,
-          0.0
+          31.1,
+          23.2,
+          15.3,
+          7.4
         ]
       },
       "5": {
         "arm_m": 0.002988,
+        "pip_arm_m": 0.00038,
         "slack_m": 0.0015647,
-        "stiffness_N_per_m": 5332.4,
+        "stiffness_N_per_m": 6633.5,
         "total_moment_Nm_at_target": 0.0499,
         "share_percent": [
-          25.0,
-          0.0,
-          0.0,
-          0.0
+          31.1,
+          23.2,
+          15.3,
+          7.4
         ]
       }
     }

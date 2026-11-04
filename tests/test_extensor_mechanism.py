@@ -141,13 +141,13 @@ def test_left_hand_mirrors_the_mechanism() -> None:
             assert mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_SITE, f"EM{key}_{site}_l") >= 0
 
 
-def test_orl_is_slack_in_unresisted_flexion_and_taut_in_ueba_protocol() -> None:
-    """Harris & Rutledge 1972: no ORL force while DIP - PIP <= 30 deg; Ueba 2011's posture (PIP 0, DIP 45) stretches it."""
+def test_orl_is_slack_with_the_pip_extended_and_taut_in_ueba_protocol() -> None:
+    """Harris & Rutledge 1972: no force in unresisted DIP flexion up to 30 deg with the PIP extended. Ueba 2011: it carries a share at
+    DIP 45 deg at every PIP angle they tested, which needs it taut there, also where DIP - PIP <= 30 deg (the two sources conflict)."""
     em = _script()
     table = em.load_table()
     model = _model()
     data = mujoco.MjData(model)
-    rng = np.random.default_rng(0)
     for key, digit in table["digits"].items():
         t = model.tendon(f"lig_ORL{key}_r").id
         pip, dip = (model.joint(digit["joints"][j]) for j in ("pip", "dip"))
@@ -158,8 +158,7 @@ def test_orl_is_slack_in_unresisted_flexion_and_taut_in_ueba_protocol() -> None:
             mujoco.mj_fwdPosition(model, data)
             return float(data.ten_length[t] - model.tendon_lengthspring[t][1])
 
-        for _ in range(200):
-            p = rng.uniform(0.0, 115.0)
-            d = rng.uniform(0.0, min(90.0, p + 30.0))
-            assert stretch(p, d) <= 1e-9
-        assert stretch(0.0, 45.0) > 0.0
+        for d in np.linspace(0.0, 29.5, 7):  # the tabled arm and slack are rounded
+            assert stretch(0.0, d) <= 1e-9
+        for p in (0.0, 30.0, 60.0, 90.0):
+            assert stretch(p, 45.0) > 0.0

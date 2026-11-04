@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — CMC4/5 springs to active cupping, ORL to Ueba's shares, EDC2's wrist sphere
+Changed: `scripts/fit_cmc_joints.py`, `scripts/fit_extensor_mechanism.py`, `build/data/cmc_joints.json`, `extensor_mechanism.json`, `extrinsic_muscles.json`, `passive_joint_moments.json`, `muscle_passive.json`, `myoarm_r_chain.xml`, `myoarm_r_tendon.xml`, `myoarm_r_muscle.xml`, `tests/test_extensor_mechanism.py`, `hand-cmc-joints.md`, `extensor-mechanism.md`, `hand-literature-comparison.md`, `CHANGELOG.md`
+Why: Active cupping overshot its measured maxima, the ORL carried nothing above PIP 0 against Ueba's shares, and EDC2 ran clear of the dorsal wrist; springs, ligament and sphere are refitted and every passive fit rerun.
+
 ## 2026-11-04 — One specific tension for the wrist and hand muscles
 Changed: `scripts/fit_specific_tension.py`, `build/data/specific_tension.json`, `hand_intrinsic_muscles.json`, `extrinsic_muscles.json`, `muscle_passive.json`, `passive_joint_moments.json`, `hand_function.json`, `myoarm_r_muscle.xml`, `myoarm_r_tendon.xml`, `myoarm_r_chain.xml`, `scripts/validate_hand_function.py`, `scripts/generate_extrinsic_muscles.py`, `tests/test_specific_tension.py`, `tests/test_hand_grip.py`, `hand-function-validation.md`, `hand-literature-comparison.md`, `passive-moments-and-thenar.md`, `CHANGELOG.md`
 Why: The hand's muscles sat at specific tensions from 86 to 248 N/cm2 with no measurement behind them; one value calibrated to measured strength replaces them, with its conflict against the physiological range stated.

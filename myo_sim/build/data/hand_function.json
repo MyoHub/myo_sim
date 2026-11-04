@@ -890,6 +890,40 @@
             "APL": 0.0
           },
           "grip_N": 491.3
+        },
+        {
+          "model": "+ CMC4/5 springs to active cupping, ORL to Ueba's shares, EDC2 wrist sphere; slack lengths, passive scales, links and springs refitted",
+          "fingerprint": {
+            "nu": 71,
+            "nq": 47,
+            "passive_springs": true,
+            "mcp2_flexion_damping": 0.0142,
+            "edc3_fpmax": 0.0221,
+            "palm_pad_m": 0.007986,
+            "op_fpmax": 0.005604,
+            "jt45_stiffness": 1000.0,
+            "fds3_vmax": 10.0
+          },
+          "posture": "self_selected",
+          "mode": "balanced",
+          "levels": {
+            "FDS": 0.9973,
+            "FDP": 0.7936,
+            "EDC": 0.9331,
+            "EIP": 0.0009,
+            "EDM": 0.1997,
+            "ECRL": 0.0,
+            "ECRB": 0.9108097336128553,
+            "ECU": 0.8511436600945914,
+            "FCR": 0.0,
+            "FCU": 0.0,
+            "PL": 0.0,
+            "FPL": 0.0,
+            "EPL": 0.0,
+            "EPB": 0.0,
+            "APL": 0.0
+          },
+          "grip_N": 469.7
         }
       ]
     },

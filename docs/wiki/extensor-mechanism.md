@@ -83,25 +83,23 @@ measured extension arm.
 
 ## Oblique retinacular ligament
 
-One tension-only fixed tendon per finger, `lig_ORL{d}_r`, of length r (q_DIP - q_PIP): it lengthens with DIP
+One tension-only fixed tendon per finger, `lig_ORL{d}_r`, of length r_d q_DIP - r_p q_PIP: it lengthens with DIP
 flexion and shortens with PIP flexion (Landsmeer 1949: palmar of the PIP axis, part of the terminal tendon
-at the DIP). r is the model's terminal-tendon DIP arm (no source gives the ORL's arms; equal arms make its
-slack a pure angle difference). The slack length is r x 30 deg: Harris & Rutledge 1972 (Tables I-II) found it
-slack in unresisted flexion, with PIP-DIP differences up to 30 deg. The stiffness gives Ueba et al. 2011's
-ORL share of the DIP resistance at PIP 0, DIP 45 deg, MCP 0 with 1.96 N on the extensor (25 %); the total
-there is Kamper et al. 2002's DIP static torque plus the preload. The ORL is a fixed tendon, the cheapest
-form (variant 2 of the proposal): a spatial ORL needs extra wraps to stay palmar of the PIP, and its arms
-are not measured either.
+at the DIP). r_d is the model's terminal-tendon DIP arm. The slack length is r_d x 30 deg: Harris & Rutledge 1972 (Tables I-II)
+found it slack in unresisted flexion. r_p and the stiffness are the least-squares line through Ueba et al. 2011's four
+shares of the DIP resistance, at DIP 45 deg, MCP 0 with 1.96 N on the extensor (25 / 31 / 18 / 3 % at PIP 0 / 30 / 60 / 90 deg); the total
+there is Kamper et al. 2002's DIP static torque plus the preload. No source gives the arms. r_p comes out at 0.127 r_d: the ligament lies
+close to the PIP axis, which is how it can stay taut at DIP 45 deg up to PIP 90 deg. The ORL is a fixed tendon, the cheapest
+form (variant 2 of the proposal).
 
-Fitted per digit (`orl.result` in the table): arms 3.6 / 3.1 / 5.5 / 3.0 mm, stiffness 3756 / 5095 / 1644 /
-5332 N/m (digits 2-5). With the refitted springs the index ORL carries 23.7 % of the DIP resistance in
-Ueba's posture.
+Fitted per digit (`orl.result` in the table): DIP arms 3.6 / 3.1 / 5.5 / 3.0 mm, PIP arms 0.45 / 0.39 / 0.70 / 0.38 mm, stiffness 4672 / 6338 /
+2045 / 6634 N/m (digits 2-5). A stretch linear in the PIP angle can't rise from PIP 0 to 30 deg as Ueba's mean does. Measured shares: `hand-literature-comparison.md` (cupping and ORL step).
 
-**The two sources conflict.** With the slack set by Harris & Rutledge, the ORL is slack at Ueba's PIP 30,
-60 and 90 deg (DIP 45 deg is less than 30 deg beyond the PIP), so it reproduces Ueba's 25 % at PIP 0 but
-not 31 / 18 / 3 % at 30 / 60 / 90 deg. Harris & Rutledge is kept as the constraint: it keeps free finger
-motion unaffected, as Leijnse & Spoor 2012's coupling fits also found the ORL unnecessary in 67 of 68
-fingers.
+**The two sources conflict in part.** With the PIP extended both hold: slack up to DIP 30 deg, a share at DIP 45 deg. Harris & Rutledge also saw it
+slack with DIP - PIP up to 30 deg at larger PIP angles, but Ueba's shares at PIP 30, 60, 90 deg (DIP - PIP 15, -15, -45 deg) need it taut there. Ueba is kept, since it is
+a force measurement and Harris's an inspection. In a full fist the ORL then carries about 15 N, about 50 mN m at the DIP against about 1.5 N m from the FDP. Leijnse & Spoor 2012's coupling fits also found the ORL
+unnecessary in 67 of 68 fingers, and it does not change the model's DIP-PIP coupling (0.34 at PIP 70 deg before and after, Leijnse 1.0): it only resists DIP flexion, and the coupling asks for more of it.
+No explicit-ligament form is needed for these shares.
 
 The ORL counts as part of the model's own passive moment when the residual joint springs are fitted
 (`scripts/fit_passive_moments.py`, ligaments `lig_`).
@@ -119,7 +117,7 @@ The ORL counts as part of the model's own passive moment when the residual joint
 
 - Constant fractions: no posture dependence of c or of the slip ratio (Lee et al. 2008a; Valero-Cuevas et
   al. 2007), no release of the distal phalanx with the PIP flexed 80-90 deg (Landsmeer 1949; Harris &
-  Rutledge 1972; Ueba et al. 2011).
+  Rutledge 1972; Ueba et al. 2011) beyond what the ORL's small PIP arm gives.
 - The lumbrical fractions are fitted on the index and applied to all four lumbricals; the interosseous ones
   are Chao & An's for every digit.
 - The extensors' MCP moment arms are unchanged (the hood is distal of the MCP wrap).

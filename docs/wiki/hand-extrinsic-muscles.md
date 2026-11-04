@@ -214,6 +214,8 @@ misses them by 1.2 mm RMS, so it was not used. EDC3 already wraps its torus sphe
 
 The finger moment arms, and with them the An 1983 and Lee 2008b comparisons, do not change: the wrap
 spans the wrist only. EDC2's wrist arms now lie with EDC3's and EDC4's (24-25 mm at 60 deg extension).
+**Sphere moved (cupping and ORL step).** The sphere sits 11 mm dorsal of the carpus (it was MoBL's EDC index torus), so with the side site outside it the tendon ran over its top, 15.6 mm clear of the bone at wrist flexion: a straight line clear of the dorsal wrist and hand, which the earlier inside wrap had hidden. The centre moves 6 mm palmar, back to the earlier path height. Wrist arm at neutral / 39 deg flexion 18.7 / 13.6 -> 17.0 / 10.8 mm (`dev` 17.3 / 10.3, Holzbaur et al. 2005's average 16 mm). EDC4 and EDC5 lie 11 mm clear, ECRL 12 mm, EPL 14 mm, also on `dev`.
+
 ### The other forearm wraps
 
 The same fix for the other forearm wraps whose side site sat inside the geom (`wrap_sides` in the data

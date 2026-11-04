@@ -26,6 +26,12 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 - **New joints:** per hand `cmc4_flexion`, `cmc5_flexion`, `node_LUM1-4`, `node_JT3-5`; in `myofullbody` 24 neck joints after the lumbar joints, so every arm and leg index moves. Build joint lists by name; filter `node_` joints and `lig_`, `node_`, `passive_` tendons from observations.
 - **Dynamics:** `vmax` 10 on the forearm and hand muscles makes hand movement 2-5 times faster for the same activation; rigid-tendon maps change leg and upper-arm fibre lengths and forces. All hand, arm, leg and full-body checkpoints need retraining and parity baselines regenerating. mujoco-warp needs `nconmax` >= 64 for hand models.
 
+- **CMC4/5 springs, ORL, EDC2's wrist sphere (all models with a hand).** See `docs/wiki/hand-cmc-joints.md`, `extensor-mechanism.md` and `hand-literature-comparison.md` (cupping and ORL step).
+  - **CMC4/5:** the flexion side of the end-range springs is fitted to Büren et al. 2020's active maxima: about 3 N m at the limits (was 0.96 N m). Active cupping 17.0 / 35.0 -> 12.2 / 25.1 deg. Ranges unchanged.
+  - **ORL:** PIP arm 0.127 x the DIP arm instead of equal arms, stiffness refitted: it carries a share at every PIP angle of Ueba 2011 and is now taut in deep flexion, where Harris & Rutledge 1972 saw it slack: about 15 N in a fist. DIP-PIP coupling unchanged.
+  - **EDC2:** `EDCI_torus_wrap_r` moves 6 mm palmar with its side site: the tendon no longer runs 15.6 mm clear of the dorsal carpus. Wrist arm at neutral / 39 deg flexion 18.7 / 13.6 -> 17.0 / 10.8 mm (`dev` 17.3 / 10.3).
+  - **Refits:** the established order, on the specific-tension forces.
+
 - **One specific tension for the wrist and hand muscles (all models with an arm or hand).** See `docs/wiki/hand-function-validation.md` and `hand-literature-comparison.md` (specific-tension step).
   - **Change:** peak force = PCSA x 166 N/cm2 for ECRL, ECRB, ECU, FCR, FCU, PL, FDS, FDP, EDC, EDM, EIP, EPL, EPB, FPL, APL and every hand intrinsic (`build/data/specific_tension.json`, `scripts/fit_specific_tension.py`). Before, the intrinsics had 86.3 N/cm2, OP 176 N/cm2 and the extrinsics an implied 88-248 N/cm2. DI1 heads 50 / 50 (Linscheid 1991, was 36 / 64). BRD, PT, PQ and SUP are unchanged.
   - **Calibration:** adult man, all ages: RIHM index and little-finger abduction (McGee 2020), grip and key pinch (Mathiowetz 1985). 166 N/cm2 lies outside the published range (55 N/cm2 O'Brien 2010): read it as a correction of the cadaver PCSA.
