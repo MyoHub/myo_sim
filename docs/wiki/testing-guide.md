@@ -21,6 +21,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_warp_parity.py` | Every tendon length in `myohands` and `myoarms` matches between CPU MuJoCo and mujoco-warp over random postures (to 1e-5 m) | After tendon or wrap changes; skipped without mujoco-warp or a CUDA device, and an expected failure on mujoco-warp < 3.16 for tendons with a sidesite inside their wrap geom |
 | `test_warp_version_warning.py` | `load_spec()` warns once when mujoco-warp < 3.16 is installed and the model has arm or hand tendons; silent otherwise |
 | `test_standing_keyframe.py` | The `standing` keyframe: JSON matches its script, couplings hold, only the feet touch at t = 0, joint speeds over 50 ms, muscle lengths, attach and spec editing, with `qpos0` as negative control | After joint, coupling, contact or `compose.py` changes |
+| `test_postures.py` | The posture keyframes: JSON matches its script, couplings hold, only the feet touch at t = 0, joint speeds over 50 ms, muscle lengths, attach and spec editing, with `qpos0` as negative control | After joint, coupling, contact or `compose.py` changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
 

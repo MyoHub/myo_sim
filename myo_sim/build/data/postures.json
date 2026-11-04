@@ -1,0 +1,103 @@
+{
+  "provenance": {
+    "script": "scripts/generate_postures.py",
+    "source": "qpos0 of each composed model; model parameters are not changed",
+    "shoulder_elv_rad": 0.1,
+    "floor_clearance_m": 0.0001,
+    "method": "shoulder elevation raised to clear the thorax, joint couplings evaluated from their polynomials, ankles bisected until heel and forefoot are level, root lowered to the floor clearance",
+    "documentation": "docs/wiki/postures.md"
+  },
+  "postures": {
+    "standing": {
+      "description": "Upright, feet flat, arms just clear of the thorax.",
+      "source": "qpos0 with the couplings evaluated; shoulder elevation is a clearance value, not a measured arm posture"
+    }
+  },
+  "models": {
+    "myofullbody": {
+      "standing": {
+        "root_z": 0.945501673,
+        "joints": {
+          "sternoclavicular_r2_r": -0.0242,
+          "sternoclavicular_r3_r": 0.01025,
+          "unrotscap_r3_r": -0.01025,
+          "unrotscap_r2_r": 0.0242,
+          "acromioclavicular_r2_r": -0.0049,
+          "acromioclavicular_r3_r": 0.0396,
+          "acromioclavicular_r1_r": 0.0178,
+          "unrothum_r1_r": -0.0178,
+          "unrothum_r3_r": -0.0396,
+          "unrothum_r2_r": 0.0049,
+          "shoulder_elv_r": 0.1,
+          "sternoclavicular_r2_l": -0.0242,
+          "sternoclavicular_r3_l": 0.01025,
+          "unrotscap_r3_l": -0.01025,
+          "unrotscap_r2_l": 0.0242,
+          "acromioclavicular_r2_l": -0.0049,
+          "acromioclavicular_r3_l": 0.0396,
+          "acromioclavicular_r1_l": 0.0178,
+          "unrothum_r1_l": -0.0178,
+          "unrothum_r3_l": -0.0396,
+          "unrothum_r2_l": 0.0049,
+          "shoulder_elv_l": 0.1,
+          "knee_angle_translation1_r": 9.54e-08,
+          "knee_angle_rotation2_r": -1.47e-08,
+          "knee_angle_rotation3_r": 1.09e-08,
+          "ankle_angle_r": 0.0119593609,
+          "knee_angle_beta_translation2_r": -0.0108281,
+          "knee_angle_beta_translation1_r": 0.0524192,
+          "knee_angle_beta_rotation1_r": 0.010506,
+          "knee_angle_translation1_l": 9.54e-08,
+          "knee_angle_rotation2_l": -1.47e-08,
+          "knee_angle_rotation3_l": 1.09e-08,
+          "ankle_angle_l": 0.0119593609,
+          "knee_angle_beta_translation2_l": -0.0108281,
+          "knee_angle_beta_translation1_l": 0.0524192,
+          "knee_angle_beta_rotation1_l": 0.010506
+        }
+      }
+    },
+    "myolegs": {
+      "standing": {
+        "root_z": 0.960501673,
+        "joints": {
+          "knee_angle_translation1_r": 9.54e-08,
+          "knee_angle_rotation2_r": -1.47e-08,
+          "knee_angle_rotation3_r": 1.09e-08,
+          "ankle_angle_r": 0.0119593609,
+          "knee_angle_beta_translation2_r": -0.0108281,
+          "knee_angle_beta_translation1_r": 0.0524192,
+          "knee_angle_beta_rotation1_r": 0.010506,
+          "knee_angle_translation1_l": 9.54e-08,
+          "knee_angle_rotation2_l": -1.47e-08,
+          "knee_angle_rotation3_l": 1.09e-08,
+          "ankle_angle_l": 0.0119593609,
+          "knee_angle_beta_translation2_l": -0.0108281,
+          "knee_angle_beta_translation1_l": 0.0524192,
+          "knee_angle_beta_rotation1_l": 0.010506
+        }
+      }
+    },
+    "myolegs_abdomen": {
+      "standing": {
+        "root_z": 0.960501673,
+        "joints": {
+          "knee_angle_translation1_r": 9.54e-08,
+          "knee_angle_rotation2_r": -1.47e-08,
+          "knee_angle_rotation3_r": 1.09e-08,
+          "ankle_angle_r": 0.0119593609,
+          "knee_angle_beta_translation2_r": -0.0108281,
+          "knee_angle_beta_translation1_r": 0.0524192,
+          "knee_angle_beta_rotation1_r": 0.010506,
+          "knee_angle_translation1_l": 9.54e-08,
+          "knee_angle_rotation2_l": -1.47e-08,
+          "knee_angle_rotation3_l": 1.09e-08,
+          "ankle_angle_l": 0.0119593609,
+          "knee_angle_beta_translation2_l": -0.0108281,
+          "knee_angle_beta_translation1_l": 0.0524192,
+          "knee_angle_beta_rotation1_l": 0.010506
+        }
+      }
+    }
+  }
+}
