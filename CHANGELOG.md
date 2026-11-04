@@ -30,6 +30,8 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 - **`LTpT_T12_l` path (all models with the torso chain).** Five path points of the left T12 longissimus had the right muscle's coordinates, so it seems to have run down the right side of the spine; their z is now negated. Downstream: at qpos = 0, with every other coordinate held fixed, this muscle's moment arm about `lat_bending` goes from +26.86 mm to -26.86 mm, so policies trained on the old path should be re-evaluated or retrained.
 
+- **Pelvis counted once (`myofullbody`, `myolegs`, `myolegs26`, `myolegs_abdomen`).** The torso chain's sacrum is now massless, so the pelvis mass is the leg chain's alone; `myofullbody` weighs 76.78 kg instead of 84.26 kg, and the head (unchanged) is 7.6 % of it. Downstream: dynamics of the four models with legs change; policies trained on them should be re-evaluated or retrained. Torso-only models only lose 7.486 kg of reported mass, since their sacrum is welded to the world.
+
 - **CMC4/5 springs, ORL, EDC2's wrist sphere (all models with a hand).** See `docs/wiki/hand-cmc-joints.md`, `extensor-mechanism.md` and `hand-literature-comparison.md` (cupping and ORL step).
   - **CMC4/5:** the flexion side of the end-range springs is fitted to Büren et al. 2020's active maxima: about 3 N m at the limits (was 0.96 N m). Active cupping 17.0 / 35.0 -> 12.2 / 25.1 deg. Ranges unchanged.
   - **ORL:** PIP arm 0.127 x the DIP arm instead of equal arms, stiffness refitted: it carries a share at every PIP angle of Ueba 2011 and is now taut in deep flexion, where Harris & Rutledge 1972 saw it slack: about 15 N in a fist. DIP-PIP coupling unchanged.

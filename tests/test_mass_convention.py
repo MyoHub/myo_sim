@@ -4,8 +4,8 @@ import pytest
 from myo_sim import load_model, load_spec
 from myo_sim.build.mass import audit_mass, subtree_mass
 
-# 83.99 kg after the neck and the head share, plus 14 x 0.1 g nodes of the hand; wrap geoms are massless and the lunate keeps its dev mass.
-FULLBODY_MASS = 84.00
+# With the neck, the 14 x 0.1 g nodes of the hand and massless wraps; the pelvis counted once (#155).
+FULLBODY_MASS = 76.51
 DE_LEVA_HEAD_NECK = 0.0694  # de Leva (1996) head-and-neck share of body mass
 TORSO_MASS = 14.897  # OpenSim trunk minus the head it contained (#138)
 # Part models keep the rigid head at the de Leva share of the 84.26 kg rigid-head body (#138).
@@ -45,6 +45,7 @@ def test_only_attachment_frames_are_massless(fullbody_model):
     }
     assert massless == {
         "Full Body",
+        "sacrum",
         "head_attach",
         "neck",
         "myohead_base",
