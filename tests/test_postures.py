@@ -247,7 +247,7 @@ def test_unknown_model_raises():
 def test_unknown_posture_raises():
     spec = myo_sim.load_spec("myofullbody")
     with pytest.raises(KeyError, match="no posture 'kneeling'"):
-        myo_sim.add_posture_keyframe(spec, "myofullbody", "kneeling")
+        myo_sim.add_posture_keyframes(spec, "myofullbody", ["kneeling"])
 
 
 @pytest.mark.parametrize("name", MODELS)
@@ -263,7 +263,7 @@ def test_models_without_postures_list_none():
 
 def test_add_one_posture_by_name():
     spec = myo_sim.load_spec("myofullbody")
-    myo_sim.add_posture_keyframe(spec, "myofullbody", "standing")
+    myo_sim.add_posture_keyframes(spec, "myofullbody", ["standing"])
     named = myo_sim.load_spec("myofullbody", build_kwargs={"postures": ["standing"]}).compile()
     model = spec.compile()
     assert model.nkey == named.nkey == 1

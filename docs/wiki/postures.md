@@ -28,7 +28,7 @@ The script also prints the tables below (`--report`). To change the pose, edit t
 - `myo_sim.load(name)` and `myo_sim.load_model(name)` include the keyframe; use `mujoco.mj_resetDataKeyframe(model, data, model.key("standing").id)`.
 - `myo_sim.load_spec(name)` and `build_spec(name)` leave it out unless you pass `build_kwargs={"postures": True}`, or a list of names such as `{"postures": ["standing"]}`. A keyframe's `qpos` has a fixed size, so `compile()` fails after deleting a joint from a spec that holds one (`keyframe 'standing': invalid qpos size`), and specs from `load_spec` are meant to be edited. Adding a joint is worse: MuJoCo pads the keyframe at the end, which is right for a new body at the end of the tree, but a hinge added under `femur_r` silently shifts 10 joints of the left leg by one.
 - `myo_sim.list_postures(name)` gives the postures of a model, in keyframe order.
-- `myo_sim.add_posture_keyframes(spec, model_name)` adds them to an edited spec, and `add_posture_keyframe(spec, model_name, posture)` adds one, matched by joint name: joints the spec no longer has are skipped and joints the table does not list stay at `qpos0`. The root keeps the spec's x, y and orientation.
+- `myo_sim.add_posture_keyframes(spec, model_name)` adds them to an edited spec (pass a list of names to add only those), matched by joint name: joints the spec no longer has are skipped and joints the table does not list stay at `qpos0`. The root keeps the spec's x, y and orientation.
 - `MjSpec.attach` keeps the keyframe under the attach prefix: two bodies attached with `a_` and `b_` give `a_standing` and `b_standing`, each with the other body at its `qpos0`. Tested on MuJoCo 3.4, 3.9, 3.11 and 3.17.
 
 ## Measurements
