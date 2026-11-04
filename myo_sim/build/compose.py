@@ -32,7 +32,7 @@ from myo_sim import MODELS_DIR
 
 try:
     from .hand import prune_arm_spec_to_hand
-    from .keyframes import add_standing_keyframe
+    from .keyframes import add_posture_keyframes
     from .utils import (
         MirrorRules,
         add_contact_pairs,
@@ -44,7 +44,7 @@ try:
     )
 except ImportError:
     from hand import prune_arm_spec_to_hand
-    from keyframes import add_standing_keyframe
+    from keyframes import add_posture_keyframes
     from utils import (
         MirrorRules,
         add_contact_pairs,
@@ -659,11 +659,11 @@ def build_spec(
         model_name: Key into MODEL_REGISTRY (e.g. "myotorso_arms").
         build_kwargs: Passed along to builder function.
                       TODO: raise error if unused kwarg supplied.
-                      ``{"standing_keyframe": True}`` adds the ``standing``
-                      keyframe to the spec (myofullbody, myolegs and
-                      myolegs_abdomen). Without it the spec has no keyframe, so
-                      joints can still be deleted from it; see
-                      myo_sim.build.keyframes.
+                      ``{"postures": True}`` adds all of the model's postures as
+                      keyframes and ``{"postures": ["standing"]}`` the named ones;
+                      ``{"standing_keyframe": True}`` still means the latter.
+                      Without them the spec has no keyframe, so joints can still
+                      be deleted from it; see myo_sim.build.keyframes.
         inertia_floor: Optional numerical-conditioning floor for
             auto/mesh-derived body inertia, applied via the compiler's
             ``boundinertia`` attribute (MuJoCo clamps a body's principal
@@ -698,8 +698,11 @@ def build_spec(
         disable_finger_collision(spec)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
+    postures = registration.build_kwargs.get("postures", False)
     if registration.build_kwargs.get("standing_keyframe", False):
-        add_standing_keyframe(spec, model_name)
+        postures = postures or ["standing"]
+    if postures:
+        add_posture_keyframes(spec, model_name, None if postures is True else postures)
     return spec
 
 

@@ -2,7 +2,10 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Optional
 
+from myo_sim.build.keyframes import add_posture_keyframe as add_posture_keyframe
+from myo_sim.build.keyframes import add_posture_keyframes as add_posture_keyframes
 from myo_sim.build.keyframes import add_standing_keyframe as add_standing_keyframe
+from myo_sim.build.keyframes import list_postures as list_postures
 from myo_sim.fragments import FragmentInfo as FragmentInfo
 from myo_sim.fragments import FragmentRegistry as FragmentRegistry
 
@@ -131,10 +134,8 @@ def load(name: str) -> tuple:
 
 
 def load_model(name: str) -> tuple:
-    """Compile a model by registry name; free-standing models come with their ``standing`` keyframe."""
-    from myo_sim.build.keyframes import has_standing_keyframe
-
-    spec = load_spec(name, build_kwargs={"standing_keyframe": True} if has_standing_keyframe(name) else None)
+    """Compile a model by registry name, with all of its postures as keyframes (see ``list_postures``)."""
+    spec = load_spec(name, build_kwargs={"postures": True} if list_postures(name) else None)
     model = spec.compile()
     return model
 
@@ -154,9 +155,10 @@ def load_spec(
         name: Registry name or legacy alias (e.g. "myotorso_arms", "hand").
         build_kwargs: Passed along to builder function.
                       TODO: Raise error on unused kwarg.
-                      ``{"standing_keyframe": True}`` adds the ``standing``
-                      keyframe that load() and load_model() include. To add it
-                      after editing the joints, call add_standing_keyframe().
+                      ``{"postures": True}`` adds the posture keyframes that load()
+                      and load_model() include, and ``{"postures": ["standing"]}``
+                      only the named ones. To add them after editing the joints,
+                      call add_posture_keyframes().
         inertia_floor: Optional numerical-conditioning floor for
             auto/mesh-derived body inertia (sets the compiler's
             ``boundinertia``/``boundmass``). None (default, unchanged
