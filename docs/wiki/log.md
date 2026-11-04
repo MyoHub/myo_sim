@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Pelvic tilt in the standing keyframe of `myolegs_abdomen`
+Changed: `scripts/generate_standing_keyframes.py`, `myo_sim/build/keyframes.py`, `myo_sim/build/data/standing_keyframes.json`, `tests/test_standing_keyframe.py`, `docs/wiki/standing-keyframe.md`, `CHANGELOG.md`
+Why: With the muscles off the trunk hinge reached 3.05 rad/s in 50 ms, up from 1.88 rad/s when the sacrum became massless. The trunk loads the pelvis 4.2 cm behind the hips and neither hinge has stiffness, so the lighter pelvis turns between them. The generator now tilts the pelvis until the hinge is above the hip axis: 2.92 rad/s with the muscles, 0.66 rad/s without them. Limits unchanged.
+
 ## 2026-11-04 — Thumbs at their passive equilibrium in the standing keyframe
 Changed: `scripts/generate_standing_keyframes.py`, `myo_sim/build/data/standing_keyframes.json`, `tests/test_standing_keyframe.py`, `docs/wiki/standing-keyframe.md`, `CHANGELOG.md`
 Why: The passive spring of the thumb CMC took the joint to 8 rad/s in the first 50 ms. The generator now solves the thumb joints for the equilibrium of the passive moments and gravity; `myofullbody` is at 3.35 rad/s (limit 5.5) and 1.97 rad/s with the muscles off (limit 2.0). The finger equilibrium has no single answer without contacts, so the fingers stay at `qpos0`.

@@ -14,6 +14,8 @@ import json
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+import numpy as np
+
 if TYPE_CHECKING:
     import mujoco
 
@@ -38,7 +40,8 @@ def add_standing_keyframe(spec: "mujoco.MjSpec", model_name: str = "myofullbody"
     Values are matched by joint name on the spec as it is now, so call this after
     deleting or adding joints: joints the spec no longer has are skipped, joints the
     table does not list stay at ``qpos0``. The root keeps the spec's own x, y and
-    orientation and takes its height from the table. The keyframe survives
+    orientation and takes its height from the table, plus the entry's ``root_y_offset`` and
+    ``root_quat`` in the root's frame where it has them. The keyframe survives
     ``MjSpec.attach`` (with the attach prefix in its name), and the other bodies of the
     composed model are at their ``qpos0`` in it.
 
@@ -66,5 +69,12 @@ def add_standing_keyframe(spec: "mujoco.MjSpec", model_name: str = "myofullbody"
             qpos[model.jnt_qposadr[joint_id]] = entry["joints"][name]
     root_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, ROOT_JOINT)
     if root_id >= 0:
-        qpos[model.jnt_qposadr[root_id] + 2] = entry["root_z"]
+        adr = model.jnt_qposadr[root_id]
+        qpos[adr + 2] = entry["root_z"]
+        if "root_quat" in entry:
+            own = qpos[adr + 3 : adr + 7].copy()
+            offset = np.zeros(3)
+            mujoco.mju_rotVecQuat(offset, [0.0, entry["root_y_offset"], 0.0], own)
+            qpos[adr : adr + 2] += offset[:2]
+            mujoco.mju_mulQuat(qpos[adr + 3 : adr + 7], own, np.array(entry["root_quat"]))
     return spec.add_key(name=STANDING_KEYFRAME_NAME, qpos=qpos.tolist())

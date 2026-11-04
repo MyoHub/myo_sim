@@ -65,6 +65,8 @@ def test_table_is_what_the_script_writes():
     for name, entry in table["models"].items():
         assert entry["joints"].keys() == written["models"][name]["joints"].keys()
         assert entry["root_z"] == pytest.approx(written["models"][name]["root_z"], abs=1e-7)
+        for key in ("root_y_offset", "root_quat"):
+            assert entry.get(key, 0.0) == pytest.approx(written["models"][name].get(key, 0.0), abs=1e-7), key
         for joint, value in entry["joints"].items():
             assert value == pytest.approx(written["models"][name]["joints"][joint], abs=1e-7), joint
 
@@ -108,6 +110,20 @@ def test_thumb_starts_at_its_passive_equilibrium(side):
     data = mujoco.MjData(model)
     assert np.abs(SCRIPT.thumb_moments(model, data, _standing_qpos(model), side)).max() < 1e-5
     assert np.abs(SCRIPT.thumb_moments(model, data, model.qpos0, side)).max() > 0.5, "negative control"
+
+
+def test_trunk_hinge_stands_over_the_hip_axis():
+    model = myo_sim.load_model("myolegs_abdomen")
+    qpos = _standing_qpos(model)
+    data = _state(model, qpos)
+    hinge, hip = data.joint(SCRIPT.TRUNK_HINGE).xanchor, data.joint("hip_flexion_r").xanchor
+    assert hinge[1] == pytest.approx(hip[1], abs=1e-6)
+    upright = _state(model, model.qpos0)
+    assert np.linalg.norm(data.body("torso").xmat - upright.body("torso").xmat) < 1e-6, "the trunk stays upright"
+    assert np.linalg.norm(data.body("tibia_r").xmat - upright.body("tibia_r").xmat) < 0.02, "the legs stay upright"
+    assert data.joint(SCRIPT.TRUNK_HINGE).xanchor[1] != pytest.approx(
+        upright.joint(SCRIPT.TRUNK_HINGE).xanchor[1], abs=0.01
+    ), "negative control: without the tilt the hinge is behind the hips"
 
 
 def test_qpos0_negative_control_for_contacts():

@@ -10,7 +10,10 @@
       "mp_flexion",
       "ip_flexion"
     ],
-    "method": "shoulder elevation raised to clear the thorax, joint couplings evaluated from their polynomials, ankles bisected until heel and forefoot are level, root lowered to the floor clearance, thumb joints at the equilibrium of the passive moments and gravity at zero activation, computed by the script",
+    "pelvic_tilt_models": [
+      "myolegs_abdomen"
+    ],
+    "method": "shoulder elevation raised to clear the thorax, joint couplings evaluated from their polynomials, ankles bisected until heel and forefoot are level, root lowered to the floor clearance, thumb joints at the equilibrium of the passive moments and gravity at zero activation, computed by the script, pelvis tilted until the trunk hinge is above the hip axis where the model is listed",
     "documentation": "docs/wiki/standing-keyframe.md"
   },
   "models": {
@@ -83,8 +86,10 @@
       }
     },
     "myolegs_abdomen": {
-      "root_z": 0.960501673,
+      "root_z": 0.9424714624,
       "joints": {
+        "flex_extension": 0.2728743564,
+        "hip_flexion_r": 0.2728743564,
         "knee_angle_translation1_r": 9.54e-08,
         "knee_angle_rotation2_r": -1.47e-08,
         "knee_angle_rotation3_r": 1.09e-08,
@@ -92,6 +97,7 @@
         "knee_angle_beta_translation2_r": -0.0108281,
         "knee_angle_beta_translation1_r": 0.0524192,
         "knee_angle_beta_rotation1_r": 0.010506,
+        "hip_flexion_l": 0.2728743564,
         "knee_angle_translation1_l": 9.54e-08,
         "knee_angle_rotation2_l": -1.47e-08,
         "knee_angle_rotation3_l": 1.09e-08,
@@ -99,7 +105,14 @@
         "knee_angle_beta_translation2_l": -0.0108281,
         "knee_angle_beta_translation1_l": 0.0524192,
         "knee_angle_beta_rotation1_l": 0.010506
-      }
+      },
+      "root_y_offset": -0.0190875474,
+      "root_quat": [
+        0.9907068777,
+        0.1360142733,
+        0.0,
+        0.0
+      ]
     }
   }
 }

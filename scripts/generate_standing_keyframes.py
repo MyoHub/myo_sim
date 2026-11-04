@@ -7,7 +7,9 @@ Start from ``qpos0`` and change only what makes it unusable as a start:
 2. put every joint coupling (``<joint>`` equality) on its polynomial,
 3. dorsiflex the ankles until heel and forefoot are level,
 4. lower the root until the feet are ``FLOOR_CLEARANCE_M`` above the floor,
-5. put each thumb where its passive moments and gravity balance at zero activation.
+5. put each thumb where its passive moments and gravity balance at zero activation,
+6. where the trunk is free to hinge on a light pelvis (``PELVIC_TILT_MODELS``), tilt the pelvis forward until the trunk's
+   hinge is above the hip axis, with the legs and trunk kept upright, so that the trunk's weight does not turn the pelvis.
 
 Run from the repository root: ``python scripts/generate_standing_keyframes.py``.
 """
@@ -35,6 +37,8 @@ FOREFOOT_GEOM = "bofoot_col2_{side}"
 ROUND_DECIMALS = 10
 SIDES = ("r", "l")
 THUMB_JOINTS = ("cmc_flexion", "cmc_abduction", "mp_flexion", "ip_flexion")
+PELVIC_TILT_MODELS = ("myolegs_abdomen",)
+TRUNK_HINGE = "flex_extension"
 
 
 def _joint_adr(model: mujoco.MjModel, name: str) -> int:
@@ -109,7 +113,27 @@ def thumbs_at_equilibrium(model: mujoco.MjModel, qpos: np.ndarray) -> np.ndarray
     return with_thumbs(solved.x)
 
 
-def solve_pose(model: mujoco.MjModel) -> np.ndarray:
+def tilt_pelvis(model: mujoco.MjModel, qpos: np.ndarray) -> np.ndarray:
+    """Return *qpos* with the pelvis turned about the hip axis until the trunk hinge is above it; legs and trunk stay upright."""
+    if not np.allclose(qpos[3:7], (1.0, 0.0, 0.0, 0.0)):
+        raise ValueError("The pelvic tilt expects an upright root")
+    data = mujoco.MjData(model)
+    data.qpos[:] = qpos
+    mujoco.mj_kinematics(model, data)
+    hip = data.joint("hip_flexion_r").xanchor.copy()
+    behind, above = (data.joint(TRUNK_HINGE).xanchor - hip)[1:]  # the models face -y
+    tilt = float(np.arctan2(behind, above))
+    out = qpos.copy()
+    for joint in ("hip_flexion_r", "hip_flexion_l", TRUNK_HINGE):
+        out[_joint_adr(model, joint)] = tilt
+    out[3:7] = np.cos(tilt / 2), np.sin(tilt / 2), 0.0, 0.0
+    relative = qpos[:3] - hip
+    out[1] = hip[1] + np.cos(tilt) * relative[1] - np.sin(tilt) * relative[2]
+    out[2] = hip[2] + np.sin(tilt) * relative[1] + np.cos(tilt) * relative[2]
+    return coupling_values(model, out)
+
+
+def solve_pose(model: mujoco.MjModel, name: str) -> np.ndarray:
     """Return the standing ``qpos`` of *model* (see the module docstring)."""
     data = mujoco.MjData(model)
 
@@ -139,6 +163,8 @@ def solve_pose(model: mujoco.MjModel) -> np.ndarray:
         else:
             low = mid
     qpos = pose(0.5 * (low + high))
+    if name in PELVIC_TILT_MODELS:
+        qpos = tilt_pelvis(model, qpos)
     data.qpos[:] = qpos
     mujoco.mj_kinematics(model, data)
     lowest = min(_floor_distance(model, data, name) for name in foot_geoms(model))
@@ -154,7 +180,12 @@ def model_entry(model: mujoco.MjModel, qpos: np.ndarray) -> dict:
         adr = model.jnt_qposadr[joint]
         if name != ROOT_JOINT and abs(qpos[adr] - model.qpos0[adr]) > 10.0 ** (-ROUND_DECIMALS):
             joints[name] = round(float(qpos[adr]), ROUND_DECIMALS)
-    return {"root_z": round(float(qpos[_joint_adr(model, ROOT_JOINT) + 2]), ROUND_DECIMALS), "joints": joints}
+    root = _joint_adr(model, ROOT_JOINT)
+    entry = {"root_z": round(float(qpos[root + 2]), ROUND_DECIMALS), "joints": joints}
+    if not np.allclose(qpos[root + 3 : root + 7], model.qpos0[root + 3 : root + 7]):
+        entry["root_y_offset"] = round(float(qpos[root + 1] - model.qpos0[root + 1]), ROUND_DECIMALS)
+        entry["root_quat"] = [round(float(v), ROUND_DECIMALS) for v in qpos[root + 3 : root + 7]]
+    return entry
 
 
 def build_table() -> dict:
@@ -162,7 +193,7 @@ def build_table() -> dict:
     models = {}
     for name in MODELS:
         model = build_spec(name).compile()
-        models[name] = model_entry(model, solve_pose(model))
+        models[name] = model_entry(model, solve_pose(model, name))
     return {
         "provenance": {
             "script": "scripts/generate_standing_keyframes.py",
@@ -170,11 +201,13 @@ def build_table() -> dict:
             "shoulder_elv_rad": SHOULDER_ELV_RAD,
             "floor_clearance_m": FLOOR_CLEARANCE_M,
             "thumb_equilibrium_joints": list(THUMB_JOINTS),
+            "pelvic_tilt_models": list(PELVIC_TILT_MODELS),
             "method": (
                 "shoulder elevation raised to clear the thorax, joint couplings evaluated from their "
                 "polynomials, ankles bisected until heel and forefoot are level, root lowered to the "
                 "floor clearance, thumb joints at the equilibrium of the passive moments and gravity at zero "
-                "activation, computed by the script"
+                "activation, computed by the script, pelvis tilted until the trunk hinge is above the hip axis "
+                "where the model is listed"
             ),
             "documentation": "docs/wiki/standing-keyframe.md",
         },
@@ -229,7 +262,7 @@ def report() -> None:
     stored = []
     for name in MODELS:
         model = build_spec(name).compile()
-        standing = solve_pose(model)
+        standing = solve_pose(model, name)
         for label, qpos in (("`qpos0`", model.qpos0), ("`standing`", standing)):
             data = mujoco.MjData(model)
             data.qpos[:] = qpos
