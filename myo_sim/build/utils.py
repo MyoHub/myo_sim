@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import copy
+import math
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
@@ -262,6 +263,26 @@ def mirror_quaternion(element: ET.Element) -> None:
     element.set("quat", format_floats(values))
 
 
+def mirror_camera_euler(element: ET.Element) -> None:
+    """Mirror a camera's euler across z so that it still looks at its mirrored target.
+
+    A camera looks along its -z, so its mirrored frame is ``M R diag(-1, 1, 1)``, not the
+    ``M R M`` of other elements, which would turn it to look the other way. For MuJoCo's default
+    intrinsic xyz sequence and the radians that build_mirrored_child_xml writes, ``(a, b, c)``
+    becomes ``(-a, pi - b, -c)``.
+    """
+    values = float_list(element.get("euler"))
+    if len(values) != 3:
+        return
+    element.set("euler", format_floats([-values[0], math.pi - values[1], -values[2]]))
+
+
+def turn_camera_quaternion(element: ET.Element) -> None:
+    """After mirror_quaternion, turn a camera by pi about its own y so that it looks at its mirrored target."""
+    w, x, y, z = float_list(element.get("quat"))
+    element.set("quat", format_floats([-y, -z, w, x]))
+
+
 def mirror_fromto(element: ET.Element) -> None:
     values = float_list(element.get("fromto"))
     if len(values) != 6:
@@ -309,10 +330,14 @@ def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
         elif attr_name == "axis":
             mirror_axial_attribute(mirrored, attr_name)
         elif attr_name == "euler":
-            if mirrored.tag != "body":
+            if mirrored.tag == "camera":
+                mirror_camera_euler(mirrored)
+            elif mirrored.tag != "body":
                 mirror_axial_attribute(mirrored, attr_name)
         elif attr_name == "quat":
             mirror_quaternion(mirrored)
+            if mirrored.tag == "camera":
+                turn_camera_quaternion(mirrored)
         elif attr_name == "fromto":
             mirror_fromto(mirrored)
         elif attr_name == "fullinertia":
