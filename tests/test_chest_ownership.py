@@ -55,4 +55,4 @@ def test_fullbody_total_mass_is_anthropometrically_consistent():
     """
     model = load_spec("myofullbody").compile()
 
-    assert model.body_mass.sum() == pytest.approx(84.08, abs=0.1)
+    assert model.body_mass.sum() == pytest.approx(84.00, abs=0.1)

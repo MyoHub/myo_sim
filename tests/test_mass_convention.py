@@ -4,8 +4,8 @@ import pytest
 from myo_sim import load_model, load_spec
 from myo_sim.build.mass import audit_mass, subtree_mass
 
-# 83.99 kg after the neck and the head share, plus the hand: 2 x 40.9 g in the lunate (the EDM wrap cylinder resized) and 14 x 0.1 g nodes.
-FULLBODY_MASS = 84.08
+# 83.99 kg after the neck and the head share, plus 14 x 0.1 g nodes of the hand; wrap geoms are massless and the lunate keeps its dev mass.
+FULLBODY_MASS = 84.00
 DE_LEVA_HEAD_NECK = 0.0694  # de Leva (1996) head-and-neck share of body mass
 TORSO_MASS = 14.897  # OpenSim trunk minus the head it contained (#138)
 # Part models keep the rigid head at the de Leva share of the 84.26 kg rigid-head body (#138).

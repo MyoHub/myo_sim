@@ -376,6 +376,8 @@
                                         <site class="myoarm_marker" name="Radius_marker_r" pos="0.05749 -0.2272 0.02738"/>
 
                                         <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="myoarm_wrist">
+                                            <!-- The mass and inertia this body got from its wrap geoms on dev: kept so the arm and the body total stay as they were. -->
+                                            <inertial pos="-0.00089131 -0.00917102 -0.00186901" mass="0.16375769" quat="0.65249538 0.4123981 0.60123937 0.2066127" diaginertia="5.60932989e-05 4.97744861e-05 3.21989459e-05"/>
                                             <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.349066 0.523599" damping="0.25"/>
                                             <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-1.396263 1.221730" damping="0.25"/>
                                             <geom mesh="lunate_r" name="lunate_r" type="mesh"/>
