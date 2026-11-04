@@ -62,7 +62,7 @@ class Posture:
         feet_support: The feet stand on the floor and the ankles are solved to level them.
         root_pitch_deg: Forward pitch of the pelvis, if it is not solved from ``balance``.
         balance: Solve the pelvis pitch to put the centre of mass this fraction of the way
-            from the calcaneus origin to the toes origin, front to back of the mean foot.
+            from the calcaneus origins (0) to the toes origins (1) of the feet.
         level_roll: Also solve the subtalar joints to level each foot from side to side.
         solve_knee: Knee solved so that both feet reach the floor (for uneven legs).
     """
@@ -160,7 +160,7 @@ SEAT_OFF = Posture(
     name="seat_off",
     description="Thighs near horizontal, as at the moment of leaving a chair. A sit-to-stand start.",
     source="hip 93.3, knee 82.7 deg at seat-off (Kinoshita et al. 2015); pelvis pitch set so that the ankle comes near their 9.0 deg",
-    targets_deg={"hip_flexion": 93.3, "knee_angle": 82.7, "flex_extension": -13.0, **ARM_REACH},
+    targets_deg={"hip_flexion": 93.3, "knee_angle": 82.7, "flex_extension": -7.0, **ARM_REACH},
     feet_support=True,
     root_pitch_deg=19.4,
     level_roll=True,
@@ -283,7 +283,7 @@ def _floor_distance(model: mujoco.MjModel, data: mujoco.MjData, geom: int) -> fl
 
 
 def foot_geoms(model: mujoco.MjModel, side: str) -> dict[str, int]:
-    """Collision geoms of one foot: ``heel`` and ``forefoot``, ``medial`` and ``lateral`` if it has rails, and ``all``."""
+    """Collision geoms that level one foot: ``heel`` and ``forefoot``, and ``medial`` and ``lateral`` if it has rails."""
     if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_GEOM, f"foot_col1_{side}") >= 0:
         names = {
             "heel": f"foot_col1_{side}",
@@ -642,6 +642,30 @@ def trunk_lean_deg(model: mujoco.MjModel, data: mujoco.MjData) -> float:
     return float(np.degrees(np.arccos(np.clip(0.5 * (np.trace(relative) - 1.0), -1.0, 1.0))))
 
 
+def _words(names: str) -> list[str]:
+    return [word.rstrip("0123456789") for word in names.split("_")]
+
+
+def _speed_row(name: str, model: mujoco.MjModel, label: str, qpos: np.ndarray, feet_support: bool) -> str:
+    peak = rollout_extremes(model, qpos)
+    model.opt.disableflags |= int(mujoco.mjtDisableBit.mjDSBL_ACTUATION)
+    off = rollout_extremes(model, qpos)
+    model.opt.disableflags &= ~int(mujoco.mjtDisableBit.mjDSBL_ACTUATION)
+    lost, joint = collapse_time(model, qpos)
+    lost_text = f"holds {COLLAPSE_HORIZON_S:.0f} s" if lost is None else f"{lost:.2f}" + (f" ({joint})" if joint else "")
+    floor, margin = "-", "-"
+    if feet_support:
+        down = floor_time(model, qpos)
+        floor = f"over {COLLAPSE_HORIZON_S:.0f}" if down is None else f"{down:.2f}"
+        data = state_at(model, qpos)
+        if data.ncon >= 3:
+            margin = f"{support_margin(model, data) * 100:.1f}"
+    return (
+        f"| {name} | {label} | {peak[0]:.2f} ({peak[1]}) | {off[0]:.2f} ({off[1]}) | {-peak[2] * 1e3:.2f} | "
+        f"{lost_text} | {floor} | {margin} |"
+    )
+
+
 def report() -> None:
     """Print the measurements of the wiki page."""
     measured = []
@@ -651,42 +675,38 @@ def report() -> None:
             qpos, pitch = solve_pose(model, name, posture)
             measured.append((name, model, posture, qpos, pitch, state_at(model, qpos)))
     print(
-        "| Model | Posture | Peak speed, 50 ms | Muscles off, 50 ms | Lost at (s) | Other than feet on the floor at (s) | COM inside support (cm) |"
+        "| Model | Posture | Peak speed, 50 ms | Muscles off, 50 ms | Deepest in 50 ms (mm) | Lost at (s) "
+        "| Other than feet on the floor at (s) | COM inside support (cm) |"
     )
-    print("|---|---|---|---|---|---|---|")
-    for name, model, posture, qpos, _, data in measured:
-        peak = rollout_extremes(model, qpos)
-        model.opt.disableflags |= int(mujoco.mjtDisableBit.mjDSBL_ACTUATION)
-        off = rollout_extremes(model, qpos)
-        model.opt.disableflags &= ~int(mujoco.mjtDisableBit.mjDSBL_ACTUATION)
-        lost, joint = collapse_time(model, qpos)
-        lost_text = f"holds {COLLAPSE_HORIZON_S:.0f} s" if lost is None else f"{lost:.2f}" + (f" ({joint})" if joint else "")
-        floor, margin = "-", "-"
-        if posture.feet_support:
-            down = floor_time(model, qpos)
-            floor = f"over {COLLAPSE_HORIZON_S:.0f}" if down is None else f"{down:.2f}"
-            margin = f"{support_margin(model, data) * 100:.1f}"
-        print(
-            f"| {name} | `{posture.name}` | {peak[0]:.2f} ({peak[1]}) | {off[0]:.2f} ({off[1]}) | {lost_text} | {floor} | {margin} |"
-        )
+    print("|---|---|---|---|---|---|---|---|")
+    seen = set()
+    for name, model, posture, qpos, _, _ in measured:
+        if name not in seen:
+            seen.add(name)
+            print(_speed_row(name, model, "`qpos0`", model.qpos0, posture.feet_support))
+        print(_speed_row(name, model, f"`{posture.name}`", qpos, posture.feet_support))
     print()
     print(
-        "| Model | Posture | Root z (m) | Pelvis pitch (deg) | Trunk lean (deg) | Ankle r, l (deg) | Knee r, l (deg) | Contacts at t = 0 "
-        "| Largest force (N) | Sum / weight | Deepest (mm) |"
+        "| Model | Posture | Root z (m) | Pelvis pitch (deg) | Trunk rotation (deg) | Ankle r, l (deg) | Knee r, l (deg) "
+        "| Stance width (m) | Step length (m) | Contacts at t = 0 | Largest force (N) | Sum / weight | Heel share of foot load "
+        "| COM ahead of the ankle (cm) |"
     )
-    print("|---|---|---|---|---|---|---|---|---|---|---|")
+    print("|---|---|---|---|---|---|---|---|---|---|---|---|---|---|")
     for name, model, posture, qpos, pitch, data in measured:
         if not posture.feet_support:
             continue
         contacts, weight = t0_contacts(model, data)
         forces = [c[2] for c in contacts]
-        angle = lambda joint, side: abs(np.degrees(qpos[_joint_adr(model, f"{joint}_{side}")]))  # noqa: E731
+        heel = sum(force for geom1, geom2, force, _ in contacts if not {"bofoot", "toes"} & set(_words(geom1 + "_" + geom2)))
+        ankles = [np.degrees(qpos[_joint_adr(model, f"ankle_angle_{side}")]) for side in SIDES]
+        knees = [abs(np.degrees(qpos[_joint_adr(model, f"knee_angle_{side}")])) for side in SIDES]
+        right, left = data.body("talus_r").xpos, data.body("talus_l").xpos
+        ahead = 0.5 * (right[1] + left[1]) - data.subtree_com[0][1]  # the models face -y
         print(
             f"| {name} | `{posture.name}` | {qpos[_joint_adr(model, ROOT_JOINT) + 2]:.3f} | {np.degrees(pitch):.1f} | "
-            f"{trunk_lean_deg(model, data):.1f} | "
-            f"{np.degrees(qpos[_joint_adr(model, 'ankle_angle_r')]):.1f}, {np.degrees(qpos[_joint_adr(model, 'ankle_angle_l')]):.1f} | "
-            f"{angle('knee_angle', 'r'):.1f}, {angle('knee_angle', 'l'):.1f} | {len(contacts)} | {max(forces):.0f} | "
-            f"{sum(forces) / weight:.2f} | {-min(c[3] for c in contacts) * 1e3:.2f} |"
+            f"{trunk_lean_deg(model, data):.1f} | {ankles[0]:.1f}, {ankles[1]:.1f} | {knees[0]:.1f}, {knees[1]:.1f} | "
+            f"{abs(right[0] - left[0]):.3f} | {abs(right[1] - left[1]):.3f} | {len(contacts)} | {max(forces):.0f} | "
+            f"{sum(forces) / weight:.2f} | {heel / sum(forces):.0%} | {ahead * 100:.1f} |"
         )
     print()
     print("| Model | Posture | Shortest | Longest | Outside [lmin, lmax] | Over 1.2 | Largest passive force (N), muscle |")
@@ -700,6 +720,24 @@ def report() -> None:
             f"| {name} | `{posture.name}` | {lengths.min():.3f} | {lengths.max():.3f} | {outside} | {int((lengths > 1.2).sum())} | "
             f"{abs(data.actuator_force[strongest]):.0f}, {muscle} |"
         )
+    print()
+    print("Where the fixed-base models settle at zero activation, in degrees, after 4 s from their first posture:")
+    print()
+    for name in ("myoarm_r", "myohand_r"):
+        model = build_spec(name).compile()
+        qpos, _ = solve_pose(model, name, MODELS[name][0])
+        data = mujoco.MjData(model)
+        data.qpos[:] = qpos
+        for _ in range(round(4.0 / model.opt.timestep)):
+            mujoco.mj_step(model, data)
+        coupled = {model.eq_obj1id[eq] for eq in range(model.neq) if model.eq_type[eq] == mujoco.mjtEq.mjEQ_JOINT}
+        joints = (j for j in range(model.njnt) if j not in coupled)
+        settled = ", ".join(
+            f"{mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, j)} {np.degrees(qpos[model.jnt_qposadr[j]]):.1f} to "
+            f"{np.degrees(data.qpos[model.jnt_qposadr[j]]):.1f}"
+            for j in joints
+        )
+        print(f"- {name}, peak speed at the end {np.abs(data.qvel).max():.3f} rad/s: {settled}")
 
 
 def main() -> None:
