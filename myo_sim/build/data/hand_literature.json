@@ -1196,7 +1196,7 @@
           "spread_kind": "SD",
           "kind": "in vivo, nerve-block estimate (moment split by mass fractions; a weak check)",
           "source": "ketchum1978",
-          "protocol": "maximal effort, index; model: peak isometric force (PCSA x 86.3 N/cm2, Jacobson 1992)"
+          "protocol": "maximal effort, index; model: peak isometric force (PCSA x the specific tension, Jacobson 1992)"
         }
       ]
     },
@@ -11779,6 +11779,641 @@
         "Middle-finger gap to the palm over 14 cases (FDS and FDP at 0.4-1, with and without intrinsics, wrist neutral and 30 deg extended): mean 12.5 -> 5.3 mm, worst 19.1 -> 10.0 mm. The protocol's one case moves 4.0 -> 5.1 mm: with the digits close, which of two states it reaches depends on which neighbour closes first.",
         "Other values tested: margin -2 / -3 / -5 mm gives a mean of 9.9 / 7.8 / 3.7 mm. Lowering the friction of these pairs to 0.2-0.7 changes the protocol's case by less than 1 mm once the pairs are in place, and narrowing the proximal capsules by 10-20 % leaves it at 8 mm.",
         "Junctura links: the ring-traction share with the links is measured with the fingers' contacts, and side contact starting later lowers EDC4-EDC3 from 1000 to about 400 N/m. The fit's other values barely move. The extrinsic passive fit was not rerun here: it comes with the specific-tension step."
+      ]
+    },
+    {
+      "id": "specific_tension",
+      "title": "One specific tension for the wrist and hand muscles",
+      "summary": "Peak force = PCSA x 166 N/cm2 for every wrist and hand muscle, fitted to the measured strength of an adult man: RIHM index and little-finger abduction (McGee 2020), grip and key pinch (Mathiowetz 1985). Before, the intrinsics had 86.3 N/cm2, OP 176 and the extrinsics an implied 88-248 N/cm2. DI1 heads 50 / 50 (Linscheid 1991). Thumb CMC armature 5e-4 and MP 3e-4 kg m2 for stability at the 2 ms step; the hand's passive fits rerun in the established order. Before = adjacent-digit step.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          76.13,
+          54.81,
+          60.92,
+          61.24
+        ],
+        "tenodesis_pip_rom": 32.0,
+        "tenodesis_index_gap": [
+          33.77,
+          37.43
+        ],
+        "tenodesis_release": [
+          76.3,
+          54.34,
+          57.37,
+          37.7
+        ],
+        "grip_self_selected": 491.31,
+        "grip_settled": 441.78,
+        "grip_shares": [
+          33.0,
+          12.2,
+          14.91,
+          39.9
+        ],
+        "grip_finger_shares_settled": [
+          32.08,
+          23.92,
+          12.84,
+          31.16
+        ],
+        "grip_posture_change": [
+          -29.75,
+          -53.71
+        ],
+        "lateral_pinch": 96.24,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          21.62,
+          18.94,
+          6.92
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "fpl_moment_arms": [
+          4.18,
+          -1.66,
+          7.12
+        ],
+        "apl_moment_arms": [
+          -7.06,
+          -11.3
+        ],
+        "di1_moment_arms": [
+          4.4,
+          8.21
+        ],
+        "index_abduction_moment": 2.03,
+        "adm_moment_arms": [
+          5.18,
+          9.92
+        ],
+        "little_abduction_moment": 1.93,
+        "hypothenar_cupping": [
+          17.01,
+          35.04
+        ],
+        "pi1_moment_arms": [
+          5.97,
+          5.86
+        ],
+        "lum1_moment_arms": [
+          8.22,
+          4.93
+        ],
+        "di2_moment_arms": [
+          5.47,
+          10.65
+        ],
+        "lum2_moment_arms": [
+          11.38,
+          9.96
+        ],
+        "di3_moment_arms": [
+          4.44,
+          8.79
+        ],
+        "pi2_moment_arms": [
+          3.42,
+          8.2
+        ],
+        "lum3_moment_arms": [
+          6.55,
+          7.65
+        ],
+        "di4_moment_arms": [
+          4.91,
+          7.56
+        ],
+        "pi3_moment_arms": [
+          2.43,
+          8.54
+        ],
+        "lum4_moment_arms": [
+          5.45,
+          8.65
+        ],
+        "index_intrinsic_forces": [
+          249.0,
+          124.5,
+          18.3
+        ],
+        "edc_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "eip_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "lumbrical_ip_moment_arms": [
+          0.7,
+          1.8
+        ],
+        "ui_ip_moment_arms": [
+          1.02,
+          1.87
+        ],
+        "orl_share": [
+          23.72,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "intrinsic_plus": [
+          92.13,
+          -1.19,
+          -0.88
+        ],
+        "ip_coupling_slope": [
+          -0.01,
+          0.34,
+          null
+        ],
+        "lumbrical_excursion": [
+          31.93,
+          36.66,
+          36.46,
+          29.56
+        ],
+        "lum1_systemic_mcp_arm": 3.0,
+        "ecrl_moment_arms": [
+          11.66,
+          -23.64
+        ],
+        "ecrb_moment_arms": [
+          14.01,
+          -12.57
+        ],
+        "fcr_moment_arms": [
+          -16.41,
+          -6.41
+        ],
+        "juncturae_ring_traction": [
+          17.71,
+          17.26
+        ],
+        "juncturae_middle_traction": [
+          0.05,
+          -0.03
+        ],
+        "fcu_moment_arms": [
+          14.66,
+          12.25
+        ],
+        "ecu_extension_rotation": [
+          5.71,
+          6.09,
+          0.13
+        ],
+        "ecu_ulnar_rotation": [
+          11.12,
+          17.36,
+          17.82
+        ],
+        "fds5_force": [
+          60.9,
+          28.51
+        ],
+        "forearm_vmax": 10.0,
+        "thumb_cmc_inertia": [
+          5.47,
+          5.36
+        ],
+        "force_velocity_rate": 3.94,
+        "period_two_share": [
+          0.1,
+          1.3,
+          0.8,
+          1.7,
+          1.5
+        ],
+        "free_peak_speed": [
+          12.8,
+          12.43,
+          20.18
+        ],
+        "forearm_axis_radial_head": 1.03,
+        "forearm_axis_ulnar_head": -0.71,
+        "prosup_moment_arms_biceps": [
+          6.31,
+          15.77,
+          -4.74
+        ],
+        "prosup_moment_arms_supinator": [
+          6.77,
+          7.88,
+          5.79
+        ],
+        "prosup_moment_arms_pt": [
+          -4.36,
+          -11.63,
+          6.41
+        ],
+        "prosup_moment_arms_pq": [
+          -2.1,
+          -7.29,
+          -0.99
+        ],
+        "prosup_moment_arms_ecu": [
+          0.19,
+          -1.21,
+          -0.2
+        ],
+        "prosup_moment_arms_fcu": [
+          -5.04,
+          -0.08,
+          5.05
+        ],
+        "head_neck_mass_share": 6.94,
+        "neck_strength": [
+          30.81,
+          46.12,
+          39.69,
+          12.83
+        ],
+        "pect_hip_moment_arms": [
+          23.46,
+          24.96,
+          3.52
+        ],
+        "quad_fem_hip_moment_arms": [
+          8.36,
+          41.03,
+          -35.03
+        ],
+        "gem_hip_moment_arms": [
+          1.4,
+          11.22,
+          -29.42
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": 0.24,
+          "3": -0.24,
+          "4": -0.53,
+          "5": -0.42
+        },
+        "fist_max_penetration": 0.59
+      },
+      "before": {
+        "label": "specific_tension",
+        "id": "adjacent_margin",
+        "values": {
+          "tenodesis_mcp_rom": [
+            78.22,
+            67.03,
+            63.82,
+            60.02
+          ],
+          "tenodesis_pip_rom": 14.61,
+          "tenodesis_index_gap": [
+            34.45,
+            7.82
+          ],
+          "tenodesis_release": [
+            78.49,
+            66.5,
+            55.87,
+            29.92
+          ],
+          "grip_self_selected": 314.45,
+          "grip_settled": 255.18,
+          "grip_shares": [
+            31.92,
+            14.69,
+            21.04,
+            32.35
+          ],
+          "grip_posture_change": [
+            -32.9,
+            -62.16
+          ],
+          "lateral_pinch": 69.82,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "cmc45_arc": [
+            21.0,
+            43.3
+          ],
+          "cmc45_active_flexion": [
+            16.0,
+            33.0
+          ],
+          "cmc45_coupling": 2.06,
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            21.62,
+            18.94,
+            6.92
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "fpl_moment_arms": [
+            4.18,
+            -1.66,
+            7.12
+          ],
+          "apl_moment_arms": [
+            -7.06,
+            -11.3
+          ],
+          "di1_moment_arms": [
+            4.38,
+            8.06
+          ],
+          "index_abduction_moment": 1.04,
+          "adm_moment_arms": [
+            5.18,
+            9.92
+          ],
+          "little_abduction_moment": 1.0,
+          "hypothenar_cupping": [
+            16.11,
+            33.19
+          ],
+          "pi1_moment_arms": [
+            5.97,
+            5.86
+          ],
+          "lum1_moment_arms": [
+            8.22,
+            4.93
+          ],
+          "di2_moment_arms": [
+            5.47,
+            10.65
+          ],
+          "lum2_moment_arms": [
+            11.38,
+            9.96
+          ],
+          "di3_moment_arms": [
+            4.44,
+            8.79
+          ],
+          "pi2_moment_arms": [
+            3.42,
+            8.2
+          ],
+          "lum3_moment_arms": [
+            6.55,
+            7.65
+          ],
+          "di4_moment_arms": [
+            4.91,
+            7.56
+          ],
+          "pi3_moment_arms": [
+            2.43,
+            8.54
+          ],
+          "lum4_moment_arms": [
+            5.45,
+            8.65
+          ],
+          "index_intrinsic_forces": [
+            129.4,
+            64.7,
+            9.5
+          ],
+          "edc_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "eip_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "lumbrical_ip_moment_arms": [
+            0.7,
+            1.8
+          ],
+          "ui_ip_moment_arms": [
+            1.02,
+            1.87
+          ],
+          "orl_share": [
+            23.72,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "intrinsic_plus": [
+            91.05,
+            -0.62,
+            -0.52
+          ],
+          "ip_coupling_slope": [
+            -0.01,
+            0.37,
+            null
+          ],
+          "lumbrical_excursion": [
+            31.93,
+            36.66,
+            36.46,
+            29.56
+          ],
+          "lum1_systemic_mcp_arm": 3.0,
+          "ecrl_moment_arms": [
+            11.66,
+            -23.64
+          ],
+          "ecrb_moment_arms": [
+            14.01,
+            -12.57
+          ],
+          "fcr_moment_arms": [
+            -16.41,
+            -6.41
+          ],
+          "juncturae_ring_traction": [
+            18.5,
+            22.0
+          ],
+          "juncturae_middle_traction": [
+            0.04,
+            -0.01
+          ],
+          "fcu_moment_arms": [
+            14.66,
+            12.25
+          ],
+          "ecu_extension_rotation": [
+            5.71,
+            6.09,
+            0.13
+          ],
+          "ecu_ulnar_rotation": [
+            11.12,
+            17.36,
+            17.82
+          ],
+          "fds5_force": [
+            46.5,
+            27.16
+          ],
+          "forearm_vmax": 10.0,
+          "thumb_cmc_inertia": [
+            2.47,
+            2.36
+          ],
+          "force_velocity_rate": 4.23,
+          "period_two_share": [
+            0.1,
+            1.5,
+            1.9,
+            2.3,
+            3.51
+          ],
+          "free_peak_speed": [
+            14.18,
+            12.21,
+            18.88
+          ],
+          "forearm_axis_radial_head": 1.03,
+          "forearm_axis_ulnar_head": -0.71,
+          "prosup_moment_arms_biceps": [
+            6.31,
+            15.77,
+            -4.74
+          ],
+          "prosup_moment_arms_supinator": [
+            6.77,
+            7.88,
+            5.79
+          ],
+          "prosup_moment_arms_pt": [
+            -4.36,
+            -11.63,
+            6.41
+          ],
+          "prosup_moment_arms_pq": [
+            -2.1,
+            -7.29,
+            -0.99
+          ],
+          "prosup_moment_arms_ecu": [
+            0.19,
+            -1.21,
+            -0.2
+          ],
+          "prosup_moment_arms_fcu": [
+            -5.04,
+            -0.08,
+            5.05
+          ],
+          "head_neck_mass_share": 6.94,
+          "neck_strength": [
+            30.81,
+            46.12,
+            39.69,
+            12.83
+          ],
+          "pect_hip_moment_arms": [
+            23.46,
+            24.96,
+            3.52
+          ],
+          "quad_fem_hip_moment_arms": [
+            8.36,
+            41.03,
+            -35.03
+          ],
+          "gem_hip_moment_arms": [
+            1.4,
+            11.22,
+            -29.42
+          ],
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": 0.22,
+            "3": 5.05,
+            "4": -0.58,
+            "5": -0.35
+          },
+          "fist_max_penetration": 0.6
+        }
+      },
+      "notes": [
+        "Held-out: fitted on the two RIHM moments alone, 156 N/cm2 predicts grip 455 N and key pinch 95 N; fitted on grip and pinch alone, 172 N/cm2 predicts 2.09 and 2.01 N m. Leave-one-out within 1.1 SD.",
+        "166 N/cm2 lies outside the published range (55 N/cm2, O'Brien et al. 2010), and is best read as a correction of the cadaver PCSA: Linscheid et al. 1991's PCSA of the same intrinsics are about 2.5 times Jacobson et al. 1992's.",
+        "Single-muscle estimates disagree: DI1 249 N against 53.4 N (Ketchum et al. 1978) and 93.3 N (Infantolino & Challis 2014); the first lumbrical's 18.3 N matches Ketchum's 19.9 N. Wrist moments of ECRL, ECRB, ECU 8.5 N m against 6.8; of FCR, FCU, PL 10.0 N m against 11.",
+        "Force-velocity rate at activation 1 4.2 -> 3.9 with the new armature; the extrinsic joint-fit error 1053 -> 1237 N cm2 (without the release step 860 -> 1140)."
       ]
     }
   ]

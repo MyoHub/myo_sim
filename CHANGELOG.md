@@ -26,6 +26,13 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 - **New joints:** per hand `cmc4_flexion`, `cmc5_flexion`, `node_LUM1-4`, `node_JT3-5`; in `myofullbody` 24 neck joints after the lumbar joints, so every arm and leg index moves. Build joint lists by name; filter `node_` joints and `lig_`, `node_`, `passive_` tendons from observations.
 - **Dynamics:** `vmax` 10 on the forearm and hand muscles makes hand movement 2-5 times faster for the same activation; rigid-tendon maps change leg and upper-arm fibre lengths and forces. All hand, arm, leg and full-body checkpoints need retraining and parity baselines regenerating. mujoco-warp needs `nconmax` >= 64 for hand models.
 
+- **One specific tension for the wrist and hand muscles (all models with an arm or hand).** See `docs/wiki/hand-function-validation.md` and `hand-literature-comparison.md` (specific-tension step).
+  - **Change:** peak force = PCSA x 166 N/cm2 for ECRL, ECRB, ECU, FCR, FCU, PL, FDS, FDP, EDC, EDM, EIP, EPL, EPB, FPL, APL and every hand intrinsic (`build/data/specific_tension.json`, `scripts/fit_specific_tension.py`). Before, the intrinsics had 86.3 N/cm2, OP 176 N/cm2 and the extrinsics an implied 88-248 N/cm2. DI1 heads 50 / 50 (Linscheid 1991, was 36 / 64). BRD, PT, PQ and SUP are unchanged.
+  - **Calibration:** adult man, all ages: RIHM index and little-finger abduction (McGee 2020), grip and key pinch (Mathiowetz 1985). 166 N/cm2 lies outside the published range (55 N/cm2 O'Brien 2010): read it as a correction of the cadaver PCSA.
+  - **Numerics:** thumb CMC armature 2e-4 -> 5e-4 kg m2, MP 1e-4 -> 3e-4 kg m2. Grip and pinch bands follow the reference subject (Mathiowetz 1985, men).
+  - **Refits:** extrinsic slack lengths and passive scales, thenar passive scales, junctura links, joint springs.
+  - **Downstream (MyoSuite):** all forces in the hand and wrist change, by -33 % to +92 %; the same activation produces different moments. Checkpoints of hand and arm tasks need retraining.
+
 - **Grip share test: whole fingers, settled (protocol, no model change).** `tests/test_hand_grip.py::test_finger_shares_at_the_cached_optimum` compares all three phalanges at 2 s with Kong et al. 2011, whose load cells take the whole finger over a 4 s hold (Amis 1987 also sums the three phalanges). Target and tolerance unchanged; the grip force keeps McFarland's phalanges and 0.15 s. `hand_function.json`, `validate_hand_function.py`. Diagnosis of the shares and the fist: `docs/wiki/hand-function-validation.md`.
 
 - **Contact margin between adjacent digits (all models with a hand).** See `docs/wiki/hand-contacts-and-pads.md` and `hand-literature-comparison.md` (adjacent-digit step).

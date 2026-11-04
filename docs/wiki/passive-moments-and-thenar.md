@@ -253,12 +253,8 @@ passive scales first.
 
 - **Architecture**: Jacobson et al. 1992 Table I (n = 9). Head splits of Jacobson's total
   PCSA: AdP by Stamenkovic et al. 2014 (1.18 : 2.01, n = 10), FPB 0.56 / 0.44 and DI1
-  0.36 / 0.64 by Mirakhorlo et al. 2016 Table 2 (one specimen; Linscheid 1991, n = 8, gives
-  0.62 / 0.38 and 0.50 / 0.50).
-- **Force** = PCSA x 86.3 N/cm2, the specific tension the thenar muscles were given (a
-  least-squares value over MyoHand's OP, EPB and APL; not a literature value). OP keeps
-  MyoHand's 180 N (176.5 N/cm2) until the common intrinsic specific tension is decided
-  (55 N/cm2 is proposed). DI1 rises from RI2's 61.2 N to 129.4 N.
+  0.50 / 0.50 by Linscheid 1991 (n = 8; Mirakhorlo et al. 2016's one specimen gives 0.36 / 0.64); FPB 0.56 / 0.44 by Mirakhorlo et al. 2016 Table 2 (Linscheid: 0.62 / 0.38).
+- **Force** = PCSA x the specific tension of the wrist and hand muscles, 166 N/cm2 since the specific-tension step (`build/data/specific_tension.json`, `hand-function-validation.md`). OP has no exception. DI1 is split 50 / 50 by Linscheid.
 - **Sites**: start points from MUSIC (MIT, `LICENSE-MUSIC.txt`), Mirakhorlo et al. 2016
   (CC BY 4.0, `LICENSE-Mirakhorlo2016.txt`; their attachment points mapped onto MyoHand) and
   MyoHand's own OP sites; straight paths through the sites.

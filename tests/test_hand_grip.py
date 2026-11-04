@@ -94,7 +94,7 @@ def test_grip_table_is_sourced() -> None:
     assert "justification" in table["grip"]["tolerances"]
     assert table["sources"]["mcfarland2023"]["doi"] == "10.1109/TBME.2022.3217722"
     assert table["grip"]["tolerances"]["grip_N"] == pytest.approx(
-        [table["grip"]["targets"]["experiment_N"][0] - table["grip"]["targets"]["experiment_N"][1], 533.5]
+        [table["grip"]["targets"]["experiment_N"][0] - table["grip"]["targets"]["experiment_N"][1], 589.8], abs=0.1
     )
 
 

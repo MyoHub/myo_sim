@@ -10,7 +10,7 @@
 - **FCU:** the pisiform via point ``FCU-P4_r`` (position rewritten) and the hamate-hook via point
   ``FCU-P5_r`` (chain block ``FCU hamate``); FCU's ``lengthrange`` is shifted by its length change at q0,
   so its normalised fibre length at q0 is unchanged.
-- **FDS5:** its force.
+- **FDS5:** its force, PCSA times the specific tension of ``specific_tension.json``.
 - **Wrap sides** (``wrap_sides``): the side sites of EDC2's, EDC4's, EDC5's, EDM's, ECRB's and FCR's wrist
   wraps and of PQ's ulnar wrap, moved from inside their geoms (inside wrap) to outside (ordinary side wrap), and
   where tabled the geom's centre and radius.
@@ -284,12 +284,10 @@ def muscles_with_revisions(text: str, table: dict[str, Any], fcu_length_q0: floa
 
 
 def fds5_force(table: dict[str, Any]) -> None:
-    f = table["fds5"]
-    factors = [f["model_force_N"][m] / f["holzbaur_force_N"][m] for m in ("FDS2", "FDS3", "FDS4")]
-    f["force_N"] = {
-        "value": round(f["holzbaur_force_N"]["FDS5"] * float(np.mean(factors)), 1),
-        "derivation": f"Holzbaur 2005 FDS5 x mean(MyoHand / Holzbaur, FDS2-4) = 16.5 x {np.mean(factors):.3f}",
-    }
+    """FDS5's force: its PCSA times the specific tension of the forearm and hand (``specific_tension.json``)."""
+    tension = json.loads((DATA_DIR / "specific_tension.json").read_text())
+    area, sigma = tension["extrinsic_pcsa"]["FDS5"]["cm2"], tension["value_N_per_cm2"]["value"]
+    table["fds5"]["force_N"] = {"value": round(area * sigma, 1), "derivation": f"{area} cm2 x {sigma} N/cm2"}
 
 
 def write_xml(table: dict[str, Any]) -> None:

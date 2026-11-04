@@ -245,6 +245,43 @@ middle finger's recorded share falls 40.7 (S1) -> 38.0 (S1b) -> 35.0 (S2) -> 34.
 
 **Protocol, as a result.** The share test now takes whole fingers in the settled state (above). The tolerance (1 SD of Kong) and the target are unchanged; the test still fails.
 
+## Strength: one specific tension
+
+**Reference subject.** An adult man, right or dominant hand, mean over all ages: the model's body is an 84 kg man (de Leva's male shares), and these are the largest cohorts with SDs. Women's norms and the mixed cohorts stay as context. The hand-function bands now follow this subject: grip 338.0-589.8 N (Mathiowetz 1985, was 270.7-533.5 N, O'Driscoll 1992), lateral pinch 88.5-129.5 N (was 31.5-72.3 N, Valero-Cuevas 2003); each is the source's mean ± 1 SD. The grip's negative control (flexors at half force below the band) still holds.
+
+**Fit.** Peak force = PCSA x one value for every wrist and hand muscle (Holzbaur 2005's Table 1 for the extrinsics, Jacobson 1992 for the intrinsics, `build/data/specific_tension.json`). Weighted least squares over the four functional targets, at a grid of values with each muscle's passive force kept:
+
+| Target (men) | Mean ± SD | Value it asks for (N/cm2) | Model at 166 N/cm2 |
+| --- | --- | --- | --- |
+| Index MCP abduction, RIHM (McGee 2020) (N m) | 2.71 ± 0.84 | 220 | 2.02 |
+| Little-finger abduction, RIHM (McGee 2020) (N m) | 1.56 ± 0.47 | 134 | 1.94 |
+| Grip (Mathiowetz 1985) (N) | 463.9 ± 125.9 | 160 | 483 |
+| Key pinch (Mathiowetz 1985) (N) | 109.0 ± 20.5 | 180 | 100 |
+
+Result: **166 N/cm2**. The held-out checks: fitted on the two moments alone, 156 N/cm2 predicts grip 455 N and pinch 95 N; fitted on grip and pinch alone, 172 N/cm2 predicts 2.09 and 2.01 N m; leaving out one target at a time, it is predicted within 1.1 SD (index -0.9, little +1.1, grip +0.2, pinch -0.7). The functional targets agree with each other.
+
+Not fitted, at 166 N/cm2:
+
+| Check | Model | Measured | Value it asks for (N/cm2) |
+| --- | --- | --- | --- |
+| Wrist extension, ECRL, ECRB, ECU (N m) | 8.5 | 6.83 (Ketchum 1978, fingers flaccid), 6.5 (Delp 1996) | 134 |
+| Wrist flexion, FCR, FCU, PL (N m) | 10.0 | 11 (Delp 1996, finger activity not stated) | 183 |
+| Wrist flexion, with FDS, FDP, FPL at full activation (N m) | 45.8 | 11, as above | 40 |
+| Wrist extension, with EDC, EDM, EIP, EPL (N m) | 19.5 | 6.5, as above | 55 |
+| Index MCP flexion, DI1, PI1, LUM1 (N m) | 1.33 | 2.24 (McGee 72.0 N x 42.6 mm x Ketchum's 73 % for the intrinsics) | 220 |
+| First dorsal interosseous force (N) | 249 | 53.4 ± 24.7 (Ketchum), 93.3 (Infantolino 2014) | 36-62 |
+| First palmar interosseous force (N) | 124.5 | 27.2 ± 11.5 (Ketchum) | 36 |
+| First lumbrical force (N) | 18.3 | 19.9 ± 8.8 (Ketchum) | 181 |
+| FDP2 / FDS2 force (N) | 252 / 226 | 60.6 / 67.8 (Ketchum) | 40 / 50 |
+
+**Against the published range.** 166 N/cm2 lies outside it: 25 (Loren 1996), 35 (Brand 1981), 45 (Holzbaur 2005, forearm), 55 ± 11 (O'Brien 2010, quadriceps in vivo), 34-100 (Christophy 2012's survey); only Holzbaur's 140 N/cm2 for the arm comes near. Holzbaur already attributes his high values to disuse atrophy in elderly specimens. Two sources here point the same way: Linscheid 1991's PCSA of the same intrinsics are about 2.5 times Jacobson 1992's, so 166 N/cm2 on Jacobson's is about 66 N/cm2 on Linscheid's; Infantolino 2014 find an FDI PCSA in vivo twice the cadaveric. So the value is best read as "physiological tension on a PCSA about three times too small", not as a tissue property. Individual peak forces are then large against the in-vivo single-muscle estimates. Those estimates come from single-joint efforts split by mass fractions and can't be right for grip either way: Ketchum's FDS and FDP sum to 461 N over the four fingers, and on the model's mechanics that gives about 120 N of grip (Chao 1976 and Amis 1987 also find tendon forces well above the external force in grasp).
+
+**Forces.** FCR 408 -> 273 N, FCU 480 -> 475 N, ECRL 337 -> 362 N, ECRB 253 -> 371 N, ECU 193 -> 344 N, FDS3 259 -> 336 N, FDP3 212 -> 302 N, EDC4 109 -> 125 N, FPL 201 -> 285 N, OP 180 -> 169 N, DI1 129 -> 249 N, ADM 77 -> 148 N. BRD, PT, PQ and SUP keep their forces; no target here tests them.
+
+**Numerics.** Force-velocity damping grows with peak force. The thumb needs more armature to stay stable at the 2 ms step: CMC 2e-4 -> 5e-4 kg m2 on both axes, MP 1e-4 -> 3e-4 kg m2 (`passive_joint_moments.json`), the smallest values with no period-2 oscillation over random thumb poses and muscle subsets at full activation. The thumb's CMC inertia is now 6-8 times anthropometric.
+
+**The optimiser.** After the search the wrist-muscle levels are balanced again at their own levels (`balance_iterations`), because ECU and FCU also cross CMC5: the wrist lock at the optimum falls from 0.83 to 0.01 N m.
+
 ## Known issues
 
 - **The 0.15 s grip is not settled.** At fixed activation levels the grip keeps changing well after

@@ -633,10 +633,16 @@ def optimise_grip(gs: GripScene, table: dict[str, Any], balance: bool = True) ->
     key = tuple(np.round(np.clip(min(runs, key=lambda r: r.fun).x, 0, 1), 4))
     objective(np.array(key))
     r = cache[key][1]
-    levels = levels_of(np.array(key), r["wrist_levels"])
+    wrist_levels = r["wrist_levels"]
+    levels = levels_of(np.array(key), wrist_levels)
+    if balance:  # the wrist muscles also cross CMC5 and the thumb: balance again at their own levels
+        for _ in range(p["balance_iterations"]):
+            remaining = np.array(grip_evaluate(gs, levels, table)["wrist_lock_Nm"])
+            wrist_levels, _ = balance_lp(cols @ wrist_levels + remaining)
+            levels = levels_of(np.array(key), wrist_levels)
     final = grip_evaluate(gs, levels, table)
     final["levels"] = {grp: float(v) for grp, v in zip(outer, key)} | {
-        n.removesuffix("_r"): float(v) for n, v in zip(wrist_names, r["wrist_levels"])
+        n.removesuffix("_r"): float(v) for n, v in zip(wrist_names, wrist_levels)
     }
     final["residual_Nm"] = r["residual_Nm"]
     final["evaluations"] = len(cache)

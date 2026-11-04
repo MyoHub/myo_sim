@@ -109,9 +109,8 @@
     }
   },
   "specific_tension": {
-    "value_N_per_cm2": 86.3,
-    "derivation": "least squares F = sigma x PCSA over MyoHand's OP (180 N), EPB (46.0 N) and APL (116.7 N) with Jacobson 1992 PCSA 1.02, 0.47, 1.93 cm2; per muscle 176.5, 97.9, 60.5 N/cm2, so MyoHand implies no single value and the fitted one is a compromise (forces scale linearly with it).",
-    "status": "kept for this table until the common intrinsic specific tension is decided; 55 N/cm2 (O'Brien et al. 2010, Mirakhorlo et al. 2018) is the proposed value"
+    "value_N_per_cm2": 166,
+    "derivation": "one value for the forearm and hand muscles: build/data/specific_tension.json"
   },
   "template_muscle": "APL",
   "path_fit": {
@@ -175,10 +174,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 180.0,
+        "value": 169.3,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "180 N, MyoHand's value, kept until the intrinsic specific tension is decided (1.02 cm2 x 86.3 N/cm2 would give 88.0 N; 180 N implies 176.5 N/cm2)"
+        "derivation": "1.02 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0355,
@@ -272,7 +271,7 @@
         }
       },
       "fpmax": {
-        "value": 0.003392,
+        "value": 0.005604,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -332,10 +331,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 62.0,
+        "value": 119.2,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "1.94 cm2 x 1.18 / 3.19 (Stamenkovic 2014 head ratio) = 0.718 cm2 x 86.3 N/cm2"
+        "derivation": "0.718 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0408,
@@ -455,7 +454,7 @@
         "pcsa_cm2": 0.533
       },
       "fpmax": {
-        "value": 0.8926,
+        "value": 0.4584,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -470,7 +469,7 @@
           "body": "trapezium_r",
           "pos": [
             -0.015138,
-            -0.011605,
+            -0.011604,
             -0.006701
           ],
           "start": {
@@ -486,7 +485,7 @@
           "body": "firstmc_r",
           "pos": [
             0.011426,
-            -0.019752,
+            -0.019751,
             -0.022168
           ],
           "start": {
@@ -503,7 +502,7 @@
           "pos": [
             -0.008489,
             0.001458,
-            -0.014157
+            -0.014156
           ],
           "start": {
             "pos": [
@@ -523,10 +522,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 31.9,
+        "value": 61.4,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.66 cm2 x 0.56 (Mirakhorlo 2016 head ratio, n = 1) = 0.37 cm2 x 86.3 N/cm2"
+        "derivation": "0.37 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0415,
@@ -677,7 +676,7 @@
         }
       },
       "fpmax": {
-        "value": 0.01053,
+        "value": 0.009221,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -744,10 +743,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 58.7,
+        "value": 112.9,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.68 cm2 x 86.3 N/cm2"
+        "derivation": "0.68 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0416,
@@ -871,7 +870,7 @@
         }
       },
       "fpmax": {
-        "value": 0.5376,
+        "value": 0.3496,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -922,10 +921,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 105.5,
+        "value": 202.9,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "1.94 cm2 x 2.01 / 3.19 (Stamenkovic 2014 head ratio) = 1.222 cm2 x 86.3 N/cm2"
+        "derivation": "1.222 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.034,
@@ -1040,7 +1039,7 @@
         "pcsa_cm2": 1.293
       },
       "fpmax": {
-        "value": 0.006374,
+        "value": 0.004115,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1055,7 +1054,7 @@
           "pos": [
             0.001891,
             -0.006796,
-            -0.012734
+            -0.012733
           ],
           "start": {
             "pos": [
@@ -1070,7 +1069,7 @@
           "body": "firstmc_r",
           "pos": [
             0.007937,
-            -0.024286,
+            -0.024288,
             -0.020612
           ],
           "start": {
@@ -1086,7 +1085,7 @@
           "body": "proximal_thumb_r",
           "pos": [
             -0.009592,
-            -0.001939,
+            -0.00194,
             -0.010167
           ],
           "start": {
@@ -1107,10 +1106,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 25.0,
+        "value": 48.1,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.66 cm2 x 0.44 (Mirakhorlo 2016 head ratio, n = 1) = 0.29 cm2 x 86.3 N/cm2"
+        "derivation": "0.29 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0415,
@@ -1155,13 +1154,13 @@
             "mp_flexion_r": [
               9.32,
               9.6,
-              -0.0
+              -0.01
             ]
           }
         }
       },
       "fpmax": {
-        "value": 0.0228,
+        "value": 0.01705,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1192,9 +1191,9 @@
         {
           "body": "secondmc_r",
           "pos": [
-            0.01124,
-            -0.023842,
-            -0.000266
+            0.012359,
+            -0.023513,
+            -0.000304
           ],
           "start": {
             "pos": [
@@ -1208,9 +1207,9 @@
         {
           "body": "2proxph_r",
           "pos": [
-            0.007314,
-            -0.014559,
-            0.002259
+            0.007289,
+            -0.014441,
+            0.002231
           ],
           "start": {
             "pos": [
@@ -1225,15 +1224,15 @@
       "architecture_source": "jacobson1992",
       "jacobson_name": "DI1",
       "pcsa_cm2": {
-        "value": 0.96,
+        "value": 0.75,
         "scales_with": "mass",
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 82.8,
+        "value": 124.5,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "1.5 cm2 x 0.64 (Mirakhorlo 2016 head ratio, n = 1) = 0.96 cm2 x 86.3 N/cm2"
+        "derivation": "0.75 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0317,
@@ -1245,9 +1244,9 @@
         "scales_with": "none"
       },
       "head_split": {
-        "source": "mirakhorlo2016",
-        "fraction": 0.64,
-        "note": "Mirakhorlo 2016 Table 2 (n = 1): MC1 head 0.62, MC2 head 1.11 cm2. Linscheid 1991 (n = 8) gives 0.50 / 0.50."
+        "source": "linscheid1991",
+        "fraction": 0.5,
+        "note": "Linscheid 1991 Table 1 (n = 8): 2.05 and 2.04 cm2; Barry 2018's distributed model also splits 50 / 50. Mirakhorlo 2016 Table 2 (n = 1): MC1 head 0.62, MC2 head 1.11 cm2 (0.36 / 0.64), the earlier split."
       },
       "insertion_note": "Bony (PP2 base): Salsbury 1937 wholly bony in 28/28 hands, Masquelet 1986 (34 hands), Eladoumikdachi 2002 lateral band 2/14.",
       "fit": {
@@ -1272,23 +1271,23 @@
         "result": {
           "site_shift_mm": [
             0.0,
-            5.57,
-            2.1
+            4.5,
+            2.13
           ],
           "fibre_length_measurement_box": [
-            0.726,
-            1.062
+            0.714,
+            1.068
           ],
           "fibre_length_full_range": [
-            0.726,
-            1.062
+            0.714,
+            1.068
           ],
           "model_mm": {
             "mcp2_flexion_r": [
-              -4.38
+              -4.4
             ],
             "mcp2_abduction_r": [
-              -8.06
+              -8.21
             ]
           },
           "start_mm": {
@@ -1299,17 +1298,17 @@
               -10.77
             ]
           },
-          "rms_z": 0.744,
+          "rms_z": 0.793,
           "force_weights": {
-            "DI1d": 0.64,
-            "DI1s": 0.36
+            "DI1d": 0.5,
+            "DI1s": 0.5
           },
           "head_mm": {
             "mcp2_flexion_r": [
-              -4.36
+              -4.39
             ],
             "mcp2_abduction_r": [
-              -7.24
+              -8.02
             ]
           }
         }
@@ -1323,9 +1322,9 @@
         {
           "body": "firstmc_r",
           "pos": [
-            0.000739,
-            -0.008947,
-            -0.001508
+            0.000639,
+            -0.008786,
+            -0.001624
           ],
           "start": {
             "pos": [
@@ -1339,9 +1338,9 @@
         {
           "body": "secondmc_r",
           "pos": [
-            0.014611,
-            -0.023658,
-            -0.000698
+            0.013034,
+            -0.023819,
+            -0.000571
           ],
           "start": {
             "pos": [
@@ -1355,9 +1354,9 @@
         {
           "body": "2proxph_r",
           "pos": [
-            0.007474,
-            -0.014303,
-            0.002037
+            0.007121,
+            -0.014298,
+            0.002257
           ],
           "start": {
             "pos": [
@@ -1372,15 +1371,15 @@
       "architecture_source": "jacobson1992",
       "jacobson_name": "DI1",
       "pcsa_cm2": {
-        "value": 0.54,
+        "value": 0.75,
         "scales_with": "mass",
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 46.6,
+        "value": 124.5,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "1.5 cm2 x 0.36 (Mirakhorlo 2016 head ratio, n = 1) = 0.54 cm2 x 86.3 N/cm2"
+        "derivation": "0.75 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0317,
@@ -1392,8 +1391,8 @@
         "scales_with": "none"
       },
       "head_split": {
-        "source": "mirakhorlo2016",
-        "fraction": 0.36
+        "source": "linscheid1991",
+        "fraction": 0.5
       },
       "fit": {
         "group": "DI1",
@@ -1411,21 +1410,21 @@
         },
         "result": {
           "site_shift_mm": [
-            8.05,
-            2.7,
-            1.93
+            8.12,
+            3.93,
+            2.33
           ],
           "fibre_length_measurement_box": [
-            0.692,
-            1.174
+            0.708,
+            1.162
           ],
           "fibre_length_full_range": [
-            0.68,
-            1.261
+            0.693,
+            1.245
           ],
           "model_mm": {
             "cmc_abduction_r": [
-              3.26
+              3.29
             ]
           },
           "head_mm": {
@@ -1433,7 +1432,7 @@
               -4.41
             ],
             "mcp2_abduction_r": [
-              -9.52
+              -8.39
             ]
           }
         }
@@ -1523,10 +1522,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 64.7,
+        "value": 124.5,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.75 cm2 x 86.3 N/cm2"
+        "derivation": "0.75 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.025,
@@ -1668,10 +1667,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 9.5,
+        "value": 18.3,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.11 cm2 x 86.3 N/cm2"
+        "derivation": "0.11 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0554,
@@ -1851,10 +1850,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 115.6,
+        "value": 222.4,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "1.34 cm2 x 86.3 N/cm2"
+        "derivation": "1.34 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0251,
@@ -2011,10 +2010,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 6.9,
+        "value": 13.3,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.08 cm2 x 86.3 N/cm2"
+        "derivation": "0.08 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0555,
@@ -2208,10 +2207,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 82.0,
+        "value": 157.7,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.95 cm2 x 86.3 N/cm2"
+        "derivation": "0.95 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0258,
@@ -2368,10 +2367,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 56.1,
+        "value": 107.9,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.65 cm2 x 86.3 N/cm2"
+        "derivation": "0.65 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.026,
@@ -2527,10 +2526,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 6.9,
+        "value": 13.3,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.08 cm2 x 86.3 N/cm2"
+        "derivation": "0.08 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0562,
@@ -2724,10 +2723,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 78.5,
+        "value": 151.1,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.91 cm2 x 86.3 N/cm2"
+        "derivation": "0.91 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0258,
@@ -2884,10 +2883,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 52.6,
+        "value": 101.3,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.61 cm2 x 86.3 N/cm2"
+        "derivation": "0.61 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0236,
@@ -2964,7 +2963,7 @@
         }
       },
       "fpmax": {
-        "value": 1.3,
+        "value": 0.9404,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -3048,10 +3047,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 5.2,
+        "value": 10.0,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.06 cm2 x 86.3 N/cm2"
+        "derivation": "0.06 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0501,
@@ -3211,10 +3210,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 76.8,
+        "value": 147.7,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.89 cm2 x 86.3 N/cm2"
+        "derivation": "0.89 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0462,
@@ -3359,10 +3358,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 46.6,
+        "value": 89.6,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "0.54 cm2 x 86.3 N/cm2"
+        "derivation": "0.54 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0406,
@@ -3445,10 +3444,10 @@
         "reference_segment": "hand"
       },
       "force_N": {
-        "value": 94.9,
+        "value": 182.6,
         "scales_with": "mass",
         "reference_segment": "hand",
-        "derivation": "1.1 cm2 x 86.3 N/cm2"
+        "derivation": "1.1 cm2 x 166 N/cm2"
       },
       "optimal_fiber_length_m": {
         "value": 0.0195,
@@ -3502,8 +3501,8 @@
     "fpmax_reference": 1.3,
     "penalty": 1.0,
     "result": {
-      "cost_before": 98872.876,
-      "cost_after": 5906.652
+      "cost_before": 434862.166,
+      "cost_after": 6002.198
     }
   },
   "lumbrical_nodes": {

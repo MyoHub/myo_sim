@@ -294,9 +294,13 @@ def _equilibrium(row: dict) -> float:
 
 
 def test_relaxed_hands_settle_inside_their_ranges() -> None:
-    """Without gravity or excitation, joints whose spring rest angle lies inside the range settle off their limits, the same on both hands."""
+    """Without gravity, excitation or contacts, joints whose spring rest angle lies inside the range settle off their limits, the same on both hands.
+
+    With contacts the hands can differ by static-friction states (test_muscle_passive.py and hand-contacts-and-pads.md cover those).
+    """
     model = myo_sim.load_spec("myofullbody").compile()
     model.opt.gravity[:] = 0.0
+    model.opt.disableflags |= mujoco.mjtDisableBit.mjDSBL_CONTACT
     data = mujoco.MjData(model)
     rows = _applied_rows()
     rng = np.random.default_rng(2)
