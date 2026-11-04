@@ -4,11 +4,11 @@ Reference for agents editing the MjSpec composition pipeline in `myo_sim/build/c
 
 ## Overview
 
-`build_spec(name: str)` is the core entry point. It:
+`build_spec(name: str)` is the core entry point; callers who just want a compiled `MjModel` use `build_spec(name).compile()` or `myo_sim.load_model(name)`. `build_spec`:
 
 1. Look up `name` in `MODEL_REGISTRY` to get a `ModelRegistration`.
 2. Dispatch to the matching builder function via `SPEC_BUILDERS[registration.build_strategy]`.
-3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, and injects contact pairs / sensors as needed. Every builder returns an editable `MjSpec` (not a compiled `MjModel`) — `build_spec()` stops there so callers can edit further before compiling.
+3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, and injects contact pairs / sensors as needed. Every builder returns an editable `MjSpec` (not a compiled `MjModel`) — `build_spec()` stops there so callers can edit further before compiling; `myo_sim.load_model()` compiles it for you.
 
 `myo_sim.load_spec(name)` / `myo_sim.load_model(name)` / `myo_sim.load(name)` (in `myo_sim/__init__.py`) are the package-level entry points most consumers should use instead of calling `compose.py` directly — they also resolve packaged legacy static XMLs and legacy aliases (`hand`, `myoarm`, ...), which `build_spec` does not.
 
@@ -31,6 +31,10 @@ This generates:
 - `myo_sim/models/myofullbody.xml`
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
+
+## Keyframes
+
+`build_spec()` adds no keyframe unless called with `build_kwargs={"standing_keyframe": True}`; `myo_sim.load_model()` passes that for the models with a standing keyframe. See `docs/wiki/standing-keyframe.md`.
 
 ## MODEL_REGISTRY and BuildStrategy
 

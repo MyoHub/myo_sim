@@ -3,6 +3,7 @@ from dataclasses import fields
 from pathlib import Path
 
 import mujoco
+import numpy as np
 
 import myo_sim
 from myo_sim import load_model
@@ -211,3 +212,11 @@ def test_generated_xml_preserves_geom_collision_flags(tmp_path):
 
         assert list(generated_model.geom_contype) == list(built_model.geom_contype), output_path
         assert list(generated_model.geom_conaffinity) == list(built_model.geom_conaffinity), output_path
+
+
+def test_build_kwargs_do_not_leak_into_later_builds():
+    registered = dict(MODEL_REGISTRY["myofullbody"].build_kwargs)
+    default = load_model("myofullbody").body("Full Body").pos.copy()
+    myo_sim.load_spec("myofullbody", build_kwargs={"root_pos": (5.0, 5.0, 5.0)})
+    assert MODEL_REGISTRY["myofullbody"].build_kwargs == registered
+    np.testing.assert_allclose(load_model("myofullbody").body("Full Body").pos, default)

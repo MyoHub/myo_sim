@@ -21,7 +21,7 @@ import os
 import sys
 import time
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from pathlib import Path
 from typing import Any, Literal, Optional
@@ -33,6 +33,7 @@ from myo_sim import MODELS_DIR
 try:
     from .hand import prune_arm_spec_to_hand, prune_rigid_pairs
     from .head import build_head_spec
+    from .keyframes import add_standing_keyframe
     from .utils import (
         MirrorRules,
         add_contact_pairs,
@@ -45,6 +46,7 @@ try:
 except ImportError:
     from hand import prune_arm_spec_to_hand, prune_rigid_pairs
     from head import build_head_spec
+    from keyframes import add_standing_keyframe
     from utils import (
         MirrorRules,
         add_contact_pairs,
@@ -99,7 +101,6 @@ LEGS26_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs26_chain.xml"
 TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
 LEFT_ARM_ATTACH_SITE = "arm_attach_l"
-TORSO_ABDOMEN_ROOT_QUAT = (0.707388, 0, 0, -0.706825)
 ROOT_POS = (0, 0, 1)
 
 LEFT_ARM_STRATEGY_MIRROR_RIGHT = "mirror_right_to_left"
@@ -556,7 +557,6 @@ def build_torso_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     abdomen = _build_torso_abdomen_from_xml(registration)
     root_body = find_body(abdomen, "root")
     root_body.pos = registration.build_kwargs.get("root_pos", ROOT_POS)
-    root_body.quat = TORSO_ABDOMEN_ROOT_QUAT
     return abdomen
 
 
@@ -566,6 +566,7 @@ def build_legs_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
     abdomen.attach(build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    add_contact_pairs(abdomen, LEG_CONTACTS_XML)
 
     return abdomen
 
@@ -711,6 +712,11 @@ def build_spec(
         model_name: Key into MODEL_REGISTRY (e.g. "myotorso_arms").
         build_kwargs: Passed along to builder function.
                       TODO: raise error if unused kwarg supplied.
+                      ``{"standing_keyframe": True}`` adds the ``standing``
+                      keyframe to the spec (myofullbody, myolegs and
+                      myolegs_abdomen). Without it the spec has no keyframe, so
+                      joints can still be deleted from it; see
+                      myo_sim.build.keyframes.
         inertia_floor: Optional numerical-conditioning floor for
             auto/mesh-derived body inertia, applied via the compiler's
             ``boundinertia`` attribute (MuJoCo clamps a body's principal
@@ -735,12 +741,18 @@ def build_spec(
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
 
-    build_kwargs = build_kwargs or {}
-    registration.build_kwargs.update(build_kwargs)
+    if build_kwargs:
+        # A copy: the registry entry is shared by every later build and alias.
+        registration = replace(registration, build_kwargs={**registration.build_kwargs, **build_kwargs})
 
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
+    if registration.build_kwargs.get("disable_finger_collisions", False):
+        # Again on the composed spec: its explicit pairs are only added after the arms are built.
+        disable_finger_collision(spec)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
+    if registration.build_kwargs.get("standing_keyframe", False):
+        add_standing_keyframe(spec, model_name)
     return spec
 
 
