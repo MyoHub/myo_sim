@@ -18,6 +18,8 @@ from myo_sim.build.leg_passive import (
     T_MAX,
     LegMuscles,
     active_fl,
+    apply_start_state,
+    fit_leg_passive,
     geometry,
     load_passive_data,
     model_passive,
@@ -48,6 +50,18 @@ def test_fitted_errors_reproduce(leg):
     recorded = ref["validation"]["rms_Nm"]
     for i, j in enumerate(("hip", "knee", "ankle")):
         assert rms[i] <= recorded[j] + 0.05, (j, rms[i], recorded[j])
+
+
+def test_xml_and_recorded_errors_are_what_the_fit_gives(leg):
+    """Up to the optimiser's tolerance, which moves single fpmax values by a few percent."""
+    model, _, ref, mus = leg
+    result = fit_leg_passive(apply_start_state(myo_sim.load("myolegs")[0]))
+    assert result["rms_Nm_after"] == pytest.approx(ref["validation"]["rms_Nm"], abs=0.02)
+    start = apply_start_state(myo_sim.load("myolegs")[0])
+    for i, (name, row) in enumerate(result["muscles"].items()):
+        assert model.actuator_gainprm[mus.acts[i], 7] == pytest.approx(row["fpmax"], rel=0.1), name
+        fitted_r1 = start.actuator_gainprm[mus.acts[i], 1] - row["slack_shift_L0"]
+        assert model.actuator_gainprm[mus.acts[i], 1] == pytest.approx(fitted_r1, abs=0.02), name
 
 
 def test_active_force_length_at_strength_postures(leg):

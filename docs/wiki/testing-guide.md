@@ -21,8 +21,8 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |
 | `test_leg_muscle_symmetry.py` | Leg muscle moment arms are symmetric between left and right | After `myolegs` XML changes |
 | `test_arm_rigid_conversion.py` | Adopted arm maps match the published MoBL-ARMS rigid-tendon fibre length | After `myoarm_r_muscle.xml` or `scripts/fit_arm_rigid_maps.py` changes |
-| `test_leg_passive.py` | Leg passive moments reproduce the recorded fit to Silder et al. (2007); active-strength constraint; L/R identical | After `myolegs_muscle.xml` or `build/leg_passive.py` changes |
-| `test_leg_rigid_conversion.py` | Adopted leg maps match the published Rajagopal rigid-tendon fibre lengths over the full joint range | After `myolegs_muscle.xml` or `scripts/fit_leg_rigid_maps.py` changes |
+| `test_leg_passive.py` | Leg passive moments reproduce the recorded fit to Silder et al. (2007); active-strength constraint; L/R identical (the XML and the recorded errors are what the fit gives) | After `myolegs_muscle.xml` or `build/leg_passive.py` changes |
+| `test_leg_rigid_conversion.py` | Adopted leg maps match the published Rajagopal rigid-tendon fibre lengths over the full joint range; muscles outside the passive fit hold what the script writes | After `myolegs_muscle.xml` or `scripts/fit_leg_rigid_maps.py` changes |
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_model_stability.py` | Every composed model steps without going non-finite; `myofullbody` survives random-activation rollouts (3 seeds) from qpos0 and from a stored state where BIClong grazed its former elbow wrap | After XML, tendon or wrap changes |
 | `test_tendon_path_continuity.py` | No arm tendon length jumps by more than 1 mm per 1e-3 rad over the elbow range plus 0.13 rad past each limit, for 9 forearm rotations | After arm tendon, wrap or sidesite changes |

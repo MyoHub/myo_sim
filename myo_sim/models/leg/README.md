@@ -37,7 +37,7 @@ Passive force is calibrated to measured passive joint moments (`scripts/fit_leg_
 (20 young adults), with the medial gastrocnemius kept at the ultrasound fascicle lengths of
 [Narici et al. 1996](https://doi.org/10.1113/jphysiol.1996.sp021685) and each muscle at least half its active force at the
 angle of maximal voluntary strength of [Anderson et al. 2007](https://doi.org/10.1016/j.jbiomech.2007.03.022)
-(`tests/test_leg_passive.py`). RMS error against Silder et al.: hip 11.0 N m, knee 8.4 N m, ankle 2.1 N m.
+(`tests/test_leg_passive.py`). RMS error against Silder et al.: hip 10.8 N m, knee 8.2 N m, ankle 2.1 N m.
 
 ## Known limitations
 
@@ -66,6 +66,8 @@ angle of maximal voluntary strength of [Anderson et al. 2007](https://doi.org/10
 - Contact geometries based on the [Yeadon measurement method](https://yeadon.readthedocs.io/en/latest/measurements.html#measurements), slightly adjusted to fit the MuJoCo MSK model. Contact properties were optimized for contact-rich behaviors.
 
 ## Changelog
+
+**2026-11-04** — Knee hinges at Rajagopal's walker_knee frame, then the rigid-tendon maps and the passive fit rerun on them from their starting point. Knee moment arms against OpenSim 6.19 -> 0.75 mm rms; passive error hip / knee / ankle 11.0 / 8.38 / 2.06 -> 10.83 / 8.22 / 2.11 N m. See `CHANGELOG.md`.
 
 **2026-11-03** — Pectineus, quadratus femoris and gemelli part of the leg (+6 actuators), appended after the other muscles; moment arms within 2-11 mm of Gait2392, step time within 2 %.
 

@@ -12,6 +12,7 @@ import numpy as np
 import pytest
 
 import myo_sim
+from myo_sim.build.leg_passive import GROUPS
 from myo_sim.build.rigid_conversion import (
     REGIONS,
     actuator_lengths,
@@ -20,6 +21,7 @@ from myo_sim.build.rigid_conversion import (
     joint_sweep_postures,
     load_leg_reference,
     mujoco_fiber_length,
+    region_rigid_maps,
     rigid_equivalent_fiber_length,
     sample_postures,
 )
@@ -78,6 +80,16 @@ def test_semimem_standing_fiber_length_near_reference(leg):
     a = _act(model, "semimem_r")
     ln = float(mujoco_fiber_length(model, a, data.actuator_length[a]))
     assert 0.6 < ln < 1.3, ln  # Rajagopal2016 (OpenSim, passive): 0.95; the passive calibration shifts it by <= 0.15
+
+
+def test_muscles_outside_the_passive_fit_hold_the_script_maps(leg):
+    model, ref, _ = leg
+    fitted = {n + "_r" for group in GROUPS.values() for n in group}
+    for name, (r0, r1, l0, l1) in region_rigid_maps(model, "leg").items():
+        if name not in fitted:
+            a = _act(model, name)
+            assert model.actuator_gainprm[a, :2] == pytest.approx([r0, r1], abs=1e-5), name
+            assert model.actuator_lengthrange[a] == pytest.approx([l0, l1], abs=1e-5), name
 
 
 def test_lengthrange_covers_single_joint_sweeps(leg):

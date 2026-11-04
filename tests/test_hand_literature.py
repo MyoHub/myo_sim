@@ -88,6 +88,8 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
         ("neck_strength", 0.1),
         ("fullbody_total_mass", 0.01),
         ("femur_origin_opensim_distance", 0.01),
+        ("leg_passive_rms_silder", 0.05),
+        ("knee_moment_arm_opensim_rms", 0.01),
         *((f"{m}_hip_moment_arms", 0.05) for m in ("pect", "quad_fem", "gem")),
         ("ecu_extension_rotation", 0.05),
         ("ecu_ulnar_rotation", 0.05),

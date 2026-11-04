@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Leg fits rerun on the new knee
+Changed: `myo_sim/models/leg/assets/myolegs_muscle.xml`, `myo_sim/build/leg_passive.py`, `myo_sim/build/data/leg_passive_start.json`, `myo_sim/build/references.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_leg_passive.py`, `tests/test_leg_rigid_conversion.py`, `tests/test_hand_literature.py`, `docs/wiki/model-authoring.md`, `docs/wiki/hand-literature-comparison.md`, `CHANGELOG.md`, `myo_sim/models/leg/README.md`
+Why: #153 moved the knee, so the recorded passive errors and `vasint_r`'s length range no longer held. The fit used its own earlier result as its start, so it now has a start table and a rerun gives the same XML; new tests hold the XML and the recorded errors to what the scripts give.
+
 ## 2026-11-04 — Body mass, knee and head share in the literature comparison
 Changed: `scripts/hand_literature_comparison.py`, `myo_sim/build/references.py`, `myo_sim/build/data/hand_literature.json`, `docs/wiki/hand-literature-comparison.md`, `docs/validation/neck/README.md`, `tests/test_hand_literature.py`, `CHANGELOG.md`
 Why: Every model change gets its comparison. The new step puts total mass and the femur origin next to the Rajagopal OpenSim model and the head share next to de Leva; the test holds them to the current model. Grip, pinch and tenodesis did not move.

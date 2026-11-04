@@ -95,6 +95,10 @@ uv run python scripts/fit_arm_rigid_maps.py --write
 uv run pytest tests/test_leg_rigid_conversion.py tests/test_leg_passive.py tests/test_arm_rigid_conversion.py
 ```
 
+The passive fit starts from the rigid-tendon maps and `build/data/leg_passive_start.json`, so a rerun does not build on its
+own earlier result; copy the errors it prints to `SILDER2007["validation"]`. Rerun all of it after a change to the leg's
+joints or paths.
+
 Cited table values live in `myo_sim/build/references.py`. Fit grids and optimizer output stay in the
 fit scripts; `load()` does not read them. Adopt a muscle when fibre-length RMSE vs the published
 rigid-tendon length falls and isometric force RMSE does not rise by more than 2 % of \(F_0\).

@@ -260,6 +260,11 @@
       "short": "Rajagopal et al. 2016",
       "citation": "Rajagopal A, Dembia CL, DeMers MS, Delp DD, Hicks JL, Delp SL. Full-body musculoskeletal model for muscle-driven simulation of human gait. IEEE Trans Biomed Eng 63(10):2068-2079, 2016.",
       "doi": "10.1109/TBME.2016.2586891"
+    },
+    "silder2007": {
+      "short": "Silder et al. 2007",
+      "citation": "Silder A, Whittington B, Heiderscheit B, Thelen DG. Identification of passive elastic joint moment-angle relationships in the lower extremity. J Biomech 40(12):2628-2635, 2007.",
+      "doi": "10.1016/j.jbiomech.2006.12.017"
     }
   },
   "quantities": {
@@ -1797,6 +1802,30 @@
           "kind": "model, walker_knee",
           "source": "rajagopal2016",
           "protocol": "OpenSim 4.6, Rajagopal2016.osim, knee angle set and couplings enforced; model: myofullbody, right knee, couplings on their polynomials"
+        }
+      ]
+    },
+    "knee_moment_arm_opensim_rms": {
+      "label": "Knee moment arms of the 13 muscles crossing the knee, RMS difference from OpenSim over 0-120 deg, mean / largest",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": "0 (the reference)",
+          "kind": "model, walker_knee",
+          "source": "rajagopal2016",
+          "protocol": "OpenSim 4.6, Rajagopal2016.osim, hip and ankle at 0, every 15 deg; model: myolegs, dL/dq with the couplings"
+        }
+      ]
+    },
+    "leg_passive_rms_silder": {
+      "label": "Passive joint moments, RMS error against the mean model, hip / knee / ankle",
+      "unit": "N m",
+      "literature": [
+        {
+          "value": "0 (the fit target)",
+          "kind": "in vivo, 20 young adults, mean model",
+          "source": "silder2007",
+          "protocol": "Table 4 at the postures of the trials, moments below 40 N m; model: myolegs, zero activation"
         }
       ]
     },
@@ -13374,6 +13403,15 @@
           0.0,
           0.0
         ],
+        "leg_passive_rms_silder": [
+          10.83,
+          8.22,
+          2.11
+        ],
+        "knee_moment_arm_opensim_rms": [
+          0.75,
+          2.58
+        ],
         "pect_hip_moment_arms": [
           23.46,
           24.96,
@@ -13732,7 +13770,9 @@
         "Femur origin seen from the tibia, distance from OpenSim at knee 0 / 30 / 90 / 120 deg: 0.00 / 4.80 / 12.75 / 15.53 mm before, 0.000 / 0.000 / 0.000 / 0.003 mm now, on values measured with OpenSim 4.6 on Rajagopal2016.osim. tests/test_knee_joint_centre.py holds its own stored values, within 0.05 mm.",
         "Largest excess of a coupled knee coordinate over its range along the coupling: 2.5e-4 rad (knee_angle_rotation2_r at 46 deg) before, none now.",
         "Hand: grip 469.7 N, settled 412.2 N, lateral pinch 96.2 N, unchanged: the muscle forces do not depend on body mass.",
-        "Junctura traction of myoarm_r: ring 17.85 / 17.86 -> 17.48 / 17.86 deg, though no hand parameter changed and the bodies whose mass changed are fixed to the world in that model. It moved with the body masses alone (no change with the knee merge); not explained further, so read 0.4 deg as the sensitivity of this measure."
+        "Junctura traction of myoarm_r: ring 17.85 / 17.86 -> 17.48 / 17.86 deg, though no hand parameter changed and the bodies whose mass changed are fixed to the world in that model. It moved with the body masses alone (no change with the knee merge); not explained further, so read 0.4 deg as the sensitivity of this measure.",
+        "Leg fits rerun on the new knee from the pre-fit state (scripts/fit_leg_rigid_maps.py, scripts/fit_leg_passive.py). Passive moments against Silder et al. 2007, hip / knee / ankle: 11.0 / 8.38 / 2.06 -> 10.83 / 8.22 / 2.11 N m rms, so the ankle is 0.05 N m worse, hip and knee better. Fibre length against the rigid-tendon reference, 24 maps: median 0.0014 -> 0.0012, largest (semimem) 0.116 -> 0.087. Worse: gaslat 0.011 -> 0.019. Active force-length factor against the reference, mean over the 24 maps 0.046 of F0 before and after; addmagDist, gaslat, piri and semimem rise by 0.008-0.019, all under the 2 % adoption rule, and bfsh, glmed1, glmed2, semiten and vasmed fall by 0.005-0.031.",
+        "Knee moment arms against OpenSim, RMS over 0-120 deg, mean / largest of 13 muscles: 6.19 / 9.33 mm before the knee step, 0.75 / 2.58 mm now; each muscle is closer. Moment arms do not depend on the fits."
       ]
     }
   ]

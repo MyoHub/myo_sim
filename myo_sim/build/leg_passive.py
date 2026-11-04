@@ -28,7 +28,9 @@ Usage::
     uv run python scripts/fit_leg_passive.py          # fit and print
     uv run python scripts/fit_leg_passive.py --write  # rewrite range/lengthrange and fpmax (both sides)
 
-Run after ``scripts/fit_leg_rigid_maps.py --write``: the shift is applied on top of the converted maps.
+The fit starts from the rigid-tendon maps and ``data/leg_passive_start.json``, not from the XML's earlier fit, so a rerun gives the
+same values whenever the geometry is the same. ``SILDER2007["validation"]`` records the errors it prints. Run
+``scripts/fit_leg_rigid_maps.py --write`` first, for the adopted muscles this fit does not touch.
 """
 
 from __future__ import annotations
@@ -42,8 +44,9 @@ import mujoco
 import numpy as np
 
 from myo_sim.build.references import SILDER2007
-from myo_sim.build.rigid_conversion import LEG_MUSCLE_XML, effective_moment_arms, sample_postures
+from myo_sim.build.rigid_conversion import LEG_MUSCLE_XML, effective_moment_arms, region_rigid_maps, sample_postures
 
+START_PATH = Path(__file__).with_name("data") / "leg_passive_start.json"
 T_MAX = 40.0  # N m; the exponential fits are not used beyond this
 EXCESS_WEIGHT = 10.0
 MAX_SHIFT = 0.15  # |slack shift| / L0
@@ -215,8 +218,25 @@ class LegMuscles:
         return -np.einsum("nm,nmj->nj", force, arms)  # qfrc = dL/dq * (-tension)
 
 
+def apply_start_state(model: mujoco.MjModel) -> mujoco.MjModel:
+    """Put the fit's starting point on a compiled ``myolegs``, in place: rigid-tendon maps and the start table, both sides."""
+    start = json.loads(START_PATH.read_text())["muscles"]
+    maps = region_rigid_maps(model, "leg")
+    for right in sorted(set(maps) | set(start)):
+        row = start.get(right, {})
+        r0, r1, l0, l1 = maps[right] if right in maps else (*row["range"], *row["lengthrange"])
+        for name in (right, right[:-2] + "_l"):
+            a = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, name)
+            model.actuator_lengthrange[a] = l0, l1
+            for prm in (model.actuator_gainprm, model.actuator_biasprm):
+                prm[a, :2] = r0, r1
+                if "fpmax" in row:
+                    prm[a, 7] = row["fpmax"]
+    return model
+
+
 def fit_leg_passive(model: mujoco.MjModel) -> dict:
-    """Fit slack shifts (L0) and fpmax per right-leg muscle; returns the result with errors before and after."""
+    """Fit slack shifts (L0) and fpmax per right-leg muscle of a model at ``apply_start_state``; returns the result with errors."""
     from scipy.optimize import least_squares
 
     ref = load_passive_data()
@@ -345,7 +365,7 @@ def main() -> None:
     args = ap.parse_args()
     import myo_sim
 
-    model, _ = myo_sim.load("myolegs")
+    model = apply_start_state(myo_sim.load("myolegs")[0])
     result = fit_leg_passive(model)
     print(json.dumps({k: v for k, v in result.items() if k != "muscles"}))
     for n, r in result["muscles"].items():

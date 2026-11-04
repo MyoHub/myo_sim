@@ -615,6 +615,30 @@ def body_against_rajagopal() -> dict[str, Any]:
     return {"fullbody_total_mass": float(model.body_mass.sum()), "femur_origin_opensim_distance": errors}
 
 
+def leg_against_references() -> dict[str, Any]:
+    """Passive moment error against Silder et al. 2007, and knee moment arms against OpenSim (mean and largest RMS) on ``myolegs``."""
+    import myo_sim
+    from myo_sim.build.leg_passive import T_MAX, load_passive_data, model_passive, silder_moments, silder_postures
+    from myo_sim.build.references import RAJAGOPAL2016_BODY
+    from myo_sim.build.rigid_conversion import effective_moment_arms
+
+    model = myo_sim.load_model("myolegs")
+    angles = silder_postures()
+    target = silder_moments(load_passive_data()["params"], angles[:, 0], angles[:, 1], angles[:, 2])
+    error = np.where(np.abs(target) < T_MAX, model_passive(model, angles) - target, np.nan)
+    table = RAJAGOPAL2016_BODY["knee_moment_arms_mm"]
+    acts = [model.actuator(name).id for name in table]
+    arms = [
+        effective_moment_arms(model, {"knee_angle_r": np.radians(deg)}, ["knee_angle_r"], acts)[1][:, 0]
+        for deg in RAJAGOPAL2016_BODY["knee_moment_arm_angles_deg"]
+    ]
+    arm_rms = np.sqrt(np.mean((1e3 * np.array(arms) - np.array(list(table.values())).T) ** 2, axis=0))
+    return {
+        "leg_passive_rms_silder": np.sqrt(np.nanmean(error**2, axis=0)).tolist(),
+        "knee_moment_arm_opensim_rms": [float(arm_rms.mean()), float(arm_rms.max())],
+    }
+
+
 def deep_hip() -> dict[str, Any]:
     """Moment arms of the deep hip muscles of ``myolegs`` at neutral: flexion / adduction / rotation (mm, dL/dq, sign of Gait2392)."""
     import myo_sim
@@ -654,6 +678,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= forearm_rotation(model)
     out |= head_and_neck()
     out |= body_against_rajagopal()
+    out |= leg_against_references()
     out |= deep_hip()
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
