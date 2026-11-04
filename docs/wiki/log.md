@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Hand contact pairs from the active fist
+Changed: `myo_sim/build/data/hand_contact_pairs.json`, `scripts/generate_hand_contacts.py` (group label per `selection.always` entry), `myo_sim/models/contacts/myohand_self_contacts.xml`, `hand-contacts-and-pads.md`, `arm/README_hand.md`, `hand_literature.json`, `hand-literature-comparison.md`, `CHANGELOG.md`
+Why: The static scan cannot see postures past a soft joint limit, so the ring fingertip entered its own metacarpal skin in the active fist and held the middle finger back; five pairs close this.
+
 ## 2026-11-04 — Wrap geoms without mass
 Changed: `myo_sim/models/arm/assets/myoarm_r_assets.xml`, `myoarm_r_chain.xml` (lunate inertial), `tests/test_mass_convention.py`, `tests/test_chest_ownership.py`, `hand_literature.json`, `hand-literature-comparison.md`, `CHANGELOG.md`
 Why: Arm wrap geoms carried mass through the default density, so resizing a wrap changed the lunate and the body total; they are massless now and the lunate keeps its `dev` mass, which returns `myofullbody` to 84.00 kg.

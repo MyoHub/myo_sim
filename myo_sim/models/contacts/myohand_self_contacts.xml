@@ -149,6 +149,11 @@
         <pair name="midph2_coll_r__palm_pad_r" geom1="midph2_coll_r" geom2="palm_pad_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
         <pair name="midph3_coll_r__palm_pad_r" geom1="midph3_coll_r" geom2="palm_pad_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
         <pair name="midph4_coll_r__palm_pad_r" geom1="midph4_coll_r" geom2="palm_pad_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="4mcski_r__distph4_coll_r" geom1="4mcski_r" geom2="distph4_coll_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="5mcskin_r__distph4_coll_r" geom1="5mcskin_r" geom2="distph4_coll_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="4mcski_r__distph4_coll_2_r" geom1="4mcski_r" geom2="distph4_coll_2_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="distph3_coll_r__proxph4_coll_r" geom1="distph3_coll_r" geom2="proxph4_coll_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="distph3_coll_2_r__proxph4_coll_r" geom1="distph3_coll_2_r" geom2="proxph4_coll_r" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
         <!-- left hand -->
         <pair name="proxph3_coll_l__proxph4_coll_l" geom1="proxph3_coll_l" geom2="proxph4_coll_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2" margin="-0.002"/>
         <pair name="proxph2_coll_l__proxph3_coll_l" geom1="proxph2_coll_l" geom2="proxph3_coll_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
@@ -294,6 +299,11 @@
         <pair name="midph2_coll_l__palm_pad_l" geom1="midph2_coll_l" geom2="palm_pad_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
         <pair name="midph3_coll_l__palm_pad_l" geom1="midph3_coll_l" geom2="palm_pad_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
         <pair name="midph4_coll_l__palm_pad_l" geom1="midph4_coll_l" geom2="palm_pad_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="4mcski_l__distph4_coll_l" geom1="4mcski_l" geom2="distph4_coll_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="5mcskin_l__distph4_coll_l" geom1="5mcskin_l" geom2="distph4_coll_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="4mcski_l__distph4_coll_2_l" geom1="4mcski_l" geom2="distph4_coll_2_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="distph3_coll_l__proxph4_coll_l" geom1="distph3_coll_l" geom2="proxph4_coll_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="distph3_coll_2_l__proxph4_coll_l" geom1="distph3_coll_2_l" geom2="proxph4_coll_l" condim="3" friction="1 1 0.005 0.0001 0.0001" solref="0.004 1" solimp="0.95 0.99 0.001 0.5 2"/>
         <!-- END generated -->
     </contact>
 </mujocoinclude>

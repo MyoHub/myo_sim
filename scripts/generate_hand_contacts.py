@@ -19,7 +19,8 @@ penetration (MuJoCo clamps ``margin - gap`` at zero, so a ``gap`` cannot do this
 ``min_pen_frac``, or when it is functional: thumb pulp against a fingertip pad (pinch), and any finger or
 thumb geom against a palm geom that it penetrates somewhere in the scan or comes within
 ``fist_reach_mm`` of in the fist, and always the pairs listed under ``selection.always`` (the
-fingertips and the thumb against the palm and hypothenar pads).
+fingertips and the thumb against the palm and hypothenar pads, and the pairs the active fist showed to be
+needed where a joint passes its soft limit under load, which a scan inside the ranges cannot see).
 """
 
 from __future__ import annotations
@@ -131,9 +132,14 @@ def scan(table: dict[str, Any]) -> dict[str, dict[str, float]]:
 def select(table: dict[str, Any], stats: dict[str, dict[str, float]]) -> list[dict[str, Any]]:
     rules, roles = table["selection"], table["roles"]
     existing = {" ".join(sorted(p)) for p in table["existing_pairs"]}
-    functional = {" ".join(sorted((a, b))) for group in rules["always"] for a in group["geoms"] for b in group["against"]}
+    functional = {
+        " ".join(sorted((a, b))): group.get("group", "fingers_and_thumb_vs_palm")
+        for group in rules["always"]
+        for a in group["geoms"]
+        for b in group["against"]
+    }
     pairs = []
-    for key in functional - set(stats):  # pairs the scan never brought close: keep them all the same
+    for key in set(functional) - set(stats):  # pairs the scan never brought close: keep them all the same
         stats[key] = {"pen_frac": 0.0, "min_mm": None, "rest_mm": None, "fist_mm": None}
     for key, s in sorted(stats.items(), key=lambda kv: (-kv[1]["pen_frac"], kv[0])):
         a, b = key.split()
@@ -147,7 +153,7 @@ def select(table: dict[str, Any], stats: dict[str, dict[str, float]]) -> list[di
         elif kinds == {"thumb_pad", "finger_pad"}:
             group = "thumb_pad_vs_finger_pads"
         elif key in functional:
-            group = "fingers_and_thumb_vs_palm"
+            group = functional[key]
         elif (
             "palm" in kinds
             and kinds & {"finger", "finger_pad", "thumb", "thumb_pad"}

@@ -68,6 +68,38 @@
           "hypothenar_pad_r"
         ],
         "note": "thumb against the palm and hypothenar pads (opposition)"
+      },
+      {
+        "geoms": [
+          "distph4_coll_r",
+          "distph4_coll_2_r"
+        ],
+        "against": [
+          "4mcski_r"
+        ],
+        "group": "active_fist",
+        "note": "ring fingertip against its own metacarpal skin: 7-8 mm in the active fist (the static scan misses it: under full flexor force the MCP passes its range by up to 20 deg in the joint's soft limit)"
+      },
+      {
+        "geoms": [
+          "distph4_coll_r"
+        ],
+        "against": [
+          "5mcskin_r"
+        ],
+        "group": "active_fist",
+        "note": "ring fingertip against the little finger's metacarpal skin: 5 mm in the active fist once the ring finger stops on its own"
+      },
+      {
+        "geoms": [
+          "distph3_coll_r",
+          "distph3_coll_2_r"
+        ],
+        "against": [
+          "proxph4_coll_r"
+        ],
+        "group": "active_fist",
+        "note": "middle fingertip against the ring finger's proximal phalanx: 12 mm in the active fist once the ring finger stops on its metacarpal"
       }
     ]
   },
@@ -1602,6 +1634,56 @@
       "geom1": "midph4_coll_r",
       "geom2": "palm_pad_r",
       "group": "fingers_and_thumb_vs_palm",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "4mcski_r",
+      "geom2": "distph4_coll_r",
+      "group": "active_fist",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "5mcskin_r",
+      "geom2": "distph4_coll_r",
+      "group": "active_fist",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "4mcski_r",
+      "geom2": "distph4_coll_2_r",
+      "group": "active_fist",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_r",
+      "geom2": "proxph4_coll_r",
+      "group": "active_fist",
+      "pen_frac": 0.0,
+      "min_mm": null,
+      "rest_mm": null,
+      "fist_mm": null,
+      "condim": 3
+    },
+    {
+      "geom1": "distph3_coll_2_r",
+      "geom2": "proxph4_coll_r",
+      "group": "active_fist",
       "pen_frac": 0.0,
       "min_mm": null,
       "rest_mm": null,

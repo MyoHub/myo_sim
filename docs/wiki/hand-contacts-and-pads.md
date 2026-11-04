@@ -84,9 +84,21 @@ collision geoms on bodies that are neither the same nor parent and child.
 - always: the fingertip pads, distal and middle phalanges of digits 2-5, and the distal and proximal
   thumb against the palm and hypothenar pads.
 
-Result: **144 pairs per hand** (288 for two hands): the 13 existing, 47 finger-finger, 30 thumb-finger,
-4 pulp-to-pulp and 50 against the palm. The earlier 71-pair proposal was made with the dorsal pads; with
+Result of the scan: 144 pairs per hand: the 13 existing, 47 finger-finger, 30 thumb-finger,
+4 pulp-to-pulp and 50 against the palm. Five more come from the active fist (below), so **149 pairs per
+hand** (298 for two hands). The earlier 71-pair proposal was made with the dorsal pads; with
 the pads palmar the scan selects 81 new pairs that do not involve the palm, against the proposal's 59.
+
+**Active fist pairs.** The scan stays inside the joint ranges, but under full flexor force the MCP joints
+pass their soft limits by up to 20 deg. The ring fingertip then went 7-8 mm into its own metacarpal skin, a
+pair the scan had never brought close, and the over-flexed ring finger held the middle finger back. Pairs
+listed under `selection.always` (group `active_fist`): the ring fingertip capsule and pad against `4mcski_r`,
+its capsule against `5mcskin_r` (5 mm once it stops on its own metacarpal), and the middle fingertip capsule
+and pad against `proxph4_coll_r` (12 mm once the ring finger stops). Fingertip to palm in the fist, digits 2-5:
+-0.8 / 12.9 / -7.1 / -0.3 -> -0.4 / 4.0 / -0.4 / -0.3 mm; the deepest paired penetration stays 0.7 mm. Unpaired
+overlaps left in active fists (wrist neutral, 30 deg flexed or extended, with or without the intrinsics) are at
+most 3.3 mm (the little finger's distal phalanx on its own proximal phalanx, which folds within one soft-tissue
+mass; ring against index and middle phalanges up to 3.0 mm).
 
 **Rest overlaps.** `proxph3_coll_r`–`proxph4_coll_r` (−1.5 mm) and `proxph4_coll_r`–`5proxph_coll_r`
 (−0.2 mm) overlap at q = 0. They keep their geometry and get `margin = -0.002`: the contact starts only
@@ -104,7 +116,7 @@ keeps stable at the 2 ms step, as for the grip dynamometer (`hand_function.json`
 | Check | Result |
 | --- | --- |
 | Active hand contacts at q = 0 (`myohand_r`, `myohands`, `myoarm_r`, `myoarms`, `myofullbody`) | none |
-| Active fist (FDS, FDP at 1, 1 s, wrist neutral, thumb locked) | penetration beyond each pair's margin ≤ 0.74 mm; digits 2, 4, 5 touch the palm (within 0.8 mm); digit 3 stops 14.4 mm short (18.5 mm before S1b), held by its neighbours |
+| Active fist (FDS, FDP at 1, 1 s, wrist neutral, thumb locked) | penetration beyond each pair's margin ≤ 0.7 mm; digits 2, 4, 5 touch the palm (within 0.4 mm); digit 3 stops 4.0 mm short (18.5 mm before S1b, 12.9 mm before the active fist pairs), held by its neighbours |
 | 20 random-activation rollouts of `myohand_r` (1.5 s each) | deepest paired penetration beyond the margin 1.6 mm; up to 9 contacts; finite |
 | Unpaired penetrations in those rollouts | thumb proximal phalanx against the little finger's distal and middle phalanges (up to 14 mm: thumb-to-little opposition, below the 2 % scan threshold), the thenar pad against the MC2 capsule and the palm pad against the ring proximal phalanx near the MCP joint (pad-to-palm overlaps of one soft-tissue mass) |
 | CPU vs mujoco-warp, states from random-activation rollouts | same contacts, distances within 0.008 mm |
