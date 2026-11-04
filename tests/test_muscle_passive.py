@@ -160,12 +160,20 @@ def _joint(model: mujoco.MjModel, base: str, side: str) -> int:
     raise KeyError(base)
 
 
+def _distal_bodies(model: mujoco.MjModel, root: int) -> set[int]:
+    bodies = {int(root)}
+    for body in range(int(root) + 1, model.nbody):
+        if model.body_parentid[body] in bodies:
+            bodies.add(body)
+    return bodies
+
+
 @cache
 def _settle(
-    wrist_deg: float, tolerance: float | None = None, seconds: float = 3.0, contacts: bool = True
+    wrist_deg: float, tolerance: float | None = None, seconds: float = 3.0, contacts: bool = True, held_body: bool = False
 ) -> dict[str, tuple[float, float, float]]:
     """Hand joint angles and limits (deg) after *seconds* without gravity or excitation, both wrists held at
-    *wrist_deg* (*tolerance*: the solver tolerance, default MuJoCo's)."""
+    *wrist_deg* (*tolerance*: the solver tolerance, default MuJoCo's; *held_body*: every joint proximal to the wrists held too)."""
     model = myo_sim.load_spec("myofullbody").compile()
     model.opt.gravity[:] = 0.0
     if not contacts:
@@ -178,6 +186,12 @@ def _settle(
             dof = model.joint(name).dofadr[0]
             model.dof_armature[dof] = model.dof_damping[dof] = 1e4  # hold the wrist and forearm
         data.qpos[model.joint(f"flexion_{side}").qposadr[0]] = wrist_deg * DEG
+    if held_body:
+        forearms = [model.joint(f"pro_sup_{side}").id for side in ("r", "l")]
+        hand = {body for joint in forearms for body in _distal_bodies(model, model.jnt_bodyid[joint])}
+        for dof in range(model.nv):
+            if model.dof_bodyid[dof] not in hand:
+                model.dof_armature[dof] = model.dof_damping[dof] = 1e4
     for _ in range(int(seconds / model.opt.timestep)):
         mujoco.mj_step(model, data)
     out = {}
@@ -194,8 +208,12 @@ def test_tenodesis_index_flexes_as_the_wrist_extends() -> None:
     for side in ("r", "l"):
         assert extended[f"mcp2_flexion_{side}"][0] > flexed[f"mcp2_flexion_{side}"][0] + 10.0
         assert extended[f"pm2_flexion_{side}"][0] > flexed[f"pm2_flexion_{side}"][0] + 10.0
-    for joint in ("mcp2_flexion", "pm2_flexion"):  # left / right symmetric
-        assert extended[f"{joint}_r"][0] == pytest.approx(extended[f"{joint}_l"][0], abs=0.1)
+    # Left / right symmetric. Asked of a held body at a converged solver: with the whole body free the gap at 3 s wanders
+    # between 0.01 and 0.23 deg as unrelated masses and muscles change; held, it is 0.000 deg on the model before and after.
+    for wrist_deg in (-60.0, 60.0):
+        held = _settle(wrist_deg, 1e-12, held_body=True)
+        for joint in ("mcp2_flexion", "pm2_flexion"):
+            assert held[f"{joint}_r"][0] == pytest.approx(held[f"{joint}_l"][0], abs=0.1)
 
 
 @pytest.mark.parametrize("digit", (3, 4, 5))

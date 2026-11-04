@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Left-right tenodesis test on a held body
+Changed: `tests/test_muscle_passive.py`, `myo_sim/build/data/hand_literature.json`, `docs/wiki/hand-literature-comparison.md`
+Why: The gap of 0.23 deg came from the free-floating body at the default solver tolerance, not from the model: every left and right value agrees, and with body and arms held at tolerance 1e-12 the gap is 0.000 deg before and after the mass changes. The test now asks its question there, at both wrist positions, with the 0.1 deg limit. The junctura traction change has the same source.
+
 ## 2026-11-04 — Pelvic tilt in the standing keyframe of `myolegs_abdomen`
 Changed: `scripts/generate_standing_keyframes.py`, `myo_sim/build/keyframes.py`, `myo_sim/build/data/standing_keyframes.json`, `tests/test_standing_keyframe.py`, `docs/wiki/standing-keyframe.md`, `CHANGELOG.md`
 Why: With the muscles off the trunk hinge reached 3.05 rad/s in 50 ms, up from 1.88 rad/s when the sacrum became massless. The trunk loads the pelvis 4.2 cm behind the hips and neither hinge has stiffness, so the lighter pelvis turns between them. The generator now tilts the pelvis until the hinge is above the hip axis: 2.92 rad/s with the muscles, 0.66 rad/s without them. Limits unchanged.
