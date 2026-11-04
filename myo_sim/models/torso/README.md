@@ -14,7 +14,7 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 ## Reference model
 
 - **Source:** [Constrained Lumbar Spine model - 210](https://simtk.org/projects/lumbarspine)
-- **Paper:** Walia et al., 2025. MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton. IROS 2025. ([IEEE](https://ieeexplore.ieee.org/document/11063132))
+- **Paper:** Walia et al., 2025. MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton. ICORR 2025. ([IEEE](https://ieeexplore.ieee.org/document/11063132))
 
 ## Fidelity
 
@@ -48,9 +48,11 @@ Example fidelity check (IL_L1 left/right moment-arm and force-length plot) for s
 ```bibtex
 @inproceedings{Walia2025,
   title     = {MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton},
-  author    = {Walia, Rohan and Garzon, Kevin and Billot, Morgane and Subramanian, Swathika and Wang, Huiyi and Refai, Mohamed Irfan and Durandau, Guillaume},
-  booktitle = {2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  author    = {Walia, Rohan and Billot, Morgane and Garzon-Aguirre, Kevin and Subramanian, Swathika and Wang, Huiyi and Refai, Mohamed Irfan and Durandau, Guillaume},
+  booktitle = {2025 International Conference on Rehabilitation Robotics (ICORR)},
+  pages     = {128--135},
   year      = {2025},
+  doi       = {10.1109/ICORR66766.2025.11063132},
   url       = {https://ieeexplore.ieee.org/document/11063132},
 }
 ```
