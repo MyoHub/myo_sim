@@ -12,6 +12,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
 | `test_chest_ownership.py` | `chest_r` in torso chain, not arm chain; no `chest_l` in bilateral models; `chest_r` stays massless and `myofullbody` totals ~76.5 kg | After chain XML changes |
+| `test_knee_coupling_ranges.py` | Every coordinate the knee drives stays inside its declared range along its coupling polynomial | After knee chain XML or coupling changes |
 | `test_knee_joint_centre.py` | The femur's origin seen from the tibia against stored OpenSim values on both knees, with the knee's couplings active | After knee chain XML changes |
 | `test_pelvis_mass_once.py` | In the four models with legs the sacrum is massless beside the legs' pelvis; the sacrum moves only in those models | After torso or leg chain mass changes |
 | `test_mass_convention.py` | `myofullbody` total mass (76.5 kg) and inertia sanity, only attachment frames massless, skull and cervical chain (`myohead_base` subtree) hold 6.94 % of body mass; part models keep the rigid head at 5.848 kg | After mass, inertia or head/torso changes |
