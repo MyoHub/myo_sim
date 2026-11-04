@@ -11,12 +11,16 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
 | `test_chest_ownership.py` | `chest_r` in torso chain, not arm chain; no `chest_l` in bilateral models; `chest_r` stays massless and `myofullbody` totals ~84.3 kg | After chain XML changes |
-| `test_mass_convention.py` | `myofullbody` total mass and inertia sanity, only attachment frames massless and the head holds about 6.9 % of body mass | After mass, inertia or head/torso changes |
 | `test_fragment_registry.py` | FragmentRegistry legacy entries and all composed `myo_sim.load()` names build and forward | After `__init__.py` changes |
 | `test_passive_torso_build.py` | Passive torso scaffold builds without error | After torso XML or compose changes |
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |
 | `test_leg_muscle_symmetry.py` | Leg muscle moment arms are symmetric between left and right | After `myolegs` XML changes |
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
+| `test_model_stability.py` | Every composed model steps without going non-finite; `myofullbody` survives random-activation rollouts (3 seeds) from qpos0 and from a stored state where BIClong grazed its former elbow wrap | After XML, tendon or wrap changes |
+| `test_tendon_path_continuity.py` | No arm tendon length jumps by more than 1 mm per 1e-3 rad over the elbow range plus 0.13 rad past each limit, for 9 forearm rotations | After arm tendon, wrap or sidesite changes |
+| `test_warp_parity.py` | Every tendon length in `myohands` and `myoarms` matches between CPU MuJoCo and mujoco-warp over random postures (to 1e-5 m) | After tendon or wrap changes; skipped without mujoco-warp or a CUDA device, and an expected failure on mujoco-warp < 3.16 for tendons with a sidesite inside their wrap geom |
+| `test_warp_version_warning.py` | `load_spec()` warns once when mujoco-warp < 3.16 is installed and the model has arm or hand tendons; silent otherwise |
+| `test_postures.py` | The posture keyframes: JSON matches its script, couplings hold, only the feet touch at t = 0, joint speeds over 50 ms, muscle lengths, attach and spec editing, with `qpos0` as negative control | After joint, coupling, contact or `compose.py` changes |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
 
@@ -42,7 +46,7 @@ uv run pytest tests/test_build_registry.py -v
 
 **New static XML entry point** (a standalone model loaded via `mujoco.MjModel.from_xml_path`): add its path (relative to `MODELS_DIR`) to the `model_paths` list in `tests/test_sims.py`.
 
-**New composed model** (built via `build_model()`): add an entry to the `expected` dict in `test_every_registered_model_has_build_strategy` in `tests/test_build_registry.py`. If the model is bilateral (has left and right arms), also add its name to the `@pytest.mark.parametrize` decorator in `tests/test_mirror_symmetry.py`.
+**New composed model** (built via `build_spec()`): add an entry to the `expected` dict in `test_every_registered_model_has_build_strategy` in `tests/test_build_registry.py`. If the model is bilateral (has left and right arms), also add its name to the `@pytest.mark.parametrize` decorator in `tests/test_mirror_symmetry.py`.
 
 **New muscle symmetry check**: use `discover_bilateral_suffix_pairs()` from `tests/muscle_symmetry_checks.py` to find left/right muscle pairs automatically. Do not hardcode pairs in the test — that will cause the test to silently miss new muscles.
 
