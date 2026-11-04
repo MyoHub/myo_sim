@@ -28,6 +28,8 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 - **Knee joint centre (`myolegs`, `myolegs_abdomen`, `myofullbody`).** The three knee hinges of each leg now sit at Rajagopal's walker_knee joint frame instead of the tibia's origin. Seen from the tibia, the femur's origin was 4.80, 12.75 and 15.53 mm off OpenSim's at 30, 90 and 120 deg of flexion and now matches it within 0.0007 mm at 0, 30, 90 and 120 deg. Downstream: the knee's kinematics change, and so may the moment arms of the muscles crossing it; policies trained on the old knee should be re-evaluated or retrained.
 
+- **`LTpT_T12_l` path (all models with the torso chain).** Five path points of the left T12 longissimus had the right muscle's coordinates, so it seems to have run down the right side of the spine; their z is now negated. Downstream: at qpos = 0, with every other coordinate held fixed, this muscle's moment arm about `lat_bending` goes from +26.86 mm to -26.86 mm, so policies trained on the old path should be re-evaluated or retrained.
+
 - **CMC4/5 springs, ORL, EDC2's wrist sphere (all models with a hand).** See `docs/wiki/hand-cmc-joints.md`, `extensor-mechanism.md` and `hand-literature-comparison.md` (cupping and ORL step).
   - **CMC4/5:** the flexion side of the end-range springs is fitted to Büren et al. 2020's active maxima: about 3 N m at the limits (was 0.96 N m). Active cupping 17.0 / 35.0 -> 12.2 / 25.1 deg. Ranges unchanged.
   - **ORL:** PIP arm 0.127 x the DIP arm instead of equal arms, stiffness refitted: it carries a share at every PIP angle of Ueba 2011 and is now taut in deep flexion, where Harris & Rutledge 1972 saw it slack: about 15 N in a fist. DIP-PIP coupling unchanged.
