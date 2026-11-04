@@ -2,6 +2,10 @@
 
 Model changes that alter actuators, joints, sites or dynamics are breaking for downstream environments and trained policies. List them here; they ship together in the next release tag.
 
+## Unreleased
+
+- **mujoco-warp version warning.** `myo_sim.load_spec()`, and with it `load()` and `load_model()`, warns once per process when mujoco-warp older than 3.16 is installed and the model has arm or hand tendons, whose lengths those versions can get wrong by up to about 3 mm (google-deepmind/mujoco_warp#1713). No model change.
+
 ## 0.2.4
 
 The body of 0.2.3 with fixes. Apart from the items below, every `myofullbody` model array is identical to 0.2.3, and tendon lengths and actuator forces match on 6000 random postures.
