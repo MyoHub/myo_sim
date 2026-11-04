@@ -27,6 +27,11 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 - **Mass:** `myofullbody` 76.51 kg (84.26 kg on `dev`, which counted the pelvis twice); head and neck 6.94 % of it, torso 15.416 kg.
 - **Dynamics:** `vmax` 10 on the forearm and hand muscles makes hand movement 2-5 times faster for the same activation; rigid-tendon maps change leg and upper-arm fibre lengths and forces. All hand, arm, leg and full-body checkpoints need retraining and parity baselines regenerating. mujoco-warp needs `nconmax` >= 64 for hand models.
 
+- **`standing` keyframe on this model (`myofullbody`, `myolegs`, `myolegs_abdomen`; merged from 0.2.4).** See `docs/wiki/standing-keyframe.md`.
+  - **Table:** regenerated and identical: it holds only kinematics at knee 0, so neither the knee hinges nor the masses move it.
+  - **Open:** `test_first_50_ms_stay_slow` fails for `myofullbody` (8.04 rad/s, the thumb CMC under its passive spring at `qpos0`; limit 5.5) and `myolegs_abdomen` (4.54 rad/s, limit 3.0; 3.05 rad/s with the muscles off, limit 2.0). The limits stay as they are.
+  - **Downstream (MyoSuite):** hand joints can no longer be deleted from a spec on their own: passive tendons and couplings refer to them, so `compile()` fails with a missing-joint error.
+
 - **Knee joint centre (`myolegs`, `myolegs_abdomen`, `myofullbody`).** The three knee hinges of each leg now sit at Rajagopal's walker_knee joint frame instead of the tibia's origin. Seen from the tibia, the femur's origin was 4.80, 12.75 and 15.53 mm off OpenSim's at 30, 90 and 120 deg of flexion and now matches it within 0.0007 mm at 0, 30, 90 and 120 deg. Downstream: the knee's kinematics change, and so may the moment arms of the muscles crossing it; policies trained on the old knee should be re-evaluated or retrained.
 
 - **`LTpT_T12_l` path (all models with the torso chain).** Five path points of the left T12 longissimus had the right muscle's coordinates, so it seems to have run down the right side of the spine; their z is now negated. Downstream: at qpos = 0, with every other coordinate held fixed, this muscle's moment arm about `lat_bending` goes from +26.86 mm to -26.86 mm, so policies trained on the old path should be re-evaluated or retrained.

@@ -22,7 +22,8 @@ MAX_SPEED_50MS = {"myofullbody": 5.5, "myolegs": 3.0, "myolegs_abdomen": 3.0}
 MAX_SPEED_50MS_MUSCLES_OFF = 2.0
 MIN_QPOS0_SPEED_50MS = 9.0
 MAX_DEPTH_50MS_M = {"myofullbody": 1e-3, "myolegs": 2e-3, "myolegs_abdomen": 2e-3}
-FINGER_TOKENS = ("cmc_", "mcp", "pm", "md")
+# No tendon or equality refers to the toes; the hand joints are held by the passive tendons and couplings.
+DELETED_JOINT_TOKENS = ("mtp_angle_",)
 
 
 def _script():
@@ -139,25 +140,25 @@ def test_muscle_lengths_stay_valid(name):
     assert standing.max() <= at_qpos0.max()
 
 
-def _delete_finger_joints(spec) -> int:
-    fingers = [j for j in spec.joints if j.name.startswith(FINGER_TOKENS)]
-    assert fingers
-    for joint in fingers:
+def _delete_joints(spec) -> int:
+    joints = [j for j in spec.joints if j.name.startswith(DELETED_JOINT_TOKENS)]
+    assert joints
+    for joint in joints:
         spec.delete(joint)
-    return len(fingers)
+    return len(joints)
 
 
 def test_spec_stays_editable_by_default():
     spec = myo_sim.load_spec("myofullbody")
     assert len(spec.keys) == 0
-    _delete_finger_joints(spec)
+    _delete_joints(spec)
     assert spec.compile().nkey == 0
 
 
 def test_deleting_a_joint_from_a_spec_with_the_keyframe_fails():
     """Why ``load_spec`` does not add the keyframe by default."""
     spec = myo_sim.load_spec("myofullbody", build_kwargs={"standing_keyframe": True})
-    _delete_finger_joints(spec)
+    _delete_joints(spec)
     with pytest.raises(ValueError, match="standing"):
         spec.compile()
 
@@ -165,7 +166,7 @@ def test_deleting_a_joint_from_a_spec_with_the_keyframe_fails():
 def test_add_after_deleting_joints_matches_by_name():
     reference = myo_sim.load_model("myofullbody")
     spec = myo_sim.load_spec("myofullbody")
-    deleted = _delete_finger_joints(spec)
+    deleted = _delete_joints(spec)
     myo_sim.add_standing_keyframe(spec, "myofullbody")
     model = spec.compile()
     want = _joint_values(reference, _standing_qpos(reference))

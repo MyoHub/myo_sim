@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Standing keyframe on the rebuilt model
+Changed: `docs/wiki/standing-keyframe.md`, `tests/test_standing_keyframe.py`, `CHANGELOG.md`
+Why: The keyframe came with the 0.2.4 merge. Regenerating gave the same table, while forces, speeds and the centre of mass changed, so the page takes the new numbers. The spec-editing tests delete the toe joints now, since passive tendons and couplings hold the hand joints. Two 50 ms speed checks fail and are left open with their limits unchanged.
+
 ## 2026-11-04 — Head at 6.94 % of the total after the pelvis was counted once
 Changed: `myo_sim/models/head/assets/myohead_chain.xml`, `myohead_rigid_chain.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `tests/test_mass_convention.py`, `myo_sim/build/data/specific_tension.json`, `myo_sim/models/head/README.md`, `docs/wiki/hand-function-validation.md`, `hand-literature-comparison.md`, `testing-guide.md`, `CHANGELOG.md`
 Why: Decision: #155 itself left the head unchanged, which left it at 7.62 % of the new 76.51 kg. The head goes back to de Leva's 6.94 % (head and neck 5.310 kg, rigid head 5.329 kg) and the 0.519 kg to the torso (15.416 kg), inertias with the masses as #138 did; no total changes. The text "84 kg man" goes: that mass came from the pelvis counted twice and was never chosen; the model stays an adult male reference.
