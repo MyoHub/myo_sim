@@ -102,6 +102,14 @@ def test_only_the_feet_touch_at_t0(name):
     assert all(dist > -MAX_DEPTH_M for _, _, _, dist in contacts), contacts
 
 
+@pytest.mark.parametrize("side", ("r", "l"))
+def test_thumb_starts_at_its_passive_equilibrium(side):
+    model = myo_sim.load_model("myofullbody")
+    data = mujoco.MjData(model)
+    assert np.abs(SCRIPT.thumb_moments(model, data, _standing_qpos(model), side)).max() < 1e-5
+    assert np.abs(SCRIPT.thumb_moments(model, data, model.qpos0, side)).max() > 0.5, "negative control"
+
+
 def test_qpos0_negative_control_for_contacts():
     model = myo_sim.load_model("myofullbody")
     contacts, _ = SCRIPT.t0_contacts(model, _state(model, model.qpos0))

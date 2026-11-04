@@ -4,7 +4,13 @@
     "source": "qpos0 of each composed model; model parameters are not changed",
     "shoulder_elv_rad": 0.1,
     "floor_clearance_m": 0.0001,
-    "method": "shoulder elevation raised to clear the thorax, joint couplings evaluated from their polynomials, ankles bisected until heel and forefoot are level, root lowered to the floor clearance",
+    "thumb_equilibrium_joints": [
+      "cmc_flexion",
+      "cmc_abduction",
+      "mp_flexion",
+      "ip_flexion"
+    ],
+    "method": "shoulder elevation raised to clear the thorax, joint couplings evaluated from their polynomials, ankles bisected until heel and forefoot are level, root lowered to the floor clearance, thumb joints at the equilibrium of the passive moments and gravity at zero activation, computed by the script",
     "documentation": "docs/wiki/standing-keyframe.md"
   },
   "models": {
@@ -22,6 +28,10 @@
         "unrothum_r3_r": -0.0396,
         "unrothum_r2_r": 0.0049,
         "shoulder_elv_r": 0.1,
+        "cmc_flexion_r": -0.1309347075,
+        "cmc_abduction_r": 0.3693835763,
+        "mp_flexion_r": -0.2674188256,
+        "ip_flexion_r": -0.16880452,
         "sternoclavicular_r2_l": -0.0242,
         "sternoclavicular_r3_l": 0.01025,
         "unrotscap_r3_l": -0.01025,
@@ -33,6 +43,10 @@
         "unrothum_r3_l": -0.0396,
         "unrothum_r2_l": 0.0049,
         "shoulder_elv_l": 0.1,
+        "cmc_flexion_l": -0.1309347075,
+        "cmc_abduction_l": 0.3693835763,
+        "mp_flexion_l": -0.2674188256,
+        "ip_flexion_l": -0.16880452,
         "knee_angle_translation1_r": 9.54e-08,
         "knee_angle_rotation2_r": -1.47e-08,
         "knee_angle_rotation3_r": 1.09e-08,

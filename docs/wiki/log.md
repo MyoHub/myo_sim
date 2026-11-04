@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Thumbs at their passive equilibrium in the standing keyframe
+Changed: `scripts/generate_standing_keyframes.py`, `myo_sim/build/data/standing_keyframes.json`, `tests/test_standing_keyframe.py`, `docs/wiki/standing-keyframe.md`, `CHANGELOG.md`
+Why: The passive spring of the thumb CMC took the joint to 8 rad/s in the first 50 ms. The generator now solves the thumb joints for the equilibrium of the passive moments and gravity; `myofullbody` is at 3.35 rad/s (limit 5.5) and 1.97 rad/s with the muscles off (limit 2.0). The finger equilibrium has no single answer without contacts, so the fingers stay at `qpos0`.
+
 ## 2026-11-04 — Leg fits rerun on the new knee
 Changed: `myo_sim/models/leg/assets/myolegs_muscle.xml`, `myo_sim/build/leg_passive.py`, `myo_sim/build/data/leg_passive_start.json`, `myo_sim/build/references.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_leg_passive.py`, `tests/test_leg_rigid_conversion.py`, `tests/test_hand_literature.py`, `docs/wiki/model-authoring.md`, `docs/wiki/hand-literature-comparison.md`, `CHANGELOG.md`, `myo_sim/models/leg/README.md`
 Why: #153 moved the knee, so the recorded passive errors and `vasint_r`'s length range no longer held. The fit used its own earlier result as its start, so it now has a start table and a rerun gives the same XML; new tests hold the XML and the recorded errors to what the scripts give.

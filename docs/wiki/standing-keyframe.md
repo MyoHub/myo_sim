@@ -14,12 +14,13 @@
 
 ## How the pose is made
 
-`scripts/generate_standing_keyframes.py` writes `myo_sim/build/data/standing_keyframes.json` from `qpos0` of each composed model, in four steps:
+`scripts/generate_standing_keyframes.py` writes `myo_sim/build/data/standing_keyframes.json` from `qpos0` of each composed model, in five steps:
 
 1. Raise `shoulder_elv_r` and `shoulder_elv_l` to 0.10 rad (5.7 deg), the plane of elevation staying at 0. The humerus then clears the thorax by 6.2 mm (0.05 rad leaves 2 mm of overlap, 0.08 rad clears it by 3 mm). This is a clearance value, not a measured arm posture. The scapular joints follow through their couplings.
 2. Evaluate every joint coupling from its polynomial, so that couplings hold to rounding.
 3. Bisect the ankle angle until heel and forefoot are level (0.012 rad, 0.7 deg of dorsiflexion).
 4. Lower the root until the feet are 0.1 mm above the floor. That is inside the 1 mm contact margin of the foot geoms, so the feet carry the weight from t = 0.
+5. In `myofullbody`, solve each thumb's four joints for the equilibrium of the passive moments and gravity at zero activation: CMC flexion -7.5 deg, CMC abduction 21.2 deg, MP flexion -15.3 deg, IP flexion -9.7 deg, on both hands.
 
 The script also prints the tables below (`--report`). To change the pose, edit the constants in the script and rerun it. `tests/test_standing_keyframe.py` checks that the JSON is what the script writes. The table holds only kinematics: the body masses do not enter it and the knee hinges only matter away from knee 0, so the knee and mass changes of v0.3.0 left it as it was, to the last digit. The contact forces, the speeds and the centre of mass below did change.
 
@@ -37,39 +38,41 @@ MuJoCo 3.17, zero activation, the model's own timestep (2 ms).
 | Model | Pose | Root z (m) | Coupling error (mm or mrad) | Contacts at t = 0 | Largest force (N) | Sum / weight | Deepest (mm) |
 |---|---|---|---|---|---|---|---|
 | myofullbody | `qpos0` | 1.0000 | 52.4 | 2 | 688 | 1.83 | 11.38 |
-| myofullbody | `standing` | 0.9455 | 0.0 | 8 | 114 | 0.69 | -0.10 |
+| myofullbody | `standing` | 0.9455 | 0.0 | 8 | 115 | 0.69 | -0.10 |
 | myolegs | `qpos0` | 1.0000 | 52.4 | 0 | 0 | 0.00 | -0.00 |
-| myolegs | `standing` | 0.9605 | 0.0 | 8 | 130 | 0.88 | -0.10 |
+| myolegs | `standing` | 0.9605 | 0.0 | 8 | 131 | 0.88 | -0.10 |
 | myolegs_abdomen | `qpos0` | 1.0000 | 52.4 | 0 | 0 | 0.00 | -0.00 |
-| myolegs_abdomen | `standing` | 0.9605 | 0.0 | 8 | 148 | 1.00 | -0.10 |
+| myolegs_abdomen | `standing` | 0.9605 | 0.0 | 8 | 149 | 0.99 | -0.10 |
 
 "Deepest" is the largest overlap of any contact (negative: the closest contact is still apart). At t = 0 only the feet touch in `standing`. Their contact forces add up to at most body weight because the body is already accelerating.
 
 | Model | Pose | Peak speed, 10 ms | Peak speed, 50 ms | Peak speed, 50 ms, muscles off | Deepest in 50 ms (mm) |
 |---|---|---|---|---|---|
-| myofullbody | `qpos0` | 6.65 (cmc_abduction_l) | 9.81 (knee_angle_l) | 8.24 (cmc_abduction_r) | 11.38 |
-| myofullbody | `standing` | 6.43 (cmc_abduction_r) | 8.04 (cmc_abduction_r) | 8.00 (cmc_abduction_r) | 0.66 |
-| myolegs | `qpos0` | 4.67 (knee_angle_l) | 9.93 (knee_angle_l) | 0.98 (knee_angle_beta_translation1_l) | 8.39 |
-| myolegs | `standing` | 0.73 (subtalar_angle_l) | 2.46 (knee_angle_l) | 0.65 (mtp_angle_l) | 0.71 |
-| myolegs_abdomen | `qpos0` | 6.82 (hip_flexion_l) | 14.62 (hip_flexion_r) | 0.98 (knee_angle_beta_translation1_l) | 8.87 |
-| myolegs_abdomen | `standing` | 1.18 (hip_flexion_l) | 4.54 (hip_flexion_r) | 3.05 (flex_extension) | 0.68 |
+| myofullbody | `qpos0` | 6.65 (cmc_abduction_l) | 9.86 (knee_angle_l) | 8.24 (cmc_abduction_r) | 11.38 |
+| myofullbody | `standing` | 1.39 (pro_sup_l) | 3.35 (hip_flexion_l) | 1.97 (hip_flexion_l) | 0.64 |
+| myolegs | `qpos0` | 4.70 (knee_angle_l) | 9.98 (knee_angle_l) | 0.98 (knee_angle_beta_translation1_l) | 8.02 |
+| myolegs | `standing` | 0.72 (subtalar_angle_l) | 2.56 (knee_angle_l) | 0.65 (mtp_angle_l) | 0.68 |
+| myolegs_abdomen | `qpos0` | 6.82 (hip_flexion_l) | 14.62 (hip_flexion_r) | 0.98 (knee_angle_beta_translation1_l) | 8.49 |
+| myolegs_abdomen | `standing` | 1.18 (hip_flexion_l) | 4.58 (hip_flexion_r) | 3.05 (flex_extension) | 0.65 |
 
 Speeds are the largest joint speed, without the free root joint. The leg speeds at `qpos0` come from the violated couplings and the overlap.
 
-In `myofullbody` the largest speed in `standing` is the thumb: the keyframe leaves the hand at `qpos0`, where the passive spring of `cmc_abduction` holds 0.58 N m on a very small inertia, so the joint reaches 8 rad/s in 50 ms, with or without the muscles. That is above the 50 ms limits of `tests/test_standing_keyframe.py`, so `test_first_50_ms_stay_slow[myofullbody]` fails and stays open. The arm models show the same speed from `qpos0`. Without the hand joints the 50 ms peak is 3.39 rad/s (`hip_flexion_l`), 1.97 rad/s with the muscles off.
+The thumb is why step 5 exists. The passive spring of `cmc_abduction` holds 0.59 N m at `qpos0` on a very small inertia, so from there the joint reaches 8 rad/s in 50 ms, with or without the muscles. The thumb's equilibrium is well defined: eight random starts reach the same angles with residuals below 1e-13 N m, it is stable, and the left hand balances at the right hand's angles.
+
+The finger joints stay at `qpos0`. They start away from equilibrium too, but by at most 0.07 N m (`mcp3_flexion`), and reach 2.5 rad/s in 50 ms. The same solve has no single answer for them: without contacts, starts end up to 51 deg apart with fingers overlapping by up to 13 mm, because the passive moments are small and finger abduction has almost no stiffness.
 
 In `myolegs_abdomen` `test_first_50_ms_stay_slow` fails as well and stays open: 4.54 rad/s (`hip_flexion_r`, limit 3.0), 3.05 rad/s with the muscles off (`flex_extension`, limit 2.0). The peak with the muscles was already 5.46 rad/s before the knee and pelvis changes; the peak with the muscles off rose from 1.88 rad/s when the sacrum became massless.
 
-What remains in the legs and trunk comes from the passive force of the muscles at zero activation: the pelvis pitches at about 85 rad/s^2 (the largest passive forces on the trunk and hip are 308 N in `rect_abd` and 294 N in `psoas`). A keyframe cannot remove this without bending the body: 0.17 rad of trunk flexion with 0.04 rad of knee flexion (hips and ankles following half the knee angle) lowers the 50 ms peak without the hand joints from 3.4 to 1.9 rad/s. The keyframe stays upright instead.
+What remains in the legs and trunk comes from the passive force of the muscles at zero activation: the pelvis pitches at about 85 rad/s^2 (the largest passive forces on the trunk and hip are 308 N in `rect_abd` and 307 N in `psoas`). A keyframe cannot remove this without bending the body: 0.17 rad of trunk flexion with 0.04 rad of knee flexion (hips and ankles following half the knee angle) lowers the 50 ms peak from 3.4 to 2.0 rad/s. The keyframe stays upright instead.
 
 | Model | Pose | Shortest | Longest | Outside [lmin, lmax] | Over 1.2 | Largest passive force (N), muscle | Largest change from `qpos0` |
 |---|---|---|---|---|---|---|---|
 | myofullbody | `qpos0` | 0.130 | 1.663 | 4 | 58 | 555, recfem_l | 0.000, Ps_L1_VB_r |
-| myofullbody | `standing` | 0.130 | 1.603 | 4 | 58 | 308, rect_abd_r | 1.044, recfem_r |
-| myolegs | `qpos0` | 0.656 | 1.663 | 0 | 10 | 555, recfem_l | 0.000, addbrev_r |
-| myolegs | `standing` | 0.617 | 1.364 | 0 | 8 | 294, psoas_r | 1.044, recfem_r |
-| myolegs_abdomen | `qpos0` | 0.656 | 1.663 | 0 | 10 | 555, recfem_l | 0.000, ercspn_r |
-| myolegs_abdomen | `standing` | 0.617 | 1.364 | 0 | 8 | 294, psoas_r | 1.044, recfem_r |
+| myofullbody | `standing` | 0.130 | 1.603 | 4 | 56 | 308, rect_abd_r | 1.044, recfem_r |
+| myolegs | `qpos0` | 0.653 | 1.663 | 0 | 10 | 555, recfem_l | 0.000, addbrev_r |
+| myolegs | `standing` | 0.614 | 1.378 | 0 | 8 | 307, psoas_r | 1.044, recfem_r |
+| myolegs_abdomen | `qpos0` | 0.653 | 1.663 | 0 | 10 | 555, recfem_l | 0.000, ercspn_r |
+| myolegs_abdomen | `standing` | 0.614 | 1.378 | 0 | 8 | 307, psoas_r | 1.044, recfem_r |
 
 Normalised lengths are in units of optimal fibre length, and `[lmin, lmax]` is the range of the MuJoCo muscle force curve, `[0, 2]` here. The four muscles outside it (`FDS3` and `FDP3` of each hand) are outside at `qpos0` as well. The largest change, `recfem`, is the coupling correction: putting the patella where its coupling says shortens rectus femoris and takes its passive force from 555 N to 0.
 
@@ -77,8 +80,8 @@ Normalised lengths are in units of optimal fibre length, and `[lmin, lmax]` is t
 
 | Model | Heel share of foot load at t = 0 | Forefoot share | Centre of mass ahead of the ankle (cm) |
 |---|---|---|---|
-| myofullbody | 63% | 37% | -0.9 |
-| myolegs | 65% | 35% | -0.7 |
+| myofullbody | 64% | 36% | -0.9 |
+| myolegs | 66% | 34% | -0.7 |
 | myolegs_abdomen | 67% | 33% | -0.7 |
 
 | Quantity | Model | Literature | Reference and protocol |

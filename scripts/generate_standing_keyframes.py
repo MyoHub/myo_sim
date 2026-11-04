@@ -6,7 +6,8 @@ Start from ``qpos0`` and change only what makes it unusable as a start:
 1. raise each shoulder by ``SHOULDER_ELV_RAD`` so that the humerus clears the thorax,
 2. put every joint coupling (``<joint>`` equality) on its polynomial,
 3. dorsiflex the ankles until heel and forefoot are level,
-4. lower the root until the feet are ``FLOOR_CLEARANCE_M`` above the floor.
+4. lower the root until the feet are ``FLOOR_CLEARANCE_M`` above the floor,
+5. put each thumb where its passive moments and gravity balance at zero activation.
 
 Run from the repository root: ``python scripts/generate_standing_keyframes.py``.
 """
@@ -33,6 +34,7 @@ HEEL_GEOM = "foot_col1_{side}"
 FOREFOOT_GEOM = "bofoot_col2_{side}"
 ROUND_DECIMALS = 10
 SIDES = ("r", "l")
+THUMB_JOINTS = ("cmc_flexion", "cmc_abduction", "mp_flexion", "ip_flexion")
 
 
 def _joint_adr(model: mujoco.MjModel, name: str) -> int:
@@ -72,6 +74,41 @@ def coupling_residual(model: mujoco.MjModel, qpos: np.ndarray) -> float:
     return float(np.abs(coupling_values(model, qpos) - qpos).max())
 
 
+def thumb_moments(model: mujoco.MjModel, data: mujoco.MjData, qpos: np.ndarray, side: str) -> np.ndarray:
+    """Passive moments plus gravity on the thumb joints of *side* at *qpos*, zero activation and velocity (N m)."""
+    data.qpos[:], data.qvel[:], data.act[:] = qpos, 0.0, 0.0
+    mujoco.mj_forward(model, data)
+    dofs = [model.joint(f"{joint}_{side}").dofadr[0] for joint in THUMB_JOINTS]
+    return (data.qfrc_passive + data.qfrc_actuator - data.qfrc_bias)[dofs]
+
+
+def thumbs_at_equilibrium(model: mujoco.MjModel, qpos: np.ndarray) -> np.ndarray:
+    """Return *qpos* with both thumbs at the root of ``thumb_moments``, the left one with the right one's angles."""
+    from scipy.optimize import least_squares
+
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, f"{THUMB_JOINTS[0]}_r") < 0:
+        return qpos
+    data = mujoco.MjData(model)
+    adr = {side: [_joint_adr(model, f"{joint}_{side}") for joint in THUMB_JOINTS] for side in SIDES}
+    ranges = np.array([model.joint(f"{joint}_r").range for joint in THUMB_JOINTS]).T
+
+    def with_thumbs(angles: np.ndarray) -> np.ndarray:
+        out = qpos.copy()
+        for side in SIDES:
+            out[adr[side]] = angles
+        return out
+
+    solved = least_squares(
+        lambda angles: thumb_moments(model, data, with_thumbs(angles), "r"),
+        qpos[adr["r"]],
+        bounds=ranges,
+        xtol=1e-13,
+        ftol=1e-13,
+        gtol=1e-13,
+    )
+    return with_thumbs(solved.x)
+
+
 def solve_pose(model: mujoco.MjModel) -> np.ndarray:
     """Return the standing ``qpos`` of *model* (see the module docstring)."""
     data = mujoco.MjData(model)
@@ -106,7 +143,7 @@ def solve_pose(model: mujoco.MjModel) -> np.ndarray:
     mujoco.mj_kinematics(model, data)
     lowest = min(_floor_distance(model, data, name) for name in foot_geoms(model))
     qpos[_joint_adr(model, ROOT_JOINT) + 2] -= lowest - FLOOR_CLEARANCE_M
-    return qpos
+    return thumbs_at_equilibrium(model, qpos)
 
 
 def model_entry(model: mujoco.MjModel, qpos: np.ndarray) -> dict:
@@ -132,10 +169,12 @@ def build_table() -> dict:
             "source": "qpos0 of each composed model; model parameters are not changed",
             "shoulder_elv_rad": SHOULDER_ELV_RAD,
             "floor_clearance_m": FLOOR_CLEARANCE_M,
+            "thumb_equilibrium_joints": list(THUMB_JOINTS),
             "method": (
                 "shoulder elevation raised to clear the thorax, joint couplings evaluated from their "
                 "polynomials, ankles bisected until heel and forefoot are level, root lowered to the "
-                "floor clearance"
+                "floor clearance, thumb joints at the equilibrium of the passive moments and gravity at zero "
+                "activation, computed by the script"
             ),
             "documentation": "docs/wiki/standing-keyframe.md",
         },
