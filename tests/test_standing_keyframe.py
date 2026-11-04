@@ -121,9 +121,9 @@ def test_trunk_hinge_stands_over_the_hip_axis():
     upright = _state(model, model.qpos0)
     assert np.linalg.norm(data.body("torso").xmat - upright.body("torso").xmat) < 1e-6, "the trunk stays upright"
     assert np.linalg.norm(data.body("tibia_r").xmat - upright.body("tibia_r").xmat) < 0.02, "the legs stay upright"
-    assert data.joint(SCRIPT.TRUNK_HINGE).xanchor[1] != pytest.approx(
-        upright.joint(SCRIPT.TRUNK_HINGE).xanchor[1], abs=0.01
-    ), "negative control: without the tilt the hinge is behind the hips"
+    assert data.joint(SCRIPT.TRUNK_HINGE).xanchor[1] != pytest.approx(upright.joint(SCRIPT.TRUNK_HINGE).xanchor[1], abs=0.01), (
+        "negative control: without the tilt the hinge is behind the hips"
+    )
 
 
 def test_qpos0_negative_control_for_contacts():
