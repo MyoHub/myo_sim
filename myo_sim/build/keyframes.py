@@ -104,20 +104,3 @@ def add_posture_keyframes(
             spec.delete(key)
     model = spec.compile()
     return [spec.add_key(name=name, qpos=posture_qpos(model, entries[name]).tolist()) for name in names]
-
-
-def add_posture_keyframe(spec: "mujoco.MjSpec", model_name: str, posture: str) -> "mujoco.MjsKey":
-    """Add one posture of *model_name* to an uncompiled spec; see :func:`add_posture_keyframes`.
-
-    Args:
-        spec: Uncompiled spec of the model, optionally edited.
-        model_name: Entry of the table to read (registry name or alias).
-        posture: Name of the posture.
-
-    Returns:
-        The new keyframe.
-
-    Raises:
-        KeyError: If the table does not have the posture for *model_name*.
-    """
-    return add_posture_keyframes(spec, model_name, [posture])[0]
