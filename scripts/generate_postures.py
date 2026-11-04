@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Write ``myo_sim/build/data/standing_keyframes.json``; ``--report`` prints the wiki tables.
+"""Write ``myo_sim/build/data/postures.json``; ``--report`` prints the wiki tables.
 
-Start from ``qpos0`` and change only what makes it unusable as a start:
+The table holds one posture, ``standing``. Start from ``qpos0`` and change only what makes it unusable as a start:
 
 1. raise each shoulder by ``SHOULDER_ELV_RAD`` so that the humerus clears the thorax,
 2. put every joint coupling (``<joint>`` equality) on its polynomial,
 3. dorsiflex the ankles until heel and forefoot are level,
 4. lower the root until the feet are ``FLOOR_CLEARANCE_M`` above the floor.
 
-Run from the repository root: ``python scripts/generate_standing_keyframes.py``.
+Run from the repository root: ``python scripts/generate_postures.py``.
 """
 
 from __future__ import annotations
@@ -24,7 +24,7 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from myo_sim.build.compose import build_spec  # noqa: E402
-from myo_sim.build.keyframes import ROOT_JOINT, STANDING_KEYFRAME_PATH  # noqa: E402
+from myo_sim.build.keyframes import POSTURES_PATH, ROOT_JOINT  # noqa: E402
 
 MODELS = ("myofullbody", "myolegs", "myolegs_abdomen")
 SHOULDER_ELV_RAD = 0.10  # 5.7 deg: humerus to thorax clearance of 6.2 mm, see the wiki page
@@ -125,10 +125,10 @@ def build_table() -> dict:
     models = {}
     for name in MODELS:
         model = build_spec(name).compile()
-        models[name] = model_entry(model, solve_pose(model))
+        models[name] = {"standing": model_entry(model, solve_pose(model))}
     return {
         "provenance": {
-            "script": "scripts/generate_standing_keyframes.py",
+            "script": "scripts/generate_postures.py",
             "source": "qpos0 of each composed model; model parameters are not changed",
             "shoulder_elv_rad": SHOULDER_ELV_RAD,
             "floor_clearance_m": FLOOR_CLEARANCE_M,
@@ -137,7 +137,13 @@ def build_table() -> dict:
                 "polynomials, ankles bisected until heel and forefoot are level, root lowered to the "
                 "floor clearance"
             ),
-            "documentation": "docs/wiki/standing-keyframe.md",
+            "documentation": "docs/wiki/postures.md",
+        },
+        "postures": {
+            "standing": {
+                "description": "Upright, feet flat, arms just clear of the thorax.",
+                "source": "qpos0 with the couplings evaluated; shoulder elevation is a clearance value, not a measured arm posture",
+            },
         },
         "models": models,
     }
@@ -256,9 +262,9 @@ def main() -> None:
     if args.report:
         report()
         return
-    STANDING_KEYFRAME_PATH.parent.mkdir(exist_ok=True)
-    STANDING_KEYFRAME_PATH.write_text(json.dumps(build_table(), indent=2) + "\n")
-    print(f"wrote {STANDING_KEYFRAME_PATH}")
+    POSTURES_PATH.parent.mkdir(exist_ok=True)
+    POSTURES_PATH.write_text(json.dumps(build_table(), indent=2) + "\n")
+    print(f"wrote {POSTURES_PATH}")
 
 
 if __name__ == "__main__":

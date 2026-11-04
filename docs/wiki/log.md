@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-04 — Posture API in place of the standing keyframe helpers
+Changed: myo_sim/build/keyframes.py, myo_sim/__init__.py, myo_sim/build/compose.py, scripts/generate_postures.py, myo_sim/build/data/postures.json, tests/test_postures.py, docs/wiki/postures.md, CHANGELOG.md
+Why: review of the release asked for keyframes to cover postures in general, so 0.2.4 ships the general API from the start, with `standing` as its only posture. No release ever had the old names, so nothing needs to keep working.
+
 ## 2026-11-03 — Standing keyframe, 0.2.4
 Changed: scripts/generate_standing_keyframes.py, myo_sim/build/keyframes.py, myo_sim/build/data/standing_keyframes.json, myo_sim/build/compose.py, myo_sim/__init__.py, tests/test_standing_keyframe.py, docs/wiki/standing-keyframe.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, docs/wiki/build-and-composition.md, CHANGELOG.md, pyproject.toml, uv.lock
 Why: qpos0 of the free-standing models violates the knee couplings and overlaps the arms with the thorax, so they had no clean start pose; the keyframe adds one without changing any model parameter.
