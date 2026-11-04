@@ -51,7 +51,7 @@ No arm model changes (every MjModel array of myoarm_r, myoarms, myotorso_arms an
 | ″ |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 205.0 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 43.6 / 25.7 / 12.7 / 18.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 43.6 / 25.7 / 12.7 / 18.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -86,7 +86,7 @@ Names only. scripts/compare_model_numerics.py finds every MjModel array, and the
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 205.0 | 205.0 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 43.6 / 25.7 / 12.7 / 18.1 | 43.6 / 25.7 / 12.7 / 18.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 43.6 / 25.7 / 12.7 / 18.1 | 43.6 / 25.7 / 12.7 / 18.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -119,7 +119,7 @@ Fingertip pads moved to the palmar side and fitted to Dallard's D_N0 (6.4 mm, sc
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 132.8 | 295.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 20.8 / 40.7 / 27.0 / 11.5 | 44.7 / 27.9 / 12.3 / 15.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 20.8 / 40.7 / 27.0 / 11.5 | 44.7 / 27.9 / 12.3 / 15.1 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -155,7 +155,7 @@ PIP flexion limit of digits 2-5 raised from 90 to 115 deg (Leijnse et al. 2010, 
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 282.9 | 132.8 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.5 / 38.0 / 22.9 / 9.5 | 20.8 / 40.7 / 27.0 / 11.5 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 29.5 / 38.0 / 22.9 / 9.5 | 20.8 / 40.7 / 27.0 / 11.5 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -193,7 +193,7 @@ AdP split into AdPt and AdPo (Stamenkovic 2014 head ratio of Jacobson's PCSA), F
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 305.9 | 282.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 33.9 / 35.0 / 21.3 / 9.9 | 29.5 / 38.0 / 22.9 / 9.5 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 33.9 / 35.0 / 21.3 / 9.9 | 29.5 / 38.0 / 22.9 / 9.5 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -241,7 +241,7 @@ CMC4 and CMC5 hinges (centres sphere-fitted to the metacarpal bases; CMC5 axis f
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 277.9 | 305.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 34.3 / 34.0 / 19.7 / 12.0 | 33.9 / 35.0 / 21.3 / 9.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 34.3 / 34.0 / 19.7 / 12.0 | 33.9 / 35.0 / 21.3 / 9.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -294,7 +294,7 @@ UI_UB5 re-routed as ADM (pisiform to the ulnar base of the proximal phalanx, via
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 339.7 | 277.9 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.8 / 30.9 / 18.6 / 20.6 | 34.3 / 34.0 / 19.7 / 12.0 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 29.8 / 30.9 / 18.6 / 20.6 | 34.3 / 34.0 / 19.7 / 12.0 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -351,7 +351,7 @@ EDC2-5, EIP, EDM, LU_RB2-5 and UI_UB2-4 end on junction sites of the proximal ph
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 362.7 | 339.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 28.1 / 33.0 / 17.0 / 21.9 | 29.8 / 30.9 / 18.6 / 20.6 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 28.1 / 33.0 / 17.0 / 21.9 | 29.8 / 30.9 / 18.6 / 20.6 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -421,7 +421,7 @@ The finger-side bundles RI3-5, LU_RB2-5 and UI_UB2-4 become the anatomical muscl
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 266.6 | 362.7 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.2 / 29.7 / 18.1 / 22.9 | 28.1 / 33.0 / 17.0 / 21.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 29.2 / 29.7 / 18.1 / 22.9 | 28.1 / 33.0 / 17.0 / 21.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -503,7 +503,7 @@ Each lumbrical arises from a junction node on its own FDP tendon: a light body o
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 263.1 | 266.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.7 / 27.9 / 19.6 / 22.8 | 29.2 / 29.7 / 18.1 / 22.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 29.7 / 27.9 / 19.6 / 22.8 | 29.2 / 29.7 / 18.1 / 22.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -584,7 +584,7 @@ Junction nodes on EDC3, EDC4 and EDC5 with tension-only junctura links EDC4-EDC3
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 251.6 | 263.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 31.9 / 25.2 / 20.3 / 22.7 | 29.7 / 27.9 / 19.6 / 22.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 31.9 / 25.2 / 20.3 / 22.7 | 29.7 / 27.9 / 19.6 / 22.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -675,7 +675,7 @@ EDC2's wrist-wrap side site moves from the centre of its sphere (inside wrap: th
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 256.1 | 251.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 24.8 / 19.7 / 25.2 | 31.9 / 25.2 / 20.3 / 22.7 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 30.3 / 24.8 / 19.7 / 25.2 | 31.9 / 25.2 / 20.3 / 22.7 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -765,7 +765,7 @@ The extensors' two lateral-band branches end where the bands converge, and their
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 256.1 | 256.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 24.8 / 19.7 / 25.2 | 30.3 / 24.8 / 19.7 / 25.2 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 30.3 / 24.8 / 19.7 / 25.2 | 30.3 / 24.8 / 19.7 / 25.2 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -853,7 +853,7 @@ The tie helpers of the junctura nodes start at the EDC's via point EDC{d}-P4_r, 
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 266.5 | 256.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 29.9 / 29.6 / 17.9 / 22.6 | 30.3 / 24.8 / 19.7 / 25.2 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 29.9 / 29.6 / 17.9 / 22.6 | 30.3 / 24.8 / 19.7 / 25.2 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -943,7 +943,7 @@ Barry et al. 2018's OpenSim thumb model (2020 revision; MyoHand's bone meshes an
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 264.1 | 266.5 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.3 / 29.2 / 18.7 / 21.8 | 29.9 / 29.6 / 17.9 / 22.6 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 30.3 / 29.2 / 18.7 / 21.8 | 29.9 / 29.6 / 17.9 / 22.6 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -1035,7 +1035,7 @@ EDC4, EDC5, EDM, ECRB, FCR (wrist) and PQ (ulna) had their wrap side sites insid
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 263.8 | 264.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 30.0 / 27.3 / 19.0 / 23.7 | 30.3 / 29.2 / 18.7 / 21.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 30.0 / 27.3 / 19.0 / 23.7 | 30.3 / 29.2 / 18.7 / 21.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -1132,7 +1132,7 @@ A period-two oscillation of the wrist and digit joints appeared from activation 
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 264.1 | 263.8 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 31.0 / 17.2 / 20.8 / 30.9 | 30.0 / 27.3 / 19.0 / 23.7 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 31.0 / 17.2 / 20.8 / 30.9 | 30.0 / 27.3 / 19.0 / 23.7 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -1239,7 +1239,7 @@ ECU's wrist-crossing via point moves from the radius (19.6 mm from the forearm r
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 245.6 | 264.1 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 35.9 / 10.3 / 13.9 / 39.8 | 31.0 / 17.2 / 20.8 / 30.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 35.9 / 10.3 / 13.9 / 39.8 | 31.0 / 17.2 / 20.8 / 30.9 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -1357,7 +1357,7 @@ Merges the rigid-tendon maps of #123: range and lengthrange of 24 leg muscles pe
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 245.6 | 245.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -1474,7 +1474,7 @@ The elbow wrap sphere leaves BIClong's path: inside the elbow's range it touches
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 245.6 | 245.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -1589,7 +1589,7 @@ The HYOID neck (Mortensen et al. 2018; 24 joints for 6 coordinates, 18 couplings
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 245.6 | 245.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -1708,7 +1708,7 @@ The muscles the Rajagopal legs lack, from OpenSim's Gait2392 (Delp et al. 1990),
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 245.6 | 245.6 | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 35.9 / 10.3 / 13.9 / 39.8 | 35.9 / 10.3 / 13.9 / 39.8 | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -2051,7 +2051,7 @@ Every contact pair between phalanges of adjacent digits gets a margin of -4 mm: 
 | ″ |  |  | 279.3 ± 75.6 (SD); in vivo, women | Mathiowetz et al. 1985 | as above |
 | ″ |  |  | 436.4 ± 6.9; model (ARMS) | McFarland et al. 2023 | model protocol: 48 mm elliptical dynamometer on the third metacarpal, 0.15 s simulation |
 | Maximum power grip, self-selected wrist, settled (same levels after 2 s) (N) | 255.2 | – | 402.1 ± 131.4 (SD); in vivo | O'Driscoll et al. 1992 | as above |
-| Grip share per digit 2 / 3 / 4 / 5 (%) | 31.9 / 14.7 / 21.0 / 32.4 | – | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band) |
+| Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s (%) | 31.9 / 14.7 / 21.0 / 32.4 | – | 21.1 / 38.5 / 25.5 / 15.0 ± 4.7 / 4.2 / 4.7 / 4.7 (SD); in vivo | Kong et al. 2011 | maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s |
 | ″ |  |  | 30 / 30 / 22 / 18; in vivo | Amis 1987 | maximal grasp of cylinders 31-116 mm, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs) |
 | ″ |  |  | 24.7 / 32.8 / 27.0 / 15.5 ± 3.9 / 3.4 / 2.2 / 2.0 (SD); in vivo | Ohtsuki 1981 | four fingers pulling on rings over the middle phalanges, hand in a cast (extrinsic flexors only), right hand, n = 10 |
 | ″ |  |  | 26 / 29 / 23 / 22; in vivo | Ejeskar & Ortengren 1981 | isolated fingertip pull-off force while gripping a 20-35 mm cylinder, men, right hand, n = 20 (Table 2; shares of the four isolated forces) |
@@ -2271,6 +2271,31 @@ from the in-vivo mean (still inside its band), so the axes were not changed. Wra
 over the metacarpal base or the sesamoids is the remaining lever for the trends, together with the
 extrinsic findings below.
 
+### MCP collateral ligaments as passive spatial tendons (grip and fist; proposal #142)
+
+MCP abduction has no flexion-dependent limit: the ring finger drifts radially by up to 20 deg in a fist, and with no restraint the fingers may converge in flexion and
+squeeze the middle finger. The trial put one tension-only strand per side of each finger MCP (the dorsal portion of the proper collateral), from Minami et al. 1984's Table 2 attachments
+on the metacarpal head to the phalanx base, scaled per digit by the MCP-to-base distance.
+
+| Quantity | Without | Strands, 80 N/mm | Literature | Reference |
+| --- | --- | --- | --- | --- |
+| Strand lengthening 0 -> 80 deg flexion, index radial / ulnar (mm) | – | 3.0 / 3.0, flat from 50 to 70 deg, then falling | +3 to 4 mm; lengthens to 50 deg, constant to 70 deg, a little shorter beyond | Minami et al. 1984 |
+| Grip, best of ten starts at 0.15 s (N) | 314.5 | 342.9 | 402.1 ± 131.4 | O'Driscoll et al. 1992 |
+| Shares at 0.15 s, proximal and middle phalanges (%) | 31.9 / 14.7 / 21.0 / 32.3 | 26.4 / 27.9 / 16.2 / 29.5 | | |
+| Settled grip (N) | 255.2 | 248.4 | as above | |
+| Settled whole-finger shares (%) | 34.4 / 25.9 / 13.2 / 26.6 | 31.6 / 26.9 / 13.9 / 27.7 | 21.1 / 38.5 / 25.5 / 15.0 ± 4-5 | Kong et al. 2011 |
+| Middle-finger gap in the fist over 14 cases, mean / worst (mm) | 5.3 / 10.0 | 4.9 / 11.8 | | |
+| Tenodesis, MCP range 2 / 3 / 4 / 5 (deg) | 78 / 67 / 64 / 60 | 78 / 67 / 65 / 60 | mean 65.2 | McFarland et al. 2023 (model) |
+
+The slack length is the strand's longest length over the flexion range, so it loads no flexion; with the slack taken at 45 deg the strands carried about 40 N through flexion and cut the tenodesis
+range to 48 / 38 / 40 / 28 deg. With no tensile data of the finger MCP collaterals, 80 N/mm is the thumb CMC dorsoradial ligament's stiffness (Bettinger et al. 2000: 78.3 ± 21.9 N/mm); 200 and 400 N/mm
+give the same settled shares within 2 points. A first proxy (a joint spring tightening to 0 deg by 45 deg flexion) gave 8 N m/rad as the stiffness where the middle finger's share moves, and the settled share
+rises at most from 16.3 to 23.6 % with abduction held at its limits.
+
+**Outcome.** The geometry reproduces Minami's length curves, and the 0.15 s reading improves far beyond the optimiser's spread, but that reading is a transient. In the settled state and in the fist
+the strands do nothing beyond the spread, so they are not adopted: eight more tendons per hand with a stiffness taken from another joint, for no functional gain. The fingers still reach
+MCP abduction of 10-17 deg in a fist where the collaterals would forbid it, which stays an open check.
+
 ## Open checks before release
 
 Adopted values that the literature questions, to be checked once more before the release of the
@@ -2325,7 +2350,7 @@ revised hand. Items that a later step resolved say so.
 - **DI2 and PI3 MCP arms:** DI2's flexion arm is 5.5 mm against An et al. 1979's 10.2 mm and PI3's
   abduction arm 8.5 against 10.0 mm; the fibre-length window (0.5 at full MCP extension) holds their sites.
   An 1979's digit 3-5 values are normative-model potentials without spread.
-- **Grip digit shares:** since S5 the middle finger's grip share is 29.7 %, 0.5 points outside the
+- **Grip digit shares (cause: `hand-function-validation.md`, Grip and fist diagnosis; the test now takes whole fingers, settled):** since S5 the middle finger's grip share is 29.7 %, 0.5 points outside the
   protocol's band around ARMS's 42.2 % (the earlier, model-based target) (`test_grip_at_the_cached_optimum` fails); after S6 27.9 % (2.3
   points outside); after S7 25.2 % (the junctura link holds the middle finger against the ring finger's
   extensor); after the EDC2 wrap change 24.8 %; after the JT3/JT5 tie fix 29.6 %; after the wrap-side revision

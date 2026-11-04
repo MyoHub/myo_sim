@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Grip and fist diagnosis; share test on whole fingers, settled
+Changed: `scripts/validate_hand_function.py`, `scripts/hand_literature_comparison.py`, `tests/test_hand_grip.py`, `hand_function.json`, `hand_literature.json`, `hand-function-validation.md`, `hand-literature-comparison.md`, `CHANGELOG.md`
+Why: Kong and Amis measure whole fingers and Kong's subjects held for 4 s, while the test read two phalanges at 0.15 s; the diagnosis also shows MCP collateral strands help only that transient, so they are documented and not adopted.
+
 ## 2026-11-04 — Contact margin between adjacent digits
 Changed: `myo_sim/build/data/hand_contact_pairs.json`, `scripts/generate_hand_contacts.py`, `myo_sim/models/contacts/myohand_self_contacts.xml`, `hand-contacts-and-pads.md`, `hand_literature.json`, `hand-literature-comparison.md`, `CHANGELOG.md`
 Why: Rigid capsules of adjacent fingers overlap by up to 8.7 mm at the flexion limits, so the middle finger wedged between its neighbours in a fist; contact now starts where the bones would meet.

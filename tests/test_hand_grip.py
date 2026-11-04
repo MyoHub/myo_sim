@@ -100,15 +100,24 @@ def test_grip_table_is_sourced() -> None:
 
 def test_grip_at_the_cached_optimum() -> None:
     table = load_hand_function_table()
-    tol, targets = table["grip"]["tolerances"], table["grip"]["targets"]
+    tol = table["grip"]["tolerances"]
     r = _cached_grip()
     assert tol["grip_N"][0] <= r["grip"] <= tol["grip_N"][1]
     assert r["grip"] == pytest.approx(CACHED["grip_N"], rel=0.02)
-    for digit, share in targets["digit_share"].items():  # measured shares, mean +- 1 SD (Kong et al. 2011)
-        band = tol["digit_share_sd_band"] * targets["digit_share_sd"][digit]
-        assert abs(r["share"][int(digit)] - share) <= band, (digit, r["share"])
     assert max(abs(m) for m in r["wrist_lock_Nm"]) <= tol["max_wrist_lock_Nm"]
     assert r["penetration_m"] <= tol["max_penetration_m"]
+
+
+def test_finger_shares_at_the_cached_optimum() -> None:
+    """Measured shares, mean +- 1 SD (Kong et al. 2011): whole fingers, held as long as the subjects held (settled)."""
+    v = _script()
+    table = load_hand_function_table()
+    tol, targets = table["grip"]["tolerances"], table["grip"]["targets"]
+    gs = _grip_scene("self_selected")
+    r = v.grip_evaluate(gs, v.grip_levels(gs.scene.hand, CACHED["levels"]), table, table["grip"]["settled"]["settle_s"])
+    for digit, share in targets["digit_share"].items():
+        band = tol["digit_share_sd_band"] * targets["digit_share_sd"][digit]
+        assert abs(r["finger_share"][int(digit)] - share) <= band, (digit, r["finger_share"])
 
 
 def test_grip_tolerance_rejects_weak_flexors() -> None:

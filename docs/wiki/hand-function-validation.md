@@ -59,8 +59,12 @@ drop the penalty.
 
 **Settled grip.** Next to every optimum the script reports the grip at the same levels after 2 s
 from the same closed hand (`grip.settled` in the table; force and digit shares averaged over the
-last 0.05 s), with the change of the grip between 1 and 2 s as a check on how settled it is. It is
-reported only: the optimisation, the tolerances and `tests/test_hand_grip.py` use the paper's 0.15 s.
+last 0.05 s), with the change of the grip between 1 and 2 s as a check on how settled it is. The optimisation and the force
+tolerances use the paper's 0.15 s.
+
+**Finger shares.** `test_finger_shares_at_the_cached_optimum` compares the settled state with Kong et al. 2011, counting all three
+phalanges. Kong's load cells take the whole finger and the subjects held for 4 s; Amis 1987 also sums all three phalanges and finds
+the distal one carrying the most. The grip force stays McFarland's: proximal and middle phalanges, 0.15 s.
 
 **Lateral pinch.** Wrist 0/0, fingers locked. Thumb: CMC 15 deg extension and 20 deg adduction, MP
 20 deg and IP 40 deg flexion. Static on the four thumb DOFs: the tip presses on a sensor, and the tip
@@ -168,6 +172,78 @@ With the AdP heads fitted to Smutz's flexion arms the lateral pinch has no solut
 limit (best palmar force 20.5 N at 1.9 times off-axis), which is why they keep their registered paths
 (`passive-moments-and-thenar.md`). The grip cache fingerprint now also holds the actuator count and OP's
 passive scale, which tell S1b and S2 apart.
+
+## Grip and fist diagnosis
+
+Why the middle finger carried a quarter of its measured share and the little finger too much (35.9 / 10.3 / 13.9 / 39.8 % at 0.15 s
+at the start of this round), hypothesis by hypothesis on the model before the changes below. Each row is a fresh optimisation (ten
+starts, except the baseline's 32); "settled" holds the same levels for 2 s; "whole finger" counts all three phalanges.
+
+**The optimiser first.** The optimum is not one flat top but three modes. Over 32 starts:
+
+| Mode | FDS / FDP levels | Grip (N) | Shares 2 / 3 / 4 / 5 at 0.15 s (%) |
+| --- | --- | --- | --- |
+| FDS and FDP high (the best admissible) | 0.93-1.0 / 0.68-0.85 | 306-319 | 30-33 / 16-18 / 20-23 / 28-32 |
+| FDP high, FDS low | 0.07-0.75 / 0.73-0.96 | 260-314 | 29-41 / 4-14 / 6-17 / 39-49 |
+| FDS high, FDP low | 0.84-1.0 / 0.18-0.37 | 256-288 | 31-34 / 22-29 / 14-18 / 23-27 |
+
+Within a mode the spread is about 2 points per digit; between modes the middle finger moves by up to 25 points at grip forces within
+15 %. The earlier 10.3 % was the second mode, reached by chance, so a change is real only when it exceeds 2 points within one mode.
+
+**Hypotheses.** Best admissible optimum of the first mode unless marked:
+
+| Change | Grip (N) | Shares at 0.15 s (%) | Settled grip (N) | Settled shares (%) | Settled, whole finger (%) |
+| --- | --- | --- | --- | --- | --- |
+| Baseline | 317.2 | 31.5 / 15.6 / 21.6 / 31.4 | 254.4 | 38.1 / 16.3 / 15.2 / 30.3 | 32.0 / 26.8 / 13.7 / 27.6 |
+| Finger-finger contact pairs kept in the scene | 363.5 | 27.3 / 29.8 / 19.9 / 23.0 | 270.7 | 37.0 / 18.3 / 13.7 / 30.9 | 33.0 / 25.9 / 13.3 / 27.8 |
+| MCP abduction spring tightening to 0 deg by 45 deg flexion, 2 N m/rad | 311.0 | 30.3 / 17.0 / 19.1 / 33.6 | 253.3 | 36.9 / 17.2 / 15.0 / 30.9 | 33.2 / 26.1 / 13.3 / 27.4 |
+| ″ 8 N m/rad | 333.2 | 26.2 / 23.4 / 20.7 / 29.7 | 258.2 | 34.9 / 22.2 / 15.7 / 27.2 | 31.1 / 28.5 / 13.9 / 26.4 |
+| MCP abduction at its limits (range ±0.06 deg, soft) | 370.7 | 23.8 / 30.5 / 18.8 / 26.8 | 261.4 | 32.0 / 23.6 / 15.3 / 29.1 | 28.6 / 29.1 / 14.1 / 28.2 |
+| Collateral strands, 80 N/mm (adopted below) | 369.9 | 24.8 / 30.0 / 18.7 / 26.5 | 252.6 | 35.4 / 19.3 / 16.0 / 29.3 | 29.2 / 28.4 / 14.3 / 28.2 |
+| CMC4/5 locked | 267.6 | 35.6 / 20.2 / 22.6 / 21.5 | 230.2 | 41.7 / 19.0 / 14.7 / 24.6 | 32.6 / 29.0 / 14.3 / 24.1 |
+| All finger intrinsics at 0.5 (third mode) | 211.8 | 35.0 / 29.7 / 22.2 / 13.2 | 186.4 | 39.8 / 27.0 / 23.8 / 9.5 | 32.3 / 38.6 / 19.0 / 10.1 |
+| All finger intrinsics at 0 (second mode) | 168.2 | 46.0 / 12.1 / 9.7 / 32.2 | 102.0 | 75.3 / 13.7 / 0.0 / 10.9 | 41.9 / 30.1 / 11.7 / 16.3 |
+| Lumbricals at 0 | 311.6 | 30.5 / 15.6 / 22.0 / 31.9 | 246.1 | 39.0 / 15.2 / 16.0 / 29.8 | 31.9 / 26.9 / 14.0 / 27.1 |
+| Both DI1 heads at 0 | 284.6 | 24.2 / 18.4 / 23.6 / 33.7 | 220.8 | 29.9 / 19.4 / 18.7 / 32.0 | 25.9 / 29.5 / 15.2 / 29.4 |
+| ADM / FDM / ODM at activation 0, one at a time | 297 / 315 / 287 | 32-33 / 15-17 / 21-23 / 29-33 | 223-237 | within 3 points of baseline | within 3 points |
+| ADM, FDM and ODM removed, no passive force | 217.8 | 42.4 / 20.8 / 19.8 / 16.9 | 155.4 | 59.5 / 23.7 / 8.3 / 8.5 | 40.3 / 31.3 / 13.7 / 14.8 |
+| FDP5 force x 0.5 | 292.0 | 34.4 / 17.7 / 23.2 / 24.7 | 237.6 | 42.3 / 17.2 / 19.7 / 20.8 | 38.4 / 30.5 / 16.1 / 15.0 |
+| FDP5 force x 1.25 | 329.8 | 28.2 / 11.7 / 16.6 / 43.4 | 227.1 | 41.3 / 15.4 / 14.8 / 28.4 | 33.3 / 26.1 / 13.3 / 27.3 |
+| FDS5 force x 0.5 / x 1.25 | 327 / 312 | 31 / 14-15 / 20 / 35 | 225 / 254 | within 3 points | within 3 points |
+| Baseline, whole fingers optimised, 1 s, wrist neutral | 242.8 whole finger | | | | 32.8 / 16.2 / 14.1 / 36.9 |
+| Kong's double-frustum handle (48 / 55 / 55 / 48 mm), wrist neutral, 1 s | 201.8 whole finger | | | | 37.4 / 19.8 / 12.7 / 30.2 |
+
+**What matters.**
+
+- **Which phalanges count, at the settled state: 10 points on the middle finger.** The protocol counts the proximal and middle phalanges
+  (McFarland), but Kong's load cells take the whole finger, and Amis 1987 sums all three phalanges and finds the distal phalanx carrying
+  the most, with middle and proximal similar. In the model the middle finger rests on its tip: 0 / 29 / 83 N on its proximal, middle and
+  distal phalanges at the settled state. The fix is in the protocol (below).
+- **The transient.** At 0.15 s neighbour contacts and MCP abduction restraint each move the middle finger by 8-15 points, far above the
+  spread, because they change how the fingers arrive. Settled, the same changes give 2-7 points. Kong's subjects held for 4 s.
+- **The FDS / FDP level.** The middle finger's strength is its FDS. The wrist balance decides how much FDS the optimum affords: FDS has the
+  larger wrist moment arm, so the second mode wins whenever extensors run short (wrist neutral: FDS 0.07-0.11, FDP 0.6, grip 40 % lower).
+  With FDS high and FDP low the whole-finger shares reach Kong's middle finger (38.6 %) at 186 N. No single level satisfies grip and shares.
+- **The little finger is its FDP.** FDP5 has the largest FDP force in the model (Lieber et al. 1992's PCSA 2.20 cm2, equal to FDP3's 2.23, against
+  Ketchum's in-vivo 5.27 kg, the smallest FDP). Half of it brings the little finger to 15.0 % settled, whole finger, Kong's value, which one
+  muscle's force must not be tuned to reach. The hypothenar muscles at full activation add about 5 points; no single one matters.
+- **What does not matter:** lumbricals, FDS5, a single hypothenar muscle.
+- **Unexplained:** the ring finger stays at 13-16 % (settled, whole finger) in every row but one, against 22-25 %. EDC at 0.8-0.95 in the optimum (the
+  optimiser uses it as a wrist extensor, while Chao et al. 1976 have the extensors passive in grasp) takes most from the ring finger, the largest
+  EDC against its flexors; at EDC 0 the grip rises to 388 N but the wrist lock supplies 5.3 N m. The root of the low share may be the wrist balance
+  itself.
+
+**Fist.** Which contact pairs hold the middle finger: removing the pairs of digits 2-3 lets it reach the palm (-1.6 mm), as does removing 3-4 (-1.1 mm); 2-4 gives
+9.2 mm, 3-5 / 2-5 / 4-5 none. It is wedged between two neighbours: at their flexion limits the proximal capsules overlap 8.7 and 6.0 mm, and the ring finger
+drifts radially by up to 20 deg, past the MCP's soft limit, under its FDS (abduction arm -4.3 mm at 90 deg MCP flexion against +0.9 mm at 0 deg). A tight
+abduction spring alone makes it worse (gap 17-22 mm): with nowhere to go the overlap remains. Fixes: the active fist pairs and the adjacent-digit margin.
+
+**History against `dev`.** `dev`'s shares in this protocol are 52.3 / 36.2 / 4.3 / 7.2 % at 0.15 s: the middle finger is inside Kong's band, the others are not. The
+middle finger's recorded share falls 40.7 (S1) -> 38.0 (S1b) -> 35.0 (S2) -> 34.0 (S3) -> 30.9 (S4, hypothenar muscles) -> 29.7 (S5) -> 25-30 (S6-S2c) -> 27.3 (wrap sides) ->
+17.2 (`vmax` 10) -> 10.3 (ECU), but the last two are mode changes as well as model changes: at the old levels `vmax` 10 gave 18 % and the 32-start optimum of the ECU step is
+15.6 %. Hypothenar force pulled share to digit 5 (S4), and each step of muscle speed moved the 0.15 s reading toward the settled distribution.
+
+**Protocol, as a result.** The share test now takes whole fingers in the settled state (above). The tolerance (1 SD of Kong) and the target are unchanged; the test still fails.
 
 ## Known issues
 

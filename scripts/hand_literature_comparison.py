@@ -660,6 +660,8 @@ def from_hand_function(results: dict[str, Any]) -> dict[str, Any]:
         out["grip_self_selected"] = base["grip"]
         out["grip_settled"] = base.get("settled", {}).get("grip")
         out["grip_shares"] = [100.0 * base["share"][str(d)] for d in DIGITS]
+        if "finger_share" in base.get("settled", {}):
+            out["grip_finger_shares_settled"] = [100.0 * base["settled"]["finger_share"][str(d)] for d in DIGITS]
         out["grip_posture_change"] = [100.0 * (g[k]["balanced"]["grip"] / base["grip"] - 1.0) for k in ("neutral", "flexed")]
     if "pinch" in results:
         p = results["pinch"]

@@ -536,6 +536,9 @@ def grip_evaluate(
         "wrist_lock_Nm": np.mean([s["wrist_lock_Nm"] for s in samples], axis=0).tolist(),
     }
     mean["share"] = {d: mean["digits"][d] / mean["grip"] if mean["grip"] > 0 else 0.0 for d in DIGITS}
+    # Kong et al. 2011 and Amis 1987 measure the whole finger: all three phalanges.
+    whole = {d: sum(mean["segments"][f"{d}_{seg}"] for seg in ("proximal", "middle", "distal")) for d in DIGITS}
+    mean["finger_share"] = {d: whole[d] / sum(whole.values()) if sum(whole.values()) > 0 else 0.0 for d in DIGITS}
     mean["fl"] = {n: force_length(scene, data, n) for grp in ("FDS", "FDP") for n in scene.hand.muscles[grp]}
     mean["angles_deg"] = {
         f"{k}{d}": scene.angle(data, f"{k}{d}") for d in DIGITS for k in ("mcp_flexion", "pip_flexion", "dip_flexion")
@@ -552,7 +555,7 @@ def grip_settled(gs: GripScene, levels: dict[str, float], table: dict[str, Any])
     s = table["grip"]["settled"]
     check = grip_evaluate(gs, levels, table, s["check_s"])["grip"]
     late = grip_evaluate(gs, levels, table, s["settle_s"])
-    keys = ("grip", "digits", "share", "wrist_lock_Nm", "penetration_m")
+    keys = ("grip", "digits", "share", "finger_share", "wrist_lock_Nm", "penetration_m")
     return {k: late[k] for k in keys} | {"change_from_check": late["grip"] / check - 1.0 if check > 0 else 0.0}
 
 
@@ -848,8 +851,9 @@ def _fmt(results: dict[str, Any], table: dict[str, Any]) -> str:
                 if "settled" in r:
                     st = r["settled"]
                     share = " ".join(f"{d}:{100 * st['share'][d]:.1f}%" for d in DIGITS)
+                    whole = " ".join(f"{d}:{100 * st['finger_share'][d]:.1f}%" for d in DIGITS)
                     lines.append(
-                        f"  settled ({table['grip']['settled']['settle_s']:g} s, same levels): {st['grip']:.1f} N, shares {share}, "
+                        f"  settled ({table['grip']['settled']['settle_s']:g} s, same levels): {st['grip']:.1f} N, shares {share}, whole finger {whole}, "
                         f"change since {table['grip']['settled']['check_s']:g} s {100 * st['change_from_check']:+.1f} %, "
                         f"wrist lock {max(abs(v) for v in st['wrist_lock_Nm']):.3f} N m"
                     )

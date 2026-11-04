@@ -358,7 +358,7 @@
       ]
     },
     "grip_shares": {
-      "label": "Grip share per digit 2 / 3 / 4 / 5",
+      "label": "Grip share per digit 2 / 3 / 4 / 5, proximal and middle phalanges, at 0.15 s",
       "unit": "%",
       "literature": [
         {
@@ -377,7 +377,7 @@
           "spread_kind": "SD",
           "kind": "in vivo",
           "source": "kong2011",
-          "protocol": "maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC (test band)"
+          "protocol": "maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s"
         },
         {
           "value": "30 / 30 / 22 / 18",
@@ -1840,6 +1840,36 @@
           "kind": "model",
           "source": "gait2392",
           "protocol": "OpenSim 4.6, hip neutral; model: myolegs, -dL/dq"
+        }
+      ]
+    },
+    "grip_finger_shares_settled": {
+      "label": "Grip share per digit 2 / 3 / 4 / 5, whole fingers, settled",
+      "unit": "%",
+      "literature": [
+        {
+          "value": [
+            21.1,
+            38.5,
+            25.5,
+            15.0
+          ],
+          "spread": [
+            4.7,
+            4.2,
+            4.7,
+            4.7
+          ],
+          "spread_kind": "SD",
+          "kind": "in vivo",
+          "source": "kong2011",
+          "protocol": "maximal power grip of a multi-finger handle (spans 48-55 mm), elbow 90 deg, wrist neutral, n = 72 men; Table 3, 100 % MVC load cell per finger, held 4 s (test band)"
+        },
+        {
+          "value": "30 / 30 / 22 / 18",
+          "kind": "in vivo",
+          "source": "amis1987",
+          "protocol": "maximal grasp of cylinders 31-116 mm, sum of all three phalanges, one finger instrumented per trial, n = 17; abstract and Fig. 6 (no SDs)"
         }
       ]
     }
