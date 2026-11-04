@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-04 — Body mass, knee and head share in the literature comparison
+Changed: `scripts/hand_literature_comparison.py`, `myo_sim/build/references.py`, `myo_sim/build/data/hand_literature.json`, `docs/wiki/hand-literature-comparison.md`, `docs/validation/neck/README.md`, `tests/test_hand_literature.py`, `CHANGELOG.md`
+Why: Every model change gets its comparison. The new step puts total mass and the femur origin next to the Rajagopal OpenSim model and the head share next to de Leva; the test holds them to the current model. Grip, pinch and tenodesis did not move.
+
 ## 2026-11-04 — Standing keyframe on the rebuilt model
 Changed: `docs/wiki/standing-keyframe.md`, `tests/test_standing_keyframe.py`, `CHANGELOG.md`
 Why: The keyframe came with the 0.2.4 merge. Regenerating gave the same table, while forces, speeds and the centre of mass changed, so the page takes the new numbers. The spec-editing tests delete the toe joints now, since passive tendons and couplings hold the hand joints. Two 50 ms speed checks fail and are left open with their limits unchanged.

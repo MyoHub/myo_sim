@@ -62,6 +62,17 @@ RAJAGOPAL2016_LEG = {  # Rajagopal et al. 2016; l0/lts m, alpha rad
     },
 }
 
+RAJAGOPAL2016_BODY = {  # OpenSim 4.6 on Rajagopal2016.osim; femur_r origin in the tibia_r frame (m) by knee flexion (deg), couplings enforced
+    "citation": "Rajagopal A, Dembia CL, DeMers MS, Delp DD, Hicks JL, Delp SL (2016) IEEE Trans Biomed Eng 63:2068-2079",
+    "total_mass_kg": 75.337,
+    "femur_origin_in_tibia_r": {
+        0: (0.000000460, 0.404425200, 0.001265260),
+        30: (-0.207409107, 0.349768489, -0.029175461),
+        90: (-0.407269807, -0.005492295, -0.074626560),
+        120: (-0.354443726, -0.208012532, -0.053421677),
+    },
+}
+
 MOBL_ARM = {  # Holzbaur 2005 / Saul 2015; l0/lts m, alpha rad
     "citation": "Holzbaur et al. 2005 Ann Biomed Eng 33:829-840; Saul et al. 2015 Comput Methods Biomech Biomed Engin 18:1445-1458",
     "doi": "10.1007/s10439-005-3320-7; 10.1080/10255842.2014.916698",

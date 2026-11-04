@@ -255,6 +255,11 @@
       "short": "Gait2392",
       "citation": "Delp SL, Loan JP, Hoy MG, Zajac FE, Topp EL, Rosen JM. An interactive graphics-based model of the lower extremity to study orthopaedic surgical procedures. IEEE Trans Biomed Eng 37(8):757-767, 1990; OpenSim model Gait2392 (Seth, Anderson, Delp), CC BY 3.0.",
       "doi": "10.1109/10.102791"
+    },
+    "rajagopal2016": {
+      "short": "Rajagopal et al. 2016",
+      "citation": "Rajagopal A, Dembia CL, DeMers MS, Delp DD, Hicks JL, Delp SL. Full-body musculoskeletal model for muscle-driven simulation of human gait. IEEE Trans Biomed Eng 63(10):2068-2079, 2016.",
+      "doi": "10.1109/TBME.2016.2586891"
     }
   },
   "quantities": {
@@ -1768,6 +1773,30 @@
           "kind": "cadaver-derived segment parameters, men",
           "source": "deleva1996",
           "protocol": "head-and-neck segment; model: skull and cervical segments over the whole body"
+        }
+      ]
+    },
+    "fullbody_total_mass": {
+      "label": "Total mass, myofullbody",
+      "unit": "kg",
+      "literature": [
+        {
+          "value": 75.34,
+          "kind": "model, the source of the legs",
+          "source": "rajagopal2016",
+          "protocol": "OpenSim 4.6, total of Rajagopal2016.osim; model: sum of the body masses"
+        }
+      ]
+    },
+    "femur_origin_opensim_distance": {
+      "label": "Femur origin seen from the tibia, distance from OpenSim's at knee flexion 0 / 30 / 90 / 120 deg",
+      "unit": "mm",
+      "literature": [
+        {
+          "value": "0 (the reference)",
+          "kind": "model, walker_knee",
+          "source": "rajagopal2016",
+          "protocol": "OpenSim 4.6, Rajagopal2016.osim, knee angle set and couplings enforced; model: myofullbody, right knee, couplings on their polynomials"
         }
       ]
     },
@@ -13054,6 +13083,656 @@
         "CMC4/5 springs: about 3 N m at the flexion limits, between El-Shennawy et al. 2001's 0.96 N m (a lower bound) and Aljasim et al. 2025's 4.4 N m. The ranges stay; the CMC5 limit takes about 70 N at the MC5 head.",
         "ORL: taut at DIP 45 deg at every PIP angle Ueba tested, so in deep flexion, where Harris & Rutledge saw it slack: about 15 N in a full fist, a few percent of the FDP's moment at the DIP. A stretch linear in PIP can't rise from PIP 0 to 30 deg as Ueba's mean does. It leaves the DIP-PIP coupling unchanged: it only resists DIP flexion.",
         "EDC2: 15.6 mm clear of the carpus at the corner before, now below EDC4 and EDC5's 11 mm; wrist arm at neutral / 39 deg flexion 18.7 / 13.6 -> 17.0 / 10.8 mm (dev 17.3 / 10.3)."
+      ]
+    },
+    {
+      "id": "pelvis_knee_head",
+      "title": "Knee hinges, coupled ranges, pelvis counted once, head share (MyoHub/myo_sim#153-#156)",
+      "summary": "The knee's hinges move to Rajagopal's walker_knee frame (#153), the left LTpT_T12 path points are mirrored (#154), the sacrum is massless so the pelvis counts once (#155), the coordinates the knee drives get ranges that contain their couplings (#156). #155 itself left the head unchanged; the head then returns to de Leva's share of the new total, the difference going to the torso. Before = CMC4/5 and ORL step.",
+      "values": {
+        "tenodesis_mcp_rom": [
+          72.57,
+          54.82,
+          60.33,
+          59.39
+        ],
+        "tenodesis_pip_rom": 31.41,
+        "tenodesis_index_gap": [
+          29.31,
+          37.78
+        ],
+        "tenodesis_release": [
+          72.03,
+          54.37,
+          55.18,
+          30.76
+        ],
+        "grip_self_selected": 469.73,
+        "grip_settled": 412.18,
+        "grip_shares": [
+          34.51,
+          13.76,
+          18.51,
+          33.22
+        ],
+        "grip_finger_shares_settled": [
+          33.72,
+          24.66,
+          13.37,
+          28.25
+        ],
+        "grip_posture_change": [
+          -33.03,
+          -58.1
+        ],
+        "lateral_pinch": 96.25,
+        "pip_flexion_limit": [
+          115.0,
+          115.0,
+          115.0,
+          115.0
+        ],
+        "cmc45_arc": [
+          21.0,
+          43.3
+        ],
+        "cmc45_active_flexion": [
+          16.0,
+          33.0
+        ],
+        "cmc45_coupling": 2.06,
+        "op_moment_arms": [
+          13.37,
+          -2.38
+        ],
+        "adpt_moment_arms": [
+          21.62,
+          18.94,
+          6.92
+        ],
+        "adpo_moment_arms": [
+          14.72,
+          1.42,
+          8.35
+        ],
+        "fpb_moment_arms": [
+          16.94,
+          -4.32,
+          8.73
+        ],
+        "apb_moment_arms": [
+          4.13,
+          -9.7,
+          2.04
+        ],
+        "fpl_moment_arms": [
+          4.18,
+          -1.66,
+          7.12
+        ],
+        "apl_moment_arms": [
+          -7.06,
+          -11.3
+        ],
+        "di1_moment_arms": [
+          4.4,
+          8.21
+        ],
+        "index_abduction_moment": 2.03,
+        "adm_moment_arms": [
+          5.18,
+          9.92
+        ],
+        "little_abduction_moment": 1.93,
+        "hypothenar_cupping": [
+          12.18,
+          25.1
+        ],
+        "pi1_moment_arms": [
+          5.97,
+          5.86
+        ],
+        "lum1_moment_arms": [
+          8.22,
+          4.93
+        ],
+        "di2_moment_arms": [
+          5.47,
+          10.65
+        ],
+        "lum2_moment_arms": [
+          11.38,
+          9.96
+        ],
+        "di3_moment_arms": [
+          4.44,
+          8.79
+        ],
+        "pi2_moment_arms": [
+          3.42,
+          8.2
+        ],
+        "lum3_moment_arms": [
+          6.55,
+          7.65
+        ],
+        "di4_moment_arms": [
+          4.91,
+          7.56
+        ],
+        "pi3_moment_arms": [
+          2.43,
+          8.54
+        ],
+        "lum4_moment_arms": [
+          5.45,
+          8.65
+        ],
+        "index_intrinsic_forces": [
+          249.0,
+          124.5,
+          18.3
+        ],
+        "edc_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "eip_ip_moment_arms": [
+          1.94,
+          2.57
+        ],
+        "lumbrical_ip_moment_arms": [
+          0.7,
+          1.8
+        ],
+        "ui_ip_moment_arms": [
+          1.02,
+          1.87
+        ],
+        "orl_share": [
+          29.52,
+          19.45,
+          11.24,
+          4.08
+        ],
+        "intrinsic_plus": [
+          92.12,
+          -1.19,
+          -0.89
+        ],
+        "ip_coupling_slope": [
+          -0.01,
+          0.35,
+          null
+        ],
+        "lumbrical_excursion": [
+          31.93,
+          36.66,
+          36.46,
+          29.56
+        ],
+        "lum1_systemic_mcp_arm": 3.0,
+        "ecrl_moment_arms": [
+          11.66,
+          -23.64
+        ],
+        "ecrb_moment_arms": [
+          14.01,
+          -12.57
+        ],
+        "fcr_moment_arms": [
+          -16.41,
+          -6.41
+        ],
+        "juncturae_ring_traction": [
+          17.48,
+          17.86
+        ],
+        "juncturae_middle_traction": [
+          0.06,
+          -0.02
+        ],
+        "fcu_moment_arms": [
+          14.66,
+          12.25
+        ],
+        "ecu_extension_rotation": [
+          5.71,
+          6.09,
+          0.13
+        ],
+        "ecu_ulnar_rotation": [
+          11.12,
+          17.36,
+          17.82
+        ],
+        "fds5_force": [
+          60.9,
+          28.51
+        ],
+        "forearm_vmax": 10.0,
+        "thumb_cmc_inertia": [
+          5.47,
+          5.36
+        ],
+        "force_velocity_rate": 3.94,
+        "period_two_share": [
+          0.0,
+          2.51,
+          2.2,
+          1.1,
+          2.3
+        ],
+        "free_peak_speed": [
+          13.01,
+          12.43,
+          19.46
+        ],
+        "forearm_axis_radial_head": 1.03,
+        "forearm_axis_ulnar_head": -0.71,
+        "prosup_moment_arms_biceps": [
+          6.31,
+          15.77,
+          -4.74
+        ],
+        "prosup_moment_arms_supinator": [
+          6.77,
+          7.88,
+          5.79
+        ],
+        "prosup_moment_arms_pt": [
+          -4.36,
+          -11.63,
+          6.41
+        ],
+        "prosup_moment_arms_pq": [
+          -2.1,
+          -7.29,
+          -0.99
+        ],
+        "prosup_moment_arms_ecu": [
+          0.19,
+          -1.21,
+          -0.2
+        ],
+        "prosup_moment_arms_fcu": [
+          -5.04,
+          -0.08,
+          5.05
+        ],
+        "head_neck_mass_share": 6.94,
+        "neck_strength": [
+          30.82,
+          46.11,
+          39.7,
+          12.83
+        ],
+        "fullbody_total_mass": 76.51,
+        "femur_origin_opensim_distance": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "pect_hip_moment_arms": [
+          23.46,
+          24.96,
+          3.52
+        ],
+        "quad_fem_hip_moment_arms": [
+          8.36,
+          41.03,
+          -35.03
+        ],
+        "gem_hip_moment_arms": [
+          1.4,
+          11.22,
+          -29.42
+        ],
+        "fingertip_pad_thickness": {
+          "2": 6.4,
+          "3": 6.63,
+          "4": 6.71,
+          "5": 6.07,
+          "thumb": 7.89
+        },
+        "palm_pad_thickness": {
+          "palm_pad_r": 7.99,
+          "hypothenar_pad_r": 16.84,
+          "thenar_pad_r": 26.7
+        },
+        "fist_tip_to_palm": {
+          "2": 0.25,
+          "3": 0.61,
+          "4": -0.6,
+          "5": -0.38
+        },
+        "fist_max_penetration": 0.69
+      },
+      "before": {
+        "label": "pelvis_knee_head",
+        "id": "cupping_orl",
+        "values": {
+          "tenodesis_mcp_rom": [
+            72.57,
+            54.82,
+            60.33,
+            59.39
+          ],
+          "tenodesis_pip_rom": 31.41,
+          "tenodesis_index_gap": [
+            29.31,
+            37.78
+          ],
+          "tenodesis_release": [
+            72.03,
+            54.37,
+            55.18,
+            30.76
+          ],
+          "grip_self_selected": 469.73,
+          "grip_settled": 412.18,
+          "grip_shares": [
+            34.51,
+            13.76,
+            18.51,
+            33.22
+          ],
+          "grip_finger_shares_settled": [
+            33.72,
+            24.66,
+            13.37,
+            28.25
+          ],
+          "grip_posture_change": [
+            -33.03,
+            -58.1
+          ],
+          "lateral_pinch": 96.25,
+          "pip_flexion_limit": [
+            115.0,
+            115.0,
+            115.0,
+            115.0
+          ],
+          "cmc45_arc": [
+            21.0,
+            43.3
+          ],
+          "cmc45_active_flexion": [
+            16.0,
+            33.0
+          ],
+          "cmc45_coupling": 2.06,
+          "op_moment_arms": [
+            13.37,
+            -2.38
+          ],
+          "adpt_moment_arms": [
+            21.62,
+            18.94,
+            6.92
+          ],
+          "adpo_moment_arms": [
+            14.72,
+            1.42,
+            8.35
+          ],
+          "fpb_moment_arms": [
+            16.94,
+            -4.32,
+            8.73
+          ],
+          "apb_moment_arms": [
+            4.13,
+            -9.7,
+            2.04
+          ],
+          "fpl_moment_arms": [
+            4.18,
+            -1.66,
+            7.12
+          ],
+          "apl_moment_arms": [
+            -7.06,
+            -11.3
+          ],
+          "di1_moment_arms": [
+            4.4,
+            8.21
+          ],
+          "index_abduction_moment": 2.03,
+          "adm_moment_arms": [
+            5.18,
+            9.92
+          ],
+          "little_abduction_moment": 1.93,
+          "hypothenar_cupping": [
+            12.18,
+            25.1
+          ],
+          "pi1_moment_arms": [
+            5.97,
+            5.86
+          ],
+          "lum1_moment_arms": [
+            8.22,
+            4.93
+          ],
+          "di2_moment_arms": [
+            5.47,
+            10.65
+          ],
+          "lum2_moment_arms": [
+            11.38,
+            9.96
+          ],
+          "di3_moment_arms": [
+            4.44,
+            8.79
+          ],
+          "pi2_moment_arms": [
+            3.42,
+            8.2
+          ],
+          "lum3_moment_arms": [
+            6.55,
+            7.65
+          ],
+          "di4_moment_arms": [
+            4.91,
+            7.56
+          ],
+          "pi3_moment_arms": [
+            2.43,
+            8.54
+          ],
+          "lum4_moment_arms": [
+            5.45,
+            8.65
+          ],
+          "index_intrinsic_forces": [
+            249.0,
+            124.5,
+            18.3
+          ],
+          "edc_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "eip_ip_moment_arms": [
+            1.94,
+            2.57
+          ],
+          "lumbrical_ip_moment_arms": [
+            0.7,
+            1.8
+          ],
+          "ui_ip_moment_arms": [
+            1.02,
+            1.87
+          ],
+          "orl_share": [
+            29.52,
+            19.45,
+            11.24,
+            4.08
+          ],
+          "intrinsic_plus": [
+            92.12,
+            -1.19,
+            -0.89
+          ],
+          "ip_coupling_slope": [
+            -0.01,
+            0.35,
+            null
+          ],
+          "lumbrical_excursion": [
+            31.93,
+            36.66,
+            36.46,
+            29.56
+          ],
+          "lum1_systemic_mcp_arm": 3.0,
+          "ecrl_moment_arms": [
+            11.66,
+            -23.64
+          ],
+          "ecrb_moment_arms": [
+            14.01,
+            -12.57
+          ],
+          "fcr_moment_arms": [
+            -16.41,
+            -6.41
+          ],
+          "juncturae_ring_traction": [
+            17.85,
+            17.86
+          ],
+          "juncturae_middle_traction": [
+            0.06,
+            -0.04
+          ],
+          "fcu_moment_arms": [
+            14.66,
+            12.25
+          ],
+          "ecu_extension_rotation": [
+            5.71,
+            6.09,
+            0.13
+          ],
+          "ecu_ulnar_rotation": [
+            11.12,
+            17.36,
+            17.82
+          ],
+          "fds5_force": [
+            60.9,
+            28.51
+          ],
+          "forearm_vmax": 10.0,
+          "thumb_cmc_inertia": [
+            5.47,
+            5.36
+          ],
+          "force_velocity_rate": 3.94,
+          "period_two_share": [
+            0.0,
+            2.51,
+            2.2,
+            1.1,
+            2.3
+          ],
+          "free_peak_speed": [
+            13.01,
+            12.43,
+            19.46
+          ],
+          "forearm_axis_radial_head": 1.03,
+          "forearm_axis_ulnar_head": -0.71,
+          "prosup_moment_arms_biceps": [
+            6.31,
+            15.77,
+            -4.74
+          ],
+          "prosup_moment_arms_supinator": [
+            6.77,
+            7.88,
+            5.79
+          ],
+          "prosup_moment_arms_pt": [
+            -4.36,
+            -11.63,
+            6.41
+          ],
+          "prosup_moment_arms_pq": [
+            -2.1,
+            -7.29,
+            -0.99
+          ],
+          "prosup_moment_arms_ecu": [
+            0.19,
+            -1.21,
+            -0.2
+          ],
+          "prosup_moment_arms_fcu": [
+            -5.04,
+            -0.08,
+            5.05
+          ],
+          "head_neck_mass_share": 6.94,
+          "neck_strength": [
+            30.81,
+            46.12,
+            39.69,
+            12.83
+          ],
+          "pect_hip_moment_arms": [
+            23.46,
+            24.96,
+            3.52
+          ],
+          "quad_fem_hip_moment_arms": [
+            8.36,
+            41.03,
+            -35.03
+          ],
+          "gem_hip_moment_arms": [
+            1.4,
+            11.22,
+            -29.42
+          ],
+          "fingertip_pad_thickness": {
+            "2": 6.4,
+            "3": 6.63,
+            "4": 6.71,
+            "5": 6.07,
+            "thumb": 7.89
+          },
+          "palm_pad_thickness": {
+            "palm_pad_r": 7.99,
+            "hypothenar_pad_r": 16.84,
+            "thenar_pad_r": 26.7
+          },
+          "fist_tip_to_palm": {
+            "2": 0.25,
+            "3": 0.61,
+            "4": -0.6,
+            "5": -0.38
+          },
+          "fist_max_penetration": 0.69
+        }
+      },
+      "notes": [
+        "Total mass of myofullbody 84.00 -> 76.51 kg, 1.17 kg (1.6 %) above the 75.34 kg of the Rajagopal model the legs come from. The total follows from the segment masses of the sources and was not chosen.",
+        "Head and neck share: 6.94 % before, 7.62 % with the pelvis fix alone (5.829 kg of 76.51 kg), 6.94 % after resizing (5.310 kg). Skull 4.30 kg as in the source, cervical segments 1.529 -> 1.010 kg, rigid head of the part models 5.848 -> 5.329 kg, torso 14.897 -> 15.416 kg; inertias scale with the masses.",
+        "Femur origin seen from the tibia, distance from OpenSim at knee 0 / 30 / 90 / 120 deg: 0.00 / 4.80 / 12.75 / 15.53 mm before, 0.000 / 0.000 / 0.000 / 0.003 mm now, on values measured with OpenSim 4.6 on Rajagopal2016.osim. tests/test_knee_joint_centre.py holds its own stored values, within 0.05 mm.",
+        "Largest excess of a coupled knee coordinate over its range along the coupling: 2.5e-4 rad (knee_angle_rotation2_r at 46 deg) before, none now.",
+        "Hand: grip 469.7 N, settled 412.2 N, lateral pinch 96.2 N, unchanged: the muscle forces do not depend on body mass.",
+        "Junctura traction of myoarm_r: ring 17.85 / 17.86 -> 17.48 / 17.86 deg, though no hand parameter changed and the bodies whose mass changed are fixed to the world in that model. It moved with the body masses alone (no change with the knee merge); not explained further, so read 0.4 deg as the sensitivity of this measure."
       ]
     }
   ]

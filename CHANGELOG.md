@@ -44,6 +44,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
   - **Torso (all models):** 14.897 -> 15.416 kg.
   - **Inertia:** scaled with mass, as #138 did: torso `diaginertia` x 1.0349, rigid head x 0.9112, cervical segments x 0.6603 (1.1-3.1e-4 kg m2).
   - **Effect:** whole-body centre of mass at `qpos0` 1.24 mm lower and 0.16 mm further forward. Downstream: mass distribution in every model with the torso chain changes slightly; the figures for the head, neck and torso in the older entries below are superseded.
+  - **Against the literature:** `hand-literature-comparison.md` (pelvis, knee and head step): total 76.51 kg against 75.34 kg in the Rajagopal OpenSim model the legs come from; femur origin from the tibia within 0.003 mm of OpenSim at 0 / 30 / 90 / 120 deg (0.00 / 4.80 / 12.75 / 15.53 mm before); head and neck 6.94 %. Grip 469.7 N and lateral pinch 96.2 N unchanged.
 
 - **Knee coupled ranges (`myolegs`, `myolegs_abdomen`, `myofullbody`).** Ten ranges of the coordinates the knee drives are widened to contain their own coupling polynomials. Downstream: the joint limits no longer disagree with the couplings at those knee angles; policies trained near them may behave slightly differently. Not measured on a trained policy.
 

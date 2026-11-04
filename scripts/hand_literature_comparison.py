@@ -595,6 +595,26 @@ def head_and_neck() -> dict[str, Any]:
     }
 
 
+def body_against_rajagopal() -> dict[str, Any]:
+    """Total mass of ``myofullbody`` (kg) and the femur origin seen from the tibia against OpenSim (mm), couplings on their polynomials."""
+    import myo_sim
+    from myo_sim.build.references import RAJAGOPAL2016_BODY
+
+    model = myo_sim.load_model("myofullbody")
+    data = mujoco.MjData(model)
+    coupling_values = _load_script("generate_standing_keyframes").coupling_values
+    errors = []
+    for degrees, reference in RAJAGOPAL2016_BODY["femur_origin_in_tibia_r"].items():
+        qpos = model.qpos0.copy()
+        qpos[model.joint("knee_angle_r").qposadr[0]] = np.radians(degrees)
+        data.qpos[:] = coupling_values(model, qpos)
+        mujoco.mj_kinematics(model, data)
+        femur, tibia = model.body("femur_r").id, model.body("tibia_r").id
+        position = data.xmat[tibia].reshape(3, 3).T @ (data.xpos[femur] - data.xpos[tibia])
+        errors.append(1e3 * float(np.linalg.norm(position - np.array(reference))))
+    return {"fullbody_total_mass": float(model.body_mass.sum()), "femur_origin_opensim_distance": errors}
+
+
 def deep_hip() -> dict[str, Any]:
     """Moment arms of the deep hip muscles of ``myolegs`` at neutral: flexion / adduction / rotation (mm, dL/dq, sign of Gait2392)."""
     import myo_sim
@@ -633,6 +653,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= force_velocity(model)
     out |= forearm_rotation(model)
     out |= head_and_neck()
+    out |= body_against_rajagopal()
     out |= deep_hip()
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)

@@ -43,9 +43,9 @@ axial rotation uses a pure moment. Other body coordinates are prescribed.
 
 | Direction | Model (Nm) | Experiment mean ± SD (Nm) |
 |---|---:|---:|
-| Flexion | 30.81 | 30 ± 5 |
-| Extension | 46.12 | 52 ± 11 |
-| Lateral bending | 39.69 | 36 ± 8 |
+| Flexion | 30.82 | 30 ± 5 |
+| Extension | 46.11 | 52 ± 11 |
+| Lateral bending | 39.70 | 36 ± 8 |
 | Axial rotation | 12.83 | 15 ± 4 |
 
 Measured on the current model with `neck_strength` in `scripts/hand_literature_comparison.py` (the recording with
