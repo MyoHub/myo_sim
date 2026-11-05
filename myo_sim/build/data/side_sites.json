@@ -1,0 +1,782 @@
+{
+  "format": 1,
+  "description": "Side sites moved so that a wrap has the same path under MuJoCo 3's and MuJoCo 4's wrap rule. Written by scripts/migrate_side_sites.py (search, off-body-sweep); the chain XML takes 'pos' and 'body' from here. MuJoCo 3's path is the reference: a site moves only if no sampled in-range posture changes under either rule.",
+  "sources": [
+    "MuJoCo changelog, Upcoming Version: side site semantics; src/engine/engine_util_misc.c wrap_circle at 3.17.0 and on main"
+  ],
+  "sampling": {
+    "postures_per_set": 12000,
+    "sweep_steps": 101,
+    "sets": {
+      "A": "in range, joint couplings applied",
+      "B": "in range, joints independent",
+      "C": "as A, 0.13 rad past the hinge limits"
+    },
+    "length_tolerance_m": 1e-06
+  },
+  "kept_note": "Wraps whose MuJoCo 3 path no side site gives under the MuJoCo 4 rule, mostly because the MuJoCo 3 path itself flips sides inside the range of motion. They keep their site, so MuJoCo 3 is unchanged and MuJoCo 4 differs by the amounts here. 'site_without_jump' is a site that would give one jump-free path on both versions, at the stated change from MuJoCo 3; not applied.",
+  "sites": [
+    {
+      "name": "TMAJ_LAThum_cylinder_TMAJ_1_sidesite_r",
+      "geom": "TMAJ_LAThum_cylinder",
+      "users": [
+        "TMAJ_tendon"
+      ],
+      "body": "humerus_r",
+      "body_before": "humerus_r",
+      "pos_before": [
+        0.0707,
+        0.0257,
+        0.0645
+      ],
+      "pos": [
+        -0.005755,
+        -0.043457,
+        0.006894
+      ],
+      "method": "Direction in the cylinder's plane, two radii from its axis, in the middle (widest margin) of the directions for which both wrap rules give the MuJoCo 3 path at every sampled posture.",
+      "margin_deg": 59.5,
+      "difference_before_mm": 14.814,
+      "share_of_postures_before_percent": 100.0
+    },
+    {
+      "name": "TMAJ_LAThum_cylinder_LAT2_1_sidesite_r",
+      "geom": "TMAJ_LAThum_cylinder",
+      "users": [
+        "LAT2_tendon"
+      ],
+      "body": "humerus_r",
+      "body_before": "humerus_r",
+      "pos_before": [
+        0.0707,
+        0.0257,
+        0.0645
+      ],
+      "pos": [
+        -0.004875,
+        -0.043498,
+        0.007317
+      ],
+      "method": "Direction in the cylinder's plane, two radii from its axis, in the middle (widest margin) of the directions for which both wrap rules give the MuJoCo 3 path at every sampled posture.",
+      "margin_deg": 63.5,
+      "difference_before_mm": 12.842,
+      "share_of_postures_before_percent": 100.0
+    },
+    {
+      "name": "SUP_cylinder_SUP_2_sidesite_r",
+      "geom": "SUP_cylinder",
+      "users": [
+        "SUP_tendon"
+      ],
+      "body": "ulna_r",
+      "body_before": "radius_r",
+      "pos_before": [
+        0.005119,
+        -0.043905,
+        0.015596
+      ],
+      "pos": [
+        0.01513,
+        -0.0387,
+        0.03071
+      ],
+      "method": "No fixed direction on the radius holds under the MuJoCo 4 rule: the insertion on the ulna turns about 200 deg around the cylinder with forearm rotation. A site on the ulna turns with it. Chosen with 'off-body-sweep': equal to the MuJoCo 3 path under both rules over the pro_sup range, the rules agree 0.53 rad past the lower and 0.10 rad past the upper limit. The site position is a routing control, not an anatomical landmark.",
+      "difference_before_mm": 33.009,
+      "share_of_postures_before_percent": 12.682,
+      "past_limit_note": "MuJoCo 3 with the old site flips to the other arc 0.004 rad past the upper limit, by 2.75 mm; the new site stays on the in-range arc there, so past that limit it differs from the old path by that amount."
+    }
+  ],
+  "kept": [
+    {
+      "side_site": "LIGhh_s_ellipsoid_s_glenohum_1_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "s_glenohum_ligament/LIGhh_s_ellipsoid_s_glenohum"
+      ],
+      "difference_mm": {
+        "A": 24.603,
+        "B": 34.177,
+        "C": 33.852
+      },
+      "share_percent": {
+        "A": 0.094,
+        "B": 1.34,
+        "C": 0.242
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 14.18,
+        "mujoco4": 0.3
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          0.759,
+          0.6312,
+          -0.1595
+        ],
+        "rules_disagree_postures": 0,
+        "jump_mm": 0.3,
+        "changes_mujoco3_share_percent": 0.07,
+        "changes_mujoco3_max_mm": 25.72
+      }
+    },
+    {
+      "side_site": "LIGhh_mi_ellipsoid_m_glenohum_1_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "m_glenohum_ligament/LIGhh_mi_ellipsoid_m_glenohum"
+      ],
+      "difference_mm": {
+        "A": 19.856,
+        "B": 20.37,
+        "C": 17.652
+      },
+      "share_percent": {
+        "A": 0.109,
+        "B": 0.481,
+        "C": 0.059
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 18.66,
+        "mujoco4": 0.23
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          0.7118,
+          0.4908,
+          -0.5025
+        ],
+        "rules_disagree_postures": 0,
+        "jump_mm": 0.23,
+        "changes_mujoco3_share_percent": 0.07,
+        "changes_mujoco3_max_mm": 18.86
+      }
+    },
+    {
+      "side_site": "LIGhh_s_ellipsoid_coracohum_1_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "coracohum_ligament/LIGhh_s_ellipsoid_coracohum"
+      ],
+      "difference_mm": {
+        "A": 12.398,
+        "B": 13.125,
+        "C": 12.642
+      },
+      "share_percent": {
+        "A": 0.047,
+        "B": 0.16,
+        "C": 0.066
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 13.45,
+        "mujoco4": 6.64
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          0.8904,
+          0.447,
+          0.0865
+        ],
+        "rules_disagree_postures": 0,
+        "jump_mm": 0.49,
+        "changes_mujoco3_share_percent": 0.06,
+        "changes_mujoco3_max_mm": 13.29
+      }
+    },
+    {
+      "side_site": "DELT1hh_ellipsoid_DELT1_2_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "DELT1_tendon/DELT1hh_ellipsoid_DELT1"
+      ],
+      "difference_mm": {
+        "A": 97.101,
+        "B": 103.921,
+        "C": 100.48
+      },
+      "share_percent": {
+        "A": 0.176,
+        "B": 0.33,
+        "C": 0.121
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 27.63,
+        "mujoco4": 18.3
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          -0.3619,
+          -0.8384,
+          0.4075
+        ],
+        "rules_disagree_postures": 2,
+        "jump_mm": 0.54,
+        "changes_mujoco3_share_percent": 0.18,
+        "changes_mujoco3_max_mm": 33.86
+      }
+    },
+    {
+      "side_site": "SUPSP_ellipsoid_SUPSP_1_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "SUPSP_tendon/SUPSP_ellipsoid_SUPSP"
+      ],
+      "difference_mm": {
+        "A": 6.972,
+        "B": 6.206,
+        "C": 7.003
+      },
+      "share_percent": {
+        "A": 0.047,
+        "B": 0.026,
+        "C": 0.039
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 6.82,
+        "mujoco4": 3.59
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          -0.095,
+          0.0995,
+          0.9905
+        ],
+        "rules_disagree_postures": 4,
+        "jump_mm": 0.96,
+        "changes_mujoco3_share_percent": 0.03,
+        "changes_mujoco3_max_mm": 6.97
+      }
+    },
+    {
+      "side_site": "SUBSCAP_ellipsoid_SUBSC_1_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "SUBSC_tendon/SUBSCAP_ellipsoid_SUBSC"
+      ],
+      "difference_mm": {
+        "A": 11.106,
+        "B": 14.804,
+        "C": 13.123
+      },
+      "share_percent": {
+        "A": 0.035,
+        "B": 0.231,
+        "C": 0.062
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 0.23,
+        "mujoco4": 0.23
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          0.4889,
+          0.5144,
+          0.7045
+        ],
+        "rules_disagree_postures": 0,
+        "jump_mm": 0.23,
+        "changes_mujoco3_share_percent": 0.01,
+        "changes_mujoco3_max_mm": 8.61
+      }
+    },
+    {
+      "side_site": "LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "TMAJ_tendon/LAT_TMAJ2hh_sphere"
+      ],
+      "difference_mm": {
+        "A": 32.752,
+        "B": 33.062,
+        "C": 34.133
+      },
+      "share_percent": {
+        "A": 0.737,
+        "B": 0.513,
+        "C": 2.625
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 27.49,
+        "mujoco4": 0.39
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          0.0372,
+          -0.8864,
+          -0.4615
+        ],
+        "rules_disagree_postures": 0,
+        "jump_mm": 0.39,
+        "changes_mujoco3_share_percent": 0.36,
+        "changes_mujoco3_max_mm": 34.35
+      }
+    },
+    {
+      "side_site": "LAT_TMAJ2hh_sphere_LAT1_2_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "LAT1_tendon/delt2hum_cylinder"
+      ],
+      "difference_mm": {
+        "A": 12.027,
+        "B": 14.728,
+        "C": 19.669
+      },
+      "share_percent": {
+        "A": 0.386,
+        "B": 0.555,
+        "C": 0.371
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 5.67,
+        "mujoco4": 2.84
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          -0.6088,
+          -0.7934,
+          0.0
+        ],
+        "rules_disagree_postures": 2,
+        "jump_mm": 0.35,
+        "changes_mujoco3_share_percent": 0.26,
+        "changes_mujoco3_max_mm": 5.48
+      }
+    },
+    {
+      "side_site": "LAT_TMAJ2hh_sphere_LAT3_2_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "LAT3_tendon/delt2hum_cylinder"
+      ],
+      "difference_mm": {
+        "A": 14.402,
+        "B": 15.142,
+        "C": 14.293
+      },
+      "share_percent": {
+        "A": 1.084,
+        "B": 2.51,
+        "C": 1.034
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 14.1,
+        "mujoco4": 7.85
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          -0.749,
+          -0.6626,
+          0.0
+        ],
+        "rules_disagree_postures": 0,
+        "jump_mm": 0.36,
+        "changes_mujoco3_share_percent": 1.22,
+        "changes_mujoco3_max_mm": 14.22
+      }
+    },
+    {
+      "side_site": "BIClong_ellipsoid_BIClong_2_sidesite_r",
+      "model": "myoarm_r",
+      "users": [
+        "BIClong_tendon/BIClong_ellipsoid_BIClong"
+      ],
+      "difference_mm": {
+        "A": 71.998,
+        "B": 72.534,
+        "C": 72.273
+      },
+      "share_percent": {
+        "A": 10.895,
+        "B": 5.207,
+        "C": 10.798
+      },
+      "no_site_keeps_mujoco3": true,
+      "sweep_jump_mm": {
+        "mujoco3": 71.69,
+        "mujoco4": 0.33
+      },
+      "site_without_jump": {
+        "direction_in_geom_frame": [
+          0.6052,
+          -0.6598,
+          -0.4455
+        ],
+        "rules_disagree_postures": 1334,
+        "jump_mm": 0.33,
+        "changes_mujoco3_share_percent": 17.24,
+        "changes_mujoco3_max_mm": 71.61
+      }
+    },
+    {
+      "side_site": "Fifthmd_site_EDC5_side_r",
+      "model": "myoarm_r",
+      "users": [
+        "EDC5_tendon/Fifthmd_wrap",
+        "EDM_tendon/Fifthmd_wrap"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 1.344
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 4.373
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "Gmax3_at_pelvis_site_glmax3_r",
+      "model": "myolegs",
+      "users": [
+        "glmax3_r_tendon/Gmax3_at_pelvis_wrap_r"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 227.685
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 2.181
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_recfem_r",
+      "model": "myolegs",
+      "users": [
+        "recfem_r_tendon/KnExt_at_fem_wrap_r"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 188.853,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 13.194,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_vasint_r",
+      "model": "myolegs",
+      "users": [
+        "vasint_r_tendon/KnExt_at_fem_wrap_r"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 90.706,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 1.867,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_vaslat_r",
+      "model": "myolegs",
+      "users": [
+        "vaslat_r_tendon/KnExt_at_fem_wrap_r"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 96.72,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.149,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_vasmed_r",
+      "model": "myolegs",
+      "users": [
+        "vasmed_r_tendon/KnExt_at_fem_wrap_r"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 87.56,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.069,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "AMdist_at_femshaft_site_addmagDist_l",
+      "model": "myolegs",
+      "users": [
+        "addmagDist_l_tendon/AMdist_at_femshaft_wrap_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 10.632
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.01
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "Gmax3_at_pelvis_site_glmax3_l",
+      "model": "myolegs",
+      "users": [
+        "glmax3_l_tendon/Gmax3_at_pelvis_wrap_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 227.447
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 2.274
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "IL_at_brim_site_iliacus_l",
+      "model": "myolegs",
+      "users": [
+        "iliacus_l_tendon/IL_at_brim_wrap_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 253.497
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.01
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_recfem_l",
+      "model": "myolegs",
+      "users": [
+        "recfem_l_tendon/KnExt_at_fem_wrap_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 188.853,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 13.037,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_vasint_l",
+      "model": "myolegs",
+      "users": [
+        "vasint_l_tendon/KnExt_at_fem_wrap_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 90.818,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 1.764,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_vaslat_l",
+      "model": "myolegs",
+      "users": [
+        "vaslat_l_tendon/KnExt_at_fem_wrap_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 96.744,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.26,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "KnExt_at_fem_site_vasmed_l",
+      "model": "myolegs",
+      "users": [
+        "vasmed_l_tendon/KnExt_at_fem_wrap_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 86.888,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.119,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "AMdist_at_femshaft_site_addmagDist_r",
+      "model": "myolegs_abdomen",
+      "users": [
+        "addmagDist_r_tendon/AMdist_at_femshaft_wrap_r"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 15.125
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.019
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "IL_at_brim_site_iliacus_r",
+      "model": "myolegs_abdomen",
+      "users": [
+        "iliacus_r_tendon/IL_at_brim_wrap_r"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 253.016
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.01
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "back_cylinder_l_IL_L3_1_sidesite_r",
+      "model": "myotorso",
+      "users": [
+        "IL_L3_r_tendon/back_cylinder_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 842.499,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.085,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "back_cylinder_l_IL_L3_1_sidesite_l",
+      "model": "myotorso",
+      "users": [
+        "IL_L3_l_tendon/back_cylinder_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 862.767,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.081,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "back_cylinder_l_IL_L4_1_sidesite_l",
+      "model": "myotorso",
+      "users": [
+        "IL_L4_l_tendon/back_cylinder_l"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 850.419,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.009,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "back_cylinder_s_LTpT_R12_4_sidesite_r",
+      "model": "myotorso",
+      "users": [
+        "LTpT_R12_r_tendon/back_cylinder_s"
+      ],
+      "difference_mm": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 346.503
+      },
+      "share_percent": {
+        "A": 0.0,
+        "B": 0.0,
+        "C": 0.007
+      },
+      "no_site_keeps_mujoco3": true
+    },
+    {
+      "side_site": "back_cylinder_s_LTpT_R12_4_sidesite_l",
+      "model": "myotorso",
+      "users": [
+        "LTpT_R12_l_tendon/back_cylinder_s"
+      ],
+      "difference_mm": {
+        "A": 345.551,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "share_percent": {
+        "A": 0.007,
+        "B": 0.0,
+        "C": 0.0
+      },
+      "no_site_keeps_mujoco3": true
+    }
+  ]
+}

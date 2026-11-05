@@ -2,6 +2,10 @@
 
 Model changes that alter actuators, joints, sites or dynamics are breaking for downstream environments and trained policies. List them here; they ship together in the next release tag.
 
+## Unreleased
+
+- **Side sites for MuJoCo 4 (`myoarm_r`, `myoarms`, `myotorso_arm_r`, `myotorso_arms`, `myofullbody`).** MuJoCo 4 chooses a wrap's side differently. The side sites of TMAJ's and LAT2's cylinder move, and SUP's moves from the radius to the ulna, which gives the same path on MuJoCo 3 and 4 there. No path changes on MuJoCo 3 within the joint ranges; past the supination limit SUP stays on its arc where it used to flip by 2.8 mm. Other shoulder wraps still differ on MuJoCo 4 because their MuJoCo 3 path flips sides inside the range: `build/data/side_sites.json`, `kept`, and `docs/wiki/model-authoring.md`.
+
 ## 0.2.4
 
 The body of 0.2.3 with fixes. Apart from the items below, every `myofullbody` model array is identical to 0.2.3, and tendon lengths and actuator forces match on 6000 random postures.

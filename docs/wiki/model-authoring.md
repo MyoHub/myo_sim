@@ -95,7 +95,13 @@ Then reference them in the tendon:
 <geom geom="NewMuscle_wrap_r" sidesite="NewMuscle_wrap_sidesite_r"/>
 ```
 
-Both the geom and sidesite must be on the same body (or a nearby body if the muscle spans bodies). If the sidesite is missing or on a different body from the geom, MuJoCo will error at load time.
+The side site normally sits on the geom's body; a site on a body that turns with the tendon's endpoint is also valid (`SUP`). A name that does not exist is an error at load time.
+
+### Side sites on MuJoCo 3 and 4
+
+The two versions choose a wrap's side differently. MuJoCo 3 wraps when the segment between the endpoints crosses the geom or lies on the far side of it from the side site, along the arc whose middle is nearest the site. MuJoCo 4 follows the winding of the polyline endpoint, side site, endpoint, and snaps when an endpoint crosses the ray opposite the side site. Put a new side site in the middle of the wrapped arc, where both agree, and check it: `tests/test_side_sites.py` fails if a wrap outside `build/data/side_sites.json`'s `kept` list differs between the rules at coupled, in-range postures. `scripts/migrate_side_sites.py` searches sites; MuJoCo 3's path is the reference, and a site moves only if no sampled in-range posture changes.
+
+A MuJoCo 3 path that flips sides inside the range cannot be reproduced under the MuJoCo 4 rule: the old flip needs the site perpendicular to the arc's middle, the new one needs it on the endpoint's ray, and at one posture one site cannot be both unless the endpoints are opposite. Those wraps are in `kept`, with the site that would give one jump-free path on both versions and how much of MuJoCo 3's path it would change.
 
 ---
 

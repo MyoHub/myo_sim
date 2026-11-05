@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-05 — Side sites for one path on MuJoCo 3 and 4
+Changed: myo_sim/models/arm/assets/myoarm_r_chain.xml, myo_sim/build/data/side_sites.json, scripts/migrate_side_sites.py, tests/test_side_sites.py, tests/test_postures.py, tests/test_warp_parity.py, myo_sim/build/keyframes.py, docs/wiki/model-authoring.md, docs/wiki/postures.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: MuJoCo 4 chooses a wrap's side by the winding of endpoint, side site, endpoint. Three sites now give the MuJoCo 3 path under both rules, with MuJoCo 3 unchanged in range. The wraps in side_sites.json's kept list cannot: their MuJoCo 3 path flips sides inside the range.
+
 ## 2026-11-05 — Tag and GitHub release after PyPI publication
 Changed: .github/workflows/publish.yml, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: one manual main-branch run now publishes the package and releases the same commit and artifacts on GitHub; failed release jobs can resume without another PyPI upload.

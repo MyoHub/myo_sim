@@ -193,7 +193,6 @@
                                 <site name="TMAJ_TMAJ-P1_r" pos="0.00998 -0.05419 -0.00568"/>
                                 <site name="TMAJ_TMAJ-P2_r" pos="-0.00625597 -0.049991 -0.0159345"/>
                                 <site name="LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r" pos="-0.0129153 -0.0208485 -0.0110803"/>
-                                <site name="TMAJ_LAThum_cylinder_TMAJ_1_sidesite_r" pos="0.0707 0.0257 0.0645"/>
                                 <site name="PECM1_PECM1-P1_r" pos="0.01169 -0.04191 0.0078"/>
                                 <site name="PECM1_PECM1-P2_r" pos="0.0210522 -0.01996 0.00793506"/>
                                 <site name="PEC1hh_ellipsoid_PECM1_2_sidesite_r" pos="0.00259407 -0.0252892 -0.00394296" rgba="1 0 0 0"/>
@@ -211,7 +210,6 @@
                                 <site name="LAT2_LAT2-P1_r" pos="0.00968 -0.04071 -0.00611"/>
                                 <site name="LAT2_LAT2-P2_r" pos="-0.00769792 -0.0421159 -0.0156065"/>
                                 <site name="LAT_TMAJ2hh_sphere_LAT2_2_sidesite_r" pos="-0.0157083 -0.017011 -0.0250469" rgba="1 0 0 0"/>
-                                <site name="TMAJ_LAThum_cylinder_LAT2_1_sidesite_r" pos="0.0707 0.0257 0.0645"/>
                                 <site name="LAT3_LAT3-P1_r" pos="0.01208 -0.03922 -0.00416"/>
                                 <site name="LAT3_LAT3-P2_r" pos="-0.0116777 -0.0435673 -0.0143472"/>
                                 <site name="LAT_TMAJ2hh_sphere_LAT3_2_sidesite_r" pos="-0.014069 -0.0219399 -0.00787017"/>
@@ -257,6 +255,8 @@
                                 <site class="myoarm_marker" name="Bicep_marker_r" pos="0.01591 -0.181 -0.00553"/>
                                 <site class="myoarm_marker" name="Elbow_Lateral_marker_r" pos="0.00509 -0.2806 0.02884"/>
                                 <site class="myoarm_marker" name="Elbow_Medial_marker_r" pos="-0.00407 -0.2844 -0.05408"/>
+                                <site name="TMAJ_LAThum_cylinder_TMAJ_1_sidesite_r" pos="-0.005755 -0.043457 0.006894"/>
+                                <site name="TMAJ_LAThum_cylinder_LAT2_1_sidesite_r" pos="-0.004875 -0.043498 0.007317"/>
                                 <body name="ulna_r" pos="0.0061 -0.2904 -0.0123" childclass="myoarm_elbow">
                                     <inertial diaginertia="0.00543663 0.00523521 0.001" mass="1.1053" pos="0.00971783 -0.0959509 0.024286" quat="0.792048 0.609078 0.0156735 0.0379256"/>
                                     <joint axis="0.0494004 0.0366003 0.998108" name="elbow_flexion_r" pos="0 0 0" range="0 2.269"/>
@@ -290,6 +290,7 @@
                                     <site name="SUP_SUP-P3_r" pos="-0.0136 -0.03384 0.02013"/>
                                     <site name="BRA_BRA-P4_r" pos="-0.0032 -0.0239 0.0009"/>
                                     <site class="myoarm_marker" name="Ulna_marker_r" pos="-0.01672 -0.2416 0.04782"/>
+                                    <site name="SUP_cylinder_SUP_2_sidesite_r" pos="0.01513 -0.0387 0.03071"/>
                                     <body name="radius_r" pos="0.0004 -0.0115 0.02">
                                         <inertial diaginertia="0.001 0.001 0.001" mass="0.23359" pos="0.0336341 -0.181559 0.0156" quat="0.770264 0.63559 0.0119833 0.0507376"/>
 
@@ -366,7 +367,6 @@
                                         <site name="ECU_sidesite_r" pos="-0.0163 -0.2417 0.0349"/>
                                         <site name="SUP_SUP-P1_r" pos="0.00996 -0.06096 0.00075"/>
                                         <site name="SUP_SUP-P2_r" pos="0.01301 -0.0517 -0.00357" />
-                                        <site name="SUP_cylinder_SUP_2_sidesite_r" pos="0.00511946 -0.043905 0.0155965"/>
                                         <site name="BIClong_BIClong-P10_r" pos="-0.00670279 -0.0291637 -0.0127257"/>
                                         <site name="BIClong_BIClong-P11_r" pos="-0.002 -0.0375 -0.002"/>
                                         <site name="BICshort_BICshort-P6_r" pos="-0.00774281 -0.0255585 -0.0131094"/>
