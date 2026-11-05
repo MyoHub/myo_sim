@@ -22,3 +22,5 @@ The body of 0.2.3 with fixes. Apart from the items below, every `myofullbody` mo
 
 - **mujoco-warp version warning.** `myo_sim.load_spec()`, and with it `load()` and `load_model()`, warns once per process when mujoco-warp older than 3.16 is installed and the model has arm or hand tendons, whose lengths those versions can get wrong by up to about 3 mm (google-deepmind/mujoco_warp#1713). No model change.
 - **Motor finger gears (`legacy/finger/motorfinger_v0.xml`, #136).** The gears of `extn`, `adabR`, `adabL`, `mflx` and `dflx` go from 20, 5, 5, 10, 10 to 160, 80, 80, 160, 160, to match the capabilities of the muscle finger. Downstream: anything that scales these gears multiplies the new values. MyoSuite's `motor_finger` recipe scales them by 4, so it drops that scale when it moves to this release, and its motorFinger checkpoints, made with 80, 20, 20, 40, 40, need retraining.
+
+- **`mujoco<4`.** MuJoCo 4 changes how spatial tendons use side sites, which moves some muscle paths in these models, so this release stays on MuJoCo 3.
