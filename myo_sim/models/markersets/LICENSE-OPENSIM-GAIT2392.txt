@@ -1,0 +1,25 @@
+Third-party data: OpenSim gait2392 scaling marker set
+
+Used in: opensim_gait2392.xml
+
+Source file: Pipelines/Gait2392_Simbody/gait2392_Scale_MarkerSet.xml of the opensim-models repository,
+https://github.com/opensim-org/opensim-models/blob/d9b05d470b1a481c222372c85b75772faf8f7792/Pipelines/Gait2392_Simbody/gait2392_Scale_MarkerSet.xml
+(opensim-models commit d9b05d470b1a481c222372c85b75772faf8f7792).
+
+License: Creative Commons Attribution 3.0 (CC BY 3.0), http://creativecommons.org/licenses/by/3.0/
+(legal code: https://creativecommons.org/licenses/by/3.0/legalcode)
+
+Changes: converted to MJCF sites; values unchanged except rounding.
+
+Credits, as stated in the <credits> element of the gait2392 model (Models/Gait2392_Simbody/gait2392_thelen2003muscle.osim,
+same commit):
+
+Delp S.L., Loan J.P., Hoy M.G., Zajac F.E., Topp E.L., Rosen J.M., Thelen D.G., Anderson F.C., Seth A. Notes: 3D, 23
+DOF gait model created by D.G. Thelen, Univ. of Wisconsin-Madison, and Ajay Seth, Frank C. Anderson, and Scott L.
+Delp, Stanford University. Lower extremity joint defintions based on Delp et al. (1990). Low back joint and
+anthropometry based on Anderson and Pandy (1999, 2001). Planar knee model of Yamaguchi and Zajac (1989). Seth
+replaced tibia translation constraints with a CustomJoint for the knee and removed the patella to eliminate all
+kinematic constraints; insertions of the quadrucepts are handled with moving points in the tibia frame as defined by
+Delp 1990. License: Creative Commons (CCBY 3.0). You are free to distribute, remix, tweak, and build upon this work,
+even commercially, as long as you credit us for the original creation. http://creativecommons.org/licenses/by/3.0/
+More Information: http://simtk-confluence.stanford.edu:8080/display/OpenSim/Gait+2392+and+2354+Models
