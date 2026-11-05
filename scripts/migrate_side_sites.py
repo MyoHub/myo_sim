@@ -669,7 +669,8 @@ def run_search(n: int, steps: int, out_path: str, models: tuple[str, ...]) -> No
                 "feasible_tier_a": int(ev["tier_a_only"].sum()),
                 "fewest_3x_violations": int(ev["v3"].min()),
             }
-            good = ev["feasible"] if ev["feasible"].any() else ev["tier_a_only"]
+            # a site with no in-range difference stays unless a candidate also clears the other posture sets
+            good = ev["feasible"] if ev["feasible"].any() or summary["A"]["max_mm"] == 0.0 else ev["tier_a_only"]
             if good.any():
                 i = widest_margin(ev["dirs"], good)
                 entry["pos"] = [round(float(v), 6) for v in ev["in_body"][i]]
@@ -973,6 +974,58 @@ def alternatives(name: str, n: int, sweep_steps: int, out_path: str) -> None:
         Path(out_path).write_text(json.dumps(result, indent=1))
 
 
+def line_jumps(name: str, n: int, out_path: str, lines: int = 40, steps: int = 400) -> None:
+    """Jumps of each differing wrap under both rules, on coupled in-range lines from a differing posture to mid-range.
+
+    Rare differences hide from single-joint sweeps; a straight line in joint space through the coupling polynomials
+    crosses them.
+    """
+    import json
+    from pathlib import Path
+
+    import myo_sim
+
+    model = myo_sim.load_model(name)
+    wraps = model_wraps(model)
+    side = side_local(model, wraps)
+    qs = sample_postures(model, n, 21, True)
+    ends, _ = forward_sites(model, qs, wraps)
+    joints = limited_joints(model)
+    mid_q = model.qpos0.copy()[None]
+    mid_q[0, model.jnt_qposadr[joints]] = model.jnt_range[joints].mean(1)
+    apply_couplings(model, mid_q)
+    t = np.linspace(0.0, 1.0, steps)[:, None]
+    result = {}
+    for k, w in enumerate(wraps):
+        if not rule_decides(w, side[k]):
+            continue
+        args = (side[k], w.radius, w.is_sphere)
+        l3, _ = segment_length(ends[:, k, 0], ends[:, k, 1], *args, 3)
+        l4, _ = segment_length(ends[:, k, 0], ends[:, k, 1], *args, 4)
+        bad = np.flatnonzero(np.abs(l3 - l4) > 1e-3)
+        if len(bad) == 0:
+            continue
+        chosen = bad[np.random.default_rng(1).permutation(len(bad))[:lines]]
+        worst = {3: 0.0, 4: 0.0}
+        for i in chosen:
+            path = qs[i][None] + t * (mid_q[0] - qs[i])[None]
+            apply_couplings(model, path)
+            e, _ = wrap_geometry(model, path, w, [])
+            for rule in (3, 4):
+                length, _ = segment_length(e[:, 0], e[:, 1], *args, rule)
+                worst[rule] = max(worst[rule], float(np.abs(np.diff(length)).max()))
+        key = f"{w.tendon_name}/{w.geom_name}"
+        result[key] = {
+            "differ_mm": round(float(np.abs(l3 - l4).max() * 1e3), 2),
+            "share_percent": round(float((np.abs(l3 - l4) > 1e-3).mean() * 100), 3),
+            "line_jump_mj3_mm": round(worst[3] * 1e3, 2),
+            "line_jump_mj4_mm": round(worst[4] * 1e3, 2),
+            "lines": len(chosen),
+        }
+        print(key, result[key], flush=True)
+    Path(out_path).write_text(json.dumps(result, indent=1))
+
+
 def dense_tendon_jacobian(model, data) -> np.ndarray:
     """Tendon Jacobian as a float32 array (ntendon, nv)."""
     import mujoco
@@ -1075,6 +1128,10 @@ def main() -> None:
     sweep.add_argument("--body", required=True)
     sweep.add_argument("--joint", required=True)
     sub.add_parser("write")
+    lj = sub.add_parser("line-jumps")
+    lj.add_argument("--model", default="myoarm_r")
+    lj.add_argument("--out", required=True)
+    lj.add_argument("--postures", type=int, default=20000)
     alt = sub.add_parser("alternatives")
     alt.add_argument("--model", default="myoarm_r")
     alt.add_argument("--out", required=True)
@@ -1096,6 +1153,8 @@ def main() -> None:
     args = parser.parse_args()
     if args.command == "write":
         write_chain()
+    if args.command == "line-jumps":
+        line_jumps(args.model, args.postures, args.out)
     if args.command == "alternatives":
         alternatives(args.model, args.postures, args.sweep_steps, args.out)
     if args.command == "dump":
