@@ -179,12 +179,25 @@ def test_spec_stays_editable_by_default():
     assert spec.compile().nkey == 0
 
 
-def test_deleting_a_joint_from_a_spec_with_the_keyframe_fails():
-    """Why ``load_spec`` does not add the keyframe by default."""
+def test_deleting_a_joint_from_a_spec_with_the_keyframe():
+    """Why ``load_spec`` does not add the keyframe by default: MuJoCo 3 refuses to compile, MuJoCo 4 keeps it by name.
+
+    Either way a keyframe must never reach a model with its values on the wrong joints.
+    """
     spec = myo_sim.load_spec("myofullbody", build_kwargs={"standing_keyframe": True})
-    _delete_joints(spec)
-    with pytest.raises(ValueError, match="standing"):
-        spec.compile()
+    deleted = _delete_joints(spec)
+    if int(mujoco.__version__.split(".")[0]) < 4:
+        with pytest.raises(ValueError, match="standing"):
+            spec.compile()
+        return
+    reference = myo_sim.load_model("myofullbody")
+    model = spec.compile()
+    want = _joint_values(reference, _standing_qpos(reference))
+    got = _joint_values(model, model.key_qpos[0])
+    assert model.nq == reference.nq - deleted
+    assert len(got) == len(want) - deleted
+    assert all(got[name] == pytest.approx(want[name]) for name in got)
+    assert model.key_qpos[0][:7] == pytest.approx(reference.key_qpos[0][:7])
 
 
 def test_add_after_deleting_joints_matches_by_name():
