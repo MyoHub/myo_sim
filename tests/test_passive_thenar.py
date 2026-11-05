@@ -98,6 +98,11 @@ def test_chain_holds_the_intrinsic_sites() -> None:
             np.testing.assert_allclose([float(v) for v in element.get("pos").split()], site["pos"], atol=1e-9)
 
 
+# The table is fitted on MuJoCo 4. MuJoCo 3's kinematics differ at rounding level (1e-15 m) and the fit lands up to
+# 3.0e-6 m away there (DI2, measured on 3.17); a 1e-13 m change of the start points moves it as far.
+SITE_ATOL_M = 2e-6 if int(mujoco.__version__.split(".")[0]) >= 4 else 3.5e-6
+
+
 def test_intrinsic_fit_reproduces_the_table() -> None:
     """The tabled sites and passive scales are what ``generate_hand_intrinsic_muscles.py --fit`` fits from the start points."""
     pytest.importorskip("scipy")
@@ -107,7 +112,7 @@ def test_intrinsic_fit_reproduces_the_table() -> None:
     gen.fit(refit)
     for old, new in zip(table["muscles"], refit["muscles"]):
         for a, b in zip(old["sites"], new["sites"]):
-            np.testing.assert_allclose(b["pos"], a["pos"], atol=2e-6, err_msg=old["name"])
+            np.testing.assert_allclose(b["pos"], a["pos"], atol=SITE_ATOL_M, err_msg=old["name"])
         assert new["fit"]["result"].get("rms_z") == pytest.approx(old["fit"]["result"].get("rms_z"), abs=0.01)
 
 
