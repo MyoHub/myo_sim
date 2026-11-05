@@ -22,7 +22,17 @@ WRAP_SITE, WRAP_SPHERE, WRAP_CYLINDER = 3, 4, 5
 MJMINVAL = 1e-15
 # myofullbody holds the same wraps; its 350 wraps exceed the memory budget of a scan and the dumps cover it.
 SEARCH_MODELS = ("myoarm_r", "myolegs", "myolegs_abdomen", "myotorso")
-CHECK_MODELS = ("myoarm_r", "myoarms", "myofullbody", "myolegs", "myolegs26", "myolegs_abdomen", "myotorso", "myohands", "myohand_r")
+CHECK_MODELS = (
+    "myoarm_r",
+    "myoarms",
+    "myofullbody",
+    "myolegs",
+    "myolegs26",
+    "myolegs_abdomen",
+    "myotorso",
+    "myohands",
+    "myohand_r",
+)
 LENGTH_TOL = 1e-6  # m
 LIMIT_MARGIN = 0.13  # rad past the hinge limits, as in tests/test_tendon_path_continuity.py
 # Posture sets: A in range on the joint couplings, B in range with every joint independent, C as A past the limits.
@@ -292,7 +302,10 @@ def sweep_postures(model, steps: int, seed: int, coupled: bool, bases: int = 4, 
         follower = coupled and any(model.eq_type[e] == 2 and model.eq_obj1id[e] == j for e in range(model.neq))
         if follower:
             continue
-        lo, hi = model.jnt_range[j, 0] - margin * (model.jnt_type[j] == 3), model.jnt_range[j, 1] + margin * (model.jnt_type[j] == 3)
+        lo, hi = (
+            model.jnt_range[j, 0] - margin * (model.jnt_type[j] == 3),
+            model.jnt_range[j, 1] + margin * (model.jnt_type[j] == 3),
+        )
         grid = np.linspace(lo, hi, steps)
         for b, base in enumerate(start):
             q = np.tile(base, (steps, 1))
@@ -675,9 +688,11 @@ def run_search(n: int, steps: int, out_path: str, models: tuple[str, ...]) -> No
                 i = widest_margin(ev["dirs"], good)
                 entry["pos"] = [round(float(v), 6) for v in ev["in_body"][i]]
                 entry["left_v4_outside_tier_a"] = int(ev["v4rest"][i])
-                entry["margin_deg"] = round(
-                    float(np.degrees(np.arccos(np.clip((ev["dirs"][i] @ ev["dirs"][~good].T).max(), -1, 1)))), 1
-                ) if (~good).any() else 180.0
+                entry["margin_deg"] = (
+                    round(float(np.degrees(np.arccos(np.clip((ev["dirs"][i] @ ev["dirs"][~good].T).max(), -1, 1)))), 1)
+                    if (~good).any()
+                    else 180.0
+                )
             else:
                 keep = ev["v3"] == 0
                 if keep.any():
@@ -730,6 +745,7 @@ def chain_between(model, body0: int, body1: int) -> list[int]:
 def off_body_search(name: str, wrap_key: str, n: int, steps: int, distances: tuple[float, ...], n_dirs: int) -> list[dict]:
     """Side site on another body of the wrap's chain: violations under both rules in every posture set."""
     import mujoco
+
     import myo_sim
 
     model = myo_sim.load_model(name)
@@ -804,6 +820,7 @@ def off_body_sweep(name: str, wrap_key: str, body: str, joint: str, extra: float
     Candidates are ranked by how far past the limits the two rules still agree with each other.
     """
     import mujoco
+
     import myo_sim
 
     model = myo_sim.load_model(name)
@@ -926,7 +943,10 @@ def alternatives(name: str, n: int, sweep_steps: int, out_path: str) -> None:
             continue
         dirs = direction_grid(w.is_sphere, n_sphere=2000)
         idx = np.arange(len(ref))
-        d3, d4, disagree, jumps = [np.empty((len(dirs), len(ref)), np.float32) for _ in range(2)] + [np.zeros(len(dirs), int), np.zeros(len(dirs), int)]
+        d3, d4, disagree, jumps = [np.empty((len(dirs), len(ref)), np.float32) for _ in range(2)] + [
+            np.zeros(len(dirs), int),
+            np.zeros(len(dirs), int),
+        ]
         worst_jump = np.zeros(len(dirs))
         for c0 in range(0, len(dirs), 128):
             c = dirs[c0 : c0 + 128]
@@ -1042,6 +1062,7 @@ def run_dump(out_dir: str, label: str, models: tuple[str, ...], n: int, steps: i
     from pathlib import Path
 
     import mujoco
+
     import myo_sim
 
     folder = Path(out_dir)
@@ -1050,7 +1071,10 @@ def run_dump(out_dir: str, label: str, models: tuple[str, ...], n: int, steps: i
         model = myo_sim.load_model(name)
         data = mujoco.MjData(model)
         spatial = np.array([int(model.wrap_type[model.tendon_adr[t]]) != 1 for t in range(model.ntendon)])
-        result: dict[str, np.ndarray] = {"names": np.array([model.tendon(t).name for t in range(model.ntendon)]), "spatial": spatial}
+        result: dict[str, np.ndarray] = {
+            "names": np.array([model.tendon(t).name for t in range(model.ntendon)]),
+            "spatial": spatial,
+        }
         for tier in TIERS:
             qs = tier_postures(model, tier, n, steps)
             length = np.empty((len(qs), model.ntendon))
@@ -1101,7 +1125,9 @@ def run_check(folder: str, a: str, b: str, models: tuple[str, ...], limit_mm: fl
             for t in np.flatnonzero(worst > limit_mm * 1e-3):
                 rows.setdefault(str(names[t]), []).append(f"{tier} {worst[t] * 1e3:.2f} mm {share[t] * 100:.2f} %")
         arms = np.abs(x["arms"] - y["arms"]).max((0, 2))
-        print(f"  tendons over {limit_mm} mm: {len(rows)}; moment arms: max {arms.max() * 1e3:.3f} mm, tendons over 0.1 mm {int((arms > 1e-4).sum())}")
+        print(
+            f"  tendons over {limit_mm} mm: {len(rows)}; moment arms: max {arms.max() * 1e3:.3f} mm, tendons over 0.1 mm {int((arms > 1e-4).sum())}"
+        )
         for tendon, text in sorted(rows.items()):
             t = np.flatnonzero(names == tendon)[0]
             print(f"  {tendon:30s} {'; '.join(text)} | arm {arms[t] * 1e3:.2f} mm")
@@ -1170,7 +1196,9 @@ def main() -> None:
         run_search(args.postures, args.steps, args.out, tuple(args.models))
     elif args.command == "off-body":
         for key in args.wrap:
-            rows = off_body_search(args.model, key, args.postures, args.steps, (1.5, 2.0, 3.0, 6.0, 12.0, 25.0, 60.0), args.dirs)
+            rows = off_body_search(
+                args.model, key, args.postures, args.steps, (1.5, 2.0, 3.0, 6.0, 12.0, 25.0, 60.0), args.dirs
+            )
             rows.sort(key=lambda r: (-r["feasible"], sum(r["violations_3x"].values()) + sum(r["violations_4"].values())))
             for r in rows[:4]:
                 print(r, flush=True)
