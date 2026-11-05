@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-05 — Posture tests that hold on MuJoCo 3 and 4
+Changed: tests/test_postures.py, docs/wiki/postures.md
+Why: the `qpos0` negative control (9 rad/s) and the length comparison relied on the long `recfem` path that MuJoCo 3 takes at `qpos0`. The control now requires `qpos0` to exceed each model's `standing` limit, and the length check allows 0.01 for `gasmed`. The wiki wrongly gave the couplings and overlap as the source of the `qpos0` speeds.
+
 ## 2026-11-05 — Side sites for one path on MuJoCo 3 and 4
 Changed: myo_sim/models/arm/assets/myoarm_r_chain.xml, myo_sim/build/data/side_sites.json, scripts/migrate_side_sites.py, tests/test_side_sites.py, tests/test_postures.py, tests/test_warp_parity.py, myo_sim/build/keyframes.py, docs/wiki/model-authoring.md, docs/wiki/postures.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: MuJoCo 4 chooses a wrap's side by the winding of endpoint, side site, endpoint. Three sites now give the MuJoCo 3 path under both rules, with MuJoCo 3 unchanged in range. The wraps in side_sites.json's kept list cannot: their MuJoCo 3 path flips sides inside the range.
