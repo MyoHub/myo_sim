@@ -44,7 +44,10 @@ def _inside_wrap_tendons(model: mujoco.MjModel) -> set[str]:
     for t in range(model.ntendon):
         for w in range(model.tendon_adr[t], model.tendon_adr[t] + model.tendon_num[t]):
             side = int(model.wrap_prm[w])
-            if model.wrap_type[w] not in (mujoco.mjtWrap.mjWRAP_SPHERE, mujoco.mjtWrap.mjWRAP_CYLINDER) or side < 0:
+            if (
+                int(model.wrap_type[w]) not in (int(mujoco.mjtWrap.mjWRAP_SPHERE), int(mujoco.mjtWrap.mjWRAP_CYLINDER))
+                or side < 0
+            ):
                 continue
             g = model.wrap_objid[w]
             local = data.geom_xmat[g].reshape(3, 3).T @ (data.site_xpos[side] - data.geom_xpos[g])

@@ -4,8 +4,9 @@
 a posture to start from (see ``docs/wiki/postures.md``). The postures live in
 ``data/postures.json``, written by ``scripts/generate_postures.py``.
 
-Specs stay free of keyframes unless asked for: a keyframe's ``qpos`` has a fixed size,
-so deleting a joint from a spec that holds one makes ``compile()`` fail.
+Specs stay free of keyframes unless asked for: on MuJoCo 3 a keyframe's ``qpos`` has a fixed
+size, so deleting a joint from a spec that holds one makes ``compile()`` fail. MuJoCo 4 keeps
+the keyframe's values by joint name across the edit.
 """
 
 from __future__ import annotations
