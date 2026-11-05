@@ -55,6 +55,8 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 - **Knee coupled ranges (`myolegs`, `myolegs_abdomen`, `myofullbody`).** Ten ranges of the coordinates the knee drives are widened to contain their own coupling polynomials. Downstream: the joint limits no longer disagree with the couplings at those knee angles; policies trained near them may behave slightly differently. Not measured on a trained policy.
 
+- **Side sites for MuJoCo 4 (`myoarm_r`, `myoarms`, `myotorso_arm_r`, `myotorso_arms`, `myofullbody`).** MuJoCo 4 chooses a wrap's side differently. The side sites of TMAJ's and LAT2's cylinder move, and SUP's moves from the radius to the ulna, which gives the same path on MuJoCo 3 and 4 there. No path changes on MuJoCo 3 within the joint ranges; past the supination limit SUP stays on its arc where it used to flip by 2.8 mm. Other arm, forearm and hand wraps still differ on MuJoCo 4 because their MuJoCo 3 path flips sides inside the range: `build/data/side_sites.json`, `kept`, and `docs/wiki/model-authoring.md`.
+
 - **CMC4/5 springs, ORL, EDC2's wrist sphere (all models with a hand).** See `docs/wiki/hand-cmc-joints.md`, `extensor-mechanism.md` and `hand-literature-comparison.md` (cupping and ORL step).
   - **CMC4/5:** the flexion side of the end-range springs is fitted to Büren et al. 2020's active maxima: about 3 N m at the limits (was 0.96 N m). Active cupping 17.0 / 35.0 -> 12.2 / 25.1 deg. Ranges unchanged.
   - **ORL:** PIP arm 0.127 x the DIP arm instead of equal arms, stiffness refitted: it carries a share at every PIP angle of Ueba 2011 and is now taut in deep flexion, where Harris & Rutledge 1972 saw it slack: about 15 N in a fist. DIP-PIP coupling unchanged.

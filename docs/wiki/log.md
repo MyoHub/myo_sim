@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-05 — Side sites for one path on MuJoCo 3 and 4
+Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (side sites of TMAJ, LAT2, SUP), `myo_sim/build/data/side_sites.json`, `scripts/migrate_side_sites.py`, `tests/test_side_sites.py`, `tests/test_standing_keyframe.py`, `myo_sim/build/keyframes.py`, `scripts/compare_model_numerics.py`, `docs/wiki/model-authoring.md`, `docs/wiki/standing-keyframe.md`, `docs/wiki/testing-guide.md`
+Why: MuJoCo 4 chooses a wrap's side by the winding of endpoint, side site, endpoint. Three sites now give the MuJoCo 3 path under both rules, with MuJoCo 3 unchanged in range. The wraps in `side_sites.json`'s `kept` list cannot: their MuJoCo 3 path flips sides inside the range.
+
 ## 2026-11-04 — Left-right tenodesis test on a held body
 Changed: `tests/test_muscle_passive.py`, `myo_sim/build/data/hand_literature.json`, `docs/wiki/hand-literature-comparison.md`
 Why: The gap of 0.23 deg came from the free-floating body at the default solver tolerance, not from the model: every left and right value agrees, and with body and arms held at tolerance 1e-12 the gap is 0.000 deg before and after the mass changes. The test now asks its question there, at both wrist positions, with the 0.1 deg limit. The junctura traction change has the same source.
