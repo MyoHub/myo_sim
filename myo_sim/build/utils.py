@@ -7,6 +7,7 @@ import math
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import mujoco
 
@@ -47,6 +48,27 @@ def find_body(spec: object, body_name: str) -> object:
     if body is None:
         raise ValueError(f"Body not found: {body_name!r}")
     return body
+
+
+# Element lists that MjSpec.attach copies by resolving their references.
+ATTACH_CHECKED_LISTS = ("tendons", "actuators", "equalities", "sensors", "pairs", "excludes")
+
+
+def attach_checked(parent: mujoco.MjSpec, child: mujoco.MjSpec, prefix: str = "", suffix: str = "", **where: Any) -> object:
+    """Attach ``child`` to ``parent`` like ``MjSpec.attach``, but fail if an element is lost.
+
+    MjSpec.attach silently leaves out an element whose references don't resolve, such as a
+    tendon over a misspelled site, together with the actuator on it.
+
+    Raises:
+        ValueError: naming every named tendon, actuator, equality, sensor, pair or exclude lost.
+    """
+    expected = {(kind, prefix + e.name + suffix) for kind in ATTACH_CHECKED_LISTS for e in getattr(child, kind) if e.name}
+    frame = parent.attach(child, prefix=prefix, suffix=suffix, **where)
+    present = {(kind, e.name) for kind in ATTACH_CHECKED_LISTS for e in getattr(parent, kind)}
+    if lost := sorted(expected - present):
+        raise ValueError(f"MjSpec.attach left out elements with unresolved references: {lost}")
+    return frame
 
 
 def find_site(spec: object, site_name: str) -> object:

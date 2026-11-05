@@ -110,7 +110,7 @@ See `docs/validation/neck/README.md` for source and acceptance scope.
    ```python
    def build_my_new_spec(registration: ModelRegistration) -> mujoco.MjSpec:
        torso = load_torso_spec(registration)  # or load_passive_torso_spec
-       torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
+       attach_checked(torso, load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
        # ... additional attachments ...
        return torso
    ```
@@ -143,9 +143,9 @@ See `docs/validation/neck/README.md` for source and acceptance scope.
 
 ## Key Utilities in utils.py
 
-### `MjSpec.attach(...)`
+### `attach_checked(parent, child, ...)`
 
-Builders attach child `MjSpec` objects directly with MuJoCo's `spec.attach(...)` API. Use the `site=` argument when attaching to a named site already declared in the parent XML (e.g., `arm_attach_r`, `arm_attach_l`). Use the `frame=` argument when attaching to a programmatically created frame (e.g., `root_body.add_frame(...)` for leg attachment).
+Builders attach child `MjSpec` objects through `attach_checked(parent, child, prefix=..., suffix=..., site=... | frame=...)`, which calls MuJoCo's `spec.attach(...)`. MuJoCo silently leaves out a child element whose references don't resolve: a tendon over a misspelled site disappears together with its muscle (MuJoCo 3.4 to 4.0), while the child alone fails to compile. `attach_checked` raises a `ValueError` naming every lost tendon, actuator, equality, sensor, pair or exclude. Don't call `spec.attach(...)` directly in builders. Use the `site=` argument when attaching to a named site already declared in the parent XML (e.g., `arm_attach_r`, `arm_attach_l`). Use the `frame=` argument when attaching to a programmatically created frame (e.g., `root_body.add_frame(...)` for leg attachment).
 
 ### `build_child_xml_from_components(...)`
 

@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-06 — Composition fails on elements MjSpec.attach drops
+Changed: `myo_sim/build/utils.py` (`attach_checked`), `myo_sim/build/compose.py`, `tests/test_attach_checked.py`, `docs/wiki/build-and-composition.md`
+Why: `MjSpec.attach` silently leaves out an element whose references don't resolve. A misspelled site in `myoarm_r_tendon.xml` removed APL and its tendon from `myoarm_r`, `myoarms` and `myofullbody` without an error, while `myohand_r` failed to compile. Every builder now attaches through `attach_checked`, which raises with the names of the lost elements. No registered model loses an element today.
+
 ## 2026-11-06 — APL fibre length on its via path; wrist deviation; fist over nudged starts
 Changed: `myo_sim/models/arm/assets/myoarm_r_muscle.xml`, `myoarm_r_tendon.xml` (springs), `myo_sim/build/data/{muscle_passive,passive_joint_moments,standing_keyframes,hand_literature}.json`, `scripts/fit_muscle_passive.py` (`physiological_maps`), `scripts/hand_literature_comparison.py` (`fist_run`, `fist`), `tests/test_muscle_passive.py`, `tests/test_hand_contacts.py`, `docs/wiki/{hand-extrinsic-muscles,hand-contacts-and-pads,hand-literature-comparison,testing-guide}.md`, `CHANGELOG.md`
 Why: The APL length range was fitted to a MuJoCo 3 path that wrapped about 39 mm round the old CMC cylinder, leaving the fibres at 0.55-0.88 optimal length on the via path. It now comes from Jacobson et al. 1992's optimal fibre length (via Holzbaur et al. 2005) and a neutral-posture slack rule; the other re-routed muscles were checked and kept. The wrist-deviation change of the muscle fit is traced to the APL and justified against the total with springs (0.010 N m rms against Formica 2012, 0.014 before). The fist outcome is chaotic in the start, so it is measured over 12 nudged starts.
