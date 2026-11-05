@@ -52,3 +52,19 @@ docs/wiki/            # canonical wiki location
 | Add a mesh | `myo_sim/models/meshes/` |
 | Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
+
+## Publishing
+
+After merging the release PR, run **Publish to PyPI and GitHub** from Actions on `main`.
+The workflow reads the stable `X.Y.Z` version from the built wheel, publishes to PyPI
+using the existing `pypi` environment and Trusted Publisher, then tags the exact build
+commit as `vX.Y.Z`. It creates a GitHub release with generated notes and attaches the
+same wheel and source archive before publishing the release. It never bumps versions
+or writes to `main`. A tag pointing to another commit fails before the PyPI upload.
+
+If GitHub release creation fails after PyPI succeeds, use **Re-run failed jobs** on
+that run. The release job reuses the original artifacts, accepts an existing tag only
+at the original commit, and resumes an existing draft/release. Do not restart the whole
+workflow for an already published version: PyPI rejects duplicate uploads by design.
+Tag creation requires the repository's tag rules to permit the Actions token to create
+`v*` tags; the workflow does not bypass rules.
