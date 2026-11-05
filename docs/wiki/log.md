@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-05 — Stay below MuJoCo 4
+Changed: pyproject.toml, uv.lock, CHANGELOG.md
+Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
+
 ## 2026-11-05 — Tag and GitHub release after PyPI publication
 Changed: .github/workflows/publish.yml, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: one manual main-branch run now publishes the package and releases the same commit and artifacts on GitHub; failed release jobs can resume without another PyPI upload.
