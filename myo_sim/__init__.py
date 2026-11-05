@@ -172,6 +172,9 @@ def load_spec(
     import mujoco
 
     from myo_sim.build.compose import ALIASES, build_spec
+    from myo_sim.build.warp_version import warn_if_old_mujoco_warp
+
+    warn_if_old_mujoco_warp(ALIASES.get(name, name))
 
     build_kwargs = build_kwargs or {}
     composed_models = _composed_models()
