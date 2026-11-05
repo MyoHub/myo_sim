@@ -18,9 +18,11 @@ myo_sim/              # installable Python package
     scene/            # scene wrapper XMLs for rendering
     textures/         # shared textures
   build/
-    compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec()/build_model(), SPEC_BUILDERS
+    compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
+    keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
+    data/             # tables written by scripts/, with provenance
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -31,6 +33,7 @@ tests/
   test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
+  test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -47,4 +50,21 @@ docs/wiki/            # canonical wiki location
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
+| Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
+
+## Publishing
+
+After merging the release PR, run **Publish to PyPI and GitHub** from Actions on `main`.
+The workflow reads the stable `X.Y.Z` version from the built wheel, publishes to PyPI
+using the existing `pypi` environment and Trusted Publisher, then tags the exact build
+commit as `vX.Y.Z`. It creates a GitHub release with generated notes and attaches the
+same wheel and source archive before publishing the release. It never bumps versions
+or writes to `main`. A tag pointing to another commit fails before the PyPI upload.
+
+If GitHub release creation fails after PyPI succeeds, use **Re-run failed jobs** on
+that run. The release job reuses the original artifacts, accepts an existing tag only
+at the original commit, and resumes an existing draft/release. Do not restart the whole
+workflow for an already published version: PyPI rejects duplicate uploads by design.
+Tag creation requires the repository's tag rules to permit the Actions token to create
+`v*` tags; the workflow does not bypass rules.
