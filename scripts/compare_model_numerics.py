@@ -60,7 +60,7 @@ def dump(models: list[str], out: Path) -> None:
         for _ in range(5):
             data.qpos[:] = model.qpos0
             for j in range(model.njnt):
-                if model.jnt_type[j] in (mujoco.mjtJoint.mjJNT_HINGE, mujoco.mjtJoint.mjJNT_SLIDE) and model.jnt_limited[j]:
+                if int(model.jnt_type[j]) in (int(mujoco.mjtJoint.mjJNT_HINGE), int(mujoco.mjtJoint.mjJNT_SLIDE)) and model.jnt_limited[j]:
                     data.qpos[model.jnt_qposadr[j]] = rng.uniform(*model.jnt_range[j])
             mujoco.mj_forward(model, data)
             postures.append(
