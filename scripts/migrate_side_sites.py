@@ -1051,6 +1051,8 @@ def dense_tendon_jacobian(model, data) -> np.ndarray:
     import mujoco
 
     out = np.zeros((model.ntendon, model.nv))
+    if data.ten_J.size == out.size:  # dense before the sparse tendon Jacobian
+        return data.ten_J.reshape(out.shape).astype(np.float32)
     # the sparsity pattern moved from mjData to mjModel between MuJoCo versions
     holder = data if hasattr(data, "ten_J_rownnz") else model
     mujoco.mju_sparse2dense(out, data.ten_J, holder.ten_J_rownnz, holder.ten_J_rowadr, holder.ten_J_colind)
