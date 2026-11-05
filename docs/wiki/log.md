@@ -6,6 +6,10 @@ Append-only maintenance log, most recent first.
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
 
+## 2026-11-05 — Tag and GitHub release after PyPI publication
+Changed: .github/workflows/publish.yml, docs/wiki/repository-map.md, docs/wiki/log.md
+Why: one manual main-branch run now publishes the package and releases the same commit and artifacts on GitHub; failed release jobs can resume without another PyPI upload.
+
 ## 2026-11-04 — mujoco-warp version warning
 Changed: myo_sim/build/warp_version.py, myo_sim/__init__.py, myo_sim/models/arm/README.md, tests/test_warp_version_warning.py, CHANGELOG.md, docs/wiki/testing-guide.md
 Why: the arm README lists a mujoco-warp limitation that only a parity test on a GPU would reveal; loading a model now says so when the installed version is affected.

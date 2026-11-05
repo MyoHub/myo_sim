@@ -1,13 +1,26 @@
-name: Publish to PyPI
+name: Publish to PyPI and GitHub
 
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.version.outputs.tag }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v4
@@ -17,11 +30,39 @@ jobs:
       - name: Build sdist and wheel
         run: uv build
 
+      - name: Read built version and check tag
+        id: version
+        shell: bash
+        run: |
+          tag=$(uv run --no-project python - <<'PY'
+          import email
+          import pathlib
+          import re
+          import zipfile
+
+          wheel, = pathlib.Path("dist").glob("*.whl")
+          with zipfile.ZipFile(wheel) as archive:
+              metadata, = (n for n in archive.namelist() if n.endswith(".dist-info/METADATA"))
+              version = email.message_from_bytes(archive.read(metadata))["Version"]
+          if not re.fullmatch(r"[0-9]+\.[0-9]+\.[0-9]+", version):
+              raise SystemExit(f"Expected a stable X.Y.Z release, got {version!r}")
+          print(f"v{version}")
+          PY
+          )
+          if git show-ref --verify --quiet "refs/tags/$tag"; then
+            test "$(git rev-parse "$tag^{commit}")" = "$GITHUB_SHA" || {
+              echo "::error::Tag $tag already points to a different commit"
+              exit 1
+            }
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dist
           path: dist/
+          if-no-files-found: error
 
   publish:
     needs: build
@@ -38,3 +79,42 @@ jobs:
 
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
+
+  release:
+    needs: [build, publish]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Create tag and GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          TAG: ${{ needs.build.outputs.tag }}
+        shell: bash
+        run: |
+          if git show-ref --verify --quiet "refs/tags/$TAG"; then
+            test "$(git rev-parse "$TAG^{commit}")" = "$GITHUB_SHA" || {
+              echo "::error::Tag $TAG already points to a different commit"
+              exit 1
+            }
+          else
+            git tag "$TAG" "$GITHUB_SHA"
+            git push origin "refs/tags/$TAG"
+          fi
+          if ! gh release view "$TAG" > /dev/null 2>&1; then
+            gh release create "$TAG" --verify-tag --title "$TAG" --generate-notes --draft
+          fi
+          gh release upload "$TAG" dist/* --clobber
+          gh release edit "$TAG" --draft=false
