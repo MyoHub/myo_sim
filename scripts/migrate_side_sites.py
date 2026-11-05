@@ -1,14 +1,15 @@
-"""Side sites that give the same tendon path under the MuJoCo 3 and the MuJoCo 4 wrap rule.
+"""Tendon paths on MuJoCo 4: side sites, via sites and how each path compares under the MuJoCo 3 rule.
 
-MuJoCo 4 picks the side of a wrap by the winding of the polyline first endpoint -> side site ->
-second endpoint; MuJoCo 3 used a half-plane test and the arc nearest the side site. This script
-holds a NumPy copy of ``wrap_circle`` for both rules, so one process can evaluate both. The real
-engines check it: ``dump`` runs under each MuJoCo, ``check`` compares the dumps.
+MuJoCo 4 picks the side of a wrap by the winding of the polyline first endpoint -> side site -> second endpoint;
+MuJoCo 3 used a half-plane test and the arc nearest the side site. This script holds a NumPy copy of wrap_circle
+for both rules, so one process can score both; tests/test_side_sites.py ties it to the running engine.
 
-    python scripts/migrate_side_sites.py search --out result.json   # candidate sites per side site
-    python scripts/migrate_side_sites.py write                      # apply data/side_sites.json to the chains
-    python scripts/migrate_side_sites.py dump out.npz               # under each MuJoCo: lengths, arms, jumps
-    python scripts/migrate_side_sites.py check a.npz b.npz          # compare two dumps
+    python scripts/migrate_side_sites.py select-sides FDS2_r_tendon/FDS_ellipsoid_wrap_r --also-mujoco3
+    python scripts/migrate_side_sites.py fit-vias
+    python scripts/migrate_side_sites.py write
+    python scripts/migrate_side_sites.py record-jumps
+    python scripts/migrate_side_sites.py dump out label      # under each MuJoCo
+    python scripts/migrate_side_sites.py check out label3 label4
 """
 
 from __future__ import annotations
@@ -20,8 +21,6 @@ import numpy as np
 
 WRAP_SITE, WRAP_SPHERE, WRAP_CYLINDER = 3, 4, 5
 MJMINVAL = 1e-15
-# myofullbody holds the same wraps; its 350 wraps exceed the memory budget of a scan and the dumps cover it.
-SEARCH_MODELS = ("myoarm_r", "myolegs", "myolegs_abdomen", "myotorso")
 CHECK_MODELS = (
     "myoarm_r",
     "myoarms",
@@ -371,6 +370,7 @@ class WrapSamples:
     blocked4: np.ndarray
     wind: np.ndarray
     valid: np.ndarray
+    chord: np.ndarray  # (n, 2): squared distance between the tangent points of each solution
 
 
 def precompute(p0, p1, radius: float, is_sphere: bool) -> WrapSamples:
@@ -395,6 +395,7 @@ def precompute(p0, p1, radius: float, is_sphere: bool) -> WrapSamples:
     len3, len4 = np.empty((n, 3)), np.empty((n, 3))
     len3[:, 0] = len4[:, 0] = np.linalg.norm(p0 - p1, axis=-1)
     blocked3, blocked4 = np.empty((n, 2), bool), np.empty((n, 2), bool)
+    chord = np.empty((n, 2))
     for i, sgn in enumerate((1.0, -1.0)):
         s0 = np.stack(
             [
@@ -413,6 +414,7 @@ def precompute(p0, p1, radius: float, is_sphere: bool) -> WrapSamples:
         m = s0 + s1
         nrm = np.linalg.norm(m, axis=-1, keepdims=True)
         mid[:, i] = m / np.where(nrm < MJMINVAL, 1.0, nrm)
+        chord[:, i] = ((s0 - s1) ** 2).sum(-1)
         blocked3[:, i] = _is_intersect(end0, s0, end1, s1, strict=False)
         blocked4[:, i] = _is_intersect(end0, s0, end1, s1, strict=True)
         cross = s0[:, 1] * s1[:, 0] - s0[:, 0] * s1[:, 1]
@@ -439,7 +441,7 @@ def precompute(p0, p1, radius: float, is_sphere: bool) -> WrapSamples:
                 out[:, i + 1] = (
                     np.linalg.norm(p0 - c0, axis=-1) + np.sqrt(wl * wl + (z1 - z0) ** 2) + np.linalg.norm(p1 - c1, axis=-1)
                 )
-    return WrapSamples(a0, a1, end0, end1, near, clear, mid, len3, len4, blocked3, blocked4, wind, valid)
+    return WrapSamples(a0, a1, end0, end1, near, clear, mid, len3, len4, blocked3, blocked4, wind, valid, chord)
 
 
 def states(ws: WrapSamples, side_dirs: np.ndarray, rule: int) -> np.ndarray:
@@ -465,6 +467,18 @@ def states(ws: WrapSamples, side_dirs: np.ndarray, rule: int) -> np.ndarray:
         blocked = np.where(pick1, ws.blocked4[:, 1], ws.blocked4[:, 0])
     state = pick1.astype(np.int8) + 1
     state[drop | blocked | ~ws.valid[None]] = 0
+    return state
+
+
+def states_no_side(ws: WrapSamples, rule: int) -> np.ndarray:
+    """Path without a side site: the shorter arc if the segment crosses the geom; (n,). The same under both rules but for is_intersect."""
+    blocked_all = ws.blocked3 if rule == 3 else ws.blocked4
+    g0 = np.where(blocked_all[:, 0], -10000.0, -ws.chord[:, 0])
+    g1 = np.where(blocked_all[:, 1], -10000.0, -ws.chord[:, 1])
+    pick1 = ~(g0 > g1)
+    blocked = np.where(pick1, blocked_all[:, 1], blocked_all[:, 0])
+    state = pick1.astype(np.int8) + 1
+    state[ws.clear | blocked | ~ws.valid] = 0
     return state
 
 
@@ -561,172 +575,6 @@ def reference_lengths(ws: WrapSamples, side_dir: np.ndarray) -> np.ndarray:
     return ws.state_len3[np.arange(len(state)), state]
 
 
-def scan_model(name: str, n: int, steps: int) -> dict[str, list[dict]]:
-    """Wraps per side site whose current site differs between the rules in any posture set."""
-    import myo_sim
-
-    model = myo_sim.load_model(name)
-    wraps = model_wraps(model)
-    side = side_local(model, wraps)
-    ends = {t: forward_sites(model, tier_postures(model, t, n, steps), wraps)[0] for t in TIERS}
-    groups: dict[str, list[dict]] = {}
-    for k, w in enumerate(wraps):
-        if not rule_decides(w, side[k]):
-            continue
-        entry = {"model": name, "wrap": w, "side": side[k], "tiers": {}, "flagged": False}
-        for t, e in ends.items():
-            ws = precompute(e[:, k, 0], e[:, k, 1], w.radius, w.is_sphere)
-            ref = reference_lengths(ws, side[k])
-            dev = deviation(ws, side[k][None], ref, 4)[0]
-            entry["tiers"][t] = {"ws": ws, "ref": ref, "dev": dev}
-            entry["flagged"] |= bool(dev.max() > LENGTH_TOL)
-        groups.setdefault(w.side_name, []).append(entry)
-    return {site: g for site, g in groups.items() if any(e["flagged"] for e in g)}
-
-
-def evaluate_group(group: list[dict], model, site_name: str) -> dict:
-    """Candidate directions around the first geom of a side site's group, scored under both rules."""
-    import mujoco
-
-    first = group[0]["wrap"]
-    is_sphere = first.is_sphere
-    dirs = direction_grid(is_sphere)
-    site_id = model.site(site_name).id
-    data = mujoco.MjData(model)
-    mujoco.mj_kinematics(model, data)
-    body = model.site_bodyid[site_id]
-    body_rot = data.xmat[body].reshape(3, 3)
-    body_pos = data.xpos[body]
-    rot0 = data.geom_xmat[first.geom].reshape(3, 3)
-    pos0 = data.geom_xpos[first.geom]
-    radius = max(e["wrap"].radius for e in group)
-    # two radii out, in the plane of a cylinder
-    world = pos0 + (dirs * 2.0 * first.radius) @ rot0.T
-    in_body = (world - body_pos) @ body_rot
-    n = len(dirs)
-    v3, v4a, v4rest = np.zeros(n, int), np.zeros(n, int), np.zeros(n, int)
-    worst3, worst4 = np.zeros(n), np.zeros(n)
-    outside = np.ones(n, bool)
-    for e in group:
-        w = e["wrap"]
-        rot = data.geom_xmat[w.geom].reshape(3, 3)
-        loc = (world - data.geom_xpos[w.geom]) @ rot
-        outside &= np.linalg.norm(loc, axis=1) > 1.2 * w.radius
-        for t, tier in e["tiers"].items():
-            d3 = deviation(tier["ws"], loc, tier["ref"], 3)
-            d4 = deviation(tier["ws"], loc, tier["ref"], 4)
-            v3 += (d3 > LENGTH_TOL).sum(1)
-            worst3 = np.maximum(worst3, d3.max(1))
-            worst4 = np.maximum(worst4, d4.max(1))
-            if t == "A":
-                v4a += (d4 > LENGTH_TOL).sum(1)
-            else:
-                v4rest += (d4 > LENGTH_TOL).sum(1)
-    feasible = outside & (v3 == 0) & (v4a == 0) & (v4rest == 0)
-    tier_a_only = outside & (v3 == 0) & (v4a == 0)
-    return {
-        "dirs": dirs,
-        "in_body": in_body,
-        "v3": v3,
-        "v4a": v4a,
-        "v4rest": v4rest,
-        "worst3": worst3,
-        "worst4": worst4,
-        "feasible": feasible,
-        "tier_a_only": tier_a_only,
-        "radius": radius,
-    }
-
-
-def widest_margin(dirs: np.ndarray, good: np.ndarray) -> int:
-    """Index of the good direction farthest from any direction that is not good."""
-    bad = dirs[~good]
-    idx = np.where(good)[0]
-    if len(bad) == 0:
-        return int(idx[0])
-    return int(idx[np.argmin((dirs[idx] @ bad.T).max(1))])
-
-
-def group_summary(group: list[dict]) -> dict:
-    """Largest difference and share of postures between the rules at the current site, per tier."""
-    out = {}
-    for t in TIERS:
-        devs = np.concatenate([e["tiers"][t]["dev"] for e in group])
-        out[t] = {"max_mm": round(float(devs.max() * 1e3), 3), "share_percent": round(float((devs > 1e-3).mean() * 100), 3)}
-    return out
-
-
-def run_search(n: int, steps: int, out_path: str, models: tuple[str, ...]) -> None:
-    """Search every flagged side site and write the result as JSON."""
-    import json
-    from pathlib import Path
-
-    import myo_sim
-
-    result: dict[str, dict] = {}
-    for name in models:
-        groups = scan_model(name, n, steps)
-        model = myo_sim.load_model(name)
-        print(f"== {name}: {len(groups)} side sites differ", flush=True)
-        for site, group in groups.items():
-            ev = evaluate_group(group, model, site)
-            summary = group_summary(group)
-            entry = {
-                "model": name,
-                "body": model.body(model.site_bodyid[model.site(site).id]).name,
-                "site_pos": [round(float(v), 6) for v in model.site_pos[model.site(site).id]],
-                "users": sorted({f"{e['wrap'].tendon_name}/{e['wrap'].geom_name}" for e in group}),
-                "difference_now": summary,
-                "candidates": len(ev["dirs"]),
-                "feasible_all_tiers": int(ev["feasible"].sum()),
-                "feasible_tier_a": int(ev["tier_a_only"].sum()),
-                "fewest_3x_violations": int(ev["v3"].min()),
-            }
-            # a site with no in-range difference stays unless a candidate also clears the other posture sets
-            good = ev["feasible"] if ev["feasible"].any() or summary["A"]["max_mm"] == 0.0 else ev["tier_a_only"]
-            if good.any():
-                i = widest_margin(ev["dirs"], good)
-                entry["pos"] = [round(float(v), 6) for v in ev["in_body"][i]]
-                entry["left_v4_outside_tier_a"] = int(ev["v4rest"][i])
-                entry["margin_deg"] = (
-                    round(float(np.degrees(np.arccos(np.clip((ev["dirs"][i] @ ev["dirs"][~good].T).max(), -1, 1)))), 1)
-                    if (~good).any()
-                    else 180.0
-                )
-            else:
-                keep = ev["v3"] == 0
-                if keep.any():
-                    i = int(np.where(keep)[0][np.argmin(ev["v4a"][keep] + ev["v4rest"][keep])])
-                else:
-                    i = int(np.argmin(ev["v3"] * 1000 + ev["v4a"]))
-                entry["best"] = {
-                    "pos": [round(float(v), 6) for v in ev["in_body"][i]],
-                    "v3": int(ev["v3"][i]),
-                    "v4_tier_a": int(ev["v4a"][i]),
-                    "v4_other": int(ev["v4rest"][i]),
-                    "worst3_mm": round(float(ev["worst3"][i] * 1e3), 3),
-                    "worst4_mm": round(float(ev["worst4"][i] * 1e3), 3),
-                }
-            key = site
-            if key in result:
-                result[key]["also_in"] = result[key].get("also_in", []) + [name]
-                for t, v in summary.items():
-                    if v["max_mm"] > result[key]["difference_now"][t]["max_mm"]:
-                        result[key]["difference_now"][t] = v
-                if "pos" in result[key] and "pos" not in entry:
-                    result[key]["conflict"] = name
-                continue
-            result[key] = entry
-            status = "MOVE" if "pos" in entry else "KEEP"
-            print(
-                f"{status} {site:46s} {summary['A']['max_mm']:8.2f} A {summary['B']['max_mm']:8.2f} B "
-                f"{summary['C']['max_mm']:8.2f} C | feasible {entry['feasible_all_tiers']}/{entry['feasible_tier_a']} "
-                f"of {entry['candidates']}",
-                flush=True,
-            )
-        Path(out_path).write_text(json.dumps(result, indent=1))
-
-
 def chain_between(model, body0: int, body1: int) -> list[int]:
     """Bodies on the kinematic path between two bodies."""
 
@@ -742,92 +590,17 @@ def chain_between(model, body0: int, body1: int) -> list[int]:
     return a[: a.index(common) + 1] + b[: b.index(common)]
 
 
-def off_body_search(name: str, wrap_key: str, n: int, steps: int, distances: tuple[float, ...], n_dirs: int) -> list[dict]:
-    """Side site on another body of the wrap's chain: violations under both rules in every posture set."""
-    import mujoco
+def off_body_sweep(name: str, wrap_key: str, body: str, joint: str, extra: float = 0.8) -> list[dict]:
+    """Side sites on *body* for a wrap whose relative motion is one joint: on the MuJoCo 4 rule, the current path in range.
 
-    import myo_sim
-
-    model = myo_sim.load_model(name)
-    wraps = model_wraps(model)
-    side = side_local(model, wraps)
-    k = next(i for i, w in enumerate(wraps) if f"{w.tendon_name}/{w.geom_name}" == wrap_key)
-    w = wraps[k]
-    geom_body = model.geom_bodyid[w.geom]
-    chain = chain_between(model, model.site_bodyid[w.site0], model.site_bodyid[w.site1])
-    bodies = [b for b in chain if b not in (geom_body, 0)]
-    data = mujoco.MjData(model)
-    sets = {}
-    for tier in TIERS:
-        qs = tier_postures(model, tier, n, steps)
-        ends = np.empty((len(qs), 2, 3))
-        rel = {b: (np.empty((len(qs), 3, 3)), np.empty((len(qs), 3))) for b in bodies}
-        for i, q in enumerate(qs):
-            data.qpos[:] = q
-            mujoco.mj_kinematics(model, data)
-            rot, pos = data.geom_xmat[w.geom].reshape(3, 3), data.geom_xpos[w.geom]
-            ends[i, 0] = rot.T @ (data.site_xpos[w.site0] - pos)
-            ends[i, 1] = rot.T @ (data.site_xpos[w.site1] - pos)
-            for b in bodies:
-                rel[b][0][i] = rot.T @ data.xmat[b].reshape(3, 3)
-                rel[b][1][i] = rot.T @ (data.xpos[b] - pos)
-        ws = precompute(ends[:, 0], ends[:, 1], w.radius, w.is_sphere)
-        sets[tier] = (ws, reference_lengths(ws, side[k]), rel)
-    data.qpos[:] = model.qpos0
-    mujoco.mj_kinematics(model, data)
-    rot0, pos0 = data.geom_xmat[w.geom].reshape(3, 3), data.geom_xpos[w.geom]
-    dirs = direction_grid(True, n_sphere=n_dirs)
-    out = []
-    for b in bodies:
-        rot_b, pos_b = data.xmat[b].reshape(3, 3), data.xpos[b]
-        for dist in distances:
-            points = ((pos0 + (dirs * w.radius * dist) @ rot0.T) - pos_b) @ rot_b
-            v3, v4 = {t: np.zeros(n_dirs, int) for t in TIERS}, {t: np.zeros(n_dirs, int) for t in TIERS}
-            outside = np.ones(n_dirs, bool)
-            for tier, (ws, ref, rel) in sets.items():
-                idx = np.arange(len(ref))
-                for c0 in range(0, n_dirs, 64):
-                    loc = np.einsum("nij,cj->cni", rel[b][0], points[c0 : c0 + 64]) + rel[b][1][None]
-                    outside[c0 : c0 + 64] &= np.linalg.norm(loc, axis=-1).min(1) > 1.2 * w.radius
-                    v3[tier][c0 : c0 + 64] += (np.abs(ws.state_len3[idx, states(ws, loc, 3)] - ref) > LENGTH_TOL).sum(1)
-                    v4[tier][c0 : c0 + 64] += (np.abs(ws.state_len4[idx, states(ws, loc, 4)] - ref) > LENGTH_TOL).sum(1)
-            in_range = sum(v3[t] + v4[t] for t in ("A", "B"))
-            past = v3["C"] + v4["C"]
-            good = outside & (in_range == 0)
-            if good.any():
-                good = good & (past == past[good].min())
-                i = widest_margin(dirs, good)
-            else:
-                i = int(np.argmin(np.where(outside, in_range, 10**9)))
-            out.append(
-                {
-                    "wrap": wrap_key,
-                    "body": model.body(b).name,
-                    "distance_radii": dist,
-                    "feasible": int(good.sum()),
-                    "pos": [round(float(x), 6) for x in points[i]],
-                    "violations_3x": {t: int(v[i]) for t, v in v3.items()},
-                    "violations_4": {t: int(v[i]) for t, v in v4.items()},
-                    "postures": {t: len(sets[t][1]) for t in TIERS},
-                }
-            )
-    return out
-
-
-def off_body_sweep(name: str, wrap_key: str, body: str, joint: str, extra: float = 0.6) -> list[dict]:
-    """Side sites on *body* for a wrap whose relative motion is one joint: equal to MuJoCo 3 in range under both rules.
-
-    Candidates are ranked by how far past the limits the two rules still agree with each other.
+    Candidates are ranked by how far past the limits the path keeps its side.
     """
     import mujoco
 
     import myo_sim
 
     model = myo_sim.load_model(name)
-    wraps = model_wraps(model)
-    side = side_local(model, wraps)
-    k = next(i for i, w in enumerate(wraps) if f"{w.tendon_name}/{w.geom_name}" == wrap_key)
-    w = wraps[k]
+    w = next(x for x in model_wraps(model) if f"{x.tendon_name}/{x.geom_name}" == wrap_key)
     b = model.body(body).id
     j = model.joint(joint)
     lo, hi = j.range
@@ -835,6 +608,7 @@ def off_body_sweep(name: str, wrap_key: str, body: str, joint: str, extra: float
     data = mujoco.MjData(model)
     ends = np.empty((len(grid), 2, 3))
     rot_rel, pos_rel = np.empty((len(grid), 3, 3)), np.empty((len(grid), 3))
+    side_now = np.empty((len(grid), 3))
     for i, x in enumerate(grid):
         data.qpos[:] = model.qpos0
         data.qpos[j.qposadr[0]] = x
@@ -842,33 +616,32 @@ def off_body_sweep(name: str, wrap_key: str, body: str, joint: str, extra: float
         rot, pos = data.geom_xmat[w.geom].reshape(3, 3), data.geom_xpos[w.geom]
         ends[i, 0] = rot.T @ (data.site_xpos[w.site0] - pos)
         ends[i, 1] = rot.T @ (data.site_xpos[w.site1] - pos)
+        side_now[i] = rot.T @ (data.site_xpos[w.side] - pos)
         rot_rel[i] = rot.T @ data.xmat[b].reshape(3, 3)
         pos_rel[i] = rot.T @ (data.xpos[b] - pos)
     ws = precompute(ends[:, 0], ends[:, 1], w.radius, w.is_sphere)
-    ref = reference_lengths(ws, side[k])
+    idx = np.arange(len(grid))
+    ref = ws.state_len4[idx, states(ws, side_now[None], 4)[0]]
     data.qpos[:] = model.qpos0
     mujoco.mj_kinematics(model, data)
     rot0, pos0 = data.geom_xmat[w.geom].reshape(3, 3), data.geom_xpos[w.geom]
     rot_b, pos_b = data.xmat[b].reshape(3, 3), data.xpos[b]
     angles = np.radians(np.arange(0.0, 360.0, 1.0))
     i0, i1 = np.searchsorted(grid, lo), np.searchsorted(grid, hi)
-    idx = np.arange(len(grid))
     rows = []
-    for rho in (0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 1.75, 2.0, 2.5, 3.0, 4.0, 6.0, 8.0, 12.0):
+    for rho in (0.25, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0, 4.0, 6.0, 8.0, 12.0, 16.0, 24.0):
         for z in (0.0, 1.5, 2.0, 3.0, 4.0, -1.5, -2.0, -3.0, -4.0):
             plane = np.stack([rho * np.cos(angles), rho * np.sin(angles), z + 0 * angles], 1)
             points = ((pos0 + (plane * w.radius) @ rot0.T) - pos_b) @ rot_b
             loc = np.einsum("nij,cj->cni", rot_rel, points) + pos_rel[None]
             outside = np.linalg.norm(loc, axis=-1).min(1) > 1.5 * w.radius
-            len3 = ws.state_len3[idx, states(ws, loc, 3)]
-            len4 = ws.state_len4[idx, states(ws, loc, 4)]
-            agree = np.abs(len3 - len4) < LENGTH_TOL
-            exact = (np.abs(len3 - ref) < LENGTH_TOL) & agree
+            st = states(ws, loc, 4)
+            exact = np.abs(ws.state_len4[idx, st] - ref) < LENGTH_TOL
             for c in np.flatnonzero(outside & exact[:, i0 : i1 + 1].all(1)):
                 a, e = i0, i1
-                while a > 0 and agree[c, a - 1]:
+                while a > 0 and st[c, a - 1] == st[c, i0]:
                     a -= 1
-                while e < len(grid) - 1 and agree[c, e + 1]:
+                while e < len(grid) - 1 and st[c, e + 1] == st[c, i1]:
                     e += 1
                 rows.append(
                     {
@@ -876,122 +649,107 @@ def off_body_sweep(name: str, wrap_key: str, body: str, joint: str, extra: float
                         "rho_radii": rho,
                         "z_radii": z,
                         "angle_deg": float(np.degrees(angles[c])),
-                        "agree_past_lower": round(float(lo - grid[a]), 3),
-                        "agree_past_upper": round(float(grid[e] - hi), 3),
+                        "past_lower": round(float(lo - grid[a]), 3),
+                        "past_upper": round(float(grid[e] - hi), 3),
                     }
                 )
-    rows.sort(key=lambda r: -min(r["agree_past_lower"], r["agree_past_upper"]))
+    rows.sort(key=lambda r: -min(r["past_lower"], r["past_upper"]))
     return rows
 
 
+def _after_body_tag(lines: list[str], body: str) -> tuple[int, str]:
+    """Line index just after a body's opening tag, outside any generated block, and the indent of its children."""
+    import re
+
+    anchor = next(i for i, x in enumerate(lines) if f'<body name="{body}"' in x)
+    return anchor + 1, re.match(r"\s*", lines[anchor]).group(0) + "    "
+
+
+def _edit_site(lines: list[str], site: dict) -> None:
+    """Position of one moved side site, in place; a new parent body takes it just after its opening tag."""
+    import re
+
+    pos = 'pos="' + " ".join(f"{v:g}" for v in site["pos"]) + '"'
+    found = [i for i, line in enumerate(lines) if f'<site name="{site["name"]}"' in line]
+    if found and site["body"] == site.get("body_before", site["body"]):
+        lines[found[0]] = re.sub(r'pos="[^"]*"', pos, lines[found[0]])
+        return
+    text = re.sub(r'pos="[^"]*"', pos, lines[found[0]]).strip() if found else f'<site name="{site["name"]}" {pos}/>'
+    for i in reversed(found):
+        del lines[i]
+    k, indent = _after_body_tag(lines, site["body"])
+    lines.insert(k, indent + text)
+
+
 def write_chain() -> None:
-    """Apply ``data/side_sites.json`` to the right arm chain: position, and the parent body where it differs."""
+    """Apply ``data/side_sites.json`` to the chains and tendon files: moved sites, removed side sites, geom radii."""
     import json
     import re
     from pathlib import Path
 
     root = Path(__file__).resolve().parents[1]
     table = json.loads((root / "myo_sim/build/data/side_sites.json").read_text())
-    chain = root / "myo_sim/models/arm/assets/myoarm_r_chain.xml"
-    lines = chain.read_text().split("\n")
-    for site in table["sites"]:
-        k = next(i for i, line in enumerate(lines) if f'<site name="{site["name"]}"' in line)
-        line = re.sub(r'pos="[^"]*"', 'pos="' + " ".join(f"{v:g}" for v in site["pos"]) + '"', lines[k])
-        del lines[k]
-        anchor = next(i for i, x in enumerate(lines) if f'<body name="{site["body"]}"' in x)
-        indent = re.match(r"\s*", lines[anchor]).group(0) + "    "
-        # after the anchor body's last direct site, or its opening tag and inertial
-        end = anchor + 1
-        for i in range(anchor + 1, len(lines)):
-            stripped = lines[i].strip()
-            if stripped.startswith("<body") or stripped.startswith("</body"):
-                break
-            if stripped.startswith("<site"):
-                end = i + 1
-        lines.insert(end, indent + line.strip())
-    chain.write_text("\n".join(lines))
-
-
-def alternatives(name: str, n: int, sweep_steps: int, out_path: str) -> None:
-    """For side sites with no site that keeps MuJoCo 3's path under both rules: the two sites worth comparing.
-
-    ``unified``: same path on both versions at every in-range posture, with the fewest jumps along the sweeps and then
-    the smallest change from MuJoCo 3. ``four_only``: under the MuJoCo 4 rule the closest to MuJoCo 3's path.
-    """
-    import json
-    from pathlib import Path
-
-    import myo_sim
-
-    model = myo_sim.load_model(name)
-    wraps = model_wraps(model)
-    side = side_local(model, wraps)
-    random_q = sample_postures(model, n, 21, True)
-    sweep_q, ids = sweep_postures(model, sweep_steps, 22, True, bases=4)
-    qs = np.vstack([random_q, sweep_q])
-    ends, _ = forward_sites(model, qs, wraps)
-    same_sweep = ids[1:] == ids[:-1]
-    start = len(random_q)
-    result = {}
-    for k, w in enumerate(wraps):
-        if not rule_decides(w, side[k]):
-            continue
-        ws = precompute(ends[:, k, 0], ends[:, k, 1], w.radius, w.is_sphere)
-        ref = reference_lengths(ws, side[k])
-        dev_now = deviation(ws, side[k][None], ref, 4)[0]
-        if dev_now.max() < LENGTH_TOL:
-            continue
-        dirs = direction_grid(w.is_sphere, n_sphere=2000)
-        idx = np.arange(len(ref))
-        d3, d4, disagree, jumps = [np.empty((len(dirs), len(ref)), np.float32) for _ in range(2)] + [
-            np.zeros(len(dirs), int),
-            np.zeros(len(dirs), int),
-        ]
-        worst_jump = np.zeros(len(dirs))
-        for c0 in range(0, len(dirs), 128):
-            c = dirs[c0 : c0 + 128]
-            l3 = ws.state_len3[idx, states(ws, c, 3)]
-            l4 = ws.state_len4[idx, states(ws, c, 4)]
-            d3[c0 : c0 + 128] = np.abs(l3 - ref)
-            d4[c0 : c0 + 128] = np.abs(l4 - ref)
-            disagree[c0 : c0 + 128] = (np.abs(l3 - l4) > LENGTH_TOL).sum(1)
-            steps = np.abs(np.diff(l4[:, start:], axis=1))[:, same_sweep]
-            jumps[c0 : c0 + 128] = (steps > 2e-3).sum(1)
-            worst_jump[c0 : c0 + 128] = steps.max(1)
-        ref_steps = np.abs(np.diff(ref[start:]))[same_sweep]
-        now_steps = np.abs(np.diff(ws.state_len4[idx, states(ws, side[k][None], 4)[0]][start:]))[same_sweep]
-        order = np.lexsort(((d3 > LENGTH_TOL).sum(1), jumps, disagree))
-        u = int(order[0])
-        f = int(np.argmin((d4 > LENGTH_TOL).sum(1)))
-        data = {
-            "users": f"{w.tendon_name}/{w.geom_name}",
-            "side": w.side_name,
-            "postures": len(ref),
-            "now": {
-                "rules_differ_share_percent": round(float((dev_now > 1e-3).mean() * 100), 2),
-                "rules_differ_max_mm": round(float(dev_now.max() * 1e3), 2),
-                "mj3_jump_max_mm": round(float(ref_steps.max() * 1e3), 2),
-                "mj3_jump_steps": int((ref_steps > 2e-3).sum()),
-                "mj4_jump_max_mm": round(float(now_steps.max() * 1e3), 2),
-                "mj4_jump_steps": int((now_steps > 2e-3).sum()),
-            },
-            "unified": {
-                "direction_geom_frame": [round(float(v), 4) for v in dirs[u]],
-                "rules_disagree_postures": int(disagree[u]),
-                "jump_steps": int(jumps[u]),
-                "jump_max_mm": round(float(worst_jump[u] * 1e3), 2),
-                "changes_mj3_share_percent": round(float((d3[u] > 1e-3).mean() * 100), 2),
-                "changes_mj3_max_mm": round(float(d3[u].max() * 1e3), 2),
-            },
-            "four_only": {
-                "direction_geom_frame": [round(float(v), 4) for v in dirs[f]],
-                "differs_from_mj3_share_percent": round(float((d4[f] > 1e-3).mean() * 100), 2),
-                "differs_from_mj3_max_mm": round(float(d4[f].max() * 1e3), 2),
-            },
-        }
-        result[data["users"]] = data
-        print(json.dumps(data), flush=True)
-        Path(out_path).write_text(json.dumps(result, indent=1))
+    models = root / "myo_sim/models"
+    files = {
+        "arm": (models / "arm/assets/myoarm_r_chain.xml", models / "arm/assets/myoarm_r_tendon.xml"),
+        "torso": (models / "torso/assets/myotorso_chain.xml", models / "torso/assets/myotorso_tendon.xml"),
+    }
+    for part, (chain, tendons) in files.items():
+        lines = chain.read_text().split("\n")
+        text = tendons.read_text()
+        for site in table["sites"]:
+            if site.get("part", "arm") == part:
+                _edit_site(lines, site)
+        for removal in table.get("removed", []):
+            if removal.get("part", "arm") != part:
+                continue
+            text = text.replace(f' sidesite="{removal["name"]}"', "")
+            if f'"{removal["name"]}"' not in text:
+                lines = [x for x in lines if f'<site name="{removal["name"]}"' not in x]
+            if "radius_m" in removal:
+                k = next(i for i, x in enumerate(lines) if f'name="{removal["geom"]}"' in x)
+                size = re.search(r'size="([^"]*)"', lines[k]).group(1).split()
+                size[0] = f"{removal['radius_m']:g}"
+                lines[k] = re.sub(r'size="[^"]*"', 'size="' + " ".join(size) + '"', lines[k])
+        for geom in table.get("geoms", []) if part == "arm" else []:
+            lines = [x for x in lines if f'name="{geom["name"]}"' not in x]
+            k = next(i for i, x in enumerate(lines) if f'name="{geom["copy_of"]}"' in x)
+            pos = re.search(r'pos="([^"]*)"', lines[k]).group(1)
+            size = f"{geom['radius_m']:g}"
+            indent = re.match(r"\s*", lines[k]).group(0)
+            lines.insert(
+                k + 1, f'{indent}<geom class="myoarm_wrap" name="{geom["name"]}" type="sphere" pos="{pos}" size="{size}"/>'
+            )
+            for tendon in geom["tendons"]:
+                start = text.index(f'name="{tendon}"')
+                stop = text.index("</spatial>", start)
+                text = (
+                    text[:start]
+                    + text[start:stop].replace(f'<geom geom="{geom["copy_of"]}"', f'<geom geom="{geom["name"]}"')
+                    + text[stop:]
+                )
+        for via in table.get("vias", []):
+            if via.get("part", "arm") != part:
+                continue
+            start = text.index(f'name="{via["tendon"]}"')
+            stop = text.index("</spatial>", start)
+            block = text[start:stop]
+            # the site, in the wrap's place; a via replacing a site as well takes that entry out of the path
+            block = re.sub(rf'<geom geom="{via["geom"]}"[^>]*?(/>|></geom>)', f'<site site="{via["name"]}"/>', block)
+            for gone in via.get("drops_sites", []):
+                block = re.sub(rf'\s*<site site="{gone}"/>', "", block)
+            text = text[:start] + block + text[stop:]
+            for name in (via["side"], via["geom"], *via.get("drops_sites", [])):
+                if f'"{name}"' not in text:
+                    lines = [x for x in lines if f'name="{name}"' not in x]
+            if via.get("chain_block"):  # scripts/generate_extrinsic_muscles.py writes this site
+                continue
+            lines = [x for x in lines if f'<site name="{via["name"]}"' not in x]
+            k, indent = _after_body_tag(lines, via["body"])
+            pos = " ".join(f"{v:g}" for v in via["pos"])
+            lines.insert(k, f'{indent}<site name="{via["name"]}" pos="{pos}"/>')
+        chain.write_text("\n".join(lines))
+        tendons.write_text(text)
 
 
 def line_jumps(name: str, n: int, out_path: str, lines: int = 40, steps: int = 400) -> None:
@@ -1135,44 +893,356 @@ def run_check(folder: str, a: str, b: str, models: tuple[str, ...], limit_mm: fl
             print(f"  {tendon:30s} {'; '.join(text)} | arm {arms[t] * 1e3:.2f} mm")
 
 
+# Hinges with room to grow: searches keep these continuous past today's limits as well (rad).
+EXTRA_MARGIN = {
+    "flexion": 0.3,
+    "deviation": 0.3,
+    "mcp2_flexion": 0.55,
+    "mcp3_flexion": 0.55,
+    "mcp4_flexion": 0.55,
+    "mcp5_flexion": 0.55,
+}
+JUMP_TOL = 0.3e-3  # m
+
+
+def wrap_joints(model, wrap: Wrap) -> np.ndarray:
+    """Limited joints that move the wrap's endpoints relative to its geom, followers of joint couplings included."""
+    bodies = {int(model.site_bodyid[wrap.site0]), int(model.site_bodyid[wrap.site1]), int(model.geom_bodyid[wrap.geom])}
+    chain: set[int] = set()
+    ids = sorted(bodies)
+    for a in ids:
+        for b in ids:
+            chain.update(chain_between(model, a, b))
+
+    def depth(b: int) -> int:
+        d = 0
+        while b > 0:
+            b = int(model.body_parentid[b])
+            d += 1
+        return d
+
+    top = min(chain, key=depth)
+    chain.discard(top)
+    limited = set(limited_joints(model).tolist())
+    return np.array([j for j in range(model.njnt) if int(model.jnt_bodyid[j]) in chain and j in limited], dtype=int)
+
+
+def margin_of(model, joint: int, base: float) -> float:
+    """How far past its limits a hinge is sampled."""
+    name = model.joint(joint).name
+    for token, extra in EXTRA_MARGIN.items():
+        if name.startswith(token):
+            return max(base, extra)
+    return base if int(model.jnt_type[joint]) == 3 else 0.0
+
+
+def continuity_postures(
+    model,
+    wrap: Wrap,
+    past: bool,
+    seed: int = 41,
+    n_lines: int = 400,
+    line_steps: int = 80,
+    sweep_steps: int = 801,
+    n_bases: int = 8,
+):
+    """Sequences of nearby postures for one wrap: sweeps of each joint that moves it, and straight lines in joint space."""
+    rng = np.random.default_rng(seed)
+    joints = wrap_joints(model, wrap)
+    eqs = [e for e in range(model.neq) if int(model.eq_type[e]) == 2 and model.eq_active0[e] and model.eq_obj2id[e] >= 0]
+    followers = {int(model.eq_obj1id[e]) for e in eqs}
+    drivers = {int(model.eq_obj2id[e]) for e in eqs if int(model.eq_obj1id[e]) in set(joints.tolist())}
+    drive = sorted({int(j) for j in joints if int(j) not in followers} | drivers)
+    limits = {}
+    for j in drive:
+        extra = margin_of(model, j, LIMIT_MARGIN) if past else 0.0
+        limits[j] = (model.jnt_range[j][0] - extra, model.jnt_range[j][1] + extra)
+
+    def draw(n: int) -> np.ndarray:
+        q = np.tile(model.qpos0, (n, 1))
+        for j in drive:
+            lo, hi = limits[j]
+            u = rng.random(n)
+            edge = rng.random(n) < 0.25
+            u[edge] = rng.integers(0, 2, edge.sum())
+            q[:, model.jnt_qposadr[j]] = lo + u * (hi - lo)
+        return q
+
+    rows, ids = [], []
+    count = 0
+    bases = np.vstack([model.qpos0[None], draw(n_bases - 1)])
+    for j in drive:
+        lo, hi = limits[j]
+        grid = np.linspace(lo, hi, sweep_steps)
+        for base in bases:
+            q = np.tile(base, (sweep_steps, 1))
+            q[:, model.jnt_qposadr[j]] = grid
+            rows.append(q)
+            ids.append(np.full(sweep_steps, count))
+            count += 1
+    t = np.linspace(0.0, 1.0, line_steps)[None, :, None]
+    a, b = draw(n_lines), draw(n_lines)
+    rows.append((a[:, None, :] * (1 - t) + b[:, None, :] * t).reshape(-1, model.nq))
+    ids.append(np.repeat(np.arange(count, count + n_lines), line_steps))
+    q = np.vstack(rows)
+    apply_couplings(model, q)
+    return q, np.concatenate(ids)
+
+
+def state_jump(ws: WrapSamples, st: np.ndarray, rule: int, same: np.ndarray) -> np.ndarray:
+    """Length discontinuity at each change of state between neighbouring samples, (..., n-1).
+
+    Each state is compared at both samples and the smaller difference counts: a wrap that has just become invalid
+    has a meaningless arc on one side of the change.
+    """
+    table = ws.state_len3 if rule == 3 else ws.state_len4
+    n = st.shape[-1]
+    idx = np.arange(n - 1)
+    a, b = st[..., :-1], st[..., 1:]
+    here = np.abs(table[idx, a] - table[idx, b])
+    there = np.abs(table[idx + 1, a] - table[idx + 1, b])
+    return np.where((a != b) & same, np.minimum(here, there), 0.0)
+
+
+def side_search(name: str, wrap_key: str, n_circle: int = 720, n_sphere: int = 3000) -> dict:
+    """Score side directions on the geom's body for one wrap: discontinuities under both rules, change from the current path."""
+    import myo_sim
+
+    model = myo_sim.load_model(name)
+    wraps = model_wraps(model)
+    side = side_local(model, wraps)
+    k = next(i for i, w in enumerate(wraps) if f"{w.tendon_name}/{w.geom_name}" == wrap_key)
+    w = wraps[k]
+    dirs = direction_grid(w.is_sphere, n_circle, n_sphere)
+    out: dict = {
+        "wrap": wrap_key,
+        "site": w.side_name,
+        "radius": w.radius,
+        "is_sphere": w.is_sphere,
+        "dirs": dirs,
+        "current": side[k],
+    }
+    for label, past in (("in", False), ("past", True)):
+        qs, ids = continuity_postures(model, w, past)
+        ends, _ = wrap_geometry(model, qs, w, [])
+        ws = precompute(ends[:, 0], ends[:, 1], w.radius, w.is_sphere)
+        same = ids[1:] == ids[:-1]
+        now3 = states(ws, side[k][None], 3)[0]
+        now4 = states(ws, side[k][None], 4)[0]
+        idx = np.arange(len(qs))
+        ref3 = ws.state_len3[idx, now3]
+        out[f"{label}_now"] = {r: float(state_jump(ws, s[None], r, same).max()) for r, s in ((3, now3), (4, now4))}
+        j3, j4 = np.zeros(len(dirs)), np.zeros(len(dirs))
+        c3, c4, s3 = np.zeros(len(dirs)), np.zeros(len(dirs)), np.zeros(len(dirs))
+        f4 = np.zeros(len(dirs), int)
+        for c0 in range(0, len(dirs), 96):
+            c = dirs[c0 : c0 + 96]
+            st3, st4 = states(ws, c, 3), states(ws, c, 4)
+            j3[c0 : c0 + 96] = state_jump(ws, st3, 3, same).max(1)
+            j4[c0 : c0 + 96] = state_jump(ws, st4, 4, same).max(1)
+            f4[c0 : c0 + 96] = ((st4[:, :-1] > 0) & (st4[:, 1:] > 0) & (st4[:, :-1] != st4[:, 1:]) & same).sum(1)
+            l4 = ws.state_len4[idx, st4]
+            l3 = ws.state_len3[idx, st3]
+            c4[c0 : c0 + 96] = (np.abs(l4 - ref3) > 1e-3).mean(1)
+            c3[c0 : c0 + 96] = (np.abs(l3 - ref3) > 1e-3).mean(1)
+            s3[c0 : c0 + 96] = (np.abs(l3 - l4) > 1e-3).mean(1)
+        out[f"{label}_flips4"] = f4
+        out[f"{label}_j3"], out[f"{label}_j4"], out[f"{label}_change4"], out[f"{label}_change3"], out[f"{label}_rules"] = (
+            j3,
+            j4,
+            c4,
+            c3,
+            s3,
+        )
+        out[f"{label}_postures"] = len(qs)
+    return out
+
+
+def fit_vias(selected: tuple[str, ...] = ()) -> None:
+    """Fit the via sites of ``data/side_sites.json`` to their moment-arm targets and store the positions and residuals.
+
+    The via must already be in the chain and tendon files (``write`` with any start position).
+    """
+    import json
+    from pathlib import Path
+
+    import mujoco
+    from scipy.optimize import least_squares
+
+    import myo_sim
+
+    path = Path(__file__).resolve().parents[1] / "myo_sim/build/data/side_sites.json"
+    table = json.loads(path.read_text())
+    model = myo_sim.load_model("myoarm_r")
+    data = mujoco.MjData(model)
+
+    def arm(t: int, joint: str, deg: float, base: dict | None = None) -> float:
+        adr = model.joint(joint).qposadr[0]
+        lengths = []
+        for h in (-1e-3, 1e-3):
+            data.qpos[:] = model.qpos0
+            for name, value in (base or {}).items():
+                data.qpos[model.joint(name).qposadr[0]] = value
+            data.qpos[adr] = np.radians(deg) + h
+            mujoco.mj_kinematics(model, data)
+            mujoco.mj_tendon(model, data)
+            lengths.append(data.ten_length[t])
+        return (lengths[1] - lengths[0]) / 2e-3 * 1e3
+
+    for via in table["vias"]:
+        if selected and via["name"] not in selected:
+            continue
+        site = model.site(via["name"]).id
+        t = model.tendon(via["tendon"]).id
+
+        def residuals(x: np.ndarray) -> np.ndarray:
+            model.site_pos[site] = x
+            base = via.get("base")
+            out = [(arm(t, r["joint"], r["deg"], base) - r["arm_mm"]) / r["sd"] for r in via["targets"]]
+            for r in via.get("mean_targets", []):
+                grid = np.arange(r["range_deg"][0], r["range_deg"][1] + 1, 10.0)
+                out.append((np.mean([arm(t, r["joint"], g) for g in grid]) - r["arm_mm"]) / r["sd"])
+            for r in via.get("sign", []):
+                grid = np.arange(r["range_deg"][0], r["range_deg"][1] + 1, 10.0)
+                out += [max(0.0, r["margin_mm"] - r["sign"] * arm(t, r["joint"], g, base)) for g in grid]
+            return np.array(out)
+
+        start = np.array(via["pos"], float)
+        bounds = (start - 0.02, start + 0.02)
+        best = None
+        rng = np.random.default_rng(3)
+        for k in range(6):
+            x0 = start if k == 0 else np.clip(start + rng.uniform(-0.01, 0.01, 3), *bounds)
+            fit = least_squares(residuals, x0, bounds=bounds, diff_step=1e-3, x_scale=0.003, max_nfev=60)
+            if best is None or fit.cost < best.cost:
+                best = fit
+        via["pos"] = [round(float(v), 6) for v in best.x]
+        model.site_pos[site] = via["pos"]
+        via["fit"] = {
+            "rms_z": round(float(np.sqrt(np.mean(residuals(best.x) ** 2))), 3),
+            "arms": {
+                r["joint"] + "@" + str(r["deg"]): round(float(arm(t, r["joint"], r["deg"], via.get("base"))), 2)
+                for r in via["targets"]
+            },
+            "curve_flexion_deg_mm": {str(g): round(float(arm(t, "flexion_r", g)), 2) for g in range(-90, 81, 30)},
+            "curve_deviation_deg_mm": {str(g): round(float(arm(t, "deviation_r", g)), 2) for g in range(-30, 41, 10)},
+        }
+        print(via["name"], via["pos"], via["fit"], flush=True)
+    path.write_text(json.dumps(table, indent=2) + "\n")
+
+
+def record_jumps() -> None:
+    """Store in ``data/side_sites.json`` every wrap whose length jumps on MuJoCo 4 by more than JUMP_TOL, with the MuJoCo 3 value."""
+    import json
+    from pathlib import Path
+
+    import myo_sim
+
+    path = Path(__file__).resolve().parents[1] / "myo_sim/build/data/side_sites.json"
+    table = json.loads(path.read_text())
+    table["jumps_mm"] = {}
+    for name in ("myoarm_r", "myolegs", "myotorso"):
+        model = myo_sim.load_model(name)
+        wraps = model_wraps(model)
+        side = side_local(model, wraps)
+        out = table["jumps_mm"].setdefault(name, {})
+        for k, w in enumerate(wraps):
+            if w.side >= 0 and not np.isnan(side[k][0]) and np.linalg.norm(side[k]) < w.radius:
+                continue
+            row = {}
+            for label, past in (("in", False), ("past", True)):
+                qs, ids = continuity_postures(model, w, past)
+                ends, _ = wrap_geometry(model, qs, w, [])
+                ws = precompute(ends[:, 0], ends[:, 1], w.radius, w.is_sphere)
+                same = ids[1:] == ids[:-1]
+                if w.side < 0:
+                    st3, st4 = states_no_side(ws, 3)[None], states_no_side(ws, 4)[None]
+                elif np.isnan(side[k][0]):
+                    body = model.body(model.site_bodyid[w.side]).name
+                    moving = wrap_geometry(model, qs, w, [(body, np.array(model.site_pos[w.side]))])[1][0][None]
+                    st3, st4 = states(ws, moving, 3), states(ws, moving, 4)
+                else:
+                    st3, st4 = states(ws, side[k][None], 3), states(ws, side[k][None], 4)
+                row[label] = round(float(state_jump(ws, st4, 4, same).max() * 1e3), 2)
+                row[label + "_mujoco3"] = round(float(state_jump(ws, st3, 3, same).max() * 1e3), 2)
+            if max(row["in"], row["past"]) > JUMP_TOL * 1e3 or max(row["in_mujoco3"], row["past_mujoco3"]) > JUMP_TOL * 1e3:
+                out[f"{w.tendon_name}/{w.geom_name}"] = row
+                print(name, w.tendon_name, w.geom_name, row, flush=True)
+    path.write_text(json.dumps(table, indent=2) + "\n")
+
+
+def select_side_sites(wrap_keys: tuple[str, ...], also_mujoco3: bool, unchanged: bool) -> None:
+    """Middle of the widest run of side directions without jump or change of side on MuJoCo 4, past the limits as well;
+    optionally only those that also have none on MuJoCo 3, and that leave today's path as it is. Updates sites."""
+    import json
+    from pathlib import Path
+
+    import mujoco
+
+    import myo_sim
+
+    path = Path(__file__).resolve().parents[1] / "myo_sim/build/data/side_sites.json"
+    table = json.loads(path.read_text())
+    model = myo_sim.load_model("myoarm_r")
+    data = mujoco.MjData(model)
+    mujoco.mj_kinematics(model, data)
+    wraps = model_wraps(model)
+    for key in wrap_keys:
+        w = next(x for x in wraps if f"{x.tendon_name}/{x.geom_name}" == key)
+        r = side_search("myoarm_r", key, n_circle=720)
+        good = (r["in_j4"] <= JUMP_TOL) & (r["past_j4"] <= JUMP_TOL) & (r["in_flips4"] == 0)
+        width4 = float(good.sum() * 0.5)
+        if also_mujoco3:
+            good &= (r["in_j3"] <= JUMP_TOL) & (r["past_j3"] <= JUMP_TOL)
+        if unchanged:
+            good &= (r["in_change4"] < 1e-3) & (r["in_change3"] < 1e-3)
+        doubled = np.r_[good, good]
+        best_len, best_end, run = 0, 0, 0
+        for i, g in enumerate(doubled):
+            run = run + 1 if g else 0
+            if best_len < run <= len(good):
+                best_len, best_end = run, i
+        direction = r["dirs"][((2 * best_end - best_len + 1) // 2) % len(good)]
+        world = data.geom_xpos[w.geom] + data.geom_xmat[w.geom].reshape(3, 3) @ (direction * 2 * w.radius)
+        body = int(model.site_bodyid[w.side])
+        pos = data.xmat[body].reshape(3, 3).T @ (world - data.xpos[body])
+        entry = next(e for e in table["sites"] if e["name"] == w.side_name)
+        entry["pos"] = [round(float(v), 6) for v in pos]
+        entry["plateau_width_deg"] = round(best_len * 0.5, 1)
+        entry["plateau_width_mujoco4_deg"] = width4
+        print(key, entry["pos"], best_len * 0.5, width4, flush=True)
+    path.write_text(json.dumps(table, indent=2) + "\n")
+
+
 def main() -> None:
     """Command line."""
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
-    search = sub.add_parser("search")
-    search.add_argument("--out", required=True)
-    search.add_argument("--postures", type=int, default=12000)
-    search.add_argument("--steps", type=int, default=101)
-    search.add_argument("--models", nargs="*", default=list(SEARCH_MODELS))
-    off = sub.add_parser("off-body")
-    off.add_argument("--model", default="myoarm_r")
-    off.add_argument("--wrap", nargs="+", required=True, help="tendon/geom")
-    off.add_argument("--postures", type=int, default=6000)
-    off.add_argument("--steps", type=int, default=41)
-    off.add_argument("--dirs", type=int, default=1500)
-    sweep = sub.add_parser("off-body-sweep")
+    sub.add_parser("write", help="apply data/side_sites.json to the chain and tendon files")
+    fit = sub.add_parser("fit-vias", help="fit the via sites to their moment-arm targets")
+    fit.add_argument("names", nargs="*")
+    select = sub.add_parser("select-sides", help="middle of the jump-free side directions of a wrap")
+    select.add_argument("wraps", nargs="+", help="tendon/geom")
+    select.add_argument("--also-mujoco3", action="store_true")
+    select.add_argument("--unchanged", action="store_true")
+    sweep = sub.add_parser("off-body-sweep", help="side sites on another body for a wrap moved by one joint")
     sweep.add_argument("--model", default="myoarm_r")
     sweep.add_argument("--wrap", required=True)
     sweep.add_argument("--body", required=True)
     sweep.add_argument("--joint", required=True)
-    sub.add_parser("write")
-    lj = sub.add_parser("line-jumps")
-    lj.add_argument("--model", default="myoarm_r")
-    lj.add_argument("--out", required=True)
-    lj.add_argument("--postures", type=int, default=20000)
-    alt = sub.add_parser("alternatives")
-    alt.add_argument("--model", default="myoarm_r")
-    alt.add_argument("--out", required=True)
-    alt.add_argument("--postures", type=int, default=8000)
-    alt.add_argument("--sweep-steps", type=int, default=501)
-    dump = sub.add_parser("dump")
+    sub.add_parser("record-jumps", help="store the wraps with a length jump in data/side_sites.json")
+    lines = sub.add_parser("line-jumps", help="jumps of differing wraps on coupled lines")
+    lines.add_argument("--model", default="myoarm_r")
+    lines.add_argument("--out", required=True)
+    lines.add_argument("--postures", type=int, default=20000)
+    dump = sub.add_parser("dump", help="lengths, moment arms and sweep jumps of the running MuJoCo")
     dump.add_argument("folder")
     dump.add_argument("label")
     dump.add_argument("--models", nargs="*", default=list(CHECK_MODELS))
     dump.add_argument("--postures", type=int, default=12000)
     dump.add_argument("--steps", type=int, default=101)
     dump.add_argument("--arm-postures", type=int, default=800)
-    check = sub.add_parser("check")
+    check = sub.add_parser("check", help="compare two dumps")
     check.add_argument("folder")
     check.add_argument("a")
     check.add_argument("b")
@@ -1181,29 +1251,23 @@ def main() -> None:
     args = parser.parse_args()
     if args.command == "write":
         write_chain()
-    if args.command == "line-jumps":
-        line_jumps(args.model, args.postures, args.out)
-    if args.command == "alternatives":
-        alternatives(args.model, args.postures, args.sweep_steps, args.out)
-    if args.command == "dump":
-        run_dump(args.folder, args.label, tuple(args.models), args.postures, args.steps, args.arm_postures)
-    if args.command == "check":
-        run_check(args.folder, args.a, args.b, tuple(args.models), args.limit_mm)
-    if args.command == "off-body-sweep":
+    elif args.command == "fit-vias":
+        fit_vias(tuple(args.names))
+    elif args.command == "select-sides":
+        select_side_sites(tuple(args.wraps), args.also_mujoco3, args.unchanged)
+    elif args.command == "off-body-sweep":
         rows = off_body_sweep(args.model, args.wrap, args.body, args.joint)
         print(len(rows), "candidates")
         for r in rows[:12]:
             print(r)
-    if args.command == "search":
-        run_search(args.postures, args.steps, args.out, tuple(args.models))
-    elif args.command == "off-body":
-        for key in args.wrap:
-            rows = off_body_search(
-                args.model, key, args.postures, args.steps, (1.5, 2.0, 3.0, 6.0, 12.0, 25.0, 60.0), args.dirs
-            )
-            rows.sort(key=lambda r: (-r["feasible"], sum(r["violations_3x"].values()) + sum(r["violations_4"].values())))
-            for r in rows[:4]:
-                print(r, flush=True)
+    elif args.command == "record-jumps":
+        record_jumps()
+    elif args.command == "line-jumps":
+        line_jumps(args.model, args.postures, args.out)
+    elif args.command == "dump":
+        run_dump(args.folder, args.label, tuple(args.models), args.postures, args.steps, args.arm_postures)
+    elif args.command == "check":
+        run_check(args.folder, args.a, args.b, tuple(args.models), args.limit_mm)
 
 
 if __name__ == "__main__":

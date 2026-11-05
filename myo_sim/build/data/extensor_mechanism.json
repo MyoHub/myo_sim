@@ -544,7 +544,7 @@
         "site:EDM-P2_r",
         "site:EDM-P3_r",
         "site:EDM-P4_r",
-        "geom:EDM_ellipsoid_wrap_r:EDM_ellipsoid_site_EDM_side_r",
+        "site:EDM_via_r",
         "site:EDM-P5_r",
         "site:EDM-P6_r",
         "geom:5thmcp_ellipsoid_wrap_r:5thmcp_ellipsoid_site_EDC5_side_r"

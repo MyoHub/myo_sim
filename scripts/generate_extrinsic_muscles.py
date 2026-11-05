@@ -11,13 +11,10 @@
   ``FCU-P5_r`` (chain block ``FCU hamate``); FCU's ``lengthrange`` is shifted by its length change at q0,
   so its normalised fibre length at q0 is unchanged.
 - **FDS5:** its force, PCSA times the specific tension of ``specific_tension.json``.
-- **Wrap sides** (``wrap_sides``): the side sites of EDC2's, EDC4's, EDC5's, EDM's, ECRB's and FCR's wrist
-  wraps and of PQ's ulnar wrap, moved from inside their geoms (inside wrap) to outside (ordinary side wrap), and
+- **Wrap sides** (``wrap_sides``): the side sites of EDC2's, EDC4's and EDC5's wrist wraps and of PQ's ulnar wrap, moved from inside their geoms (inside wrap) to outside (ordinary side wrap), and
   where tabled the geom's centre and radius.
 - **APL at the thumb CMC** (``thumb_extrinsics``): APL's MC1-base insertion from Barry et al. 2018 (site ``pos``
-  in the chain) over a cylinder on the trapezium (``APL_cmc_wrap_r`` and its side site in the chain block
-  ``thumb trapezium``) with the centre and orientation of Barry's ``THM_CMC1_APL`` ellipsoid (MuJoCo has no
-  ellipsoid wrap).
+  in the chain), over a via site on the trapezium in the chain block ``thumb trapezium`` (``side_sites.json``).
 - **ECU:** the groove via point ``ECU-P5_r`` on the ulna (chain block ``ECU groove``): the tendon's subsheath
   holds it in the groove of the ulnar head, which does not turn with the radius.
 
@@ -49,6 +46,7 @@ from myo_sim.build.hand_data import DATA_DIR, load_intrinsic_table, place_tendon
 
 SCRIPT = "generate_extrinsic_muscles.py"
 DATA_PATH = DATA_DIR / "extrinsic_muscles.json"
+SIDE_SITES_JSON = DATA_DIR / "side_sites.json"
 DEG = np.pi / 180.0
 TRACTION_N = 14.7  # 1.5 kg (von Schroeder & Botte 1993)
 K_MAX = 1.0e3  # N/m: above this the link force chatters at 2 ms when the neighbour flexes against it
@@ -224,35 +222,14 @@ def chain_with_wrap_sides(text: str, table: dict[str, Any]) -> str:
     return text
 
 
-def apl_wrap(table: dict[str, Any]) -> tuple[list[float], list[float]]:
-    """Quaternion (w x y z) of the APL cylinder and position of its side site, both in ``trapezium_r``.
-
-    The orientation is Barry's body-fixed x-y-z rotation; the side site lies ``distance_radii`` radii from the
-    axis, at ``side_angle_deg`` from the cylinder's local x axis about its z axis (outside the cylinder).
-    """
-    w = table["thumb_extrinsics"]["apl_wrap"]
-    quat = np.zeros(4)
-    mujoco.mju_euler2Quat(quat, np.asarray(w["euler_xyz_body_rad"], float), "xyz")
-    rot = np.zeros(9)
-    mujoco.mju_quat2Mat(rot, quat)
-    rot = rot.reshape(3, 3)
-    angle = np.radians(w["side_angle_deg"]["value"])
-    offset = w["distance_radii"] * w["radius_m"]["value"] * (np.cos(angle) * rot[:, 0] + np.sin(angle) * rot[:, 1])
-    side = np.asarray(w["pos"], float) + offset
-    return [round(float(v), 6) for v in quat], [round(float(v), 6) for v in side]
-
-
 def thumb_block(table: dict[str, Any]) -> str:
-    """Generated chain block ``thumb trapezium``: the APL cylinder and its side site."""
-    w = table["thumb_extrinsics"]["apl_wrap"]
-    quat, side = apl_wrap(table)
+    """Generated chain block ``thumb trapezium``: APL's via site on the trapezium (fit in data/side_sites.json)."""
+    sites = json.loads(SIDE_SITES_JSON.read_text())
+    via = next(v for v in sites["vias"] if v["name"] == table["thumb_extrinsics"]["apl_via"]["site"])
     ind = " " * 52
     return (
-        f"{ind}<!-- APL cylinder over the thumb CMC (after Barry et al. 2018, MIT, build/data/LICENSE-Barry2018.txt);"
-        " extrinsic_muscles.json -->\n"
-        f'{ind}<geom name="{w["geom"]}" type="cylinder" size="{_number(w["radius_m"]["value"])} {_number(w["half_length_m"])}"'
-        f' pos="{" ".join(_number(v) for v in w["pos"])}" quat="{" ".join(_number(v) for v in quat)}" class="myoarm_wrap"/>\n'
-        f'{ind}<site name="{w["side_site"]}" pos="{" ".join(_number(v) for v in side)}"/>\n'
+        f"{ind}<!-- APL over the thumb CMC: via site on the trapezium, fitted to Smutz et al. 1998; side_sites.json -->\n"
+        f'{ind}<site name="{via["name"]}" pos="{" ".join(_number(v) for v in via["pos"])}"/>\n'
     )
 
 

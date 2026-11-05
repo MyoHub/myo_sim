@@ -195,10 +195,8 @@
         <site name="back_cylinder_s_IL_R6_1_sidesite_r" pos="-0.0348449 0.0886841 -0.108783" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_IL_R5_1_sidesite_l" pos="-0.0340043 0.0759544 0.0125701" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_IL_R6_1_sidesite_l" pos="-0.0348449 0.0886841 0.108783" class="myotorso_sidesite"/>
-        <site name="back_cylinder_s_LTpT_R12_4_sidesite_r" pos="-0.0411 0.1048 0.03882" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_2_sidesite_r" pos="-0.03691 0.06919 0.03508" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_1_sidesite_r" pos="-0.03859 0.0494129 0.0902269" class="myotorso_sidesite"/>
-        <site name="back_cylinder_s_LTpT_R12_4_sidesite_l" pos="-0.0411 0.1048 -0.03882" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_2_sidesite_l" pos="-0.03691 0.06919 -0.03508" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_1_sidesite_l" pos="-0.03859 0.0494129 -0.0902269" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpL_L1_1_sidesite_r" pos="-0.0370101 0.0990854 -0.0777896" class="myotorso_sidesite"/>
@@ -240,6 +238,8 @@
         <site name="intobl_l_intobl_l-P2" pos="0.07 0.16 -0.015"/>
         <site name="extobl_r_extobl_r-P2" pos="0.065 0.11 0.11"/>
         <site name="extobl_l_extobl_l-P2" pos="0.065 0.11 -0.11"/>
+          <site name="back_cylinder_s_LTpT_R12_4_sidesite_r" pos="-0.019816 0.14144 -0" class="myotorso_sidesite"/>
+          <site name="back_cylinder_s_LTpT_R12_4_sidesite_l" pos="-0.02039 0.142532 -0" class="myotorso_sidesite"/>
         <body name="Abdomen" pos="0.098 0.0711 0">
           <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
           <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.05 .015"/>

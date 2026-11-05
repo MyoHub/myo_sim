@@ -4,6 +4,10 @@ Append-only. Add entries at the top (most recent first). Do not edit past entrie
 
 ---
 
+## 2026-11-05 — Paths on MuJoCo 4: shoulder wraps, BIClong, wrist and thumb via sites
+Changed: `myo_sim/models/arm/assets/*`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/build/data/{side_sites,extrinsic_muscles,extensor_mechanism,muscle_passive,passive_joint_moments,standing_keyframes,hand_intrinsic_muscles,hand_literature}.json`, `scripts/migrate_side_sites.py`, `scripts/generate_extrinsic_muscles.py`, `scripts/hand_literature_comparison.py`, `tests/test_side_sites.py`, `tests/test_standing_keyframe.py`, `tests/test_extrinsic_muscles.py`, `tests/test_hand_literature.py`, `tests/test_passive_thenar.py`, `docs/wiki/*`, `CHANGELOG.md`
+Why: MuJoCo 4 is now the reference for model paths. Humeral-head wraps have no side site, latissimus runs over a sphere, FDS and FDP stay on the palmar arc, FCR, ECRB, ECRL, EDM and APL pass via sites fitted to the literature. Fits, recorded errors and the literature step come from MuJoCo 4.
+
 ## 2026-11-05 — Side sites for one path on MuJoCo 3 and 4
 Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (side sites of TMAJ, LAT2, SUP), `myo_sim/build/data/side_sites.json`, `scripts/migrate_side_sites.py`, `tests/test_side_sites.py`, `tests/test_standing_keyframe.py`, `myo_sim/build/keyframes.py`, `scripts/compare_model_numerics.py`, `docs/wiki/model-authoring.md`, `docs/wiki/standing-keyframe.md`, `docs/wiki/testing-guide.md`
 Why: MuJoCo 4 chooses a wrap's side by the winding of endpoint, side site, endpoint. Three sites now give the MuJoCo 3 path under both rules, with MuJoCo 3 unchanged in range. The wraps in `side_sites.json`'s `kept` list cannot: their MuJoCo 3 path flips sides inside the range.

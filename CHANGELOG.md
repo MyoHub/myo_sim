@@ -55,7 +55,14 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 - **Knee coupled ranges (`myolegs`, `myolegs_abdomen`, `myofullbody`).** Ten ranges of the coordinates the knee drives are widened to contain their own coupling polynomials. Downstream: the joint limits no longer disagree with the couplings at those knee angles; policies trained near them may behave slightly differently. Not measured on a trained policy.
 
-- **Side sites for MuJoCo 4 (`myoarm_r`, `myoarms`, `myotorso_arm_r`, `myotorso_arms`, `myofullbody`).** MuJoCo 4 chooses a wrap's side differently. The side sites of TMAJ's and LAT2's cylinder move, and SUP's moves from the radius to the ulna, which gives the same path on MuJoCo 3 and 4 there. No path changes on MuJoCo 3 within the joint ranges; past the supination limit SUP stays on its arc where it used to flip by 2.8 mm. Other arm, forearm and hand wraps still differ on MuJoCo 4 because their MuJoCo 3 path flips sides inside the range: `build/data/side_sites.json`, `kept`, and `docs/wiki/model-authoring.md`.
+- **Paths on MuJoCo 4 (all models with an arm or a hand; `myotorso` side sites).** MuJoCo 4 is the reference for tendon paths and recorded fits; values are measured on it (`docs/wiki/model-authoring.md`, `docs/wiki/hand-extrinsic-muscles.md`, `build/data/side_sites.json`). Changes in paths:
+  - The wraps over the humeral head (BIClong, TMAJ, DELT1, SUPSP, SUBSC, superior, middle and coracohumeral ligaments) have no side site, so they take the short arc. DELT1's sphere is 23 mm (29.7 before). They no longer jump by up to 107 mm (DELT1), 73 mm (BIClong) or 34 mm (TMAJ) on either version.
+  - LAT1, LAT2 and LAT3 run over a sphere instead of the humeral cylinder (no moment arm step of 12-19 mm).
+  - FDS2-5 and FDP2-5 stay on the palmar arc of their carpal cylinders at wrist extension, where they used to act as extensors.
+  - FCR, ECRB, ECRL, EDM and APL pass via sites instead of wraps; new arms are in the wiki table (ECRL 7.6 / -18.3 mm from 11.7 / -23.6, APL at the CMC -4.9 / -7.4 from -7.1 / -11.3). `FCR_torus_wrap_r`, `ECRB_torus_wrap_r`, `ECRL_torus_wrap_r`, `EDM_ellipsoid_wrap_r`, `APL_cmc_wrap_r` and their side sites are gone, as is `APL-P6_r`.
+  - TMAJ's and LAT2's humeral cylinder sites move; SUP's moves to the ulna. `LTpT_R12` side sites move (346 mm jump along axial rotation on MuJoCo 3).
+  - Passive fits and standing keyframes rerun on MuJoCo 4. Site and geom ids in the arm change.
+  - EDC2, EDC4 and EDC5 still jump by 2-6 mm in range on both versions.
 
 - **CMC4/5 springs, ORL, EDC2's wrist sphere (all models with a hand).** See `docs/wiki/hand-cmc-joints.md`, `extensor-mechanism.md` and `hand-literature-comparison.md` (cupping and ORL step).
   - **CMC4/5:** the flexion side of the end-range springs is fitted to Büren et al. 2020's active maxima: about 3 N m at the limits (was 0.96 N m). Active cupping 17.0 / 35.0 -> 12.2 / 25.1 deg. Ranges unchanged.

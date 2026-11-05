@@ -295,7 +295,7 @@
     }
   },
   "thumb_extrinsics": {
-    "method": "APL crosses the thumb CMC on Barry et al. 2018's routing (their path points in MyoHand's identical bone frames); the forearm and wrist part of the path is unchanged: from its MC1-base via point APL-P6_r over a cylinder on the trapezium to Barry's insertion on the MC1 base (APL-P7_r, moved; APL-P8_r removed). The cylinder replaces Barry's THM_CMC1_APL ellipsoid (MuJoCo has no ellipsoid wrap): Barry's centre and orientation, radius = the ellipsoid's 6 mm semi-axis; Barry's trapezium point of APL lies inside it and is not used. Moment arms against Smutz et al. 1998 at their neutral (mid-point of the CMC ranges, MP 0).",
+    "method": "APL crosses the thumb CMC on Barry et al. 2018's routing (their path points in MyoHand's identical bone frames); the forearm and wrist part of the path is unchanged: from the forearm over a via site on the trapezium to Barry's insertion on the MC1 base (APL-P7_r, moved; APL-P8_r removed). Moment arms against Smutz et al. 1998 at their neutral (mid-point of the CMC ranges, MP 0).",
     "sources": [
       "barry2018",
       "smutz1998"
@@ -317,7 +317,10 @@
         "note": "Barry's APL insertion on the MC1 base (was a via point before APL-P8_r)"
       }
     },
-    "apl_wrap": {
+    "not_adopted": {
+      "FPL": "Barry's FPL CMC routing (trapezium point and first MC1 point) raises FPL's CMC flexion arm at Smutz's neutral from 4.2 to 14.3 mm (Smutz 14.3 +- 4.0; RMS z 2.50 -> 1.70), but the lateral pinch then has no solution within its off-axis limit (best 3.6 N at 14x the limit); the trapezium point alone (13.8 mm) gives the same. Not adopted."
+    },
+    "apl_wrap_before": {
       "geom": "APL_cmc_wrap_r",
       "body": "trapezium_r",
       "pos": [
@@ -343,8 +346,10 @@
       },
       "distance_radii": 2.0
     },
-    "not_adopted": {
-      "FPL": "Barry's FPL CMC routing (trapezium point and first MC1 point) raises FPL's CMC flexion arm at Smutz's neutral from 4.2 to 14.3 mm (Smutz 14.3 +- 4.0; RMS z 2.50 -> 1.70), but the lateral pinch then has no solution within its off-axis limit (best 3.6 N at 14x the limit); the trapezium point alone (13.8 mm) gives the same. Not adopted."
+    "apl_via": {
+      "site": "APL_via_r",
+      "body": "trapezium_r",
+      "method": "The cylinder gave a 44 mm snap under MuJoCo 4 and took APL around its far side. A via site on the trapezium replaces it and via point APL-P6_r, fitted to Smutz et al. 1998's arms at their neutral with APL an abductor over the CMC range (build/data/side_sites.json, vias)."
     }
   },
   "wrap_sides": {
@@ -512,146 +517,9 @@
           -0.017156,
           0.020282
         ]
-      },
-      "ECRB": {
-        "method": "dorsal; sphere centre and radius fitted (bounded: centre within 5 mm per axis, radius x0.5-2) to Horii 1993 neutral arms and the earlier arm curves",
-        "site": "ECRB_torus_site_ECRB_side_r",
-        "geom": "ECRB_torus_wrap_r",
-        "body": "lunate_r",
-        "geom_type": "sphere",
-        "direction_body": [
-          0.169,
-          -0.0121,
-          0.9855
-        ],
-        "distance_radii": 2.0,
-        "geom_pos_before": [
-          0.0126,
-          -0.0095,
-          0.0186
-        ],
-        "geom_pos": [
-          0.011354,
-          -0.009514,
-          0.0136
-        ],
-        "radius_before_m": 0.002,
-        "radius_m": 0.001647,
-        "pos_before": [
-          0.0126,
-          -0.0095,
-          0.0186
-        ],
-        "fit": {
-          "rms_old": 1.96,
-          "jump": 0.38,
-          "z": [
-            1.0,
-            0.21
-          ],
-          "neutral": [
-            14.01,
-            -12.57
-          ],
-          "centre_shift_mm": 5.15
-        },
-        "pos": [
-          0.011911,
-          -0.009554,
-          0.016846
-        ]
-      },
-      "FCR": {
-        "method": "palmar; sphere centre and radius fitted (bounded as ECRB) to Horii 1993's neutral arms and the earlier arm curves",
-        "site": "FCR_torus_site_FCR_side_r",
-        "geom": "FCR_torus_wrap_r",
-        "body": "lunate_r",
-        "geom_type": "sphere",
-        "direction_body": [
-          -0.6075,
-          0.696,
-          -0.3828
-        ],
-        "distance_radii": 2.0,
-        "geom_pos_before": [
-          0.0032,
-          -0.0045,
-          -0.019
-        ],
-        "geom_pos": [
-          0.0082,
-          -0.005478,
-          -0.014624
-        ],
-        "radius_before_m": 0.0015,
-        "radius_m": 0.001164,
-        "pos_before": [
-          0.0032,
-          -0.0045,
-          -0.019
-        ],
-        "fit": {
-          "rms_old": 3.07,
-          "jump": 1.24,
-          "z": [
-            -0.47,
-            0.8
-          ],
-          "neutral": [
-            -16.41,
-            -6.41
-          ],
-          "centre_shift_mm": 6.72
-        },
-        "pos": [
-          0.006786,
-          -0.003858,
-          -0.015515
-        ]
-      },
-      "EDM": {
-        "method": "dorsal; the cylinder grows 14 -> 23.6 mm radius (centre 0.7 mm) so that the outside wrap reproduces the earlier arm curves (the inside wrap held the tendon within the 14 mm circle)",
-        "site": "EDM_ellipsoid_site_EDM_side_r",
-        "geom": "EDM_ellipsoid_wrap_r",
-        "body": "lunate_r",
-        "geom_type": "cylinder",
-        "direction_body": [
-          -0.1563,
-          0.0094,
-          0.9877
-        ],
-        "distance_radii": 2.0,
-        "geom_pos_before": [
-          -0.0167,
-          -0.0022,
-          0.0048
-        ],
-        "geom_pos": [
-          -0.016643,
-          -0.001642,
-          0.004331
-        ],
-        "radius_before_m": 0.014,
-        "radius_m": 0.023627,
-        "pos_before": [
-          -0.0167,
-          0.0022,
-          0.015
-        ],
-        "fit": {
-          "rms_old": 0.0,
-          "jump": 0.49,
-          "z": null,
-          "neutral": null,
-          "centre_shift_mm": 0.73
-        },
-        "pos": [
-          -0.024029,
-          -0.001198,
-          0.051002
-        ]
       }
-    }
+    },
+    "replaced": "FCR, ECRB, EDM: their small spheres or wide cylinder gave length jumps; each is now a via site on the lunate (build/data/side_sites.json, vias)."
   },
   "ecu": {
     "method": "ECU runs in the groove on the dorsal (posterior) surface of the ulnar head, radial to the styloid, held there by its own subsheath, which is fixed to the ulna and does not turn with the radius (Horii 1993: the ECU alone among the wrist motors changes its moment arms with forearm rotation). Its via point ECU-P5_r moves from the radius to the ulna, at the distal end of the groove; distal of it the tendon runs straight to the MC5 base (ECU-P6_r). The site is fitted within the groove's surface: on the posterior to lateral side of the ulnar head, 0.5 to 3 mm outside the sphere fitted to the head's mesh vertices (the tendon lies in the groove, below the head's outline), to the extension and ulnar-deviation moment arms of Horii 1993 and Loren 1996 in supination, neutral and pronation. The wrap sphere on the radius (ECU_torus_wrap_r, its side site at the sphere's centre) and its unused duplicates (ECU_torus_r, ECU_sidesite_r) are removed: with the groove on the ulna the tendon never reaches a sphere there. The path proximal of the groove is unchanged (sites on the humerus and the ulna); the forearm rotation axis is unchanged (it already passes through the radial and ulnar heads; axis_check).",

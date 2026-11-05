@@ -126,11 +126,16 @@ Then reference them in the tendon:
 
 The side site normally sits on the geom's body; a site on a body that turns with the tendon's endpoint is also valid (`SUP`). A name that does not exist is an error at load time.
 
-### Side sites on MuJoCo 3 and 4
+### Side sites and MuJoCo 4
 
-The two versions choose a wrap's side differently. MuJoCo 3 wraps when the segment between the endpoints crosses the geom or lies on the far side of it from the side site, along the arc whose middle is nearest the site. MuJoCo 4 follows the winding of the polyline endpoint, side site, endpoint, and snaps when an endpoint crosses the ray opposite the side site. Put a new side site in the middle of the wrapped arc, where both agree, and check it: `tests/test_side_sites.py` fails if a wrap outside `build/data/side_sites.json`'s `kept` list differs between the rules at coupled, in-range postures. `scripts/migrate_side_sites.py` searches sites; MuJoCo 3's path is the reference, and a site moves only if no sampled in-range posture changes.
+MuJoCo 4 is the reference for tendon paths, fits and recorded errors. It follows the winding of the polyline endpoint, side site, endpoint, and a tendon snaps only when an endpoint crosses the ray opposite the side site. MuJoCo 3 used a half-plane test and the arc nearest the site, with jumps at other postures. Choose a path for MuJoCo 4 first: continuity in range and past the limits, then moment arms against the literature. Where candidates are near-equal on MuJoCo 4, take the one that also works on MuJoCo 3 and say so. MuJoCo 3 differences are stated in `build/data/side_sites.json` and `docs/wiki/log.md`.
 
-A MuJoCo 3 path that flips sides inside the range cannot be reproduced under the MuJoCo 4 rule: the old flip needs the site perpendicular to the arc's middle, the new one needs it on the endpoint's ray, and at one posture one site cannot be both unless the endpoints are opposite. Those wraps are in `kept`, with the site that would give one jump-free path on both versions and how much of MuJoCo 3's path it would change.
+- **On a sphere, usually no side site.** The wrap then takes the shorter arc when the segment crosses the geom, in the plane through the endpoints and the centre. It cannot change side, and the path is the same under both rules.
+- **On a cylinder, a side site in the middle of the wrapped arc.** Without one the arc changes side where the segment crosses the axis: no length jump, but a moment arm step.
+- **A small peg is a via site.** A sphere of a millimetre or two that only holds a tendon on one side gives snaps; fit a via site to the moment arms instead.
+- **Keep endpoints out of the geom.** A via point inside the circle ends the wrap at once.
+
+`scripts/migrate_side_sites.py` has a copy of both rules, the side direction search, `fit-vias` and `record-jumps`; `tests/test_side_sites.py` fails if a wrap jumps by more than `jumps_mm` allows on the MuJoCo 4 rule.
 
 ---
 

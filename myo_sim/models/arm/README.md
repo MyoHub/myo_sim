@@ -32,7 +32,7 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 
 ## Known limitations
 
-- [ ] With mujoco-warp older than 3.16, the tendons with a sidesite inside their wrap geom (DELT2, DELT3, PECM1, ECRL, FDP4, FPL; the forearm wraps of ECRB, FCR, PQ, EDC2, EDC4, EDC5 and EDM were moved outside and the ECU has no wrap any more) can be up to about 3 mm longer on the GPU than in CPU MuJoCo, because the float32 inside-wrap solve falls back to an approximate contact point ([mujoco_warp#1713](https://github.com/google-deepmind/mujoco_warp/issues/1713)). Use mujoco-warp 3.16 or newer; `tests/test_warp_parity.py` checks this.
+- [ ] With mujoco-warp older than 3.16, the tendons with a sidesite inside their wrap geom (DELT2, DELT3, PECM1, FDP4, FPL; the forearm wraps of PQ, EDC2, EDC4 and EDC5 were moved outside and the ECU has no wrap any more) can be up to about 3 mm longer on the GPU than in CPU MuJoCo, because the float32 inside-wrap solve falls back to an approximate contact point ([mujoco_warp#1713](https://github.com/google-deepmind/mujoco_warp/issues/1713)). Use mujoco-warp 3.16 or newer; `tests/test_warp_parity.py` checks this.
 - [ ] See [all open issues](https://github.com/MyoHub/myo_sim/issues)
 
 ## Manual adjustments
@@ -42,6 +42,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 - Muscle parameters updated during the 2026-05 refactor to improve force-length accuracy.
 
 ## Changelog
+
+**2026-11-05** — Paths on MuJoCo 4: humeral-head wraps without side sites (DELT1's sphere 23 mm), latissimus over a sphere, FDS and FDP on the palmar arc, via sites for FCR, ECRB, ECRL, EDM and APL. See `docs/wiki/hand-extrinsic-muscles.md` and `build/data/side_sites.json`.
 
 **2026-10-30** — ECU through the groove of the ulnar head: `ECU-P5_r` moves from the radius to the ulna (fitted to Horii 1993 and Loren 1996; its extension arm now falls in pronation), the ECU wrap sphere and side sites on the radius are removed; extrinsic passive parameters and springs refitted (new spring tendon `passive_wrist_deviation_pos_r`). The forearm rotation axis was checked against the radial and ulnar heads and is unchanged. See `docs/wiki/hand-extrinsic-muscles.md`.
 

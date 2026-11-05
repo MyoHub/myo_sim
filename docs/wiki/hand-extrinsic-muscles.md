@@ -251,13 +251,11 @@ simtk.org/projects/thumbindexdynam, MIT Use Agreement, `build/data/LICENSE-Barry
 bone meshes and body frames, so its path points apply in MyoHand's bodies unchanged (`thumb_extrinsics`
 in the data file).
 
-- **APL:** from its MC1-base via point `APL-P6_r` over a cylinder on the trapezium (`APL_cmc_wrap_r`) to
-  Barry's insertion on the MC1 base (`APL-P7_r`; `APL-P8_r` removed). MuJoCo has no ellipsoid wrap, so the
-  cylinder takes the centre and orientation of Barry's `THM_CMC1_APL` ellipsoid and its 6 mm semi-axis as
-  radius; Barry's trapezium point lies inside it and is not used. The side site sits two radii from the
-  axis, in the middle of the band of side directions (180-270 deg about the cylinder's axis) over which the
-  tendon wraps at every Smutz posture. The forearm and wrist part of the path is unchanged (wrist arms
-  unchanged). APL was a weak CMC flexor; it is now an extensor and abductor.
+- **APL:** until the MuJoCo 4 step it ran from its MC1-base via point `APL-P6_r` over a cylinder on the trapezium to
+  Barry's insertion on the MC1 base (`APL-P7_r`; `APL-P8_r` removed), the cylinder taking the centre and
+  orientation of Barry's `THM_CMC1_APL` ellipsoid. It went round the far side of the cylinder, 30-48 mm longer
+  than straight, and under MuJoCo 4 snapped back by 44 mm. It now runs over a via site on the trapezium (below,
+  `APL_via_r`) to the same insertion. APL was a weak CMC flexor; it is now an extensor and abductor.
 - **FPL (not adopted):** Barry's trapezium point and first MC1 point raise FPL's CMC flexion arm from 4.2
   to 14.3 mm (Smutz 14.3 ± 4.0; RMS z 2.50 -> 1.70), but the lateral pinch then has no solution within its
   off-axis limit (best 3.6 N at 14 times the limit); the trapezium point alone (13.8 mm) fails the same way.
@@ -265,12 +263,47 @@ in the data file).
 
 | At Smutz et al. 1998's neutral (mm; + = flexor / adductor) | Before | After | Smutz 1998 (mean ± SD) |
 | --- | --- | --- | --- |
-| APL CMC flexion / CMC abduction | 1.4 / -2.6 | -7.1 / -11.3 | -7.1 ± 3.4 / -10.5 ± 3.3 |
-| APL RMS z (3 postures per joint) | 2.34 | 0.71 | 0 |
+| APL CMC flexion / CMC abduction, cylinder | 1.4 / -2.6 | -7.1 / -11.3 | -7.1 ± 3.4 / -10.5 ± 3.3 |
+| APL CMC flexion / CMC abduction, via site (MuJoCo 4 step) | -7.1 / -11.3 | -4.9 / -7.4 | -7.1 ± 3.4 / -10.5 ± 3.3 |
+| APL RMS z (3 postures per joint), cylinder | 2.34 | 0.71 | 0 |
 | FPL CMC flexion / CMC abduction / MP flexion (unchanged) | 4.2 / -1.7 / 7.1 | 4.2 / -1.7 / 7.1 | 14.3 ± 4.0 / -0.2 ± 4.9 / 13.6 ± 2.2 |
 
 Barry's adductor-pollicis transverse-head insertion is used too (`passive-moments-and-thenar.md`); his
 oblique-head path is not (it makes the lateral pinch infeasible).
+
+## Paths on MuJoCo 4 (wrist and thumb)
+
+MuJoCo 4 chooses a wrap's side by the winding of endpoint, side site, endpoint; it is the reference for these paths
+(`model-authoring.md`). Fits were rerun on it. Arms in mm from dL/dq, + = extensor / ulnar deviator; `build/data/side_sites.json`
+holds the positions, targets and residuals, `scripts/migrate_side_sites.py fit-vias` rewrites them.
+
+**FDS2-5 and FDP2-5.** Both heads wrap a 13 mm cylinder on the lunate. Below about -58 to -66 deg of wrist flexion the old
+side sites sent the tendon to the dorsal side, where it extended the wrist (FDS2 +16 mm) and the length jumped by 3-6 mm on
+MuJoCo 4 and 6-12 mm on MuJoCo 3. Each site now sits in the middle of the side directions that keep the palmar arc: 170-180 deg
+of directions qualify on MuJoCo 4 and a 42-46 deg part of them gives the same path on MuJoCo 3, and that part is used. The path
+is identical on both; FDS2's arm goes from -7.3 at -90 deg to -14.1 at 0 and -30.5 at 80 deg. No moment arm of these muscles
+at the wrist is in the literature used here, so this rests on sign and on Knutson et al. 2000's passive moment at the MCP
+(below). `fit_muscle_passive.py` gives the same RMSE on the index, 3.287 N cm: Knutson's wrist range ends at 60 deg, where the
+new path equals the old MuJoCo 3 path.
+
+**FCR, ECRB, ECRL, EDM.** Small spheres (FCR 1.2 mm, ECRB 1.6 mm) acted as one-sided pegs: no side direction keeps both the
+arms and continuity on MuJoCo 4 (the few without jumps turn FCR into an extensor at wrist extension). EDM's 23.6 mm cylinder
+ended the wrap when via point `EDM-P4_r` came inside it at the flexion limit, a 44 mm jump. ECRL's inside wrap turned it into a
+flexor below -65 deg. Each is now a via site on the lunate fitted to the tabled arms with the sign held over the whole range.
+
+| Muscle | Before, on MuJoCo 4: jump; arm at neutral | Via site: arm at neutral (RMS z) | Literature at neutral | Garland 2018 mean over range |
+| --- | --- | --- | --- | --- |
+| FCR | 18.9 mm; -16.4 / -6.4 | -15.8 / -7.7 (0.44) | -15 ± 3 / -8 ± 2 (Horii); -15 / -5.7 (Loren); -16.2 ± 1.5 / -8.6 ± 4.0 (Garland MRI) | -12.2 ± 2.1 / -10.2 ± 2.5 |
+| ECRB | 12.2 mm; 14.0 / -12.6 | 11.8 / -12.5 (0.60) | 12 ± 2 / -13 ± 2 (Horii); 16 / -16 (Loren); 9.2 ± 1.6 / -11.1 ± 2.6 (Garland MRI) | 10.8 ± 2.8 / -10.0 ± 2.2 |
+| ECRL | none; 11.7 / -23.6, flexor below -65 deg | 7.6 / -18.3, extensor to -90 deg (0.57) | 7 ± 2 / -19 ± 2 (Horii); 10 / -23 (Loren); 4.8 ± 1.3 / -16.7 ± 2.4 (Garland MRI) | 6.6 ± 3.0 / -17.2 ± 3.6 |
+| EDM | 44.1 mm; 9.5 / 14.5 | 9.3 / 14.3 (0.21) | none used | none used |
+| APL (trapezium, CMC flexion / abduction at Smutz's neutral) | 44.8 mm; -7.1 / -11.3 | -4.9 / -7.4 (0.24) | -7.1 ± 3.4 / -10.5 ± 3.3 (Smutz) | – |
+
+On MuJoCo 3 all of these are the same paths: a via site has no wrap rule. EDC2, EDC4 and EDC5 keep their sphere wraps; on both
+versions their lengths still jump by 2.2 / 3.0 / 5.8 mm in range (`jumps_mm` in the data file), and they were not moved here.
+
+The wrist fits keep their arms over -90 to 80 deg of flexion and -30 to 40 deg of deviation, past today's limits, and the MCP side
+sites of EDC2 and EIP were moved so that their paths stay continuous to 0.55 rad of hyperextension; neither range is applied here.
 
 ## Refits
 

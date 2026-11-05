@@ -109,6 +109,7 @@
 
                                 <geom class="myoarm_wrap" name="DELT1hh_ellipsoid_r" pos="-0.0139 -0.0127 -0.0262" quat="0.83666 0.160028 0.454758 0.259973" size="0.03"/>
                                 <geom class="myoarm_wrap" name="delt2hum_cylinder_r" pos="0.0017 -0.0958 0.0011" quat="0.713926 0.699514 -0.0280022 0.014313" size="0.0109 0.12" type="cylinder"/>
+                                <geom class="myoarm_wrap" name="LAT_hum_sphere_r" type="sphere" pos="0.0017 -0.0958 0.0011" size="0.0109"/>
                                 <geom class="myoarm_wrap" name="delt3hum_ellipsoid_r" pos="0.0019 -0.0592 0.0011" quat="0.156827 0.126209 0.749421 -0.630749" size="0.01"/>
                                 <geom class="myoarm_wrap" name="SUPSP_ellipsoid_r" pos="0.0002 0.0077 0.0043" quat="0.793859 0.0125049 0.0149602 -0.607789" size="0.02"/>
                                 <geom class="myoarm_wrap" name="INFSP_and_TMIN_hum_head_ellipsoid_r" pos="-0.0003 0.0026 0.0038" quat="0.989183 -0.142571 -0.00937337 -0.0332047" size="0.02" rgba="1 0 0 0"/>
@@ -137,7 +138,7 @@
                                 <geom class="myoarm_wrap" name="LIGhh_mi_ellipsoid_m_glenohum_r" pos="-0.001 0.004 0.001" quat="0.923956 -0.382499 0 0" size="0.019"/>
                                 <geom class="myoarm_wrap" name="LIGhh_mi_ellipsoid_i_glenohum_r" pos="-0.001 0.004 0.001" quat="0.923956 -0.382499 0 0" size="0.019"/>
                                 <geom class="myoarm_wrap" name="LIGhh_s_ellipsoid_coracohum_r" pos="-0.001 0.003 0.003" quat="0.923956 -0.382499 0 0" size="0.02"/>
-                                <geom class="myoarm_wrap" name="DELT1hh_ellipsoid_DELT1_r" pos="-0.0279974 -0.0075035 -0.0080664" quat="0.83666 0.160028 0.454758 0.259973" size="0.029726" rgba="1 0 0 0"/>
+                                <geom class="myoarm_wrap" name="DELT1hh_ellipsoid_DELT1_r" pos="-0.0279974 -0.0075035 -0.0080664" quat="0.83666 0.160028 0.454758 0.259973" size="0.023" rgba="1 0 0 0"/>
                                 <geom class="myoarm_wrap" name="delt3hum_ellipsoid_DELT3_r" pos="0.0044 -0.0624 0.00443794" quat="0.156827 0.126209 0.749421 -0.630749" size="0.0125"/>
                                 <geom class="myoarm_wrap" name="SUPSP_ellipsoid_SUPSP_r" pos="0.00110546 0.00820496 0.00197985" quat="0.793859 0.0125049 0.0149602 -0.607789" size="0.0202151"/>
                                 <geom class="myoarm_wrap" name="SUBSCAP_ellipsoid_SUBSC_r" pos="0.0028089 -0.00313613 -0.00633073" quat="0.881836 -0.408886 0.210176 0.104899" size="0.0171729"/>
@@ -167,32 +168,25 @@
                                 <site name="CORBhum_sidesite_r" pos="0.00844 -0.121 -0.01278"/>
                                 <site name="Elbow_PT_ECRL_sidesite_r" pos="0.01843 -0.2761 -0.006962"/>
                                 <site name="s_glenohum_s_glenohum-P1_r" pos="0.018 0.011 -0.009"/>
-                                <site name="LIGhh_s_ellipsoid_s_glenohum_1_sidesite_r" pos="0.00985 0.011 -0.01467"/>
                                 <site name="m_glenohum_m_glenohum-P1_r" pos="0.016 0.003 -0.012"/>
-                                <site name="LIGhh_mi_ellipsoid_m_glenohum_1_sidesite_r" pos="0.01146 0.003222 -0.01556"/>
                                 <site name="i_glenohum_i_glenohum-P1_r" pos="0.009 -0.003 -0.018"/>
                                 <site name="LIGhh_mi_ellipsoid_i_glenohum_1_sidesite_r" pos="0.009 -0.003 -0.018"/>
                                 <site name="coracohum_coracohum-P1_r" pos="0.02 0.011 -0.003"/>
-                                <site name="LIGhh_s_ellipsoid_coracohum_1_sidesite_r" pos="0.01817 0.01067 -0.006444"/>
                                 <site name="DELT1_DELT1-P1_r" pos="0.00896 -0.11883 0.00585"/>
                                 <site name="DELT1_DELT1-P2_r" pos="0.01623 -0.1033 -0.00412"/>
-                                <site name="DELT1hh_ellipsoid_DELT1_2_sidesite_r" pos="0.000809535 -0.0383736 -0.00627703"/>
                                 <site name="DELT2_DELT2-P1_r" pos="0.00461 -0.13611 0.0056"/>
                                 <site name="DELT2_DELT2-P2_r" pos="0.00623159 -0.0641952 -0.0301843"/>
                                 <site name="delt2hum_cylinder_DELT2_1_sidesite_r" pos="0.1107 0.0132 0.1101"/>
                                 <site name="DELT3_DELT3-P3_r" pos="0.00206 -0.07602 0.01045"/>
                                 <site name="delt3hum_ellipsoid_DELT3_2_sidesite_r" pos="0.0108133 -0.0711671 0.00262982"/>
                                 <site name="SUPSP_SUPSP-P1_r" pos="0.00256 0.01063 0.02593"/>
-                                <site name="SUPSP_ellipsoid_SUPSP_1_sidesite_r" pos="0.00229806 0.00847163 0.0284548"/>
                                 <site name="INFSP_INFSP-P1_r" pos="-0.00887 0.00484 0.02448"/>
                                 <site name="infsp_new_cylinder_INFSP_1_sidesite_r" pos="-0.0432342 -0.0560158 0.0141316"/>
                                 <site name="SUBSC_SUBSC-P1_r" pos="0.01403 0.0084 -0.01331"/>
-                                <site name="SUBSCAP_ellipsoid_SUBSC_1_sidesite_r" pos="0.0144482 0.0109872 -0.0101213"/>
                                 <site name="TMIN_TMIN-P1_r" pos="-0.00127 -0.01259 0.022"/>
                                 <site name="INFSP_and_TMIN_hum_head_ellipsoid_TMIN_1_sidesite_r" pos="-0.00813624 -0.010913 0.1" rgba="1 0 0 0"/>
                                 <site name="TMAJ_TMAJ-P1_r" pos="0.00998 -0.05419 -0.00568"/>
                                 <site name="TMAJ_TMAJ-P2_r" pos="-0.00625597 -0.049991 -0.0159345"/>
-                                <site name="LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r" pos="-0.0129153 -0.0208485 -0.0110803"/>
                                 <site name="PECM1_PECM1-P1_r" pos="0.01169 -0.04191 0.0078"/>
                                 <site name="PECM1_PECM1-P2_r" pos="0.0210522 -0.01996 0.00793506"/>
                                 <site name="PEC1hh_ellipsoid_PECM1_2_sidesite_r" pos="0.00259407 -0.0252892 -0.00394296" rgba="1 0 0 0"/>
@@ -205,14 +199,12 @@
                                 <site name="PEC23hh_sphere_PECM3_2_sidesite_r" pos="0.0033563 -0.0186528 0.00113941" rgba="1 0 0 0"/>
                                 <site name="LAT1_LAT1-P1_r" pos="0.0105 -0.03415 -0.00653"/>
                                 <site name="LAT1_LAT1-P2_r" pos="-0.00550867 -0.0262692 -0.0129871"/>
-                                <site name="LAT_TMAJ2hh_sphere_LAT1_2_sidesite_r" pos="-0.01849985 -0.0389514 -0.024259"/>
                                 <site name="TMAJ_LAThum_cylinder_LAT1_1_sidesite_r" pos="-0.0107 -0.0257 0.0645"/>
                                 <site name="LAT2_LAT2-P1_r" pos="0.00968 -0.04071 -0.00611"/>
                                 <site name="LAT2_LAT2-P2_r" pos="-0.00769792 -0.0421159 -0.0156065"/>
                                 <site name="LAT_TMAJ2hh_sphere_LAT2_2_sidesite_r" pos="-0.0157083 -0.017011 -0.0250469" rgba="1 0 0 0"/>
                                 <site name="LAT3_LAT3-P1_r" pos="0.01208 -0.03922 -0.00416"/>
                                 <site name="LAT3_LAT3-P2_r" pos="-0.0116777 -0.0435673 -0.0143472"/>
-                                <site name="LAT_TMAJ2hh_sphere_LAT3_2_sidesite_r" pos="-0.014069 -0.0219399 -0.00787017"/>
                                 <site name="TMAJ_LAThum_cylinder_LAT3_1_sidesite_r" pos="0.0707 0.0257 0.0645"/>
                                 <site name="CORB_CORB-P3_r" pos="0.00743 -0.15048 -0.00782"/>
                                 <site name="CORBhum_cylinder_CORB_2_sidesite_r" pos="-0.00868897 -0.144208 -0.00172395"/>
@@ -242,7 +234,6 @@
                                 <site name="BIClong_BIClong-P7_r" pos="0.01703 -0.12125 0.00024"/>
                                 <site name="BIClong_BIClong-P8_r" pos="0.0228 -0.1754 -0.0063"/>
                                 <site name="Elbow_BIC_BRD_ellipsoid_BIClong_7_sidesite_r" pos="0.00972896 -0.273869 -0.0199478"/>
-                                <site name="BIClong_ellipsoid_BIClong_2_sidesite_r" pos="0.02337 0.01102 0.001639"/>
                                 <site name="BICshort_BICshort-P3_r" pos="0.01117 -0.07576 -0.01101"/>
                                 <site name="BICshort_BICshort-P4_r" pos="0.01703 -0.12125 -0.01079"/>
                                 <site name="BICshort_BICshort-P5_r" pos="0.0228 -0.1754 -0.0063"/>
@@ -258,6 +249,7 @@
                                 <site name="TMAJ_LAThum_cylinder_TMAJ_1_sidesite_r" pos="-0.005755 -0.043457 0.006894"/>
                                 <site name="TMAJ_LAThum_cylinder_LAT2_1_sidesite_r" pos="-0.004875 -0.043498 0.007317"/>
                                 <body name="ulna_r" pos="0.0061 -0.2904 -0.0123" childclass="myoarm_elbow">
+                                    <site name="SUP_cylinder_SUP_2_sidesite_r" pos="0.06702 -0.0498 0.04744"/>
                                     <inertial diaginertia="0.00543663 0.00523521 0.001" mass="1.1053" pos="0.00971783 -0.0959509 0.024286" quat="0.792048 0.609078 0.0156735 0.0379256"/>
                                     <joint axis="0.0494004 0.0366003 0.998108" name="elbow_flexion_r" pos="0 0 0" range="0 2.269"/>
                                     <geom mesh="ulna_r" name="ulna_r" type="mesh"/>
@@ -294,7 +286,6 @@
                                     <site name="SUP_SUP-P3_r" pos="-0.0136 -0.03384 0.02013"/>
                                     <site name="BRA_BRA-P4_r" pos="-0.0032 -0.0239 0.0009"/>
                                     <site class="myoarm_marker" name="Ulna_marker_r" pos="-0.01672 -0.2416 0.04782"/>
-                                    <site name="SUP_cylinder_SUP_2_sidesite_r" pos="0.01513 -0.0387 0.03071"/>
                                     <body name="radius_r" pos="0.0004 -0.0115 0.02">
                                         <inertial diaginertia="0.001 0.001 0.001" mass="0.23359" pos="0.0336341 -0.181559 0.0156" quat="0.770264 0.63559 0.0119833 0.0507376"/>
 
@@ -376,6 +367,10 @@
                                         <site class="myoarm_marker" name="Radius_marker_r" pos="0.05749 -0.2272 0.02738"/>
 
                                         <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="myoarm_wrist">
+                                            <site name="EDM_via_r" pos="-0.015904 -0.021642 0.006252"/>
+                                            <site name="ECRL_via_r" pos="0.015939 -0.011783 0.004225"/>
+                                            <site name="ECRB_via_r" pos="0.00926 -0.012606 0.01072"/>
+                                            <site name="FCR_via_r" pos="0.010895 -0.011477 -0.01348"/>
                                             <!-- The mass and inertia this body got from its wrap geoms on dev: kept so the arm and the body total stay as they were. -->
                                             <inertial pos="-0.00089131 -0.00917102 -0.00186901" mass="0.16375769" quat="0.65249538 0.4123981 0.60123937 0.2066127" diaginertia="5.60932989e-05 4.97744861e-05 3.21989459e-05"/>
                                             <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.349066 0.523599" damping="0.25"/>
@@ -387,11 +382,7 @@
                                             <!-- <geom name="PL_ellipsoid_wrap" pos="0.0170362 -0.0128706 0.0101738" quat="0.998158 -0.0141897 0.050277 0.0308429" class="myoarm_wrap" size="0.0272385"/> -->
                                             <geom name="FDS_ellipsoid_wrap_r" type="cylinder" size="0.013 0.025" pos="0.0012 -0.0057 -0.0003" euler="0.00837758 1.48 -0.0171042" class="myoarm_wrap"/>
                                             <geom name="FDP_ellipsoid_wrap_r" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0032" euler="-1.46747 1.37 0.121824" class="myoarm_wrap"/>
-                                            <geom name="EDM_ellipsoid_wrap_r" type="cylinder" size="0.023627 0.018" pos="-0.016643 -0.001642 0.004331" euler="2.9627 1.73 0.117984" class="myoarm_wrap"/>
                                             <geom name="FPL_ellipsoid_wrap_r" type="sphere" size="0.015" pos="0.02 -0.025 -0.0033" class="myoarm_wrap"/>
-                                            <geom name="ECRL_torus_wrap_r" pos="0.0222 -0.0096 0.0208" quat="0.637339 0.675155 -0.168467 0.331034" class="myoarm_wrap" size="0.008"/>
-                                            <geom name="ECRB_torus_wrap_r" pos="0.011354 -0.009514 0.0136" quat="0.78744 0.610837 -0.011177 -0.0818018" class="myoarm_wrap" size="0.001647"/>
-                                            <geom name="FCR_torus_wrap_r" pos="0.0082 -0.005478 -0.014624" quat="0.71204 -0.696183 -0.0894345 0.0181554" class="myoarm_wrap" size="0.001164"/>
 
                                             <geom name="EDCL_torus_wrap_r" pos="-0.0098 -0.0133 0.0148" quat="0.386237 0.907673 0.159784 0.037683" class="myoarm_wrap" size="0.004"/>
                                             <geom name="EDCR_torus_wrap_r" pos="-0.010024 -0.014 0.015658" quat="0.516906 0.814718 -0.18962 0.1819" class="myoarm_wrap" size="0.0028"/>
@@ -400,25 +391,21 @@
                                             <site name="ExtensorEllipse_ellipsoid_site_EIP_side_r" pos="-0.0195105 -0.00430577 0.0636576"/>
                                             <site name="PL_ellipsoid_site_PL_side_r" pos="-0.0286005 -0.023546 -0.0168168"/>
 
-                                            <site name="FDS_ellipsoid_site_FDS5_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="FDS_ellipsoid_site_FDS4_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="FDS_ellipsoid_site_FDS3_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="FDS_ellipsoid_site_FDS2_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
 
-                                            <site name="FDP_ellipsoid_site_FDP5_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="FDP_ellipsoid_site_FDP4_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="FDP_ellipsoid_site_FDP3_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="FDP_ellipsoid_site_FDP2_side_r" pos="-0.00481002 -0.034454 -0.0213554"/>
-                                            <site name="EDM_ellipsoid_site_EDM_side_r" pos="-0.024029 -0.001198 0.051002"/>
                                             <site name="FPL_ellipsoid_site_FPL_side_r" pos="0.017 -0.025 -0.0033"/>
-                                            <site name="ECRL_torus_site_ECRL_side_r" pos="0.0222 -0.0096 0.0208"/>
-                                            <site name="ECRB_torus_site_ECRB_side_r" pos="0.011911 -0.009554 0.016846"/>
-                                            <site name="FCR_torus_site_FCR_side_r" pos="0.006786 -0.003858 -0.015515"/>
 
                                             <site name="EDCL_torus_site_EDC5_side_r" pos="-0.007941 -0.008591 0.020994"/>
                                             <site name="EDCR_torus_site_EDC4_side_r" pos="-0.010175 -0.017156 0.020282"/>
                                             <site name="EDCM_torus_site_EDC3_side_r" pos="-0.0007 -0.0117 0.0191"/>
                                             <site name="EDCI_torus_site_EDC2_side_r" pos="0.009 -0.0149 0.0221"/>
+                                            <site name="FDS_ellipsoid_site_FDS5_side_r" pos="0.003556 -0.004567 -0.026168"/>
+                                            <site name="FDS_ellipsoid_site_FDS4_side_r" pos="0.003555 -0.00434 -0.026157"/>
+                                            <site name="FDS_ellipsoid_site_FDS3_side_r" pos="0.003552 -0.003661 -0.026113"/>
+                                            <site name="FDS_ellipsoid_site_FDS2_side_r" pos="0.003548 -0.003209 -0.026074"/>
+                                            <site name="FDP_ellipsoid_site_FDP5_side_r" pos="-0.002605 -0.002247 -0.022377"/>
+                                            <site name="FDP_ellipsoid_site_FDP4_side_r" pos="-0.002424 -0.003124 -0.022523"/>
+                                            <site name="FDP_ellipsoid_site_FDP3_side_r" pos="-0.002334 -0.003565 -0.022585"/>
+                                            <site name="FDP_ellipsoid_site_FDP2_side_r" pos="-0.002515 -0.002685 -0.022454"/>
 
                                             <body name="scaphoid_r" pos="0.012345 -0.004464 -0.001254">
                                                 <geom mesh="scaphoid_r" name="scaphoid_r" type="mesh"/>
@@ -464,13 +451,12 @@
                                                     <site name="Trpzm_site_FPL_side_r" pos="0.0125474 -0.0222585 0.00136571"/>
                                                     <site name="Trpzm_site_OP_side_r" pos="0.0125474 -0.0222585 0.00136571"/>
         <!-- BEGIN generated by scripts/generate_extrinsic_muscles.py (thumb trapezium); do not edit by hand -->
-                                                    <!-- APL cylinder over the thumb CMC (after Barry et al. 2018, MIT, build/data/LICENSE-Barry2018.txt); extrinsic_muscles.json -->
-                                                    <geom name="APL_cmc_wrap_r" type="cylinder" size="0.006 0.014" pos="0.006 0.007 0.005" quat="0.513561 -0.788968 0.337301 -0.003692" class="myoarm_wrap"/>
-                                                    <site name="APL_cmc_site_APL_side_r" pos="0.00393 0.013627 0.014788"/>
+                                                    <!-- APL over the thumb CMC: via site on the trapezium, fitted to Smutz et al. 1998; side_sites.json -->
+                                                    <site name="APL_via_r" pos="0.012261 0.002353 -0.006113"/>
         <!-- END generated by scripts/generate_extrinsic_muscles.py (thumb trapezium) -->
                                                     <site name="S_grasp_r" pos="-0.011 -0.06 -0.03" size=".01" group="3"/>
                                                     <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
-                                                    <site name="FPBs-P1_r" pos="-0.015138 -0.011604 -0.006701"/>
+                                                    <site name="FPBs-P1_r" pos="-0.015137 -0.011604 -0.006701"/>
                                                     <site name="APB-P1_r" pos="0.001973 0.00318 -0.010287"/>
                                                     <camera name="palm_lookat_r" pos="-0.011 -0.06 -0.5" euler="0 3.14 0"/>
 
@@ -489,23 +475,21 @@
                                                         <site name="EPB-P7_r" pos="0.0217 -0.023 -0.0114"/>
                                                         <!-- <site name="FPL-P7_r" pos="0.001 -0.013 -0.011"/>
                                                         <site name="FPL-P8_r" pos="0.008 -0.025 -0.012"/>
-                                                        <site name="APL-P6_r" pos="0 0.006 -0.01"/>
                                                         <site name="APL-P7_r" pos="0.0063 0.0032 -0.0059"/>
                                                         <site name="APL-P8_r" pos="0.014 -0.019 -0.014"/> -->
                                                         <!-- APL-P7_r: position from Barry et al. 2018 (MIT, build/data/LICENSE-Barry2018.txt), written by scripts/generate_extrinsic_muscles.py -->
                                                         <site name="FPL-P7_r" pos="-0.0061 -0.0162 -0.0094"/>
                                                         <site name="FPL-P8_r" pos="0.0021 -0.023 -0.0096"/>
-                                                        <site name="APL-P6_r" pos="0 0.006 -0.01"/>
                                                         <site name="APL-P7_r" pos="0.013 0 -0.002"/>
-                                                        <site name="OP-P2_r" pos="0.010241 -0.029625 -0.016801"/>
+                                                        <site name="OP-P2_r" pos="0.01024 -0.029626 -0.016803"/>
                                                         <!-- <site name="MPthumb_site_EPL_side_r" pos="0.0233473 -0.0173314 -0.02"/> -->
                                                         <site name="MPthumb_site_EPB_side_r" pos="0.0252901 -0.0179637 -0.00935966"/>
                                                         <site name="MPthumb_site_FPL_side_r" pos="0.0177 -0.0305 -0.0143"/>
                                                         <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
-                                                        <site name="FPBs-P2_r" pos="0.011426 -0.019751 -0.022168"/>
-                                                        <site name="FPBd-P2_r" pos="0.007937 -0.024288 -0.020612"/>
+                                                        <site name="FPBs-P2_r" pos="0.011425 -0.019752 -0.022169"/>
+                                                        <site name="FPBd-P2_r" pos="0.007937 -0.024288 -0.020613"/>
                                                         <site name="APB-P2_r" pos="0.016 -0.021031 -0.019914"/>
-                                                        <site name="DI1s-P1_r" pos="0.000639 -0.008786 -0.001624"/>
+                                                        <site name="DI1s-P1_r" pos="0.000639 -0.008785 -0.001624"/>
                                                         <body name="proximal_thumb_r" pos="0.0165 -0.0292 -0.0127">
                                                             <joint axis="-0.084295 -0.203488 0.975442" name="mp_flexion_r" pos="0 0 0" range="-0.785398 0.698132" armature="0.0003"/>
                                                             <geom name="proximal_thumb_coll_r" class="myohand_coll" size="0.0085" fromto="0 0 0 0.014 -0.0259 -0.0101"/>
@@ -523,9 +507,9 @@
                                                             <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, Mirakhorlo et al. 2016, CC BY 4.0, and for AdPt-P2_r Barry et al. 2018, MIT; licences in build/data/) -->
                                                             <site name="AdPt-P2_r" pos="0.001027 -0.008384 -0.005311"/>
                                                             <site name="AdPo-P2_r" pos="-0.0037 -0.0086 -0.0026"/>
-                                                            <site name="FPBs-P3_r" pos="-0.008489 0.001458 -0.014156"/>
-                                                            <site name="FPBd-P3_r" pos="-0.009592 -0.00194 -0.010167"/>
-                                                            <site name="APB-P3_r" pos="-0.001417 0.002819 -0.006404"/>
+                                                            <site name="FPBs-P3_r" pos="-0.008489 0.001459 -0.014156"/>
+                                                            <site name="FPBd-P3_r" pos="-0.009591 -0.00194 -0.010167"/>
+                                                            <site name="APB-P3_r" pos="-0.001417 0.002819 -0.006405"/>
 
                                                             <body name="distal_thumb_r" pos="0.014 -0.0259 -0.0101">
                                                                 <geom name="distal_thumb_coll_r" class="myohand_coll" size="0.0065" fromto="0 0 0 0.010 -0.018 -0.007"/>
@@ -558,6 +542,8 @@
                                                     <site name="ODM-P1_r" pos="0.0085 -0.007 -0.0185"/>
                                                 </body>
                                                 <body name="secondmc_r" pos="0.014685 -0.03762 0.005032">
+                                                    <site name="2ndmcp_ellipsoid_site_EDC2_side_r" pos="0.008829 -0.038637 0.009331"/>
+                                                    <site name="2ndmcp_ellipsoid_site_EIP_side_r" pos="0.008792 -0.037402 0.010499"/>
                                                     <geom name="2mcskin_coll_r" class="myohand_coll" size="0.010 0.028" euler="1.42 0.15 -.1"/>
                                                     <geom mesh="2mc_r" name="2mc_r" type="mesh"/>
                                                     <geom name="2ndmcp_ellipsoid_wrap_r" type="cylinder" size="0.0065 0.005" pos="0.0058 -0.0294 0.0007" euler="0.84927721 -1.33552594 1.33814394" class="myoarm_wrap"/>
@@ -589,8 +575,6 @@
                                                     <site name="DI1s-P2_r" pos="0.013034 -0.023819 -0.000571"/>
                                                     <site name="2ndmcp_ellipsoid_site_FDS2_side_r" pos="0 0 0"/>
                                                     <site name="2ndmcp_ellipsoid_site_FDP2_side_r" pos="0.0058 -0.0294 -0.0087"/>
-                                                    <site name="2ndmcp_ellipsoid_site_EDC2_side_r" pos="0.0058 -0.0294 0.0087"/>
-                                                    <site name="2ndmcp_ellipsoid_site_EIP_side_r" pos="0.0058 -0.0294 0.0087"/>
                                                     <body name="2proxph_r" pos="0.003501 -0.028243 0.00362">
                                                         <joint axis="0.995013 0.09975 0" name="mcp2_flexion_r" pos="0 0 0" range="0.0 1.5708" damping="0.0142"/>
                                                         <joint axis="-0.054999 0.085899 0.994785" name="mcp2_abduction_r" pos="0 0 0" range="-0.261799 0.261799"/>
@@ -614,8 +598,8 @@
                                                         <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
                                                         <site name="PI1-P3_r" pos="-0.004348 -0.015692 0.002833"/>
                                                         <site name="LUM1-P3_r" pos="0.007508 -0.008468 -0.000502"/>
-                                                        <site name="DI1d-P3_r" pos="0.007289 -0.014441 0.002231"/>
-                                                        <site name="DI1s-P3_r" pos="0.007121 -0.014298 0.002257"/>
+                                                        <site name="DI1d-P3_r" pos="0.007289 -0.014442 0.002231"/>
+                                                        <site name="DI1s-P3_r" pos="0.00712 -0.014298 0.002258"/>
                                                         <site name="Secondpm_site_EDC2_side_r" pos="0.0075 -0.0407 0.0121"/>
                                                         <body name="midph2_r" pos="0.00751 -0.041273 0.007326">
                                                             <geom name="midph2_coll_r" class="myohand_coll" size="0.008 0.012" pos="0.0013 -0.012 0.00" euler="1.5 0.14 -.35"/>
@@ -676,8 +660,8 @@
                                                     <site name="3rdmcp_ellipsoid_site_FDP3_side_r" pos="0.0015 -0.025 0.002"/>
                                                     <site name="3rdmcp_ellipsoid_site_EDC3_side_r" pos="0.0016 -0.0291 0.0081"/>
                                                     <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
-                                                    <site name="DI2-P1_r" pos="0.000774 0.006967 -0.009643"/>
-                                                    <site name="DI2-P2_r" pos="0.013791 -0.007084 -0.006105"/>
+                                                    <site name="DI2-P1_r" pos="0.000774 0.006968 -0.009643"/>
+                                                    <site name="DI2-P2_r" pos="0.01379 -0.007086 -0.006104"/>
         <!-- BEGIN generated by scripts/generate_extrinsic_muscles.py (node JT3); do not edit by hand -->
                                                     <!-- node_JT3_r: junctura node on EDC3 (tendon equality node_JT3_tie_r) -->
                                                     <body name="node_JT3_r" pos="-0.000947 -0.03788 0.012414">
@@ -695,7 +679,7 @@
                                                         <site name="LUM2-P1_r" pos="0.002599 0.000309 -0.001101"/>
                                                     </body>
         <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (node LUM2) -->
-                                                    <site name="LUM2-P2_r" pos="0.014327 -0.029085 -0.007732"/>
+                                                    <site name="LUM2-P2_r" pos="0.014327 -0.029085 -0.007733"/>
                                                     <site name="DI3-P1_r" pos="0.0013 0.0064 -0.0095"/>
                                                     <site name="DI3-P2_r" pos="-0.008063 -0.02625 -0.004751"/>
         <!-- BEGIN generated by scripts/generate_hand_intrinsic_muscles.py (node LUM3); do not edit by hand -->
@@ -736,10 +720,10 @@
                                                         <site name="FDP3-P7_r" pos="0.0024 -0.0364 -0.0005"/>
                                                         <site name="Thirdpm_site_EDC3_side_r" pos="0.00155575 -0.04355 0.012991"/>
                                                         <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MyoHand, MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
-                                                        <site name="DI2-P3_r" pos="0.012239 -0.0037 -0.003578"/>
-                                                        <site name="DI2-P4_r" pos="0.008643 -0.022563 0.004193"/>
-                                                        <site name="LUM2-P3_r" pos="0.007799 -0.024009 0.004754"/>
-                                                        <site name="DI3-P3_r" pos="-0.00437 -0.011792 0.000381"/>
+                                                        <site name="DI2-P3_r" pos="0.012242 -0.0037 -0.003579"/>
+                                                        <site name="DI2-P4_r" pos="0.008641 -0.022565 0.004195"/>
+                                                        <site name="LUM2-P3_r" pos="0.007798 -0.024009 0.004754"/>
+                                                        <site name="DI3-P3_r" pos="-0.00437 -0.011793 0.000381"/>
                                                         <site name="DI3-P4_r" pos="-0.00205 -0.018627 -0.008975"/>
                                                         <body name="midph3_r" pos="0.00165 -0.044211 0.00623">
                                                             <joint axis="1 0 0" name="pm3_flexion_r" pos="0 0 0" range="0 2.007129" damping="0.0105"/>
@@ -846,10 +830,10 @@
                                                         <site name="Fourthpm_site_EDC4_side_r" pos="0.00028232 -0.0402561 0.008299"/>
 
                                                         <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MyoHand, MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
-                                                        <site name="PI2-P3_r" pos="0.003753 -0.024429 0.000359"/>
-                                                        <site name="LUM3-P3_r" pos="0.001843 -0.015723 0.00011"/>
-                                                        <site name="DI4-P3_r" pos="-0.008124 -0.012093 7.1e-05"/>
-                                                        <site name="DI4-P4_r" pos="-0.004191 -0.021201 -0.005511"/>
+                                                        <site name="PI2-P3_r" pos="0.003754 -0.024429 0.000359"/>
+                                                        <site name="LUM3-P3_r" pos="0.001843 -0.015723 0.000111"/>
+                                                        <site name="DI4-P3_r" pos="-0.008123 -0.012093 7e-05"/>
+                                                        <site name="DI4-P4_r" pos="-0.004192 -0.021201 -0.005511"/>
                                                         <body name="midph4_r" pos="-0.003528 -0.040255 0.001345">
                                                             <joint axis="0.921061 0 0.389418" name="pm4_flexion_r" pos="0 0 0" range="0 2.007129" damping="0.0105"/>
                                                             <geom name="midph4_coll_r" class="myohand_coll" size="0.0075 0.01" pos="-.00 -0.012 -.001" euler="1.58 -.08 0"/>
@@ -923,7 +907,7 @@
                                                         <site name="LUM4-P1_r" pos="0.003132 0.001089 -0.002307"/>
                                                     </body>
         <!-- END generated by scripts/generate_hand_intrinsic_muscles.py (node LUM4) -->
-                                                    <site name="LUM4-P2_r" pos="0.009603 -0.021577 -0.001054"/>
+                                                    <site name="LUM4-P2_r" pos="0.009603 -0.021576 -0.001054"/>
                                                     <site name="ADM-P2_r" pos="-0.006451 -0.018829 -0.011353"/>
                                                     <site name="FDM-P2_r" pos="-0.002 -0.02 -0.01"/>
                                                     <site name="ODM-P2_r" pos="-0.0163 -0.0152 -0.0042"/>
@@ -958,9 +942,9 @@
         <site name="EM5_band_side_r" pos="-0.00753724 -0.035495 0.000421867"/>
         <!-- END generated by scripts/fit_extensor_mechanism.py (5proxph_r) -->
                                                         <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
-                                                        <site name="PI3-P3_r" pos="0.006418 -0.014107 0.005166"/>
+                                                        <site name="PI3-P3_r" pos="0.006418 -0.014106 0.005167"/>
                                                         <site name="LUM4-P3_r" pos="0.004973 -0.013799 0.001703"/>
-                                                        <site name="ADM-P3_r" pos="-0.007446 -0.008516 -0.011506"/>
+                                                        <site name="ADM-P3_r" pos="-0.007446 -0.008516 -0.011505"/>
                                                         <site name="FDM-P3_r" pos="-0.0045 -0.0138 -0.0128"/>
                                                         <!-- <site name="FDS5-P6_r" pos="0.0018 -0.0143 -0.0055"/>
                                                         <site name="FDS5-P7_r" pos="0.001 -0.021 -0.007"/>

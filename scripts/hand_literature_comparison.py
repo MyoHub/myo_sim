@@ -144,6 +144,9 @@ def fist(model_name: str = "myoarm_r") -> dict[str, Any]:
     data = vhf.start(scene, locks)
     flexors = [n for n in (*hand.muscles["FDS"], *hand.muscles["FDP"])]
     vhf.set_activation(scene, data, {n: 1.0 for n in flexors})
+    # From the exact start the contacts settle one way (digit 3 at 0.61 mm on MuJoCo 3, 1.14 on 4); any rounding-size
+    # change of the start gives the other, the same on both versions (2.73 mm).
+    data.qpos[:] += 1e-12 * np.random.default_rng(3).standard_normal(model.nq)
     hand_bodies = _subtree(model, "lunate_r")
     steps = int(round(FIST_SECONDS / model.opt.timestep))
     deepest = 0.0
@@ -663,6 +666,83 @@ def deep_hip() -> dict[str, Any]:
     return out
 
 
+ACKLAND_REGIONS = {
+    "delt1": "DELT1",
+    "delt2": "DELT2",
+    "delt3": "DELT3",
+    "lat1": "LAT1",
+    "lat2": "LAT2",
+    "lat3": "LAT3",
+    "tmaj": "TMAJ",
+    "supsp": "SUPSP",
+    "subsc": "SUBSC",
+}
+ACKLAND_PLANES_DEG = (30.0, 0.0, 90.0)  # elv_angle of scaption, coronal-plane abduction, sagittal-plane flexion
+
+
+def _coupled_length(model: mujoco.MjModel, data: mujoco.MjData, tendon: str, joints: dict[str, float]) -> float:
+    """Length of *tendon* with *joints* set (rad) and the joint couplings of the shoulder applied."""
+    data.qpos[:] = model.qpos0
+    for name, value in joints.items():
+        data.qpos[model.joint(name).qposadr[0]] = value
+    for e in range(model.neq):
+        if int(model.eq_type[e]) == 2 and model.eq_active0[e] and model.eq_obj2id[e] >= 0:
+            a1, a2 = model.jnt_qposadr[model.eq_obj1id[e]], model.jnt_qposadr[model.eq_obj2id[e]]
+            x = data.qpos[a2] - model.qpos0[a2]
+            data.qpos[a1] = model.qpos0[a1] + sum(c * x**i for i, c in enumerate(model.eq_data[e][:5]))
+    mujoco.mj_kinematics(model, data)
+    mujoco.mj_tendon(model, data)
+    return float(data.ten_length[model.tendon(tendon).id])
+
+
+def shoulder_and_biceps(model: mujoco.MjModel) -> dict[str, Any]:
+    """Shoulder arms in Ackland et al. 2008's planes, their largest and smallest value over 5-120 deg of elevation
+    (mm, -dL/dq of ``shoulder_elv_r`` on the couplings, positive = abductor or flexor); BIClong excursion at Lamplot et
+    al. 2020's positions and elbow arm at Ettema et al. 1998's."""
+    if mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, "shoulder_elv_r") < 0:
+        return {}
+    data = mujoco.MjData(model)
+    out: dict[str, Any] = {}
+    grid = np.radians(np.arange(5.0, 121.0, 5.0))
+    for key, muscle in ACKLAND_REGIONS.items():
+        tendon = f"{muscle}_r_tendon"
+        row = []
+        for plane in ACKLAND_PLANES_DEG:
+            arms = []
+            for e in grid:
+                ends = [
+                    _coupled_length(model, data, tendon, {"elv_angle_r": np.radians(plane), "shoulder_elv_r": e + h})
+                    for h in (1e-3, -1e-3)
+                ]
+                arms.append(-(ends[0] - ends[1]) / 2e-3 * 1e3)
+            row += [float(np.max(arms)), float(np.min(arms))]
+        out[f"shoulder_arms_{key}"] = row
+    elbow = np.pi / 2
+    sagittal = np.radians(90.0)
+    rest = _coupled_length(
+        model, data, "BIClong_r_tendon", {"elv_angle_r": sagittal, "shoulder_elv_r": 0.0, "elbow_flexion_r": elbow}
+    )
+    out["biclong_excursion_shoulder_flexion"] = [
+        (
+            rest
+            - _coupled_length(
+                model,
+                data,
+                "BIClong_r_tendon",
+                {"elv_angle_r": sagittal, "shoulder_elv_r": np.radians(f), "elbow_flexion_r": elbow},
+            )
+        )
+        * 1e3
+        for f in (45.0, 90.0)
+    ]
+    out["biclong_elbow_arm"] = []
+    for included in (120.0, 95.0, 70.0):
+        q = np.radians(180.0 - included)
+        ends = [_coupled_length(model, data, "BIClong_r_tendon", {"elbow_flexion_r": q + h}) for h in (1e-3, -1e-3)]
+        out["biclong_elbow_arm"].append(-(ends[0] - ends[1]) / 2e-3 * 1e3)
+    return out
+
+
 def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     import myo_sim
 
@@ -676,6 +756,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= extrinsic_revisions(model)
     out |= force_velocity(model)
     out |= forearm_rotation(model)
+    out |= shoulder_and_biceps(model)
     out |= head_and_neck()
     out |= body_against_rajagopal()
     out |= leg_against_references()

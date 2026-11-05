@@ -174,7 +174,7 @@ def test_fds5_force_follows_its_group() -> None:
     assert force / model.actuator_gainprm[model.actuator("FDS4_r").id][2] == pytest.approx(0.40 / 1.61, abs=0.05)
 
 
-WRAP_SIDES = ("EDC2", "EDC4", "EDC5", "EDM", "ECRB", "FCR", "PQ")
+WRAP_SIDES = ("EDC2", "EDC4", "EDC5", "PQ")
 
 
 @pytest.mark.parametrize("muscle", WRAP_SIDES)

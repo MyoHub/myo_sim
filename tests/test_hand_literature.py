@@ -96,6 +96,9 @@ def _close(recorded: object, measured: object, tol: float) -> bool:
         ("forearm_axis_radial_head", 0.05),
         ("forearm_axis_ulnar_head", 0.05),
         *((f"prosup_moment_arms_{m}", 0.05) for m in ("biceps", "supinator", "pt", "pq", "ecu", "fcu")),
+        *((f"shoulder_arms_{m}", 0.05) for m in ("delt1", "delt2", "delt3", "lat1", "lat2", "lat3", "tmaj", "supsp", "subsc")),
+        ("biclong_excursion_shoulder_flexion", 0.05),
+        ("biclong_elbow_arm", 0.05),
     ],
 )
 def test_latest_step_matches_the_current_model(key: str, tol: float) -> None:
