@@ -1,4 +1,4 @@
-"""The ``standing`` keyframe: a physically clean start that changes nothing else in the model."""
+"""The posture keyframes (``standing``): a physically clean start that changes nothing else in the model."""
 
 from __future__ import annotations
 
@@ -19,9 +19,12 @@ MAX_DEPTH_M = 1e-3
 # Peak joint speed over 50 ms at zero activation, per model. Passive muscle force sets it: see the wiki page.
 MAX_SPEED_50MS = {"myofullbody": 5.5, "myolegs": 3.0, "myolegs_abdomen": 3.0}
 MAX_SPEED_50MS_MUSCLES_OFF = 2.0
-MIN_QPOS0_SPEED_50MS = 9.0
+# qpos0 is off the knee couplings; on MuJoCo 3 recfem takes a wrap 171 mm longer there and the first 50 ms are faster.
+# gasmed is 0.0083 optimal lengths longer at standing than at qpos0 in myolegs and myolegs_abdomen (MuJoCo 4).
+MAX_LENGTH_ABOVE_QPOS0 = 0.01
 MAX_DEPTH_50MS_M = {"myofullbody": 1e-3, "myolegs": 2e-3, "myolegs_abdomen": 2e-3}
-FINGER_TOKENS = ("cmc_", "mcp", "pm", "md")
+# No tendon or equality refers to the toes; the hand joints are held by the passive tendons and couplings.
+DELETED_JOINT_TOKENS = ("mtp_angle_",)
 
 
 def _script():
@@ -67,6 +70,8 @@ def test_table_is_what_the_script_writes():
             stored = written["models"][name][posture]
             assert entry["joints"].keys() == stored["joints"].keys()
             assert entry["root_z"] == pytest.approx(stored["root_z"], abs=1e-7)
+            for key in ("root_y_offset", "root_quat"):
+                assert entry.get(key, 0.0) == pytest.approx(stored.get(key, 0.0), abs=1e-7), key
             for joint, value in entry["joints"].items():
                 assert value == pytest.approx(stored["joints"][joint], abs=1e-7), joint
 
@@ -104,6 +109,28 @@ def test_only_the_feet_touch_at_t0(name):
     assert all(dist > -MAX_DEPTH_M for _, _, _, dist in contacts), contacts
 
 
+@pytest.mark.parametrize("side", ("r", "l"))
+def test_thumb_starts_at_its_passive_equilibrium(side):
+    model = myo_sim.load_model("myofullbody")
+    data = mujoco.MjData(model)
+    assert np.abs(SCRIPT.thumb_moments(model, data, _standing_qpos(model), side)).max() < 1e-5
+    assert np.abs(SCRIPT.thumb_moments(model, data, model.qpos0, side)).max() > 0.5, "negative control"
+
+
+def test_trunk_hinge_stands_over_the_hip_axis():
+    model = myo_sim.load_model("myolegs_abdomen")
+    qpos = _standing_qpos(model)
+    data = _state(model, qpos)
+    hinge, hip = data.joint(SCRIPT.TRUNK_HINGE).xanchor, data.joint("hip_flexion_r").xanchor
+    assert hinge[1] == pytest.approx(hip[1], abs=1e-6)
+    upright = _state(model, model.qpos0)
+    assert np.linalg.norm(data.body("torso").xmat - upright.body("torso").xmat) < 1e-6, "the trunk stays upright"
+    assert np.linalg.norm(data.body("tibia_r").xmat - upright.body("tibia_r").xmat) < 0.02, "the legs stay upright"
+    assert data.joint(SCRIPT.TRUNK_HINGE).xanchor[1] != pytest.approx(upright.joint(SCRIPT.TRUNK_HINGE).xanchor[1], abs=0.01), (
+        "negative control: without the tilt the hinge is behind the hips"
+    )
+
+
 def test_qpos0_negative_control_for_contacts():
     model = myo_sim.load_model("myofullbody")
     contacts, _ = SCRIPT.t0_contacts(model, _state(model, model.qpos0))
@@ -127,7 +154,7 @@ def test_first_50_ms_stay_slow(name):
     peak, joint, deepest = SCRIPT.rollout_extremes(model, standing)
     assert peak < MAX_SPEED_50MS[name], joint
     assert deepest > -MAX_DEPTH_50MS_M[name]
-    assert SCRIPT.rollout_extremes(model, model.qpos0)[0] > MIN_QPOS0_SPEED_50MS, "negative control"
+    assert SCRIPT.rollout_extremes(model, model.qpos0)[0] > MAX_SPEED_50MS[name], "negative control"
     model.opt.disableflags |= int(mujoco.mjtDisableBit.mjDSBL_ACTUATION)
     assert SCRIPT.rollout_extremes(model, standing)[0] < MAX_SPEED_50MS_MUSCLES_OFF
 
@@ -139,36 +166,49 @@ def test_muscle_lengths_stay_valid(name):
     standing = SCRIPT.normalised_lengths(model, _state(model, _standing_qpos(model)))
     low, high = model.actuator_gainprm[:, 4], model.actuator_gainprm[:, 5]
     assert ((standing < low) | (standing > high)).sum() <= ((at_qpos0 < low) | (at_qpos0 > high)).sum()
-    assert standing.max() <= at_qpos0.max()
+    assert standing.max() <= at_qpos0.max() + MAX_LENGTH_ABOVE_QPOS0
 
 
-def _delete_finger_joints(spec) -> int:
-    fingers = [j for j in spec.joints if j.name.startswith(FINGER_TOKENS)]
-    assert fingers
-    for joint in fingers:
+def _delete_joints(spec) -> int:
+    joints = [j for j in spec.joints if j.name.startswith(DELETED_JOINT_TOKENS)]
+    assert joints
+    for joint in joints:
         spec.delete(joint)
-    return len(fingers)
+    return len(joints)
 
 
 def test_spec_stays_editable_by_default():
     spec = myo_sim.load_spec("myofullbody")
     assert len(spec.keys) == 0
-    _delete_finger_joints(spec)
+    _delete_joints(spec)
     assert spec.compile().nkey == 0
 
 
-def test_deleting_a_joint_from_a_spec_with_the_keyframe_fails():
-    """Why ``load_spec`` does not add the keyframe by default."""
+def test_deleting_a_joint_from_a_spec_with_the_keyframe():
+    """Why ``load_spec`` does not add the keyframe by default: MuJoCo 3 refuses to compile, MuJoCo 4 keeps it by name.
+
+    Either way a keyframe must never reach a model with its values on the wrong joints.
+    """
     spec = myo_sim.load_spec("myofullbody", build_kwargs={"postures": True})
-    _delete_finger_joints(spec)
-    with pytest.raises(ValueError, match="standing"):
-        spec.compile()
+    deleted = _delete_joints(spec)
+    if int(mujoco.__version__.split(".")[0]) < 4:
+        with pytest.raises(ValueError, match="standing"):
+            spec.compile()
+        return
+    reference = myo_sim.load_model("myofullbody")
+    model = spec.compile()
+    want = _joint_values(reference, _standing_qpos(reference))
+    got = _joint_values(model, model.key_qpos[0])
+    assert model.nq == reference.nq - deleted
+    assert len(got) == len(want) - deleted
+    assert all(got[name] == pytest.approx(want[name]) for name in got)
+    assert model.key_qpos[0][:7] == pytest.approx(reference.key_qpos[0][:7])
 
 
 def test_add_after_deleting_joints_matches_by_name():
     reference = myo_sim.load_model("myofullbody")
     spec = myo_sim.load_spec("myofullbody")
-    deleted = _delete_finger_joints(spec)
+    deleted = _delete_joints(spec)
     myo_sim.add_posture_keyframes(spec, "myofullbody")
     model = spec.compile()
     want = _joint_values(reference, _standing_qpos(reference))

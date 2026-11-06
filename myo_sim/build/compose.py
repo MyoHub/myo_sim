@@ -31,24 +31,28 @@ import mujoco
 from myo_sim import MODELS_DIR
 
 try:
-    from .hand import prune_arm_spec_to_hand
+    from .hand import prune_arm_spec_to_hand, prune_rigid_pairs
+    from .head import build_head_spec
     from .keyframes import add_posture_keyframes
     from .utils import (
         MirrorRules,
         add_contact_pairs,
         add_sensors,
+        attach_checked,
         build_child_xml_from_components,
         build_mirrored_child_xml,
         find_body,
         find_site,
     )
 except ImportError:
-    from hand import prune_arm_spec_to_hand
+    from hand import prune_arm_spec_to_hand, prune_rigid_pairs
+    from head import build_head_spec
     from keyframes import add_posture_keyframes
     from utils import (
         MirrorRules,
         add_contact_pairs,
         add_sensors,
+        attach_checked,
         build_child_xml_from_components,
         build_mirrored_child_xml,
         find_body,
@@ -76,7 +80,7 @@ SCENE_XML = ROOT / "scene" / "myosuite_scene.xml"
 MUSCLEMIMIC_SCENE_XML = ROOT / "scene" / "myosuite_scene_musclemimic.xml"
 TORSO_ABDOMEN_UNLOCKED_JOINTS = {"flex_extension", "lat_bending", "axial_rotation"}
 ARM_CONTACTS_XML = ROOT / "contacts" / "myoarm_contacts.xml"
-HAND_CONTACTS_XML = ROOT / "contacts" / "myohand_contacts.xml"
+HAND_SELF_CONTACTS_XML = ROOT / "contacts" / "myohand_self_contacts.xml"
 LEG_CONTACTS_XML = ROOT / "contacts" / "myolegs_contacts.xml"
 FULLBODY_CONTACTS_XML = ROOT / "contacts" / "myofullbody_contacts.xml"
 FULLBODY_SENSORS_XML = ROOT / "sensors" / "myofullbody_sensors.xml"
@@ -112,6 +116,7 @@ class BuildStrategy(str, Enum):
     RIGHT_ARM_BODY = "right_arm_body"
     RIGHT_HAND = "right_hand"
     BOTH_HANDS = "both_hands"
+    HEAD = "head"
     FULLBODY = "fullbody"
     LEGS_BODY = "legs_body"
     LEGS26_BODY = "legs26_body"
@@ -214,6 +219,13 @@ MODEL_REGISTRY = {
     ),
 }
 
+MODEL_REGISTRY["myohead"] = ModelRegistration(
+    name="myohead",
+    description="HYOID cervical chain with mirrored neck muscles",
+    build_strategy=BuildStrategy.HEAD,
+    build_kwargs={},
+)
+
 # Legacy names that resolve to a MODEL_REGISTRY entry. This is the single source
 # of truth for load()-level aliases; every value must be a key of MODEL_REGISTRY.
 ALIASES: dict[str, str] = {
@@ -268,6 +280,18 @@ def build_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
+def attach_neck(torso: mujoco.MjSpec) -> None:
+    """Replace the rigid head scaffold with the muscular HYOID neck, in place.
+
+    Called last by the full-body builder, so the neck's tendons, actuators and
+    equalities come after those of the arms and legs. The torso part models
+    keep the rigid head.
+    """
+    torso.delete(find_body(torso, "neck"))
+    head_frame = find_body(torso, "head_attach").add_frame(name="myohead_attach")
+    attach_checked(torso, build_head_spec(), prefix="", suffix="", frame=head_frame)
+
+
 def build_torso_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return build_torso_spec(registration)
 
@@ -290,6 +314,19 @@ def build_passive_torso_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     return torso
 
 
+def add_hand_self_contacts(arm: mujoco.MjSpec) -> None:
+    """Add the hand's self-contact pairs (``myohand_self_contacts.xml``) whose geoms are in *arm*.
+
+    The pairs belong to the arm itself, so every model with a hand carries them, and the hand models keep
+    them through the pruning.
+    """
+
+    def present(pair: ET.Element) -> bool:
+        return arm.geom(pair.get("geom1")) is not None and arm.geom(pair.get("geom2")) is not None
+
+    add_contact_pairs(arm, HAND_SELF_CONTACTS_XML, include_pair=present)
+
+
 def build_right_arm_spec(registration: Optional[ModelRegistration] = None) -> mujoco.MjSpec:
     right_arm_xml = build_child_xml_from_components(
         model_name="myoarm_r_attach",
@@ -303,6 +340,7 @@ def build_right_arm_spec(registration: Optional[ModelRegistration] = None) -> mu
     )
     right_arm = mujoco.MjSpec.from_string(right_arm_xml)
     right_arm.compiler.balanceinertia = True
+    add_hand_self_contacts(right_arm)
 
     if registration and registration.build_kwargs.get("disable_finger_collisions", False):
         right_arm = disable_finger_collision(right_arm)
@@ -324,6 +362,7 @@ def build_mirrored_left_arm_spec(registration: Optional[ModelRegistration] = Non
     )
     left_arm = mujoco.MjSpec.from_string(left_arm_xml)
     left_arm.compiler.balanceinertia = True
+    add_hand_self_contacts(left_arm)
     if registration and registration.build_kwargs.get("disable_finger_collisions", False):
         left_arm = disable_finger_collision(left_arm)
     return left_arm
@@ -395,8 +434,11 @@ def lock_torso_abdomen_joints(abdomen: mujoco.MjSpec) -> None:
 
 def build_arms_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = build_passive_torso_spec(registration)
-    torso.attach(build_right_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
-    torso.attach(
+    attach_checked(
+        torso, build_right_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
+    )
+    attach_checked(
+        torso,
         build_mirrored_left_arm_spec(registration),
         prefix="",
         suffix="",
@@ -408,7 +450,9 @@ def build_arms_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
 
 def build_right_arm_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = build_passive_torso_spec(registration)
-    torso.attach(build_right_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    attach_checked(
+        torso, build_right_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
+    )
 
     return torso
 
@@ -428,26 +472,35 @@ def build_left_hand_from_arm_spec(registration: Optional[ModelRegistration] = No
     return hand
 
 
+def add_hand_contact_pairs(torso: mujoco.MjSpec, include_left_arm_contacts: bool) -> None:
+    """Contact pairs of a hand model with the torso and the other arm: the arm's pairs that survive pruning.
+
+    The arm's pairs are pruned like the rest of the arm (``prune_rigid_pairs``): a pair goes when a geom
+    was removed or its two geoms are welded together in the hand model. The hand's self-contacts come with
+    the pruned arm itself.
+    """
+    add_contact_pairs(torso, ARM_CONTACTS_XML, include_pair=lambda pair: pair_is_supported(pair, include_left_arm_contacts))
+    prune_rigid_pairs(torso)
+
+
 def build_right_hand_torso_from_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = build_passive_torso_spec(registration)
-    torso.attach(
-        build_right_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
+    attach_checked(
+        torso, build_right_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
     )
-    add_contact_pairs(
-        torso,
-        HAND_CONTACTS_XML,
-        include_pair=lambda pair: pair_is_supported(pair, include_left_arm_contacts=False),
-    )
+    add_hand_contact_pairs(torso, include_left_arm_contacts=False)
     return torso
 
 
 def build_both_hands_torso_from_arm_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = build_passive_torso_spec(registration)
-    torso.attach(
-        build_right_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
+    attach_checked(
+        torso, build_right_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
     )
-    torso.attach(build_left_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
-    add_contact_pairs(torso, HAND_CONTACTS_XML)
+    attach_checked(
+        torso, build_left_hand_from_arm_spec(registration), prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE)
+    )
+    add_hand_contact_pairs(torso, include_left_arm_contacts=True)
     return torso
 
 
@@ -466,25 +519,28 @@ def build_torso_arms_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     right_arm = build_right_arm_spec(registration)
     left_arm = build_left_arm_spec(registration)
 
-    torso.attach(right_arm, prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    attach_checked(torso, right_arm, prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
     if left_arm is not None:
-        torso.attach(left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
+        attach_checked(torso, left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
 
     return torso
 
 
 def build_fullbody_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     torso = build_torso_spec(registration)
-    torso.attach(build_right_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
+    attach_checked(
+        torso, build_right_arm_spec(registration), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE)
+    )
     left_arm = build_left_arm_spec(registration)
     if left_arm is not None:
-        torso.attach(left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
+        attach_checked(torso, left_arm, prefix="", suffix="", site=find_site(torso, LEFT_ARM_ATTACH_SITE))
 
     add_sensors(torso, FULLBODY_SENSORS_XML)
 
     full_body = find_body(torso, "Full Body")
     legs_frame = full_body.add_frame(name="legs_attach")
-    torso.attach(build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    attach_checked(torso, build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    attach_neck(torso)
 
     return torso
 
@@ -494,7 +550,7 @@ def build_legs_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body = find_body(torso, "Full Body")
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
-    torso.attach(build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    attach_checked(torso, build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
 
     return torso
 
@@ -504,7 +560,7 @@ def build_legs26_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body = find_body(torso, "Full Body")
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
-    torso.attach(build_legs26_spec(registration), prefix="", suffix="", frame=legs_frame)
+    attach_checked(torso, build_legs26_spec(registration), prefix="", suffix="", frame=legs_frame)
     return torso
 
 
@@ -520,13 +576,18 @@ def build_legs_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body = find_body(abdomen, "root")
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
-    abdomen.attach(build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    attach_checked(abdomen, build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
     add_contact_pairs(abdomen, LEG_CONTACTS_XML)
 
     return abdomen
 
 
+def build_standalone_head_spec(registration: ModelRegistration) -> mujoco.MjSpec:
+    return build_head_spec(standalone=True)
+
+
 SPEC_BUILDERS = {
+    BuildStrategy.HEAD: build_standalone_head_spec,
     BuildStrategy.TORSO_BODY: build_torso_body_spec,
     BuildStrategy.TORSO_ARMS: build_torso_arms_spec,
     BuildStrategy.ARMS_BODY: build_arms_body_spec,
@@ -595,6 +656,9 @@ COARSE_COLLISION_DISABLED_GEOM_BASENAMES: tuple[str, ...] = (
     "5midph_coll",
     "5distph_coll",
     "5distph_coll_2",
+    "palm_pad",
+    "thenar_pad",
+    "hypothenar_pad",
 )
 _ARM_SIDE_SUFFIXES: tuple[str, ...] = ("_r", "_l")
 

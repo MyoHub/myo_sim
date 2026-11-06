@@ -49,6 +49,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `RIGHT_HAND` | `build_right_hand_from_arm_spec` |
 | `BOTH_HANDS` | `build_both_hands_from_arm_spec` |
 | `FULLBODY` | `build_fullbody_spec` |
+| `HEAD` | `build_standalone_head_spec` |
 | `LEGS_BODY` | `build_legs_body_spec` |
 | `LEGS26_BODY` | `build_legs26_body_spec` |
 | `TORSO_ABDOMEN` | `build_torso_abdomen_spec` |
@@ -69,7 +70,8 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 | `myolegs` | `LEGS_BODY` | Passive anatomical torso scaffold + legs |
 | `myolegs26` | `LEGS26_BODY` | Passive anatomical torso scaffold + reduced 26-muscle legs (see [MyoLeg26](../../myo_sim/models/leg/README.md#myoleg26-reduced-26-muscle-legs-only)) |
 | `myolegs_abdomen` | `LEGS_ABDOMEN` | Minimal abdomen scaffold + legs; free-floating root |
-| `myofullbody` | `FULLBODY` | Full body: torso + mirrored arms + legs; free-floating root |
+| `myofullbody` | `FULLBODY` | Full body: torso + muscular neck + mirrored arms + legs; free-floating root |
+| `myohead` | `HEAD` | Fixed HYOID cervical chain; six independent coordinates and 72 muscles |
 
 `ModelRegistration` fields that control composition:
 
@@ -80,6 +82,20 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 - `add_root_freejoint`: adds a free joint to the root body (needed for locomotion models).
 - `root_pos`: initial position of the root body in world space.
 - `mirror_rules`: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
+
+`myofullbody` carries the muscular neck; there is no switch for it.
+`compose.attach_neck()` runs last in its builder: it deletes the rigid head
+subtree and attaches `build/head.py`'s spec to the existing `head_attach` frame,
+so the neck's tendons, actuators and equalities follow those of the arms and legs.
+The neck joints sit in the torso subtree, before the arm and leg joints.
+The midline skeleton is authored once; only right muscle sites, tendons and
+actuators are mirrored with `MirrorRules`. The existing `neck`, `head` and head
+collision names are preserved. All part models (`myotorso`, `myotorso_arms`,
+`myotorso_arm_r`, `myoarms`, `myohands`, `myolegs`, ...) keep the rigid head
+(`myohead_rigid_chain.xml`), which has no joints or muscles. Whether the torso
+part models should also carry the neck depends on the simple-versus-full model
+strategy of the model policy, which is still open.
+See `docs/validation/neck/README.md` for source and acceptance scope.
 
 ## How to Add a New Composed Model
 
@@ -94,7 +110,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
    ```python
    def build_my_new_spec(registration: ModelRegistration) -> mujoco.MjSpec:
        torso = load_torso_spec(registration)  # or load_passive_torso_spec
-       torso.attach(load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
+       attach_checked(torso, load_right_arm_spec(), prefix="", suffix="", site=find_site(torso, RIGHT_ARM_ATTACH_SITE))
        # ... additional attachments ...
        return torso
    ```
@@ -127,9 +143,9 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 
 ## Key Utilities in utils.py
 
-### `MjSpec.attach(...)`
+### `attach_checked(parent, child, ...)`
 
-Builders attach child `MjSpec` objects directly with MuJoCo's `spec.attach(...)` API. Use the `site=` argument when attaching to a named site already declared in the parent XML (e.g., `arm_attach_r`, `arm_attach_l`). Use the `frame=` argument when attaching to a programmatically created frame (e.g., `root_body.add_frame(...)` for leg attachment).
+Builders attach child `MjSpec` objects through `attach_checked(parent, child, prefix=..., suffix=..., site=... | frame=...)`, which calls MuJoCo's `spec.attach(...)`. MuJoCo silently leaves out a child element whose references don't resolve: a tendon over a misspelled site disappears together with its muscle (MuJoCo 3.4 to 4.0), while the child alone fails to compile. `attach_checked` raises a `ValueError` naming every lost tendon, actuator, equality, sensor, pair or exclude. Don't call `spec.attach(...)` directly in builders. Use the `site=` argument when attaching to a named site already declared in the parent XML (e.g., `arm_attach_r`, `arm_attach_l`). Use the `frame=` argument when attaching to a programmatically created frame (e.g., `root_body.add_frame(...)` for leg attachment).
 
 ### `build_child_xml_from_components(...)`
 
@@ -158,7 +174,7 @@ A frozen dataclass that controls how `mirror_element()` transforms the right-sid
 | `prefix_replacements` | `tuple[tuple[str, str], ...]` | Prefix substitutions applied to name references |
 | `mirror_file_attributes` | `bool` | Whether to apply mirroring to `file` attributes (mesh file names) |
 
-Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement. Override specific fields only when the default logic produces incorrect results for a new body part.
+Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement and the muscle-tendon infix `_r_tendon` → `_l_tendon`. Override specific fields only when the default logic produces incorrect results for a new body part.
 
 ### `add_contact_pairs(spec, contacts_xml, include_pair=None)`
 
@@ -179,10 +195,38 @@ Contacts are stored in separate XML files under `myo_sim/models/contacts/`:
 - `myoarm_contacts.xml` — contact pairs for arm geometries
 - `myolegs_contacts.xml` — contact pairs for leg geometries
 - `myofullbody_contacts.xml` — cross-body contact pairs for the full-body model
+- `myohand_self_contacts.xml` — self-contacts of each hand (generated by `scripts/generate_hand_contacts.py`), added to every arm fragment by `add_hand_self_contacts()`, so every model with a hand carries them
 
 None of these files are referenced via `<include>` from any model XML. They are parsed and injected programmatically at build time by `load_torso_spec()`, which calls `add_contact_pairs()` based on flags in the `ModelRegistration`. This keeps contacts out of standalone XML models (which don't need them) while making them available in all composed models that do.
 
 The `test_contact_paths.py` test enforces this: it verifies that contact XML paths appear only via `ROOT / "contacts" / ...` in `compose.py`, never embedded in `assets/` XMLs.
+
+## Hand models by pruning
+
+`myohand_r`, `myohands` and the bare hand fragments (`FRAGMENT_SPEC_BUILDERS["myohand_r"]` / `["myohand_l"]`)
+are the arm with elements removed (`prune_arm_spec_to_hand` in `build/hand.py`); no hand element is
+defined in Python. The pruning keeps the actuators in `RIGHT_HAND_ACTUATORS` and removes the joints in
+`RIGHT_HAND_REMOVED_JOINTS`; everything else follows generically:
+
+- tendons driven by a removed actuator go; passive tendons (springs, ligaments) stay when their length
+  depends on a kept joint and they name no removed joint;
+- equalities, sensors, contact pairs and excludes that name a removed element go
+  (`delete_dangling_references`), and so do contact pairs whose geoms are welded together in the hand
+  (`prune_rigid_pairs`);
+- kept joints, actuators and actuated tendons get the side suffix through `rename_elements`.
+
+`rename_elements(spec, {mjtObj: {old: new}})` renames elements of any type together with every
+reference to them. MjSpec stores references by name and does not follow a rename: actuator, equality,
+sensor, pair, exclude and camera/light references are rewritten in place; a tendon path cannot be
+re-pointed, so every tendon from the first affected one on is re-created with the same attributes and
+wraps, which keeps the tendon order. A tendon whose wrap target lies outside the spec (a torso site
+before attachment) exposes no name, so re-creating it raises an error.
+
+The hand's self-contacts (`myohand_self_contacts.xml`, see `hand-contacts-and-pads.md`) belong to the arm
+fragments (`add_hand_self_contacts`) and survive the pruning with them. The hand models' pairs with the
+torso and the other arm are the arm's (`myoarm_contacts.xml`) pruned the same way (`add_hand_contact_pairs`). `tests/test_hand_pruning.py` checks
+that every arm actuator, tendon, equality, sensor and pair that should survive is in the hand models
+with identical parameters, and that tendon lengths agree at random hand postures.
 
 ## Sensor Injection Pattern
 

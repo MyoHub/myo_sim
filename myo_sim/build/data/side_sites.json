@@ -1,0 +1,1419 @@
+{
+  "format": 1,
+  "description": "Side sites changed for MuJoCo 4 and how each wrap compares under the MuJoCo 3 rule. Written by scripts/migrate_side_sites.py; the chain and tendon XML take positions, parents and removals from here. MuJoCo 4 is the reference: a path that cannot match on both versions takes the MuJoCo 4 path without a jump, and the MuJoCo 3 difference is stated.",
+  "sources": [
+    "MuJoCo changelog, Upcoming Version: side site semantics; src/engine/engine_util_misc.c wrap_circle at 3.17.0 and on main"
+  ],
+  "sampling": {
+    "sequences": "continuity_postures in scripts/migrate_side_sites.py: for each wrap, every joint that moves it swept alone (801 steps) from qpos0 and 7 random coupled postures, and 400 straight lines of 80 steps between random coupled postures; 'past' adds 0.13 rad at every hinge limit, 0.3 rad at the wrist and 0.55 rad at the MCPs",
+    "length_tolerance_m": 0.0003
+  },
+  "sites": [
+    {
+      "name": "TMAJ_LAThum_cylinder_TMAJ_1_sidesite_r",
+      "geom": "TMAJ_LAThum_cylinder_r",
+      "users": [
+        "TMAJ_r_tendon"
+      ],
+      "body": "humerus_r",
+      "body_before": "humerus_r",
+      "pos_before": [
+        0.0707,
+        0.0257,
+        0.0645
+      ],
+      "pos": [
+        -0.005755,
+        -0.043457,
+        0.006894
+      ],
+      "method": "Direction in the cylinder's plane, two radii from its axis, in the middle (widest margin) of the directions for which both wrap rules give the MuJoCo 3 path at every sampled posture.",
+      "margin_deg": 59.5,
+      "difference_before_mm": 14.814,
+      "share_of_postures_before_percent": 100.0,
+      "keeps_mujoco3": true
+    },
+    {
+      "name": "TMAJ_LAThum_cylinder_LAT2_1_sidesite_r",
+      "geom": "TMAJ_LAThum_cylinder_r",
+      "users": [
+        "LAT2_r_tendon"
+      ],
+      "body": "humerus_r",
+      "body_before": "humerus_r",
+      "pos_before": [
+        0.0707,
+        0.0257,
+        0.0645
+      ],
+      "pos": [
+        -0.004875,
+        -0.043498,
+        0.007317
+      ],
+      "method": "Direction in the cylinder's plane, two radii from its axis, in the middle (widest margin) of the directions for which both wrap rules give the MuJoCo 3 path at every sampled posture.",
+      "margin_deg": 63.5,
+      "difference_before_mm": 12.842,
+      "share_of_postures_before_percent": 100.0,
+      "keeps_mujoco3": true
+    },
+    {
+      "name": "SUP_cylinder_SUP_2_sidesite_r",
+      "geom": "SUP_cylinder_r",
+      "users": [
+        "SUP_r_tendon"
+      ],
+      "body": "ulna_r",
+      "body_before": "radius_r",
+      "pos_before": [
+        0.005119,
+        -0.043905,
+        0.015596
+      ],
+      "pos": [
+        0.06702,
+        -0.0498,
+        0.04744
+      ],
+      "method": "No fixed direction on the radius holds under the MuJoCo 4 rule: the insertion on the ulna turns about 200 deg around the cylinder with forearm rotation. A site on the ulna turns with it. Chosen with off-body-sweep on the MuJoCo 4 rule: in range equal to the previous path, no change of side up to 0.76 rad past the lower and 0.17 rad past the upper limit. The site position is a routing control, not an anatomical landmark.",
+      "difference_before_mm": 33.009,
+      "share_of_postures_before_percent": 33.099,
+      "keeps_mujoco3": true
+    },
+    {
+      "name": "back_cylinder_s_LTpT_R12_4_sidesite_r",
+      "part": "torso",
+      "geom": "back_cylinder_s",
+      "users": [
+        "LTpT_R12_r_tendon"
+      ],
+      "body": "lumbar5",
+      "body_before": "lumbar5",
+      "pos_before": [
+        -0.0411,
+        0.1048,
+        0.03882
+      ],
+      "pos": [
+        -0.019816,
+        0.14144,
+        -0.0
+      ],
+      "keeps_mujoco3": false,
+      "method": "Side direction with no state flip along the sweeps, two radii from the axis. MuJoCo 3 had a 346 mm jump along axial rotation at this wrap; the MuJoCo 3 path changes only at that jump, 0.01 % of the sampled postures.",
+      "difference_before_mm": 0.0,
+      "sweep_jump_before_mm": {
+        "mujoco3": 346.5,
+        "mujoco4": 0.04
+      }
+    },
+    {
+      "name": "back_cylinder_s_LTpT_R12_4_sidesite_l",
+      "part": "torso",
+      "geom": "back_cylinder_s",
+      "users": [
+        "LTpT_R12_l_tendon"
+      ],
+      "body": "lumbar5",
+      "body_before": "lumbar5",
+      "pos_before": [
+        -0.0411,
+        0.1048,
+        -0.03882
+      ],
+      "pos": [
+        -0.02039,
+        0.142532,
+        -0.0
+      ],
+      "keeps_mujoco3": false,
+      "method": "Side direction with no state flip along the sweeps, two radii from the axis. MuJoCo 3 had a 346 mm jump along axial rotation at this wrap; the MuJoCo 3 path changes only at that jump, 0.01 % of the sampled postures.",
+      "difference_before_mm": 345.551,
+      "sweep_jump_before_mm": {
+        "mujoco3": 345.59,
+        "mujoco4": 0.04
+      }
+    },
+    {
+      "name": "FDS_ellipsoid_site_FDS5_side_r",
+      "geom": "FDS_ellipsoid_wrap_r",
+      "users": [
+        "FDS5_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        0.003556,
+        -0.004567,
+        -0.026168
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 3.0,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 8.8
+      },
+      "plateau_width_deg_both_versions": 46.5,
+      "plateau_width_deg_mujoco4": 179.0
+    },
+    {
+      "name": "FDS_ellipsoid_site_FDS4_side_r",
+      "geom": "FDS_ellipsoid_wrap_r",
+      "users": [
+        "FDS4_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        0.003555,
+        -0.00434,
+        -0.026157
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 3.5,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 8.43
+      },
+      "plateau_width_deg_both_versions": 46.0,
+      "plateau_width_deg_mujoco4": 180.0
+    },
+    {
+      "name": "FDS_ellipsoid_site_FDS3_side_r",
+      "geom": "FDS_ellipsoid_wrap_r",
+      "users": [
+        "FDS3_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        0.003552,
+        -0.003661,
+        -0.026113
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 5.0,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 6.87
+      },
+      "plateau_width_deg_both_versions": 46.5,
+      "plateau_width_deg_mujoco4": 180.5
+    },
+    {
+      "name": "FDS_ellipsoid_site_FDS2_side_r",
+      "geom": "FDS_ellipsoid_wrap_r",
+      "users": [
+        "FDS2_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        0.003548,
+        -0.003209,
+        -0.026074
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 6.0,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 6.59
+      },
+      "plateau_width_deg_both_versions": 45.5,
+      "plateau_width_deg_mujoco4": 180.5
+    },
+    {
+      "name": "FDP_ellipsoid_site_FDP5_side_r",
+      "geom": "FDP_ellipsoid_wrap_r",
+      "users": [
+        "FDP5_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        -0.002605,
+        -0.002247,
+        -0.022377
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 87.5,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 7.96
+      },
+      "plateau_width_deg_both_versions": 46.0,
+      "plateau_width_deg_mujoco4": 174.0
+    },
+    {
+      "name": "FDP_ellipsoid_site_FDP4_side_r",
+      "geom": "FDP_ellipsoid_wrap_r",
+      "users": [
+        "FDP4_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        -0.002424,
+        -0.003124,
+        -0.022523
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 85.5,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 10.33
+      },
+      "plateau_width_deg_both_versions": 45.0,
+      "plateau_width_deg_mujoco4": 174.0
+    },
+    {
+      "name": "FDP_ellipsoid_site_FDP3_side_r",
+      "geom": "FDP_ellipsoid_wrap_r",
+      "users": [
+        "FDP3_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        -0.002334,
+        -0.003565,
+        -0.022585
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 84.5,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 12.45
+      },
+      "plateau_width_deg_both_versions": 43.0,
+      "plateau_width_deg_mujoco4": 172.0
+    },
+    {
+      "name": "FDP_ellipsoid_site_FDP2_side_r",
+      "geom": "FDP_ellipsoid_wrap_r",
+      "users": [
+        "FDP2_r_tendon"
+      ],
+      "body": "lunate_r",
+      "body_before": "lunate_r",
+      "pos_before": [
+        -0.00481,
+        -0.034454,
+        -0.021355
+      ],
+      "pos": [
+        -0.002515,
+        -0.002685,
+        -0.022454
+      ],
+      "keeps_mujoco3": false,
+      "direction_deg_in_geom_plane": 86.5,
+      "method": "Middle of the side directions that give the palmar arc at every sampled posture, in range and 0.3 rad past the wrist limits, with no change of side. On MuJoCo 4 any direction in plateau_width_deg_mujoco4 does this with the same path; of those, the part that also has no jump on MuJoCo 3 is used.",
+      "sweep_jump_before_mm": {
+        "mujoco3": 11.06
+      },
+      "plateau_width_deg_both_versions": 42.5,
+      "plateau_width_deg_mujoco4": 170.5
+    },
+    {
+      "name": "2ndmcp_ellipsoid_site_EIP_side_r",
+      "geom": "2ndmcp_ellipsoid_wrap_r",
+      "users": [
+        "EIP_r_tendon"
+      ],
+      "body": "secondmc_r",
+      "body_before": "secondmc_r",
+      "pos_before": [
+        0.0058,
+        -0.0294,
+        0.0087
+      ],
+      "pos": [
+        0.008792,
+        -0.037402,
+        0.010499
+      ],
+      "keeps_mujoco3": true,
+      "method": "Same path in range on both versions; the side direction keeps the length continuous to 0.55 rad past the extension limit of the MCP joint on MuJoCo 4 as well, where the previous site snapped.",
+      "plateau_width_deg": 66.0
+    },
+    {
+      "name": "2ndmcp_ellipsoid_site_EDC2_side_r",
+      "geom": "2ndmcp_ellipsoid_wrap_r",
+      "users": [
+        "EDC2_r_tendon"
+      ],
+      "body": "secondmc_r",
+      "body_before": "secondmc_r",
+      "pos_before": [
+        0.0058,
+        -0.0294,
+        0.0087
+      ],
+      "pos": [
+        0.008829,
+        -0.038637,
+        0.009331
+      ],
+      "keeps_mujoco3": true,
+      "method": "Same path in range on both versions; the side direction keeps the length continuous to 0.55 rad past the extension limit of the MCP joint on MuJoCo 4 as well, where the previous site snapped.",
+      "plateau_width_deg": 81.0
+    }
+  ],
+  "removed": [
+    {
+      "name": "LIGhh_s_ellipsoid_s_glenohum_1_sidesite_r",
+      "tendon": "s_glenohum_ligament_r",
+      "geom": "LIGhh_s_ellipsoid_s_glenohum_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 15.41,
+        "j3": 22.27,
+        "fl": 8
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          0.8126,
+          0.5692,
+          -0.1255
+        ],
+        "j4": 0.03,
+        "j3": 0.03,
+        "past_j4": 0.5
+      },
+      "after": {
+        "j4": 0.03,
+        "j3": 0.03,
+        "fl": 0,
+        "chg": 0.19,
+        "chgmax": 23.74
+      },
+      "past_after_j4": 0.05
+    },
+    {
+      "name": "LIGhh_mi_ellipsoid_m_glenohum_1_sidesite_r",
+      "tendon": "m_glenohum_ligament_r",
+      "geom": "LIGhh_mi_ellipsoid_m_glenohum_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 8.75,
+        "j3": 19.74,
+        "fl": 8
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          0.8155,
+          0.3822,
+          -0.4345
+        ],
+        "j4": 0.04,
+        "j3": 2.86,
+        "past_j4": 0.02
+      },
+      "after": {
+        "j4": 0.04,
+        "j3": 0.04,
+        "fl": 0,
+        "chg": 0.18,
+        "chgmax": 19.74
+      },
+      "past_after_j4": 0.02
+    },
+    {
+      "name": "LIGhh_s_ellipsoid_coracohum_1_sidesite_r",
+      "tendon": "coracohum_ligament_r",
+      "geom": "LIGhh_s_ellipsoid_coracohum_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 6.36,
+        "j3": 13.1,
+        "fl": 12
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          0.8904,
+          0.447,
+          0.0865
+        ],
+        "j4": 1.21,
+        "j3": 2.8,
+        "past_j4": 0.03
+      },
+      "after": {
+        "j4": 0.03,
+        "j3": 0.03,
+        "fl": 0,
+        "chg": 0.43,
+        "chgmax": 13.1
+      },
+      "past_after_j4": 0.03
+    },
+    {
+      "name": "DELT1hh_ellipsoid_DELT1_2_sidesite_r",
+      "tendon": "DELT1_r_tendon",
+      "geom": "DELT1hh_ellipsoid_DELT1_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 18.71,
+        "j3": 100.87,
+        "fl": 23
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          -0.3619,
+          -0.8384,
+          0.4075
+        ],
+        "j4": 10.02,
+        "j3": 100.87,
+        "past_j4": 10.35
+      },
+      "after": {
+        "j4": 10.02,
+        "j3": 10.02,
+        "fl": 0,
+        "chg": 0.28,
+        "chgmax": 100.86
+      },
+      "past_after_j4": 10.35,
+      "radius_m": 0.023,
+      "radius_before_m": 0.029726,
+      "radius_method": "The via point DELT1-P3 on the scapula comes within 23.2 mm of the sphere's centre in the coupled range and past its limits. With the point inside the sphere the wrap ends at once, a 10 mm jump, so the radius is the largest that keeps it outside: 23 mm. The path changes only where the wrap acts, 2.2 % of the sampled postures."
+    },
+    {
+      "name": "SUPSP_ellipsoid_SUPSP_1_sidesite_r",
+      "tendon": "SUPSP_r_tendon",
+      "geom": "SUPSP_ellipsoid_SUPSP_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 3.63,
+        "j3": 7.04,
+        "fl": 24
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          -0.095,
+          0.0995,
+          0.9905
+        ],
+        "j4": 0.53,
+        "j3": 2.22,
+        "past_j4": 0.05
+      },
+      "after": {
+        "j4": 0.04,
+        "j3": 0.04,
+        "fl": 0,
+        "chg": 0.21,
+        "chgmax": 7.04
+      },
+      "past_after_j4": 0.05
+    },
+    {
+      "name": "SUBSCAP_ellipsoid_SUBSC_1_sidesite_r",
+      "tendon": "SUBSC_r_tendon",
+      "geom": "SUBSCAP_ellipsoid_SUBSC_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 0.01,
+        "j3": 12.49,
+        "fl": 0
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          0.1853,
+          0.6539,
+          0.7335
+        ],
+        "j4": 0.01,
+        "j3": 0.01,
+        "past_j4": 10.6
+      },
+      "after": {
+        "j4": 0.01,
+        "j3": 0.01,
+        "fl": 0,
+        "chg": 0.02,
+        "chgmax": 12.49
+      },
+      "past_after_j4": 0.01
+    },
+    {
+      "name": "LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r",
+      "tendon": "TMAJ_r_tendon",
+      "geom": "LAT_TMAJ2hh_sphere_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 17.0,
+        "j3": 34.43,
+        "fl": 99
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          0.0096,
+          -0.928,
+          -0.3725
+        ],
+        "j4": 0.05,
+        "j3": 0.06,
+        "past_j4": 2.76
+      },
+      "after": {
+        "j4": 0.05,
+        "j3": 0.06,
+        "fl": 0,
+        "chg": 3.64,
+        "chgmax": 34.43
+      },
+      "past_after_j4": 0.05
+    },
+    {
+      "name": "LAT_TMAJ2hh_sphere_LAT1_2_sidesite_r",
+      "tendon": "LAT1_r_tendon",
+      "geom": "LAT_hum_sphere_r",
+      "method": "Side site removed, and the wrap moved to a sphere of the cylinder's centre and radius (geoms): see there.",
+      "before": {
+        "j4": 2.76,
+        "j3": 5.53,
+        "fl": 97
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          -0.6088,
+          -0.7934,
+          0.0
+        ],
+        "j4": 1.9,
+        "j3": 1.9,
+        "past_j4": 2.43
+      },
+      "after": {
+        "j4": 1.9,
+        "j3": 1.9,
+        "fl": 94,
+        "chg": 1.13,
+        "chgmax": 5.53
+      },
+      "past_after_j4": 2.43,
+      "geom_before": "delt2hum_cylinder_r"
+    },
+    {
+      "name": "LAT_TMAJ2hh_sphere_LAT3_2_sidesite_r",
+      "tendon": "LAT3_r_tendon",
+      "geom": "LAT_hum_sphere_r",
+      "method": "Side site removed, and the wrap moved to a sphere of the cylinder's centre and radius (geoms): see there.",
+      "before": {
+        "j4": 7.97,
+        "j3": 14.48,
+        "fl": 112
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          -0.749,
+          -0.6626,
+          0.0
+        ],
+        "j4": 1.12,
+        "j3": 1.12,
+        "past_j4": 1.69
+      },
+      "after": {
+        "j4": 1.12,
+        "j3": 1.12,
+        "fl": 103,
+        "chg": 3.91,
+        "chgmax": 14.48
+      },
+      "past_after_j4": 1.69,
+      "geom_before": "delt2hum_cylinder_r"
+    },
+    {
+      "name": "BIClong_ellipsoid_BIClong_2_sidesite_r",
+      "tendon": "BIClong_r_tendon",
+      "geom": "BIClong_ellipsoid_BIClong_r",
+      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
+      "before": {
+        "j4": 20.11,
+        "j3": 72.87,
+        "fl": 33
+      },
+      "listed_site": {
+        "direction_in_geom_frame": [
+          0.0291,
+          -0.9731,
+          -0.2285
+        ],
+        "j4": 1.28,
+        "j3": 72.87,
+        "past_j4": 1.25
+      },
+      "after": {
+        "j4": 0.02,
+        "j3": 0.02,
+        "fl": 0,
+        "chg": 4.14,
+        "chgmax": 72.87
+      },
+      "past_after_j4": 0.02,
+      "biclong": true
+    }
+  ],
+  "vias": [
+    {
+      "name": "FCR_via_r",
+      "tendon": "FCR_r_tendon",
+      "geom": "FCR_torus_wrap_r",
+      "side": "FCR_torus_site_FCR_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -15,
+          "sd": 3,
+          "source": "horii1993"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -8,
+          "sd": 2,
+          "source": "horii1993"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -15,
+          "sd": 3,
+          "source": "loren1996"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -5.7,
+          "sd": 2,
+          "source": "loren1996"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -16.2,
+          "sd": 1.5,
+          "source": "garland2018 MRI"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -8.6,
+          "sd": 4,
+          "source": "garland2018 MRI"
+        }
+      ],
+      "mean_targets": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -60,
+            60
+          ],
+          "arm_mm": -12.2,
+          "sd": 2.1,
+          "source": "garland2018 tendon excursion"
+        },
+        {
+          "joint": "deviation_r",
+          "range_deg": [
+            -20,
+            20
+          ],
+          "arm_mm": -10.2,
+          "sd": 2.5,
+          "source": "garland2018 tendon excursion"
+        }
+      ],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -90,
+            80
+          ],
+          "sign": -1,
+          "margin_mm": 3
+        },
+        {
+          "joint": "deviation_r",
+          "range_deg": [
+            -20,
+            40
+          ],
+          "sign": -1,
+          "margin_mm": 2
+        }
+      ],
+      "pos": [
+        0.010895,
+        -0.011477,
+        -0.01348
+      ],
+      "geom_pos_before": [
+        0.0082,
+        -0.005478,
+        -0.014624
+      ],
+      "radius_before_m": 0.001164,
+      "fit": {
+        "rms_z": 0.442,
+        "arms": {
+          "flexion_r@0": -15.83,
+          "deviation_r@0": -7.74
+        },
+        "curve_flexion_deg_mm": {
+          "-90": -1.18,
+          "-60": -6.97,
+          "-30": -12.09,
+          "0": -15.83,
+          "30": -16.96,
+          "60": -12.0
+        },
+        "curve_deviation_deg_mm": {
+          "-30": -3.34,
+          "-20": -4.86,
+          "-10": -6.33,
+          "0": -7.74,
+          "10": -9.06,
+          "20": -10.28,
+          "30": -11.37,
+          "40": -12.32
+        }
+      }
+    },
+    {
+      "name": "ECRB_via_r",
+      "tendon": "ECRB_r_tendon",
+      "geom": "ECRB_torus_wrap_r",
+      "side": "ECRB_torus_site_ECRB_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 12,
+          "sd": 2,
+          "source": "horii1993"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -13,
+          "sd": 2,
+          "source": "horii1993"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 16,
+          "sd": 3,
+          "source": "loren1996"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -16,
+          "sd": 3,
+          "source": "loren1996"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 9.2,
+          "sd": 1.6,
+          "source": "garland2018 MRI"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -11.1,
+          "sd": 2.6,
+          "source": "garland2018 MRI"
+        }
+      ],
+      "mean_targets": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -60,
+            60
+          ],
+          "arm_mm": 10.8,
+          "sd": 2.8,
+          "source": "garland2018 tendon excursion"
+        },
+        {
+          "joint": "deviation_r",
+          "range_deg": [
+            -20,
+            20
+          ],
+          "arm_mm": -10.0,
+          "sd": 2.2,
+          "source": "garland2018 tendon excursion"
+        }
+      ],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -90,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 3
+        },
+        {
+          "joint": "deviation_r",
+          "range_deg": [
+            -30,
+            40
+          ],
+          "sign": -1,
+          "margin_mm": 6
+        }
+      ],
+      "pos": [
+        0.00926,
+        -0.012606,
+        0.01072
+      ],
+      "geom_pos_before": [
+        0.011354,
+        -0.009514,
+        0.0136
+      ],
+      "radius_before_m": 0.001647,
+      "fit": {
+        "rms_z": 0.6,
+        "arms": {
+          "flexion_r@0": 11.8,
+          "deviation_r@0": -12.47
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 2.45,
+          "-60": 13.32,
+          "-30": 14.03,
+          "0": 11.8,
+          "30": 8.27,
+          "60": 4.0
+        },
+        "curve_deviation_deg_mm": {
+          "-30": -8.79,
+          "-20": -10.11,
+          "-10": -11.35,
+          "0": -12.47,
+          "10": -13.45,
+          "20": -14.27,
+          "30": -14.89,
+          "40": -15.23
+        }
+      }
+    },
+    {
+      "name": "ECRL_via_r",
+      "tendon": "ECRL_r_tendon",
+      "geom": "ECRL_torus_wrap_r",
+      "side": "ECRL_torus_site_ECRL_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 7,
+          "sd": 2,
+          "source": "horii1993"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -19,
+          "sd": 2,
+          "source": "horii1993"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 10,
+          "sd": 3,
+          "source": "loren1996"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -23,
+          "sd": 3,
+          "source": "loren1996"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 4.8,
+          "sd": 1.3,
+          "source": "garland2018 MRI"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -16.7,
+          "sd": 2.4,
+          "source": "garland2018 MRI"
+        }
+      ],
+      "mean_targets": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -60,
+            60
+          ],
+          "arm_mm": 6.6,
+          "sd": 3.0,
+          "source": "garland2018 tendon excursion"
+        },
+        {
+          "joint": "deviation_r",
+          "range_deg": [
+            -20,
+            20
+          ],
+          "arm_mm": -17.2,
+          "sd": 3.6,
+          "source": "garland2018 tendon excursion"
+        }
+      ],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -90,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 2
+        },
+        {
+          "joint": "deviation_r",
+          "range_deg": [
+            -30,
+            40
+          ],
+          "sign": -1,
+          "margin_mm": 8
+        }
+      ],
+      "pos": [
+        0.015939,
+        -0.011783,
+        0.004225
+      ],
+      "geom_pos_before": [
+        0.0222,
+        -0.0096,
+        0.0208
+      ],
+      "radius_before_m": 0.008,
+      "fit": {
+        "rms_z": 0.571,
+        "arms": {
+          "flexion_r@0": 7.62,
+          "deviation_r@0": -18.32
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 1.63,
+          "-60": 7.87,
+          "-30": 8.86,
+          "0": 7.62,
+          "30": 5.34,
+          "60": 2.52
+        },
+        "curve_deviation_deg_mm": {
+          "-30": -16.46,
+          "-20": -17.37,
+          "-10": -18.02,
+          "0": -18.32,
+          "10": -18.08,
+          "20": -16.91,
+          "30": -13.98,
+          "40": -7.9
+        }
+      }
+    },
+    {
+      "name": "EDM_via_r",
+      "tendon": "EDM_r_tendon",
+      "geom": "EDM_ellipsoid_wrap_r",
+      "side": "EDM_ellipsoid_site_EDM_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -60,
+          "arm_mm": 17.9,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 9.5,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 60,
+          "arm_mm": -1.9,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 14.5,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "cmc5_flexion_r",
+          "deg": 0,
+          "arm_mm": 7.4,
+          "sd": 1,
+          "source": "previous path"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [],
+      "pos": [
+        -0.015904,
+        -0.021642,
+        0.006252
+      ],
+      "geom_pos_before": [
+        -0.016643,
+        -0.001642,
+        0.004331
+      ],
+      "radius_before_m": 0.023627,
+      "fit": {
+        "rms_z": 0.208,
+        "arms": {
+          "flexion_r@-60": 17.29,
+          "flexion_r@0": 9.35,
+          "flexion_r@60": -1.24,
+          "deviation_r@0": 14.32,
+          "cmc5_flexion_r@0": 7.41
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 19.14,
+          "-60": 17.29,
+          "-30": 13.84,
+          "0": 9.35,
+          "30": 4.21,
+          "60": -1.24
+        },
+        "curve_deviation_deg_mm": {
+          "-30": 18.15,
+          "-20": 17.05,
+          "-10": 15.77,
+          "0": 14.32,
+          "10": 12.74,
+          "20": 11.04,
+          "30": 9.25,
+          "40": 7.38
+        }
+      }
+    },
+    {
+      "name": "APL_via_r",
+      "tendon": "APL_r_tendon",
+      "geom": "APL_cmc_wrap_r",
+      "side": "APL_cmc_site_APL_side_r",
+      "body": "trapezium_r",
+      "drops_sites": [
+        "APL-P6_r"
+      ],
+      "chain_block": true,
+      "pos": [
+        0.012261,
+        0.002353,
+        -0.006113
+      ],
+      "base": {
+        "cmc_flexion_r": -0.04,
+        "cmc_abduction_r": 0.14
+      },
+      "targets": [
+        {
+          "joint": "cmc_flexion_r",
+          "deg": -2.292,
+          "arm_mm": -7.1,
+          "sd": 3.4,
+          "source": "smutz1998"
+        },
+        {
+          "joint": "cmc_abduction_r",
+          "deg": 8.05,
+          "arm_mm": -10.5,
+          "sd": 3.3,
+          "source": "smutz1998"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -26.8,
+          "sd": 8,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -6.8,
+          "sd": 8,
+          "source": "previous path"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "cmc_abduction_r",
+          "range_deg": [
+            -28,
+            44
+          ],
+          "sign": -1,
+          "margin_mm": 3
+        },
+        {
+          "joint": "cmc_flexion_r",
+          "range_deg": [
+            -44,
+            40
+          ],
+          "sign": -1,
+          "margin_mm": 1
+        },
+        {
+          "joint": "deviation_r",
+          "range_deg": [
+            -20,
+            40
+          ],
+          "sign": -1,
+          "margin_mm": 10
+        }
+      ],
+      "geom_pos_before": [
+        0.006,
+        0.007,
+        0.005
+      ],
+      "radius_before_m": 0.006,
+      "fit": {
+        "rms_z": 0.244,
+        "arms": {
+          "cmc_flexion_r@-2.292": -4.94,
+          "cmc_abduction_r@8.05": -7.35,
+          "deviation_r@0": -31.32,
+          "flexion_r@0": -5.69
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 5.5,
+          "-60": 1.82,
+          "-30": -2.03,
+          "0": -5.69,
+          "30": -8.74,
+          "60": -10.64
+        },
+        "curve_deviation_deg_mm": {
+          "-30": -28.34,
+          "-20": -29.83,
+          "-10": -30.88,
+          "0": -31.32,
+          "10": -30.79,
+          "20": -28.49,
+          "30": -22.56,
+          "40": -9.9
+        }
+      }
+    }
+  ],
+  "jumps_mm": {
+    "myoarm_r": {
+      "SUP_r_tendon/SUP_cylinder_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 6.51
+      },
+      "ECRL_r_tendon/Elbow_PT_ECRL_wrap_r": {
+        "in": 0.01,
+        "in_mujoco3": 0.01,
+        "past": 2.54,
+        "past_mujoco3": 2.54
+      },
+      "EDC5_r_tendon/EDCL_torus_wrap_r": {
+        "in": 5.78,
+        "in_mujoco3": 5.66,
+        "past": 13.96,
+        "past_mujoco3": 17.88
+      },
+      "EDC5_r_tendon/Fifthmd_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 1.35
+      },
+      "EDC4_r_tendon/EDCR_torus_wrap_r": {
+        "in": 3.0,
+        "in_mujoco3": 3.04,
+        "past": 5.85,
+        "past_mujoco3": 20.29
+      },
+      "EDC3_r_tendon/EDCM_torus_wrap_r": {
+        "in": 0.13,
+        "in_mujoco3": 0.13,
+        "past": 9.78,
+        "past_mujoco3": 25.29
+      },
+      "EDC2_r_tendon/EDCI_torus_wrap_r": {
+        "in": 2.22,
+        "in_mujoco3": 2.23,
+        "past": 3.84,
+        "past_mujoco3": 22.44
+      },
+      "EDM_r_tendon/Fifthmd_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 1.35
+      },
+      "PI3_r_tendon/Fifthmd_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 1.35
+      },
+      "LUM4_r_tendon/Fifthmd_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 1.35
+      },
+      "node_JT5_edc_r/Fifthmd_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 1.35
+      }
+    },
+    "myolegs": {
+      "addmagDist_r_tendon/AMdist_at_femshaft_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.54,
+        "past_mujoco3": 13.57
+      },
+      "glmax3_r_tendon/Gmax3_at_pelvis_wrap_r": {
+        "in": 0.01,
+        "in_mujoco3": 0.01,
+        "past": 0.01,
+        "past_mujoco3": 226.51
+      },
+      "iliacus_r_tendon/IL_at_brim_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.01,
+        "past_mujoco3": 253.33
+      },
+      "addmagDist_l_tendon/AMdist_at_femshaft_wrap_l": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.54,
+        "past_mujoco3": 13.57
+      },
+      "glmax3_l_tendon/Gmax3_at_pelvis_wrap_l": {
+        "in": 0.01,
+        "in_mujoco3": 0.01,
+        "past": 0.01,
+        "past_mujoco3": 226.51
+      },
+      "iliacus_l_tendon/IL_at_brim_wrap_l": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.01,
+        "past_mujoco3": 253.33
+      }
+    },
+    "myotorso": {
+      "rect_abd_r_tendon/Cylinder_abdomen": {
+        "in": 5.91,
+        "in_mujoco3": 5.91,
+        "past": 5.88,
+        "past_mujoco3": 5.88
+      },
+      "rect_abd_l_tendon/Cylinder_abdomen": {
+        "in": 5.96,
+        "in_mujoco3": 5.96,
+        "past": 6.02,
+        "past_mujoco3": 6.02
+      }
+    }
+  },
+  "geoms": [
+    {
+      "name": "LAT_hum_sphere_r",
+      "copy_of": "delt2hum_cylinder_r",
+      "radius_m": 0.0109,
+      "tendons": [
+        "LAT1_r_tendon",
+        "LAT2_r_tendon",
+        "LAT3_r_tendon"
+      ],
+      "method": "On the humeral cylinder the latissimus arc changes side where the segment crosses the axis: no length jump but a moment arm step of 12-19 mm, whichever side site. A sphere of the same centre and radius, without side site, has no such step (below 0.5 mm) and leaves the arms in the planes of Ackland et al. 2008 unchanged; the same on both versions. DELT2 stays on the cylinder."
+    }
+  ],
+  "jumps_note": "Wraps with a length jump above the tolerance on either rule, by record-jumps: largest jump in mm on the MuJoCo 4 rule in range ('in') and past the limits ('past'), and the same on the MuJoCo 3 rule."
+}

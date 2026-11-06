@@ -37,7 +37,7 @@ jobs:
         python-version: ["3.10", "3.13"]
         # Test the minimum supported MuJoCo release (pinned in pyproject.toml)
         # and the newest release so both floor and upstream breakage are caught.
-        mujoco-version: ["3.4", "latest"]
+        mujoco-version: ["3.7", "latest"]
     steps:
       - uses: actions/checkout@v4
 

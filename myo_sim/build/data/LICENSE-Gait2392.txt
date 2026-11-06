@@ -1,0 +1,3 @@
+Attachment points, peak forces, optimal fibre and tendon slack lengths in deep_hip_muscles.json derive from OpenSim's Gait2392 model
+(Delp et al. 1990; Seth, Anderson, Delp; https://github.com/opensim-org/opensim-models), used under CC BY 3.0
+(https://creativecommons.org/licenses/by/3.0/). The pelvis points are mapped to this model's frame.

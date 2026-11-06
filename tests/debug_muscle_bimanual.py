@@ -1,6 +1,6 @@
 """Verify left/right symmetry of bimanual arm muscles.
 
-Naming convention: right muscles have no suffix, left muscles use _l, and
+Naming convention: right muscles use _r, left muscles use _l, and
 joints use _r/_l suffixes.
 """
 
@@ -30,7 +30,7 @@ DEFAULT_MODEL = "myoarms"
 ACTIVATION = 1.0
 EPS = 1e-5
 
-MUSCLE_SUFFIX = {"right": "", "left": "_l"}
+MUSCLE_SUFFIX = {"right": "_r", "left": "_l"}
 JOINT_SUFFIX = {"right": "_r", "left": "_l"}
 
 
@@ -124,15 +124,15 @@ def run_all(model, data, eq_map, *, plot=False):
 
     for act_id in range(model.nu):
         name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_ACTUATOR, act_id)
-        if name is None or name.endswith(("_l", "_left")):
+        if name is None or not name.endswith(MUSCLE_SUFFIX["right"]):
             continue
 
-        left_name = name + MUSCLE_SUFFIX["left"]
+        base_muscle = name.removesuffix(MUSCLE_SUFFIX["right"])
+        left_name = base_muscle + MUSCLE_SUFFIX["left"]
         left_act_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, left_name)
         if left_act_id < 0:
             continue
 
-        base_muscle = name
         tendon_id = model.actuator_trnid[act_id, 0]
         if tendon_id < 0:
             continue
@@ -183,7 +183,7 @@ def main():
         default=DEFAULT_MODEL,
         help="Model source to analyze",
     )
-    parser.add_argument("--muscle", help="Base/right muscle name, e.g. DELT1")
+    parser.add_argument("--muscle", help="Base muscle name without the side suffix, e.g. DELT1")
     parser.add_argument("--joint", help="Base joint name, e.g. shoulder_elv")
     parser.add_argument("--plot", action="store_true", help="Save plots")
     args = parser.parse_args()

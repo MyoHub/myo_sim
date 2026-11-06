@@ -4,8 +4,9 @@
 a posture to start from (see ``docs/wiki/postures.md``). The postures live in
 ``data/postures.json``, written by ``scripts/generate_postures.py``.
 
-Specs stay free of keyframes unless asked for: a keyframe's ``qpos`` has a fixed size,
-so deleting a joint from a spec that holds one makes ``compile()`` fail.
+Specs stay free of keyframes unless asked for: on MuJoCo 3 a keyframe's ``qpos`` has a fixed
+size, so deleting a joint from a spec that holds one makes ``compile()`` fail. MuJoCo 4 keeps
+the keyframe's values by joint name across the edit.
 """
 
 from __future__ import annotations
@@ -15,9 +16,10 @@ from collections.abc import Sequence
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+import numpy as np
+
 if TYPE_CHECKING:
     import mujoco
-    import numpy as np
 
 POSTURES_PATH = Path(__file__).with_name("data") / "postures.json"
 ROOT_JOINT = "root"
@@ -46,11 +48,12 @@ def list_postures(model_name: str) -> list[str]:
     return list(_model_postures(model_name))
 
 
-def posture_qpos(model: "mujoco.MjModel", entry: dict[str, Any]) -> "np.ndarray":
+def posture_qpos(model: "mujoco.MjModel", entry: dict[str, Any]) -> np.ndarray:
     """``qpos`` of a table entry on a compiled model, matched by joint name.
 
     Joints the model does not have are skipped and joints the entry does not list stay
-    at ``qpos0``. The root keeps its x, y and orientation and takes its height from the entry.
+    at ``qpos0``. The root keeps its x, y and orientation and takes its height from the entry,
+    plus the entry's ``root_y_offset`` and ``root_quat`` in the root's frame where it has them.
 
     Args:
         model: Compiled model.
@@ -68,7 +71,14 @@ def posture_qpos(model: "mujoco.MjModel", entry: dict[str, Any]) -> "np.ndarray"
             qpos[model.jnt_qposadr[joint_id]] = entry["joints"][name]
     root_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, ROOT_JOINT)
     if root_id >= 0:
-        qpos[model.jnt_qposadr[root_id] + 2] = entry["root_z"]
+        adr = model.jnt_qposadr[root_id]
+        qpos[adr + 2] = entry["root_z"]
+        if "root_quat" in entry:
+            own = qpos[adr + 3 : adr + 7].copy()
+            offset = np.zeros(3)
+            mujoco.mju_rotVecQuat(offset, [0.0, entry["root_y_offset"], 0.0], own)
+            qpos[adr : adr + 2] += offset[:2]
+            mujoco.mju_mulQuat(qpos[adr + 3 : adr + 7], own, np.array(entry["root_quat"]))
     return qpos
 
 

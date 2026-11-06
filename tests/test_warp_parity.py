@@ -15,8 +15,6 @@ from myo_sim import load_model
 wp = pytest.importorskip("warp")
 mjw = pytest.importorskip("mujoco_warp")
 
-pytestmark = pytest.mark.skipif(not wp.is_cuda_available(), reason="mujoco_warp parity needs a CUDA device")
-
 NWORLD = 64
 SEED = 0
 # float32 rounding stays below 1e-6 m on these models; real path differences are above 3e-5 m.
@@ -44,7 +42,10 @@ def _inside_wrap_tendons(model: mujoco.MjModel) -> set[str]:
     for t in range(model.ntendon):
         for w in range(model.tendon_adr[t], model.tendon_adr[t] + model.tendon_num[t]):
             side = int(model.wrap_prm[w])
-            if model.wrap_type[w] not in (mujoco.mjtWrap.mjWRAP_SPHERE, mujoco.mjtWrap.mjWRAP_CYLINDER) or side < 0:
+            if (
+                int(model.wrap_type[w]) not in (int(mujoco.mjtWrap.mjWRAP_SPHERE), int(mujoco.mjtWrap.mjWRAP_CYLINDER))
+                or side < 0
+            ):
                 continue
             g = model.wrap_objid[w]
             local = data.geom_xmat[g].reshape(3, 3).T @ (data.site_xpos[side] - data.geom_xpos[g])
@@ -62,7 +63,7 @@ def test_tendon_lengths_match_between_cpu_and_warp(name):
     model = load_model(name)
     qpos = _random_postures(model, NWORLD, SEED)
 
-    # GPU: only the kinematics and tendon stages are needed for lengths.
+    # Warp's default device: only the kinematics and tendon stages are needed for lengths.
     m = mjw.put_model(model)
     d = mjw.make_data(model, nworld=NWORLD, nconmax=64, njmax=256)
     d.qpos = wp.array(qpos, dtype=float)

@@ -11,7 +11,8 @@
     - Added collision geometry for torso self-contact
   ====================================================== -->
     <body name="sacrum" pos="0 0 0" euler="1.57079632679 -1.57079632679 0" childclass="myotorso">
-      <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="7.486" diaginertia="0.08 0.075 0.03"/>
+      <!-- massless: with the legs, their pelvis carries the pelvis mass (the torso ends at the sacrum, #48); in torso-only models the sacrum is welded to the world -->
+      <inertial pos="0 0 0" quat="0.707107 0 0 0.707107" mass="0" diaginertia="0 0 0"/>
 
       <!-- pelvis sites -->
       <site name="Ps_L1_VB_Ps_L1_VB-P2_r" pos="-0.0238 -0.008000 0.0759"/>
@@ -149,7 +150,7 @@
       <site name="LTpT_T9_LTpT_t9_R-P1_l" pos="-0.165822 0.0268352 0"/>
       <site name="LTpT_T10_LTpT_t10_R-P1_l" pos="-0.164463 0.0245611 -0.01072"/>
       <site name="LTpT_T11_LTpT_t11_R-P1_l" pos="-0.157649 0.0307094 -0.02404"/>
-      <site name="LTpT_T12_LTpT_t12_R-P1_l" pos="-0.14476 0.0488 0.02793"/>
+      <site name="LTpT_T12_LTpT_t12_R-P1_l" pos="-0.14476 0.0488 -0.02793"/>
       <site name="LTpT_R7_LTpT_r7_R-P1_l" pos="-0.13132 0.06051 -0.00028"/>
       <site name="LTpT_R8_LTpT_r8_R-P1_l" pos="-0.1429 0.05025 -0.00037"/>
       <site name="LTpT_R9_LTpT_r9_R-P1_l" pos="-0.16582 0.0268352 0"/>
@@ -194,10 +195,8 @@
         <site name="back_cylinder_s_IL_R6_1_sidesite_r" pos="-0.0348449 0.0886841 -0.108783" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_IL_R5_1_sidesite_l" pos="-0.0340043 0.0759544 0.0125701" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_IL_R6_1_sidesite_l" pos="-0.0348449 0.0886841 0.108783" class="myotorso_sidesite"/>
-        <site name="back_cylinder_s_LTpT_R12_4_sidesite_r" pos="-0.0411 0.1048 0.03882" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_2_sidesite_r" pos="-0.03691 0.06919 0.03508" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_1_sidesite_r" pos="-0.03859 0.0494129 0.0902269" class="myotorso_sidesite"/>
-        <site name="back_cylinder_s_LTpT_R12_4_sidesite_l" pos="-0.0411 0.1048 -0.03882" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_2_sidesite_l" pos="-0.03691 0.06919 -0.03508" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpT_R12_1_sidesite_l" pos="-0.03859 0.0494129 -0.0902269" class="myotorso_sidesite"/>
         <site name="back_cylinder_s_LTpL_L1_1_sidesite_r" pos="-0.0370101 0.0990854 -0.0777896" class="myotorso_sidesite"/>
@@ -239,6 +238,8 @@
         <site name="intobl_l_intobl_l-P2" pos="0.07 0.16 -0.015"/>
         <site name="extobl_r_extobl_r-P2" pos="0.065 0.11 0.11"/>
         <site name="extobl_l_extobl_l-P2" pos="0.065 0.11 -0.11"/>
+          <site name="back_cylinder_s_LTpT_R12_4_sidesite_r" pos="-0.019816 0.14144 -0" class="myotorso_sidesite"/>
+          <site name="back_cylinder_s_LTpT_R12_4_sidesite_l" pos="-0.02039 0.142532 -0" class="myotorso_sidesite"/>
         <body name="Abdomen" pos="0.098 0.0711 0">
           <inertial pos="0 0 0" mass="0.01" diaginertia="0.001 0.001 0.001"/>
           <joint name="Abs_t1" pos="0 0 0" axis="1 0 0" limited="true" type="slide" range="-.05 .015"/>
@@ -263,7 +264,7 @@
           <inertial pos="0.0170296 0.018 0" quat="0.707107 0 0 0.707107" mass="1.799" diaginertia="0.01643 0.01123 0.0052"/>
           <joint name="L4_L5_FE" pos="0 0 0" axis="0 0 1" limited="true" range="-0.18607 0.083953"/>
           <joint name="L4_L5_LB" pos="0 0 0" axis="1 0 0" limited="true" range="-0.0889703 0.089703"/>
-          <joint name="L4_L5_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.3168812 0.3168812"/>
+          <joint name="L4_L5_AR" pos="0 0 0" axis="0 1 0" limited="true" range="-0.0174533 0.0174533"/>
           <geom name="lumbar4_geom_1" type="mesh" pos="-0.009 -0.004 0" euler="0 0 -0.2" mesh="lumbar4_geom_1_lumbar4"/>
           <site name="Ps_L4_TP_Ps_L4_TP-P1_r" pos="-0.015649 0.0249464 0.0258768"/>
           <site name="Ps_L4_L5_IVD_Ps_L4_L5_IVD-P1_r" pos="0.00541963 0.00394754 0.0205966"/>
@@ -292,7 +293,7 @@
           <site name="LTpT_T9_LTpT_t9_R-P2_l" pos="-0.04672 0.01796 -0.00748"/>
           <site name="LTpT_T10_LTpT_t10_R-P2_l" pos="-0.04672 0.01796 -0.01256"/>
           <site name="LTpT_T11_LTpT_t11_R-P2_l" pos="-0.04672 0.017 -0.02194"/>
-          <site name="LTpT_T12_LTpT_t12_R-P2_l" pos="-0.04672 0.017 0.02524"/>
+          <site name="LTpT_T12_LTpT_t12_R-P2_l" pos="-0.04672 0.017 -0.02524"/>
           <site name="LTpT_R4_LTpT_r4_R-P1_l" pos="-0.0457852 0.00705986 -0.00282013"/>
           <site name="LTpT_R5_LTpT_r5_R-P1_l" pos="-0.0473001 0.00396965 -8e-05"/>
           <site name="LTpT_R7_LTpT_r7_R-P2_l" pos="-0.0467202 0.0188294 -0.00812957"/>
@@ -351,7 +352,7 @@
             <site name="LTpT_T9_LTpT_t9_R-P3_l" pos="-0.0464295 0.0138534 -0.00969"/>
             <site name="LTpT_T10_LTpT_t10_R-P2_0_l" pos="-0.0461 0.01403 -0.01441"/>
             <site name="LTpT_T11_LTpT_t11_R-P3_l" pos="-0.0501482 0.0134888 -0.020885"/>
-            <site name="LTpT_T12_LTpT_t12_R-P3_l" pos="-0.0493674 0.0140564 0.0238974"/>
+            <site name="LTpT_T12_LTpT_t12_R-P3_l" pos="-0.0493674 0.0140564 -0.0238974"/>
             <site name="LTpT_R6_LTpT_r6_R-P2_l" pos="-0.0469974 0.0147336 -0.010844"/>
             <site name="LTpT_R7_LTpT_r7_R-P2_0_l" pos="-0.0461005 0.0141694 -0.0128553"/>
             <site name="LTpT_R8_LTpT_r8_R-P2_0_l" pos="-0.0459248 0.0135047 -0.0160395"/>
@@ -437,7 +438,7 @@
               <site name="LTpT_T9_LTpT_t9_R-P3_0_l" pos="-0.0447163 0.00347304 -0.0115"/>
               <site name="LTpT_T10_LTpT_t10_R-P3_l" pos="-0.044 0.00338 -0.01525"/>
               <site name="LTpT_T11_LTpT_t11_R-P2_0_l" pos="-0.046 0.00338 -0.01983"/>
-              <site name="LTpT_T12_LTpT_t12_R-P2_0_l" pos="-0.0458028 0.00398333 0.0225543"/>
+              <site name="LTpT_T12_LTpT_t12_R-P2_0_l" pos="-0.0458028 0.00398333 -0.0225543"/>
               <site name="LTpT_R4_LTpT_r4_R-P2_l" pos="-0.0463322 0.00545622 -0.01148"/>
               <site name="LTpT_R5_LTpT_r5_R-P2_l" pos="-0.0474338 0.00463268 -0.0141962"/>
               <site name="LTpT_R6_LTpT_r6_R-P2_0_l" pos="-0.044 0.0044 -0.014"/>
@@ -500,7 +501,7 @@
                 <site name="MF_m1t.3_MF_m1t.3-P2_l" pos="-0.04094 -0.016 -0.0031"/>
                 <site name="MF_m1.laminar_MF_m1.laminar-P2_l" pos="-0.0341019 -0.00560525 -0.00619"/>
                 <body name="torso" pos="0.0025 -0.089 0">
-                  <inertial pos="0.0046 0.246 0" mass="18.619" diaginertia="0.165 0.15 0.125"/>
+                  <inertial pos="0.0046 0.246 0" mass="15.4164" diaginertia="0.13660 0.12418 0.10349"/>
                   <site name="clavicle_l" pos="0.021 .390 -.058" class="myotorso_marker"/>
                   <site name="clavicle_r" pos="0.021 .390 0.058" class="myotorso_marker"/>
                   <site name="clavicle_spine" pos="-.01 .4 0" class="myotorso_marker"/>
@@ -702,7 +703,7 @@
                   <site name="LTpT_T9_LTpT_t9_R-P2_0_l" pos="-0.07694 0.218354 -0.02633"/>
                   <site name="LTpT_T10_LTpT_t10_R-P2_1_l" pos="-0.0698233 0.189776 -0.0181"/>
                   <site name="LTpT_T11_LTpT_t11_R-P2_1_l" pos="-0.060879 0.161718 -0.01762"/>
-                  <site name="LTpT_T12_LTpT_t12_R-P2_1_l" pos="-0.052717 0.13133 0.01818"/>
+                  <site name="LTpT_T12_LTpT_t12_R-P2_1_l" pos="-0.052717 0.13133 -0.01818"/>
                   <site name="LTpT_R4_LTpT_r4_R-P2_0_l" pos="-0.0768261 0.18568 -0.026"/>
                   <site name="LTpT_R4_LTpT_r4_R-P3_l" pos="-0.0775768 0.21098 -0.02858"/>
                   <site name="LTpT_R4_LTpT_r4_R-P4_l" pos="-0.0782966 0.237256 -0.03112"/>

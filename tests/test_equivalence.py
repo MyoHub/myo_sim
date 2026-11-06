@@ -15,7 +15,7 @@ import mujoco
 import numpy as np
 import pytest
 
-from myo_sim.build.compose import build_spec
+import myo_sim
 
 musclemimic_models = pytest.importorskip("musclemimic_models")
 
@@ -52,14 +52,12 @@ EXPECTED_COLLISION_GEOM_COUNT_DELTA = -2
 def _ref_to_tgt_actuator(name: str) -> str:
     if name.endswith("_left"):
         return name[: -len("_left")] + "_l"
+    if name in _ARM_BASE_MUSCLES:  # myo_sim's right arm carries _r
+        return name + "_r"
     return name
 
 
 _JOINT_MAP_REF_TO_TGT = {
-    "cmc_abduction_r": "cmc_abduction",
-    "cmc_flexion_r": "cmc_flexion",
-    "md3_flexion_r": "md3_flexion",
-    "pm4_flexion_r": "pm4_flexion",
     "elbow_flex_r": "elbow_flexion_r",
     "elbow_flex_l": "elbow_flexion_l",
 }
@@ -204,10 +202,10 @@ _ARM_JOINT_PREFIXES = (
 )
 
 _ARM_JOINT_NAMES = {
-    "cmc_flexion",
-    "cmc_abduction",
-    "md3_flexion",
-    "pm4_flexion",
+    "cmc_flexion_r",
+    "cmc_abduction_r",
+    "md3_flexion_r",
+    "pm4_flexion_r",
 }
 
 _LEG_JOINT_PREFIXES = (
@@ -261,7 +259,7 @@ def ref_model():
 
 @pytest.fixture(scope="module")
 def tgt_model():
-    return build_spec(TGT_MODEL_NAME).compile()
+    return myo_sim.load_model(TGT_MODEL_NAME)
 
 
 @pytest.fixture(scope="module")
@@ -282,7 +280,7 @@ def tgt_eq_map(tgt_model):
 def _shared_actuator_names() -> list[str]:
     """Return ref-side actuator names whose tgt mapping also exists."""
     ref = mujoco.MjModel.from_xml_path(str(REF_XML))
-    tgt = build_spec(TGT_MODEL_NAME).compile()
+    tgt = myo_sim.load_model(TGT_MODEL_NAME)
     tgt_names = {mujoco.mj_id2name(tgt, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(tgt.nu)}
     shared = []
     for i in range(ref.nu):
@@ -490,7 +488,7 @@ def test_torso_muscle_equivalence(ref_act_name, ref_model, tgt_model, ref_eq_map
 def test_actuator_coverage():
     """All actuators in ref must map to tgt and vice versa."""
     ref = mujoco.MjModel.from_xml_path(str(REF_XML))
-    tgt = build_spec(TGT_MODEL_NAME).compile()
+    tgt = myo_sim.load_model(TGT_MODEL_NAME)
 
     ref_names = {mujoco.mj_id2name(ref, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(ref.nu)}
     tgt_names = {mujoco.mj_id2name(tgt, mujoco.mjtObj.mjOBJ_ACTUATOR, i) for i in range(tgt.nu)}

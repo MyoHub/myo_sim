@@ -21,5 +21,6 @@ Available registered models:
 - `myohand_r`: passive anatomical torso scaffold plus a right hand derived by pruning `myoarm_r`.
 - `myohands`: passive anatomical torso scaffold plus right and mirrored-left hands derived from arm specs.
 
-`utils.py` contains shared XML and mirroring helpers. `hand.py` contains the
-hand-specific pruning logic used to derive hand-only specs from arm specs.
+`utils.py` contains shared XML and mirroring helpers. `hand.py` derives the
+hand-only specs from the arm specs by removal only, with generic renaming of every reference
+(`rename_elements`) and pruning of dangling or rigid elements.
