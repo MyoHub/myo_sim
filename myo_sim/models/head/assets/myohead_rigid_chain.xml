@@ -18,6 +18,7 @@
         <geom class="myohead_coll" name="hat_cervical_coll" type="capsule" size="0.05 0.04" pos="-.02 .450 0" euler="1.57 -.2 0"/>
 
         <body name="head" pos="0 0.5 0">
+            <inertial pos="0.00662 0.06927 0" quat="0.27992 0.649 -0.27888 0.65013" mass="5.848" diaginertia="0.017555 0.016479 0.012359"/>
             <!-- <joint name="neck_flexion" axis="0 0 1" type="hinge" range="-.87 1.05"/> -->
 
             <geom mesh="hat_jaw" name="hat_jaw" type="mesh" pos="0 -.5 0"/>
