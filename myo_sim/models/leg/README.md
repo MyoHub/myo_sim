@@ -26,8 +26,7 @@ Example fidelity check (glmax1 left/right moment-arm and force-length plot) for 
 ## Known limitations
 
 - [ ] #64 — `myoleg` naming used inconsistently across the repository
-- [ ] Endpoints (markers) below the knee joints have approximately 1 cm position differences between the converted MuJoCo and OpenSim model. This may be due to the polynomial approximation of the OpenSim lookup table for knee translation degrees of freedom.
-- [ ] Vastus muscle moment arms at the knee joint have relatively large differences (same sign, a few cm). This may be caused by the dependent joint constraints at the knee and also affects knee extensor muscle force.
+- [ ] Vastus muscle moment arms at the knee still differ from OpenSim by 0.9-1.1 mm on average over 0-120 deg (largest 1.9-2.1 mm from 30 deg, up to 4.95 mm at 0 deg), measured on the right leg of `myolegs` (MuJoCo 3.9.0) against OpenSim 4.6. This may come from the patella's coupled coordinates, which are held as polynomials. Before the knee hinges were moved to Rajagopal's walker_knee frame, the mean was 3.4-3.7 mm, and the position offsets below the knee (about 1 cm) seem to have come from the hinges: the talus's origin, seen from the femur, now matches OpenSim within 0.002 mm.
 - [ ] Muscle forces are not identical between the converted MuJoCo and OpenSim models due to differences in muscle model definitions (stiff vs. elastic tendons). Elastic tendon support in MuJoCo is not yet implemented for this model.
 - [ ] Muscle moment arms in the reference OpenSim model contain sudden changes (wrapping path jumps), which required the manual adjustments described below.
 
