@@ -78,8 +78,8 @@ RI2 path (see below).
 
 | Row | Status | Source | Muscles subtracted | Segments (+/-) | Source peak | Muscles only | Before | After |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| wrist flexion | measured | Formica 2012 (linear) | all, elbow 90 deg | 1+1 | 0.303 | 0.141 | 0.0004 | 0.0002 |
-| wrist deviation | measured | Formica 2012 (linear) | all, elbow 90 deg | 1+1 | 0.507 | 0.239 | 0.0273 | 0.0133 |
+| wrist flexion | measured | Formica 2012 (linear) | all, elbow 90 deg (Formica's grip since the spring posture refit, below) | 1+1 | 0.303 | 0.141 | 0.0004 | 0.0002 |
+| wrist deviation | measured | Formica 2012 (linear) | all, elbow 90 deg (Formica's grip since the spring posture refit, below) | 1+1 | 0.507 | 0.239 | 0.0273 | 0.0133 |
 | forearm pro/supination | covered_by_muscles | Formica 2012 (reference only) | | none | | | | |
 | thumb CMC flexion | measured | Domalain 2010 | all | 3+1 | 1.498 | 0.270 | 0.074 | 0.009 |
 | thumb CMC abduction | measured | Domalain 2010 | all | 3+1 | 1.384 | 0.364 | 0.128 | 0.075 |
@@ -93,6 +93,39 @@ RI2 path (see below).
 | PIP 5 flexion | assumed | index curve (Kamper 2002) | all | 0+1 | 0.052 | 0.042 | 0.0482 | 0.0431 |
 | DIP 3-5 flexion | assumed | index curve (Kamper 2002) | all | 4+0 | 0.080 | 0.057 | 0.0032 | 0.0032 |
 | all MCP abduction | gap | no measured passive data | | none | | | | |
+
+### Springs at the posture of their data
+
+Each spring row subtracts the model's own passive muscle moment before fitting the rest, so the posture of the other
+joints decides what the spring is fitted to. The wrist rows used elbow 90 deg with the fingers straight, while
+Formica et al. 2012 measured with the elbow at about 60 deg, the forearm neutral and the hand closed around the robot
+handle, and the extrinsic passive fit (`muscle_passive.json`, `formica2012_grip`) already used that posture. The spring
+rows now name the posture of their source (`subtract_model_muscles.posture`, read by `source_posture` in
+`scripts/fit_passive_moments.py`) and `tests/test_muscle_passive.py` checks that both fits use the same one. The other
+rows were already at their source's posture: Kamper 2002 and Barry 2018's transfers at neutral, Knutson 2000 with the
+interphalangeal joints extended (the spring only covers the intrinsic part, whose muscles do not cross the wrist), and
+Domalain 2010 and the CMC4/5 rows, which have no extrinsic-fit row, at `qpos0`. The shoulder posture of Formica's
+protocol (abducted about 40 deg, flexed about 35 deg) is not set: no muscle that crosses the wrist crosses the shoulder.
+
+RMS against the source over its range (N m), MuJoCo 4; MuJoCo 3.17 gives the same values to 1e-4:
+
+| Row (source) | Muscles only, Formica's posture | Total before, at the old spring posture | Total before, at Formica's posture | Total after, at Formica's posture | Total after, at elbow 90 deg, fingers straight |
+| --- | --- | --- | --- | --- | --- |
+| wrist flexion (Formica 2012) | 0.117 | 0.012 | 0.114 | 0.016 | 0.122 |
+| wrist deviation (Formica 2012) | 0.133 | 0.011 | 0.056 | 0.023 | 0.051 |
+
+The rows at their own posture before and after (unchanged): thumb CMC flexion 0.273 / 0.078, abduction 0.370 / 0.083,
+thumb MP 0.025 / 0.009, IP 0.035 / 0.017 (Domalain 2010, Barry 2018); index MCP / PIP / DIP 0.011 / 0.005, 0.017 /
+0.014, 0.027 / 0.002; digits 3-5 MCP 0.010-0.013 / 0.001-0.008, PIP 0.016-0.036 / 0.014-0.020, DIP 0.015-0.037 /
+0.002-0.010 (Knutson 2000, Kamper 2002); CMC4 / CMC5 1.56 / 0.005 and 1.10 / 0.031 (El-Shennawy 2001), as muscles only
+/ total. With the grip the stretched finger extensors give the wrist a passive extension moment, which the old springs,
+fitted with straight fingers, added to: at Formica's posture the total was off by 0.114 N m in flexion. Fitted where
+Formica measured, the total is 0.016 / 0.023 N m there. At elbow 90 deg with straight fingers, a posture no wrist source
+covers, the springs now leave a deficit (0.12 / 0.05 N m): the wrist is less stiff there than Formica's grip.
+
+The alternative extrinsic fit of round 3 (seeded from the old thumb and ECU passive scales; muscles only 0.062 N m in
+deviation) still loses at Formica's posture: total 0.063 N m in flexion and 0.028 N m in deviation, against 0.016 and
+0.023 N m. The extrinsic fit as run is kept.
 
 For the thumb rows, "Before" is the fit before step S2 of the hand rebuild (single AdP and
 FPB, thenar passive scale at MuJoCo's default) and "After" the fit on S2's muscles, whose

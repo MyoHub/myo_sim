@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-06 — Joint springs fitted at the posture of their data
+Changed: `scripts/fit_passive_moments.py` (`source_posture`), `myo_sim/build/data/passive_joint_moments.json` (rows name their source posture), `muscle_passive.json` (Formica posture: forearm neutral explicit, protocol note), `myoarm_r_tendon.xml` (wrist springs), `hand_literature.json`, `tests/test_muscle_passive.py`, `docs/wiki/{passive-moments-and-thenar,hand-extrinsic-muscles,hand-literature-comparison}.md`, `CHANGELOG.md`
+Why: the wrist springs subtracted the muscles at elbow 90 deg with straight fingers while Formica et al. 2012 measured, and the extrinsic fit evaluated, at elbow 60 deg with the hand closed on a handle. At Formica's posture the old total was off by 0.114 N m in flexion; fitted there it is 0.016 N m. The round-3 alternative extrinsic fit still loses.
+
 ## 2026-11-06 — Merge dev (0.2.4 release, posture API, mujoco-warp warning, MuJoCo cap)
 Changed: `myo_sim/build/keyframes.py`, `myo_sim/__init__.py`, `myo_sim/build/compose.py` (posture API with this line's `root_y_offset` / `root_quat`; `attach_checked` kept), `myo_sim/build/data/postures.json` (was `standing_keyframes.json`), `scripts/generate_postures.py` (was `generate_standing_keyframes.py`), `tests/test_postures.py` (was `test_standing_keyframe.py`), `docs/wiki/postures.md` (was `standing-keyframe.md`), `myo_sim/build/warp_version.py`, `pyproject.toml` / `uv.lock` (`mujoco>=3.7,<4`), `CHANGELOG.md`, wiki pages
 Why: dev released 0.2.4 with the general posture API, the mujoco-warp warning and the `mujoco<4` cap. This line keeps its own table values, mass convention and test logic under the released names; dev's 0.2.4 changelog section is taken as released.

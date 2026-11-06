@@ -41,6 +41,7 @@ from myo_sim.build.hand_data import (
 )
 
 SCRIPT = "fit_passive_moments.py"
+MUSCLE_PASSIVE_PATH = PASSIVE_DATA_PATH.with_name("muscle_passive.json")
 
 LIGAMENT_PREFIX = "lig_"  # passive ligament tendons (extensor mechanism ORL): part of the model's own passive moment
 DEG = np.pi / 180.0
@@ -86,8 +87,21 @@ def ligament_moment(model: object, data: object, dof: int) -> float:
     return float(total)
 
 
+def source_posture(base: dict[str, Any]) -> dict[str, float]:
+    """Posture (deg) of the other joints for a row's muscle baseline.
+
+    ``posture`` names an entry of ``joint_targets.postures_deg`` in ``muscle_passive.json``, the
+    posture the extrinsic passive fit uses for the same source, so both fits see one protocol;
+    ``posture_deg`` gives the angles directly.
+    """
+    if "posture" in base:
+        table = json.loads(MUSCLE_PASSIVE_PATH.read_text())
+        return dict(table["joint_targets"]["postures_deg"][base["posture"]])
+    return dict(base.get("posture_deg", {}))
+
+
 def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndarray:
-    """Passive moment (N m) at *joint* of the model's own muscles (zero activation) and ligaments, other joints per ``posture_deg``.
+    """Passive moment (N m) at *joint* of the model's own muscles (zero activation) and ligaments, other joints per ``source_posture``.
 
     ``muscles`` (optional) restricts the sum to the muscles the source curve
     includes (no ligaments then); by default every muscle and ligament counts.
@@ -95,6 +109,7 @@ def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndar
     import mujoco
 
     base = curve["subtract_model_muscles"]
+    posture = source_posture(base)
     model = myo_sim.load_spec(base["model"]).compile()
     data = mujoco.MjData(model)
     ids = [model.actuator(name).id for name in base["muscles"]] if "muscles" in base else None
@@ -103,7 +118,7 @@ def muscle_baseline(curve: dict[str, Any], joint: str, q: np.ndarray) -> np.ndar
     out = np.zeros_like(q)
     for i, value in enumerate(q):
         data.qpos[:] = model.qpos0
-        for name, deg in base.get("posture_deg", {}).items():
+        for name, deg in posture.items():
             data.qpos[model.joint(name).qposadr[0]] = deg * DEG
         data.qpos[model.joint(joint).qposadr[0]] = value
         data.qvel[:] = 0.0

@@ -335,7 +335,9 @@ which capped ECU's passive scale (0.63 -> 0.46) and so left a larger deficit in 
 the springs, the model matches Formica with 0.010 N m rms (0.014 before the new paths). A second fit started from the old
 thumb and ECU scales reaches a lower muscle cost (deviation 0.062 N m rms) but puts ECU and ECRB near their full passive
 scale; at the springs' posture (elbow 90 deg, fingers extended) the muscles then exceed Formica by 0.19 N m in radial
-deviation, no spring can remove that, and the total error is 0.087 N m. The fit as run is kept.
+deviation, no spring can remove that, and the total error is 0.087 N m. The fit as run is kept. Since the springs are
+fitted at Formica's own posture (`passive-moments-and-thenar.md`, springs at the posture of their data) the total is 0.016 /
+0.023 N m in flexion / deviation there, and the alternative still loses (0.063 / 0.028 N m).
 
 ## Refits
 

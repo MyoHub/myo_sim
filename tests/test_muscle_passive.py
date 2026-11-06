@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from functools import cache
 from pathlib import Path
 from types import ModuleType
@@ -12,6 +13,7 @@ import numpy as np
 import pytest
 
 import myo_sim
+from myo_sim.build.hand_data import PASSIVE_DATA_PATH
 
 MODELS = ("myofullbody", "myotorso_arms", "myohands", "myoarm_r")
 DEG = np.pi / 180.0
@@ -81,6 +83,15 @@ def test_physiological_muscles_keep_their_cited_fibre_length() -> None:
         for key, value in d.items():
             assert np.allclose(stored[key], value, atol=2e-6 if key.endswith("_m") else 2e-3), (name, key)
         assert 0.75 <= d["normalised_length_5_50_95"][0] and d["normalised_length_5_50_95"][2] <= 1.25, name
+
+
+def test_springs_and_muscle_fit_share_the_source_posture() -> None:
+    """A joint fitted by both the extrinsic passive fit and the joint springs is evaluated in one posture, the source's."""
+    springs = {r["joint"]: r for r in json.loads(PASSIVE_DATA_PATH.read_text())["joints"]}
+    rows = _fit_script().load_table()["joint_targets"]["rows"]
+    for row in rows:
+        base = springs[row["row"]]["source_curve"]["subtract_model_muscles"]
+        assert base.get("posture") == row["posture"], row["row"]
 
 
 def test_fit_matches_the_recorded_error() -> None:

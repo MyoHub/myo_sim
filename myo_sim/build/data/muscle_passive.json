@@ -754,6 +754,7 @@
     "postures_deg": {
       "formica2012_grip": {
         "elbow_flexion_r": 60.0,
+        "pro_sup_r": 0.0,
         "mcp2_flexion_r": 45.0,
         "pm2_flexion_r": 60.0,
         "md2_flexion_r": 30.0,
@@ -773,7 +774,7 @@
       "neutral": {}
     },
     "postures_note": {
-      "formica2012_grip": "Formica 2012: hand closed around the robot handle and bound shut, elbow flexed about 60 deg. The finger and thumb angles of the grip are not reported; MCP 45, PIP 60, DIP 30 deg and thumb MP / IP 20 deg flexion are assumed (a cylindrical grasp).",
+      "formica2012_grip": "Formica 2012 (Methods): seated, shoulder abducted about 40 deg and flexed about 35 deg, elbow flexed about 60 deg, forearm in neutral between pronation and supination, hand closed around the robot handle and bound shut. No wrist or finger muscle crosses the shoulder, so the shoulder stays at qpos0. The finger and thumb angles of the grip are not reported; MCP 45, PIP 60, DIP 30 deg and thumb MP / IP 20 deg flexion are assumed (a cylindrical grasp). The joint springs (passive_joint_moments.json) subtract the muscles in the same posture.",
       "knutson2000": "Interphalangeal joints braced in extension; the wrist is swept (wrist_deg).",
       "neutral": "Kamper 2002: wrist and the other joints of the finger at neutral."
     },
