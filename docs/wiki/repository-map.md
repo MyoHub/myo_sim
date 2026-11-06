@@ -26,7 +26,7 @@ myo_sim/              # installable Python package
     rigid_conversion.py  # library for scripts/fit_{leg,arm}_rigid_maps.py (not used at load time)
     references.py        # cited table values (Rajagopal, MoBL-ARMS, Silder)
     leg_passive.py       # library for scripts/fit_leg_passive.py
-    keyframes.py      # add_standing_keyframe(), reads data/standing_keyframes.json
+    keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
     data/             # JSON provenance and fitting input of the intrinsic muscles and passive springs
 scripts/
   fit_passive_moments.py       # refits passive springs, rewrites their block in myoarm_r_tendon.xml
@@ -36,7 +36,7 @@ scripts/
   generate_extrinsic_muscles.py # fits (--fit, --fit-ecu) and writes the juncturae nodes and links, the FCU via points, the ECU groove site and FDS5's force
   fit_leg_rigid_maps.py / fit_arm_rigid_maps.py / fit_leg_passive.py
   generate_deep_hip_muscles.py # fits (--fit) and writes pectineus, quadratus femoris and gemelli into the leg XML
-  generate_standing_keyframes.py # writes data/standing_keyframes.json; --report prints the wiki tables
+  generate_postures.py         # writes data/postures.json; --report prints the wiki tables
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -51,7 +51,7 @@ tests/
   test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
-  test_standing_keyframe.py        # the standing keyframe: pose quality, attach, spec editing
+  test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -71,5 +71,21 @@ docs/validation/      # concise literature validation reports and figures; not p
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
-| Change the standing pose | `scripts/generate_standing_keyframes.py`, then rerun it |
+| Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
+
+## Publishing
+
+After merging the release PR, run **Publish to PyPI and GitHub** from Actions on `main`.
+The workflow reads the stable `X.Y.Z` version from the built wheel, publishes to PyPI
+using the existing `pypi` environment and Trusted Publisher, then tags the exact build
+commit as `vX.Y.Z`. It creates a GitHub release with generated notes and attaches the
+same wheel and source archive before publishing the release. It never bumps versions
+or writes to `main`. A tag pointing to another commit fails before the PyPI upload.
+
+If GitHub release creation fails after PyPI succeeds, use **Re-run failed jobs** on
+that run. The release job reuses the original artifacts, accepts an existing tag only
+at the original commit, and resumes an existing draft/release. Do not restart the whole
+workflow for an already published version: PyPI rejects duplicate uploads by design.
+Tag creation requires the repository's tag rules to permit the Actions token to create
+`v*` tags; the workflow does not bypass rules.

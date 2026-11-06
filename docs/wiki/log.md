@@ -1,8 +1,10 @@
-# Wiki Maintenance Log
+# Wiki Log
 
-Append-only. Add entries at the top (most recent first). Do not edit past entries.
+Append-only maintenance log, most recent first.
 
----
+## 2026-11-06 — Merge dev (0.2.4 release, posture API, mujoco-warp warning, MuJoCo cap)
+Changed: `myo_sim/build/keyframes.py`, `myo_sim/__init__.py`, `myo_sim/build/compose.py` (posture API with this line's `root_y_offset` / `root_quat`; `attach_checked` kept), `myo_sim/build/data/postures.json` (was `standing_keyframes.json`), `scripts/generate_postures.py` (was `generate_standing_keyframes.py`), `tests/test_postures.py` (was `test_standing_keyframe.py`), `docs/wiki/postures.md` (was `standing-keyframe.md`), `myo_sim/build/warp_version.py`, `pyproject.toml` / `uv.lock` (`mujoco>=3.7,<4`), `CHANGELOG.md`, wiki pages
+Why: dev released 0.2.4 with the general posture API, the mujoco-warp warning and the `mujoco<4` cap. This line keeps its own table values, mass convention and test logic under the released names; dev's 0.2.4 changelog section is taken as released.
 
 ## 2026-11-06 — Composition fails on elements MjSpec.attach drops
 Changed: `myo_sim/build/utils.py` (`attach_checked`), `myo_sim/build/compose.py`, `tests/test_attach_checked.py`, `docs/wiki/build-and-composition.md`
@@ -19,6 +21,22 @@ Why: MuJoCo 4 is now the reference for model paths. Humeral-head wraps have no s
 ## 2026-11-05 — Side sites for one path on MuJoCo 3 and 4
 Changed: `myo_sim/models/arm/assets/myoarm_r_chain.xml` (side sites of TMAJ, LAT2, SUP), `myo_sim/build/data/side_sites.json`, `scripts/migrate_side_sites.py`, `tests/test_side_sites.py`, `tests/test_standing_keyframe.py`, `myo_sim/build/keyframes.py`, `scripts/compare_model_numerics.py`, `docs/wiki/model-authoring.md`, `docs/wiki/standing-keyframe.md`, `docs/wiki/testing-guide.md`
 Why: MuJoCo 4 chooses a wrap's side by the winding of endpoint, side site, endpoint. Three sites now give the MuJoCo 3 path under both rules, with MuJoCo 3 unchanged in range. The wraps in `side_sites.json`'s `kept` list cannot: their MuJoCo 3 path flips sides inside the range.
+
+## 2026-11-05 — Stay below MuJoCo 4
+Changed: pyproject.toml, uv.lock, CHANGELOG.md
+Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
+
+## 2026-11-05 — Tag and GitHub release after PyPI publication
+Changed: .github/workflows/publish.yml, docs/wiki/repository-map.md, docs/wiki/log.md
+Why: one manual main-branch run now publishes the package and releases the same commit and artifacts on GitHub; failed release jobs can resume without another PyPI upload.
+
+## 2026-11-04 — mujoco-warp version warning
+Changed: myo_sim/build/warp_version.py, myo_sim/__init__.py, myo_sim/models/arm/README.md, tests/test_warp_version_warning.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: the arm README lists a mujoco-warp limitation that only a parity test on a GPU would reveal; loading a model now says so when the installed version is affected.
+
+## 2026-11-04 — Posture API in place of the standing keyframe helpers
+Changed: myo_sim/build/keyframes.py, myo_sim/__init__.py, myo_sim/build/compose.py, scripts/generate_postures.py, myo_sim/build/data/postures.json, tests/test_postures.py, docs/wiki/postures.md, CHANGELOG.md
+Why: review of the release asked for keyframes to cover postures in general, so 0.2.4 ships the general API from the start, with `standing` as its only posture. No release ever had the old names, so nothing needs to keep working.
 
 ## 2026-11-04 — Left-right tenodesis test on a held body
 Changed: `tests/test_muscle_passive.py`, `myo_sim/build/data/hand_literature.json`, `docs/wiki/hand-literature-comparison.md`

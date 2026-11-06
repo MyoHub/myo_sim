@@ -32,7 +32,7 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 
 ## Known limitations
 
-- [ ] With mujoco-warp older than 3.16, the tendons with a sidesite inside their wrap geom (DELT2, DELT3, PECM1, FDP4, FPL; the forearm wraps of PQ, EDC2, EDC4 and EDC5 were moved outside and the ECU has no wrap any more) can be up to about 3 mm longer on the GPU than in CPU MuJoCo, because the float32 inside-wrap solve falls back to an approximate contact point ([mujoco_warp#1713](https://github.com/google-deepmind/mujoco_warp/issues/1713)). Use mujoco-warp 3.16 or newer; `tests/test_warp_parity.py` checks this.
+- [ ] With mujoco-warp older than 3.16, the tendons with a sidesite inside their wrap geom (DELT2, DELT3, PECM1, FDP4, FPL; the forearm wraps of PQ, EDC2, EDC4 and EDC5 were moved outside and the ECU has no wrap any more) can be up to about 3 mm longer on the GPU than in CPU MuJoCo, because the float32 inside-wrap solve falls back to an approximate contact point ([mujoco_warp#1713](https://github.com/google-deepmind/mujoco_warp/issues/1713)). Use mujoco-warp 3.16 or newer; `myo_sim.load_spec()` warns if an older one is installed, and `tests/test_warp_parity.py` checks this.
 - [ ] See [all open issues](https://github.com/MyoHub/myo_sim/issues)
 
 ## Manual adjustments

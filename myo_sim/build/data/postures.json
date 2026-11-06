@@ -1,0 +1,130 @@
+{
+  "provenance": {
+    "script": "scripts/generate_postures.py",
+    "source": "qpos0 of each composed model; model parameters are not changed",
+    "shoulder_elv_rad": 0.1,
+    "floor_clearance_m": 0.0001,
+    "thumb_equilibrium_joints": [
+      "cmc_flexion",
+      "cmc_abduction",
+      "mp_flexion",
+      "ip_flexion"
+    ],
+    "pelvic_tilt_models": [
+      "myolegs_abdomen"
+    ],
+    "method": "shoulder elevation raised to clear the thorax, joint couplings evaluated from their polynomials, ankles bisected until heel and forefoot are level, root lowered to the floor clearance, thumb joints at the equilibrium of the passive moments and gravity at zero activation, computed by the script, pelvis tilted until the trunk hinge is above the hip axis where the model is listed",
+    "documentation": "docs/wiki/postures.md"
+  },
+  "postures": {
+    "standing": {
+      "description": "Upright, feet flat, arms just clear of the thorax.",
+      "source": "qpos0 with the couplings evaluated; shoulder elevation is a clearance value, not a measured arm posture"
+    }
+  },
+  "models": {
+    "myofullbody": {
+      "standing": {
+        "root_z": 0.945501673,
+        "joints": {
+          "sternoclavicular_r2_r": -0.0242,
+          "sternoclavicular_r3_r": 0.01025,
+          "unrotscap_r3_r": -0.01025,
+          "unrotscap_r2_r": 0.0242,
+          "acromioclavicular_r2_r": -0.0049,
+          "acromioclavicular_r3_r": 0.0396,
+          "acromioclavicular_r1_r": 0.0178,
+          "unrothum_r1_r": -0.0178,
+          "unrothum_r3_r": -0.0396,
+          "unrothum_r2_r": 0.0049,
+          "shoulder_elv_r": 0.1,
+          "cmc_flexion_r": -0.0937623888,
+          "cmc_abduction_r": 0.3471140588,
+          "mp_flexion_r": -0.2426463734,
+          "ip_flexion_r": -0.1811905495,
+          "sternoclavicular_r2_l": -0.0242,
+          "sternoclavicular_r3_l": 0.01025,
+          "unrotscap_r3_l": -0.01025,
+          "unrotscap_r2_l": 0.0242,
+          "acromioclavicular_r2_l": -0.0049,
+          "acromioclavicular_r3_l": 0.0396,
+          "acromioclavicular_r1_l": 0.0178,
+          "unrothum_r1_l": -0.0178,
+          "unrothum_r3_l": -0.0396,
+          "unrothum_r2_l": 0.0049,
+          "shoulder_elv_l": 0.1,
+          "cmc_flexion_l": -0.0937623888,
+          "cmc_abduction_l": 0.3471140588,
+          "mp_flexion_l": -0.2426463734,
+          "ip_flexion_l": -0.1811905495,
+          "knee_angle_translation1_r": 9.54e-08,
+          "knee_angle_rotation2_r": -1.47e-08,
+          "knee_angle_rotation3_r": 1.09e-08,
+          "ankle_angle_r": 0.0119593609,
+          "knee_angle_beta_translation2_r": -0.0108281,
+          "knee_angle_beta_translation1_r": 0.0524192,
+          "knee_angle_beta_rotation1_r": 0.010506,
+          "knee_angle_translation1_l": 9.54e-08,
+          "knee_angle_rotation2_l": -1.47e-08,
+          "knee_angle_rotation3_l": 1.09e-08,
+          "ankle_angle_l": 0.0119593609,
+          "knee_angle_beta_translation2_l": -0.0108281,
+          "knee_angle_beta_translation1_l": 0.0524192,
+          "knee_angle_beta_rotation1_l": 0.010506
+        }
+      }
+    },
+    "myolegs": {
+      "standing": {
+        "root_z": 0.960501673,
+        "joints": {
+          "knee_angle_translation1_r": 9.54e-08,
+          "knee_angle_rotation2_r": -1.47e-08,
+          "knee_angle_rotation3_r": 1.09e-08,
+          "ankle_angle_r": 0.0119593609,
+          "knee_angle_beta_translation2_r": -0.0108281,
+          "knee_angle_beta_translation1_r": 0.0524192,
+          "knee_angle_beta_rotation1_r": 0.010506,
+          "knee_angle_translation1_l": 9.54e-08,
+          "knee_angle_rotation2_l": -1.47e-08,
+          "knee_angle_rotation3_l": 1.09e-08,
+          "ankle_angle_l": 0.0119593609,
+          "knee_angle_beta_translation2_l": -0.0108281,
+          "knee_angle_beta_translation1_l": 0.0524192,
+          "knee_angle_beta_rotation1_l": 0.010506
+        }
+      }
+    },
+    "myolegs_abdomen": {
+      "standing": {
+        "root_z": 0.9424714624,
+        "joints": {
+          "flex_extension": 0.2728743564,
+          "hip_flexion_r": 0.2728743564,
+          "knee_angle_translation1_r": 9.54e-08,
+          "knee_angle_rotation2_r": -1.47e-08,
+          "knee_angle_rotation3_r": 1.09e-08,
+          "ankle_angle_r": 0.0119593609,
+          "knee_angle_beta_translation2_r": -0.0108281,
+          "knee_angle_beta_translation1_r": 0.0524192,
+          "knee_angle_beta_rotation1_r": 0.010506,
+          "hip_flexion_l": 0.2728743564,
+          "knee_angle_translation1_l": 9.54e-08,
+          "knee_angle_rotation2_l": -1.47e-08,
+          "knee_angle_rotation3_l": 1.09e-08,
+          "ankle_angle_l": 0.0119593609,
+          "knee_angle_beta_translation2_l": -0.0108281,
+          "knee_angle_beta_translation1_l": 0.0524192,
+          "knee_angle_beta_rotation1_l": 0.010506
+        },
+        "root_y_offset": -0.0190875474,
+        "root_quat": [
+          0.9907068777,
+          0.1360142733,
+          0.0,
+          0.0
+        ]
+      }
+    }
+  }
+}

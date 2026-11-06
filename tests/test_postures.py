@@ -1,9 +1,8 @@
-"""The ``standing`` keyframe: a physically clean start that changes nothing else in the model."""
+"""The posture keyframes (``standing``): a physically clean start that changes nothing else in the model."""
 
 from __future__ import annotations
 
 import importlib.util
-import json
 from pathlib import Path
 
 import mujoco
@@ -12,7 +11,7 @@ import pytest
 
 import myo_sim
 from myo_sim.build.compose import MODEL_REGISTRY, build_spec
-from myo_sim.build.keyframes import STANDING_KEYFRAME_PATH
+from myo_sim.build.keyframes import load_posture_table
 
 MODELS = ("myofullbody", "myolegs", "myolegs_abdomen")
 MAX_FOOT_FORCE_N = 150.0
@@ -29,8 +28,8 @@ DELETED_JOINT_TOKENS = ("mtp_angle_",)
 
 
 def _script():
-    path = Path(__file__).resolve().parents[1] / "scripts" / "generate_standing_keyframes.py"
-    spec = importlib.util.spec_from_file_location("generate_standing_keyframes", path)
+    path = Path(__file__).resolve().parents[1] / "scripts" / "generate_postures.py"
+    spec = importlib.util.spec_from_file_location("generate_postures", path)
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
@@ -60,17 +59,21 @@ def _joint_values(model, qpos, prefix=""):
 
 
 def test_table_is_what_the_script_writes():
-    written = json.loads(STANDING_KEYFRAME_PATH.read_text())
+    written = load_posture_table()
     table = SCRIPT.build_table()
     assert table["provenance"] == written["provenance"]
+    assert table["postures"] == written["postures"]
     assert table["models"].keys() == written["models"].keys()
-    for name, entry in table["models"].items():
-        assert entry["joints"].keys() == written["models"][name]["joints"].keys()
-        assert entry["root_z"] == pytest.approx(written["models"][name]["root_z"], abs=1e-7)
-        for key in ("root_y_offset", "root_quat"):
-            assert entry.get(key, 0.0) == pytest.approx(written["models"][name].get(key, 0.0), abs=1e-7), key
-        for joint, value in entry["joints"].items():
-            assert value == pytest.approx(written["models"][name]["joints"][joint], abs=1e-7), joint
+    for name, postures in table["models"].items():
+        assert postures.keys() == written["models"][name].keys()
+        for posture, entry in postures.items():
+            stored = written["models"][name][posture]
+            assert entry["joints"].keys() == stored["joints"].keys()
+            assert entry["root_z"] == pytest.approx(stored["root_z"], abs=1e-7)
+            for key in ("root_y_offset", "root_quat"):
+                assert entry.get(key, 0.0) == pytest.approx(stored.get(key, 0.0), abs=1e-7), key
+            for joint, value in entry["joints"].items():
+                assert value == pytest.approx(stored["joints"][joint], abs=1e-7), joint
 
 
 @pytest.mark.parametrize("name", MODELS)
@@ -186,7 +189,7 @@ def test_deleting_a_joint_from_a_spec_with_the_keyframe():
 
     Either way a keyframe must never reach a model with its values on the wrong joints.
     """
-    spec = myo_sim.load_spec("myofullbody", build_kwargs={"standing_keyframe": True})
+    spec = myo_sim.load_spec("myofullbody", build_kwargs={"postures": True})
     deleted = _delete_joints(spec)
     if int(mujoco.__version__.split(".")[0]) < 4:
         with pytest.raises(ValueError, match="standing"):
@@ -206,7 +209,7 @@ def test_add_after_deleting_joints_matches_by_name():
     reference = myo_sim.load_model("myofullbody")
     spec = myo_sim.load_spec("myofullbody")
     deleted = _delete_joints(spec)
-    myo_sim.add_standing_keyframe(spec, "myofullbody")
+    myo_sim.add_posture_keyframes(spec, "myofullbody")
     model = spec.compile()
     want = _joint_values(reference, _standing_qpos(reference))
     got = _joint_values(model, model.key_qpos[0])
@@ -221,7 +224,7 @@ def test_add_after_adding_a_joint_matches_by_name():
     body = spec.body("femur_r").add_body(name="extra")
     body.add_joint(name="extra_hinge", axis=[1, 0, 0], type=mujoco.mjtJoint.mjJNT_HINGE, range=[-1, 1])
     body.add_geom(type=mujoco.mjtGeom.mjGEOM_SPHERE, size=[0.01, 0, 0], mass=0.01)
-    myo_sim.add_standing_keyframe(spec, "myofullbody")
+    myo_sim.add_posture_keyframes(spec, "myofullbody")
     model = spec.compile()
     want = _joint_values(reference, _standing_qpos(reference))
     got = _joint_values(model, model.key_qpos[0])
@@ -230,15 +233,15 @@ def test_add_after_adding_a_joint_matches_by_name():
 
 
 def test_adding_twice_keeps_one_keyframe():
-    spec = myo_sim.load_spec("myofullbody", build_kwargs={"standing_keyframe": True})
-    myo_sim.add_standing_keyframe(spec, "myofullbody")
+    spec = myo_sim.load_spec("myofullbody", build_kwargs={"postures": True})
+    myo_sim.add_posture_keyframes(spec, "myofullbody")
     assert spec.compile().nkey == 1
 
 
 def test_attach_to_an_empty_spec():
     reference = myo_sim.load_model("myofullbody")
     parent = mujoco.MjSpec()
-    child = myo_sim.load_spec("myofullbody", build_kwargs={"standing_keyframe": True})
+    child = myo_sim.load_spec("myofullbody", build_kwargs={"postures": True})
     parent.attach(child, prefix="a_", frame=parent.worldbody.add_frame())
     model = parent.compile()
     assert mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_KEY, 0) == "a_standing"
@@ -251,7 +254,7 @@ def test_two_body_attach_keeps_one_keyframe_per_body():
     for prefix, offset in (("a_", 0.0), ("b_", 2.0)):
         frame = parent.worldbody.add_frame()
         frame.pos = [0.0, offset, 0.0]
-        parent.attach(myo_sim.load_spec("myofullbody", build_kwargs={"standing_keyframe": True}), prefix=prefix, frame=frame)
+        parent.attach(myo_sim.load_spec("myofullbody", build_kwargs={"postures": True}), prefix=prefix, frame=frame)
     model = parent.compile()
     assert model.nkey == 2
     want = _joint_values(reference, reference.key_qpos[0])
@@ -278,4 +281,30 @@ def test_part_specs_have_no_keyframe(name):
 
 def test_unknown_model_raises():
     with pytest.raises(KeyError):
-        build_spec("myoarms", build_kwargs={"standing_keyframe": True})
+        build_spec("myoarms", build_kwargs={"postures": ["standing"]})
+
+
+def test_unknown_posture_raises():
+    spec = myo_sim.load_spec("myofullbody")
+    with pytest.raises(KeyError, match="no posture 'kneeling'"):
+        myo_sim.add_posture_keyframes(spec, "myofullbody", ["kneeling"])
+
+
+@pytest.mark.parametrize("name", MODELS)
+def test_list_postures_gives_the_keyframes_of_load_model(name):
+    model = myo_sim.load_model(name)
+    assert myo_sim.list_postures(name) == ["standing"]
+    assert [model.key(i).name for i in range(model.nkey)] == myo_sim.list_postures(name)
+
+
+def test_models_without_postures_list_none():
+    assert myo_sim.list_postures("myoarms") == []
+
+
+def test_add_one_posture_by_name():
+    spec = myo_sim.load_spec("myofullbody")
+    myo_sim.add_posture_keyframes(spec, "myofullbody", ["standing"])
+    named = myo_sim.load_spec("myofullbody", build_kwargs={"postures": ["standing"]}).compile()
+    model = spec.compile()
+    assert model.nkey == named.nkey == 1
+    assert np.array_equal(model.key_qpos, named.key_qpos)

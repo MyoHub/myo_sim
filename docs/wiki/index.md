@@ -24,7 +24,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/hand-function-validation.md` — functional hand tests after McFarland et al. 2023 (tenodesis, maximum grip, lateral pinch): method, results per model version, known issues
 - `docs/wiki/hand-contacts-and-pads.md` — fingertip, palm, thenar and hypothenar pads (fitted to Dallard 2018 and to the fist) and the hand self-contact pairs (posture scan, selection, parameters, checks)
 - `docs/wiki/hand-literature-comparison.md` — the hand against published data after each step of the hand rebuild (generated tables: model value, literature value ± spread, reference, protocol)
-- `docs/wiki/standing-keyframe.md` — the `standing` keyframe: pose, API, measurements and literature comparison
+- `docs/wiki/postures.md` — the posture keyframes: pose, API, measurements and literature comparison
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
 - `docs/wiki/log.md` — append-only wiki maintenance log
 

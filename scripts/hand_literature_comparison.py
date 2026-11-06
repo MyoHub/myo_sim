@@ -631,7 +631,7 @@ def body_against_rajagopal() -> dict[str, Any]:
 
     model = myo_sim.load_model("myofullbody")
     data = mujoco.MjData(model)
-    coupling_values = _load_script("generate_standing_keyframes").coupling_values
+    coupling_values = _load_script("generate_postures").coupling_values
     errors = []
     for degrees, reference in RAJAGOPAL2016_BODY["femur_origin_in_tibia_r"].items():
         qpos = model.qpos0.copy()

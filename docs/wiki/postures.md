@@ -1,6 +1,6 @@
-# Standing keyframe
+# Postures
 
-`myofullbody`, `myolegs` and `myolegs_abdomen` have a keyframe named `standing`. `qpos0` and every model parameter are unchanged, so it only matters if you start from it.
+Composed models can have named starting postures, stored as keyframes. At present there is one, `standing`, on `myofullbody`, `myolegs` and `myolegs_abdomen`. `qpos0` and every model parameter are unchanged, so it only matters if you start from it.
 
 ## Why
 
@@ -14,7 +14,7 @@
 
 ## How the pose is made
 
-`scripts/generate_standing_keyframes.py` writes `myo_sim/build/data/standing_keyframes.json` from `qpos0` of each composed model, in up to six steps:
+`scripts/generate_postures.py` writes `myo_sim/build/data/postures.json` from `qpos0` of each composed model, in up to six steps:
 
 1. Raise `shoulder_elv_r` and `shoulder_elv_l` to 0.10 rad (5.7 deg), the plane of elevation staying at 0. The humerus then clears the thorax by 6.2 mm (0.05 rad leaves 2 mm of overlap, 0.08 rad clears it by 3 mm). This is a clearance value, not a measured arm posture. The scapular joints follow through their couplings.
 2. Evaluate every joint coupling from its polynomial, so that couplings hold to rounding.
@@ -23,13 +23,14 @@
 5. In `myofullbody`, solve each thumb's four joints for the equilibrium of the passive moments and gravity at zero activation: CMC flexion -7.5 deg, CMC abduction 21.2 deg, MP flexion -15.3 deg, IP flexion -9.7 deg, on both hands.
 6. In `myolegs_abdomen`, tilt the pelvis forward by 15.6 deg, the angle that puts the trunk's hinge above the hip axis (4.2 cm behind and 14.9 cm above it when upright). Hip flexion and trunk extension of the same angle keep the legs and trunk upright. This is the only model whose root turns.
 
-The script also prints the tables below (`--report`). To change the pose, edit the constants in the script and rerun it. `tests/test_standing_keyframe.py` checks that the JSON is what the script writes. The table holds only kinematics: the body masses do not enter it and the knee hinges only matter away from knee 0, so the knee and mass changes of v0.3.0 left it as it was, to the last digit. The contact forces, the speeds and the centre of mass below did change.
+The script also prints the tables below (`--report`). To change the pose, edit the constants in the script and rerun it. `tests/test_postures.py` checks that the JSON is what the script writes. The table holds only kinematics: the body masses do not enter it and the knee hinges only matter away from knee 0, so the knee and mass changes of v0.3.0 left it as it was, to the last digit. The contact forces, the speeds and the centre of mass below did change.
 
 ## Using it
 
 - `myo_sim.load(name)` and `myo_sim.load_model(name)` include the keyframe; use `mujoco.mj_resetDataKeyframe(model, data, model.key("standing").id)`.
-- `myo_sim.load_spec(name)` and `build_spec(name)` leave it out unless you pass `build_kwargs={"standing_keyframe": True}`. On MuJoCo 3 a keyframe's `qpos` has a fixed size, so `compile()` fails after deleting a joint from a spec that holds one (`keyframe 'standing': invalid qpos size`); MuJoCo 4 keeps the keyframe's values by joint name across the edit. Specs from `load_spec` are meant to be edited. Adding a joint is worse: MuJoCo pads the keyframe at the end, which is right for a new body at the end of the tree, but a hinge added under `femur_r` silently shifts 10 joints of the left leg by one.
-- `myo_sim.add_standing_keyframe(spec, model_name)` adds it to an edited spec, matched by joint name: joints the spec no longer has are skipped and joints the table does not list stay at `qpos0`. The root keeps the spec's x, y and orientation, apart from the table's `root_y_offset` and `root_quat` for the tilt of `myolegs_abdomen`, which apply in the root's frame.
+- `myo_sim.load_spec(name)` and `build_spec(name)` leave it out unless you pass `build_kwargs={"postures": True}`, or a list of names such as `{"postures": ["standing"]}`. On MuJoCo 3 a keyframe's `qpos` has a fixed size, so `compile()` fails after deleting a joint from a spec that holds one (`keyframe 'standing': invalid qpos size`); MuJoCo 4 keeps the keyframe's values by joint name across the edit. Specs from `load_spec` are meant to be edited. Adding a joint is worse: MuJoCo pads the keyframe at the end, which is right for a new body at the end of the tree, but a hinge added under `femur_r` silently shifts 10 joints of the left leg by one.
+- `myo_sim.list_postures(name)` gives the postures of a model, in keyframe order.
+- `myo_sim.add_posture_keyframes(spec, model_name)` adds them to an edited spec (pass a list of names to add only those), matched by joint name: joints the spec no longer has are skipped and joints the table does not list stay at `qpos0`. The root keeps the spec's x, y and orientation, apart from the table's `root_y_offset` and `root_quat` for the tilt of `myolegs_abdomen`, which apply in the root's frame.
 - `MjSpec.attach` keeps the keyframe under the attach prefix: two bodies attached with `a_` and `b_` give `a_standing` and `b_standing`, each with the other body at its `qpos0`. Tested on MuJoCo 3.17.
 
 ## Measurements
