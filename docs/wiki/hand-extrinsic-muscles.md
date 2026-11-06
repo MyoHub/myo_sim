@@ -305,6 +305,38 @@ versions their lengths still jump by 2.2 / 3.0 / 5.8 mm in range (`jumps_mm` in 
 The wrist fits keep their arms over -90 to 80 deg of flexion and -30 to 40 deg of deviation, past today's limits, and the MCP side
 sites of EDC2 and EIP were moved so that their paths stay continuous to 0.55 rad of hyperextension; neither range is applied here.
 
+**APL fibre length on the new path.** On MuJoCo 3 the old CMC cylinder took the APL most of the way round at most postures:
+39 mm of extra length at q0, a path of 224-251 mm (5-95 % of random in-range postures) where the via path runs 175-201 mm.
+The length range had been fitted to the longer path, so on the via path the fibres ran at 0.55-0.88 optimal length and
+carried no passive force over the measured wrist range. The APL now takes its optimal fibre length from the literature and
+its slack length from this path (`physiological` in `build/data/muscle_passive.json`, `physiological_maps` in
+`scripts/fit_muscle_passive.py`):
+
+| | Value | Source |
+| --- | --- | --- |
+| Optimal fibre length | 71 mm (at 2.7 um), pennation 8 deg | Jacobson et al. 1992, as renormalised in Holzbaur et al. 2005 Table 1 |
+| Tendon slack length | 120.2 mm: fibres at optimal length with the wrist and thumb in neutral | rule; not measurable (Holzbaur et al. 2005, p. 832) |
+| MuJoCo map | L0 71.8 mm, slack 118.7 mm, `lengthrange` 172.5-194.0 mm (was L0 78.8, slack 131.6 mm) | rigid-tendon map of `build/rigid_conversion.py` |
+| Passive fit | MuJoCo slack +7.7 % (127.9 mm), `lengthrange` 181.7-203.2 mm, `fpmax` 1.3 | `fit_muscle_passive.py` |
+| Fibre length, 5-95 % of random in-range postures | 0.79-1.14 at the reference slack; 0.66-1.01 after the passive fit (0.55-0.88 before; 0.84-1.20 on the old path on MuJoCo 3) | |
+
+For comparison, Mirakhorlo et al. 2016 measured 50.1 mm optimal fibre length, 12 deg pennation and a 156 mm tendon in one
+specimen; that tendon on this path would leave the fibres at 0.5-1.0 optimal length. Holzbaur et al. chose 130 mm for their
+own path. No other re-routed muscle needed this: EDM, FCR, ECRB, ECRL, BIClong, DELT1, TMAJ, LAT1-3, SUP, FDS2-5, FDP2-5 and
+LTpT keep their median length within 3 mm and their 5th percentile within 0.08 L0; only the tails that came from jumps of
+the old wraps are gone (EDM 0.77-1.71 -> 0.78-1.22, BIClong 0.64-1.45 -> 0.64-1.29). No EDM moment arm at the wrist was
+found in the literature used here.
+
+**Wrist deviation stiffness.** The muscles' share of Formica et al. 2012's passive deviation moment fell from 0.090 to
+0.136 N m rms with the new paths. Cause: on the old path the APL alone gave up to 0.24 N m against ulnar deviation. Without
+it the fit loaded EPB, EPL and FPL instead; EPL's extra passive extension moment at neutral raised the wrist-flexion excess,
+which capped ECU's passive scale (0.63 -> 0.46) and so left a larger deficit in radial deviation (muscles 0.20 against
+0.51 N m at 17 deg). The fit is one-sided on purpose: a deficit goes to the joint springs, an excess cannot be removed. With
+the springs, the model matches Formica with 0.010 N m rms (0.014 before the new paths). A second fit started from the old
+thumb and ECU scales reaches a lower muscle cost (deviation 0.062 N m rms) but puts ECU and ECRB near their full passive
+scale; at the springs' posture (elbow 90 deg, fingers extended) the muscles then exceed Formica by 0.19 N m in radial
+deviation, no spring can remove that, and the total error is 0.087 N m. The fit as run is kept.
+
 ## Refits
 
 Extrinsic slack lengths and passive scales (`fit_muscle_passive.py`), then the joint springs
@@ -323,11 +355,14 @@ release step 690 -> 860), the deficit at the wrist; the release bound of EDC3-5 
 - Garcia-Elias M et al. Extensor mechanism of the fingers. II. Tensile properties of components. J Hand Surg Am 16(6):1136-1140, 1991.
 - Haugstvedt JR, Berger RA, Berglund LJ. A mechanical study of the moment-forces of the supinators and pronators of the forearm. Acta Orthop Scand 72(6):629-634, 2001 (Fig. 3, read from the figure).
 - Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005 (Table 1). Cited only; no model file used.
+- Formica D et al. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012 (Table 2).
 - Horii E, An KN, Linscheid RL. Excursion of prime wrist tendons. J Hand Surg Am 18(1):83-90, 1993.
 - Leijnse JNAL. Measuring force transfers in the deep flexors of the musician's hand: theoretical analysis, clinical examples. J Biomech 30:873, 1997.
+- Jacobson MD et al. Architectural design of the human intrinsic hand muscles. J Hand Surg Am 17(5):804-809, 1992 (APL via Holzbaur et al. 2005, Table 1).
 - Lieber RL et al. Architecture of selected muscles of the arm and forearm: anatomy and implications for tendon transfer. J Hand Surg Am 17(5):787-798, 1992 (Table I).
 - Loren GJ et al. Human wrist motors: biomechanical design and application to tendon transfers. J Biomech 29(3):331-342, 1996 (appendix).
 - Matsuki KO et al. In vivo 3D kinematics of normal forearms: analysis of dynamic forearm rotation. Clin Biomech 25(10):979-983, 2010.
+- Mirakhorlo M et al. Anatomical parameters for musculoskeletal modeling of the hand and wrist. Int Biomech 3(1):40-49, 2016 (Table 2; CC BY 4.0).
 - Matsuzawa K et al. The origin structure of each finger in the flexor digitorum superficialis muscle. Surg Radiol Anat 43:3-10, 2021.
 - Murray WM, Delp SL, Buchanan TS. Variation of muscle moment arms with elbow and forearm position. J Biomech 28(5):513-525, 1995. Cited only (its forearm axis definition).
 - von Schroeder HP, Botte MJ. The functional significance of the long extensors and juncturae tendinum in finger extension. J Hand Surg Am 18(4):641-647, 1993.

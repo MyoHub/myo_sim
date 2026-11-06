@@ -100,6 +100,18 @@ overlaps left in active fists (wrist neutral, 30 deg flexed or extended, with or
 most 3.3 mm (the little finger's distal phalanx on its own proximal phalanx, which folds within one soft-tissue
 mass; ring against index and middle phalanges up to 3.0 mm).
 
+**Where the middle fingertip lands.** The fist is chaotic in its start: moving every qpos by 1e-12 to 1e-6 x a
+standard normal draw (30 seeds per size, MuJoCo 3.17 and 4) sends the middle fingertip to one of three places, with
+the same shares at every size and the same place per seed on both versions: the palm (20 of 30 runs, -0.16 to 0 mm;
+PIP 108 deg, DIP 94 deg), 1.2 mm short at the flexion limits (4 of 30; 0.8 mm on MuJoCo 3.17), or 2.7 mm short with
+the tip on the ring finger's middle phalanx (6 of 30; DIP only 45 deg). The first is the full fist; the third is two
+fingers caught on each other, which soft tissue would let slide past. Only the exact start differs between versions
+(1.19 mm on 4, 0.81 mm on 3.17), so `scripts/hand_literature_comparison.py` runs 12 nudged starts (1e-9, seeds 0-11)
+and records per digit the median, the range and the share of runs within 0.5 mm of the palm: digits 2 / 3 / 4 / 5
+median 0.23 / -0.01 / -0.59 / -0.44 mm on MuJoCo 4 (-0.08 for digit 3 on MuJoCo 3.17), shares 1 / 0.67 / 1 / 1 on
+both, deepest paired penetration 0.69 mm. The
+other digits reach the palm in every run.
+
 **Adjacent digits.** The capsules are rigid, but side by side the fingers meet through soft tissue. The
 proximal capsule radius (9 mm) exceeds the half width of the bone mesh (6.75 mm), so 4.5 mm of the overlap of
 two fingers is compressible; Dallard's fingertip pad deflects about half its thickness at 4 N alone. Every pair

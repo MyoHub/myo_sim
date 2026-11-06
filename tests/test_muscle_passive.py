@@ -64,6 +64,25 @@ def test_xml_is_what_the_fit_script_writes() -> None:
         assert 100.0 * (slack["value"] / slack["reference_value_m"] - 1.0) == pytest.approx(slack["change_percent"], abs=2e-3)
 
 
+def test_physiological_muscles_keep_their_cited_fibre_length() -> None:
+    """Muscles under ``physiological``: L0 and the fit's reference slack are the ones derived from the cited optimal
+    fibre length and pennation on the current path, and the fibres stay on the plateau of the active curve in range."""
+    fit = _fit_script()
+    table = fit.load_table()
+    model = myo_sim.load_spec("myoarm_r").compile()
+    derived = fit.physiological_maps(model, table)
+    rows = {r["names"]["r"]: r for r in table["muscles"]}
+    for name, d in derived.items():
+        a = model.actuator(name).id
+        (lo, hi), (r0, r1) = model.actuator_lengthrange[a], model.actuator_gainprm[a][:2]
+        assert (hi - lo) / (r1 - r0) == pytest.approx(d["mujoco_L0_m"], abs=2e-6), name
+        assert rows[name]["tendon_slack_m"]["reference_value_m"] == pytest.approx(d["mujoco_slack_m"], abs=1e-6), name
+        stored = table["physiological"]["muscles"][name]["derived"]
+        for key, value in d.items():
+            assert np.allclose(stored[key], value, atol=2e-6 if key.endswith("_m") else 2e-3), (name, key)
+        assert 0.75 <= d["normalised_length_5_50_95"][0] and d["normalised_length_5_50_95"][2] <= 1.25, name
+
+
 def test_fit_matches_the_recorded_error() -> None:
     """The stored values reproduce the recorded fit to Knutson's extrinsic moment."""
     fit = _fit_script()

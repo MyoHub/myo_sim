@@ -126,9 +126,11 @@ def test_rest_check_rejects_the_overlapping_pairs_without_their_margin() -> None
     assert len(_active_hand_contacts(model, data)) == 2
 
 
-def test_active_fist_does_not_penetrate() -> None:
+def test_active_fist_closes_without_penetration() -> None:
+    """Over the nudged starts every fingertip reaches the palm in most runs, and no paired contact goes 1 mm deep."""
     fist = _script("hand_literature_comparison").fist()
     assert fist["max_penetration_mm"] < 1.0
+    assert all(share > 0.5 for share in fist["tip_to_palm_mm"]["reach_share"].values()), fist["tip_to_palm_mm"]
 
 
 def test_fingertip_soft_tissue_is_on_target() -> None:

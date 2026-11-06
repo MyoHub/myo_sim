@@ -43,6 +43,9 @@ LONG_FLEXORS = {**{d: f"FDP{d}_r" for d in DIGITS}, "thumb": "FPL_r"}
 PALM_PADS = ("palm_pad_r", "thenar_pad_r", "hypothenar_pad_r")
 METACARPAL_BODIES = ("firstmc_r", "secondmc_r", "thirdmc_r", "fourthmc_r", "fifthmc_r")
 FIST_SECONDS = 1.0
+FIST_SEEDS = 12  # nudged starts of the fist
+FIST_NUDGE = 1e-9  # size of the nudge per qpos (the outcome shares are the same from 1e-12 to 1e-6)
+FIST_REACH_MM = 0.5  # a fingertip within this distance of the palm reaches it
 STABILITY_LEVELS = (0.05, 0.1, 0.3, 0.5, 1.0)
 # Peak free speed: joint and the group of muscles at activation 1 (the flexors of that joint).
 FREE_SPEED_GROUPS = (
@@ -127,13 +130,14 @@ def palm_geoms(model: mujoco.MjModel) -> list[int]:
     return [g for b in METACARPAL_BODIES for g in _body_geoms(model, b) if _collision(model, g)]
 
 
-def fist(model_name: str = "myoarm_r") -> dict[str, Any]:
-    """Active fist: FDS and FDP at full activation for FIST_SECONDS, wrist neutral, thumb locked at 0.
+def fist_run(seed: int | None = None, nudge: float = FIST_NUDGE) -> dict[str, Any]:
+    """One active fist: FDS and FDP at full activation for FIST_SECONDS, wrist neutral, thumb locked at 0.
 
     Shoulder, elbow (90 deg) and forearm are held as in the McFarland scenes; MCP abduction is free.
     Collisions are those of the model's own contact pairs. Returns the fingertip-to-palm distance per
     digit (distal capsule or pad to the nearest palm geom; negative = penetration) and the deepest
-    contact penetration between two hand geoms (carpus and distal) over the last 0.2 s.
+    contact penetration between two hand geoms (carpus and distal) over the last 0.2 s. With *seed*, every qpos
+    of the start is moved by *nudge* times a standard normal draw.
     """
     vhf = _validator()
     hand = vhf.myohand()
@@ -144,9 +148,8 @@ def fist(model_name: str = "myoarm_r") -> dict[str, Any]:
     data = vhf.start(scene, locks)
     flexors = [n for n in (*hand.muscles["FDS"], *hand.muscles["FDP"])]
     vhf.set_activation(scene, data, {n: 1.0 for n in flexors})
-    # From the exact start the contacts settle one way (digit 3 at 0.61 mm on MuJoCo 3, 1.14 on 4); any rounding-size
-    # change of the start gives the other, the same on both versions (2.73 mm).
-    data.qpos[:] += 1e-12 * np.random.default_rng(3).standard_normal(model.nq)
+    if seed is not None:
+        data.qpos[:] += nudge * np.random.default_rng(seed).standard_normal(model.nq)
     hand_bodies = _subtree(model, "lunate_r")
     steps = int(round(FIST_SECONDS / model.opt.timestep))
     deepest = 0.0
@@ -168,6 +171,29 @@ def fist(model_name: str = "myoarm_r") -> dict[str, Any]:
     )
     penetration = max(0.0, -1000.0 * deepest) if hand_pairs else "no hand pairs"
     return {"tip_to_palm_mm": gaps, "max_penetration_mm": penetration, "hand_pairs": int(hand_pairs)}
+
+
+def fist() -> dict[str, Any]:
+    """Active fist over FIST_SEEDS nudged starts: per digit the median, min and max tip-to-palm distance and the
+    share of runs in which the tip reaches the palm (within FIST_REACH_MM), and the deepest penetration of all runs.
+
+    Where the middle fingertip lands depends chaotically on the start: any nudge from 1e-12 to 1e-6 sends about
+    two thirds of the runs to the palm, the rest end 1.2 mm short at the flexion limits or 2.7 mm short with the
+    fingertip on the ring finger's middle phalanx, with the same outcome per seed on MuJoCo 3.17 and 4.
+    """
+    runs = [fist_run(seed) for seed in range(FIST_SEEDS)]
+    gaps = np.array([[r["tip_to_palm_mm"][str(d)] for d in DIGITS] for r in runs])
+    pens = [r["max_penetration_mm"] for r in runs]
+    per = lambda v: {str(d): float(x) for d, x in zip(DIGITS, v)}  # noqa: E731
+    return {
+        "tip_to_palm_mm": {
+            "median": per(np.median(gaps, axis=0)),
+            "min": per(gaps.min(axis=0)),
+            "max": per(gaps.max(axis=0)),
+            "reach_share": per(np.mean(gaps <= FIST_REACH_MM, axis=0)),
+        },
+        "max_penetration_mm": max(pens) if all(isinstance(x, float) for x in pens) else pens[0],
+    }
 
 
 def pip_limits(model: mujoco.MjModel) -> list[float]:
@@ -764,7 +790,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out["fingertip_pad_thickness"] = fingertip_pads(model)
     pads = palm_pads(model)
     out["palm_pad_thickness"] = pads or "no palm pads"
-    f = fist(model_name)
+    f = fist()
     out["fist_tip_to_palm"] = f["tip_to_palm_mm"]
     out["fist_max_penetration"] = f["max_penetration_mm"]
     return out

@@ -35,6 +35,12 @@ muscle to ``myoarm_r_muscle.xml``, the model's source of truth (the left arm is
 mirrored from it). The tabled ``force_velocity.vmax`` goes to the forearm muscle class
 in ``myoarm_r_assets.xml``; the fit itself does not depend on it.
 
+Muscles listed under ``physiological`` first get their length range from an optimal fibre
+length and pennation angle taken from the literature (``physiological_maps``): the tendon slack
+length puts the fibres at optimal length in the neutral posture, and the rigid-tendon map of
+``myo_sim.build.rigid_conversion`` turns the pair into ``lengthrange``. The passive fit then
+starts from that slack length.
+
 Run: ``uv run python scripts/fit_muscle_passive.py`` (refits, rewrites the JSON and
 the XML attributes); ``--release-only`` reruns only the release step from the tabled
 values; ``--xml-only`` only writes the JSON values into the XML.
@@ -57,6 +63,7 @@ import numpy as np
 
 import myo_sim
 from myo_sim.build.hand_data import fold_node_forces, place_tendon_nodes
+from myo_sim.build.rigid_conversion import actuator_lengths, joint_ranges, rigid_equivalent_fiber_length, sample_postures
 
 DATA_PATH = Path(__file__).parents[1] / "myo_sim" / "build" / "data" / "muscle_passive.json"
 VALIDATION_SCRIPT = Path(__file__).with_name("validate_hand_function.py")
@@ -312,6 +319,49 @@ def fitted_lengthranges(model: mujoco.MjModel, table: dict[str, Any]) -> dict[st
         unchanged = slack["value"] == slack["reference_value_m"] and abs(shift) <= 1e-6
         ranges[name] = [float(v) for v in lr] if unchanged or abs(shift) < 1e-12 else [float(v + shift) for v in lr]
     return ranges
+
+
+def physiological_maps(model: mujoco.MjModel, table: dict[str, Any]) -> dict[str, dict[str, float]]:
+    """Rigid-tendon map of each ``physiological`` muscle from its cited optimal fibre length and pennation.
+
+    The tendon slack length puts the fibres at optimal length in the neutral posture (``qpos0``); the linear map
+    of the rigid-tendon fibre length over random postures of the listed joints gives L0 and MuJoCo's slack
+    (``lengthrange`` at the muscle's ``range``).
+    """
+    out = {}
+    for name, p in table.get("physiological", {}).get("muscles", {}).items():
+        a = model.actuator(name).id
+        lopt, alpha = p["optimal_fibre_length_m"]["value"], p["pennation_rad"]["value"]
+        neutral = float(actuator_lengths(model, model.qpos0[None], [a])[0, 0])
+        lts = neutral - lopt * np.cos(alpha)
+        postures = sample_postures(model, joint_ranges(model, tuple(p["joints"])), n=400, seed=123)
+        lengths = actuator_lengths(model, postures, [a])[:, 0]
+        slope, icpt = np.polyfit(lengths, rigid_equivalent_fiber_length(lengths, lopt, lts, alpha), 1)
+        g = model.actuator_gainprm[a]
+        L0, slack = 1.0 / slope, -icpt / slope
+        norm = icpt + slope * np.percentile(lengths, [5, 50, 95])
+        out[name] = {
+            "tendon_slack_length_m": round(float(lts), 6),
+            "neutral_length_m": round(neutral, 6),
+            "mujoco_L0_m": round(float(L0), 6),
+            "mujoco_slack_m": round(float(slack), 6),
+            "lengthrange_m": [round(float(slack + g[0] * L0), 6), round(float(slack + g[1] * L0), 6)],
+            "normalised_length_5_50_95": [round(float(v), 3) for v in norm],
+        }
+    return out
+
+
+def apply_physiological(table: dict[str, Any]) -> None:
+    """Write the ``physiological`` maps into the XML and make their slack lengths the fit's reference values."""
+    model = myo_sim.load_spec("myoarm_r").compile()
+    maps = physiological_maps(model, table)
+    if not maps:
+        return
+    rows = {r["names"]["r"]: r for r in table["muscles"]}
+    for name, m in maps.items():
+        table["physiological"]["muscles"][name]["derived"] = m
+        rows[name]["tendon_slack_m"]["reference_value_m"] = m["mujoco_slack_m"]
+    write_muscle_xml({n: m["lengthrange_m"] for n, m in maps.items()}, fitted_fpmax(table))
 
 
 def fitted_fpmax(table: dict[str, Any]) -> dict[str, float]:
@@ -673,6 +723,8 @@ def main() -> None:
         write_muscle_xml(unchanged, fitted_fpmax(table))
         _report(table)
         return
+    apply_physiological(table)
+    model = myo_sim.load_spec("myoarm_r").compile()
     # Fit from the reference values, whatever the XML currently holds.
     for row in table["muscles"]:
         name = row["names"]["r"]
