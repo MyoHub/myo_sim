@@ -1,0 +1,102 @@
+<!-- Test model for myo_sim.diff: the joint, wrap, tendon and actuator features that the myo_sim
+     models do not use (pulleys, fixed tendons, ball and free joints, inside side sites, non-muscle
+     actuators, actearly and the limits), next to the ones they do. Not a body model. -->
+<mujoco model="diff_features">
+  <option timestep="0.002"/>
+  <worldbody>
+    <site name="w0" pos="0 0.05 0.3"/>
+    <body name="base" pos="0 0 0.5">
+      <freejoint name="root"/>
+      <geom name="base_g" type="box" size="0.05 0.05 0.05" mass="1"/>
+      <site name="b0" pos="0.04 0.02 0.03"/>
+      <site name="b1" pos="-0.03 0.04 -0.02"/>
+      <site name="b2" pos="0.02 -0.04 0.04"/>
+      <body name="upper" pos="0 0 -0.1" quat="0.9 0.1 0.2 0.1">
+        <joint name="shoulder" type="ball" pos="0 0 0.02"/>
+        <geom name="upper_g" type="capsule" fromto="0 0 0 0 0 -0.3" size="0.02" mass="1"/>
+        <geom name="wrap_sph" type="sphere" pos="0 0 -0.3" size="0.035"/>
+        <site name="u0" pos="0.03 0 -0.05"/>
+        <site name="u1" pos="-0.03 0.01 -0.1"/>
+        <site name="u_side" pos="0.06 0 -0.3"/>
+        <site name="u_in" pos="0.005 0 -0.3"/>
+        <body name="fore" pos="0 0 -0.3">
+          <joint name="elbow" type="hinge" axis="0 1 0" pos="0 0 0.01" range="-2 0.2"/>
+          <joint name="ulna_slide" type="slide" axis="0 0 1" range="-0.01 0.01"/>
+          <joint name="pron" type="hinge" axis="0 0 1" range="-1.5 1.5"/>
+          <geom name="fore_g" type="capsule" fromto="0 0 0 0 0 -0.25" size="0.015" mass="0.5"/>
+          <geom name="wrap_cyl" type="cylinder" pos="0 0 -0.25" quat="0.7071 0.7071 0 0" size="0.02 0.03"/>
+          <site name="f0" pos="0.02 0 -0.05"/>
+          <site name="f1" pos="-0.02 0 -0.08"/>
+          <site name="f_side" pos="0 0 -0.32"/>
+          <site name="f_in" pos="0 0.004 -0.25"/>
+          <body name="hand" pos="0 0 -0.25">
+            <joint name="wrist" type="hinge" axis="1 0 0" range="-1 1"/>
+            <joint name="wrist_coupled" type="hinge" axis="0 1 0" range="-1 1"/>
+            <joint name="held" type="slide" axis="1 0 0" range="-0.1 0.1"/>
+            <geom name="hand_g" type="box" size="0.03 0.01 0.05" pos="0 0 -0.05" mass="0.2"/>
+            <site name="h0" pos="0.01 0.01 -0.06"/>
+            <site name="h1" pos="-0.01 -0.01 -0.08"/>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <equality>
+    <joint joint1="wrist_coupled" joint2="wrist" polycoef="0.05 0.6 -0.2 0.1 0.03"/>
+    <joint joint1="held" polycoef="0.02 0 0 0 0"/>
+  </equality>
+  <tendon>
+    <spatial name="t_straight">
+      <site site="b0"/><site site="u0"/><site site="f0"/><site site="h0"/>
+    </spatial>
+    <spatial name="t_sphere">
+      <site site="u1"/><geom geom="wrap_sph"/><site site="f1"/>
+    </spatial>
+    <spatial name="t_sphere_side">
+      <site site="u0"/><geom geom="wrap_sph" sidesite="u_side"/><site site="f0"/>
+    </spatial>
+    <spatial name="t_sphere_inside">
+      <site site="u1"/><geom geom="wrap_sph" sidesite="u_in"/><site site="f0"/>
+    </spatial>
+    <spatial name="t_cyl">
+      <site site="f0"/><geom geom="wrap_cyl"/><site site="h1"/>
+    </spatial>
+    <spatial name="t_cyl_side">
+      <site site="f1"/><geom geom="wrap_cyl" sidesite="f_side"/><site site="h0"/>
+    </spatial>
+    <spatial name="t_cyl_inside">
+      <site site="f0"/><geom geom="wrap_cyl" sidesite="f_in"/><site site="h0"/>
+    </spatial>
+    <spatial name="t_pulley">
+      <site site="b0"/><site site="u0"/>
+      <pulley divisor="2"/>
+      <site site="u0"/><geom geom="wrap_sph" sidesite="u_side"/><site site="f1"/>
+      <pulley divisor="3"/>
+      <site site="u1"/><site site="h1"/>
+    </spatial>
+    <spatial name="t_world">
+      <site site="w0"/><site site="b1"/><site site="u1"/>
+    </spatial>
+    <fixed name="t_fixed">
+      <joint joint="elbow" coef="0.02"/>
+      <joint joint="ulna_slide" coef="-1.5"/>
+      <joint joint="wrist" coef="0.01"/>
+    </fixed>
+  </tendon>
+  <actuator>
+    <muscle name="m_straight" tendon="t_straight" lengthrange="0.4 0.75" force="200"/>
+    <muscle name="m_sphere" tendon="t_sphere" lengthrange="0.2 0.4" force="150" tausmooth="0.2"/>
+    <general name="m_side" tendon="t_sphere_side" lengthrange="0.2 0.4" dyntype="muscle" dynprm="0.01 0.04 0" gaintype="muscle" biastype="muscle"
+             gainprm="0.75 1.05 -1 5 0.5 1.6 1.5 1.3 1.2" biasprm="0.75 1.05 -1 5 0.5 1.6 1.5 1.3 1.2" actearly="true"/>
+    <muscle name="m_inside" tendon="t_sphere_inside" lengthrange="0.2 0.4" force="120" timeconst="0.02 0.05"/>
+    <muscle name="m_cyl" tendon="t_cyl" lengthrange="0.05 0.2" force="80" range="0.6 1.4" lmin="0.4" lmax="1.7" vmax="12" fpmax="1.5" fvmax="1.3"/>
+    <muscle name="m_cyl_side" tendon="t_cyl_side" lengthrange="0.05 0.2" force="80" forcelimited="true" forcerange="-50 0"/>
+    <muscle name="m_cyl_inside" tendon="t_cyl_inside" lengthrange="0.05 0.2" force="60" gear="1.5"/>
+    <muscle name="m_pulley" tendon="t_pulley" lengthrange="0.1 0.35" force="90"/>
+    <general name="g_world" tendon="t_world" dyntype="filter" dynprm="0.03" gaintype="affine" gainprm="10 -3 0.5" biastype="affine" biasprm="0.5 -20 -1" actlimited="true" actrange="-0.5 0.8"/>
+    <general name="g_fixed" tendon="t_fixed" dyntype="filterexact" dynprm="0.05" gainprm="5" ctrllimited="true" ctrlrange="-1 1"/>
+    <general name="g_integ" joint="pron" dyntype="integrator" gainprm="2" actlimited="true" actrange="-1 1" gear="3"/>
+    <motor name="motor_elbow" joint="elbow" gear="-4" ctrllimited="true" ctrlrange="-1 1"/>
+    <position name="pos_slide" joint="ulna_slide" kp="100" kv="2"/>
+  </actuator>
+</mujoco>

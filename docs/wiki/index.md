@@ -17,7 +17,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/model-readme-template.md` — agentic workflow for writing model READMEs
 - `docs/wiki/build-and-composition.md` — MjSpec compose.py reference
 - `docs/wiki/postures.md` — the posture keyframes: pose, API, measurements and literature comparison
-- `docs/wiki/differentiable-muscle-tendon.md` — proposal: a differentiable (torch) muscle-tendon model built from the compiled models
+- `docs/wiki/differentiable-muscle-tendon.md` — `myo_sim.diff`: the differentiable (torch) muscle-tendon model built from the compiled models
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
 - `docs/wiki/log.md` — append-only wiki maintenance log
 

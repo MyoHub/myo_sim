@@ -23,6 +23,7 @@ myo_sim/              # installable Python package
     hand.py           # prune_arm_spec_to_hand()
     keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
     data/             # tables written by scripts/, with provenance
+  diff/               # optional torch replica of tendons, moment arms, muscles (myo_sim[torch]); NOTICE
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -34,6 +35,8 @@ tests/
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
   test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
+  test_diff_parity.py / test_diff_grad.py / test_diff_compile.py  # myo_sim.diff vs MuJoCo; skip without torch
+  diff_utils.py / data/diff_features.xml                          # their helpers and feature test model
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -51,6 +54,7 @@ docs/wiki/            # canonical wiki location
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
 | Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
+| Change the differentiable muscle-tendon model | `myo_sim/diff/`, its tests `tests/test_diff_*.py`, `scripts/benchmark_diff.py` |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
 
 ## Publishing

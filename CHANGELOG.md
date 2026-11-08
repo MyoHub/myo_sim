@@ -4,6 +4,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **`myo_sim.diff`, a differentiable muscle-tendon model (new, optional).** `pip install "myo-sim[torch]"` adds a PyTorch replica, built from any compiled model, of MuJoCo's forward kinematics, spatial and fixed tendons (sphere and cylinder wraps with and without side sites, pulleys), moment arms (`ten_J`, `actuator_moment`, and moment arms through the joint couplings), muscle forces and activation dynamics. It is batched, runs on CPU and CUDA, traces as one `torch.compile` graph, follows the side-site rule of the installed MuJoCo (3 or 4) and matches MuJoCo to round-off on `myohand_r`, `myoarm_r`, `myolegs`, `myofullbody` and `myoarms`. `import myo_sim` does not import torch. No model change. See `docs/wiki/differentiable-muscle-tendon.md`.
 - **Head and trunk mass (all models with the torso chain).** The head body now carries 5.848 kg (6.94 % of body mass, de Leva 1996) and the torso 14.897 kg instead of 18.619 kg; the total of `myofullbody` is unchanged at 84.26 kg and the whole-body centre of mass rises by 1.4 cm. The OpenSim torso mass already contained the head, so the head was previously about 2.5 % of body mass. Downstream: dynamics of every model with the torso and head change slightly; policies trained on the old masses (e.g. MyoSuite and MuscleMimic `myofullbody` checkpoints) should be re-evaluated or retrained, and MyoSuite parity baselines regenerated when it moves to this release.
 
 ## 0.2.4

@@ -1,0 +1,13 @@
+myo_sim.diff includes code ported from muscle-supermimic
+(https://github.com/kaibohex/muscle-supermimic, commit 8a6244b):
+
+    muscle-supermimic
+    Copyright 2026 The muscle-supermimic Authors
+
+    This product is licensed under the Apache License, Version 2.0.
+
+Ported and modified for myo_sim by the myo_sim authors: wrap.py, tendon.py and actuator.py
+(from src/muscle_supermimic/tasks/tracking/mdp/muscle_geometry.py and muscle.py) and
+kinematics.py (from src/muscle_supermimic/tasks/tracking/mdp/kinematics.py). Each ported
+file says so in its docstring. myo_sim is itself licensed under the Apache License,
+Version 2.0 (see the LICENSE file at the root of the repository).

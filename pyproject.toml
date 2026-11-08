@@ -14,6 +14,10 @@ dependencies = [
     "numpy>=1.24",
 ]
 
+[project.optional-dependencies]
+# Differentiable muscle-tendon model, myo_sim.diff.
+torch = ["torch>=2.2"]
+
 [dependency-groups]
 dev = [
     "pytest>=8.0",
@@ -39,6 +43,7 @@ myo_sim = [
     "models/**/*",
     "build/*",
     "build/**/*",
+    "diff/NOTICE",
 ]
 
 [tool.pytest.ini_options]

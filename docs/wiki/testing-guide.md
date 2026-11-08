@@ -22,6 +22,9 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_warp_parity.py` | Every tendon length in `myohands` and `myoarms` matches between CPU MuJoCo and mujoco-warp over random postures (to 1e-5 m) | After tendon or wrap changes; skipped without mujoco-warp or a CUDA device, and an expected failure on mujoco-warp < 3.16 for tendons with a sidesite inside their wrap geom |
 | `test_warp_version_warning.py` | `load_spec()` warns once when mujoco-warp < 3.16 is installed and the model has arm or hand tendons; silent otherwise |
 | `test_postures.py` | The posture keyframes: JSON matches its script, couplings hold, only the feet touch at t = 0, joint speeds over 50 ms, muscle lengths, attach and spec editing, with `qpos0` as negative control | After joint, coupling, contact or `compose.py` changes |
+| `test_diff_parity.py` | `myo_sim.diff` against MuJoCo on random states of `myohand_r`, `myoarm_r`, `myolegs`, `myofullbody`, `myoarms` and `tests/data/diff_features.xml`: tendon lengths, velocities, Jacobians, actuator moments and forces, generalised forces, activation dynamics, float32, effective moment arms, and the other side-site rule as negative control | After `myo_sim/diff/` or tendon/wrap changes; skipped without torch |
+| `test_diff_grad.py` | `myo_sim.diff` gradients: autograd against the moment arms and against central differences away from wrap onsets, and the behaviour at onsets | After `myo_sim/diff/` changes; skipped without torch |
+| `test_diff_compile.py` | `myo_sim.diff` traces as one `torch.compile` graph (CPU); compiled step with CUDA-graph capture (skipped without CUDA) | After `myo_sim/diff/` changes; skipped without torch |
 | `test_equivalence.py` | `myofullbody` joint and actuator counts match musclemimic reference spec | Manual only — needs musclemimic reference values |
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
 
