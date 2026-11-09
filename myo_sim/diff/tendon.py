@@ -18,6 +18,9 @@ The Jacobian is returned in MuJoCo's sparse row layout (``ten_J_rownnz``, ``ten_
 
 from __future__ import annotations
 
+import importlib.util
+import os
+import warnings
 from dataclasses import dataclass
 
 import mujoco
@@ -71,6 +74,19 @@ def sparse_layout(m: mujoco.MjModel) -> tuple[np.ndarray, np.ndarray, np.ndarray
     return rownnz, rowadr, colind
 
 
+def fused_available(device: torch.device | str | None) -> bool:
+    """Whether the fused Triton kernel can run on ``device``: Triton installed and a CUDA device (or the CPU
+    with ``TRITON_INTERPRET=1``). Warns and returns False otherwise, so callers fall back to torch."""
+    if importlib.util.find_spec("triton") is None:
+        reason = "Triton is not installed"
+    elif torch.device(device or "cpu").type == "cuda" or os.environ.get("TRITON_INTERPRET") == "1":
+        return True
+    else:
+        reason = "it needs a CUDA device"
+    warnings.warn(f"fused=True ignored, {reason}; using the torch tendon path", stacklevel=3)
+    return False
+
+
 @dataclass
 class TendonState:
     """Tendon outputs.
@@ -95,9 +111,11 @@ class Tendons:
         m: compiled model.
         kin: kinematics of the same model.
         side_rule: ``"mujoco3"`` or ``"mujoco4"`` (see :mod:`myo_sim.diff.wrap`).
+        fused: evaluate the spatial tendons with the fused Triton kernel (:mod:`myo_sim.diff.fused`; CUDA, or the
+            CPU with ``TRITON_INTERPRET=1``); the gradient is the torch replica's.
     """
 
-    def __init__(self, m: mujoco.MjModel, kin: Kinematics, side_rule: str):
+    def __init__(self, m: mujoco.MjModel, kin: Kinematics, side_rule: str, fused: bool = False):
         device, dtype = kin.device, kin.dtype
         self.kin, self.side_rule, self.ntendon, self.nv = kin, side_rule, m.ntendon, m.nv
         self.rownnz, self.rowadr, self.colind = sparse_layout(m)
@@ -216,12 +234,47 @@ class Tendons:
         self.J_const = ft(Jc)
         self.row_of_slot = it(np.repeat(np.arange(m.ntendon), self.rownnz))
         self.colind_t = it(self.colind)
+        self.fused = self._fused_tables(m, triples, pieces, ent) if fused and self.npiece and fused_available(device) else None
 
     def forward(self, s: KinematicsState, qpos: torch.Tensor, qvel: torch.Tensor | None = None) -> TendonState:
         """Lengths, Jacobian and (with ``qvel``) velocities of every tendon."""
         lead = qpos.shape[:-1]
+        if self.npiece:
+            omega, v0 = self.kin.dof_axes(s)
+            args = (s.xpos, s.xmat, omega, v0)
+            if self.fused is not None:
+                from .fused import FusedTendonFunction, tendon_length_jacobian  # noqa: PLC0415  (needs triton)
+
+                if torch.is_grad_enabled() and any(x.requires_grad for x in args):
+                    L, J, WL = FusedTendonFunction.apply(self.fused, self._spatial_lj, self.side_rule, *args)
+                else:
+                    L, J, WL = tendon_length_jacobian(self.fused, *args, rule=self.side_rule)
+                wrapped = self.fused.wrap_lengths(WL) >= 0
+            else:
+                L, J, wrapped = self._spatial(*args)
+        else:
+            L = qpos.new_zeros(lead + (self.ntendon,))
+            J = qpos.new_zeros(lead + (self.nJ,))
+            wrapped = qpos.new_zeros(lead + (0,), dtype=torch.bool)
+        if self.fx_ten.numel():
+            L = L.index_add(-1, self.fx_ten, qpos[..., self.fx_qadr] * self.fx_coef)
+        J = J + self.J_const
+        vel = None
+        if qvel is not None:
+            vel = qpos.new_zeros(lead + (self.ntendon,)).index_add(-1, self.row_of_slot, J * qvel[..., self.colind_t])
+        return TendonState(length=L, J=J, velocity=vel, wrapped=wrapped)
+
+    def _spatial_lj(self, xpos, xmat, omega, v0) -> tuple[torch.Tensor, torch.Tensor]:
+        L, J, _ = self._spatial(xpos, xmat, omega, v0)
+        return L, J
+
+    def _spatial(self, xpos, xmat, omega, v0) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+        """Spatial tendons' lengths (..., ntendon), Jacobian without the fixed tendons' (..., nJ) and wrap flags, in
+        torch, from the body poses and the DOF axes."""
+        lead = xpos.shape[:-2]
+        s = KinematicsState(xpos, xmat, None, None)  # frame_pose reads the body poses only
         X, _ = self.kin.frame_pose(s, self.site_body, self.site_pos)
-        L = qpos.new_zeros(lead + (self.ntendon,))
+        L = xpos.new_zeros(lead + (self.ntendon,))
         if self.ntriple:
             gpos, gR = self.kin.frame_pose(s, self.geom_body, self.geom_pos, self.geom_R)
             g = self.tri_g
@@ -242,31 +295,61 @@ class Tendons:
             on_w = wrapped[..., self.pc_tri]
             on = torch.where(self.pc_kind == 0, torch.ones_like(on_w), torch.where(self.pc_kind == 1, on_w, ~on_w))
         else:
-            wrapped = qpos.new_zeros(lead + (0,), dtype=torch.bool)
+            wrapped = xpos.new_zeros(lead + (0,), dtype=torch.bool)
             points = X
-            on = torch.ones(lead + (self.npiece,), dtype=torch.bool, device=qpos.device)
-        if self.fx_ten.numel():
-            L = L.index_add(-1, self.fx_ten, qpos[..., self.fx_qadr] * self.fx_coef)
-        J = self.J_const.expand(lead + (self.nJ,))
-        if self.npiece:
-            x1, x2 = points[..., self.pc_p1, :], points[..., self.pc_p2, :]
-            d = x2 - x1
-            n = norm(d)
-            w = torch.where(on, self.pc_w, torch.zeros_like(n))
-            L = L.index_add(-1, self.pc_ten, n * w)
-            if self.ent_slot.numel():
-                u = d / n.unsqueeze(-1)
-                c = torch.cat((cross(x1, u), cross(x2, u)), -2)  # x_end x u, (..., 2 npiece, 3)
-                omega, v0 = self.kin.dof_axes(s)
-                e = self.ent_piece
-                val = dot(u[..., e, :], v0[..., self.ent_dof, :]) + dot(
-                    omega[..., self.ent_dof, :], c[..., self.ent_end * self.npiece + e, :]
-                )
-                J = J.index_add(-1, self.ent_slot, val * self.ent_sign * w[..., e])
-        vel = None
-        if qvel is not None:
-            vel = qpos.new_zeros(lead + (self.ntendon,)).index_add(-1, self.row_of_slot, J * qvel[..., self.colind_t])
-        return TendonState(length=L, J=J, velocity=vel, wrapped=wrapped)
+            on = torch.ones(lead + (self.npiece,), dtype=torch.bool, device=xpos.device)
+        J = xpos.new_zeros(lead + (self.nJ,))
+        x1, x2 = points[..., self.pc_p1, :], points[..., self.pc_p2, :]
+        d = x2 - x1
+        n = norm(d)
+        w = torch.where(on, self.pc_w, torch.zeros_like(n))
+        L = L.index_add(-1, self.pc_ten, n * w)
+        if self.ent_slot.numel():
+            u = d / n.unsqueeze(-1)
+            c = torch.cat((cross(x1, u), cross(x2, u)), -2)  # x_end x u, (..., 2 npiece, 3)
+            e = self.ent_piece
+            val = dot(u[..., e, :], v0[..., self.ent_dof, :]) + dot(
+                omega[..., self.ent_dof, :], c[..., self.ent_end * self.npiece + e, :]
+            )
+            J = J.index_add(-1, self.ent_slot, val * self.ent_sign * w[..., e])
+        return L, J, wrapped
+
+    def _fused_tables(self, m: mujoco.MjModel, triples: list, pieces: list, ent: list):
+        """The fused kernel's tables (:mod:`myo_sim.diff.fused`): one row per tendon, its sparse Jacobian row."""
+        from .fused import FusedTendons, Segment  # noqa: PLC0415
+
+        by_piece: dict[int, list] = {}
+        for k, dof, end, _, slot in ent:
+            t = pieces[k][0]
+            by_piece.setdefault(k, []).append((dof, end, slot - int(self.rowadr[t]), -1))
+        ns = len(self.site_ids)
+        segs, k = [], 0
+        npair = len(pieces) - 3 * len(triples)
+        for i in range(npair):
+            t, a, b = pieces[i][:3]
+            segs.append(Segment(t, a, b, -1, -1, False, False, pieces[i][5], ([], [], by_piece.get(i, []))))
+        for j, (t, a, g, b, side, cyl, w) in enumerate(triples):
+            k = npair + 3 * j
+            segs.append(Segment(t, a, b, g, side, bool(cyl), self._inside_candidate(m, side, g, cyl), w,
+                                tuple(by_piece.get(k + i, []) for i in range(3)), tag=j))  # fmt: skip
+        assert all(p[1] < ns + 2 * len(triples) for p in pieces)
+        geom_R = self.geom_R.detach().cpu().double().numpy() if len(self.geom_ids) else np.zeros((0, 9))
+        return FusedTendons(self.site_body.cpu().numpy(), m.site_pos[self.site_ids], self.geom_body.cpu().numpy(),
+                            m.geom_pos[self.geom_ids] if self.geom_ids else np.zeros((0, 3)), geom_R,
+                            m.geom_size[self.geom_ids, 0] if self.geom_ids else np.zeros(0), segs, m.ntendon,
+                            self.rowadr, self.rownnz, self.nJ, self.site_body.device)  # fmt: skip
+
+    def _inside_candidate(self, m: mujoco.MjModel, side: int, g: int, cyl: bool) -> bool:
+        """Whether a wrap's side site can lie inside its geom: on another body, or within it (fixed offset)."""
+        if side < 0:
+            return False
+        s, gid = self.site_ids[side], self.geom_ids[g]
+        if m.site_bodyid[s] != m.geom_bodyid[gid]:
+            return True
+        R = np.zeros(9)
+        mujoco.mju_quat2Mat(R, m.geom_quat[gid])
+        d = R.reshape(3, 3).T @ (m.site_pos[s] - m.geom_pos[gid])
+        return bool(min(np.linalg.norm(d), np.linalg.norm(d[:2]) if cyl else np.inf) < m.geom_size[gid, 0])
 
     def dense_J(self, J: torch.Tensor) -> torch.Tensor:
         """Sparse tendon Jacobian (..., nJ) to dense (..., ntendon, nv) (``mju_sparse2dense``)."""

@@ -60,6 +60,8 @@ class MuscleTendonModel:
         device: torch device of the tables and outputs.
         dtype: ``torch.float64`` (parity with MuJoCo) or ``torch.float32``.
         side_rule: ``"mujoco3"`` or ``"mujoco4"``; defaults to the installed MuJoCo's rule.
+        fused: opt-in fused Triton kernel for the spatial tendons (:mod:`myo_sim.diff.fused`); needs Triton and
+            CUDA, otherwise warns and keeps the default torch path.
 
     Example:
         >>> model = MuscleTendonModel(myo_sim.load_model("myoarm_r"))
@@ -73,6 +75,7 @@ class MuscleTendonModel:
         device: torch.device | str | None = None,
         dtype: torch.dtype = torch.float64,
         side_rule: str | None = None,
+        fused: bool = False,
     ):
         side_rule = side_rule or default_side_rule()
         if side_rule not in SIDE_RULES:
@@ -82,7 +85,7 @@ class MuscleTendonModel:
         self.side_rule, self.device, self.dtype = side_rule, device, dtype
         self.nq, self.nv, self.nu, self.na, self.ntendon = m.nq, m.nv, m.nu, m.na, m.ntendon
         self.kinematics = Kinematics(m, device, dtype)
-        self.tendons = Tendons(m, self.kinematics, side_rule)
+        self.tendons = Tendons(m, self.kinematics, side_rule, fused)
         self.actuators = Actuators(m, (self.tendons.rownnz, self.tendons.rowadr, self.tendons.colind), device, dtype)
         self.couplings = JointCouplings(m, device, dtype)
         self.actuator_names = [m.actuator(a).name for a in range(m.nu)]

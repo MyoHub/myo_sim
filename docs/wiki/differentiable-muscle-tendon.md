@@ -191,6 +191,24 @@ For comparison, the same quantities in MuJoCo's C code take 44 µs (`myoarm_r`) 
 (`myofullbody`) per state on one thread. Batch 1 is dominated by Python and kernel launch overhead. At
 large batches on the CPU, the wrap kernels and the sparse Jacobian entries dominate.
 
+### Fused tendon kernel (opt-in)
+
+`MuscleTendonModel(m, "cuda", fused=True)` evaluates the spatial tendons with one Triton kernel
+(`myo_sim/diff/fused.py`) instead of some hundred small torch kernels. One program per tendon and block
+of 64 states walks the tendon's path (site pairs, sphere and cylinder wraps with side sites, both
+side-site rules, the inside wrap in float64) and accumulates the length and the sparse `ten_J` row in
+registers. It is CUDA-graph capturable and needs no host synchronisation.
+
+- **Opt-in.** The default stays the pure-torch path. `fused=True` without Triton or a CUDA device warns
+  and falls back to it.
+- **Gradients.** The kernel has no backward of its own. Under autograd the backward pass recomputes the
+  torch path, so gradients are exactly the torch path's.
+- **Tests.** `tests/test_diff_fused.py` checks lengths, `ten_J`, velocities and wrap flags against the
+  torch path (float64 round-off), forces against MuJoCo, float32 error, and gradients against the torch
+  path and finite differences. It skips without Triton and CUDA; `TRITON_INTERPRET=1` runs it on the CPU.
+- **Speed.** At 2048 states on an RTX 5090, one tendon refresh (lengths and `ten_J`) takes 0.34 ms,
+  against 1.6-1.9 ms for the torch path.
+
 ## Implementation notes
 
 - **Kinematics.**
