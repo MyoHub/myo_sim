@@ -2,6 +2,14 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-08 — myo_sim.diff, differentiable muscle-tendon model
+Changed: myo_sim/diff/, pyproject.toml, tests/test_diff_parity.py, tests/test_diff_grad.py, tests/test_diff_compile.py, tests/diff_utils.py, tests/data/diff_features.xml, scripts/benchmark_diff.py, docs/wiki/differentiable-muscle-tendon.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: steps 1 and 2 of the proposal (#165): tendon geometry, moment arms, muscle forces and activation dynamics as a batched torch replica of the compiled models, with parity tests against MuJoCo 3 and 4; the proposal page becomes the module's documentation.
+
+## 2026-11-08 — Proposal: differentiable muscle-tendon model
+Changed: docs/wiki/differentiable-muscle-tendon.md, docs/wiki/index.md
+Why: model-based learning, physiological costs and gradient-based fitting need tendon lengths, moment arms and muscle forces as differentiable functions; this page proposes a shared component for discussion.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
