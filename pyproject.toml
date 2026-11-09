@@ -14,6 +14,11 @@ dependencies = [
     "numpy>=1.24",
 ]
 
+[project.optional-dependencies]
+# Array backends of myo_sim.physics; NumPy alone runs the CPU fatigue model and joint couplings.
+torch = ["torch>=2.2"]
+jax = ["jax>=0.4.20"]
+
 [dependency-groups]
 dev = [
     "pytest>=8.0",

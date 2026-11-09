@@ -23,6 +23,11 @@ myo_sim/              # installable Python package
     hand.py           # prune_arm_spec_to_hand()
     keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
     data/             # tables written by scripts/, with provenance
+  physics/            # runtime physics the models need beyond MuJoCo (NumPy core; torch/JAX lazily)
+    joint_coupling.py # put coupled joints (mjEQ_JOINT) on their polynomials
+    fatigue.py        # 3CC-r muscle fatigue: NumPy, batched torch (torch.compile on CUDA)
+    fatigue_jax.py    # the same fatigue step in JAX
+    muscle_groups.py  # functional muscle groups, keys of the fatigue parameters
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -34,6 +39,7 @@ tests/
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
   test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
+  test_physics_*.py                # myo_sim.physics: couplings, fatigue (NumPy/torch/JAX), endurance times
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
