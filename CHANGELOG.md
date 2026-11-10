@@ -2,6 +2,12 @@
 
 Model changes that alter actuators, joints, sites or dynamics are breaking for downstream environments and trained policies. List them here; they ship together in the next release tag.
 
+## 0.2.5
+
+The body of 0.2.4: no model file changes, so every model array is identical to 0.2.4. This release adds runtime code.
+
+- **`myo_sim.physics`: joint couplings and 3CC-r muscle fatigue (from MyoSuite).** `joint_coupling` puts coupled joints on their polynomials (NumPy or torch, in place or differentiable), `fatigue` holds the 3CC-r model with its cited per-group parameters (`CumulativeFatigue` in NumPy, `TorchFatigueState` batched in torch and fused with `torch.compile` on CUDA), `fatigue_jax` the same step in JAX, and `muscle_groups` the functional muscle groups. NumPy is enough to import them; torch and JAX are optional (`myo-sim[torch]`, `myo-sim[jax]`). No model file changes.
+
 ## 0.2.4
 
 The body of 0.2.3 with fixes. Apart from the items below, every `myofullbody` model array is identical to 0.2.3, and tendon lengths and actuator forces match on 6000 random postures.
