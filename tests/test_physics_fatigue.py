@@ -248,6 +248,60 @@ class TestCumulativeFatigue:
         f.reset(fatigue_reset_vec=initial)
         np.testing.assert_array_equal(f.MF, initial)
 
+    @pytest.mark.parametrize("shape", [(), (2,), (3, 1), (3, 3)])
+    def test_numpy_reset_rejects_wrong_shape_without_changing_state(self, shape: tuple[int, ...]) -> None:
+        f = _make_fatigue_model(3)
+        f.step(np.full(3, 0.6), dt=0.02)
+        before = f.state_dict()
+
+        with pytest.raises(ValueError, match="shape"):
+            f.reset(fatigue_reset_vec=np.full(shape, 0.2))
+
+        assert f.state_dict() == before
+        assert f.step(np.full(3, 0.6), dt=0.02).shape == (3,)
+
+    @pytest.mark.parametrize("field", ["MA", "MR", "MF"])
+    @pytest.mark.parametrize("invalid", [[0.2], [[0.1], [0.2], [0.3]], ["invalid"]])
+    def test_numpy_checkpoint_rejects_invalid_state_before_writing(self, field: str, invalid: list) -> None:
+        f = _make_fatigue_model(3)
+        f.step(np.full(3, 0.6), dt=0.02)
+        before = f.state_dict()
+        checkpoint = _make_fatigue_model(3).state_dict()
+        checkpoint[field] = invalid
+
+        with pytest.raises(ValueError):
+            f.load_state_dict(checkpoint)
+
+        assert f.state_dict() == before
+        assert f.step(np.full(3, 0.6), dt=0.02).shape == (3,)
+
+    @pytest.mark.parametrize("missing", ["MA", "MR", "MF"])
+    def test_numpy_checkpoint_missing_compartment_leaves_state_unchanged(self, missing: str) -> None:
+        f = _make_fatigue_model(3)
+        f.step(np.full(3, 0.6), dt=0.02)
+        before = f.state_dict()
+        checkpoint = _make_fatigue_model(3).state_dict()
+        del checkpoint[missing]
+
+        with pytest.raises(KeyError):
+            f.load_state_dict(checkpoint)
+
+        assert f.state_dict() == before
+
+    @pytest.mark.parametrize("n", [0, 3])
+    def test_numpy_checkpoint_roundtrip_preserves_next_step(self, n: int) -> None:
+        source, restored = _make_fatigue_model(n), _make_fatigue_model(n)
+        source.reset(fatigue_reset_vec=np.full(n, 0.3))
+        source.step(np.full(n, 0.7), dt=0.02)
+        checkpoint = source.state_dict()
+        restored.load_state_dict(checkpoint)
+        for actual, expected in zip(
+            restored.compute_act(np.full(n, 0.2), dt=0.02),
+            source.compute_act(np.full(n, 0.2), dt=0.02),
+        ):
+            np.testing.assert_array_equal(actual, expected)
+        assert checkpoint != restored.state_dict() or n == 0
+
     def test_custom_rates(self) -> None:
         f = _make_fatigue_model(2)
         f.set_FatigueCoefficient(0.1)

@@ -710,6 +710,10 @@ class CumulativeFatigue:
                 seeded ``np_random`` so that ``env.reset(seed=...)`` is
                 reproducible.  Defaults to the model's own RNG (see
                 :meth:`seed`).
+
+        Raises:
+            ValueError: Conflicting reset options or a vector whose shape is not
+                ``(na,)``. Invalid input leaves the compartments unchanged.
         """
         if fatigue_reset_random:
             if fatigue_reset_vec is not None:
@@ -723,9 +727,10 @@ class CumulativeFatigue:
             self._MR[:] = nf * (1.0 - ap)
             self._MF[:] = 1.0 - nf
         elif fatigue_reset_vec is not None:
-            if len(fatigue_reset_vec) != self.na:
-                raise ValueError(f"fatigue_reset_vec length {len(fatigue_reset_vec)} != na={self.na}")
-            self._MF = np.array(fatigue_reset_vec, dtype=float, copy=True)  # type: ignore[assignment]
+            mf = np.array(fatigue_reset_vec, dtype=float, copy=True)
+            if mf.shape != (self.na,):
+                raise ValueError(f"fatigue_reset_vec shape {mf.shape} != ({self.na},)")
+            self._MF = mf
             self._MR = 1.0 - self._MF  # type: ignore[assignment]
             self._MA = np.zeros(self.na)
         else:
@@ -750,11 +755,20 @@ class CumulativeFatigue:
         """Restore fatigue compartments from a :meth:`state_dict` snapshot.
 
         Args:
-            state: Dict produced by :meth:`state_dict`.
+            state: Dict produced by :meth:`state_dict`, with each compartment
+                a flat vector of length ``na``.
+
+        Raises:
+            KeyError: A compartment is missing.
+            ValueError: A compartment is nonnumeric or has the wrong shape.
+                All compartments are validated before replacing the live state.
         """
-        self._MA = np.array(state["MA"], dtype=float)  # type: ignore[assignment]
-        self._MR = np.array(state["MR"], dtype=float)  # type: ignore[assignment]
-        self._MF = np.array(state["MF"], dtype=float)  # type: ignore[assignment]
+        names = ("MA", "MR", "MF")
+        compartments = tuple(np.array(state[name], dtype=float) for name in names)
+        for name, values in zip(names, compartments):
+            if values.shape != (self.na,):
+                raise ValueError(f"{name} shape {values.shape} != ({self.na},)")
+        self._MA, self._MR, self._MF = compartments
 
     def seed(self, seed: int | None = None) -> list[int]:
         """Set random seed used by stochastic reset.
