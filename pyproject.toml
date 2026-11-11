@@ -1,6 +1,6 @@
 [project]
 name = "myo-sim"
-version = "0.2.4"
+version = "0.2.5"
 description = "MuJoCo musculoskeletal model definitions for MyoSuite"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -13,6 +13,11 @@ dependencies = [
     "mujoco>=3.4,<4",
     "numpy>=1.24",
 ]
+
+[project.optional-dependencies]
+# Array backends of myo_sim.physics; NumPy alone runs the CPU fatigue model and joint couplings.
+torch = ["torch>=2.2"]
+jax = ["jax>=0.4.20"]
 
 [dependency-groups]
 dev = [
