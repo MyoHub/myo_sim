@@ -919,7 +919,8 @@ class TorchFatigueState:
             use_uniform_params: Use the uniform ``"Default_v2_4"`` F/R/r for
                 every muscle, as :class:`CumulativeFatigue` does.
             muscles: Muscle actuators to track (ids or names), in column order;
-                default every muscle in model order.
+                default every muscle in model order. An empty selection creates
+                state with zero muscle columns, even if the model has motors.
             rest_threshold: Commands at or below it count as rest (see
                 :class:`CumulativeFatigue`); in ``[0, 1)``.
         """
@@ -929,7 +930,7 @@ class TorchFatigueState:
         if na == 0:
             return cls(
                 num_envs=num_envs,
-                n_muscles=mj_model.nu,
+                n_muscles=na,
                 device=device,
                 rest_threshold=rest_threshold,
             )

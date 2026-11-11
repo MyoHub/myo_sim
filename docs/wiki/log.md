@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Preserve empty torch fatigue selections
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: the torch model factory used every actuator as a fallback for an empty muscle selection, so motor-only models and explicit empty selections disagreed with the CPU factory and could not reset with an empty fatigue vector.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

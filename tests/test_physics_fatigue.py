@@ -560,6 +560,41 @@ class TestCumulativeFatigue:
             np.testing.assert_allclose(gpu.MA[0].numpy(), cpu.MA, atol=1e-5)
             np.testing.assert_allclose(gpu.MF[0].numpy(), cpu.MF, atol=1e-5)
 
+    @pytest.mark.parametrize("use_uniform_params", [False, True])
+    @pytest.mark.parametrize(
+        ("actuators", "selection"),
+        [
+            ('<motor name="motor0" joint="j"/><motor name="motor1" joint="j"/>', None),
+            ('<muscle name="muscle" joint="j" lengthrange="0 1" force="1"/><motor name="motor" joint="j"/>', []),
+            ("", None),
+        ],
+        ids=["motor-only", "explicit-empty", "no-actuators"],
+    )
+    def test_empty_muscle_selection_has_no_torch_state(
+        self, actuators: str, selection: list[str] | None, use_uniform_params: bool
+    ) -> None:
+        """Empty selections must stay empty through factory, reset, step and restore."""
+        torch = pytest.importorskip("torch")
+        import mujoco
+
+        from myo_sim.physics.fatigue import CumulativeFatigue, TorchFatigueState
+
+        model = mujoco.MjModel.from_xml_string(
+            '<mujoco><worldbody><body><joint name="j"/><geom size=".1"/></body></worldbody>'
+            f"<actuator>{actuators}</actuator></mujoco>"
+        )
+        cpu = CumulativeFatigue(model, muscles=selection, use_uniform_params=use_uniform_params)
+        gpu = TorchFatigueState.from_mj_model(model, 2, muscles=selection, use_uniform_params=use_uniform_params)
+        assert cpu.na == 0
+        for compartment in (gpu.MA, gpu.MR, gpu.MF):
+            assert compartment.shape == (2, cpu.na)
+        gpu.reset(fatigue_reset_vec=np.empty(0))
+        snapshot = gpu.state_dict()
+        for _ in range(2):
+            assert gpu.step(torch.empty((2, 0)), 0.02).shape == (2, 0)
+        gpu.load_state_dict(snapshot)
+        assert gpu.state_dict() == {"MA": [[], []], "MR": [[], []], "MF": [[], []]}
+
     def test_torch_state_dtype_is_fixed(self) -> None:
         """A float64 excitation no longer switches the float32 state to float64."""
         torch = pytest.importorskip("torch")

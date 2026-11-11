@@ -4,6 +4,8 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Empty torch fatigue selections.** `TorchFatigueState.from_mj_model()` now creates zero muscle columns for motor-only models and explicit empty selections, matching `CumulativeFatigue`; it previously allocated fatigue state for every actuator and rejected empty reset vectors.
+
 - **`myo_sim.physics`: joint couplings and 3CC-r muscle fatigue (from MyoSuite).** `joint_coupling` puts coupled joints on their polynomials (NumPy or torch, in place or differentiable), `fatigue` holds the 3CC-r model with its cited per-group parameters (`CumulativeFatigue` in NumPy, `TorchFatigueState` batched in torch and fused with `torch.compile` on CUDA), `fatigue_jax` the same step in JAX, and `muscle_groups` the functional muscle groups. NumPy is enough to import them; torch and JAX are optional (`myo-sim[torch]`, `myo-sim[jax]`). No model file changes.
 - **Head and trunk mass (all models with the torso chain).** The head body now carries 5.848 kg (6.94 % of body mass, de Leva 1996) and the torso 14.897 kg instead of 18.619 kg; the total of `myofullbody` is unchanged at 84.26 kg and the whole-body centre of mass rises by 1.4 cm. The OpenSim torso mass already contained the head, so the head was previously about 2.5 % of body mass. Downstream: dynamics of every model with the torso and head change slightly; policies trained on the old masses (e.g. MyoSuite and MuscleMimic `myofullbody` checkpoints) should be re-evaluated or retrained, and MyoSuite parity baselines regenerated when it moves to this release.
 
