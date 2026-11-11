@@ -28,6 +28,7 @@ myo_sim/              # installable Python package
     fatigue.py        # 3CC-r muscle fatigue: NumPy, batched torch (torch.compile on CUDA)
     fatigue_jax.py    # the same fatigue step in JAX
     muscle_groups.py  # functional muscle groups, keys of the fatigue parameters
+  muskemo/            # optional authoring: anatomy interchange, selected edits, Blender bridge and CLI
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -58,6 +59,7 @@ docs/wiki/            # canonical wiki location
 | Add a mesh | `myo_sim/models/meshes/` |
 | Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
+| Exchange anatomy or selected source-model edits with Blender/MuSkeMo | `myo_sim/muskemo/`; see `docs/wiki/muskemo-cli.md` |
 
 ## Publishing
 
