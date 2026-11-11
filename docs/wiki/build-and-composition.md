@@ -164,9 +164,18 @@ Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement. O
 
 Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<pair>` element into the `MjSpec` via `spec.add_pair()`. The optional `include_pair` callable receives the XML element and returns `False` to skip a pair (used to exclude left-arm pairs when `include_left_arm_contacts=False`).
 
+Pairs inherit any `class` defaults already defined in the spec; explicit pair
+attributes override those defaults. A missing default class raises `ValueError`.
+
 ### `add_sensors(spec, sensors_xml)`
 
-Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported frame sensors into the `MjSpec` via `spec.add_sensor()`. `myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by adding body linear and angular velocity sensors before the leg touch sensors are attached.
+Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported
+`framelinvel`, `frameangvel`, `touch` and `jointlimitfrc` sensors via
+`spec.add_sensor()`. Frame sensors retain their reference type/name; frame objects
+and references can be bodies, body frames (`xbody`), geoms, sites or cameras.
+The importer preserves `cutoff`, `noise`, `user` data and native unnamed sensors.
+`myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by
+adding body linear and angular velocity sensors before the leg touch sensors are attached.
 
 ### `find_body(spec, body_name)` and `find_site(spec, site_name)`
 
