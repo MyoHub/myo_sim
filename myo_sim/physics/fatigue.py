@@ -13,6 +13,7 @@ import os
 import re
 import warnings
 from collections.abc import Sequence
+from functools import lru_cache
 from typing import Any
 
 import numpy as np
@@ -339,7 +340,15 @@ agree to float32 round-off.
 
 _compiled_torch_step: Any = None  # torch.compile wrapper, built on first use
 _eager_keys: set[tuple] = set()  # (device, dtype, shape) whose compile failed
-_dt_tensors: dict[tuple, Any] = {}  # dt as a 0-d state tensor: no recompile per dt
+_DT_TENSOR_CACHE_SIZE = 64
+
+
+@lru_cache(maxsize=_DT_TENSOR_CACHE_SIZE)
+def _torch_dt_tensor(device: str, dtype: Any, dt: float) -> Any:
+    """An immutable scalar timestep, retaining only the most recently used values."""
+    import torch  # noqa: PLC0415
+
+    return torch.tensor(dt, dtype=dtype, device=device)
 
 
 def _torch_step(
@@ -400,8 +409,9 @@ def torch_three_cc_r_step(
 
     Compiles lazily on first use (``fullgraph``, static shapes); torch specialises
     the graph per device, dtype and shape, and passes ``dt`` as a 0-d tensor so a
-    new ``dt`` does not recompile. Falls back to the eager step, with one warning,
-    where compiling fails.
+    new ``dt`` does not recompile. A bounded cache reuses recent timestep tensors
+    without retaining every value in a variable-timestep rollout. Falls back to
+    the eager step, with one warning, where compiling fails.
 
     Args:
         MA: Active fraction, shape ``(num_envs, n_muscles)``.
@@ -439,10 +449,8 @@ def torch_three_cc_r_step(
                 dynamic=False,
                 options={"cpp.simdlen": 0},
             )
-        dt_key = (str(MA.device), MA.dtype, float(dt))
-        if dt_key not in _dt_tensors:
-            _dt_tensors[dt_key] = torch.tensor(float(dt), dtype=MA.dtype, device=MA.device)
-        return _compiled_torch_step(*args, _dt_tensors[dt_key], rest_threshold)
+        dt_tensor = _torch_dt_tensor(str(MA.device), MA.dtype, float(dt))
+        return _compiled_torch_step(*args, dt_tensor, rest_threshold)
     except Exception as err:  # any compiler failure falls back to eager
         _eager_keys.add(key)
         warnings.warn(
