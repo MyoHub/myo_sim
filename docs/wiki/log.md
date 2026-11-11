@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Preserve native sensor and contact settings
+Changed: myo_sim/build/utils.py, tests/test_native_includes.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: include imports discarded sensor reference frames and common options, lost pair class defaults and rejected unnamed sensors on MuJoCo 3.4.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
