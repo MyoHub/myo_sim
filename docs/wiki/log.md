@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Keep zero-rate fatigue gradients finite
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue_gradients.py
+Why: unused slow-mode switching calculations overflowed float32 backward passes when fatigue and recovery were disabled, even for a zero-length step; inactive divisions now use benign operands.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

@@ -180,8 +180,8 @@ def _limited(xp: Any, MA: Any, MF: Any, L: Any, F: Any, rho: Any, t: Any, modes:
     return MA + g1 * y1 + h * Ay1, MF + g1 * y2 + h * Ay2
 
 
-def _free_switch_time(xp: Any, MA: Any, MF: Any, L: Any, TL: Any, thr: Any, F: Any, rho: Any) -> Any:
-    """Time the slow mode of MF reaches ``thr`` under ``C = L (TL - MA)`` (inf: never).
+def _free_switch_time(xp: Any, MA: Any, MF: Any, L: Any, TL: Any, thr: Any, F: Any, rho: Any, duration: Any) -> Any:
+    """Time the slow mode of MF reaches ``thr``; may discard crossings beyond ``duration``.
 
     Past the fast transient, ``MF(t) = M + tau (F MA* - rho M)`` with
     ``tau = (1 - e^{-rho t}) / rho`` and ``M = MF + F (MA - MA*) / (L + F - rho)``.
@@ -190,10 +190,13 @@ def _free_switch_time(xp: Any, MA: Any, MF: Any, L: Any, TL: Any, thr: Any, F: A
     MAs = L * TL / _nonzero(xp, k)
     M = MF + F * (MA - MAs) / _nonzero(xp, k - rho)
     slope = F * MAs - rho * M
-    tau = xp.where(M < thr, (thr - M) / _nonzero(xp, slope), 0.0)
+    # A rising slow mode advances at most slope * duration. Keep inactive divisions
+    # benign: their backward pass otherwise overflows at zero fatigue/recovery rates.
+    rising = (M < thr) & (slope > 0) & (thr - M < slope * duration)
+    tau = xp.where(rising, thr - M, 0.0) / _nonzero(xp, xp.where(rising, slope, 1.0))
     x = rho * xp.where(tau > 0, tau, 0.0)
     t = -xp.log1p(-xp.where(x < 1.0 - 1e-6, x, 1.0 - 1e-6)) / rho
-    return xp.where((M >= thr) | ((slope > 0) & (x < 1.0)), t, xp.inf)
+    return xp.where((M >= thr) | (rising & (x < 1.0)), t, xp.inf)
 
 
 def _bounded(xp: Any, MA: Any, MF: Any) -> tuple[Any, Any, Any]:
@@ -280,7 +283,7 @@ def three_cc_r_step(
     t_cross = xp.where(gap > 0, xp.log(xp.where(ratio > 1, ratio, 1.0)) / k1, xp.inf)
     crosses = falling & (t_cross < T)
     if xp is np:  # NumPy skips the split segments when no muscle needs them
-        t_a = _free_switch_time(xp, MA, MF, LD, TLc, thr, F, rho)
+        t_a = _free_switch_time(xp, MA, MF, LD, TLc, thr, F, rho, T)
         if not (crosses | ~falling & ((MF >= thr) | (t_a < T))).any():
             L = xp.where(falling, LR, LD)
             return _bounded(xp, *_relax(xp, MA, MF, L, TL, F, rho, T))
@@ -296,14 +299,16 @@ def three_cc_r_step(
     MAe, MFe, s, lam1, lam2 = modes
     p2 = (F * (MA1 - MAe) - (rho + lam1) * (MF1 - MFe)) / s  # slow-mode part of MF
     q = (thr - MFe) / _nonzero(xp, p2)
-    down = (q > 0) & (q < 1)
-    t_b = xp.log(xp.where(down, q, 1.0)) / lam2
+    # Only divide by the slow eigenvalue for a crossing within this step. A far
+    # future crossing can overflow float32 gradients as F and R approach zero.
+    down = (q > 0) & (q < 1) & (q > xp.exp(lam2 * T2))
+    t_b = xp.log(xp.where(down, q, 1.0)) / xp.where(down, lam2, 1.0)
     t_b = xp.where(MFe + p2 < thr, 0.0, xp.where(down, t_b, xp.inf))
     # C is continuous at MF = 1 - TL, so the regime holding the equilibrium is absorbing:
     # a limited step whose equilibrium is limited never switches (near the boundary the
     # fast transient would otherwise read as a crossing), nor a free step with a free one.
     t_b = xp.where(MFe >= thr, xp.inf, t_b)
-    t_a = _free_switch_time(xp, MA1, MF1, LD, TLc, thr, F, rho)
+    t_a = _free_switch_time(xp, MA1, MF1, LD, TLc, thr, F, rho, T2)
     t_a = xp.where(F * (LD * TLc / _nonzero(xp, LD + F)) < rho * thr, xp.inf, t_a)
     t_sw = xp.where(limited, t_b, t_a)
     d2 = xp.where(t_sw < T2, t_sw, T2)
