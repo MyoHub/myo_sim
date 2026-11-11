@@ -75,6 +75,7 @@ def test_generate_xml_files_writes_base_model_outputs(tmp_path, monkeypatch):
             self.model_name = model_name
             self.compiler = type("Compiler", (), {"meshdir": "", "texturedir": ""})()
             self.ngeom = 0
+            self.nsite = 0
             self.geom_contype = []
             self.geom_conaffinity = []
 

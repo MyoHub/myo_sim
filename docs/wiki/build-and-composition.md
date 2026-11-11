@@ -32,6 +32,10 @@ This generates:
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
+When exported attachment defaults overlap, generation writes the compiled geom
+materials and site visibility groups explicitly, alongside collision flags. This
+keeps distinct left/right materials and attachment marker groups when the XML is reloaded.
+
 ## Keyframes
 
 `build_spec()` adds no keyframe unless called with `build_kwargs={"postures": True}` or a list of names; `myo_sim.load_model()` passes that for every model with postures. See `docs/wiki/postures.md`.
