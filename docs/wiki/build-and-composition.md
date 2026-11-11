@@ -36,6 +36,8 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 
 `build_spec()` adds no keyframe unless called with `build_kwargs={"postures": True}` or a list of names; `myo_sim.load_model()` passes that for every model with postures. See `docs/wiki/postures.md`.
 
+`build.utils.add_keyframes(spec, path)` imports an MJCF keyframe include after the final DoF layout is fixed. It preserves the full state (`time`, `qpos`, `qvel`, `act`, `ctrl`, `mpos`, `mquat`); unnamed keys, omitted fields and partial state arrays keep MuJoCo's native defaults.
+
 ## MODEL_REGISTRY and BuildStrategy
 
 `BuildStrategy` is a `str` enum. Each value maps to one builder function in `SPEC_BUILDERS`. Every builder returns an `MjSpec`.
