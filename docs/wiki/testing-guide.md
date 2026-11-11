@@ -27,6 +27,11 @@ Map of the test suite for agents working in `myo_sim`.
 
 ## Fast Gate (Run Before Every PR)
 
+CI installs the locked development environment, then overrides MuJoCo with the
+matrix's floor or newest supported release (`>=3.4,<4`). Its version report and
+pytest commands use `uv run --no-sync` so uv does not restore the locked MuJoCo
+version before the checks. Keep that flag on commands after the matrix override.
+
 Run this before opening or updating a PR. It skips the two manual-only tests:
 
 ```bash

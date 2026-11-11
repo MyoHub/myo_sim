@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Preserve the MuJoCo CI matrix overrides
+Changed: .github/workflows/ci.yml, docs/wiki/testing-guide.md
+Why: ordinary uv run restored locked MuJoCo 3.9 after the matrix installed its requested version; reporting and tests now keep the override, and latest stays below MuJoCo 4.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

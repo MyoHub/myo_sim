@@ -59,13 +59,14 @@ jobs:
         # to test both the minimum supported release and the newest one.
         run: |
           if [ "${{ matrix.mujoco-version }}" = "latest" ]; then
-            uv pip install --upgrade mujoco
+            uv pip install --upgrade "mujoco>=3.4,<4"
           else
             uv pip install "mujoco==${{ matrix.mujoco-version }}.0"
           fi
 
+      # Keep the matrix override instead of restoring the lockfile's MuJoCo.
       - name: Report versions under test
-        run: uv run python -c "import sys, mujoco; print('python', sys.version); print('mujoco', mujoco.__version__)"
+        run: uv run --no-sync python -c "import sys, mujoco; print('python', sys.version); print('mujoco', mujoco.__version__)"
 
       - name: Run tests
-        run: uv run pytest tests/ -x -n auto --ignore=tests/test_equivalence.py -q
+        run: uv run --no-sync pytest tests/ -x -n auto --ignore=tests/test_equivalence.py -q
