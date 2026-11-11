@@ -6,6 +6,7 @@ Map of the test suite for agents working in `myo_sim`.
 
 | File | What it tests | When to run |
 |---|---|---|
+| `test_keyframe_import.py` | Imported keyframes compile and reset activation, controls and mocap state exactly like native MJCF, including omitted-field defaults | After `build.utils.add_keyframes` changes |
 | `test_sims.py` | Static XML models load without error via `mujoco.MjModel.from_xml_path` | Always before PR |
 | `test_build_registry.py` | `BuildStrategy` enum fields, `MODEL_REGISTRY` completeness | After `compose.py` changes |
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |

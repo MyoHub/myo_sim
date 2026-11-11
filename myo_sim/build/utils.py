@@ -154,7 +154,7 @@ def add_sensors(spec: object, sensors_xml: Path) -> None:
 
 
 def add_keyframes(spec: object, keyframes_xml: Path) -> None:
-    """Add keyframes from an MJCF include file.
+    """Add complete keyframe states from an MJCF include file.
 
     Kept as a spec-level step (not merged into the composed child XML) because a
     keyframe's ``qpos`` is only valid once the model's DoFs are fixed -- e.g. for
@@ -162,11 +162,11 @@ def add_keyframes(spec: object, keyframes_xml: Path) -> None:
     """
     for key in ET.parse(keyframes_xml).getroot().iter("key"):
         added = spec.add_key()
-        added.name = key.get("name")
-        if key.get("qpos"):
-            added.qpos = float_list(key.get("qpos"))
-        if key.get("qvel"):
-            added.qvel = float_list(key.get("qvel"))
+        if (name := key.get("name")) is not None:
+            added.name = name
+        for field in ("qpos", "qvel", "act", "ctrl", "mpos", "mquat"):
+            if value := key.get(field):
+                setattr(added, field, float_list(value))
         if key.get("time"):
             added.time = float(key.get("time"))
 

@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Preserve complete imported keyframe state
+Changed: myo_sim/build/utils.py, tests/test_keyframe_import.py, CHANGELOG.md, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md
+Why: spec-level keyframe import discarded activation, control and mocap state and rejected unnamed keys even though native MJCF keyframes support them.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
