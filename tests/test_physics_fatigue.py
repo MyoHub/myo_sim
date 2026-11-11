@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from types import SimpleNamespace
 from typing import Any
 from unittest.mock import MagicMock
@@ -572,6 +573,36 @@ class TestCumulativeFatigue:
         f32.step(tl.float(), 0.02)
         assert f64.MA.dtype == f64.MR.dtype == f64.MF.dtype == out.dtype == torch.float32
         torch.testing.assert_close(f64.MA, f32.MA)
+
+    @pytest.mark.parametrize("device", ["cpu", "cuda"])
+    def test_torch_snapshot_preserves_state_and_gradients(self, device: str, monkeypatch: pytest.MonkeyPatch) -> None:
+        """A JSON checkpoint works after a differentiable step without detaching live state."""
+        torch = pytest.importorskip("torch")
+        if device == "cuda" and not torch.cuda.is_available():
+            pytest.skip("CUDA unavailable")
+        from myo_sim.physics import fatigue as fatigue_module
+
+        monkeypatch.setattr(fatigue_module, "TORCH_FATIGUE_COMPILE", "0")
+        fatigue = fatigue_module.TorchFatigueState(2, 3, device=device)
+        fatigue.reset(fatigue_reset_vec=[0.1, 0.2, 0.3])
+        excitation = torch.tensor([[0.3, 0.5, 0.8], [0.2, 0.6, 0.7]], device=device, requires_grad=True)
+        fatigue.step(excitation, 0.02)
+        original = {name: getattr(fatigue, name) for name in ("MA", "MR", "MF")}
+        values = {name: state.detach().clone() for name, state in original.items()}
+        expected_gradient = torch.autograd.grad(fatigue.MA.sum(), excitation, retain_graph=True)[0]
+
+        snapshot = json.loads(json.dumps(fatigue.state_dict()))
+        restored = fatigue_module.TorchFatigueState(2, 3, device=device)
+        restored.load_state_dict(snapshot)
+        for name, state in original.items():
+            assert getattr(fatigue, name) is state
+            assert state.requires_grad and state.grad_fn is not None
+            torch.testing.assert_close(state.detach(), values[name])
+            torch.testing.assert_close(getattr(restored, name), values[name])
+        gradient = torch.autograd.grad(fatigue.MA.sum(), excitation)[0]
+        assert bool(torch.isfinite(gradient).all())
+        assert bool((gradient != 0).any())
+        torch.testing.assert_close(gradient, expected_gradient)
 
     @pytest.mark.parametrize("device", ["cpu", "cuda"])
     def test_compiled_torch_step_matches_eager(self, device: str) -> None:

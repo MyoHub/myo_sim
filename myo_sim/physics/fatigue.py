@@ -1057,11 +1057,13 @@ class TorchFatigueState:
         Returns:
             Dict with keys ``"MA"``, ``"MR"``, ``"MF"``, each a nested list
             of shape ``(num_envs, n_muscles)``.
+
+        The live state tensors and their autograd graphs are preserved.
         """
         return {
-            "MA": self.MA.cpu().numpy().tolist(),
-            "MR": self.MR.cpu().numpy().tolist(),
-            "MF": self.MF.cpu().numpy().tolist(),
+            "MA": self.MA.detach().cpu().numpy().tolist(),
+            "MR": self.MR.detach().cpu().numpy().tolist(),
+            "MF": self.MF.detach().cpu().numpy().tolist(),
         }
 
     def load_state_dict(self, state: dict[str, list]) -> None:

@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Snapshot differentiable Torch fatigue state
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: serializing a state after a gradient-tracked step raised instead of producing a checkpoint; snapshots now detach only the exported values and preserve live gradients.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
