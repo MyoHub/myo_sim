@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Preserve generated XML appearance
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: merging exported attachment defaults replaced left-arm materials and changed attachment site groups when generated XML was reloaded.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

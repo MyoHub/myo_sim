@@ -808,6 +808,21 @@ def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel)
         geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
 
 
+def apply_compiled_visual_attributes(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Preserve effective materials and site groups after merging exported defaults."""
+    for geom_id, geom in enumerate(iter_worldbody_geoms(root)):
+        material_id = int(model.geom_matid[geom_id])
+        # An empty material explicitly clears any inherited class material.
+        geom.set("material", model.mat(material_id).name if material_id >= 0 else "")
+
+    worldbody = root.find("worldbody")
+    sites = list(worldbody.iter("site")) if worldbody is not None else []
+    if len(sites) != model.nsite:
+        raise ValueError(f"Generated XML has {len(sites)} sites, but compiled model has {model.nsite}")
+    for site_id, site in enumerate(sites):
+        site.set("group", str(int(model.site_group[site_id])))
+
+
 def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjModel | None = None) -> str:
     root = ET.fromstring(xml)
     if asset_dir is not None:
@@ -823,6 +838,7 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjMo
     enable_floor_collision(root)
     if model is not None:
         apply_compiled_geom_collision_flags(root, model)
+        apply_compiled_visual_attributes(root, model)
     ET.indent(root, space="  ")
     return ET.tostring(root, encoding="unicode") + "\n"
 
