@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Reset Torch fatigue directly from tensors
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: converting reset vectors through NumPy rejected device tensors and tensors requiring gradients; direct Torch conversion preserves the state device, float32 dtype and vector shape checks.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
