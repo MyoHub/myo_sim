@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Preserve inertia precision in generated XML
+Changed: myo_sim/build/compose.py, tests/test_xml_inertia_precision.py, docs/wiki/build-and-composition.md
+Why: six-digit native formatting can move an edited planar body's principal moments past the inertia triangle; generated XML now preserves the compiled moments without balancing or changing them.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

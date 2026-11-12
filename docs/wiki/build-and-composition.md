@@ -32,6 +32,20 @@ This generates:
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
+Explicit principal inertias are written from the compiled model with roundtrip
+float precision. Native six-digit formatting of edited values can otherwise
+move a planar body's moments across the inertia triangle and make the exported
+XML fail to reload. This preserves the moments; it does not enable
+`balanceinertia` or perturb the mass distribution. Other fields retain native
+XML precision.
+
+The [recorded native roundtrip matrix](../validation/xml-inertia-roundtrip.json)
+uses the pinned model-scaling PR149 head on MuJoCo 3.4, 3.9 and 3.10. All 27
+selected cases now reload; the 18 repaired cases have identical principal
+moments. Already-passing controls retain native inferred-inertia differences of
+at most 3.1e-12 kg m². This is a deterministic regression matrix, not a population
+estimate or a validation of every scaling rule.
+
 ## Keyframes
 
 `build_spec()` adds no keyframe unless called with `build_kwargs={"postures": True}` or a list of names; `myo_sim.load_model()` passes that for every model with postures. See `docs/wiki/postures.md`.
