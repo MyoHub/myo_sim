@@ -242,20 +242,22 @@ def export_model(
         for i in range(model.neq)
     ]
     data, coupling = mujoco.MjData(model), JointCouplings.from_model(model)
+    moment = np.empty((len(muscles), model.nv))
     frames = []
     for pose in poses:
         data.qpos[:] = pose
         mujoco.mj_normalizeQuat(model, data.qpos)
         project_joint_couplings(coupling, data.qpos)
         mujoco.mj_forward(model, data)
-        moment = np.zeros((model.nu, model.nv))
-        mujoco.mju_sparse2dense(
-            moment,
-            data.actuator_moment,
-            data.moment_rownnz,
-            data.moment_rowadr,
-            data.moment_colind,
-        )
+        if len(muscles):
+            # Selected row addresses still refer to the full native sparse storage.
+            mujoco.mju_sparse2dense(
+                moment,
+                data.actuator_moment,
+                data.moment_rownnz[muscles],
+                data.moment_rowadr[muscles],
+                data.moment_colind,
+            )
         frames.append(
             dict(
                 qpos=data.qpos.tolist(),
@@ -266,7 +268,7 @@ def export_model(
                 site_pos=data.site_xpos.tolist(),
                 muscle_length=data.actuator_length[muscles].tolist(),
                 muscle_tendon_length=data.ten_length[model.actuator_trnid[muscles, 0]].tolist(),
-                moment_arms=moment[muscles].tolist(),
+                moment_arms=moment.tolist(),
                 wrap_flags=_wrap_flags(model, data),
             )
         )

@@ -182,6 +182,52 @@ def test_elbow_range_length_derivatives(tmp_path: Path) -> None:
         np.testing.assert_allclose(np.asarray(frame["moment_arms"])[:, 0], derivative, atol=1e-7, rtol=1e-5)
 
 
+@pytest.mark.parametrize("muscles_present", [False, True])
+def test_mixed_actuators_decode_only_exported_muscle_rows(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, muscles_present: bool
+) -> None:
+    first = '<muscle name="first" tendon="t1" gear="3" force="10" lengthrange=".1 .8"/>' if muscles_present else ""
+    second = '<muscle name="second" tendon="t2" gear="-.5" force="10" lengthrange=".1 .8"/>' if muscles_present else ""
+    model = mujoco.MjModel.from_xml_string(
+        '<mujoco><worldbody><body><joint name="q"/><geom size=".1"/>'
+        '<body><joint name="p"/><geom size=".1"/></body></body></worldbody>'
+        '<tendon><fixed name="t1"><joint joint="q" coef="1"/><joint joint="p" coef="2"/></fixed>'
+        '<fixed name="t2"><joint joint="p" coef="2"/></fixed></tendon><actuator>'
+        f'<motor joint="q"/>{first}<motor joint="p"/>{second}</actuator></mujoco>'
+    )
+    poses = np.array([[0.1, 0.2], [0.3, -0.1]])
+    convert = mujoco.mju_sparse2dense
+    decoded_shapes = []
+
+    def selected_rows(dense: np.ndarray, *sparse: np.ndarray) -> None:
+        decoded_shapes.append(dense.shape)
+        dense.fill(np.nan)  # Native conversion must clear absent columns in the reused buffer.
+        convert(dense, *sparse)
+
+    monkeypatch.setattr(mujoco, "mju_sparse2dense", selected_rows)
+    document = export_model(model, tmp_path / "mixed.json", qpos=poses)
+
+    if not muscles_present:
+        assert document["muscles"] == []
+        assert all(frame["moment_arms"] == [] for frame in document["frames"])
+        assert decoded_shapes == []
+        return
+    assert [muscle["id"] for muscle in document["muscles"]] == [1, 3]
+    assert decoded_shapes == [(2, model.nv)] * len(poses)
+    data = mujoco.MjData(model)
+    for pose, frame in zip(poses, document["frames"], strict=True):
+        derivatives = []
+        for column in range(model.nv):
+            lengths = []
+            for direction in (-1, 1):
+                data.qpos[:] = pose
+                data.qpos[column] += direction * 1e-6
+                mujoco.mj_forward(model, data)
+                lengths.append(data.actuator_length[[1, 3]].copy())
+            derivatives.append((lengths[1] - lengths[0]) / 2e-6)
+        np.testing.assert_allclose(frame["moment_arms"], np.asarray(derivatives).T, rtol=1e-7, atol=1e-9)
+
+
 def test_couplings_and_joint_types_are_not_collapsed(tmp_path: Path) -> None:
     model = mujoco.MjModel.from_xml_string("""<mujoco><worldbody>
       <body name="root"><freejoint name="free"/><geom size=".1"/>

@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Decode only exported muscle moment arms
+Changed: myo_sim/authoring/interchange.py, tests/test_authoring.py
+Why: export now reuses one muscle-only dense Jacobian buffer, avoiding unused motor rows and repeated full-actuator allocations while preserving native geared derivatives and muscle order.
+
 ## 2026-11-12 — Avoid recompiling empty validated patches
 Changed: myo_sim/authoring/edits.py, tests/test_authoring_edits.py
 Why: an empty patch can return its already-validated copied spec without a second native compilation, while retaining source, version, list-type and static-fusion checks.
