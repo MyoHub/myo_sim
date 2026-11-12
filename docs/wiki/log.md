@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Validate Torch fatigue restores before mutation
+Changed: myo_sim/physics/fatigue.py, tests/test_torch_fatigue_restore.py, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: a missing, nonnumeric or incompatible later compartment in a checkpoint previously left earlier live compartments overwritten after the restore failed.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
