@@ -1070,9 +1070,14 @@ class TorchFatigueState:
         Args:
             state: Dict produced by :meth:`state_dict`.  Shape must be
                 compatible with the current ``(num_envs, n_muscles)`` tensors.
+                Broadcast-compatible values remain supported. Missing, nonnumeric
+                or incompatible entries are rejected before any compartment changes.
         """
         import torch  # noqa: PLC0415
 
-        self.MA.copy_(torch.tensor(state["MA"], dtype=torch.float32, device=self.MA.device))
-        self.MR.copy_(torch.tensor(state["MR"], dtype=torch.float32, device=self.MR.device))
-        self.MF.copy_(torch.tensor(state["MF"], dtype=torch.float32, device=self.MF.device))
+        values = {}
+        for name in ("MA", "MR", "MF"):
+            target = getattr(self, name)
+            values[name] = torch.tensor(state[name], dtype=torch.float32, device=target.device).expand_as(target)
+        for name, value in values.items():
+            getattr(self, name).copy_(value)

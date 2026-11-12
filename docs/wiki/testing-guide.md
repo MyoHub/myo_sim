@@ -6,6 +6,7 @@ Map of the test suite for agents working in `myo_sim`.
 
 | File | What it tests | When to run |
 |---|---|---|
+| `test_torch_fatigue_restore.py` | Failed Torch checkpoint loads preserve live compartments and the next fatigue step; valid broadcasting and buffer references are retained | After Torch fatigue restore changes; requires the optional `torch` extra, with CUDA cases skipped without a device |
 | `test_sims.py` | Static XML models load without error via `mujoco.MjModel.from_xml_path` | Always before PR |
 | `test_build_registry.py` | `BuildStrategy` enum fields, `MODEL_REGISTRY` completeness | After `compose.py` changes |
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
