@@ -215,7 +215,8 @@ def projected_joint_couplings(couplings: JointCouplings, qpos: Any, qvel: Any | 
         ``(qpos, qvel)`` projected; ``qvel`` is ``None`` if none was given.
     """
     c = couplings
-    if len(c.locked_qpos):
+    # An empty projection still returns independent arrays through the same copy path.
+    if len(c.locked_qpos) or not c.level_ends:
         qpos = _with_columns(qpos, c.locked_qpos, c.locked_value)
         if qvel is not None:
             qvel = _with_columns(qvel, c.locked_dof, 0 * c.locked_value)

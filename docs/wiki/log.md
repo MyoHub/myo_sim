@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Copy uncoupled functional projections
+Changed: myo_sim/physics/joint_coupling.py, tests/test_physics_joint_coupling.py
+Why: the functional projection returned its inputs when no joint equalities were active, so editing an output could mutate the original state; empty projections now return independent arrays while preserving Torch gradients.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
