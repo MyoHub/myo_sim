@@ -703,6 +703,47 @@ class TestCumulativeFatigue:
             np.testing.assert_allclose(got, np.tile(getattr(cpu, name), (2, 1)), atol=1e-7)
         torch.testing.assert_close(gpu.MF[[0, 2]], before[[0, 2]])
 
+    @pytest.mark.parametrize("device", ["cpu", "cuda"])
+    @pytest.mark.parametrize("kind", ["list", "numpy", "numpy-reversed", "numpy-reversed32", "tensor", "tensor-grad"])
+    def test_torch_reset_accepts_vectors_on_the_state_device(self, device: str, kind: str) -> None:
+        """Tensor resets work without a host NumPy conversion, including CUDA tensors."""
+        torch = pytest.importorskip("torch")
+        from myo_sim.physics.fatigue import TorchFatigueState
+
+        if device == "cuda" and not torch.cuda.is_available():
+            pytest.skip("CUDA is unavailable")
+        fatigue = TorchFatigueState(num_envs=4, n_muscles=3, device=device)
+        fatigue.MA.fill_(0.2)
+        fatigue.MR.fill_(0.5)
+        fatigue.MF.fill_(0.3)
+        before = tuple(state.clone() for state in (fatigue.MA, fatigue.MR, fatigue.MF))
+        values = [0.1, 0.4, 0.8]
+        if kind == "list":
+            vec = values
+        elif kind == "numpy":
+            vec = np.array(values, dtype=np.float64)
+        elif kind in ("numpy-reversed", "numpy-reversed32"):
+            dtype = np.float32 if kind == "numpy-reversed32" else np.float64
+            vec = np.array(values[::-1], dtype=dtype)[::-1]
+            assert vec.strides[0] < 0
+        else:
+            vec = torch.tensor(values, dtype=torch.float64, device=device, requires_grad=kind == "tensor-grad")
+        rows = torch.tensor([1, 3], device=device)
+        fatigue.reset(rows, fatigue_reset_vec=vec)
+
+        expected_mf = torch.tensor(values, dtype=torch.float32, device=device).expand(2, -1)
+        for state, expected, original in zip(
+            (fatigue.MA, fatigue.MR, fatigue.MF),
+            (torch.zeros_like(expected_mf), 1 - expected_mf, expected_mf),
+            before,
+        ):
+            assert state.dtype == torch.float32
+            assert state.device.type == device
+            torch.testing.assert_close(state[rows], expected)
+            torch.testing.assert_close(state[[0, 2]], original[[0, 2]])
+        if isinstance(vec, torch.Tensor):
+            torch.testing.assert_close(vec.detach(), torch.tensor(values, dtype=torch.float64, device=device))
+
     def test_torch_reset_random_matches_cpu_distribution(self) -> None:
         """Random resets: seeded, per env, and the CPU construction of the state.
 
@@ -747,6 +788,9 @@ class TestCumulativeFatigue:
             gpu.reset(fatigue_reset_vec=[0.1] * 3, fatigue_reset_random=True)
         with pytest.raises(ValueError, match="length"):
             gpu.reset(fatigue_reset_vec=[0.1, 0.2])
+        for vec in (torch.tensor([0.1, 0.2]), torch.zeros(1, 3), torch.tensor(0.1)):
+            with pytest.raises(ValueError, match="length"):
+                gpu.reset(fatigue_reset_vec=vec)
         torch.testing.assert_close(gpu.MR, torch.ones(2, 3))
 
 

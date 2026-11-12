@@ -2,6 +2,14 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Own Torch fatigue reset values before state writes
+Changed: myo_sim/physics/fatigue.py, tests/test_torch_fatigue_reset_ownership.py, tests/test_physics_fatigue.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: a reset vector viewing live MA was overwritten before MF received it, selected-row resets could reject a valid MF view due to overlapping storage, and float32 reversed NumPy vectors retained unsupported negative strides during conversion.
+
+## 2026-11-11 — Reset Torch fatigue directly from tensors
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: converting reset vectors through NumPy rejected device tensors and tensors requiring gradients; direct Torch conversion preserves the state device, float32 dtype and vector shape checks.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.
