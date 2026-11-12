@@ -2,6 +2,14 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Add selected-body mass transforms
+Changed: myo_sim/physics/body_mass.py, tests/test_physics_body_mass.py, docs/wiki/model-parameters.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: represented model mass and an explicit participant/reference ratio are different inputs; model-only copy transforms preserve geometry and force capacity while refreshing native constants.
+
+## 2026-11-12 — Add model-only muscle strength transforms
+Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md, docs/wiki/index.md
+Why: native active/passive force scaling and automatic-force resolution can be reused without importing subject fitting, environments or MyoSuite.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

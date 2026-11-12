@@ -28,6 +28,8 @@ myo_sim/              # installable Python package
     fatigue.py        # 3CC-r muscle fatigue: NumPy, batched torch (torch.compile on CUDA)
     fatigue_jax.py    # the same fatigue step in JAX
     muscle_groups.py  # functional muscle groups, keys of the fatigue parameters
+    muscle_strength.py # native peak-force resolution and model/spec strength transforms
+    body_mass.py      # selected-body mass/inertia transforms with refreshed constants
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
