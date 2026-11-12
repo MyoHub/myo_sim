@@ -704,7 +704,7 @@ class TestCumulativeFatigue:
         torch.testing.assert_close(gpu.MF[[0, 2]], before[[0, 2]])
 
     @pytest.mark.parametrize("device", ["cpu", "cuda"])
-    @pytest.mark.parametrize("kind", ["list", "numpy", "numpy-reversed", "tensor", "tensor-grad"])
+    @pytest.mark.parametrize("kind", ["list", "numpy", "numpy-reversed", "numpy-reversed32", "tensor", "tensor-grad"])
     def test_torch_reset_accepts_vectors_on_the_state_device(self, device: str, kind: str) -> None:
         """Tensor resets work without a host NumPy conversion, including CUDA tensors."""
         torch = pytest.importorskip("torch")
@@ -722,8 +722,10 @@ class TestCumulativeFatigue:
             vec = values
         elif kind == "numpy":
             vec = np.array(values, dtype=np.float64)
-        elif kind == "numpy-reversed":
-            vec = np.array(values[::-1], dtype=np.float64)[::-1]
+        elif kind in ("numpy-reversed", "numpy-reversed32"):
+            dtype = np.float32 if kind == "numpy-reversed32" else np.float64
+            vec = np.array(values[::-1], dtype=dtype)[::-1]
+            assert vec.strides[0] < 0
         else:
             vec = torch.tensor(values, dtype=torch.float64, device=device, requires_grad=kind == "tensor-grad")
         rows = torch.tensor([1, 3], device=device)

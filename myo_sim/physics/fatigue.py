@@ -1016,7 +1016,8 @@ class TorchFatigueState:
             fatigue_reset_vec: If provided, ``MF = fatigue_reset_vec``,
                 ``MR = 1 - fatigue_reset_vec`` and ``MA = 0`` in every reset
                 env. Shape ``(n_muscles,)``; an array, sequence or Torch tensor
-                (including a tensor on the simulation device).
+                (including a tensor on the simulation device). Values are copied
+                before any compartment changes, so views of live state are safe.
             fatigue_reset_random: If ``True``, draw ``nf, ap ~ U[0, 1)`` and set
                 ``MA = nf * ap``, ``MR = nf * (1 - ap)``, ``MF = 1 - nf``.
                 Cannot be combined with *fatigue_reset_vec*.
@@ -1042,10 +1043,11 @@ class TorchFatigueState:
             self.MF[rows] = 1.0 - nf
         elif fatigue_reset_vec is not None:
             if not torch.is_tensor(fatigue_reset_vec):
-                fatigue_reset_vec = np.asarray(fatigue_reset_vec, dtype=np.float32)
+                fatigue_reset_vec = np.array(fatigue_reset_vec, dtype=np.float32, copy=True)
             mf = torch.as_tensor(fatigue_reset_vec, dtype=torch.float32, device=self.MA.device)
             if mf.shape != self.MA.shape[1:]:
                 raise ValueError(f"fatigue_reset_vec length {mf.numel()} != n_muscles={self.MA.shape[1]}")
+            mf = mf.clone()
             self.MA[rows] = 0.0
             self.MF[rows] = mf
             self.MR[rows] = 1.0 - mf
