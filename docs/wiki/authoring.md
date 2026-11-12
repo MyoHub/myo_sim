@@ -58,7 +58,7 @@ generated `name` labels for unnamed objects are display labels.
 | `tendons` | ID, name and ordered elements with native wrap type, object ID and parameter, including sites, wraps and pulleys. Geom wraps include an explicit `sidesite` ID or null. |
 | `muscles` | Muscle actuator ID/name, tendon ID, peak force, gear, gain/bias/dynamics parameters, length range and `has_sidesite_constraints`. Rows follow source actuator order. |
 | `geoms` | ID, name, body, type, size and effective RGBA; meshes embed their compiled vertices and faces. Material colors apply unless geom RGBA overrides the native default. |
-| `equalities` | Native equality type, activity, object IDs and parameter data. |
+| `equalities` | Native equality type, object type, activity, object IDs and parameter data. |
 | `frames` | Evaluated qpos, world body/geom positions and wxyz quaternions, world sites, muscle lengths, physical tendon lengths, native moment arms and `wrap_flags`. |
 
 Positions use metres, angles radians, masses kilograms and inertia kg m².
@@ -67,6 +67,11 @@ length. Their rows and `moment_arms` rows follow `muscles`. Moment-arm columns
 span all `nv` velocity DOFs and contain native `dL/dq`, including gear. These are
 partial derivatives; an independent-coordinate sweep through a coupling also
 has a chain-rule contribution from dependent coordinates.
+
+Equality `object_type` preserves MuJoCo's object namespace, distinguishing body
+and site IDs for `CONNECT` and `WELD`. It can be `UNKNOWN` when the equality type
+itself identifies the namespace, as with `JOINT` and `TENDON`. A secondary object
+ID of `-1` denotes an omitted object.
 
 `provenance` records `scope: "instance"`, `status: "verified"` or `"unknown"`,
 `source_model`, `reason` and human-readable `guidance`. The optional
@@ -90,8 +95,8 @@ including sidesites outside the wrap; inside/outside state is reported per frame
 
 Native frame measurements remain the reference when an external preview uses
 different wrapping. The document supports inspection and selected edits;
-preserve the original `MjSpec` for simulation and recompilation. Flexes, skins
-and heightfields are rejected by anatomy export.
+preserve the original `MjSpec` for simulation and recompilation. Flexes, skins,
+heightfields and SDF geometry are rejected by anatomy export.
 
 ## Version 1 patch
 

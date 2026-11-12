@@ -109,7 +109,7 @@ def export_model(
         quaternions are wxyz, and inertias are about the COM in body axes.
 
     Raises:
-        ValueError: Invalid poses or unsupported flex/skin geometry.
+        ValueError: Invalid poses or unsupported flex/skin/heightfield/SDF geometry.
     """
     if model.nflex or model.nskin:
         raise ValueError("Flex and skin geometry cannot be represented by this anatomy format")
@@ -226,11 +226,14 @@ def export_model(
             )
         elif model.geom_type[i] == mujoco.mjtGeom.mjGEOM_HFIELD:
             raise ValueError("Heightfields are unsupported; export an anatomy-only model")
+        elif model.geom_type[i] == mujoco.mjtGeom.mjGEOM_SDF:
+            raise ValueError("SDF geometry is unsupported; export an anatomy-only model")
         geoms.append(geom)
     equalities = [
         dict(
             id=i,
             type=mujoco.mjtEq(int(model.eq_type[i])).name.removeprefix("mjEQ_"),
+            object_type=mujoco.mjtObj(int(model.eq_objtype[i])).name.removeprefix("mjOBJ_"),
             active=bool(model.eq_active0[i]),
             object1=int(model.eq_obj1id[i]),
             object2=int(model.eq_obj2id[i]),

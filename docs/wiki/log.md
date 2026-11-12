@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Keep anatomy references and geometry explicit
+Changed: myo_sim/authoring/interchange.py, tests/test_authoring_equalities.py, tests/test_authoring_sdf.py, docs/wiki/authoring.md
+Why: equality IDs need native body/site namespaces for unambiguous resolution, and SDF plugin geometry must be rejected rather than represented only by its bounding size.
+
 ## 2026-11-12 — Preserve custom text in native archives
 Changed: myo_sim/authoring/archive.py, tests/test_authoring_archive.py, docs/wiki/authoring.md
 Why: native XML attribute whitespace normalization could silently replace custom-text tabs and line endings with spaces; archives now preserve and compare the exact compiled text bytes.
