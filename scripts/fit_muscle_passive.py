@@ -476,6 +476,14 @@ def _fit(
     nearest = np.array([np.clip(0.0, lo, hi) for lo, hi in windows])
     middle = np.array([0.5 * (lo + hi) for lo, hi in windows])
     starts = [np.concatenate([s, np.full(k, f)]) for s, f in ((nearest, 0.0), (middle, 0.0), (middle, -1.0), (nearest, -2.0))]
+    # also from the tabled values of the last fit: a small path change should not jump to a worse basin
+    rows = {r["names"]["r"]: r for r in table["muscles"]}
+    if all(n in rows and "fpmax" in rows[n] for n in names):
+        prev_shift = [
+            np.clip(rows[n]["tendon_slack_m"]["value"] - s0, lo, hi) for n, s0, (lo, hi) in zip(names, slack, windows)
+        ]
+        prev_log = [np.clip(np.log(rows[n]["fpmax"]["value"] / FPMAX_REFERENCE), *log_bounds[0]) for n in names]
+        starts.append(np.array([*prev_shift, *prev_log]))
     x = _minimize(cost, starts, [*windows, *log_bounds])
     # Round as stored: slack to 1 um, fpmax to 4 decimals; stay inside the window.
     shift = np.array([np.clip(round(s0 + s, 6) - s0, lo, hi) for s0, s, (lo, hi) in zip(slack, x[:k], windows)])

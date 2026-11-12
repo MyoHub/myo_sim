@@ -403,6 +403,67 @@ The model's constant 8.6 / 9.0 mm over 0-90 deg match the means, and Fig. 4a's s
 angle-dependent radius is introduced. In the active fist the passive EDC3 gives -0.04 N m at the middle MCP against +5.4 N m
 from FDS3 and FDP3, so the extensor arm did not hold the fist open (below and `hand-literature-comparison.md`).
 
+## PIP pulleys
+
+**Before.** FDS and FDP 2-5 crossed the PIP on via sites only: a last site in the proximal phalanx (PP), 4-7 mm proximal
+of the joint (FDP3 and FDP4: their mid-shaft site), and a first site in the middle phalanx (MP). In flexion the MP site
+swings around the joint toward the PP site; once the two lie on one ray from the axis (at 180 deg minus their angles from
+the bones' long axes) the segment's line passes dorsal of the axis. FDS2 and FDS3 turned extensor past about 105 and
+100 deg, FDP2 flipped from +10.4 to -10.4 mm between 95 and 100 deg, and FDP4 and FDP5 fell below 1 mm at 115 deg. The PIP
+flexes to 115 deg, so a fist reaches this zone.
+
+**Why not a cylinder alone.** The MCP pulleys work because a flexor wraps its cylinder in hyperextension, on the convex
+side. In PIP flexion the flexors lie on the concave side: MuJoCo wraps a cylinder only when the straight segment cuts it
+(or when the side site's homotopy class differs), and here the segment between the PP and MP sites never comes closer to
+the axis than the PP site, so a cylinder on the axis never engages. A side site inside the cylinder (inside wrap) holds the
+tendon on the circle and gives an arm of about r cos(theta / 2), falling with flexion; via sites far from the joint
+(A2 and A4 mid-shaft) keep the arm but bowstring 3-5 mm above the literature in midrange. Neither was kept.
+
+**Change** (`pip_pulleys` in `build/data/extrinsic_muscles.json`, written by `generate_extrinsic_muscles.py`, chain blocks
+`PIP pulleys 2-5`; fit `--fit-pip`). Per tendon with the defect (FDS2-4, FDP2-5; FDS5 keeps 2.8-10.2 mm over the range):
+
+- a cylinder on the PIP axis in the PP (`pip{d}_{muscle}_wrap_r`, side site two radii out on the palmar side), inserted
+  after the last PP site, with the path's own arm at 0 deg as radius (rounded down to 0.1 mm): it holds that arm near
+  extension and in hyperextension, where the tendon lies on the volar plate;
+- the pulley points next to it: the PP site moves toward the previous PP site on the path (fraction 0-0.6; the A2
+  pulley's distal edge) and the first MP site up to 3 mm dorsally (toward the bone) and up to 6 mm distally (A4). A grid
+  search keeps the arm at least the cylinder's radius from 60 to 120 deg (5 deg past the limit) and takes the smallest RMS
+  change of the arm over 0-90 deg, where the old path agreed with the literature.
+
+FDP2's 3 mm distal move, FDP4's 5 mm and FDS3's 2 mm are the largest; every MP site moved 3 mm dorsally except FDP5's
+(1 mm). The DIP arms do not change (the FDP sites past the first MP site are untouched): FDP2 4.3 / 6.3 / 5.1 mm at DIP 0 /
+60 / 90 deg (An et al. 1983: 4.1 ± 1.4 mm mean; Brook et al. 1995: 3.0 / 4.4 / 5.2), continuous and flexor.
+
+PIP flexion moment arms in mm (+ = flexion), other joints at 0, MuJoCo 4 (3.17 identical); 0 / 30 / 60 / 90 / 100 / 110 / 115 deg
+and the mean over 0-90 deg (An et al. 1983's protocol):
+
+| Muscle | Before | After | Literature |
+| --- | --- | --- | --- |
+| FDS2 | 4.8 / 6.1 / 6.8 / 4.9 / 2.3 / -1.5 / -3.1; 6.0 | 4.7 / 5.9 / 7.6 / 8.6 / 8.8 / 8.7 / 8.4; 6.7 | 6.2 ± 1.0 mean (An 1983); 4.1 / 5.3 / 6.6 / 8.0 / 8.5 / 9.0 / 9.3, mean 6.0 (Brook 1995; past 90 extrapolated); 7.2 neutral (An 1979 x model phalanx); 8.3 (Ketchum) |
+| FDP2 | 6.9 / 8.7 / 9.9 / 10.4 / -7.2 / -10.4 / -10.4; 9.1 | 6.8 / 8.3 / 10.3 / 11.6 / 11.8 / 11.9 / 11.7; 9.2 | 7.9 ± 1.1 mean (An 1983); 5.8 / 7.1 / 8.5 / 10.0 / 10.6 / 11.2 / 11.6, mean 7.8 (Brook); 9.0 (An 1979); 9.8 (Ketchum) |
+| FDS3 | 7.0 / 8.9 / 9.9 / 6.9 / 1.2 / -5.4 / -7.4; 8.8 | 7.0 / 9.0 / 11.3 / 12.5 / 12.5 / 11.7 / 10.7; 9.9 | 6.8 (An 1979); 8.7 (Ketchum) |
+| FDP3 | 7.5 / 10.9 / 12.5 / 10.7 / 9.0 / 6.4 / 4.9; 11.0 | 7.5 / 9.5 / 12.1 / 12.3 / 11.4 / 9.9 / 8.9; 10.5 | 9.1 (An 1979); 10.7 (Ketchum) |
+| FDS4 | 3.1 / 4.6 / 5.3 / 4.7 / 4.0 / 2.9 / 2.3; 4.6 | 3.0 / 4.1 / 5.2 / 5.2 / 4.8 / 4.1 / 3.7; 4.5 | 5.8 (An 1979); 8.5 (Ketchum) |
+| FDP4 | 7.1 / 9.2 / 9.3 / 6.1 / 4.2 / 1.9 / 0.7; 8.5 | 7.1 / 9.3 / 12.0 / 12.3 / 11.5 / 10.2 / 9.2; 10.3 | 7.1 (An 1979); 10.4 (Ketchum) |
+| FDS5 | 3.9 / 6.9 / 9.3 / 10.2 / 9.9 / 9.2 / 8.6; 7.8 | unchanged (no pulley) | 6.1 (An 1979); 7.4 (Ketchum) |
+| FDP5 | 4.8 / 6.6 / 7.6 / 6.6 / 5.0 / 2.2 / 0.4; 6.7 | 4.7 / 6.0 / 7.6 / 8.0 / 7.6 / 6.7 / 5.9; 6.6 | 7.7 (An 1979); 8.5 (Ketchum) |
+
+An 1979's values are neutral moment potentials times this model's middle phalanges (25.1 / 29.1 / 24.9 / 21.0 mm); Ketchum's are one
+posture of six cadavers (Brand & Hollister 1993, Table 14-1). No measured PIP arm past about 90 deg was found; Brook's curve is
+Landsmeer's model III fitted to An 1983 over 0-90 deg and rises further when extrapolated. The index means stay within one SD of An
+1983 for FDS2 (6.7 against 6.2 ± 1.0) and FDP2 is 1.2 SD above (9.2 against 7.9 ± 1.1; 9.1 before). In deep flexion the arms now
+peak and ease off instead of collapsing: the smallest arm from 90 to 115 deg over digits 2-5 is 3.7 mm for FDS (FDS4) and 5.9 mm
+for FDP (FDP5), against -7.4 and -10.4 mm before. The ring and little FDS and FDP stay below An 1979 and Ketchum, as before.
+
+The paths are the same on MuJoCo 4 and 3.17 and have no tendon length jumps along the PIP, MCP and wrist sweeps
+(sweeps of the MCP step); the lumbrical node tie tendons copy the FDP path, wrap included.
+
+Refits: intrinsic (the lumbrical nodes ride the FDP paths), extrinsic passive, springs, postures and pads; the FCU, ECU and
+junctura fits are untouched (their paths do not cross the PIP). The extrinsic passive fit now also starts its search from the
+tabled values of the last fit: from its fixed starts alone it landed in a worse optimum under the new paths (joint error 1482
+against 1170 at the previous values), and the wrist-flexion spring then missed Formica et al. 2012 by 0.119 N m. Effects on the
+fist, grip and tenodesis: `hand-literature-comparison.md` (PIP pulley step).
+
 ## Refits
 
 Extrinsic slack lengths and passive scales (`fit_muscle_passive.py`), then the joint springs

@@ -334,8 +334,8 @@ def _held(model: mujoco.MjModel, joints: tuple[str, ...]) -> None:
         model.dof_armature[dof] = model.dof_damping[dof] = 1e4
 
 
-def _mcp_arm(model: mujoco.MjModel, data: mujoco.MjData, actuator: str, joint: str, deg: float) -> float:
-    """MCP flexion moment arm (mm, + = flexor) of *actuator* at *deg*, other joints at 0, tendon nodes placed."""
+def _flexion_arm(model: mujoco.MjModel, data: mujoco.MjData, actuator: str, joint: str, deg: float) -> float:
+    """Flexion moment arm (mm, + = flexor) of *actuator* about *joint* at *deg*, other joints at 0, tendon nodes placed."""
     data.qpos[:] = model.qpos0
     data.qpos[model.joint(joint).qposadr[0]] = np.radians(deg)
     place_tendon_nodes(model, data)
@@ -351,15 +351,15 @@ def mcp_extension(model: mujoco.MjModel) -> dict[str, Any]:
     data = mujoco.MjData(model)
     index = ("FDS2_r", "FDP2_r", "EIP_r", "EDC2_r")
     span = np.arange(0.0, 86.0, 5.0)
-    mean = [abs(float(np.mean([_mcp_arm(model, data, a, "mcp2_flexion_r", q) for q in span]))) for a in index]
+    mean = [abs(float(np.mean([_flexion_arm(model, data, a, "mcp2_flexion_r", q) for q in span]))) for a in index]
     lo = float(np.degrees(model.jnt_range[model.joint("mcp2_flexion_r").id][0]))
     hyper = np.arange(0.0, lo - 0.1, -5.0)
     flexors, extensors = [], []
     for d in DIGITS:
         joint = f"mcp{d}_flexion_r"
-        flexors += [min(_mcp_arm(model, data, f"{m}{d}_r", joint, q) for q in hyper) for m in ("FDS", "FDP")]
+        flexors += [min(_flexion_arm(model, data, f"{m}{d}_r", joint, q) for q in hyper) for m in ("FDS", "FDP")]
         ext = [f"EDC{d}_r"] + (["EIP_r"] if d == 2 else []) + (["EDM_r"] if d == 5 else [])
-        extensors.append(max(_mcp_arm(model, data, a, joint, q) for a in ext for q in hyper))
+        extensors.append(max(_flexion_arm(model, data, a, joint, q) for a in ext for q in hyper))
     out: dict[str, Any] = {
         "extrinsic_mcp_moment_arms": mean,
         "mcp_flexor_arm_hyperextension": [min(flexors[0::2]), min(flexors[1::2])],
@@ -380,6 +380,21 @@ def mcp_extension(model: mujoco.MjModel) -> dict[str, Any]:
     out["index_mcp_hyperextension_moment"] = moments
     out["active_mcp_extension"] = active_mcp_extension(model)
     return out
+
+
+def pip_flexors(model: mujoco.MjModel) -> dict[str, Any]:
+    """Extrinsic flexor PIP moment arms: index FDS / FDP averaged over PIP 0-90 deg (An et al. 1983's protocol), and
+    the smallest FDS / FDP arm of digits 2-5 in deep flexion (90 deg to the flexion limit)."""
+    data = mujoco.MjData(model)
+    span = np.arange(0.0, 90.1, 5.0)
+    mean = [float(np.mean([_flexion_arm(model, data, a, "pm2_flexion_r", q) for q in span])) for a in ("FDS2_r", "FDP2_r")]
+    deep: dict[str, list[float]] = {"FDS": [], "FDP": []}
+    for d in DIGITS:
+        joint = f"pm{d}_flexion_r"
+        hi = float(np.degrees(model.jnt_range[model.joint(joint).id][1]))
+        for m in deep:
+            deep[m].append(min(_flexion_arm(model, data, f"{m}{d}_r", joint, q) for q in np.arange(90.0, hi + 0.1, 2.5)))
+    return {"extrinsic_pip_moment_arms": mean, "pip_flexor_arm_deep_flexion": [min(deep["FDS"]), min(deep["FDP"])]}
 
 
 def active_mcp_extension(model: mujoco.MjModel, seconds: float = 2.0) -> list[float]:
@@ -890,6 +905,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     out |= interossei_lumbricals(model)
     out |= joint_ranges(model)
     out |= mcp_extension(model)
+    out |= pip_flexors(model)
     out |= extensor_mechanism(model)
     out |= lumbrical_nodes(model)
     out |= extrinsic_revisions(model)

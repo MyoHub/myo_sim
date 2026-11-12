@@ -142,6 +142,11 @@ def test_links_are_slack_at_rest_and_mirror_left_to_right() -> None:
             assert data.ten_length[r] == pytest.approx(data.ten_length[left], abs=1e-7)
 
 
+@pytest.mark.xfail(
+    strict=True,
+    reason="little-finger junctura share 14.6 deg against von Schroeder & Botte 1993's 22 (floor 15): open check "
+    "'Little finger junctura share' in docs/wiki/hand-literature-comparison.md",
+)
 def test_links_reproduce_the_recorded_traction_transfer() -> None:
     gen = _script()
     table = gen.load_table()

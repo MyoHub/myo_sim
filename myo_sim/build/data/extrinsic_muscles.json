@@ -675,23 +675,23 @@
     "side_distance_radii": 2.0,
     "digits": {
       "2": {
-        "metacarpal": "secondmc_r",
-        "phalanx": "2proxph_r",
+        "parent": "secondmc_r",
+        "child": "2proxph_r",
         "joint": "mcp2_flexion_r"
       },
       "3": {
-        "metacarpal": "thirdmc_r",
-        "phalanx": "3proxph_r",
+        "parent": "thirdmc_r",
+        "child": "3proxph_r",
         "joint": "mcp3_flexion_r"
       },
       "4": {
-        "metacarpal": "fourthmc_r",
-        "phalanx": "4proxph_r",
+        "parent": "fourthmc_r",
+        "child": "4proxph_r",
         "joint": "mcp4_flexion_r"
       },
       "5": {
-        "metacarpal": "fifthmc_r",
-        "phalanx": "5proxph_r",
+        "parent": "fifthmc_r",
+        "child": "5proxph_r",
         "joint": "mcp5_flexion_r"
       }
     },
@@ -1128,5 +1128,1054 @@
       }
     },
     "side_note": "Side sites two radii out at side_deg about the MCP axis (0 = distal, 90 = dorsal), in the metacarpal. Flexors: -90 (palmar). Extensors: 105, near the middle of the short dorsal arc in slight hyperextension, where it is shortest: at 90 deg MuJoCo 3's nearest-arc rule took the long palmar arc near -15 deg (and a side site on the proximal phalanx jumped on MuJoCo 3 with the MCP abducted). The ray opposite the site (-75 deg) is reached by the hood sites only past about 108 deg of flexion, beyond the limit and its 7.5 deg sampling margin, so the paths are continuous on MuJoCo 4 and 3.17 over -68..97 deg at every abduction."
+  },
+  "pip_pulleys": {
+    "method": "FDS2-4 and FDP2-5 cross the PIP on a cylinder on the joint's flexion axis (in the proximal phalanx), inserted after the last site of the proximal phalanx, with the side site two radii out on the palmar side. Before, they crossed the PIP on via sites only: past about 60-80 deg the middle-phalanx site came close to the joint and the segment from the proximal-phalanx site swung over it, so the flexion arm fell (FDS2 and FDS3 turned extensor past about 100-105 deg, FDP2 went from +10.4 to -10.4 mm between 90 and 110 deg, FDP4 and FDP5 fell to under 1 mm at 115 deg). The cylinder holds the arm in deep flexion, where the tendons lie on the palmar plate and in the A3 pulley; its radius is the path's own arm at 0 deg, rounded down to 0.1 mm, so the arms from 0 deg up to the via-site peak do not change. FDS5 keeps its via sites (2.8-10.2 mm over the range, no fall). Literature: flexor PIP arms rise with flexion (Landsmeer's model III; An et al. 1979 Fig. 12; Brook et al. 1995) and average 7.9 (FDP) and 6.2 mm (FDS) over 0-90 deg for the index (An et al. 1983); no measured arm beyond about 90 deg was found.",
+    "sources": [
+      "an1983",
+      "an1979",
+      "brook1995"
+    ],
+    "half_length_m": 0.004,
+    "side_distance_radii": 2.0,
+    "digits": {
+      "2": {
+        "parent": "2proxph_r",
+        "child": "midph2_r",
+        "joint": "pm2_flexion_r"
+      },
+      "3": {
+        "parent": "3proxph_r",
+        "child": "midph3_r",
+        "joint": "pm3_flexion_r"
+      },
+      "4": {
+        "parent": "4proxph_r",
+        "child": "midph4_r",
+        "joint": "pm4_flexion_r"
+      },
+      "5": {
+        "parent": "5proxph_r",
+        "child": "midph5_r",
+        "joint": "pm5_flexion_r"
+      }
+    },
+    "wraps": {
+      "FDS2": {
+        "digit": 2,
+        "side": "palmar",
+        "after_site": "FDS2-P7_r",
+        "radius_m": {
+          "value": 0.0047,
+          "derivation": "the path's own PIP arm at 0 deg before the pulley, 4.76 mm, rounded down to 0.1 mm: arms from 0 deg to the via-site peak unchanged, held at least this in deep flexion"
+        },
+        "side_deg": -90.0,
+        "geom_pos": [
+          0.00751,
+          -0.041273,
+          0.007326
+        ],
+        "geom_quat": [
+          0.633373,
+          -0.078811,
+          0.769823,
+          0.0
+        ],
+        "side_pos": [
+          0.005643,
+          -0.041273,
+          -0.001887
+        ],
+        "pulley_points": {
+          "pp_site": "FDS2-P7_r",
+          "pp_previous": "FDS2-P6_r",
+          "mp_site": "FDS2-P8_r",
+          "pp_before": [
+            0.0064,
+            -0.0368,
+            0.0023
+          ],
+          "mp_before": [
+            -0.0002,
+            -0.0088,
+            -0.0041
+          ],
+          "pp_pos": [
+            0.00589,
+            -0.03396,
+            0.00087
+          ],
+          "mp_pos": [
+            0.000396,
+            -0.0088,
+            -0.00116
+          ]
+        },
+        "fit": {
+          "pp_toward_previous": 0.1,
+          "mp_dorsal_mm": 3.0,
+          "mp_distal_mm": 0.0,
+          "rms_change_0_90_mm": 1.35,
+          "angles_deg": [
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0,
+            15.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0,
+            50.0,
+            55.0,
+            60.0,
+            65.0,
+            70.0,
+            75.0,
+            80.0,
+            85.0,
+            90.0,
+            95.0,
+            100.0,
+            105.0,
+            110.0,
+            115.0,
+            120.0
+          ],
+          "arm_before_mm": [
+            4.2,
+            4.49,
+            4.76,
+            5.02,
+            5.27,
+            5.51,
+            5.74,
+            5.94,
+            6.14,
+            6.31,
+            6.46,
+            6.59,
+            6.69,
+            6.76,
+            6.78,
+            6.76,
+            6.67,
+            6.48,
+            6.17,
+            5.68,
+            4.92,
+            3.82,
+            2.31,
+            0.47,
+            -1.46,
+            -3.15,
+            -4.44
+          ],
+          "arm_after_mm": [
+            4.7,
+            4.7,
+            4.7,
+            4.7,
+            4.7,
+            4.96,
+            5.3,
+            5.63,
+            5.95,
+            6.25,
+            6.55,
+            6.83,
+            7.09,
+            7.35,
+            7.59,
+            7.81,
+            8.01,
+            8.2,
+            8.36,
+            8.51,
+            8.63,
+            8.72,
+            8.77,
+            8.77,
+            8.67,
+            8.4,
+            7.69
+          ]
+        }
+      },
+      "FDP2": {
+        "digit": 2,
+        "side": "palmar",
+        "after_site": "FDP2-P7_r",
+        "radius_m": {
+          "value": 0.0068,
+          "derivation": "the path's own PIP arm at 0 deg before the pulley, 6.86 mm, rounded down to 0.1 mm: arms from 0 deg to the via-site peak unchanged, held at least this in deep flexion"
+        },
+        "side_deg": -90.0,
+        "geom_pos": [
+          0.00751,
+          -0.041273,
+          0.007326
+        ],
+        "geom_quat": [
+          0.633373,
+          -0.078811,
+          0.769823,
+          0.0
+        ],
+        "side_pos": [
+          0.004808,
+          -0.041273,
+          -0.006003
+        ],
+        "pulley_points": {
+          "pp_site": "FDP2-P7_r",
+          "pp_previous": "FDP2-P6_r",
+          "mp_site": "FDP2-P8_r",
+          "pp_before": [
+            0.0063,
+            -0.0343,
+            -0.0006
+          ],
+          "mp_before": [
+            0.0006,
+            -0.0088,
+            -0.0058
+          ],
+          "pp_pos": [
+            0.006,
+            -0.03289,
+            -0.00104
+          ],
+          "mp_pos": [
+            0.00149,
+            -0.011785,
+            -0.002919
+          ]
+        },
+        "fit": {
+          "pp_toward_previous": 0.1,
+          "mp_dorsal_mm": 3.0,
+          "mp_distal_mm": 3.0,
+          "rms_change_0_90_mm": 0.58,
+          "angles_deg": [
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0,
+            15.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0,
+            50.0,
+            55.0,
+            60.0,
+            65.0,
+            70.0,
+            75.0,
+            80.0,
+            85.0,
+            90.0,
+            95.0,
+            100.0,
+            105.0,
+            110.0,
+            115.0,
+            120.0
+          ],
+          "arm_before_mm": [
+            6.14,
+            6.51,
+            6.86,
+            7.2,
+            7.53,
+            7.85,
+            8.15,
+            8.43,
+            8.7,
+            8.95,
+            9.19,
+            9.4,
+            9.6,
+            9.78,
+            9.94,
+            10.08,
+            10.2,
+            10.3,
+            10.38,
+            10.43,
+            10.41,
+            10.0,
+            -7.18,
+            -10.31,
+            -10.43,
+            -10.41,
+            -10.35
+          ],
+          "arm_after_mm": [
+            6.8,
+            6.8,
+            6.8,
+            6.8,
+            6.8,
+            7.14,
+            7.56,
+            7.96,
+            8.35,
+            8.72,
+            9.07,
+            9.41,
+            9.73,
+            10.03,
+            10.31,
+            10.57,
+            10.81,
+            11.03,
+            11.23,
+            11.4,
+            11.56,
+            11.69,
+            11.79,
+            11.86,
+            11.87,
+            11.72,
+            9.72
+          ]
+        }
+      },
+      "FDS3": {
+        "digit": 3,
+        "side": "palmar",
+        "after_site": "FDS3-P7_r",
+        "radius_m": {
+          "value": 0.007,
+          "derivation": "the path's own PIP arm at 0 deg before the pulley, 7.03 mm, rounded down to 0.1 mm: arms from 0 deg to the via-site peak unchanged, held at least this in deep flexion"
+        },
+        "side_deg": -90.0,
+        "geom_pos": [
+          0.00165,
+          -0.044211,
+          0.00623
+        ],
+        "geom_quat": [
+          0.707107,
+          0.0,
+          0.707107,
+          0.0
+        ],
+        "side_pos": [
+          0.00165,
+          -0.044211,
+          -0.00777
+        ],
+        "pulley_points": {
+          "pp_site": "FDS3-P7_r",
+          "pp_previous": "FDS3-P6_r",
+          "mp_site": "FDS3-P8_r",
+          "pp_before": [
+            0.0045,
+            -0.0376,
+            -0.0021
+          ],
+          "mp_before": [
+            0.0002,
+            -0.0107,
+            -0.0054
+          ],
+          "pp_pos": [
+            0.00372,
+            -0.033,
+            -0.00344
+          ],
+          "mp_pos": [
+            0.0002,
+            -0.0127,
+            -0.0024
+          ]
+        },
+        "fit": {
+          "pp_toward_previous": 0.2,
+          "mp_dorsal_mm": 3.0,
+          "mp_distal_mm": 2.0,
+          "rms_change_0_90_mm": 2.04,
+          "angles_deg": [
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0,
+            15.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0,
+            50.0,
+            55.0,
+            60.0,
+            65.0,
+            70.0,
+            75.0,
+            80.0,
+            85.0,
+            90.0,
+            95.0,
+            100.0,
+            105.0,
+            110.0,
+            115.0,
+            120.0
+          ],
+          "arm_before_mm": [
+            6.26,
+            6.65,
+            7.03,
+            7.39,
+            7.74,
+            8.07,
+            8.37,
+            8.66,
+            8.93,
+            9.17,
+            9.39,
+            9.58,
+            9.73,
+            9.84,
+            9.89,
+            9.88,
+            9.78,
+            9.54,
+            9.08,
+            8.26,
+            6.86,
+            4.55,
+            1.23,
+            -2.44,
+            -5.44,
+            -7.42,
+            -8.59
+          ],
+          "arm_after_mm": [
+            6.98,
+            6.98,
+            6.98,
+            6.98,
+            7.03,
+            7.53,
+            8.02,
+            8.5,
+            8.96,
+            9.4,
+            9.81,
+            10.21,
+            10.59,
+            10.94,
+            11.27,
+            11.57,
+            11.84,
+            12.08,
+            12.28,
+            12.44,
+            12.54,
+            12.57,
+            12.49,
+            12.25,
+            11.73,
+            10.65,
+            8.45
+          ]
+        }
+      },
+      "FDP3": {
+        "digit": 3,
+        "side": "palmar",
+        "after_site": "FDP3-P6_r",
+        "radius_m": {
+          "value": 0.0075,
+          "derivation": "the path's own PIP arm at 0 deg before the pulley, 7.54 mm, rounded down to 0.1 mm: arms from 0 deg to the via-site peak unchanged, held at least this in deep flexion"
+        },
+        "side_deg": -90.0,
+        "geom_pos": [
+          0.00165,
+          -0.044211,
+          0.00623
+        ],
+        "geom_quat": [
+          0.707107,
+          0.0,
+          0.707107,
+          0.0
+        ],
+        "side_pos": [
+          0.00165,
+          -0.044211,
+          -0.00877
+        ],
+        "pulley_points": {
+          "pp_site": "FDP3-P6_r",
+          "mp_site": "FDP3-P8_r",
+          "pp_before": [
+            0.0007,
+            -0.0158,
+            -0.0081
+          ],
+          "mp_before": [
+            0.0016,
+            -0.0115,
+            -0.0051
+          ],
+          "pp_pos": [
+            0.0007,
+            -0.0158,
+            -0.0081
+          ],
+          "mp_pos": [
+            0.0016,
+            -0.0125,
+            -0.0021
+          ]
+        },
+        "fit": {
+          "pp_toward_previous": 0.0,
+          "mp_dorsal_mm": 3.0,
+          "mp_distal_mm": 1.0,
+          "rms_change_0_90_mm": 1.06,
+          "angles_deg": [
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0,
+            15.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0,
+            50.0,
+            55.0,
+            60.0,
+            65.0,
+            70.0,
+            75.0,
+            80.0,
+            85.0,
+            90.0,
+            95.0,
+            100.0,
+            105.0,
+            110.0,
+            115.0,
+            120.0
+          ],
+          "arm_before_mm": [
+            6.18,
+            6.87,
+            7.55,
+            8.19,
+            8.81,
+            9.4,
+            9.95,
+            10.46,
+            10.93,
+            11.35,
+            11.71,
+            12.02,
+            12.26,
+            12.43,
+            12.52,
+            12.52,
+            12.42,
+            12.2,
+            11.86,
+            11.38,
+            10.74,
+            9.93,
+            8.95,
+            7.79,
+            6.45,
+            4.94,
+            3.29
+          ],
+          "arm_after_mm": [
+            7.49,
+            7.49,
+            7.49,
+            7.49,
+            7.49,
+            7.67,
+            8.32,
+            8.94,
+            9.52,
+            10.07,
+            10.58,
+            11.05,
+            11.47,
+            11.83,
+            12.14,
+            12.37,
+            12.54,
+            12.62,
+            12.61,
+            12.5,
+            12.27,
+            11.91,
+            11.41,
+            10.75,
+            9.92,
+            8.91,
+            7.72
+          ]
+        }
+      },
+      "FDS4": {
+        "digit": 4,
+        "side": "palmar",
+        "after_site": "FDS4-P7_r",
+        "radius_m": {
+          "value": 0.0031,
+          "derivation": "the path's own PIP arm at 0 deg before the pulley, 3.12 mm, rounded down to 0.1 mm: arms from 0 deg to the via-site peak unchanged, held at least this in deep flexion"
+        },
+        "side_deg": -90.0,
+        "geom_pos": [
+          -0.003528,
+          -0.040255,
+          0.001345
+        ],
+        "geom_quat": [
+          0.833492,
+          0.0,
+          0.552531,
+          0.0
+        ],
+        "side_pos": [
+          -0.001114,
+          -0.040255,
+          -0.004366
+        ],
+        "pulley_points": {
+          "pp_site": "FDS4-P7_r",
+          "pp_previous": "FDS4-P6_r",
+          "mp_site": "FDS4-P8_r",
+          "pp_before": [
+            0.0006,
+            -0.0361,
+            -0.001
+          ],
+          "mp_before": [
+            0.0,
+            -0.0119,
+            -0.0018
+          ],
+          "pp_pos": [
+            0.0006,
+            -0.0361,
+            -0.001
+          ],
+          "mp_pos": [
+            -0.001168,
+            -0.0139,
+            0.000963
+          ]
+        },
+        "fit": {
+          "pp_toward_previous": 0.0,
+          "mp_dorsal_mm": 3.0,
+          "mp_distal_mm": 2.0,
+          "rms_change_0_90_mm": 0.35,
+          "angles_deg": [
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0,
+            15.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0,
+            50.0,
+            55.0,
+            60.0,
+            65.0,
+            70.0,
+            75.0,
+            80.0,
+            85.0,
+            90.0,
+            95.0,
+            100.0,
+            105.0,
+            110.0,
+            115.0,
+            120.0
+          ],
+          "arm_before_mm": [
+            2.54,
+            2.84,
+            3.12,
+            3.39,
+            3.65,
+            3.9,
+            4.14,
+            4.36,
+            4.56,
+            4.75,
+            4.91,
+            5.05,
+            5.16,
+            5.25,
+            5.3,
+            5.32,
+            5.3,
+            5.23,
+            5.11,
+            4.92,
+            4.68,
+            4.36,
+            3.96,
+            3.48,
+            2.91,
+            2.26,
+            1.54
+          ],
+          "arm_after_mm": [
+            3.05,
+            3.05,
+            3.05,
+            3.04,
+            3.06,
+            3.35,
+            3.63,
+            3.89,
+            4.14,
+            4.38,
+            4.59,
+            4.79,
+            4.96,
+            5.11,
+            5.23,
+            5.32,
+            5.38,
+            5.4,
+            5.38,
+            5.32,
+            5.2,
+            5.03,
+            4.8,
+            4.5,
+            4.13,
+            3.69,
+            3.17
+          ]
+        }
+      },
+      "FDP4": {
+        "digit": 4,
+        "side": "palmar",
+        "after_site": "FDP4-P6_r",
+        "radius_m": {
+          "value": 0.0071,
+          "derivation": "the path's own PIP arm at 0 deg before the pulley, 7.14 mm, rounded down to 0.1 mm: arms from 0 deg to the via-site peak unchanged, held at least this in deep flexion"
+        },
+        "side_deg": -90.0,
+        "geom_pos": [
+          -0.003528,
+          -0.040255,
+          0.001345
+        ],
+        "geom_quat": [
+          0.833492,
+          0.0,
+          0.552531,
+          0.0
+        ],
+        "side_pos": [
+          0.002002,
+          -0.040255,
+          -0.011734
+        ],
+        "pulley_points": {
+          "pp_site": "FDP4-P6_r",
+          "mp_site": "FDP4-P8_r",
+          "pp_before": [
+            -0.0012,
+            -0.012,
+            -0.0088
+          ],
+          "mp_before": [
+            0.0023,
+            -0.0071,
+            -0.006
+          ],
+          "pp_pos": [
+            -0.0012,
+            -0.012,
+            -0.0088
+          ],
+          "mp_pos": [
+            0.001132,
+            -0.0121,
+            -0.003237
+          ]
+        },
+        "fit": {
+          "pp_toward_previous": 0.0,
+          "mp_dorsal_mm": 3.0,
+          "mp_distal_mm": 5.0,
+          "rms_change_0_90_mm": 2.88,
+          "angles_deg": [
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0,
+            15.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0,
+            50.0,
+            55.0,
+            60.0,
+            65.0,
+            70.0,
+            75.0,
+            80.0,
+            85.0,
+            90.0,
+            95.0,
+            100.0,
+            105.0,
+            110.0,
+            115.0,
+            120.0
+          ],
+          "arm_before_mm": [
+            6.17,
+            6.67,
+            7.14,
+            7.58,
+            7.99,
+            8.36,
+            8.68,
+            8.97,
+            9.2,
+            9.38,
+            9.5,
+            9.56,
+            9.54,
+            9.45,
+            9.27,
+            9.0,
+            8.63,
+            8.16,
+            7.59,
+            6.9,
+            6.09,
+            5.18,
+            4.18,
+            3.08,
+            1.92,
+            0.72,
+            -0.51
+          ],
+          "arm_after_mm": [
+            7.1,
+            7.09,
+            7.09,
+            7.09,
+            7.09,
+            7.45,
+            8.09,
+            8.71,
+            9.29,
+            9.84,
+            10.36,
+            10.83,
+            11.26,
+            11.64,
+            11.96,
+            12.22,
+            12.41,
+            12.53,
+            12.55,
+            12.48,
+            12.3,
+            11.99,
+            11.54,
+            10.93,
+            10.15,
+            9.19,
+            8.02
+          ]
+        }
+      },
+      "FDP5": {
+        "digit": 5,
+        "side": "palmar",
+        "after_site": "FDP5-P7_r",
+        "radius_m": {
+          "value": 0.0048,
+          "derivation": "the path's own PIP arm at 0 deg before the pulley, 4.84 mm, rounded down to 0.1 mm: arms from 0 deg to the via-site peak unchanged, held at least this in deep flexion"
+        },
+        "side_deg": -90.0,
+        "geom_pos": [
+          -0.005279,
+          -0.035563,
+          -0.002879
+        ],
+        "geom_quat": [
+          0.884489,
+          0.0,
+          0.466561,
+          0.0
+        ],
+        "side_pos": [
+          0.000142,
+          -0.035563,
+          -0.010802
+        ],
+        "pulley_points": {
+          "pp_site": "FDP5-P7_r",
+          "pp_previous": "FDP5-P6_r",
+          "mp_site": "FDP5-P8_r",
+          "pp_before": [
+            -0.0005,
+            -0.0291,
+            -0.008
+          ],
+          "mp_before": [
+            -0.001,
+            -0.009,
+            -0.004
+          ],
+          "pp_pos": [
+            -0.0006,
+            -0.02602,
+            -0.00742
+          ],
+          "mp_pos": [
+            -0.001565,
+            -0.009,
+            -0.003175
+          ]
+        },
+        "fit": {
+          "pp_toward_previous": 0.2,
+          "mp_dorsal_mm": 1.0,
+          "mp_distal_mm": 0.0,
+          "rms_change_0_90_mm": 0.64,
+          "angles_deg": [
+            -10.0,
+            -5.0,
+            0.0,
+            5.0,
+            10.0,
+            15.0,
+            20.0,
+            25.0,
+            30.0,
+            35.0,
+            40.0,
+            45.0,
+            50.0,
+            55.0,
+            60.0,
+            65.0,
+            70.0,
+            75.0,
+            80.0,
+            85.0,
+            90.0,
+            95.0,
+            100.0,
+            105.0,
+            110.0,
+            115.0,
+            120.0
+          ],
+          "arm_before_mm": [
+            4.15,
+            4.5,
+            4.84,
+            5.16,
+            5.47,
+            5.77,
+            6.05,
+            6.32,
+            6.57,
+            6.8,
+            7.0,
+            7.19,
+            7.34,
+            7.46,
+            7.55,
+            7.59,
+            7.58,
+            7.5,
+            7.33,
+            7.04,
+            6.6,
+            5.95,
+            5.04,
+            3.8,
+            2.23,
+            0.42,
+            -1.44
+          ],
+          "arm_after_mm": [
+            4.69,
+            4.68,
+            4.68,
+            4.67,
+            4.67,
+            4.92,
+            5.28,
+            5.63,
+            5.96,
+            6.27,
+            6.57,
+            6.85,
+            7.11,
+            7.35,
+            7.56,
+            7.74,
+            7.89,
+            8.0,
+            8.06,
+            8.07,
+            8.02,
+            7.89,
+            7.65,
+            7.27,
+            6.72,
+            5.95,
+            4.9
+          ]
+        }
+      }
+    },
+    "fit": {
+      "floor_from_deg": 60.0,
+      "s_max": 0.6,
+      "s_step": 0.1,
+      "dorsal_max_mm": 3.0,
+      "dorsal_step_mm": 0.5,
+      "distal_max_mm": 6.0,
+      "distal_step_mm": 1.0
+    }
   }
 }
