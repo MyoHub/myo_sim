@@ -18,7 +18,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/build-and-composition.md` — MjSpec compose.py reference
 - `docs/wiki/postures.md` — the posture keyframes: pose, API, measurements and literature comparison
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
-- `docs/wiki/model-parameters.md` — model-only muscle strength transforms
+- `docs/wiki/model-parameters.md` — model-only strength and selected-body mass transforms
 - `docs/wiki/log.md` — append-only wiki maintenance log
 
 Open issues: https://github.com/MyoHub/myo_sim/issues
