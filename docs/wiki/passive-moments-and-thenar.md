@@ -171,7 +171,7 @@ Mappings and caveats (details in each row's `notes`):
   PIP/DIP curves for digits 3-5 (scale factors not available, so transferred unscaled).
 - Model issues found on the way: an RI2 path jump between 10 and 15 deg MCP flexion (fixed,
   below); no MCP hyperextension (range starts at 0 deg; measured passive extension reaches -65 deg,
-  Binder-Markey 2021 data); the thumb muscles at the MP joint and the digit-5 extensors at
+  Binder-Markey 2021 data; see Finger and thumb joint ranges below); the thumb muscles at the MP joint and the digit-5 extensors at
   PIP 5 exceed the transferred totals, and AdP exceeds Domalain's CMC totals (see above).
 
 ## Finger joint damping
@@ -224,6 +224,55 @@ stretched over the PIP. Two path defects showed up in the new range:
 
 The palm pads are fitted to the fist at the flexion limits, so `scripts/fit_hand_pads.py` was rerun
 (`hand-contacts-and-pads.md`).
+
+## Finger and thumb joint ranges
+
+The thumb MP and IP rows, the PIP and DIP rows and the MCP abduction rows of the index and little finger carry a
+`range` entry (value, source, status, previous value) that `fit_passive_moments.py` writes into
+`myoarm_r_chain.xml`. The rule: a joint limit is the measured maximum passive angle; active ranges are a check on
+the muscles and passive moments, not a limit. Model before -> after (deg):
+
+| Joint | Before | After | Source of the limit | Other data |
+| --- | --- | --- | --- | --- |
+| PIP 2-5 flexion / extension | 115 / 0 | 115 / 10 | extension: the lowest operating point of Kamper et al. 2002's passive torque | 18 ± 13 passive (Leijnse et al. 2010, Table 1); 13-16 ± 8 active (Mohamed Ibrahim et al. 2024) |
+| DIP 2-5 flexion / extension | 90 / 0 | unchanged (now tabled) | flexion: within one SD of 87 ± 10 passive (Leijnse), above 82-85 active (Mohamed Ibrahim) | extension 31 ± 17 passive, 6-8 active: not adopted (below) |
+| MCP2 abduction ulnar / radial | 15 / 15 | 15 / 25 | radial: Batmanabane & Malathi 1985, 35.8 from complete adduction (cadaver, passive; 31.4 in living hands) | the index touches the middle finger at 11 deg ulnar, so 25 = -11 + 35.8 |
+| MCP5 abduction radial / ulnar | 15 / 15 | 15 / 27 | ulnar: Batmanabane & Malathi 1985, 38.1 (cadaver; 33.6 living) | the little finger touches the ring finger at 11 deg radial |
+| MCP3, MCP4 abduction | 15 / 15 | unchanged | no usable split: the middle finger was the reference of the measured arcs, and the ring finger moves between neighbours (arcs 7.7 / 18.3 cadaver) | contacts stop both at 11-14 deg while the neighbours are straight |
+| Thumb IP flexion / extension | 75 / 25 | 85.8 / 34.7 | Skvarilova & Plevkova 1996, passive, 200 adults (as reported in Norkin & White 2016, Table 7.3) | active 79.1 / 23.2; Barakat et al. 2013: 88 ± 2.3 / 12 ± 9.2; AAOS 80 / 20 |
+| Thumb MP flexion / extension | 45 / 40 | 67.0 / 22.6 | as above, passive | active 57.0 / 13.7; Barakat: 60 / 8.1; Batmanabane & Malathi (cadaver): 47 / 16 |
+| MCP 2-5 flexion / extension | 90 / 0 | unchanged | flexion between 84-87 active (Mohamed Ibrahim) and 102 ± 11 passive (Leijnse) | hyperextension not adopted yet (below) |
+
+The ulnar limit of the index and the radial limit of the little finger stay past their contacts, so a straight
+neighbour stops the finger and a flexed one lets it cross. Goniometry of the finger joints has a standard error of
+about 3-5 deg (Marcionis, as reported in Norkin & White 2016), so model and data within about 5 deg agree.
+
+Active MCP deviation measured with biaxial electrogoniometers is larger than these limits (Latz et al. 2019, 31
+adults, wrist neutral, ulnar / radial: index 20.7 ± 11.7 / 31.2 ± 9.8, ring 28.0 ± 10.7 / 8.1 ± 5.8, little 48.5 ±
+17.0 / 14.8 ± 12.8 deg; the middle finger's wrist-neutral row repeats the index row of another wrist angle, at ±40
+deg wrist it is 19.5-20.4 / 12.6-13.1 deg). Skin-mounted sensors referenced to the back of the hand include
+metacarpal motion (the fifth metacarpal abducts about 13 deg at its CMC joint, Batmanabane & Malathi), which this
+model's CMC5 hinge does not have, so the radiographic arcs set the limits; Erdogan & Bakirci 2023's angles between
+the spread fingers (index-middle 21, middle-ring 20, ring-little 30 deg; photographs) are the comparison for the
+whole hand.
+
+PIP hyperextension stops at 10 deg because no passive moment is measured beyond Kamper's operating points; further
+range would need an end-range stiffness without a source. The DIP was given the same -10 deg in a first trial and
+kept at 0: Kamper's DIP cubic, the only passive DIP data, crosses zero near -14 deg (the paper states 7 deg of
+flexion), so the relaxed DIP joints rested on the -10 deg limit and the tenodesis DIP moved up to 7 deg (protocol
+bound 5 deg). DIP hyperextension needs a DIP passive curve whose equilibrium lies in flexion. The passive fits now span the new ranges: the
+PIP spring rows and the extrinsic PIP joint targets fit from -10 deg, the thumb rows over their new ranges, and
+the active force-length constraint of the extrinsic fit puts the thumb at its new limits (fist and extension) while
+"full extension" of the fingers stays at straight fingers.
+
+**MCP hyperextension (not adopted).** Measured: 61 ± 24 deg passive (Leijnse), 22-26 ± 7 deg active (Mohamed
+Ibrahim), 8-15 deg in daily activities (digits 2-5; Hayashi et al., as reported in Norkin & White 2016, Table 7.4),
+and Knutson et al. 2000's total passive moment reaches their 40 N cm end moment at 55 deg (wrist neutral). The
+model's extrinsic paths do not carry it: FDS and FDP pass the MCP through via sites, so their flexion moment arm
+falls from 6-10 mm at 0 deg to 0-2 mm at 60 deg of hyperextension (FDS3 turns extensor), and EDC2 and EDC3 turn
+into flexors past about 45 deg (the same on MuJoCo 3.17 and 4). With a -61 deg limit and refitted passive fits the
+passive index MCP moment was 12 N cm at -60 deg against Knutson's 48 N cm, and it fell from -30 to -60 deg. The
+limit stays at 0 until the flexor pulleys and the dorsal extensor path at the MCP are modelled.
 
 ## RI2 path
 

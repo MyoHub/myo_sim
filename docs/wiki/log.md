@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Finger and thumb joint ranges from range-of-motion data
+Changed: `myo_sim/build/data/passive_joint_moments.json` (`range` entries and sources), `myoarm_r_chain.xml` (ranges), `muscle_passive.json`, `hand_intrinsic_muscles.json`, `extrinsic_muscles.json`, `hand_pads.json`, `postures.json`, arm muscle and tendon XML (refits), `hand_literature.json`, `scripts/hand_literature_comparison.py` (`joint_ranges`), `tests/test_passive_thenar.py`, `docs/wiki/{passive-moments-and-thenar,hand-literature-comparison}.md`, `CHANGELOG.md`
+Why: the thumb, PIP extension and index and little-finger abduction limits had no cited source and now follow measured passive ranges.
+
 ## 2026-11-06 — Joint springs fitted at the posture of their data
 Changed: `scripts/fit_passive_moments.py` (`source_posture`), `myo_sim/build/data/passive_joint_moments.json` (rows name their source posture), `muscle_passive.json` (Formica posture: forearm neutral explicit, protocol note), `myoarm_r_tendon.xml` (wrist springs), `hand_literature.json`, `tests/test_muscle_passive.py`, `docs/wiki/{passive-moments-and-thenar,hand-extrinsic-muscles,hand-literature-comparison}.md`, `CHANGELOG.md`
 Why: the wrist springs subtracted the muscles at elbow 90 deg with straight fingers while Formica et al. 2012 measured, and the extrinsic fit evaluated, at elbow 60 deg with the hand closed on a handle. At Formica's posture the old total was off by 0.114 N m in flexion; fitted there it is 0.016 N m. The round-3 alternative extrinsic fit still loses.

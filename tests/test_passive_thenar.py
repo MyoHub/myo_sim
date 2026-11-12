@@ -238,10 +238,16 @@ def test_finger_damping_is_the_tabled_value(name: str) -> None:
 
 @pytest.mark.parametrize("name", MODELS)
 def test_tabled_joint_ranges_are_in_every_model(name: str) -> None:
-    """The PIP rows' measured range (Leijnse et al. 2010) is the joint range on both hands of every model."""
+    """Every tabled range (PIP and DIP, thumb MP and IP, MCP abduction of digits 2 and 5) is the joint range on both hands of every model."""
     table = load_passive_moment_table()
     rows = [r for r in table["joints"] if "range" in r]
-    assert {r["names"]["r"] for r in rows} == {f"pm{d}_flexion_r" for d in (2, 3, 4, 5)}
+    expected = {f"{j}{d}_flexion_r" for j in ("pm", "md") for d in (2, 3, 4, 5)}
+    assert {r["names"]["r"] for r in rows} == expected | {
+        "mp_flexion_r",
+        "ip_flexion_r",
+        "mcp2_abduction_r",
+        "mcp5_abduction_r",
+    }
     model = myo_sim.load_spec(name).compile()
     for row in rows:
         assert row["range"]["source"] in table["sources"]

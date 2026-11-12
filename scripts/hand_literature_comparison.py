@@ -201,6 +201,46 @@ def pip_limits(model: mujoco.MjModel) -> list[float]:
     return [float(np.degrees(model.jnt_range[model.joint(f"pm{d}_flexion_r").id][1])) for d in DIGITS]
 
 
+def _limits_deg(model: mujoco.MjModel, joint: str) -> np.ndarray:
+    return np.degrees(model.jnt_range[model.joint(joint).id])
+
+
+def _touch_angle(model: mujoco.MjModel, digit: int, sign: float) -> float:
+    """MCP abduction (deg) at which *digit* first touches another digit, the other joints at 0, moving by *sign*."""
+    data = mujoco.MjData(model)
+    joint = model.joint(f"mcp{digit}_abduction_r")
+    body = model.jnt_bodyid[joint.id]
+    bodies = {
+        b
+        for b in range(model.nbody)
+        if b == body or model.body_parentid[b] == body or model.body_parentid[model.body_parentid[b]] == body
+    }
+    for a in np.arange(0.0, 45.0, 0.25):
+        data.qpos[:] = model.qpos0
+        data.qpos[joint.qposadr[0]] = sign * np.radians(a)
+        mujoco.mj_forward(model, data)
+        for c in data.contact[: data.ncon]:
+            pair = {model.geom_bodyid[c.geom[0]], model.geom_bodyid[c.geom[1]]}
+            if c.dist < 0 and len(pair & bodies) == 1:
+                return float(sign * a)
+    return float("nan")
+
+
+def joint_ranges(model: mujoco.MjModel) -> dict[str, Any]:
+    """Finger and thumb joint limits (deg, as magnitudes) and the MCP abduction arcs from the touch of the neighbour."""
+    mcp, pip, dip = (_limits_deg(model, f"{j}2_flexion_r") for j in ("mcp", "pm", "md"))
+    ip, mp = _limits_deg(model, "ip_flexion_r"), _limits_deg(model, "mp_flexion_r")
+    out: dict[str, Any] = {
+        "finger_joint_limits": [abs(mcp[0]), mcp[1], abs(pip[0]), pip[1], abs(dip[0]), dip[1]],
+        "thumb_joint_limits": [abs(ip[0]), ip[1], abs(mp[0]), mp[1]],
+        "mcp_abduction_arc": [
+            _limits_deg(model, "mcp2_abduction_r")[1] - _touch_angle(model, 2, -1.0),
+            _touch_angle(model, 5, 1.0) - _limits_deg(model, "mcp5_abduction_r")[0],
+        ],
+    }
+    return out
+
+
 def _arms(model: mujoco.MjModel, tendon: str, posture: dict[str, float], joints: tuple[str, ...]) -> list[float]:
     """dL/dq (mm) of *tendon* about *joints* at *posture* (central differences)."""
     data = mujoco.MjData(model)
@@ -777,6 +817,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
         {"pip_flexion_limit": pip_limits(model)} | cmc45(model) | intrinsic_moment_arms(model) | hypothenar(model)
     )
     out |= interossei_lumbricals(model)
+    out |= joint_ranges(model)
     out |= extensor_mechanism(model)
     out |= lumbrical_nodes(model)
     out |= extrinsic_revisions(model)
