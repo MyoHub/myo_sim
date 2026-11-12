@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Keep authoring independent of editor integrations
+Changed: myo_sim/authoring/, tests/test_authoring*.py, tests/authoring_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/authoring.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
+Why: compiled anatomy, selected instance edits and native archive validation belong to a generic model-authoring contract; editor adapters and their documentation were removed while canonical chain ownership and mirroring remain unchanged.
+
 ## 2026-11-12 — Preserve material colors in anatomy exports
 Changed: myo_sim/muskemo/interchange.py, tests/test_muskemo.py, docs/wiki/muskemo.md
 Why: anatomy JSON used raw geom RGBA and lost native material colors and alpha; exports now match MuJoCo's material/default override behavior without changing the source model.

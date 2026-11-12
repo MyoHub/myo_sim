@@ -1308,7 +1308,7 @@ jax = [
     { name = "jax", version = "0.10.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version == '3.11.*'" },
     { name = "jax", version = "0.12.0.1", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.12'" },
 ]
-muskemo = [
+mesh = [
     { name = "trimesh" },
 ]
 torch = [
@@ -1334,9 +1334,9 @@ requires-dist = [
     { name = "mujoco", specifier = ">=3.4,<4" },
     { name = "numpy", specifier = ">=1.24" },
     { name = "torch", marker = "extra == 'torch'", specifier = ">=2.2" },
-    { name = "trimesh", marker = "extra == 'muskemo'", specifier = ">=4" },
+    { name = "trimesh", marker = "extra == 'mesh'", specifier = ">=4" },
 ]
-provides-extras = ["torch", "jax", "muskemo"]
+provides-extras = ["torch", "jax", "mesh"]
 
 [package.metadata.requires-dev]
 dev = [

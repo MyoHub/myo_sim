@@ -14,7 +14,7 @@ from typing import Any
 import mujoco
 import numpy as np
 import pytest
-from muskemo_support import (
+from authoring_support import (
     _assert_source_unchanged,
     _edit,
     _elbow_model,
@@ -23,8 +23,9 @@ from muskemo_support import (
     _source_state,
 )
 
-from myo_sim.muskemo import apply_model_patch, mesh_inertia, model_fingerprint
-from myo_sim.muskemo.interchange import _inertia
+import myo_sim
+from myo_sim.authoring import apply_model_patch, mesh_inertia, model_fingerprint
+from myo_sim.authoring.interchange import _inertia
 
 
 @pytest.fixture(scope="module")
@@ -52,6 +53,94 @@ def test_elbow_site_and_inertia_preserve_other_anatomy(elbow: tuple[mujoco.MjSpe
     )
     untouched_sites = np.arange(source.nsite) != source.site("BRA-P2").id
     np.testing.assert_array_equal(model.site_pos[untouched_sites], source.site_pos[untouched_sites])
+
+
+@pytest.mark.parametrize("side", ["r", "l"])
+def test_fullbody_edits_preserve_composition_and_unrelated_calibration(side: str) -> None:
+    spec = myo_sim.load_spec("myofullbody")
+    source = spec.copy().compile()
+    before = _source_state(spec)
+    chain = myo_sim.MODELS_DIR / "arm" / "assets" / "myoarm_r_chain.xml"
+    original_xml = chain.read_bytes()
+    site_name, body_name = f"DELT1_DELT1-P4_{side}", f"humerus_{side}"
+    sid, bid = source.site(site_name).id, source.body(body_name).id
+    patch = _patch(source)
+    patch["sites"] = [dict(name=site_name, pos=(source.site_pos[sid] + [0.001, 0.002, -0.003]).tolist())]
+    patch["inertias"] = [
+        dict(
+            name=body_name,
+            mass=float(source.body_mass[bid] * 1.02),
+            com=(source.body_ipos[bid] + [0.001, -0.002, 0.001]).tolist(),
+            inertia=(1.03 * np.asarray(_inertia(source.body_inertia[bid], source.body_iquat[bid]))).tolist(),
+        )
+    ]
+
+    edited = apply_model_patch(spec, patch)
+    result = edited.compile()
+
+    _assert_source_unchanged(spec, before)
+    assert chain.read_bytes() == original_xml
+    assert model_fingerprint(spec.copy().compile()) == patch["fingerprint"]
+    assert result.names == source.names
+    for field in (
+        "body_parentid",
+        "body_jntadr",
+        "body_jntnum",
+        "body_pos",
+        "body_quat",
+        "jnt_type",
+        "jnt_bodyid",
+        "jnt_pos",
+        "jnt_axis",
+        "jnt_range",
+        "jnt_qposadr",
+        "jnt_dofadr",
+        "geom_bodyid",
+        "geom_pos",
+        "geom_quat",
+        "geom_size",
+        "geom_type",
+        "site_bodyid",
+        "site_quat",
+        "eq_type",
+        "eq_obj1id",
+        "eq_obj2id",
+        "eq_data",
+        "eq_active0",
+        "tendon_adr",
+        "tendon_num",
+        "wrap_type",
+        "wrap_objid",
+        "wrap_prm",
+        "actuator_trntype",
+        "actuator_trnid",
+        "actuator_gainprm",
+        "actuator_biasprm",
+        "actuator_dynprm",
+        "actuator_gear",
+        "actuator_ctrlrange",
+        "actuator_lengthrange",
+        "qpos0",
+    ):
+        np.testing.assert_array_equal(getattr(result, field), getattr(source, field), err_msg=field)
+    other_sites = np.arange(source.nsite) != sid
+    other_bodies = np.arange(source.nbody) != bid
+    np.testing.assert_array_equal(result.site_pos[other_sites], source.site_pos[other_sites])
+    for field in ("body_mass", "body_ipos", "body_inertia", "body_iquat"):
+        np.testing.assert_array_equal(getattr(result, field)[other_bodies], getattr(source, field)[other_bodies], err_msg=field)
+    np.testing.assert_allclose(result.site_pos[sid], patch["sites"][0]["pos"], atol=1e-12)
+    np.testing.assert_allclose(result.body_ipos[bid], patch["inertias"][0]["com"], atol=1e-12)
+    np.testing.assert_allclose(
+        _inertia(result.body_inertia[bid], result.body_iquat[bid]), patch["inertias"][0]["inertia"], atol=1e-12
+    )
+    np.testing.assert_allclose(result.body_mass.sum() - source.body_mass.sum(), source.body_mass[bid] * 0.02, atol=1e-12)
+    # Native acceleration, force estimates and routed lengths may change from the
+    # selected anatomy edits; input physiological calibration remains unchanged.
+    assert not np.array_equal(result.actuator_acc0, source.actuator_acc0)
+    old, new = mujoco.MjData(source), mujoco.MjData(result)
+    mujoco.mj_forward(source, old)
+    mujoco.mj_forward(result, new)
+    assert not np.array_equal(new.ten_length, old.ten_length)
 
 
 @pytest.mark.parametrize(
@@ -240,7 +329,7 @@ def test_mesh_inertia_uses_homogeneous_watertight_mass_properties(tmp_path: Path
 
 def test_mesh_inertia_is_optional(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
     monkeypatch.setitem(sys.modules, "trimesh", None)
-    with pytest.raises(ImportError, match="myo-sim\\[muskemo\\]"):
+    with pytest.raises(ImportError, match="myo-sim\\[mesh\\]"):
         mesh_inertia(tmp_path / "unused.stl", 1000)
 
 

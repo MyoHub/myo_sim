@@ -2,7 +2,7 @@
 #
 # This source code is licensed under the Apache 2 license found in the
 # LICENSE file in the root directory of this source tree.
-"""Compiled MuJoCo anatomy interchange for the optional MuSkeMo Blender add-on."""
+"""Versioned, editor-independent interchange of compiled MuJoCo anatomy."""
 
 from __future__ import annotations
 
@@ -16,7 +16,9 @@ import numpy as np
 
 from myo_sim.physics.joint_coupling import JointCouplings, project_joint_couplings
 
-SCHEMA_VERSION = 1
+from .provenance import _provenance, _unknown_origin
+
+SCHEMA_VERSION = 2
 
 
 def _peak_force(model: mujoco.MjModel) -> np.ndarray:
@@ -58,11 +60,38 @@ def _inertia(diagonal: np.ndarray, quaternion: np.ndarray) -> list[list[float]]:
     return (rotation @ np.diag(diagonal) @ rotation.T).tolist()
 
 
+def _wrap_flags(model: mujoco.MjModel, data: mujoco.MjData) -> list[dict[str, Any]]:
+    """Report inside sidesites in native pose coordinates, independent of any editor."""
+    flags = []
+    for tendon in range(model.ntendon):
+        start = int(model.tendon_adr[tendon])
+        for wrap in range(start, start + int(model.tendon_num[tendon])):
+            if model.wrap_type[wrap] not in (mujoco.mjtWrap.mjWRAP_SPHERE, mujoco.mjtWrap.mjWRAP_CYLINDER):
+                continue
+            side = int(model.wrap_prm[wrap])
+            if side < 0:
+                continue
+            geom = int(model.wrap_objid[wrap])
+            local = data.geom_xmat[geom].reshape(3, 3).T @ (data.site_xpos[side] - data.geom_xpos[geom])
+            radial = local[:2] if model.wrap_type[wrap] == mujoco.mjtWrap.mjWRAP_CYLINDER else local
+            flags.append(
+                dict(
+                    tendon=tendon,
+                    element=wrap - start,
+                    geom=geom,
+                    sidesite=side,
+                    sidesite_inside=bool(radial @ radial < model.geom_size[geom, 0] ** 2),
+                )
+            )
+    return flags
+
+
 def export_model(
     model: mujoco.MjModel,
     output: str | Path,
     *,
     qpos: np.ndarray | None = None,
+    source_model: str | None = None,
 ) -> dict[str, Any]:
     """Export resolved anatomy, original paths and MuJoCo-evaluated poses to JSON.
 
@@ -71,6 +100,9 @@ def export_model(
         output: Destination JSON file. Mesh vertices are embedded.
         qpos: Optional ``(frames, nq)`` poses. Joint equalities are projected with
             the shared coupling implementation before evaluating each pose.
+        source_model: Optional registered model name. Canonical chain ownership
+            is reported only when that source's complete fingerprint matches.
+            Custom or unmatched models retain explicitly unknown origins.
 
     Returns:
         The JSON-compatible document. Coordinates are metres and radians,
@@ -80,7 +112,7 @@ def export_model(
         ValueError: Invalid poses or unsupported flex/skin geometry.
     """
     if model.nflex or model.nskin:
-        raise ValueError("Flex and skin geometry cannot be represented by this importer")
+        raise ValueError("Flex and skin geometry cannot be represented by this anatomy format")
     poses = np.asarray(model.qpos0[None] if qpos is None else qpos, dtype=float)
     if poses.ndim != 2 or poses.shape[1] != model.nq or not len(poses):
         raise ValueError(f"qpos must have nonempty shape (frames, {model.nq})")
@@ -101,11 +133,14 @@ def export_model(
     if any(model.actuator_trntype[a] != mujoco.mjtTrn.mjTRN_TENDON for a in muscles):
         raise ValueError("Muscles without tendon transmission are unsupported")
     force = _peak_force(model)
+    fingerprint = model_fingerprint(model)
+    provenance, owners = _provenance(model, source_model, fingerprint)
     bodies = [
         dict(
             id=i,
             name=names["body"][i],
             source_name=model.body(i).name,
+            origin=owners["body"].get(model.body(i).name, _unknown_origin()),
             parent=int(model.body_parentid[i]),
             mass=float(model.body_mass[i]),
             com=model.body_ipos[i].tolist(),
@@ -132,6 +167,7 @@ def export_model(
             id=i,
             name=names["site"][i],
             source_name=model.site(i).name,
+            origin=owners["site"].get(model.site(i).name, _unknown_origin()),
             body=int(model.site_bodyid[i]),
             pos=model.site_pos[i].tolist(),
         )
@@ -141,19 +177,22 @@ def export_model(
     for t in range(model.ntendon):
         elements = []
         for w in range(model.tendon_adr[t], model.tendon_adr[t] + model.tendon_num[t]):
-            elements.append(
-                dict(
-                    type=mujoco.mjtWrap(int(model.wrap_type[w])).name.removeprefix("mjWRAP_"),
-                    object=int(model.wrap_objid[w]),
-                    parameter=float(model.wrap_prm[w]),
-                )
+            element = dict(
+                type=mujoco.mjtWrap(int(model.wrap_type[w])).name.removeprefix("mjWRAP_"),
+                object=int(model.wrap_objid[w]),
+                parameter=float(model.wrap_prm[w]),
             )
+            if model.wrap_type[w] in (mujoco.mjtWrap.mjWRAP_SPHERE, mujoco.mjtWrap.mjWRAP_CYLINDER):
+                element["sidesite"] = int(model.wrap_prm[w]) if model.wrap_prm[w] >= 0 else None
+            elements.append(element)
         tendons.append(dict(id=t, name=names["tendon"][t], elements=elements))
+    sidesite_tendons = {t["id"] for t in tendons if any(e.get("sidesite") is not None for e in t["elements"])}
     actuators = [
         dict(
             id=int(a),
             name=names["actuator"][a],
             tendon=int(model.actuator_trnid[a, 0]),
+            has_sidesite_constraints=int(model.actuator_trnid[a, 0]) in sidesite_tendons,
             force=float(force[a]),
             gear=model.actuator_gear[a].tolist(),
             gain=model.actuator_gainprm[a].tolist(),
@@ -225,12 +264,32 @@ def export_model(
                 muscle_length=data.actuator_length[muscles].tolist(),
                 muscle_tendon_length=data.ten_length[model.actuator_trnid[muscles, 0]].tolist(),
                 moment_arms=moment[muscles].tolist(),
+                wrap_flags=_wrap_flags(model, data),
             )
         )
+    warnings: dict[tuple[int, ...], dict[str, Any]] = {}
+    for index, frame in enumerate(frames):
+        for flag in frame["wrap_flags"]:
+            if flag["sidesite_inside"]:
+                key = tuple(flag[field] for field in ("tendon", "element", "geom", "sidesite"))
+                if key not in warnings:
+                    warnings[key] = dict(
+                        code="inside_sidesite",
+                        **{field: flag[field] for field in ("tendon", "element", "geom", "sidesite")},
+                        frames=[],
+                        message=(
+                            "A sidesite lies inside its wrap geometry; external previews may choose a different path. "
+                            "MuJoCo tendon lengths and moment arms remain authoritative."
+                        ),
+                    )
+                warnings[key]["frames"].append(index)
     document = dict(
         schema=SCHEMA_VERSION,
-        fingerprint=model_fingerprint(model),
+        patch_schema=1,
+        fingerprint=fingerprint,
         mujoco_version=mujoco.__version__,
+        provenance=provenance,
+        warnings=list(warnings.values()),
         units="metres-radians-kilograms",
         bodies=bodies,
         joints=joints,

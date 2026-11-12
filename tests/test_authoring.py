@@ -2,7 +2,7 @@
 #
 # This source code is licensed under the Apache 2 license found in the
 # LICENSE file in the root directory of this source tree.
-"""MuSkeMo interchange preserves compiled anatomy and MuJoCo geometry."""
+"""Editor-independent interchange preserves compiled anatomy and MuJoCo geometry."""
 
 from __future__ import annotations
 
@@ -17,8 +17,8 @@ import numpy as np
 import pytest
 
 import myo_sim
-from myo_sim.muskemo import export_model, joint_sweep, model_fingerprint
-from myo_sim.muskemo.interchange import _peak_force
+from myo_sim.authoring import export_model, joint_sweep, model_fingerprint
+from myo_sim.authoring.interchange import _peak_force
 from myo_sim.physics.joint_coupling import JointCouplings, project_joint_couplings
 
 
@@ -44,6 +44,87 @@ def test_compiled_muscles_wraps_and_mesh_transforms(tmp_path: Path, name: str, c
         model.mesh_face[model.mesh_faceadr[mid] : model.mesh_faceadr[mid] + model.mesh_facenum[mid]],
     )
     assert model_fingerprint(model) == fingerprint
+
+
+def test_verified_fullbody_ownership_preserves_generated_left_provenance(tmp_path: Path) -> None:
+    model = myo_sim.load_spec("myofullbody").compile()
+    fingerprint = model_fingerprint(model)
+    document = export_model(model, tmp_path / "fullbody.json", source_model="myofullbody")
+
+    assert document["schema"] == 2
+    assert document["patch_schema"] == 1
+    assert document["provenance"]["scope"] == "instance"
+    assert document["provenance"]["status"] == "verified"
+    assert document["provenance"]["source_model"] == "myofullbody"
+    bodies = {body["source_name"]: body for body in document["bodies"]}
+    sites = {site["source_name"]: site for site in document["sites"]}
+    for kind, name in ((bodies, "humerus"), (sites, "DELT1_DELT1-P4")):
+        for side in ("r", "l"):
+            assert kind[f"{name}_{side}"]["origin"] == dict(
+                status="canonical",
+                chain_fragment="arm/assets/myoarm_r_chain.xml",
+                canonical_name=f"{name}_r",
+                generated_left=side == "l",
+            )
+    assert bodies["head"]["origin"]["chain_fragment"] == "head/assets/myohead_rigid_chain.xml"
+    assert bodies["pelvis"]["origin"]["chain_fragment"] == "leg/assets/myolegs_chain.xml"
+    assert bodies["Full Body"]["origin"]["status"] == "unknown"
+    assert model_fingerprint(model) == fingerprint
+
+
+@pytest.mark.parametrize("source_model", [None, "myoarm_r"])
+def test_custom_named_anatomy_does_not_claim_canonical_ownership(tmp_path: Path, source_model: str | None) -> None:
+    # Familiar object names alone cannot establish which source declared them.
+    model = mujoco.MjModel.from_xml_string(
+        '<mujoco><worldbody><body name="humerus_l"><geom size=".1"/><site name="DELT1_DELT1-P4_l"/></body></worldbody></mujoco>'
+    )
+    document = export_model(model, tmp_path / "custom.json", source_model=source_model)
+
+    assert document["provenance"]["status"] == "unknown"
+    assert document["provenance"]["source_model"] is None
+    for entry in document["bodies"] + document["sites"]:
+        assert entry["origin"] == dict(status="unknown", chain_fragment=None, canonical_name=None, generated_left=None)
+
+
+@pytest.mark.parametrize("shape", ["sphere", "cylinder"])
+@pytest.mark.parametrize("sidesite,poses", [(True, [[0.0], [0.3]]), (True, [[0.3]]), (False, [[0.0], [0.3]])])
+def test_inside_sidesite_flags_and_warnings_use_native_pose_coordinates(
+    tmp_path: Path, shape: str, sidesite: bool, poses: list[list[float]]
+) -> None:
+    side_attribute = ' sidesite="side"' if sidesite else ""
+    model = mujoco.MjModel.from_xml_string(
+        f'<mujoco><worldbody><geom name="wrap" type="{shape}" size=".1 .2"/>'
+        '<site name="start" pos="-.3 0 0"/><site name="end" pos=".3 0 0"/>'
+        '<body><joint type="slide" axis="1 0 0"/><geom size=".001" mass=".01"/>'
+        '<site name="side" pos="0 0 .04"/></body></worldbody>'
+        f'<tendon><spatial name="path"><site site="start"/><geom geom="wrap"{side_attribute}/>'
+        '<site site="end"/></spatial></tendon><actuator>'
+        '<muscle name="muscle" tendon="path" force="10" lengthrange=".1 .8"/>'
+        "</actuator></mujoco>"
+    )
+    document = export_model(model, tmp_path / f"{shape}.json", qpos=np.asarray(poses))
+
+    element = document["tendons"][0]["elements"][1]
+    assert document["muscles"][0]["has_sidesite_constraints"] is sidesite
+    assert document["muscles"][0]["force"] == 10
+    if not sidesite:
+        assert element["sidesite"] is None
+        assert all(frame["wrap_flags"] == [] for frame in document["frames"])
+        assert document["warnings"] == []
+        return
+    assert element["sidesite"] == model.site("side").id
+    expected_inside = [pose[0] == 0.0 for pose in poses]
+    assert [frame["wrap_flags"][0]["sidesite_inside"] for frame in document["frames"]] == expected_inside
+    if not any(expected_inside):
+        assert document["warnings"] == []
+        return
+    warning = document["warnings"][0]
+    assert warning["code"] == "inside_sidesite"
+    assert warning["tendon"] == 0 and warning["element"] == 1
+    assert warning["geom"] == model.geom("wrap").id
+    assert warning["sidesite"] == model.site("side").id
+    assert warning["frames"] == [index for index, inside in enumerate(expected_inside) if inside]
+    assert "MuJoCo" in warning["message"]
 
 
 @pytest.mark.parametrize(
@@ -166,9 +247,9 @@ def test_peak_force_matches_native_muscle_gain(zero_acceleration: bool) -> None:
 
 
 def test_core_import_does_not_load_optional_apps() -> None:
-    """The anatomy API imports without Blender, trimesh, training libraries or MyoSuite."""
+    """The anatomy API imports without optional editors, mesh or training libraries."""
     code = (
-        "import sys; import myo_sim.muskemo; "
+        "import sys; import myo_sim.authoring; "
         "unexpected = {'myosuite', 'trimesh', 'bpy', 'torch', 'jax'} & sys.modules.keys(); "
         "assert not unexpected, unexpected"
     )

@@ -183,7 +183,7 @@ def mesh_inertia(path: str | Path, density: float) -> dict[str, Any]:
     try:
         import trimesh  # noqa: PLC0415
     except ImportError as exc:
-        raise ImportError("Install myo-sim[muskemo] to compute optional mesh inertia") from exc
+        raise ImportError("Install myo-sim[mesh] to compute optional mesh inertia") from exc
     mesh = trimesh.load_mesh(Path(path), process=True)
     if not isinstance(mesh, trimesh.Trimesh) or not mesh.is_volume:
         raise ValueError("A watertight, consistently oriented positive-volume mesh is required")

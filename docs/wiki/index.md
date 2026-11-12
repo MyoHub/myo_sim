@@ -18,10 +18,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/build-and-composition.md` — MjSpec compose.py reference
 - `docs/wiki/postures.md` — the posture keyframes: pose, API, measurements and literature comparison
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
-- `docs/wiki/muskemo.md` — optional compiled anatomy interchange
-- `docs/wiki/muskemo-blender.md` — Blender/MuSkeMo importer and geometry validation
-- `docs/wiki/muskemo-edits.md` — selected source-bound model edits
-- `docs/wiki/muskemo-cli.md` — authoring CLI and portable edited archives
+- `docs/wiki/authoring.md` — anatomy/patch data contract, selected instance edits and validated native archives
 - `docs/wiki/log.md` — append-only wiki maintenance log
 
 Open issues: https://github.com/MyoHub/myo_sim/issues

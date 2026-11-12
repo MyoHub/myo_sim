@@ -79,22 +79,20 @@ model = build_spec("myofullbody").compile()
 print(f"Full body — joints: {model.njnt}, muscles: {model.nu}")
 ```
 
-## Optional Blender model editing
+## Model authoring
 
-`myo_sim.muskemo` exports compiled anatomy for the separately installed
-[MuSkeMo](https://github.com/PashavanBijlert/MuSkeMo) Blender add-on and applies
-selected attachment/inertia edits to a copy of the original `MjSpec`.
-It requires neither MyoSuite nor Blender for export and patching.
+`myo_sim.authoring` exports compiled anatomy and native reference measurements,
+applies source-bound attachment/inertia edits to a copied `MjSpec`, and saves
+validated portable model archives. Editor integrations can use the generic
+data contract independently.
 
 ```bash
-uv run python -m myo_sim.muskemo export --model myoelbow --output elbow.json
+uv run python -m myo_sim.authoring export --model myoelbow --output elbow.json
 ```
 
-See the [authoring workflow](docs/wiki/muskemo-cli.md),
-[Blender importer](docs/wiki/muskemo-blender.md) and
-[selected-edit API](docs/wiki/muskemo-edits.md).
-MuJoCo remains the source of truth: preview wrapping can differ in MuSkeMo.
-No bundled model is changed by enabling the bridge.
+See the [authoring contract and workflow](docs/wiki/authoring.md), including
+instance customization and canonical source contributions. MuJoCo supplies the
+reference geometry and mechanics; editor previews may use different wrapping.
 
 ## Development
 

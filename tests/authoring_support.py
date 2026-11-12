@@ -12,7 +12,7 @@ import mujoco
 import numpy as np
 
 import myo_sim
-from myo_sim.muskemo import model_fingerprint
+from myo_sim.authoring import model_fingerprint
 
 
 def _elbow_model() -> tuple[mujoco.MjSpec, mujoco.MjModel]:
