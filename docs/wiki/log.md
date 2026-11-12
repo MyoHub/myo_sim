@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Preserve material colors in anatomy exports
+Changed: myo_sim/muskemo/interchange.py, tests/test_muskemo.py, docs/wiki/muskemo.md
+Why: anatomy JSON used raw geom RGBA and lost native material colors and alpha; exports now match MuJoCo's material/default override behavior without changing the source model.
+
 ## 2026-11-11 — Optional source-model authoring with MuSkeMo
 Changed: myo_sim/muskemo/, tests/test_muskemo*.py, tests/muskemo_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/muskemo*.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
 Why: anatomy editing belongs with the source model library; export, Blender import, validation and selected edits now run without MyoSuite or a training dependency.

@@ -46,6 +46,46 @@ def test_compiled_muscles_wraps_and_mesh_transforms(tmp_path: Path, name: str, c
     assert model_fingerprint(model) == fingerprint
 
 
+@pytest.mark.parametrize(
+    "geom_rgba,material_rgba",
+    [
+        (None, None),
+        (".2 .3 .4 .6", None),
+        (None, "1 0 0 .7"),
+        (".5 .5 .5 1", "1 0 0 .7"),
+        (".5 .5 .5 .2", "1 0 0 .7"),
+        (".2 .3 .4 1", "1 0 0 .7"),
+        (".2 .3 .4 .3", "1 0 0 .7"),
+        (None, "1 0 0 0"),
+    ],
+)
+def test_exported_geom_rgba_matches_native_appearance(tmp_path: Path, geom_rgba: str | None, material_rgba: str | None) -> None:
+    """Material/default colors and explicit RGB/alpha overrides match MuJoCo without OpenGL."""
+    asset = f'<asset><material name="color" rgba="{material_rgba}"/></asset>' if material_rgba is not None else ""
+    attributes = ' material="color"' if material_rgba is not None else ""
+    if geom_rgba is not None:
+        attributes += f' rgba="{geom_rgba}"'
+    model = mujoco.MjModel.from_xml_string(
+        f'<mujoco>{asset}<worldbody><geom name="colored" size=".1"{attributes}/></worldbody></mujoco>'
+    )
+    fingerprint = model_fingerprint(model)
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    scene = mujoco.MjvScene(model, maxgeom=10)
+    mujoco.mjv_updateScene(
+        model, data, mujoco.MjvOption(), mujoco.MjvPerturb(), mujoco.MjvCamera(), mujoco.mjtCatBit.mjCAT_ALL, scene
+    )
+
+    document = export_model(model, tmp_path / "colors.json")
+
+    if scene.ngeom == 0:  # MuJoCo omits fully transparent geometry from the scene.
+        assert document["geoms"][0]["rgba"][3] == 0
+    else:
+        assert scene.ngeom == 1
+        np.testing.assert_array_equal(document["geoms"][0]["rgba"], scene.geoms[0].rgba)
+    assert model_fingerprint(model) == fingerprint
+
+
 def test_elbow_range_length_derivatives(tmp_path: Path) -> None:
     model = myo_sim.load_spec("myoelbow").compile()
     poses = joint_sweep(model, "r_elbow_flex", 31)

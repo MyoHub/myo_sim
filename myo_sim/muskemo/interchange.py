@@ -163,6 +163,10 @@ def export_model(
         )
         for a in muscles
     ]
+    colors = model.geom_rgba.copy()
+    # MuJoCo uses the material RGBA only when all four geom values equal its default.
+    uses_material = (model.geom_matid >= 0) & np.all(colors == [0.5, 0.5, 0.5, 1.0], axis=1)
+    colors[uses_material] = model.mat_rgba[model.geom_matid[uses_material]]
     geoms = []
     for i in range(model.ngeom):
         geom = dict(
@@ -171,7 +175,7 @@ def export_model(
             body=int(model.geom_bodyid[i]),
             type=mujoco.mjtGeom(int(model.geom_type[i])).name.removeprefix("mjGEOM_"),
             size=model.geom_size[i].tolist(),
-            rgba=model.geom_rgba[i].tolist(),
+            rgba=colors[i].tolist(),
         )
         if model.geom_type[i] == mujoco.mjtGeom.mjGEOM_MESH:
             mesh = model.geom_dataid[i]

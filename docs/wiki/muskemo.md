@@ -30,6 +30,8 @@ source model's mesh paths. Flexes, skins and heightfields fail explicitly.
 The selected-edit/report extension also retains raw source names, actuator gear
 and physical tendon lengths separately from geared actuator lengths. Generated
 labels for unnamed objects are display labels, not editable source names.
+Geometry RGBA follows MuJoCo's material color and alpha unless the geometry's
+RGBA differs from the native default, in which case the geometry overrides it.
 
 This interchange is for anatomy authoring and geometric validation. It is not a
 complete simulation serialization or a replacement for the original `MjSpec`:
