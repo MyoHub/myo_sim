@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Skip compilation for empty posture selections
+Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
+Why: requesting no keyframes still compiled the spec, adding model-build overhead and rejecting unfinished assemblies despite making no edits.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

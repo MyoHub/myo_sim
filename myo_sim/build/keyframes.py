@@ -87,6 +87,7 @@ def add_posture_keyframes(
         spec: Uncompiled spec of the model, optionally edited.
         model_name: Entry of the table to read (registry name or alias).
         postures: Names to add, in this order. None adds all of the model's postures.
+            An empty selection returns without compiling or modifying the spec.
 
     Returns:
         The new keyframes.
@@ -96,6 +97,8 @@ def add_posture_keyframes(
     """
     entries = _model_postures(model_name)
     names = list(entries) if postures is None else list(postures)
+    if not names:
+        return []
     for name in names:
         if name not in entries:
             raise KeyError(f"{model_name!r} has no posture {name!r}. Available: {list(entries)}")
