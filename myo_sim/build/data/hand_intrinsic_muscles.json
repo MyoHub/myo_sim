@@ -271,7 +271,7 @@
         }
       },
       "fpmax": {
-        "value": 0.005025,
+        "value": 0.00524,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -454,7 +454,7 @@
         "pcsa_cm2": 0.533
       },
       "fpmax": {
-        "value": 0.373,
+        "value": 0.3724,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -676,7 +676,7 @@
         }
       },
       "fpmax": {
-        "value": 0.008181,
+        "value": 0.008304,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -870,7 +870,7 @@
         }
       },
       "fpmax": {
-        "value": 0.2554,
+        "value": 0.2846,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1039,7 +1039,7 @@
         "pcsa_cm2": 1.293
       },
       "fpmax": {
-        "value": 0.004856,
+        "value": 0.004931,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1160,7 +1160,7 @@
         }
       },
       "fpmax": {
-        "value": 0.01294,
+        "value": 0.01298,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -1312,6 +1312,11 @@
             ]
           }
         }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -1586,6 +1591,11 @@
           },
           "rms_z": 0.214
         }
+      },
+      "fpmax": {
+        "value": 0.2545,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -1745,6 +1755,11 @@
             ]
           }
         }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -1929,6 +1944,11 @@
           },
           "rms_z": 1.754
         }
+      },
+      "fpmax": {
+        "value": 0.01981,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -2102,6 +2122,11 @@
             ]
           }
         }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -2286,6 +2311,11 @@
           },
           "rms_z": 0.363
         }
+      },
+      "fpmax": {
+        "value": 0.3114,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -2445,6 +2475,11 @@
           },
           "rms_z": 0.184
         }
+      },
+      "fpmax": {
+        "value": 0.0968,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -2618,6 +2653,11 @@
             ]
           }
         }
+      },
+      "fpmax": {
+        "value": 1.3,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -2802,6 +2842,11 @@
           },
           "rms_z": 0.284
         }
+      },
+      "fpmax": {
+        "value": 0.4543,
+        "reference_value": 1.3,
+        "method": "passive_fit"
       }
     },
     {
@@ -2963,7 +3008,7 @@
         }
       },
       "fpmax": {
-        "value": 0.236,
+        "value": 0.2377,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -3393,7 +3438,7 @@
         }
       },
       "fpmax": {
-        "value": 0.597,
+        "value": 0.6017,
         "reference_value": 1.3,
         "method": "passive_fit"
       }
@@ -3485,11 +3530,14 @@
   ],
   "joint_name_note": "MUSIC's thumb CMC joints have the same axes as MyoHand's but swapped names: MUSIC cmc_flexion = myo_sim cmc_abduction_r and vice versa. Sites are body-relative, so the geometry transfers unchanged (lengths and moment arms match MUSIC to 1e-11 m with the names mapped).",
   "passive_fit": {
-    "method": "fpmax (MuJoCo's passive-force scale) of every row that crosses a joint of these passive rows (thumb, little-finger MCP and CMC5), fitted with the extrinsic muscles' loss of fit_muscle_passive.py to the measured total passive moments of these rows of passive_joint_moments.json, over each row's fit range, other joints at 0, counting only the muscles a row's source includes (subtract_model_muscles.muscles) where it names them; the joint springs are fitted afterwards to the remainder. MuJoCo's passive force-length curve (class default fpmax 1.3) is much stiffer than measured curves, as for the extrinsic muscles.",
+    "method": "fpmax (MuJoCo's passive-force scale) of every row that crosses a joint of these passive rows (thumb, finger MCP flexion of digits 2-5 and CMC5), fitted with the extrinsic muscles' loss of fit_muscle_passive.py to the passive moments of these rows of passive_joint_moments.json, over each row's fit range, other joints at 0, counting only the muscles a row's source includes (subtract_model_muscles.muscles) where it names them; the joint springs are fitted afterwards to the remainder. The finger MCP rows are Knutson et al. 2000's intrinsic component (Eq. 2, Table 1 medians; transferred to digits 3-5), which covers the joint capsule, ligaments and the inactive interossei and lumbricals, so the loss keeps those muscles' moment within it and the springs supply the rest. The intrinsic component was separated over wrist angles -60..60 deg, with the MCP moved until the total moment reached about 40 N cm; with the wrist flexed the extrinsic part is small, so the whole model range (-61..90 deg) lies in the measured domain. MuJoCo's passive force-length curve (class default fpmax 1.3) is much stiffer than measured curves, as for the extrinsic muscles.",
     "rows": [
       "thumb_cmc_flexion",
       "thumb_cmc_abduction",
       "thumb_mp_flexion",
+      "digit2_mcp_flexion",
+      "digit3_mcp_flexion",
+      "digit4_mcp_flexion",
       "digit5_mcp_flexion",
       "digit5_cmc_flexion"
     ],
@@ -3501,8 +3549,8 @@
     "fpmax_reference": 1.3,
     "penalty": 1.0,
     "result": {
-      "cost_before": 520547.394,
-      "cost_after": 27919.707
+      "cost_before": 525819.464,
+      "cost_after": 27985.884
     }
   },
   "lumbrical_nodes": {

@@ -283,16 +283,41 @@ Passive index MCP moment, wrist neutral, activation 0 (muscles, springs, ligamen
 | MCP (deg) | -60 | -45 | -30 | -15 | 0 | 30 | 60 | 90 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Before (limit at 0; values past it geometric) | 5.9 | 10.1 | 11.1 | 8.7 | 4.4 | 1.1 | 0.5 | -5.6 |
-| Now | 34.7 | 20.1 | 18.8 | 14.4 | 8.6 | 3.9 | 1.6 | -7.1 |
+| MCP pulley step | 34.7 | 20.1 | 18.8 | 14.4 | 8.6 | 3.9 | 1.6 | -7.1 |
+| Now (intrinsic passive fit) | 34.7 | 17.8 | 11.0 | 8.1 | 6.0 | 3.7 | 0.9 | -7.1 |
 | Knutson et al. 2000 (total, Table 1 medians) | 47.7 | 21.1 | 9.6 | 4.5 | 2.0 | -0.1 | -2.5 | -15.7 |
 
-The end of the range now follows Knutson (-45 deg within 1 N cm; -60 deg lies past his measured domain). Between -30 and 45 deg
-the model is 2-9 N cm too flexing: the interossei and the lumbrical, stretched in hyperextension, give up to 9.5 N cm at -30 deg
-against Knutson's 3.4 N cm intrinsic component (their passive properties are not fitted to a moment), and the index flexors keep
-3-5 N cm of passive tension through midrange. The non-negative springs cannot remove an excess. Consequences: the relaxed index
-MCP rests at 59 deg (49 before; Lee & Jung 2014: 27 ± 4), and with all long extensors at full activation and the IP joints held
-straight the MCP joints extend to 51-63 deg, against 22-26 deg active (the muscles, not passive tissue, limit active extension
-in this model). Both are open (`hand-literature-comparison.md`, open checks).
+In the MCP pulley step the interossei and the lumbrical, stretched in hyperextension, gave up to 9.5 N cm at -30 deg
+against Knutson's 3.4 N cm intrinsic component, because their passive properties were not fitted to a moment, and the
+non-negative springs cannot remove an excess.
+
+**Intrinsic passive fit (this step).** Knutson et al. 2000 separate the passive index MCP moment into a
+wrist-independent intrinsic component (joint capsule, ligaments, inactive interossei and lumbricals; Eq. 2) and a
+wrist-dependent extrinsic one (Eqs. 3-4). The finger MCP rows `digit2..5_mcp_flexion` are now rows of the intrinsic
+passive fit (`passive_fit` in `hand_intrinsic_muscles.json`; digits 3-5 use the index curve, as before): the `fpmax` of
+the interossei and lumbricals is fitted with the one-sided loss so that their moment stays within Knutson's intrinsic
+component, and the MCP springs supply the rest. Knutson measured the intrinsic component at seven wrist angles; with the
+wrist flexed 60 deg the extrinsic part stays below 3 N cm, so the whole model range (-61..90 deg) lies in his measured
+domain. Result: PI1 1.3 -> 0.25, DI2 0.020, DI3 0.31, PI2 0.097, DI4 0.45 (DI1d, DI1s, LUM1 and LUM2-3 stay at 1.3; they
+add less than 0.3 N cm). At the index, interossei + lumbrical + spring now give 24.6 / 8.9 / 3.4 / 1.7 / 0.7 N cm at
+-60 / -45 / -30 / -15 / 0 deg (Knutson's intrinsic component 24.5 / 9.0 / 3.4 / 1.3 / 0.6; 0.4 N cm RMS over his
+measured domain). The index extrinsic fit (`fit_muscle_passive.py`) stays on Knutson's extrinsic component (unchanged:
+RMSE 5.0 N cm) and now also records the total's error, 4.9 N cm RMS over the measured domain. Fitting the total directly
+was tried: it swapped EDC2 and EIP (fpmax 0.39 / 0.09 against 0.002 / 0.66), which are interchangeable at the MCP but
+not at the wrist, and the wrist-flexion spring then missed Formica's stiffness by 0.094 N m (test bound 0.061), so it
+was not kept. The Knutson-total joint targets of digits 3-5 now count the MCP springs with the other muscles, as the
+springs stand for part of the same total.
+
+What remains is extrinsic: with the wrist neutral FDS2 and FDP2 give 5.4 N cm at 0 deg and 3.9 N cm at 30 deg
+(Knutson's extrinsic component 1.4 and -0.3), and the index flexors cannot follow the exponential rise into
+hyperextension (10.1 against 23.2 N cm at -60 deg). Their slack lengths sit at the bound of the active constraint (FDS2 -0.69 %, FDP2 -5.4 %:
+the active force-length factor in a full fist with the wrist flexed 30 deg stays at 0.5), so only `fpmax` is free, and it
+scales midrange and end range together. Knutson sampled 59 points per wrist angle evenly over the range and fitted his
+model unweighted, so his data give no basis for a midrange weight, and a weight on the free scale would trade the end
+range for the midrange; no weight is used. Consequences: the relaxed index MCP rests at 56 deg (59 in the pulley step;
+Lee & Jung 2014: 27 ± 4); with all long extensors at full activation and the IP joints held straight the MCP joints
+extend to 45 / 62 / 53 / 62 deg (pulley step 51-63), against 22-26 ± 7 deg active. Both stay open
+(`hand-literature-comparison.md`, open checks).
 
 ## RI2 path
 

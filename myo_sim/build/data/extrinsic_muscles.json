@@ -131,7 +131,7 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 251.4,
+          "value": 392.1,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.017707
@@ -144,7 +144,7 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 998.6,
+          "value": 1000.0,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.018167
@@ -170,41 +170,41 @@
       "result": {
         "without_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.53,
-            "mcp3_flexion": 6.31,
-            "mcp4_flexion": 126.36,
-            "mcp5_flexion": -0.0
+            "mcp2_flexion": -0.24,
+            "mcp3_flexion": 1.29,
+            "mcp4_flexion": 116.01,
+            "mcp5_flexion": -0.01
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.53,
-            "mcp3_flexion": 80.56,
-            "mcp4_flexion": 2.91,
-            "mcp5_flexion": 0.05
+            "mcp2_flexion": -0.24,
+            "mcp3_flexion": 114.73,
+            "mcp4_flexion": 0.1,
+            "mcp5_flexion": 0.04
           }
         },
         "with_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.53,
-            "mcp3_flexion": 23.92,
-            "mcp4_flexion": 125.28,
-            "mcp5_flexion": 12.06
+            "mcp2_flexion": -0.24,
+            "mcp3_flexion": 18.35,
+            "mcp4_flexion": 109.81,
+            "mcp5_flexion": 9.38
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.53,
-            "mcp3_flexion": 80.4,
-            "mcp4_flexion": 2.89,
-            "mcp5_flexion": 0.08
+            "mcp2_flexion": -0.24,
+            "mcp3_flexion": 114.45,
+            "mcp4_flexion": 6.27,
+            "mcp5_flexion": 0.04
           }
         },
         "residual_deg": [
-          -0.39,
-          -9.94,
-          -1.08,
-          -8.02,
-          -6.98,
-          -0.16
+          -0.94,
+          -12.61,
+          -6.2,
+          -1.83,
+          -7.0,
+          -0.28
         ],
-        "rms_deg": 5.96
+        "rms_deg": 6.46
       },
       "own_finger_note": "mcp4 under EDC4 traction and mcp3 under EDC3 traction: target 0 deg change from the links (the pulled finger's own extension is the same with and without the juncturae: traction on one tendon or on all gave the same result, p. 643)",
       "stiffness_bounds_N_per_m": {

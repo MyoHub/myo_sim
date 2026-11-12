@@ -76,6 +76,15 @@ almost rigid link (100000 N/m) 6.7 deg instead of 18, limited by the link's obli
   cutting the juncturae is 20 deg (fascia and web). This contact-driven part moves with small model changes.
 - No index-middle link and no web: the radial coupling (32 % of the middle MP's range with EDC-index
   traction) is absent.
+- Since the MCP hyperextension step the little finger's share is below the target (12.1 deg in the pulley step, 9.4 deg after
+  the intrinsic passive fit; von Schroeder & Botte 22 deg), with JT45 at its bound. The ring finger now hyperextends under
+  1.5 kg on its EDC to -44 deg (their Fig. 2: -10 ± 14 deg), but that is not the cause: holding the ring MCP at 0 / -10 / -30 deg
+  in the same trial lowers the little finger's share to 2.1 / 3.4 / 6.5 deg, since a ring tendon that moves less stretches the
+  links less. With the EDC via sites moved onto the metacarpal neck (MCP pulleys) the JT45 link is 2.5 mm shorter (18.2 mm)
+  and the little finger rests 5 deg more flexed in the trial (76 against 71 deg; their resting MP 56 deg), so the link reaches
+  2.4 N instead of 3.7 N at the same stiffness. Middle-finger traction now reaches the ring finger (6.2 deg; von Schroeder &
+  Botte 8 deg; 0 before), since the ring MCP is no longer held by the interossei's passive excess. The node positions along the tendons are a judgement (no measured junctura
+  coordinates), so no cited lever is left; open check in `hand-literature-comparison.md`.
 
 ## FDP inter-tendon links (not added)
 
@@ -385,6 +394,14 @@ An 1979's moment potentials are normalised by the middle phalanx and taken at ne
 are one posture of six cadavers (Brand & Hollister 1993, Table 14-1). No measured MCP moment arm in hyperextension was found:
 there the model rests on continuity and on Knutson's passive moment (below). The flexion arms of the flexors are unchanged, and
 the index means stay within one SD of An 1983 (FDP2 within 0.6 mm).
+
+**Extensor arms in flexion (checked, not changed).** An et al. 1983 state that the extension arms of EI and EC "were fairly
+constant throughout the range of motion" (p. 422); their single-specimen Fig. 4a reads about 7.4 / 7.6 / 6.8-7.0 mm at 0 / 45 /
+90 deg (a fall of under 1 mm past 45 deg), their range means are 8.6 ± 1.6 (EC) and 9.0 ± 1.3 mm (EI), Brook et al. 1995 fit a
+constant arm (8.3 / 8.8 mm), and Lee et al. 2008b find no effect of MCP posture on the effective extensor arms (p = 0.42 / 0.33).
+The model's constant 8.6 / 9.0 mm over 0-90 deg match the means, and Fig. 4a's specimen lies within one SD of them, so no
+angle-dependent radius is introduced. In the active fist the passive EDC3 gives -0.04 N m at the middle MCP against +5.4 N m
+from FDS3 and FDP3, so the extensor arm did not hold the fist open (below and `hand-literature-comparison.md`).
 
 ## Refits
 

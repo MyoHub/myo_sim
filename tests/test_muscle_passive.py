@@ -95,13 +95,16 @@ def test_springs_and_muscle_fit_share_the_source_posture() -> None:
 
 
 def test_fit_matches_the_recorded_error() -> None:
-    """The stored values reproduce the recorded fit to Knutson's extrinsic moment over his measured domain."""
+    """The stored values reproduce the recorded fit to Knutson's extrinsic moment, and the total, over his measured domain."""
     fit = _fit_script()
     table = fit.load_table()
     model = myo_sim.load_spec("myoarm_r").compile()
-    lengths, arms = fit.geometry(model)
+    lengths, arms, rest = fit.geometry(model)
     target = fit.knutson_extrinsic(fit.MCP_DEG[None, :], fit.WRIST_DEG[:, None])
     measured = fit.knutson_measured(fit.MCP_DEG[None, :], fit.WRIST_DEG[:, None])
+    total = fit.knutson_intrinsic(fit.MCP_DEG)[None, :] + target - rest
+    torque = fit.model_torque(model, lengths, arms, np.zeros(len(fit.MUSCLES)))
+    assert np.sqrt(np.mean((total - torque)[measured] ** 2)) == pytest.approx(table["fit"]["rmse_Ncm_total"], abs=1e-3)
     err = (target - fit.model_torque(model, lengths, arms, np.zeros(len(fit.MUSCLES))))[measured]
     assert np.sqrt(np.mean(err**2)) == pytest.approx(table["fit"]["rmse_Ncm_after"], abs=1e-3)
     assert table["fit"]["rmse_Ncm_after"] < 0.25 * table["fit"]["rmse_Ncm_before"]

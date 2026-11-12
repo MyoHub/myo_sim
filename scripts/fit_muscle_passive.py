@@ -14,9 +14,13 @@ Two fits, each from the rows' reference values, with MuJoCo's passive curve,
 MyoHand's muscle-tendon lengths and moment arms, Binder-Markey's penalty on the
 relative slack change and a mild penalty on ``|ln(fpmax / reference)|``:
 
-- index (FDS2, FDP2, EDC2, EIP): least squares on Knutson's extrinsic MCP moment;
+- index (FDS2, FDP2, EDC2, EIP): least squares on Knutson's extrinsic MCP moment. The interossei, lumbrical and
+  joint spring follow his wrist-independent intrinsic component, so the total is fitted as well; the fit records
+  the total's error against his data. (Fitting the total directly swaps EDC2 and EIP, which are interchangeable
+  at the MCP but not at the wrist, and spoils the wrist-flexion spring fit.)
 - the other extrinsic finger, thumb and wrist muscles (``joint_targets``): the
-  total measured or transferred joint moments, with a one-sided loss (a moment
+  total measured or transferred joint moments (for Knutson's total, the joint springs count with the other
+  muscles, as at the index), with a one-sided loss (a moment
   beyond the total, or opposite to it, costs ``EXCESS_WEIGHT`` times a deficit).
 
 Both are subject to ``active_constraint``: the active force-length factor of the
@@ -175,13 +179,20 @@ def passive_force(
     return force
 
 
-def geometry(model: mujoco.MjModel) -> tuple[np.ndarray, np.ndarray]:
-    """Muscle-tendon lengths and MCP moment arms (dL/dq) of the index muscles on the (wrist, MCP) grid; IP joints at 0."""
+def geometry(model: mujoco.MjModel) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Lengths and MCP moment arms (dL/dq) of the index muscles, and the rest of the passive MCP moment (N cm), on the grid.
+
+    The rest is every passive moment at the index MCP besides the four index muscles (intrinsic muscles, joint spring,
+    ligaments and links) at activation 0; IP joints at 0.
+    """
     data = mujoco.MjData(model)
     ids = [model.actuator(n).id for n in MUSCLES]
     mcp, wrist = model.joint("mcp2_flexion_r"), model.joint("flexion_r")
     lengths = np.zeros((WRIST_DEG.size, MCP_DEG.size, len(MUSCLES)))
     arms = np.zeros_like(lengths)
+    rest = np.zeros((WRIST_DEG.size, MCP_DEG.size))
+    moment = np.zeros((model.nu, model.nv))
+    others = [i for i in range(model.nu) if i not in ids]
     for i, u in enumerate(WRIST_DEG):
         for j, t in enumerate(MCP_DEG):
             out = []
@@ -196,7 +207,11 @@ def geometry(model: mujoco.MjModel) -> tuple[np.ndarray, np.ndarray]:
                 out.append(data.actuator_length[ids].copy())
             lengths[i, j] = out[0]
             arms[i, j] = (out[1] - out[2]) / 2e-5
-    return lengths, arms
+            _forward(model, data, {"flexion_r": float(u), "mcp2_flexion_r": float(t)})
+            mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
+            folded = fold_node_forces(model, data, moment)[:, mcp.dofadr[0]]
+            rest[i, j] = 100.0 * (data.qfrc_passive[mcp.dofadr[0]] + data.actuator_force[others] @ folded[others])
+    return lengths, arms, rest
 
 
 def model_torque(
@@ -234,9 +249,17 @@ def _forward(model: mujoco.MjModel, data: mujoco.MjData, posture: dict[str, floa
 
 
 def row_geometry(
-    model: mujoco.MjModel, postures: list[dict[str, float]], joint: str, names: tuple[str, ...], others: tuple[str, ...]
+    model: mujoco.MjModel,
+    postures: list[dict[str, float]],
+    joint: str,
+    names: tuple[str, ...],
+    others: tuple[str, ...],
+    springs: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
-    """Lengths and moment arms on *joint* of *names*, and the passive moment (N m) of the muscles *others*, per posture."""
+    """Lengths and moment arms on *joint* of *names*, and the passive moment (N m) of the muscles *others*, per posture.
+
+    With *springs* the rest also counts the model's passive joint moment (springs, ligaments, links) at *joint*.
+    """
     data = mujoco.MjData(model)
     ids = [model.actuator(n).id for n in names]
     rest_ids = [model.actuator(n).id for n in others]
@@ -249,6 +272,8 @@ def row_geometry(
         lengths[i] = data.actuator_length[ids]
         arms[i] = moment[ids, dof]
         rest[i] = data.actuator_force[rest_ids] @ fold_node_forces(model, data, moment[rest_ids])[:, dof]
+        if springs:
+            rest[i] += data.qfrc_passive[dof]
     return lengths, arms, rest
 
 
@@ -487,8 +512,9 @@ def _apply(model: mujoco.MjModel, names: tuple[str, ...], shift: np.ndarray, fpm
 
 def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray, np.ndarray]:
     """Binder-Markey's fit of the four index muscles to Knutson's extrinsic MCP moment; updates *table*."""
-    lengths, arms = geometry(model)
+    lengths, arms, rest = geometry(model)
     target = knutson_extrinsic(MCP_DEG[None, :], WRIST_DEG[:, None])
+    total = knutson_intrinsic(MCP_DEG)[None, :] + target
     measured = knutson_measured(MCP_DEG[None, :], WRIST_DEG[:, None])
 
     def error(shift: np.ndarray, fpmax: np.ndarray) -> float:
@@ -507,6 +533,12 @@ def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray,
         "rmse_Ncm_after": float(np.sqrt(np.mean(after**2))),
         "max_abs_err_Ncm_after": float(np.max(np.abs(after))),
         "target_peak_Ncm": float(np.max(np.abs(target[measured]))),
+        "rmse_Ncm_total": float(
+            np.sqrt(np.mean((total - rest - model_torque(model, lengths, arms, shift, fpmax))[measured] ** 2))
+        ),
+        "rest_rmse_Ncm_vs_intrinsic_component": float(
+            np.sqrt(np.mean((knutson_intrinsic(MCP_DEG)[None, :] - rest)[measured] ** 2))
+        ),
         "measured_domain": (
             f"grid points with MCP flexion >= 0 deg, or hyperextension while Knutson's total moment (intrinsic + extrinsic) "
             f"is at most {KNUTSON_END_NCM:g} N cm; {int(measured.sum())} of {measured.size} points"
@@ -533,7 +565,8 @@ def joint_fit_terms(model: mujoco.MjModel, table: dict[str, Any]) -> list[dict[s
     others = other_muscles(model, table)
     for row in table["joint_targets"]["rows"]:
         postures, target = row_points(table, row)
-        lengths, arms, rest = row_geometry(model, postures, row["joint"], JOINT_MUSCLES, others)
+        total = row["model"] == "knutson2000_total"  # its intrinsic part includes the joint spring
+        lengths, arms, rest = row_geometry(model, postures, row["joint"], JOINT_MUSCLES, others, springs=total)
         terms.append({"row": row, "target": target, "lengths": lengths, "arms": arms, "rest": rest})
     return terms
 
