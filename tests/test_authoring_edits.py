@@ -33,6 +33,30 @@ def elbow() -> tuple[mujoco.MjSpec, mujoco.MjModel]:
     return _elbow_model()
 
 
+def test_empty_validated_patch_compiles_once_and_preserves_source(
+    elbow: tuple[mujoco.MjSpec, mujoco.MjModel], monkeypatch: pytest.MonkeyPatch
+) -> None:
+    spec, source = elbow
+    patch = _patch(source)
+    before = _source_state(spec)
+    before_xml = spec.to_xml()
+    compile = mujoco.MjSpec.compile
+    calls = []
+
+    def record(candidate: mujoco.MjSpec) -> mujoco.MjModel:
+        calls.append(candidate)
+        return compile(candidate)
+
+    with monkeypatch.context() as context:
+        context.setattr(mujoco.MjSpec, "compile", record)
+        edited = apply_model_patch(spec, patch)
+    assert len(calls) == 1 and calls[0] is edited
+    assert edited is not spec
+    assert model_fingerprint(edited.compile()) == patch["fingerprint"]
+    _assert_source_unchanged(spec, before)
+    assert spec.to_xml() == before_xml
+
+
 def test_elbow_site_and_inertia_preserve_other_anatomy(elbow: tuple[mujoco.MjSpec, mujoco.MjModel]) -> None:
     spec, source = elbow
     patch = _edit(source)
@@ -151,6 +175,10 @@ def test_fullbody_edits_preserve_composition_and_unrelated_calibration(side: str
         {"fingerprint": "wrong"},
         {"mujoco_version": "different"},
         {"unknown": 1},
+        {"sites": {}},
+        {"sites": ()},
+        {"inertias": {}},
+        {"inertias": ()},
         {"sites": [{"name": "unknown", "pos": [0, 0, 0]}]},
         {"sites": [{"name": "BRA-P2", "pos": [0, 0, 0], "extra": 1}]},
         {"sites": [{"name": "BRA-P2", "pos": [0, 0, np.inf]}]},
@@ -333,12 +361,14 @@ def test_mesh_inertia_is_optional(monkeypatch: pytest.MonkeyPatch, tmp_path: Pat
         mesh_inertia(tmp_path / "unused.stl", 1000)
 
 
-def test_actual_static_fusion_is_rejected_without_changing_other_anatomy() -> None:
+@pytest.mark.parametrize("with_site_edit", [False, True])
+def test_actual_static_fusion_is_rejected_without_changing_other_anatomy(with_site_edit: bool) -> None:
     spec = _fusion_spec()
     source = spec.copy().compile()
     before = _source_state(spec)
     patch = _patch(source)
-    patch["sites"] = [dict(name="s", pos=[0.2, 0.4, 0.6])]
+    if with_site_edit:
+        patch["sites"] = [dict(name="s", pos=[0.2, 0.4, 0.6])]
     with pytest.raises(ValueError, match="fusion"):
         apply_model_patch(spec, patch)
     _assert_source_unchanged(spec, before)

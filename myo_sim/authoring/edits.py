@@ -117,6 +117,8 @@ def apply_model_patch(spec: mujoco.MjSpec, patch: dict[str, Any]) -> mujoco.MjSp
                 raise ValueError("The world body's inertia cannot be edited")
             values = (_array(entry["pos"], (3,), "pos"),) if kind == "sites" else _mass_inertia(entry)
             validated[kind].append((name, obj.id, *values))
+    if not validated["sites"] and not validated["inertias"]:
+        return candidate
     for name, sid, pos in validated["sites"]:
         site = candidate.site(name)
         if site.frame is not None:

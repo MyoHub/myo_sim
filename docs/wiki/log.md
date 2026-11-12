@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Avoid recompiling empty validated patches
+Changed: myo_sim/authoring/edits.py, tests/test_authoring_edits.py
+Why: an empty patch can return its already-validated copied spec without a second native compilation, while retaining source, version, list-type and static-fusion checks.
+
 ## 2026-11-12 — Keep anatomy references and geometry explicit
 Changed: myo_sim/authoring/interchange.py, tests/test_authoring_equalities.py, tests/test_authoring_sdf.py, docs/wiki/authoring.md
 Why: equality IDs need native body/site namespaces for unambiguous resolution, and SDF plugin geometry must be rejected rather than represented only by its bounding size.
