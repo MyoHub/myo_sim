@@ -32,6 +32,13 @@ This generates:
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
+Explicit principal inertias are written from the compiled model with roundtrip
+float precision. Native six-digit formatting of edited values can otherwise
+move a planar body's moments across the inertia triangle and make the exported
+XML fail to reload. This preserves the moments; it does not enable
+`balanceinertia` or perturb the mass distribution. Other fields retain native
+XML precision.
+
 ## Keyframes
 
 `build_spec()` adds no keyframe unless called with `build_kwargs={"postures": True}` or a list of names; `myo_sim.load_model()` passes that for every model with postures. See `docs/wiki/postures.md`.

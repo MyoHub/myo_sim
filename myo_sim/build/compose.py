@@ -808,6 +808,26 @@ def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel)
         geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
 
 
+def apply_compiled_inertia_precision(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Keep principal moments on their physical triangle after XML rounding.
+
+    Native XML uses six significant digits for edited values. A planar body's
+    largest moment can round above the sum of the other two, so a valid model
+    no longer compiles. Preserve the moments themselves rather than changing
+    them or enabling the compiler's averaging fallback.
+    """
+    worldbody = root.find("worldbody")
+    if worldbody is None:
+        return
+    bodies = list(worldbody.iter("body"))
+    if len(bodies) != model.nbody - 1:
+        raise ValueError(f"Generated XML has {len(bodies)} bodies, but compiled model has {model.nbody - 1}")
+    for body_id, body in enumerate(bodies, 1):
+        inertial = body.find("inertial")
+        if inertial is not None:
+            inertial.set("diaginertia", " ".join(format(float(value), ".17g") for value in model.body_inertia[body_id]))
+
+
 def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjModel | None = None) -> str:
     root = ET.fromstring(xml)
     if asset_dir is not None:
@@ -823,6 +843,7 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjMo
     enable_floor_collision(root)
     if model is not None:
         apply_compiled_geom_collision_flags(root, model)
+        apply_compiled_inertia_precision(root, model)
     ET.indent(root, space="  ")
     return ET.tostring(root, encoding="unicode") + "\n"
 
