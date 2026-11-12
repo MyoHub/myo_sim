@@ -339,6 +339,53 @@ deviation, no spring can remove that, and the total error is 0.087 N m. The fit 
 fitted at Formica's own posture (`passive-moments-and-thenar.md`, springs at the posture of their data) the total is 0.016 /
 0.023 N m in flexion / deviation there, and the alternative still loses (0.063 / 0.028 N m).
 
+## MCP pulleys and hyperextension
+
+**Before.** FDS and FDP 2-5 (all but FDP2, which wraps `2ndmcp_ellipsoid_wrap_r`) crossed the MCP on via sites only. Past 0 deg
+the PP site swung dorsal of the line to the MC site, so the flexion arm fell from 6-10 mm at 0 deg to 0-2 mm at -60 deg (FDS3 an
+extensor of 2 mm). EDC2 and EDC3 ran from a via site on top of the MC head (82-90 deg from distal about the MCP axis) to the hood
+site `EM{d}_H_r`; past about -45 deg the hood site passed the via site and both turned flexors. With the old paths the MCP could
+not leave 0 deg: the passive index MCP moment at -60 deg was 6 N cm against Knutson et al. 2000's 48 N cm (wrist neutral).
+
+**Change** (`mcp_pulleys` in `build/data/extrinsic_muscles.json`, written by `generate_extrinsic_muscles.py`, chain blocks
+`MCP pulleys 2-5`). One cylinder per tendon on the MCP flexion axis in the metacarpal (`mcp{d}_{muscle}_wrap_r`), with its side
+site two radii out on the palmar (flexors) or dorsal (extensors) side (`mcp{d}_{muscle}_side_r`), the middle of the wrapped arc:
+
+- Flexors (Landsmeer's model III in flexion, as An et al. 1983 Fig. 4 and Brook et al. 1995): the via sites still set the arm in
+  flexion, rising with the angle; the cylinder, inserted after the last metacarpal site, holds the arm in hyperextension, where
+  the tendons lie on the palmar plate. Its radius is the path's own arm at 0 deg, rounded down to 0.1 mm, so the flexion arms do
+  not change. FDP2 keeps its wrap (already 8.8-9.6 mm in hyperextension).
+- Extensors (Landsmeer's model I, constant arm: Brook et al. 1995; about constant in An et al. 1983 Fig. 4): EDC2 8.6 mm and EIP
+  9.0 mm (An et al. 1983 Table 3), EDC3-5 and EDM scaled from EDC2 by An et al. 1979's long-extensor moment potentials and the
+  model's middle phalanges (8.6 / 6.7 / 7.5 mm). The via site before the hood (`EDC{d}-P4_r`, `EIP-P5_r`, `EDM-P6_r`) moves about
+  the MCP axis to 135 deg from distal, 1 mm outside the cylinder, on the MC neck. Past about -30 deg the tendon leaves the cylinder
+  and its arm rises by up to 1.7 mm (bowstringing); it stays an extensor.
+- The `3rdmcp` and `5thmcp` ellipsoid wraps and eleven side sites lost their last user and were removed (two of them were in
+  `side_sites.json`). On MuJoCo 4 and 3.17 the paths are the same: every new wrap has its side site outside the cylinder and no
+  endpoint crosses the ray opposite it in -61..90 deg; no tendon length jumps along the MCP sweeps (`tests/test_side_sites.py`).
+
+MCP flexion moment arms in mm (+ = flexion), other joints at 0, MuJoCo 4 (3.17 identical); -60 / -30 / 0 / 90 deg and the mean over
+0-85 deg (An et al. 1983's protocol):
+
+| Muscle | Before | After | Literature |
+| --- | --- | --- | --- |
+| FDS2 | 1.5 / 5.2 / 8.6 / 13.0; 11.8 | 8.6 / 8.6 / 8.6 / 13.0; 11.8 | 11.9 ± 0.7 mean (An 1983); 9.6 at 0, 14.2 at 90, 6.6 at -60 extrapolated (Brook 1995); 15.2 neutral (An 1979 x model phalanx) |
+| FDP2 | 8.8 / 9.5 / 9.6 / 14.4; 11.7 | unchanged | 11.1 ± 1.1 (An 1983); 8.3 at 0, 13.1 at 90, 5.3 at -60 extrapolated (Brook); 13.0 (An 1979) |
+| EIP | -5.2 / -9.4 / -8.7 / -8.3; -7.1 | -10.0 / -9.0 / -9.0 / -9.0; -9.0 | -9.0 ± 1.3 (An 1983); -8.8 constant (Brook); -7.5 ± 3.4 (Lee 2008b) |
+| EDC2 | +5.3 / -6.7 / -8.7 / -8.4; -7.6 | -9.4 / -8.6 / -8.6 / -8.6; -8.6 | -8.6 ± 1.6 (An 1983); -8.3 (Brook); -7.0 ± 3.2 (Lee 2008b); -12.0 (An 1979); -9.7 (Ketchum) |
+| FDS3 / FDP3 | -2.0 / 3.9 / 9.5 / 15.7 and 0.7 / 4.7 / 8.5 / 13.7 | 9.5 / 9.5 / 9.5 / 15.7 and 8.4 / 8.4 / 8.5 / 13.7 | 14.8 / 11.8 neutral (An 1979) |
+| EDC3 | +4.2 / -6.2 / -9.4 / -6.7; -7.9 | -8.8 / -9.5 / -8.6 / -8.6; -8.6 | -11.9 (An 1979); -12.3 (Ketchum) |
+| FDS4 / FDP4 | 0.4 / 3.7 / 6.8 / 10.2 and 0.3 / 3.6 / 6.6 / 10.4 | 6.6 / 6.6 / 6.8 / 10.2 and 6.5 / 6.4 / 6.6 / 10.4 | 11.4 / 10.2 (An 1979) |
+| EDC4 | -1.4 / -7.5 / -7.9 / -8.2; -7.2 | -6.6 / -7.5 / -6.6 / -6.7; -6.7 | -9.3 (An 1979); -10.5 (Ketchum) |
+| FDS5 / FDP5 | 0.0 / 3.4 / 6.5 / 10.4 and -0.4 / 2.8 / 5.9 / 10.9 | 6.4 / 6.4 / 6.5 / 10.4 and 5.8 / 5.8 / 5.9 / 10.9 | 11.1 / 10.3 (An 1979) |
+| EDC5 / EDM | -4.3 / -6.2 / -5.9 / -7.2 and -4.4 / -6.6 / -6.3 / -6.4 | -8.3 / -8.1 / -7.5 / -7.5 (both) | -10.5 (An 1979, one long extensor); -9.8 (Ketchum, EDC5) |
+
+An 1979's moment potentials are normalised by the middle phalanx and taken at neutral; times this model's phalanges they lie
+1.2-1.4 times above An 1983's range means, as in An 1983 itself, so they rank the digits rather than set values. Ketchum's values
+are one posture of six cadavers (Brand & Hollister 1993, Table 14-1). No measured MCP moment arm in hyperextension was found:
+there the model rests on continuity and on Knutson's passive moment (below). The flexion arms of the flexors are unchanged, and
+the index means stay within one SD of An 1983 (FDP2 within 0.6 mm).
+
 ## Refits
 
 Extrinsic slack lengths and passive scales (`fit_muscle_passive.py`), then the joint springs
@@ -353,6 +400,10 @@ release step 690 -> 860), the deficit at the wrist; the release bound of EDC3-5 
 
 ## References
 
+- An KN, Chao EY, Cooney WP, Linscheid RL. Normative model of human hand for biomechanical analysis. J Biomech 12(10):775-788, 1979.
+- An KN, Ueba Y, Chao EY, Cooney WP, Linscheid RL. Tendon excursion and moment arm of index finger muscles. J Biomech 16(6):419-425, 1983 (Table 3, Fig. 4).
+- Brand PW, Hollister AM. Clinical Mechanics of the Hand, 2nd ed. Mosby, 1993 (Table 14-1, after Ketchum & Thompson).
+- Brook N, Mizrahi J, Shoham M, Dayan J. A biomechanical model of index finger dynamics. Med Eng Phys 17(1):54-63, 1995.
 - Akhbari B et al. Biomechanics of the distal radioulnar joint during in vivo forearm pronosupination. J Wrist Surg 10(3):208-215, 2021.
 - Garcia-Elias M et al. Extensor mechanism of the fingers. II. Tensile properties of components. J Hand Surg Am 16(6):1136-1140, 1991.
 - Haugstvedt JR, Berger RA, Berglund LJ. A mechanical study of the moment-forces of the supinators and pronators of the forearm. Acta Orthop Scand 72(6):629-634, 2001 (Fig. 3, read from the figure).
@@ -360,6 +411,8 @@ release step 690 -> 860), the deficit at the wrist; the release bound of EDC3-5 
 - Formica D et al. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012 (Table 2).
 - Horii E, An KN, Linscheid RL. Excursion of prime wrist tendons. J Hand Surg Am 18(1):83-90, 1993.
 - Leijnse JNAL. Measuring force transfers in the deep flexors of the musician's hand: theoretical analysis, clinical examples. J Biomech 30:873, 1997.
+- Knutson JS, Kilgore KL, Mansour JM, Crago PE. Intrinsic and extrinsic contributions to the passive moment at the metacarpophalangeal joint. J Biomech 33(12):1675-1681, 2000.
+- Lee SW, Chen H, Towles JD, Kamper DG. Estimation of the effective static moment arms of the tendons in the index finger extensor mechanism. J Biomech 41(7):1567-1573, 2008.
 - Jacobson MD et al. Architectural design of the human intrinsic hand muscles. J Hand Surg Am 17(5):804-809, 1992 (APL via Holzbaur et al. 2005, Table 1).
 - Lieber RL et al. Architecture of selected muscles of the arm and forearm: anatomy and implications for tendon transfer. J Hand Surg Am 17(5):787-798, 1992 (Table I).
 - Loren GJ et al. Human wrist motors: biomechanical design and application to tendon transfers. J Biomech 29(3):331-342, 1996 (appendix).

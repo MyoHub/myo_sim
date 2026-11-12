@@ -48,7 +48,10 @@ def test_rule_copy_reproduces_the_running_mujoco(name: str) -> None:
         mujoco.mj_comPos(model, data)
         mujoco.mj_tendon(model, data)
         real[i] = data.ten_length
-    assert covered.sum() > 0.5 * model.ntendon
+    spatial = sum(
+        int(model.wrap_type[model.tendon_adr[t]]) != 1 for t in range(model.ntendon)
+    )  # fixed tendons are never covered
+    assert covered.sum() > 0.5 * spatial
     assert np.abs(lengths - real)[:, covered].max() < 1e-9
 
 

@@ -444,7 +444,7 @@
         "site:EDC2-P3_r",
         "geom:EDCI_torus_wrap_r:EDCI_torus_site_EDC2_side_r",
         "site:EDC2-P4_r",
-        "geom:2ndmcp_ellipsoid_wrap_r:2ndmcp_ellipsoid_site_EDC2_side_r"
+        "geom:mcp2_EDC2_wrap_r:mcp2_EDC2_side_r"
       ],
       "s4": {
         "length_q0_m": 0.4162833053001095,
@@ -465,7 +465,7 @@
         "geom:ExtensorEllipse_ellipsoid_wrap_r:ExtensorEllipse_ellipsoid_site_EIP_side_r",
         "site:EIP-P4_r",
         "site:EIP-P5_r",
-        "geom:2ndmcp_ellipsoid_wrap_r:2ndmcp_ellipsoid_site_EIP_side_r"
+        "geom:mcp2_EIP_wrap_r:mcp2_EIP_side_r"
       ],
       "s4": {
         "length_q0_m": 0.25843270919640476,
@@ -485,7 +485,7 @@
         "site:EDC3-P3_r",
         "geom:EDCM_torus_wrap_r:EDCM_torus_site_EDC3_side_r",
         "site:EDC3-P4_r",
-        "geom:3rdmcp_ellipsoid_wrap_r:3rdmcp_ellipsoid_site_EDC3_side_r"
+        "geom:mcp3_EDC3_wrap_r:mcp3_EDC3_side_r"
       ],
       "s4": {
         "length_q0_m": 0.4179372736431405,
@@ -505,7 +505,7 @@
         "site:EDC4-P3_r",
         "geom:EDCR_torus_wrap_r:EDCR_torus_site_EDC4_side_r",
         "site:EDC4-P4_r",
-        "geom:4thmcp_ellipsoid_wrap_r:4thmcp_ellipsoid_site_EDC4_side_r"
+        "geom:mcp4_EDC4_wrap_r:mcp4_EDC4_side_r"
       ],
       "s4": {
         "length_q0_m": 0.4137522487801881,
@@ -525,7 +525,7 @@
         "site:EDC5-P3_r",
         "geom:EDCL_torus_wrap_r:EDCL_torus_site_EDC5_side_r",
         "site:EDC5-P4_r",
-        "geom:5thmcp_ellipsoid_wrap_r:5thmcp_ellipsoid_site_EDC5_side_r"
+        "geom:mcp5_EDC5_wrap_r:mcp5_EDC5_side_r"
       ],
       "s4": {
         "length_q0_m": 0.39610586142155985,
@@ -547,7 +547,7 @@
         "site:EDM_via_r",
         "site:EDM-P5_r",
         "site:EDM-P6_r",
-        "geom:5thmcp_ellipsoid_wrap_r:5thmcp_ellipsoid_site_EDC5_side_r"
+        "geom:mcp5_EDM_wrap_r:mcp5_EDM_side_r"
       ],
       "s4": {
         "length_q0_m": 0.3905851242435442,

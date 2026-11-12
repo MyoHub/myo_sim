@@ -894,13 +894,10 @@ def run_check(folder: str, a: str, b: str, models: tuple[str, ...], limit_mm: fl
 
 
 # Hinges with room to grow: searches keep these continuous past today's limits as well (rad).
+# The MCP flexion joints had 0.55 rad to prepare their paths for hyperextension; their range now includes it.
 EXTRA_MARGIN = {
     "flexion": 0.3,
     "deviation": 0.3,
-    "mcp2_flexion": 0.55,
-    "mcp3_flexion": 0.55,
-    "mcp4_flexion": 0.55,
-    "mcp5_flexion": 0.55,
 }
 JUMP_TOL = 0.3e-3  # m
 

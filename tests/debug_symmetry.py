@@ -31,11 +31,9 @@ GEOM_EULER_SIGNFLIP_EXCEPTIONS = {
     "MPthumb_wrap",
     "2ndmcp_ellipsoid_wrap",
     "Secondpm_wrap",
-    "3rdmcp_ellipsoid_wrap",
     "4thmcp_ellipsoid_wrap",
     "Fourthpm_wrap",
     "Fourthmd_wrap",
-    "5thmcp_ellipsoid_wrap",
 }
 
 

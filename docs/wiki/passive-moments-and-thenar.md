@@ -241,7 +241,7 @@ the muscles and passive moments, not a limit. Model before -> after (deg):
 | MCP3, MCP4 abduction | 15 / 15 | unchanged | no usable split: the middle finger was the reference of the measured arcs, and the ring finger moves between neighbours (arcs 7.7 / 18.3 cadaver) | contacts stop both at 11-14 deg while the neighbours are straight |
 | Thumb IP flexion / extension | 75 / 25 | 85.8 / 34.7 | Skvarilova & Plevkova 1996, passive, 200 adults (as reported in Norkin & White 2016, Table 7.3) | active 79.1 / 23.2; Barakat et al. 2013: 88 ± 2.3 / 12 ± 9.2; AAOS 80 / 20 |
 | Thumb MP flexion / extension | 45 / 40 | 67.0 / 22.6 | as above, passive | active 57.0 / 13.7; Barakat: 60 / 8.1; Batmanabane & Malathi (cadaver): 47 / 16 |
-| MCP 2-5 flexion / extension | 90 / 0 | unchanged | flexion between 84-87 active (Mohamed Ibrahim) and 102 ± 11 passive (Leijnse) | hyperextension not adopted yet (below) |
+| MCP 2-5 flexion / extension | 90 / 0 | 90 / 61 (MCP pulley step) | extension: Leijnse et al. 2010, 61 ± 24 passive; flexion between 84-87 active (Mohamed Ibrahim) and 102 ± 11 passive (Leijnse) | active extension 22-26 ± 7 (Mohamed Ibrahim), 22-31 wrist neutral (Latz et al. 2019), 22-28 (Gracia-Ibáñez et al. 2017); daily activities 8 / 8 / 12 / 15 (Hayashi, Norkin & White Table 7.4); functional 1-6 (Gracia-Ibáñez) |
 
 The ulnar limit of the index and the radial limit of the little finger stay past their contacts, so a straight
 neighbour stops the finger and a flexed one lets it cross. Goniometry of the finger joints has a standard error of
@@ -265,14 +265,34 @@ PIP spring rows and the extrinsic PIP joint targets fit from -10 deg, the thumb 
 the active force-length constraint of the extrinsic fit puts the thumb at its new limits (fist and extension) while
 "full extension" of the fingers stays at straight fingers.
 
-**MCP hyperextension (not adopted).** Measured: 61 ± 24 deg passive (Leijnse), 22-26 ± 7 deg active (Mohamed
-Ibrahim), 8-15 deg in daily activities (digits 2-5; Hayashi et al., as reported in Norkin & White 2016, Table 7.4),
-and Knutson et al. 2000's total passive moment reaches their 40 N cm end moment at 55 deg (wrist neutral). The
-model's extrinsic paths do not carry it: FDS and FDP pass the MCP through via sites, so their flexion moment arm
-falls from 6-10 mm at 0 deg to 0-2 mm at 60 deg of hyperextension (FDS3 turns extensor), and EDC2 and EDC3 turn
-into flexors past about 45 deg (the same on MuJoCo 3.17 and 4). With a -61 deg limit and refitted passive fits the
-passive index MCP moment was 12 N cm at -60 deg against Knutson's 48 N cm, and it fell from -30 to -60 deg. The
-limit stays at 0 until the flexor pulleys and the dorsal extensor path at the MCP are modelled.
+**MCP hyperextension (MCP pulley step).** Measured: 61 ± 24 deg passive (Leijnse), 22-26 ± 7 deg active (Mohamed
+Ibrahim; 23.4 / 22.4 / 31.3 deg for digits 2 / 4 / 5 with the wrist neutral, Latz et al. 2019; 22-28 deg, Gracia-Ibáñez et
+al. 2017), 8-15 deg in daily activities (digits 2-5; Hayashi et al., as reported in Norkin & White 2016, Table 7.4) and 1-6
+deg as the functional range of 24 daily tasks (Gracia-Ibáñez). Knutson et al. 2000 extended the index MCP until the total
+passive moment reached about 40 N cm (near -57 deg with the wrist neutral). The first attempt failed on the paths: FDS and FDP
+lost their MCP arm past 0 deg and EDC2 and EDC3 turned flexors past -45 deg, so the passive moment at -60 deg stayed at 12 N cm.
+The extrinsic tendons now cross the MCP on pulleys on the joint axis (`hand-extrinsic-muscles.md`, MCP pulleys), and the limit is
+-61 deg. Refits: the extrinsic passive fit (`fit_muscle_passive.py`) runs over MCP -60..90 deg, counting only grid points inside
+Knutson's measured domain (flexion, or hyperextension while his total moment stays below 40 N cm: 373 of 403 points); the
+joint targets of digits 3-5 use the same grid and mask; the MCP spring rows have two segments, and a second segment may now
+start further out when the first comes out empty (`fit_passive_moments.py`), which gives digits 3 and 4 an end-range spring
+from about -50 deg. The index extrinsic fit has RMSE 5.0 N cm over its domain (3.3 over 0..90 before).
+
+Passive index MCP moment, wrist neutral, activation 0 (muscles, springs, ligaments), N cm, + = flexion:
+
+| MCP (deg) | -60 | -45 | -30 | -15 | 0 | 30 | 60 | 90 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Before (limit at 0; values past it geometric) | 5.9 | 10.1 | 11.1 | 8.7 | 4.4 | 1.1 | 0.5 | -5.6 |
+| Now | 34.7 | 20.1 | 18.8 | 14.4 | 8.6 | 3.9 | 1.6 | -7.1 |
+| Knutson et al. 2000 (total, Table 1 medians) | 47.7 | 21.1 | 9.6 | 4.5 | 2.0 | -0.1 | -2.5 | -15.7 |
+
+The end of the range now follows Knutson (-45 deg within 1 N cm; -60 deg lies past his measured domain). Between -30 and 45 deg
+the model is 2-9 N cm too flexing: the interossei and the lumbrical, stretched in hyperextension, give up to 9.5 N cm at -30 deg
+against Knutson's 3.4 N cm intrinsic component (their passive properties are not fitted to a moment), and the index flexors keep
+3-5 N cm of passive tension through midrange. The non-negative springs cannot remove an excess. Consequences: the relaxed index
+MCP rests at 59 deg (49 before; Lee & Jung 2014: 27 ± 4), and with all long extensors at full activation and the IP joints held
+straight the MCP joints extend to 51-63 deg, against 22-26 deg active (the muscles, not passive tissue, limit active extension
+in this model). Both are open (`hand-literature-comparison.md`, open checks).
 
 ## RI2 path
 

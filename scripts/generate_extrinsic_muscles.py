@@ -167,7 +167,7 @@ def link_rest_lengths(table: dict[str, Any]) -> None:
         for name in table["juncturae"]["links"]:
             lengths[name] = max(lengths.get(name, 0.0), float(data.ten_length[model.tendon(f"lig_{name}_r").id]))
     for name, link in table["juncturae"]["links"].items():
-        link["rest_length_m"] = round(lengths[name], 6)
+        link["rest_length_m"] = float(np.ceil(lengths[name] * 1e6) / 1e6)  # rounded up: never taut at either posture
 
 
 # --- FCU and FDS5 ---------------------------------------------------------------------------------------
@@ -267,17 +267,107 @@ def fds5_force(table: dict[str, Any]) -> None:
     table["fds5"]["force_N"] = {"value": round(area * sigma, 1), "derivation": f"{area} cm2 x {sigma} N/cm2"}
 
 
+# --- MCP pulleys ----------------------------------------------------------------------------------------
+
+
+def mcp_frame(model: mujoco.MjModel, digit: dict[str, Any]) -> dict[str, np.ndarray]:
+    """MCP flexion axis, centre and the distal / dorsal unit vectors normal to it, in the metacarpal's frame.
+
+    The proximal phalanx's frame is parallel to the metacarpal's at q0, so the joint data carry over."""
+    joint = model.joint(digit["joint"])
+    pp = model.body(digit["phalanx"])
+    if model.body(pp.parentid[0]).name != digit["metacarpal"] or not np.allclose(pp.quat, [1, 0, 0, 0]):
+        raise ValueError(f"{pp.name}: expected a child of {digit['metacarpal']} with its frame")
+    axis = model.jnt_axis[joint.id] / np.linalg.norm(model.jnt_axis[joint.id])
+    centre = pp.pos + model.jnt_pos[joint.id]
+    distal = np.array([0.0, -1.0, 0.0]) - axis * -axis[1]
+    distal /= np.linalg.norm(distal)
+    return {"centre": centre, "axis": axis, "distal": distal, "dorsal": np.cross(distal, axis)}
+
+
+def _about_axis(frame: dict[str, np.ndarray], angle_deg: float, radius: float) -> np.ndarray:
+    """Direction in the plane normal to the MCP axis, *angle_deg* from distal toward dorsal, times *radius*."""
+    a = angle_deg * DEG
+    return radius * (np.cos(a) * frame["distal"] + np.sin(a) * frame["dorsal"])
+
+
+def pulley_geometry(table: dict[str, Any], model: mujoco.MjModel | None = None) -> None:
+    """Centre, axis and side site of each MCP pulley, and the moved extensor via sites (metacarpal frame)."""
+    model = build_spec("myoarm_r").compile() if model is None else model
+    cfg = table["mcp_pulleys"]
+    for wrap in cfg["wraps"].values():
+        frame = mcp_frame(model, cfg["digits"][str(wrap["digit"])])
+        radius = wrap["radius_m"]["value"]
+        side = wrap["side_deg"]  # from distal toward dorsal about the MCP axis
+        wrap["geom_pos"] = [round(float(v), 6) for v in frame["centre"]]
+        quat = np.zeros(4)
+        mujoco.mju_quatZ2Vec(quat, frame["axis"])  # a quat, which the left-side mirroring handles (zaxis it does not)
+        wrap.pop("geom_zaxis", None)
+        wrap["geom_quat"] = [round(float(v), 6) for v in quat]
+        offset = _about_axis(frame, side, cfg["side_distance_radii"] * radius)
+        wrap["side_pos"] = [round(float(v), 6) for v in frame["centre"] + offset]
+    for name, via in cfg["vias"].items():
+        frame = mcp_frame(model, cfg["digits"][str(via["digit"])])
+        rel = np.asarray(via["pos_before"], float) - frame["centre"]
+        along = float(rel @ frame["axis"])
+        pos = frame["centre"] + along * frame["axis"] + _about_axis(frame, via["angle_deg"], via["radius_m"])
+        via["pos"] = [round(float(v), 6) for v in pos]
+
+
+def pulley_block(table: dict[str, Any], digit: str) -> str:
+    """Chain block ``MCP pulleys <digit>``: the pulley cylinders on the MCP axis and their side sites."""
+    cfg = table["mcp_pulleys"]
+    ind = " " * 52
+    lines = [f"{ind}<!-- MCP pulleys on the flexion axis (extrinsic_muscles.json, mcp_pulleys) -->\n"]
+    for muscle, wrap in cfg["wraps"].items():
+        if str(wrap["digit"]) != digit:
+            continue
+        size = f"{_number(wrap['radius_m']['value'])} {_number(cfg['half_length_m'])}"
+        lines.append(
+            f'{ind}<geom name="mcp{digit}_{muscle}_wrap_r" type="cylinder" size="{size}"'
+            f' pos="{" ".join(_number(v) for v in wrap["geom_pos"])}"'
+            f' quat="{" ".join(_number(v) for v in wrap["geom_quat"])}" class="myoarm_wrap"/>\n'
+        )
+        lines.append(f'{ind}<site name="mcp{digit}_{muscle}_side_r" pos="{" ".join(_number(v) for v in wrap["side_pos"])}"/>\n')
+    return "".join(lines)
+
+
+def tendons_with_pulleys(text: str, table: dict[str, Any]) -> str:
+    """Flexor paths with their MCP pulley after the last metacarpal site (``after_site``); extensors are written
+    by ``fit_extensor_mechanism.py`` from their ``main_path``."""
+    for muscle, wrap in table["mcp_pulleys"]["wraps"].items():
+        if "after_site" not in wrap:
+            continue
+        found = re.search(rf'<spatial name="{re.escape(muscle)}_r_tendon"[^>]*>.*?</spatial>', text, re.S)
+        if found is None:
+            raise ValueError(f"no tendon {muscle}_r_tendon")
+        geom = f'<geom geom="mcp{wrap["digit"]}_{muscle}_wrap_r" sidesite="mcp{wrap["digit"]}_{muscle}_side_r"/>'
+        body = re.sub(rf"\n\s*{re.escape(geom)}", "", found.group(0))
+        site = f'<site site="{wrap["after_site"]}"/>'
+        if body.count(site) != 1:
+            raise ValueError(f"{muscle}: expected one {site}")
+        indent = re.search(rf"\n(\s*){re.escape(site)}", body).group(1)
+        body = body.replace(site, f"{site}\n{indent}{geom}")
+        text = text[: found.start()] + body + text[found.end() :]
+    return text
+
+
 def write_xml(table: dict[str, Any]) -> None:
     for name, node in table["juncturae"]["nodes"].items():
         write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, chain_node_block(name, node), "", f"node {name}")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, fcu_block(table), "", "FCU hamate")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, ecu_block(table), "", "ECU groove")
     write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, thumb_block(table), "", "thumb trapezium")
+    for digit in table["mcp_pulleys"]["digits"]:
+        write_generated_block(RIGHT_ARM_CHAIN_XML, SCRIPT, pulley_block(table, digit), "", f"MCP pulleys {digit}")
     chain = chain_with_site(RIGHT_ARM_CHAIN_XML.read_text(), "FCU-P4_r", table["fcu"]["sites"]["FCU-P4_r"]["pos"])
     chain = chain_with_wrap_sides(chain, table)
     for name, site in table["thumb_extrinsics"]["sites"].items():
         chain = chain_with_site(chain, name, site["pos"])
+    for name, via in table["mcp_pulleys"]["vias"].items():
+        chain = chain_with_site(chain, name, via["pos"])
     RIGHT_ARM_CHAIN_XML.write_text(chain)
+    RIGHT_ARM_TENDONS_XML.write_text(tendons_with_pulleys(RIGHT_ARM_TENDONS_XML.read_text(), table))
     write_generated_block(RIGHT_ARM_ASSETS_XML, SCRIPT, equality_block(table), "", "juncturae ties")
     write_generated_block(RIGHT_ARM_TENDONS_XML, SCRIPT, tendon_block(table), "</tendon>")
     model = build_spec("myoarm_r").compile()
@@ -591,6 +681,7 @@ def main() -> None:
     table = load_table()
     fds5_force(table)
     wrap_sides(table)
+    pulley_geometry(table)
     if args.fit:
         for link in table["juncturae"]["links"].values():
             link.setdefault("stiffness_N_per_m", {"value": 300.0, "method": "start"})

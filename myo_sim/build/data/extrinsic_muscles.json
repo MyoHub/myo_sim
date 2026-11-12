@@ -42,6 +42,18 @@
     "smutz1998": {
       "citation": "Smutz WP, Kongsayreepong A, Hughes RE, Niebur G, Cooney WP, An KN. Mechanical advantage of the thumb muscles. J Biomech 31(6):565-570, 1998. doi:10.1016/s0021-9290(98)00043-8",
       "location": "Tables 2, 4, 5: thumb MP and CMC moment arms (7 hands); positive = flexor / adductor"
+    },
+    "an1983": {
+      "citation": "An KN, Ueba Y, Chao EY, Cooney WP, Linscheid RL. Tendon excursion and moment arm of index finger muscles. J Biomech 16(6):419-425, 1983. doi:10.1016/0021-9290(83)90074-X",
+      "location": "Table 3 (printed in cm under an mm header): MCP flexion arms averaged over 0 to 85 deg, FS 11.9 +- 0.7, FP 11.1 +- 1.1, EI 9.0 +- 1.3, EC 8.6 +- 1.6 mm; Fig. 4a one specimen against angle (FP about 7 / 12.5 / 14 mm, FS 9 / 12.5 / 15 mm, EI and EC about 7.0-7.6 mm at 0 / 45 / 90 deg). No hyperextension tested."
+    },
+    "an1979": {
+      "citation": "An KN, Chao EY, Cooney WP, Linscheid RL. Normative model of human hand for biomechanical analysis. J Biomech 12(10):775-788, 1979. doi:10.1016/0021-9290(79)90163-5",
+      "location": "MCP flexion moment potentials of the long extensor, neutral posture, normalised by the middle-phalanx length: index 0.476, middle 0.409, ring 0.375, little 0.499; profundus 0.518 / 0.406 / 0.409 / 0.492, sublimis 0.605 / 0.507 / 0.456 / 0.530"
+    },
+    "brook1995": {
+      "citation": "Brook N, Mizrahi J, Shoham M, Dayan J. A biomechanical model of index finger dynamics. Med Eng Phys 17(1):54-63, 1995. doi:10.1016/1350-4533(95)90378-O",
+      "location": "MCP: flexors on Landsmeer's model III (FDS d 9.56, y 8.14; FDP d 8.32, y 8.32 mm), extensors with a constant arm (EC 8.3, EI 8.82 mm); coefficients fitted to An et al. 1983"
     }
   },
   "juncturae": {
@@ -61,14 +73,14 @@
         },
         "body": "thirdmc_r",
         "pos": [
-          -0.000947,
-          -0.03788,
-          0.012414
+          -0.000434,
+          -0.023343,
+          0.009888
         ],
         "axis": [
-          -0.021208,
-          -0.994325,
-          0.104245
+          -0.063459,
+          -0.947692,
+          0.312813
         ]
       },
       "JT4": {
@@ -80,14 +92,14 @@
         },
         "body": "fourthmc_r",
         "pos": [
-          -0.0004,
-          -0.0207,
-          0.0095
+          -0.000743,
+          -0.018244,
+          0.006399
         ],
         "axis": [
-          -0.2876,
-          -0.954949,
-          -0.0732
+          -0.228611,
+          -0.956082,
+          0.183422
         ]
       },
       "JT5": {
@@ -99,14 +111,14 @@
         },
         "body": "fifthmc_r",
         "pos": [
-          -0.005857,
-          -0.032954,
-          0.004849
+          -0.005449,
+          -0.019056,
+          0.004492
         ],
         "axis": [
-          -0.294663,
-          -0.954015,
-          -0.055038
+          -0.184431,
+          -0.956401,
+          0.226457
         ]
       }
     },
@@ -119,10 +131,10 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 384.1,
+          "value": 251.4,
           "method": "fit (juncturae.fit)"
         },
-        "rest_length_m": 0.024459
+        "rest_length_m": 0.017707
       },
       "JT45": {
         "from": "JT4",
@@ -132,10 +144,10 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 1000.0,
+          "value": 998.6,
           "method": "fit (juncturae.fit)"
         },
-        "rest_length_m": 0.020708
+        "rest_length_m": 0.018167
       }
     },
     "fit": {
@@ -158,41 +170,41 @@
       "result": {
         "without_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.74,
-            "mcp3_flexion": 6.83,
-            "mcp4_flexion": 69.9,
+            "mcp2_flexion": -0.53,
+            "mcp3_flexion": 6.31,
+            "mcp4_flexion": 126.36,
             "mcp5_flexion": -0.0
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.74,
-            "mcp3_flexion": 64.47,
-            "mcp4_flexion": 1.69,
-            "mcp5_flexion": 0.06
+            "mcp2_flexion": -0.53,
+            "mcp3_flexion": 80.56,
+            "mcp4_flexion": 2.91,
+            "mcp5_flexion": 0.05
           }
         },
         "with_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.74,
-            "mcp3_flexion": 25.0,
-            "mcp4_flexion": 69.9,
-            "mcp5_flexion": 18.92
+            "mcp2_flexion": -0.53,
+            "mcp3_flexion": 23.92,
+            "mcp4_flexion": 125.28,
+            "mcp5_flexion": 12.06
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.74,
-            "mcp3_flexion": 64.35,
-            "mcp4_flexion": 1.81,
-            "mcp5_flexion": 0.02
+            "mcp2_flexion": -0.53,
+            "mcp3_flexion": 80.4,
+            "mcp4_flexion": 2.89,
+            "mcp5_flexion": 0.08
           }
         },
         "residual_deg": [
-          0.17,
-          -3.07,
-          0.0,
-          -7.88,
-          -7.04,
-          -0.12
+          -0.39,
+          -9.94,
+          -1.08,
+          -8.02,
+          -6.98,
+          -0.16
         ],
-        "rms_deg": 4.49
+        "rms_deg": 5.96
       },
       "own_finger_note": "mcp4 under EDC4 traction and mcp3 under EDC3 traction: target 0 deg change from the links (the pulled finger's own extension is the same with and without the juncturae: traction on one tendon or on all gave the same result, p. 643)",
       "stiffness_bounds_N_per_m": {
@@ -651,5 +663,470 @@
         "rms_z": 2.02
       }
     }
+  },
+  "mcp_pulleys": {
+    "method": "The extrinsic finger tendons cross the MCP on cylinders on the joint's flexion axis (in the metacarpal), with the side site two radii out on the palmar (flexors) or dorsal (extensors) side. Before, FDS and FDP 2-5 (except FDP2, which keeps its wrap) crossed the MCP on via sites only: their arm fell from 6-10 mm at 0 deg to 0-2 mm at -60 deg (FDS3 turned extensor), and EDC2 and EDC3 turned flexor past about -45 deg because the PP hood site passed their via site on the metacarpal head. Flexors: Landsmeer's model III in flexion from the via sites (arm rises with flexion, as An et al. 1983 Fig. 4 and Brook et al. 1995), the cylinder holds the 0 deg arm in hyperextension (the tendons lie on the palmar plate); its radius is the path's own arm at 0 deg, so flexion is unchanged. Extensors: Landsmeer's model I (constant arm, Brook et al. 1995; An et al. 1983 Fig. 4), radius from An et al. 1983 (index) scaled by An et al. 1979 for digits 3-5; the via site before the hood moves to 135 deg from distal on the metacarpal neck, 1 mm outside the cylinder, so the hood site no longer passes it; past about -30 deg the tendon leaves the cylinder and its arm rises a little (bowstring). No measured MCP moment arm in hyperextension was found.",
+    "sources": [
+      "an1983",
+      "an1979",
+      "brook1995"
+    ],
+    "half_length_m": 0.005,
+    "side_distance_radii": 2.0,
+    "digits": {
+      "2": {
+        "metacarpal": "secondmc_r",
+        "phalanx": "2proxph_r",
+        "joint": "mcp2_flexion_r"
+      },
+      "3": {
+        "metacarpal": "thirdmc_r",
+        "phalanx": "3proxph_r",
+        "joint": "mcp3_flexion_r"
+      },
+      "4": {
+        "metacarpal": "fourthmc_r",
+        "phalanx": "4proxph_r",
+        "joint": "mcp4_flexion_r"
+      },
+      "5": {
+        "metacarpal": "fifthmc_r",
+        "phalanx": "5proxph_r",
+        "joint": "mcp5_flexion_r"
+      }
+    },
+    "wraps": {
+      "FDS2": {
+        "digit": 2,
+        "side": "palmar",
+        "after_site": "FDS2-P5_r",
+        "radius_m": {
+          "value": 0.0086,
+          "derivation": "the path's own MCP arm at 0 deg before the pulley, 8.61 mm, rounded down to 0.1 mm: flexion arms unchanged, held constant in hyperextension"
+        },
+        "geom_pos": [
+          0.003501,
+          -0.028243,
+          0.00362
+        ],
+        "side_pos": [
+          0.003501,
+          -0.028243,
+          -0.01358
+        ],
+        "geom_quat": [
+          0.707107,
+          -0.070534,
+          0.70358,
+          0.0
+        ],
+        "side_deg": -90.0
+      },
+      "FDS3": {
+        "digit": 3,
+        "side": "palmar",
+        "after_site": "FDS3-P4_r",
+        "radius_m": {
+          "value": 0.0095,
+          "derivation": "the path's own MCP arm at 0 deg before the pulley, 9.51 mm, rounded down to 0.1 mm: flexion arms unchanged, held constant in hyperextension"
+        },
+        "geom_pos": [
+          0.00024,
+          -0.02629,
+          0.001778
+        ],
+        "side_pos": [
+          0.004015,
+          -0.02629,
+          -0.016843
+        ],
+        "geom_quat": [
+          0.774167,
+          0.0,
+          0.632981,
+          0.0
+        ],
+        "side_deg": -90.0
+      },
+      "FDP3": {
+        "digit": 3,
+        "side": "palmar",
+        "after_site": "FDP3-P5_r",
+        "radius_m": {
+          "value": 0.0084,
+          "derivation": "the path's own MCP arm at 0 deg before the pulley, 8.46 mm, rounded down to 0.1 mm: flexion arms unchanged, held constant in hyperextension"
+        },
+        "geom_pos": [
+          0.00024,
+          -0.02629,
+          0.001778
+        ],
+        "side_pos": [
+          0.003578,
+          -0.02629,
+          -0.014687
+        ],
+        "geom_quat": [
+          0.774167,
+          0.0,
+          0.632981,
+          0.0
+        ],
+        "side_deg": -90.0
+      },
+      "FDS4": {
+        "digit": 4,
+        "side": "palmar",
+        "after_site": "FDS4-P5_r",
+        "radius_m": {
+          "value": 0.0067,
+          "derivation": "the path's own MCP arm at 0 deg before the pulley, 6.75 mm, rounded down to 0.1 mm: flexion arms unchanged, held constant in hyperextension"
+        },
+        "geom_pos": [
+          -0.00183,
+          -0.023689,
+          -0.000173
+        ],
+        "side_pos": [
+          0.003999,
+          -0.023689,
+          -0.012239
+        ],
+        "geom_quat": [
+          0.847044,
+          0.0,
+          0.531523,
+          0.0
+        ],
+        "side_deg": -90.0
+      },
+      "FDP4": {
+        "digit": 4,
+        "side": "palmar",
+        "after_site": "FDP4-P5_r",
+        "radius_m": {
+          "value": 0.0065,
+          "derivation": "the path's own MCP arm at 0 deg before the pulley, 6.58 mm, rounded down to 0.1 mm: flexion arms unchanged, held constant in hyperextension"
+        },
+        "geom_pos": [
+          -0.00183,
+          -0.023689,
+          -0.000173
+        ],
+        "side_pos": [
+          0.003825,
+          -0.023689,
+          -0.011879
+        ],
+        "geom_quat": [
+          0.847044,
+          0.0,
+          0.531523,
+          0.0
+        ],
+        "side_deg": -90.0
+      },
+      "FDS5": {
+        "digit": 5,
+        "side": "palmar",
+        "after_site": "FDS5-P5_r",
+        "radius_m": {
+          "value": 0.0064,
+          "derivation": "the path's own MCP arm at 0 deg before the pulley, 6.48 mm, rounded down to 0.1 mm: flexion arms unchanged, held constant in hyperextension"
+        },
+        "geom_pos": [
+          -0.001597,
+          -0.021431,
+          -0.001496
+        ],
+        "side_pos": [
+          0.00563,
+          -0.021431,
+          -0.01206
+        ],
+        "geom_quat": [
+          0.884489,
+          0.0,
+          0.466561,
+          0.0
+        ],
+        "side_deg": -90.0
+      },
+      "FDP5": {
+        "digit": 5,
+        "side": "palmar",
+        "after_site": "FDP5-P5_r",
+        "radius_m": {
+          "value": 0.0058,
+          "derivation": "the path's own MCP arm at 0 deg before the pulley, 5.87 mm, rounded down to 0.1 mm: flexion arms unchanged, held constant in hyperextension"
+        },
+        "geom_pos": [
+          -0.001597,
+          -0.021431,
+          -0.001496
+        ],
+        "side_pos": [
+          0.004953,
+          -0.021431,
+          -0.01107
+        ],
+        "geom_quat": [
+          0.884489,
+          0.0,
+          0.466561,
+          0.0
+        ],
+        "side_deg": -90.0
+      },
+      "EDC2": {
+        "digit": 2,
+        "side": "dorsal",
+        "radius_m": {
+          "value": 0.0086,
+          "derivation": "An et al. 1983 Table 3, EC 8.6 +- 1.6 mm (averaged over the range)"
+        },
+        "geom_pos": [
+          0.003501,
+          -0.028243,
+          0.00362
+        ],
+        "side_pos": [
+          0.003057,
+          -0.023814,
+          0.020234
+        ],
+        "geom_quat": [
+          0.707107,
+          -0.070534,
+          0.70358,
+          0.0
+        ],
+        "side_deg": 105.0
+      },
+      "EIP": {
+        "digit": 2,
+        "side": "dorsal",
+        "radius_m": {
+          "value": 0.009,
+          "derivation": "An et al. 1983 Table 3, EI 9.0 +- 1.3 mm (averaged over the range)"
+        },
+        "geom_pos": [
+          0.003501,
+          -0.028243,
+          0.00362
+        ],
+        "side_pos": [
+          0.003036,
+          -0.023607,
+          0.021007
+        ],
+        "geom_quat": [
+          0.707107,
+          -0.070534,
+          0.70358,
+          0.0
+        ],
+        "side_deg": 105.0
+      },
+      "EDC3": {
+        "digit": 3,
+        "side": "dorsal",
+        "radius_m": {
+          "value": 0.0086,
+          "derivation": "An et al. 1983's index EC 8.6 mm times An et al. 1979's long-extensor moment potential relative to the index (0.409 x 29.1 mm / 0.476 x 25.1 mm middle phalanx of the model = 0.996)"
+        },
+        "geom_pos": [
+          0.00024,
+          -0.02629,
+          0.001778
+        ],
+        "side_pos": [
+          -0.003061,
+          -0.021838,
+          0.018061
+        ],
+        "geom_quat": [
+          0.774167,
+          0.0,
+          0.632981,
+          0.0
+        ],
+        "side_deg": 105.0
+      },
+      "EDC4": {
+        "digit": 4,
+        "side": "dorsal",
+        "radius_m": {
+          "value": 0.0067,
+          "derivation": "An et al. 1983's index EC 8.6 mm times An et al. 1979's long-extensor moment potential relative to the index (0.375 x 24.9 mm / 0.476 x 25.1 mm middle phalanx of the model = 0.782)"
+        },
+        "geom_pos": [
+          -0.00183,
+          -0.023689,
+          -0.000173
+        ],
+        "side_pos": [
+          -0.00746,
+          -0.020221,
+          0.011482
+        ],
+        "geom_quat": [
+          0.847044,
+          0.0,
+          0.531523,
+          0.0
+        ],
+        "side_deg": 105.0
+      },
+      "EDC5": {
+        "digit": 5,
+        "side": "dorsal",
+        "radius_m": {
+          "value": 0.0075,
+          "derivation": "An et al. 1983's index EC 8.6 mm times An et al. 1979's long-extensor moment potential relative to the index (0.499 x 21.0 mm / 0.476 x 25.1 mm middle phalanx of the model = 0.877)"
+        },
+        "geom_pos": [
+          -0.001597,
+          -0.021431,
+          -0.001496
+        ],
+        "side_pos": [
+          -0.009778,
+          -0.017549,
+          0.010462
+        ],
+        "geom_quat": [
+          0.884489,
+          0.0,
+          0.466561,
+          0.0
+        ],
+        "side_deg": 105.0
+      },
+      "EDM": {
+        "digit": 5,
+        "side": "dorsal",
+        "radius_m": {
+          "value": 0.0075,
+          "derivation": "An et al. 1983's index EC 8.6 mm times An et al. 1979's long-extensor moment potential relative to the index (0.499 x 21.0 mm / 0.476 x 25.1 mm middle phalanx of the model = 0.877)"
+        },
+        "geom_pos": [
+          -0.001597,
+          -0.021431,
+          -0.001496
+        ],
+        "side_pos": [
+          -0.009778,
+          -0.017549,
+          0.010462
+        ],
+        "geom_quat": [
+          0.884489,
+          0.0,
+          0.466561,
+          0.0
+        ],
+        "side_deg": 105.0
+      }
+    },
+    "vias": {
+      "EDC2-P4_r": {
+        "digit": 2,
+        "muscle": "EDC2",
+        "pos_before": [
+          0.0031,
+          -0.0295,
+          0.0124
+        ],
+        "angle_deg": 135.0,
+        "radius_m": 0.0096,
+        "pos": [
+          0.002302,
+          -0.021541,
+          0.010408
+        ]
+      },
+      "EIP-P5_r": {
+        "digit": 2,
+        "muscle": "EIP",
+        "pos_before": [
+          0.0044,
+          -0.026,
+          0.0128
+        ],
+        "angle_deg": 135.0,
+        "radius_m": 0.01,
+        "pos": [
+          0.003908,
+          -0.021096,
+          0.010691
+        ]
+      },
+      "EDC3-P4_r": {
+        "digit": 3,
+        "muscle": "EDC3",
+        "pos_before": [
+          -0.0007,
+          -0.0263,
+          0.0112
+        ],
+        "angle_deg": 135.0,
+        "radius_m": 0.0096,
+        "pos": [
+          -0.000177,
+          -0.019502,
+          0.00862
+        ]
+      },
+      "EDC4-P4_r": {
+        "digit": 4,
+        "muscle": "EDC4",
+        "pos_before": [
+          -0.002,
+          -0.022,
+          0.009
+        ],
+        "angle_deg": 135.0,
+        "radius_m": 0.0077,
+        "pos": [
+          -0.000743,
+          -0.018244,
+          0.006399
+        ]
+      },
+      "EDC5-P4_r": {
+        "digit": 5,
+        "muscle": "EDC5",
+        "pos_before": [
+          -0.005,
+          -0.018,
+          0.004
+        ],
+        "angle_deg": 135.0,
+        "radius_m": 0.0085,
+        "pos": [
+          -0.004748,
+          -0.015421,
+          0.003631
+        ]
+      },
+      "EDM-P6_r": {
+        "digit": 5,
+        "muscle": "EDM",
+        "pos_before": [
+          -0.0054,
+          -0.0185,
+          0.0032
+        ],
+        "angle_deg": 135.0,
+        "radius_m": 0.0085,
+        "pos": [
+          -0.005393,
+          -0.015421,
+          0.00319
+        ]
+      }
+    },
+    "side_note": "Side sites two radii out at side_deg about the MCP axis (0 = distal, 90 = dorsal), in the metacarpal. Flexors: -90 (palmar). Extensors: 105, near the middle of the short dorsal arc in slight hyperextension, where it is shortest: at 90 deg MuJoCo 3's nearest-arc rule took the long palmar arc near -15 deg (and a side site on the proximal phalanx jumped on MuJoCo 3 with the MCP abducted). The ray opposite the site (-75 deg) is reached by the hood sites only past about 108 deg of flexion, beyond the limit and its 7.5 deg sampling margin, so the paths are continuous on MuJoCo 4 and 3.17 over -68..97 deg at every abduction."
   }
 }

@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — MCP pulleys of the extrinsic finger tendons; MCP hyperextension to 61 deg
+Changed: `myo_sim/build/data/extrinsic_muscles.json` (`mcp_pulleys`, junctura refit), `extensor_mechanism.json` (main paths), `passive_joint_moments.json` (MCP ranges, two-segment springs, sources), `muscle_passive.json`, `hand_intrinsic_muscles.json`, `postures.json`, `side_sites.json` (two retired side sites), `hand_literature.json` (step `mcp_pulleys`, new quantities and sources), arm chain, muscle and tendon XML, `scripts/generate_extrinsic_muscles.py` (pulley blocks; junctura rest length rounded up), `scripts/fit_muscle_passive.py` (MCP grid -60..90, Knutson measured-domain mask), `scripts/fit_passive_moments.py` (a later spring segment after an empty first one), `scripts/hand_literature_comparison.py` (MCP arms, hyperextension moment, active extension), `scripts/migrate_side_sites.py` (MCP sampling margin), tests, wiki pages
+Why: past 0 deg the flexors lost their MCP moment arm and EDC2 and EDC3 turned flexors, so the MCP could not follow measured hyperextension. Cylinders on the joint axis hold the arms (flexion arms unchanged, extensors constant after An et al. 1983); the limit follows Leijnse et al. 2010. Paths identical on MuJoCo 4 and 3.17. Open: midrange passive excess (relaxed index MCP), active extension, middle fingertip in the fist, little-finger junctura share.
+
 ## 2026-11-12 — Finger and thumb joint ranges from range-of-motion data
 Changed: `myo_sim/build/data/passive_joint_moments.json` (`range` entries and sources), `myoarm_r_chain.xml` (ranges), `muscle_passive.json`, `hand_intrinsic_muscles.json`, `extrinsic_muscles.json`, `hand_pads.json`, `postures.json`, arm muscle and tendon XML (refits), `hand_literature.json`, `scripts/hand_literature_comparison.py` (`joint_ranges`), `tests/test_passive_thenar.py`, `docs/wiki/{passive-moments-and-thenar,hand-literature-comparison}.md`, `CHANGELOG.md`
 Why: the thumb, PIP extension and index and little-finger abduction limits had no cited source and now follow measured passive ranges.

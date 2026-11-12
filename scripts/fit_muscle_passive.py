@@ -76,7 +76,9 @@ JOINT_MUSCLES = (
     "FDS3_r", "FDS4_r", "FDS5_r", "FDP3_r", "FDP4_r", "FDP5_r", "EDC3_r", "EDC4_r", "EDC5_r", "EDM_r",
     "FPL_r", "EPL_r", "EPB_r", "APL_r", "ECRB_r", "ECU_r",
 )  # fmt: skip
-MCP_DEG = np.arange(0.0, 90.1, 5.0)  # MyoHand's MCP range (no hyperextension; Knutson measured from about -45 deg)
+KNUTSON_INTRINSIC = {"A1": 1.4, "k1": 0.068, "theta1": -18.0, "A2": 1.6, "k2": 0.092, "theta2": 79.4}
+KNUTSON_END_NCM = 40.0  # Knutson et al. 2000 extended the MCP until the total moment reached about 40 N cm
+MCP_DEG = np.arange(-60.0, 90.1, 5.0)  # MCP range of the model, hyperextension to the -61 deg limit
 WRIST_DEG = np.arange(-60.0, 60.1, 10.0)
 DEG = np.pi / 180.0
 EXCESS_WEIGHT = 100.0
@@ -91,6 +93,19 @@ def knutson_extrinsic(theta: np.ndarray, wrist: np.ndarray, p: dict[str, float] 
     t3 = p["B3"] * wrist + p["phi3"]
     t4 = p["B4"] * wrist + p["phi4"]
     return p["A3"] * (np.exp(-p["k3"] * (theta - t3)) - 1.0) - p["A4"] * (np.exp(p["k4"] * (theta - t4)) - 1.0)
+
+
+def knutson_intrinsic(theta: np.ndarray, p: dict[str, float] = KNUTSON_INTRINSIC) -> np.ndarray:
+    """Knutson et al. 2000 Eq. (2): intrinsic MCP moment (N cm, +flexion), angle in deg (+flexion)."""
+    return p["A1"] * (np.exp(-p["k1"] * (theta - p["theta1"])) - 1.0) - p["A2"] * (
+        np.exp(p["k2"] * (theta - p["theta2"])) - 1.0
+    )
+
+
+def knutson_measured(theta: np.ndarray, wrist: np.ndarray) -> np.ndarray:
+    """Knutson's measured domain: flexion, or hyperextension while the total extension moment stays below 40 N cm."""
+    total = knutson_intrinsic(theta) + knutson_extrinsic(theta, wrist)
+    return (theta >= 0.0) | (total <= KNUTSON_END_NCM)
 
 
 def source_moment(row: dict[str, Any], q: np.ndarray | float, wrist_deg: np.ndarray | float = 0.0) -> np.ndarray:
@@ -200,6 +215,8 @@ def row_points(table: dict[str, Any], row: dict[str, Any]) -> tuple[list[dict[st
     postures, target = [], []
     for w in wrists:
         for a in angles:
+            if row["model"] == "knutson2000_total" and not knutson_measured(a, 0.0 if w is None else w):
+                continue
             postures.append({**base, **({} if w is None else {"flexion_r": float(w)}), row["joint"]: float(a)})
             target.append(float(source_moment(row, a * DEG, 0.0 if w is None else w)))
     return postures, np.array(target)
@@ -472,13 +489,15 @@ def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray,
     """Binder-Markey's fit of the four index muscles to Knutson's extrinsic MCP moment; updates *table*."""
     lengths, arms = geometry(model)
     target = knutson_extrinsic(MCP_DEG[None, :], WRIST_DEG[:, None])
+    measured = knutson_measured(MCP_DEG[None, :], WRIST_DEG[:, None])
 
     def error(shift: np.ndarray, fpmax: np.ndarray) -> float:
-        return float(np.sum((target - model_torque(model, lengths, arms, shift, fpmax)) ** 2))  # Binder-Markey Eq. (2), N cm
+        residual = (target - model_torque(model, lengths, arms, shift, fpmax))[measured]
+        return float(np.sum(residual**2))  # Binder-Markey Eq. (2), N cm
 
     shift, fpmax = _fit(model, table, MUSCLES, error)
-    before = target - model_torque(model, lengths, arms, np.zeros(len(MUSCLES)))
-    after = target - model_torque(model, lengths, arms, shift, fpmax)
+    before = (target - model_torque(model, lengths, arms, np.zeros(len(MUSCLES))))[measured]
+    after = (target - model_torque(model, lengths, arms, shift, fpmax))[measured]
     for k, name in enumerate(MUSCLES):
         row = next(r for r in table["muscles"] if r["names"]["r"] == name)
         row.update(_parameter_entries(implied_slack(model, name), shift[k], fpmax[k], slack_window(model, table, name)))
@@ -487,7 +506,11 @@ def fit_index(model: mujoco.MjModel, table: dict[str, Any]) -> tuple[np.ndarray,
         "rmse_Ncm_before": float(np.sqrt(np.mean(before**2))),
         "rmse_Ncm_after": float(np.sqrt(np.mean(after**2))),
         "max_abs_err_Ncm_after": float(np.max(np.abs(after))),
-        "target_peak_Ncm": float(np.max(np.abs(target))),
+        "target_peak_Ncm": float(np.max(np.abs(target[measured]))),
+        "measured_domain": (
+            f"grid points with MCP flexion >= 0 deg, or hyperextension while Knutson's total moment (intrinsic + extrinsic) "
+            f"is at most {KNUTSON_END_NCM:g} N cm; {int(measured.sum())} of {measured.size} points"
+        ),
     }
     return shift, fpmax
 

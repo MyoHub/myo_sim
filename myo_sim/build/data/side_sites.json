@@ -349,50 +349,6 @@
       },
       "plateau_width_deg_both_versions": 42.5,
       "plateau_width_deg_mujoco4": 170.5
-    },
-    {
-      "name": "2ndmcp_ellipsoid_site_EIP_side_r",
-      "geom": "2ndmcp_ellipsoid_wrap_r",
-      "users": [
-        "EIP_r_tendon"
-      ],
-      "body": "secondmc_r",
-      "body_before": "secondmc_r",
-      "pos_before": [
-        0.0058,
-        -0.0294,
-        0.0087
-      ],
-      "pos": [
-        0.008792,
-        -0.037402,
-        0.010499
-      ],
-      "keeps_mujoco3": true,
-      "method": "Same path in range on both versions; the side direction keeps the length continuous to 0.55 rad past the extension limit of the MCP joint on MuJoCo 4 as well, where the previous site snapped.",
-      "plateau_width_deg": 66.0
-    },
-    {
-      "name": "2ndmcp_ellipsoid_site_EDC2_side_r",
-      "geom": "2ndmcp_ellipsoid_wrap_r",
-      "users": [
-        "EDC2_r_tendon"
-      ],
-      "body": "secondmc_r",
-      "body_before": "secondmc_r",
-      "pos_before": [
-        0.0058,
-        -0.0294,
-        0.0087
-      ],
-      "pos": [
-        0.008829,
-        -0.038637,
-        0.009331
-      ],
-      "keeps_mujoco3": true,
-      "method": "Same path in range on both versions; the side direction keeps the length continuous to 0.55 rad past the extension limit of the MCP joint on MuJoCo 4 as well, where the previous site snapped.",
-      "plateau_width_deg": 81.0
     }
   ],
   "removed": [

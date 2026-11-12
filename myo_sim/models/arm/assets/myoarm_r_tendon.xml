@@ -275,7 +275,7 @@
             <site site="FDS5-P3_r"/>
             <site site="FDS5-P4_r"/>
             <site site="FDS5-P5_r"/>
-            <!-- <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_FDS5_side_r"/> -->
+            <geom geom="mcp5_FDS5_wrap_r" sidesite="mcp5_FDS5_side_r"/>
             <site site="FDS5-P6_r"/>
             <site site="FDS5-P7_r"/>
             <site site="FDS5-P8_r"/>
@@ -286,10 +286,9 @@
             <site site="FDS4-P2_r"/>
             <geom geom="FDS_ellipsoid_wrap_r" sidesite="FDS_ellipsoid_site_FDS4_side_r"/>
             <site site="FDS4-P3_r"/>
-            <!-- <geom geom="4thmcp_ellipsoid_wrap" sidesite="4thmcp_ellipsoid_site_FDS4_side_r"/> -->
             <site site="FDS4-P4_r"/>
             <site site="FDS4-P5_r"/>
-            <!-- <geom geom="4thmcp_ellipsoid_wrap" sidesite="4thmcp_ellipsoid_site_FDS4_side_r"/> -->
+            <geom geom="mcp4_FDS4_wrap_r" sidesite="mcp4_FDS4_side_r"/>
             <site site="FDS4-P6_r"/>
             <site site="FDS4-P7_r"/>
             <site site="FDS4-P8_r"/>
@@ -300,6 +299,7 @@
             <geom geom="FDS_ellipsoid_wrap_r" sidesite="FDS_ellipsoid_site_FDS3_side_r"/>
             <site site="FDS3-P3_r"/>
             <site site="FDS3-P4_r"/>
+            <geom geom="mcp3_FDS3_wrap_r" sidesite="mcp3_FDS3_side_r"/>
             <!-- <site site="FDS3-P5_r"/> -->
             <site site="FDS3-P6_r"/>
             <site site="FDS3-P7_r"/>
@@ -312,6 +312,7 @@
             <site site="FDS2-P3_r"/>
             <site site="FDS2-P4_r"/>
             <site site="FDS2-P5_r"/>
+            <geom geom="mcp2_FDS2_wrap_r" sidesite="mcp2_FDS2_side_r"/>
             <site site="FDS2-P6_r"/>
             <site site="FDS2-P7_r"/>
             <site site="FDS2-P8_r"/>
@@ -322,8 +323,8 @@
             <geom geom="FDP_ellipsoid_wrap_r" sidesite="FDP_ellipsoid_site_FDP5_side_r"/>
             <site site="FDP5-P3_r"/>
             <site site="FDP5-P4_r"/>
-            <!-- <geom geom="5thmcp_ellipsoid_wrap" sidesite="5thmcp_ellipsoid_site_FDP5_side_r"/> -->
             <site site="FDP5-P5_r"/>
+            <geom geom="mcp5_FDP5_wrap_r" sidesite="mcp5_FDP5_side_r"/>
             <site site="FDP5-P6_r"/>
             <site site="FDP5-P7_r"/>
             <site site="FDP5-P8_r"/>
@@ -338,6 +339,7 @@
             <site site="FDP4-P4_r"/>
             <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_FDP4_side_r"/>
             <site site="FDP4-P5_r"/>
+            <geom geom="mcp4_FDP4_wrap_r" sidesite="mcp4_FDP4_side_r"/>
             <site site="FDP4-P6_r"/>
             <!-- <site site="FDP4-P7_r"/> -->
             <site site="FDP4-P8_r"/>
@@ -351,7 +353,7 @@
             <site site="FDP3-P3_r"/>
             <site site="FDP3-P4_r"/>
             <site site="FDP3-P5_r"/>
-            <!-- <geom geom="3rdmcp_ellipsoid_wrap" sidesite="3rdmcp_ellipsoid_site_FDP3_side_r"/> -->
+            <geom geom="mcp3_FDP3_wrap_r" sidesite="mcp3_FDP3_side_r"/>
             <site site="FDP3-P6_r"/>
             <!-- <site site="FDP3-P7_r"/> -->
             <site site="FDP3-P8_r"/>
@@ -380,7 +382,7 @@
             <site site="EDC5-P3_r"/>
             <geom geom="EDCL_torus_wrap_r" sidesite="EDCL_torus_site_EDC5_side_r"/>
             <site site="EDC5-P4_r"/>
-            <geom geom="5thmcp_ellipsoid_wrap_r" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
+            <geom geom="mcp5_EDC5_wrap_r" sidesite="mcp5_EDC5_side_r"/>
             <site site="EM5_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM5_H_r"/>
@@ -413,7 +415,7 @@
             <site site="EDC4-P3_r"/>
             <geom geom="EDCR_torus_wrap_r" sidesite="EDCR_torus_site_EDC4_side_r"/>
             <site site="EDC4-P4_r"/>
-            <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_EDC4_side_r"/>
+            <geom geom="mcp4_EDC4_wrap_r" sidesite="mcp4_EDC4_side_r"/>
             <site site="EM4_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM4_H_r"/>
@@ -446,7 +448,7 @@
             <site site="EDC3-P3_r"/>
             <geom geom="EDCM_torus_wrap_r" sidesite="EDCM_torus_site_EDC3_side_r"/>
             <site site="EDC3-P4_r"/>
-            <geom geom="3rdmcp_ellipsoid_wrap_r" sidesite="3rdmcp_ellipsoid_site_EDC3_side_r"/>
+            <geom geom="mcp3_EDC3_wrap_r" sidesite="mcp3_EDC3_side_r"/>
             <site site="EM3_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM3_H_r"/>
@@ -479,7 +481,7 @@
             <site site="EDC2-P3_r"/>
             <geom geom="EDCI_torus_wrap_r" sidesite="EDCI_torus_site_EDC2_side_r"/>
             <site site="EDC2-P4_r"/>
-            <geom geom="2ndmcp_ellipsoid_wrap_r" sidesite="2ndmcp_ellipsoid_site_EDC2_side_r"/>
+            <geom geom="mcp2_EDC2_wrap_r" sidesite="mcp2_EDC2_side_r"/>
             <site site="EM2_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM2_H_r"/>
@@ -514,7 +516,7 @@
             <site site="EDM_via_r"/>
             <site site="EDM-P5_r"/>
             <site site="EDM-P6_r"/>
-            <geom geom="5thmcp_ellipsoid_wrap_r" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
+            <geom geom="mcp5_EDM_wrap_r" sidesite="mcp5_EDM_side_r"/>
             <site site="EM5_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM5_H_r"/>
@@ -548,7 +550,7 @@
             <geom geom="ExtensorEllipse_ellipsoid_wrap_r" sidesite="ExtensorEllipse_ellipsoid_site_EIP_side_r"/>
             <site site="EIP-P4_r"/>
             <site site="EIP-P5_r"/>
-            <geom geom="2ndmcp_ellipsoid_wrap_r" sidesite="2ndmcp_ellipsoid_site_EIP_side_r"/>
+            <geom geom="mcp2_EIP_wrap_r" sidesite="mcp2_EIP_side_r"/>
             <site site="EM2_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM2_H_r"/>
@@ -940,6 +942,7 @@
         <spatial name="node_LUM2_fdp_r" rgba="0 0 0 0">
             <site site="node_LUM2_ref_r"/>
             <site site="FDP3-P5_r"/>
+            <geom geom="mcp3_FDP3_wrap_r" sidesite="mcp3_FDP3_side_r"/>
             <site site="FDP3-P6_r"/>
             <site site="FDP3-P8_r"/>
             <site site="FDP3-P9_r"/>
@@ -953,6 +956,7 @@
             <site site="node_LUM3_ref_r"/>
             <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_FDP4_side_r"/>
             <site site="FDP4-P5_r"/>
+            <geom geom="mcp4_FDP4_wrap_r" sidesite="mcp4_FDP4_side_r"/>
             <site site="FDP4-P6_r"/>
             <site site="FDP4-P8_r"/>
             <site site="FDP4-P9_r"/>
@@ -965,6 +969,7 @@
         <spatial name="node_LUM4_fdp_r" rgba="0 0 0 0">
             <site site="node_LUM4_ref_r"/>
             <site site="FDP5-P5_r"/>
+            <geom geom="mcp5_FDP5_wrap_r" sidesite="mcp5_FDP5_side_r"/>
             <site site="FDP5-P6_r"/>
             <site site="FDP5-P7_r"/>
             <site site="FDP5-P8_r"/>
@@ -974,170 +979,203 @@
         <!-- END generated by scripts/generate_hand_intrinsic_muscles.py -->
         <!-- BEGIN generated by scripts/fit_passive_moments.py; do not edit by hand -->
         <!-- wrist_flexion (measured): Formica et al. 2012, doi:10.1152/jn.01014.2011 -->
-        <fixed name="passive_wrist_flexion_pos_r" springlength="-1000 0.09522499143657491" stiffness="0.2239168805424096 0 0">
+        <fixed name="passive_wrist_flexion_pos_r" springlength="-1000 0.1434176486684182" stiffness="0.27048957292403425 0 0">
             <joint joint="flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_wrist_flexion_neg_r" springlength="0.09522499143657491 1000" stiffness="0.6066099408375799 0 0">
+        <fixed name="passive_wrist_flexion_neg_r" springlength="0.1434176486684182 1000" stiffness="0.5196265158751945 0 0">
             <joint joint="flexion_r" coef="1"/>
         </fixed>
         <!-- wrist_deviation (measured): Formica et al. 2012, doi:10.1152/jn.01014.2011 -->
-        <fixed name="passive_wrist_deviation_pos_r" springlength="-1000 0.005769934735391675" stiffness="1.163100300358775 0 0">
+        <fixed name="passive_wrist_deviation_pos_r" springlength="-1000 0.020717637398147703" stiffness="0.9011538111248284 0 0">
             <joint joint="deviation_r" coef="1"/>
         </fixed>
-        <fixed name="passive_wrist_deviation_neg_r" springlength="0.005769934735391675 1000" stiffness="0.3549293449003628 0 0">
+        <fixed name="passive_wrist_deviation_neg_r" springlength="0.020717637398147703 1000" stiffness="0.35473170764426687 0 0">
             <joint joint="deviation_r" coef="1"/>
         </fixed>
         <!-- thumb_cmc_flexion (measured): Domalain et al. 2010, doi:10.1115/1.4001397 -->
-        <fixed name="passive_thumb_cmc_flexion_pos_r" springlength="-1000 0.041863589844545905" stiffness="0 0 2.620487440532652">
+        <fixed name="passive_thumb_cmc_flexion_pos_r" springlength="-1000 0.03926629882086393" stiffness="0 0 2.5825832917696427">
             <joint joint="cmc_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_cmc_flexion_pos1_r" springlength="-1000 0.6254315199251859" stiffness="3.138422867788759 24.932609304043066 64.44513068009297">
+        <fixed name="passive_thumb_cmc_flexion_pos1_r" springlength="-1000 0.6254315199251859" stiffness="3.22019799572516 23.216052134298263 78.07687114444954">
             <joint joint="cmc_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_cmc_flexion_pos2_r" springlength="-1000 0.6926726258441254" stiffness="0 6.915978866382132 0">
+        <fixed name="passive_thumb_cmc_flexion_pos2_r" springlength="-1000 0.6926726258441254" stiffness="0 4.211055616862508 19.31504808311548">
             <joint joint="cmc_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_cmc_flexion_neg_r" springlength="0.041863589844545905 1000" stiffness="0.027545172492118526 0 0">
+        <fixed name="passive_thumb_cmc_flexion_neg_r" springlength="0.03926629882086393 1000" stiffness="0.02653614037414962 0 0">
             <joint joint="cmc_flexion_r" coef="1"/>
         </fixed>
         <!-- thumb_cmc_abduction (measured): Domalain et al. 2010, doi:10.1115/1.4001397 -->
-        <fixed name="passive_thumb_cmc_abduction_pos_r" springlength="-1000 0.3603961923726325" stiffness="0 0 9.529992396718294">
+        <fixed name="passive_thumb_cmc_abduction_pos_r" springlength="-1000 0.3613933479774276" stiffness="0 0 9.588390739679618">
             <joint joint="cmc_abduction_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_cmc_abduction_pos1_r" springlength="-1000 0.7429197364146992" stiffness="5.77512286753103 143.4821350634275 667.5483802280069">
+        <fixed name="passive_thumb_cmc_abduction_pos1_r" springlength="-1000 0.7429197364146992" stiffness="5.737383403290173 145.1509746708912 641.4876772572335">
             <joint joint="cmc_abduction_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_cmc_abduction_pos2_r" springlength="-1000 0.7739551024370044" stiffness="0 0 3425.1559925372944">
+        <fixed name="passive_thumb_cmc_abduction_pos2_r" springlength="-1000 0.7739551024370044" stiffness="0 0 3530.4699467972177">
             <joint joint="cmc_abduction_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_cmc_abduction_neg_r" springlength="0.3603961923726325 1000" stiffness="1.6806753955540772 0 0">
+        <fixed name="passive_thumb_cmc_abduction_neg_r" springlength="0.3613933479774276 1000" stiffness="1.6748153655902647 0 0">
             <joint joint="cmc_abduction_r" coef="1"/>
         </fixed>
         <!-- thumb_mp_flexion (assumed): Barry et al. 2018, doi:10.1016/j.jbiomech.2018.06.017 -->
-        <fixed name="passive_thumb_mp_flexion_pos_r" springlength="-1000 -0.2339376725399406" stiffness="0.069433245611431 0 0">
+        <fixed name="passive_thumb_mp_flexion_pos_r" springlength="-1000 -0.2339376725399406" stiffness="0.07014706901384277 0 0">
             <joint joint="mp_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_mp_flexion_pos1_r" springlength="-1000 -0.11506925138587176" stiffness="0.0009074349210530328 0 0">
+        <fixed name="passive_thumb_mp_flexion_pos1_r" springlength="-1000 -0.11898858724999917" stiffness="0.0007981562277032051 0 0">
             <joint joint="mp_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_mp_flexion_neg_r" springlength="-0.2339376725399406 1000" stiffness="0.025932312839783853 0 0">
+        <fixed name="passive_thumb_mp_flexion_neg_r" springlength="-0.2339376725399406 1000" stiffness="0.023585294729203475 0 0">
             <joint joint="mp_flexion_r" coef="1"/>
         </fixed>
         <!-- thumb_ip_flexion (assumed): Barry et al. 2018, doi:10.1016/j.jbiomech.2018.06.017 -->
-        <fixed name="passive_thumb_ip_flexion_pos_r" springlength="-1000 -0.11592625705499057" stiffness="0.005832090804606897 0 0.09297005416433234">
+        <fixed name="passive_thumb_ip_flexion_pos_r" springlength="-1000 -0.11592625705499057" stiffness="0.007402538374803708 0 0.08961802109899315">
             <joint joint="ip_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_ip_flexion_pos1_r" springlength="-1000 0.4738547047870718" stiffness="0.062131393454561985 0 0">
+        <fixed name="passive_thumb_ip_flexion_pos1_r" springlength="-1000 0.4738547047870718" stiffness="0.06194177109272093 0 0">
             <joint joint="ip_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_ip_flexion_neg_r" springlength="-0.11592625705499057 1000" stiffness="0.043898050119447536 0 0">
+        <fixed name="passive_thumb_ip_flexion_neg_r" springlength="-0.11592625705499057 1000" stiffness="0.04229074189867362 0 0">
             <joint joint="ip_flexion_r" coef="1"/>
         </fixed>
         <!-- digit2_mcp_flexion (measured): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
-        <fixed name="passive_digit2_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+        <fixed name="passive_digit2_mcp_flexion_pos_r" springlength="-1000 0.9991015049003954" stiffness="0.010679311801584792 0 0.17656551692861325">
+            <joint joint="mcp2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_mcp_flexion_pos1_r" springlength="-1000 1.5245600877192982" stiffness="0.020076287189679715 0.11376671271037837 1.5261187969266865">
+            <joint joint="mcp2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_mcp_flexion_neg_r" springlength="0.9991015049003954 1000" stiffness="0 0 0.004584034006797525">
+            <joint joint="mcp2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_mcp_flexion_neg1_r" springlength="-0.8334714385964912 1000" stiffness="0.4464507692437121 -1.2576858756730296 0.5929758950741414">
             <joint joint="mcp2_flexion_r" coef="1"/>
         </fixed>
         <!-- digit2_pip_flexion (measured): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit2_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.011508213667980785 0 0">
+        <fixed name="passive_digit2_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.027376572654207235 0 0">
             <joint joint="pm2_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit2_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0.13052014679518092 0 0">
+        <fixed name="passive_digit2_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0 0 0.4715359717733892">
+            <joint joint="pm2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_pip_flexion_neg1_r" springlength="-0.09579626721472635 1000" stiffness="0.027601244258817808 0 0">
+            <joint joint="pm2_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit2_pip_flexion_neg2_r" springlength="-0.1001705259916545 1000" stiffness="3.1379826647791125e-05 0 0">
             <joint joint="pm2_flexion_r" coef="1"/>
         </fixed>
         <!-- digit2_dip_flexion (measured): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit2_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.0468951848563503 -0.004843542732977133 -0.00971101897951505">
+        <fixed name="passive_digit2_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.07307696402672728 -0.02934261530549827 -0.003130715204547171">
             <joint joint="md2_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit2_dip_flexion_pos1_r" springlength="-1000 0.45273578341206294" stiffness="-0.05826065703583513 0.1747618365106703 -0.11734148268500422">
+        <fixed name="passive_digit2_dip_flexion_pos1_r" springlength="-1000 0.44092528471435694" stiffness="-0.06349720986222002 0.1884029256320826 -0.12514609128452664">
             <joint joint="md2_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit2_dip_flexion_pos2_r" springlength="-1000 0.9251557313203025" stiffness="0.08533695789754585 -0.43681460423022583 0.5032039569401648">
+        <fixed name="passive_digit2_dip_flexion_pos2_r" springlength="-1000 0.9251557313203025" stiffness="0.08418792363518461 -0.43049420586462184 0.49561246001891396">
             <joint joint="md2_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit2_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.009604750193931593 -0.020450806561832666 0.009657120163947618">
+        <fixed name="passive_digit2_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.01009094870475051 -0.021431842829301714 0.010109266265633906">
             <joint joint="md2_flexion_r" coef="1"/>
         </fixed>
         <!-- digit3_mcp_flexion (assumed): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
-        <fixed name="passive_digit3_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+        <fixed name="passive_digit3_mcp_flexion_pos_r" springlength="-1000 0.9991015049003954" stiffness="0.010679311801584792 0 0.17656551692861325">
+            <joint joint="mcp3_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit3_mcp_flexion_pos1_r" springlength="-1000 1.5245600877192982" stiffness="0.020076287189679715 0.11376671271037837 1.5261187969266865">
+            <joint joint="mcp3_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit3_mcp_flexion_neg_r" springlength="-0.9325483934837093 1000" stiffness="0.637903596611735 -1.774970494437023 0">
             <joint joint="mcp3_flexion_r" coef="1"/>
         </fixed>
         <!-- digit3_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit3_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.0005430529363111346 0 0">
+        <fixed name="passive_digit3_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.0005430362230710229 0 0">
             <joint joint="pm3_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit3_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0.1176075924500285 0 0">
+        <fixed name="passive_digit3_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0.11760759245002854 0 0">
             <joint joint="pm3_flexion_r" coef="1"/>
         </fixed>
         <!-- digit3_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit3_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.04349329040544127 0.0012545711779636919 -0.012906138267466472">
+        <fixed name="passive_digit3_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.043493290405441275 0.0012545711779637005 -0.012906138267466482">
             <joint joint="md3_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit3_dip_flexion_pos1_r" springlength="-1000 0.44092528471435694" stiffness="-0.05419629275546076 0.16041119591020506 -0.10639748629456593">
+        <fixed name="passive_digit3_dip_flexion_pos1_r" springlength="-1000 0.44092528471435694" stiffness="-0.05419629275546073 0.16041119591020495 -0.10639748629456584">
             <joint joint="md3_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit3_dip_flexion_pos2_r" springlength="-1000 0.9212188984210672" stiffness="0.08794126479078271 -0.44812025091469576 0.5135855754397333">
+        <fixed name="passive_digit3_dip_flexion_pos2_r" springlength="-1000 0.9212188984210672" stiffness="0.08794126479078261 -0.4481202509146952 0.5135855754397325">
             <joint joint="md3_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit3_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.009257666558931765 -0.01986582481326602 0.009419853351549377">
+        <fixed name="passive_digit3_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.00925766655893177 -0.019865824813266042 0.0094198533515494">
             <joint joint="md3_flexion_r" coef="1"/>
         </fixed>
         <!-- digit4_mcp_flexion (assumed): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
-        <fixed name="passive_digit4_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+        <fixed name="passive_digit4_mcp_flexion_pos_r" springlength="-1000 0.9991015049003954" stiffness="0.010679311801584792 0 0.17656551692861325">
+            <joint joint="mcp4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_mcp_flexion_pos1_r" springlength="-1000 1.5245600877192982" stiffness="0.020076287189679715 0.11376671271037837 1.5261187969266865">
+            <joint joint="mcp4_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit4_mcp_flexion_neg_r" springlength="-0.879707350877193 1000" stiffness="0.4531487838982256 -0.8047784830356551 2.5621487191294534">
             <joint joint="mcp4_flexion_r" coef="1"/>
         </fixed>
         <!-- digit4_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit4_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.009072024497451616 0 0">
+        <fixed name="passive_digit4_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.00753865116920384 0 0">
             <joint joint="pm4_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit4_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0.15427515907380274 0 0">
+        <fixed name="passive_digit4_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0.16417858539027794 0 0">
             <joint joint="pm4_flexion_r" coef="1"/>
         </fixed>
         <!-- digit4_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit4_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.010322490335567331 0 0">
+        <fixed name="passive_digit4_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.009425242202171011 0 0">
             <joint joint="md4_flexion_r" coef="1"/>
         </fixed>
         <!-- digit5_mcp_flexion (assumed): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->
-        <fixed name="passive_digit5_mcp_flexion_pos_r" springlength="-1000 0.9991015049004013" stiffness="0.010721321304825423 0 0.176267345414987">
+        <fixed name="passive_digit5_mcp_flexion_pos_r" springlength="-1000 0.9991015049003954" stiffness="0.010679311801584792 0 0.17656551692861325">
             <joint joint="mcp5_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit5_mcp_flexion_neg_r" springlength="0.9991015049004013 1000" stiffness="0.0021355860313614 0 0">
+        <fixed name="passive_digit5_mcp_flexion_pos1_r" springlength="-1000 1.5245600877192982" stiffness="0.020076287189679715 0.11376671271037837 1.5261187969266865">
+            <joint joint="mcp5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_mcp_flexion_neg_r" springlength="0.9991015049003954 1000" stiffness="0 0 0.0105851628302497">
+            <joint joint="mcp5_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_digit5_mcp_flexion_neg1_r" springlength="-0.866497090225564 1000" stiffness="0.3341200379658001 -0.900479808837182 1.6724090701512169">
             <joint joint="mcp5_flexion_r" coef="1"/>
         </fixed>
         <!-- digit5_pip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit5_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.03799659065625418 0 0">
+        <fixed name="passive_digit5_pip_flexion_pos_r" springlength="-1000 0.11592625705499059" stiffness="0.04988643074851517 0 0">
             <joint joint="pm5_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit5_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0.03130480415599534 -0.271731951890607 0">
+        <fixed name="passive_digit5_pip_flexion_neg_r" springlength="0.11592625705499059 1000" stiffness="0.002409993639887325 -0.3792983039066818 0">
             <joint joint="pm5_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit5_pip_flexion_neg1_r" springlength="0.061677048754686825 1000" stiffness="0.0009022122351206967 0 0">
+        <fixed name="passive_digit5_pip_flexion_neg1_r" springlength="0.061677048754686825 1000" stiffness="0.0013053073983753248 0 0">
             <joint joint="pm5_flexion_r" coef="1"/>
         </fixed>
         <!-- digit5_dip_flexion (assumed): Kamper et al. 2002, doi:10.1016/S0021-9290(02)00229-4 -->
-        <fixed name="passive_digit5_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.08022838132280694 -0.03220806295166678 -0.0030425635561971464">
+        <fixed name="passive_digit5_dip_flexion_pos_r" springlength="-1000 -0.23337500495857044" stiffness="0.08202018586130239 -0.03424450245250292 -0.001677829062152658">
             <joint joint="md5_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit5_dip_flexion_pos1_r" springlength="-1000 0.4369884518151216" stiffness="-0.05518735647871099 0.1629807770098332 -0.10780589422527125">
+        <fixed name="passive_digit5_dip_flexion_pos1_r" springlength="-1000 0.4369884518151216" stiffness="-0.05583158507664332 0.16489055534454086 -0.10907188279780447">
             <joint joint="md5_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit5_dip_flexion_pos2_r" springlength="-1000 0.9251557313203025" stiffness="0.08343237255447997 -0.4274402011221415 0.4926562219055675">
+        <fixed name="passive_digit5_dip_flexion_pos2_r" springlength="-1000 0.9212188984210672" stiffness="0.0831386549380541 -0.4224794821632274 0.4833898819743902">
             <joint joint="md5_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit5_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.00892989926510655 -0.01918010594584141 0.009099137475890237">
+        <fixed name="passive_digit5_dip_flexion_pos3_r" springlength="-1000 0.00393683289923533" stiffness="0.009046163003150106 -0.01946322040177792 0.009240859995488059">
             <joint joint="md5_flexion_r" coef="1"/>
         </fixed>
         <!-- digit4_cmc_flexion (assumed): El-Shennawy et al. 2001, doi:10.1053/jhsu.2001.28761 -->
-        <fixed name="passive_digit4_cmc_flexion_pos_r" springlength="-1000 -0.0002710028500296078" stiffness="10.823786007418967 0 0">
+        <fixed name="passive_digit4_cmc_flexion_pos_r" springlength="-1000 -0.00014774415786994165" stiffness="10.764074728859557 0 0">
             <joint joint="cmc4_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit4_cmc_flexion_neg_r" springlength="-0.0002710028500296078 1000" stiffness="10.131738142327965 0 0">
+        <fixed name="passive_digit4_cmc_flexion_neg_r" springlength="-0.00014774415786994165 1000" stiffness="10.666247584394968 0 0">
             <joint joint="cmc4_flexion_r" coef="1"/>
         </fixed>
         <!-- digit5_cmc_flexion (assumed): El-Shennawy et al. 2001, doi:10.1053/jhsu.2001.28761 -->
-        <fixed name="passive_digit5_cmc_flexion_pos_r" springlength="-1000 -0.013026728728360006" stiffness="3.6058715561706194 0 0">
+        <fixed name="passive_digit5_cmc_flexion_pos_r" springlength="-1000 -0.011913235616861285" stiffness="4.316933751663687 0 0">
             <joint joint="cmc5_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_digit5_cmc_flexion_neg_r" springlength="-0.013026728728360006 1000" stiffness="3.747429254042591 0 0">
+        <fixed name="passive_digit5_cmc_flexion_neg_r" springlength="-0.011913235616861285 1000" stiffness="3.809111125631236 0 0">
             <joint joint="cmc5_flexion_r" coef="1"/>
         </fixed>
         <!-- END generated by scripts/fit_passive_moments.py -->
@@ -1167,7 +1205,7 @@
         </fixed>
         <spatial name="node_JT3_edc_r" rgba="0 0 0 0">
             <site site="EDC3-P4_r"/>
-            <geom geom="3rdmcp_ellipsoid_wrap_r" sidesite="3rdmcp_ellipsoid_site_EDC3_side_r"/>
+            <geom geom="mcp3_EDC3_wrap_r" sidesite="mcp3_EDC3_side_r"/>
             <site site="EM3_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM3_H_r"/>
@@ -1197,7 +1235,7 @@
         </fixed>
         <spatial name="node_JT4_edc_r" rgba="0 0 0 0">
             <site site="EDC4-P4_r"/>
-            <geom geom="4thmcp_ellipsoid_wrap_r" sidesite="4thmcp_ellipsoid_site_EDC4_side_r"/>
+            <geom geom="mcp4_EDC4_wrap_r" sidesite="mcp4_EDC4_side_r"/>
             <site site="EM4_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM4_H_r"/>
@@ -1227,7 +1265,7 @@
         </fixed>
         <spatial name="node_JT5_edc_r" rgba="0 0 0 0">
             <site site="EDC5-P4_r"/>
-            <geom geom="5thmcp_ellipsoid_wrap_r" sidesite="5thmcp_ellipsoid_site_EDC5_side_r"/>
+            <geom geom="mcp5_EDC5_wrap_r" sidesite="mcp5_EDC5_side_r"/>
             <site site="EM5_H_r"/>
             <pulley divisor="2.7027"/>
             <site site="EM5_H_r"/>
@@ -1252,11 +1290,11 @@
             <site site="EM5_TI_r"/>
         </spatial>
         <!-- Juncturae tendinum: tension-only, stiffness fitted to von Schroeder & Botte 1993 (extrinsic_muscles.json) -->
-        <spatial name="lig_JT34_r" springlength="0 0.024459" stiffness="384.1" width="0.001">
+        <spatial name="lig_JT34_r" springlength="0 0.017707" stiffness="251.4" width="0.001">
             <site site="node_JT4_link_r"/>
             <site site="node_JT3_link_r"/>
         </spatial>
-        <spatial name="lig_JT45_r" springlength="0 0.020708" stiffness="1000" width="0.001">
+        <spatial name="lig_JT45_r" springlength="0 0.018167" stiffness="998.6" width="0.001">
             <site site="node_JT4_link_r"/>
             <site site="node_JT5_link_r"/>
         </spatial>

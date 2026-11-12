@@ -278,12 +278,17 @@ def fit_row(row: dict[str, Any], joint_range: np.ndarray) -> None:
         if any(coef):
             segments.append({"onset": float(onset), "stiffness": coef})
         # Greedy stacking: each extra segment fits what the previous ones miss,
-        # from the onset (on a grid over this side) that lowers the error most.
+        # from the onset (on a grid over this side) that lowers the error most. A first segment
+        # that comes out empty (the muscles exceed the source near the equilibrium) still lets a
+        # later one start further out, where the source exceeds the muscles.
         side = q[sign * (q - onset) > 0]
         for _ in range(n_segments - 1):
-            if not segments or side.size < 6:
+            if side.size < 6:
                 break
-            row[direction] = segments
+            if segments:
+                row[direction] = segments
+            else:
+                row.pop(direction, None)
 
             def residual(qq: np.ndarray, _row: dict[str, Any] = row) -> np.ndarray:
                 return tau(qq) - passive_moment(_row, qq)
