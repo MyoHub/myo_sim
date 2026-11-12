@@ -154,7 +154,7 @@ Native XML has finite precision. Acceptance uses these explicit tolerances:
 | Geometric/pose arrays, including positions, rotations, sizes and `stat.center` | Relative `1e-5`, absolute `1e-6`. |
 | Native physical tendon lengths | Relative `1e-5`, absolute `1e-6` m. |
 | Native tendon Jacobians | Relative `1e-5`, absolute `1e-5`. |
-| Integer fields and object names | Exact. |
+| Integer fields, object names and custom text bytes | Exact. |
 
 Reference evaluation uses the coupled default pose, up to two stored keyframes,
 and two offsets of independent scalar coordinates: ±10% of limited ranges, or
@@ -167,6 +167,7 @@ Derived `mesh_poly*` polygon caches are exempt only when every mesh geom has
 `contype = conaffinity = 0` and no explicit contact pair references a mesh geom.
 Raw mesh vertices/faces, collision flags, poses and inferred inertias remain in
 the equivalence check.
+Custom text retains tabs, newlines and carriage returns through XML serialization.
 
 Sources whose compilation actually fuses static bodies are refused for patches
 and archives because native serialization can lose their transforms. Disable

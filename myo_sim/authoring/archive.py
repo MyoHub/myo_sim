@@ -126,6 +126,16 @@ def _archive_xml(spec: mujoco.MjSpec, model: mujoco.MjModel) -> str:
         for node in root.iter():
             node.attrib.pop("childclass", None)
 
+    # Native XML emits literal whitespace in custom text attributes. Parsing that
+    # XML normalizes tabs/newlines/CR to spaces; restore the original strings so
+    # ElementTree writes character references that preserve the compiled bytes.
+    custom = root.find("custom")
+    texts = [] if custom is None else custom.findall("text")
+    if len(texts) != len(spec.texts):
+        raise ValueError("Native archive changed the source custom text topology")
+    for node, text in zip(texts, spec.texts, strict=True):
+        node.set("data", text.data)
+
     # Preserve values the native writer omits for zero-mass attachment frames.
     bodies = list(root.find("worldbody").iter("body"))
     if len(bodies) != model.nbody - 1:
@@ -231,6 +241,8 @@ def _poses(model: mujoco.MjModel) -> list[np.ndarray]:
 def _validate_equivalence(source: mujoco.MjModel, loaded: mujoco.MjModel) -> None:
     if source.names != loaded.names:
         raise ValueError("Native archive equivalence failed for object names")
+    if source.text_data != loaded.text_data:
+        raise ValueError("Native archive equivalence failed for custom text")
     for name in (
         "nq",
         "nv",

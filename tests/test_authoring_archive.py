@@ -330,6 +330,44 @@ def test_archive_drops_flattened_include_and_unused_xml_assets(tmp_path: Path) -
     assert loaded.names == original.names
 
 
+@pytest.mark.parametrize("attached_defaults", [False, True])
+@pytest.mark.parametrize("text", ["plain", "a\tb", "a\nb", "a\rb", "a\r\nb", "\u96ea\u00e9 &<>\"'\t\r\n"])
+def test_archive_preserves_custom_text_bytes(tmp_path: Path, text: str, attached_defaults: bool) -> None:
+    spec = mujoco.MjSpec.from_string('<mujoco><custom><text name="note" data="initial"/></custom></mujoco>')
+    spec.texts[0].data = text
+    if attached_defaults:
+        child = mujoco.MjSpec.from_string(
+            '<mujoco><default><geom rgba=".2 .3 .4 1"/></default><worldbody><geom size=".1"/></worldbody></mujoco>'
+        )
+        spec.attach(child, prefix="child_", frame=spec.worldbody.add_frame())
+    source = spec.copy().compile()
+    output = save_model_archive(spec, tmp_path / "text.zip")
+    loaded = mujoco.MjSpec.from_zip(output).compile()
+    assert loaded.text_data == source.text_data
+    np.testing.assert_array_equal(loaded.text_adr, source.text_adr)
+    np.testing.assert_array_equal(loaded.text_size, source.text_size)
+    assert spec.texts[0].data == text
+    assert model_fingerprint(spec.compile()) == model_fingerprint(source)
+
+
+def test_archive_rejects_same_size_custom_text_loss(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    spec = mujoco.MjSpec.from_string('<mujoco><custom><text name="note" data="left right"/></custom></mujoco>')
+    output = tmp_path / "existing.zip"
+    output.write_bytes(b"keep this file")
+    read = mujoco.MjSpec.from_zip
+
+    def changed(path: Path) -> mujoco.MjSpec:
+        loaded = read(path)
+        loaded.texts[0].data = "LEFT right"
+        return loaded
+
+    monkeypatch.setattr(mujoco.MjSpec, "from_zip", changed)
+    with pytest.raises(ValueError, match="custom text"):
+        save_model_archive(spec, output, overwrite=True)
+    assert output.read_bytes() == b"keep this file"
+    assert spec.texts[0].data == "left right"
+
+
 @pytest.mark.parametrize("measurement", ["length-offset", "length-nan", "moment-nan"])
 def test_archive_checks_native_tendon_curves(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, measurement: str) -> None:
     spec, _ = _elbow_model()

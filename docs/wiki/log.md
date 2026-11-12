@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Preserve custom text in native archives
+Changed: myo_sim/authoring/archive.py, tests/test_authoring_archive.py, docs/wiki/authoring.md
+Why: native XML attribute whitespace normalization could silently replace custom-text tabs and line endings with spaces; archives now preserve and compare the exact compiled text bytes.
+
 ## 2026-11-12 — Keep authoring independent of editor integrations
 Changed: myo_sim/authoring/, tests/test_authoring*.py, tests/authoring_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/authoring.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
 Why: compiled anatomy, selected instance edits and native archive validation belong to a generic model-authoring contract; editor adapters and their documentation were removed while canonical chain ownership and mirroring remain unchanged.
