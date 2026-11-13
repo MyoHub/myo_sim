@@ -2,6 +2,14 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Levator scapulae slips and occipital trapezius
+Changed: `scripts/generate_scapular_muscles.py`, `myo_sim/build/data/{scapular_muscles,shoulder_strength}.json`, `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/models/head/assets/myohead_{chain,rigid_chain}.xml`, `docs/wiki/shoulder-complex.md`
+Why: the levator scapulae gets its lower (C3-C4) slip with DAS3's split, and the clavicular trapezius an occipital line (20 %, low confidence), so the neck carries the scapular muscles' cervical and occipital origins.
+
+## 2026-11-13 — Kept shoulder paths and shoulder strength
+Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/build/references.py`, `myo_sim/build/data/{side_sites,scapular_muscles,shoulder_strength,scapulothoracic,hand_literature}.json`, `scripts/{fit_shoulder_strength,generate_scapular_muscles}.py`, `tests/test_shoulder_strength.py`, `docs/wiki/{shoulder-complex,testing-guide,repository-map}.md`
+Why: DELT1 and DELT2 take Seth's paths, CORB, BICshort and TRIlong lose the via points that turned their moment arms wrong with the moving scapula, and one specific tension (111.1 N/cm2) calibrated to measured isometric shoulder moments replaces 140 N/cm2 for every shoulder muscle; with them the sternoclavicular elevation spring follows its rule to 50 N m/rad.
+
 ## 2026-11-13 — Scapulohumeral rhythm table
 Changed: `scripts/fit_scapulothoracic.py` (`rhythm`), `myo_sim/build/data/scapulothoracic.json` (section `rhythm`), `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`
 Why: the girdle's replayed motions are now compared in ISB angles with the bone-pin rhythms of Ludewig 2009, Braman 2009, McClure 2001 and Inman 1944.

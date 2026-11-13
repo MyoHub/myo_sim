@@ -59,6 +59,7 @@ def test_cervical_origins_and_mirroring(name: str, neck: str) -> None:
             p_l = rc.T @ (data.site_xpos[left] - pc)
             np.testing.assert_allclose(p_l, flip @ p_r, atol=1e-6, err_msg=f"{name} {row['name']}-P{k}")
             if neck in end:
-                assert model.body(model.site_bodyid[right]).name == end[neck]["body"]
+                body = end[neck]["body"]
+                assert model.body(model.site_bodyid[right]).name == _script().COMPOSED.get(body, body)
                 np.testing.assert_allclose(p_r, end["pos"], atol=1e-6)
     assert all(model.actuator(f"{row['name']}_{s}").id >= 0 for row in TABLE["muscles"] for s in "rl")

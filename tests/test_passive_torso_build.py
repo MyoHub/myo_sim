@@ -17,7 +17,7 @@ def test_myoarms_uses_passive_anatomical_torso_with_arm_controls_only():
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "flex_extension") < 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "L4_L5_FE") < 0
-    assert model.nu == 172  # 126 + 8 hand-rebuild intrinsic muscles + 15 shoulder muscles (18 lines for 3) per arm
+    assert model.nu == 176  # 126 + 8 hand-rebuild intrinsic muscles + 17 shoulder muscles (20 lines for 3) per arm
 
 
 def test_myoarm_r_uses_passive_anatomical_torso_with_right_arm_only():
@@ -29,4 +29,4 @@ def test_myoarm_r_uses_passive_anatomical_torso_with_right_arm_only():
 
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "flex_extension") < 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_JOINT, "L4_L5_FE") < 0
-    assert model.nu == 86  # 63 + 8 hand-rebuild intrinsic muscles + 15 shoulder muscles (18 lines for 3)
+    assert model.nu == 88  # 63 + 8 hand-rebuild intrinsic muscles + 17 shoulder muscles (20 lines for 3)

@@ -37,7 +37,8 @@ scripts/
   fit_leg_rigid_maps.py / fit_arm_rigid_maps.py / fit_leg_passive.py
   generate_deep_hip_muscles.py # fits (--fit) and writes pectineus, quadratus femoris and gemelli into the leg XML
   generate_postures.py         # writes data/postures.json; --report prints the wiki tables
-  fit_scapulothoracic.py       # Seth et al. 2019 shoulder: frame registration (register --write) and girdle design comparison (compare), from the SimTK archive
+  fit_scapulothoracic.py       # Seth et al. 2019 shoulder: frame registration (register --write) and girdle design comparison (compare), from the SimTK archive, girdle, rhythm table (rhythm --write)
+  fit_shoulder_strength.py     # one specific tension for the shoulder muscles, calibrated to isometric shoulder moments (shoulder_strength.json)
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness

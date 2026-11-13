@@ -46,7 +46,7 @@ from fit_scapulothoracic import (  # noqa: E402
 )
 
 import myo_sim  # noqa: E402
-from myo_sim.build.hand_data import write_generated_block  # noqa: E402
+from myo_sim.build.hand_data import DATA_DIR, write_generated_block  # noqa: E402
 from myo_sim.build.rigid_conversion import fit_rigid_muscle_map  # noqa: E402
 
 DATA = ROOT / "myo_sim" / "build" / "data"
@@ -90,7 +90,24 @@ ROWS = (
 # Origins near the cervical spine (within 5 mm of a cervical vertebra mesh at the rest posture) go on that vertebra in the
 # muscular neck and on the rigid neck body elsewhere: levator scapulae and the clavicular trapezius at C1, the superior
 # scapular trapezius and the superior rhomboid at C7.
-CERVICAL = {"TRAP1": "myohead_cerv1", "LEVS": "myohead_cerv1", "TRAP2": "myohead_cerv7", "RHOM1": "myohead_cerv7"}
+CERVICAL = {
+    "TRAP1": "myohead_cerv1",
+    "LEVS1": "myohead_cerv1",
+    "TRAP2": "myohead_cerv7",
+    "RHOM1": "myohead_cerv7",
+    "LEVS2": "myohead_cerv3",
+    "TRAPocc": "myohead_skull",
+}
+# Neck lines added to Seth's (scripts/fit: neck_lines). Levator scapulae in two slips with DAS3's split and lower element
+# (Chadwick et al. 2014, after Klein Breteler et al. 1999): upper (C1-C2) 48 %, lower (C3-C4) 52 %, l0 0.1302 m, slack
+# 0.018 m, the lower slip from the tip of C3's transverse process. The clavicular trapezius gives 20 % of its PCSA to an
+# occipital line from the superior nuchal line (low confidence: Johnson et al. 1994 find the occipital fibres the
+# smallest, without numbers), fibre length 0.084 m (Kamibayashi and Richmond 1998, as reported in Vasavada et al. 2010).
+COMPOSED = {"myohead_skull": "head"}  # build/head.py renames the skull when the neck is composed
+LEVATOR_SPLIT = (0.48, 0.52)
+LEVATOR_LOWER = {"l0": 0.1302, "lts": 0.018}
+OCCIPITAL_SHARE = 0.20
+OCCIPITAL_L0 = 0.084
 # Whole-muscle architecture (Ward et al. 2006, Clin Orthop Relat Res 448:157, Table 1): PCSA cm2, fibre length m, pennation
 WARD2006 = {
     "supraspinatus": (6.65, 0.0450, 5.1),
@@ -171,6 +188,73 @@ def body_transform(model: mujoco.MjModel, data: mujoco.MjData, body: str) -> tup
     return data.xmat[i].reshape(3, 3), data.xpos[i]
 
 
+def neck_landmarks() -> dict[str, np.ndarray]:
+    """Rest-posture points in chest_r (myofullbody): the tip of C3's right transverse process (its most lateral vertex) and
+    the superior nuchal line, medial third (the most posterior skull vertex 15-25 mm right of the midline)."""
+    model = myo_sim.load_model("myofullbody")
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    rc, pc = body_transform(model, data, "chest_r")
+
+    def vertices(geom: str) -> np.ndarray:
+        g = model.geom(geom).id
+        mesh = model.geom_dataid[g]
+        v = model.mesh_vert[model.mesh_vertadr[mesh] : model.mesh_vertadr[mesh] + model.mesh_vertnum[mesh]]
+        world = data.geom_xpos[g] + v @ data.geom_xmat[g].reshape(3, 3).T
+        return (world - pc) @ rc
+
+    c3 = vertices("myohead_cerv3_visual")
+    skull = vertices("hat_skull")
+    band = skull[(skull[:, 2] > 0.015) & (skull[:, 2] < 0.025)]
+    return {"c3_transverse": c3[np.argmax(c3[:, 2])], "superior_nuchal_line": band[np.argmin(band[:, 0])]}
+
+
+def neck_lines(rows: list[dict[str, Any]], tension: float) -> None:
+    """Split Seth's levator scapulae into two slips and add the occipital line of the clavicular trapezius."""
+    marks = neck_landmarks()
+    levs = next(r for r in rows if r["name"] == "LEVS")
+    trap = next(r for r in rows if r["name"] == "TRAP1")
+    total_levs, total_trap = levs["pcsa_cm2"], trap["pcsa_cm2"]
+    levs["name"] = "LEVS1"
+    lower = json.loads(json.dumps(levs))
+    occipital = json.loads(json.dumps(trap))
+    levs["pcsa_cm2"] = round(total_levs * LEVATOR_SPLIT[0], 3)
+    levs["pcsa_source"] += f"; upper slip (C1-C2), {LEVATOR_SPLIT[0]:.0%} of the muscle as DAS3's lev_scap_1"
+    lower.update(name="LEVS2", origin={"body": "chest_r", "pos": _r(marks["c3_transverse"])}, **LEVATOR_LOWER)
+    lower["pcsa_cm2"] = round(total_levs * LEVATOR_SPLIT[1], 3)
+    lower["pcsa_source"] += f"; lower slip (C3-C4), {LEVATOR_SPLIT[1]:.0%} of the muscle as DAS3's lev_scap_2"
+    lower["length_source"] = "DAS3 lev_scap_2 (Chadwick et al. 2014)"
+    lower["origin_note"] = "tip of C3's transverse process (most lateral vertex of the C3 mesh); Seth's insertion"
+    trap["pcsa_cm2"] = round(total_trap * (1 - OCCIPITAL_SHARE), 3)
+    trap["pcsa_source"] += f"; nuchal part, {1 - OCCIPITAL_SHARE:.0%} of the clavicular trapezius"
+    occipital.update(name="TRAPocc", origin={"body": "chest_r", "pos": _r(marks["superior_nuchal_line"])})
+    occipital["pcsa_cm2"] = round(total_trap * OCCIPITAL_SHARE, 3)
+    occipital["pcsa_source"] += (
+        f"; occipital part, {OCCIPITAL_SHARE:.0%} of the clavicular trapezius (low confidence: no measured share)"
+    )
+    occipital["l0"] = OCCIPITAL_L0
+    occipital["lts"] = round(_rest_length(occipital) - OCCIPITAL_L0, 5)
+    occipital["length_source"] = (
+        "fibre length of Kamibayashi and Richmond 1998 (as reported in Vasavada et al. 2010); slack: optimal fibre at rest"
+    )
+    occipital["origin_note"] = "superior nuchal line, medial third (most posterior skull vertex 15-25 mm from the midline)"
+    for row in (levs, lower, trap, occipital):
+        row["force_N"] = round(row["pcsa_cm2"] * tension, 1)
+    del lower["seth_parameters"], occipital["seth_parameters"]
+    rows.insert(rows.index(levs) + 1, lower)
+    rows.insert(rows.index(trap) + 1, occipital)
+
+
+def _rest_length(row: dict[str, Any]) -> float:
+    """Straight distance between the row's origin (chest_r) and insertion at the rest posture."""
+    model = myo_sim.load_model("myoarm_r")
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    rc, pc = body_transform(model, data, "chest_r")
+    rb, pb = body_transform(model, data, row["insertion"]["body"])
+    return float(np.linalg.norm(pb + rb @ np.array(row["insertion"]["pos"]) - pc - rc @ np.array(row["origin"]["pos"])))
+
+
 def cervical_sites(rows: list[dict[str, Any]]) -> None:
     """Origins on the neck: the same world point at the rest posture, in the HYOID vertebra and in the rigid neck."""
     for model_name, key in (("myofullbody", "hyoid"), ("myoarms", "rigid")):
@@ -182,7 +266,7 @@ def cervical_sites(rows: list[dict[str, Any]]) -> None:
             if row["name"] not in CERVICAL:
                 continue
             body = CERVICAL[row["name"]] if key == "hyoid" else "neck"
-            rb, pb = body_transform(model, data, body)
+            rb, pb = body_transform(model, data, COMPOSED.get(body, body))
             p = np.array(row["origin"]["pos"])
             row["origin"][key] = {
                 "body": body,
@@ -191,11 +275,16 @@ def cervical_sites(rows: list[dict[str, Any]]) -> None:
             }
 
 
+TENSION_NOTE = (
+    "the shoulder value calibrated to isometric shoulder moments (scripts/fit_shoulder_strength.py, shoulder_strength.json)"
+)
+
+
 def derive(zf: zipfile.ZipFile) -> dict[str, Any]:
     seth = seth_muscles(zf)
     shift = np.array(ST["registration"]["shift_seth_thorax_to_chest_r"])
     wraps = {**seth_wraps(zf), **fitted_thorax_spheres()}
-    tension = 140.0
+    tension = json.loads((DATA_DIR / "shoulder_strength.json").read_text())["fit"]["result"]["value_N_per_cm2"]
     rows = []
     for name, sname, src, wrap in ROWS:
         s = seth[sname]
@@ -212,7 +301,7 @@ def derive(zf: zipfile.ZipFile) -> dict[str, Any]:
         }
         if src == "klein_breteler":
             # Seth's F0 = Klein Breteler 1999 PCSA x 100 N/cm2 (DAS3) x 1.4, i.e. PCSA x 140 N/cm2
-            row["pcsa_cm2"] = round(s["F"] / tension, 3)
+            row["pcsa_cm2"] = round(s["F"] / 140.0, 3)
             row["pcsa_source"] = "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2"
             row["l0"], row["lts"], row["alpha_deg"] = s["l0"], s["lts"], 0.0
             row["length_source"] = "Seth 2019"
@@ -232,12 +321,13 @@ def derive(zf: zipfile.ZipFile) -> dict[str, Any]:
         row["force_N"] = round(row["pcsa_cm2"] * tension, 1)
         row["fpmax"] = FPMAX[src]
         rows.append(row)
+    neck_lines(rows, tension)
     cervical_sites(rows)
     return {
         "format": "myo_sim.scapular_muscles/1",
         "description": "Scapular muscles and rotator-cuff sub-regions after Seth et al. 2019; scripts/generate_scapular_muscles.py",
         "specific_tension_N_per_cm2": tension,
-        "specific_tension_note": "140 N/cm2: the value of Holzbaur et al. 2005 for the shoulder and the one implied by Seth's forces",
+        "specific_tension_note": TENSION_NOTE,
         "gain_tail_lmin_lmax_vmax_fpmax_fvmax": list(GAIN_TAIL),
         "wraps": wraps,
         "muscles": rows,

@@ -1,0 +1,691 @@
+{
+  "format": "myo_sim.shoulder_strength/1",
+  "description": "One specific tension for the shoulder muscles (glenohumeral muscles kept from MoBL-ARMS, rotator cuff, scapular muscles), calibrated to measured maximal isometric shoulder moments of young men; scripts/fit_shoulder_strength.py. Elbow muscles (biceps, triceps) keep their forces; passive force stays a fixed fraction of each muscle's peak force.",
+  "reference_subject": "Young adult man, as for the hand's specific tension (specific_tension.json): the model's geometry is a 50th-percentile male's and most shoulder data are from men.",
+  "sources": {
+    "holzbaur2005": {
+      "citation": "Holzbaur KRS, Murray WM, Delp SL. A model of the upper extremity for simulating musculoskeletal surgery and analyzing neuromuscular control. Ann Biomed Eng 33(6):829-840, 2005.",
+      "doi": "10.1007/s10439-005-3320-7",
+      "location": "Table 1 (PCSA from Langenderfer et al. 2004, distributed among compartments to match isometric moments); Fig. 4 (experimental moment-angle curves, digitised, no spread)"
+    },
+    "holzbaur2007": {
+      "citation": "Holzbaur KRS, Delp SL, Gold GE, Murray WM. Moment-generating capacity of upper limb muscles in healthy adults. J Biomech 40(11):2442-2449, 2007.",
+      "doi": "10.1016/j.jbiomech.2006.11.013",
+      "location": "Table 1, men (n = 5): Biodex, seated, trunk strapped, shoulder at 60 deg abduction, elbow braced extended"
+    },
+    "smith2001": {
+      "citation": "Smith J, Padgett DJ, Kotajarvi BR, Eischen JJ. Isokinetic and isometric shoulder rotation strength in the protracted position: a reliability study. Isokinetics Exerc Sci 9:119-127, 2001.",
+      "location": "Tables 2-3, men (n = 5), mean of days 1 and 2: KIN-COM, seated, 45 deg scapular-plane abduction, elbow 90 deg, 45 deg external rotation test angle"
+    },
+    "aronis2025": {
+      "citation": "Aronis G, Kurz M, Wimmer F, Hackl H, Angeli T, Gfohler M. Maximum shoulder torque and muscle activation during standing arm flexion. J Funct Morphol Kinesiol 11(1):20, 2025.",
+      "doi": "10.3390/jfmk11010020",
+      "location": "Table 1, 90 deg flexion, men (n = 14), standing, elbow extended, gravity torque added"
+    },
+    "harbo2012": {
+      "citation": "Harbo T, Brincks J, Andersen H. Maximal isokinetic and isometric muscle strength of major muscle groups related to age, body mass, height, and sex in 178 healthy subjects. Eur J Appl Physiol 112:267-275, 2012.",
+      "doi": "10.1007/s00421-011-1975-3",
+      "location": "Table 3, isometric abduction at the neutral position (arm at the side), men (n = 79, 15-83 y), Biodex, seated, gravity corrected; elbow position not stated (90 deg assumed)"
+    },
+    "roy2009": {
+      "citation": "Roy JS, MacDermid JC, Boyd KU, Faber KJ, Drosdowech D, Athwal GS. Rotational strength, range of motion, and function in people with unaffected shoulders from various stages of life. Sports Med Arthrosc Rehabil Ther Technol 1:4, 2009.",
+      "doi": "10.1186/1758-2555-1-4",
+      "location": "Table 2, men 18-39 y, dominant side: seated, 45 deg scapular-plane abduction (30 deg forward of the frontal plane), elbow 90 deg, neutral rotation"
+    },
+    "otis1990": {
+      "citation": "Otis JC, Warren RF, Backus SI, Santner TJ, Mabrey JD. Torque production in the shoulder of the normal young adult male. Am J Sports Med 18(2):119-123, 1990.",
+      "doi": "10.1177/036354659001800201",
+      "location": "as reported in Holzbaur et al. 2005 Fig. 4 (digitised, no spread; 36 young men)"
+    },
+    "garner2001": {
+      "citation": "Garner BA, Pandy MG. Musculoskeletal model of the upper limb based on the visible human male dataset. Comput Methods Biomech Biomed Engin 4(2):93-126, 2001.",
+      "doi": "10.1080/10255840008908000",
+      "location": "experimental curves as reported in Holzbaur et al. 2005 Fig. 4 (digitised, no spread)"
+    },
+    "hannah2017": {
+      "citation": "Hannah DC, Scibek JS, Carcia CR. Strength profiles in healthy individuals with and without scapular dyskinesis. Int J Sports Phys Ther 12(3):305-313, 2017.",
+      "location": "Table 2: seated shrug against a handheld dynamometer on the acromion, 0.310 +- 0.069 body weight (26 young adults, 6 men)"
+    },
+    "garner2008": {
+      "citation": "Garner BA, Shim J. Isometric shoulder girdle strength of healthy young adults. Clin Biomech 23(1):30-37, 2008.",
+      "doi": "10.1016/j.clinbiomech.2007.07.018",
+      "location": "abstract: peak elevation 1101 +- 370 N, protraction 1117 +- 471 N, seated apparatus pushed with extended arms (19 young adults; whether bilateral is not stated in the abstract)"
+    },
+    "ijspeert2019": {
+      "citation": "IJspeert J, Kerstens HCJW, Janssen RMJ, Geurts ACH, van Alfen N, Groothuis JT. Validity and reliability of serratus anterior hand held dynamometry. BMC Musculoskelet Disord 20:360, 2019.",
+      "doi": "10.1186/s12891-019-2741-6",
+      "location": "Table 2: supine, shoulder 90 deg flexion, elbow 90 deg, handheld dynamometer below the olecranon, 383.9 +- 77.7 N (21 healthy adults, 15 men)"
+    },
+    "ward2006": {
+      "citation": "Ward SR, Hentzen ER, Smallwood LH, Eastlack RK, Burns KA, Fithian DC, Friden J, Lieber RL. Rotator cuff muscle architecture: implications for glenohumeral stability. Clin Orthop Relat Res 448:157-163, 2006.",
+      "doi": "10.1097/01.blo.0000194680.94882.d3",
+      "location": "Table 1: teres minor PCSA 3.18 cm2 (the other cuff muscles in scapular_muscles.json)"
+    }
+  },
+  "pcsa": {
+    "DELT1": {
+      "cm2": 8.2,
+      "source": "holzbaur2005"
+    },
+    "DELT2": {
+      "cm2": 8.2,
+      "source": "holzbaur2005"
+    },
+    "DELT3": {
+      "cm2": 1.9,
+      "source": "holzbaur2005"
+    },
+    "PECM1": {
+      "cm2": 2.6,
+      "source": "holzbaur2005"
+    },
+    "PECM2": {
+      "cm2": 3.7,
+      "source": "holzbaur2005"
+    },
+    "PECM3": {
+      "cm2": 2.8,
+      "source": "holzbaur2005"
+    },
+    "LAT1": {
+      "cm2": 2.8,
+      "source": "holzbaur2005"
+    },
+    "LAT2": {
+      "cm2": 2.8,
+      "source": "holzbaur2005"
+    },
+    "LAT3": {
+      "cm2": 2.0,
+      "source": "holzbaur2005"
+    },
+    "TMAJ": {
+      "cm2": 3.0,
+      "source": "holzbaur2005"
+    },
+    "CORB": {
+      "cm2": 1.7,
+      "source": "holzbaur2005"
+    },
+    "TMIN": {
+      "cm2": 3.18,
+      "source": "ward2006"
+    }
+  },
+  "targets": [
+    {
+      "name": "abduction_60",
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 60,
+        "rotation_deg": 0,
+        "elbow_deg": 0,
+        "seth_trials": "abduction"
+      },
+      "direction": "elevation",
+      "mean_Nm": 74.4,
+      "sd_Nm": 10.8,
+      "n": 5,
+      "source": "holzbaur2007",
+      "where": "Table 1",
+      "fit": true
+    },
+    {
+      "name": "adduction_60",
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 60,
+        "rotation_deg": 0,
+        "elbow_deg": 0,
+        "seth_trials": "abduction"
+      },
+      "direction": "depression",
+      "mean_Nm": 93.7,
+      "sd_Nm": 11.3,
+      "n": 5,
+      "source": "holzbaur2007",
+      "where": "Table 1",
+      "fit": true
+    },
+    {
+      "name": "internal_rotation_scaption_45",
+      "posture": {
+        "plane_deg": 40,
+        "elevation_deg": 45,
+        "rotation_deg": -45,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "internal_rotation",
+      "mean_Nm": 52.8,
+      "sd_Nm": 9.9,
+      "n": 5,
+      "source": "smith2001",
+      "where": "Table 2",
+      "fit": true
+    },
+    {
+      "name": "external_rotation_scaption_45",
+      "posture": {
+        "plane_deg": 40,
+        "elevation_deg": 45,
+        "rotation_deg": -45,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "external_rotation",
+      "mean_Nm": 36.2,
+      "sd_Nm": 7.6,
+      "n": 5,
+      "source": "smith2001",
+      "where": "Table 3",
+      "fit": true
+    },
+    {
+      "name": "flexion_90",
+      "posture": {
+        "plane_deg": 90,
+        "elevation_deg": 90,
+        "rotation_deg": 0,
+        "elbow_deg": 0,
+        "seth_trials": "flexion"
+      },
+      "direction": "elevation",
+      "mean_Nm": 77.2,
+      "sd_Nm": 13.8,
+      "n": 14,
+      "source": "aronis2025",
+      "where": "Table 1",
+      "fit": true
+    },
+    {
+      "name": "abduction_side",
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 10,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "elevation",
+      "mean_Nm": 61.1,
+      "sd_Nm": 14.1,
+      "n": 79,
+      "source": "harbo2012",
+      "where": "Table 3",
+      "fit": true
+    },
+    {
+      "name": "internal_rotation_scaption_30",
+      "posture": {
+        "plane_deg": 30,
+        "elevation_deg": 45,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "internal_rotation",
+      "mean_Nm": 46.8,
+      "sd_Nm": 16.5,
+      "n": null,
+      "source": "roy2009",
+      "where": "Table 2 (held out)",
+      "fit": false
+    },
+    {
+      "name": "external_rotation_scaption_30",
+      "posture": {
+        "plane_deg": 30,
+        "elevation_deg": 45,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "external_rotation",
+      "mean_Nm": 33.6,
+      "sd_Nm": 9.0,
+      "n": null,
+      "source": "roy2009",
+      "where": "Table 2 (held out)",
+      "fit": false
+    },
+    {
+      "name": "flexion_side_otis",
+      "posture": {
+        "plane_deg": 90,
+        "elevation_deg": 10,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "flexion"
+      },
+      "direction": "elevation",
+      "mean_Nm": 93.0,
+      "n": 36,
+      "source": "otis1990",
+      "where": "Fig. 4A",
+      "fit": false
+    },
+    {
+      "name": "flexion_90_otis",
+      "posture": {
+        "plane_deg": 90,
+        "elevation_deg": 90,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "flexion"
+      },
+      "direction": "elevation",
+      "mean_Nm": 75.0,
+      "n": 36,
+      "source": "otis1990",
+      "where": "Fig. 4A",
+      "fit": false
+    },
+    {
+      "name": "extension_side_garner",
+      "posture": {
+        "plane_deg": 90,
+        "elevation_deg": 10,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "flexion"
+      },
+      "direction": "depression",
+      "mean_Nm": 70.0,
+      "n": null,
+      "source": "garner2001",
+      "where": "Fig. 4A",
+      "fit": false
+    },
+    {
+      "name": "extension_90_garner",
+      "posture": {
+        "plane_deg": 90,
+        "elevation_deg": 90,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "flexion"
+      },
+      "direction": "depression",
+      "mean_Nm": 90.0,
+      "n": null,
+      "source": "garner2001",
+      "where": "Fig. 4A",
+      "fit": false
+    },
+    {
+      "name": "abduction_90_otis",
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 90,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "elevation",
+      "mean_Nm": 57.5,
+      "n": 36,
+      "source": "otis1990",
+      "where": "Fig. 4B",
+      "fit": false
+    },
+    {
+      "name": "adduction_90_garner",
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 90,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "depression",
+      "mean_Nm": 78.0,
+      "n": null,
+      "source": "garner2001",
+      "where": "Fig. 4B",
+      "fit": false
+    },
+    {
+      "name": "internal_rotation_side_otis",
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 10,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "internal_rotation",
+      "mean_Nm": 48.0,
+      "n": 36,
+      "source": "otis1990",
+      "where": "Fig. 4C",
+      "fit": false
+    },
+    {
+      "name": "external_rotation_side_otis",
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 10,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "seth_trials": "abduction"
+      },
+      "direction": "external_rotation",
+      "mean_Nm": 43.0,
+      "n": 36,
+      "source": "otis1990",
+      "where": "Fig. 4C",
+      "fit": false
+    }
+  ],
+  "girdle_checks": [
+    {
+      "name": "shrug",
+      "joint": "sternoclavicular_r3_r",
+      "point": "acromioclavicular",
+      "force_direction_thorax": [
+        0.0,
+        1.0,
+        0.0
+      ],
+      "posture": {
+        "plane_deg": 0,
+        "elevation_deg": 10,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "pose_of": "abduction_side"
+      },
+      "literature": "0.31 +- 0.07 body weight on the acromion, about 230 N at 75 kg (hannah2017); 1101 +- 370 N with extended arms (garner2008)"
+    },
+    {
+      "name": "protraction",
+      "joint": "sternoclavicular_r2_r",
+      "point": "glenohumeral",
+      "force_direction_thorax": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "posture": {
+        "plane_deg": 90,
+        "elevation_deg": 90,
+        "rotation_deg": 0,
+        "elbow_deg": 90,
+        "pose_of": "flexion_90"
+      },
+      "literature": "383.9 +- 77.7 N at 90 deg flexion, handheld (ijspeert2019); 1117 +- 471 N with extended arms (garner2008)"
+    }
+  ],
+  "fit": {
+    "method": "Weighted least squares of (model - mean) / SD over the targets with fit = true; the maximal moment is linear in the value. Humerothoracic angles in ISB order (plane of elevation: 0 = abduction, 90 = flexion; rotation: positive internal); girdle at the nearest frame of Seth's measured motions of the named plane, the rest posture below 20 deg elevation. Smith 2001's 45 deg scaption is taken 40 deg forward of the frontal plane, Roy 2009's 30 deg.",
+    "published_range": "25-100 N/cm2 in most muscle models; 140 N/cm2 for the shoulder and elbow in Holzbaur et al. 2005; the hand and wrist of this package 166 N/cm2 (specific_tension.json)",
+    "result": {
+      "value_N_per_cm2": 111.1,
+      "rms_z": 1.2,
+      "targets": {
+        "abduction_60": {
+          "model_Nm": 65.4,
+          "z": -0.83
+        },
+        "adduction_60": {
+          "model_Nm": 103.1,
+          "z": 0.83
+        },
+        "internal_rotation_scaption_45": {
+          "model_Nm": 71.0,
+          "z": 1.84
+        },
+        "external_rotation_scaption_45": {
+          "model_Nm": 29.6,
+          "z": -0.86
+        },
+        "flexion_90": {
+          "model_Nm": 61.9,
+          "z": -1.11
+        },
+        "abduction_side": {
+          "model_Nm": 42.0,
+          "z": -1.36
+        },
+        "internal_rotation_scaption_30": {
+          "model_Nm": 60.6,
+          "z": 0.84
+        },
+        "external_rotation_scaption_30": {
+          "model_Nm": 40.5,
+          "z": 0.77
+        },
+        "flexion_side_otis": {
+          "model_Nm": 54.7
+        },
+        "flexion_90_otis": {
+          "model_Nm": 41.6
+        },
+        "extension_side_garner": {
+          "model_Nm": 93.3
+        },
+        "extension_90_garner": {
+          "model_Nm": 134.4
+        },
+        "abduction_90_otis": {
+          "model_Nm": 60.6
+        },
+        "adduction_90_garner": {
+          "model_Nm": 116.2
+        },
+        "internal_rotation_side_otis": {
+          "model_Nm": 60.1
+        },
+        "external_rotation_side_otis": {
+          "model_Nm": 41.2
+        }
+      }
+    },
+    "girdle_checks": {
+      "shrug": {
+        "moment_Nm": 71.9,
+        "lever_mm": 123.6,
+        "force_N": 582
+      },
+      "protraction": {
+        "moment_Nm": 105.3,
+        "lever_mm": 125.3,
+        "force_N": 840
+      }
+    }
+  },
+  "girdle_poses": {
+    "abduction_60": {
+      "sternoclavicular_r2_r": [
+        -0.59679466
+      ],
+      "sternoclavicular_r3_r": [
+        0.05730075
+      ],
+      "sternoclavicular_r1_r": [
+        0.12704613
+      ],
+      "acromioclavicular_r": [
+        0.99463332,
+        -0.06782091,
+        -0.07737565,
+        0.01085798
+      ]
+    },
+    "adduction_60": {
+      "sternoclavicular_r2_r": [
+        -0.59679466
+      ],
+      "sternoclavicular_r3_r": [
+        0.05730075
+      ],
+      "sternoclavicular_r1_r": [
+        0.12704613
+      ],
+      "acromioclavicular_r": [
+        0.99463332,
+        -0.06782091,
+        -0.07737565,
+        0.01085798
+      ]
+    },
+    "internal_rotation_scaption_45": {
+      "sternoclavicular_r2_r": [
+        -0.56569849
+      ],
+      "sternoclavicular_r3_r": [
+        0.01198869
+      ],
+      "sternoclavicular_r1_r": [
+        0.07681915
+      ],
+      "acromioclavicular_r": [
+        0.99557133,
+        -0.06007652,
+        -0.07190734,
+        0.00760694
+      ]
+    },
+    "external_rotation_scaption_45": {
+      "sternoclavicular_r2_r": [
+        -0.56569849
+      ],
+      "sternoclavicular_r3_r": [
+        0.01198869
+      ],
+      "sternoclavicular_r1_r": [
+        0.07681915
+      ],
+      "acromioclavicular_r": [
+        0.99557133,
+        -0.06007652,
+        -0.07190734,
+        0.00760694
+      ]
+    },
+    "flexion_90": {
+      "sternoclavicular_r2_r": [
+        -0.39866616
+      ],
+      "sternoclavicular_r3_r": [
+        0.08908228
+      ],
+      "sternoclavicular_r1_r": [
+        0.26128718
+      ],
+      "acromioclavicular_r": [
+        0.98719196,
+        -0.08081788,
+        0.08905017,
+        0.10483588
+      ]
+    },
+    "abduction_side": {},
+    "internal_rotation_scaption_30": {
+      "sternoclavicular_r2_r": [
+        -0.56569849
+      ],
+      "sternoclavicular_r3_r": [
+        0.01198869
+      ],
+      "sternoclavicular_r1_r": [
+        0.07681915
+      ],
+      "acromioclavicular_r": [
+        0.99557133,
+        -0.06007652,
+        -0.07190734,
+        0.00760694
+      ]
+    },
+    "external_rotation_scaption_30": {
+      "sternoclavicular_r2_r": [
+        -0.56569849
+      ],
+      "sternoclavicular_r3_r": [
+        0.01198869
+      ],
+      "sternoclavicular_r1_r": [
+        0.07681915
+      ],
+      "acromioclavicular_r": [
+        0.99557133,
+        -0.06007652,
+        -0.07190734,
+        0.00760694
+      ]
+    },
+    "flexion_side_otis": {},
+    "flexion_90_otis": {
+      "sternoclavicular_r2_r": [
+        -0.39866616
+      ],
+      "sternoclavicular_r3_r": [
+        0.08908228
+      ],
+      "sternoclavicular_r1_r": [
+        0.26128718
+      ],
+      "acromioclavicular_r": [
+        0.98719196,
+        -0.08081788,
+        0.08905017,
+        0.10483588
+      ]
+    },
+    "extension_side_garner": {},
+    "extension_90_garner": {
+      "sternoclavicular_r2_r": [
+        -0.39866616
+      ],
+      "sternoclavicular_r3_r": [
+        0.08908228
+      ],
+      "sternoclavicular_r1_r": [
+        0.26128718
+      ],
+      "acromioclavicular_r": [
+        0.98719196,
+        -0.08081788,
+        0.08905017,
+        0.10483588
+      ]
+    },
+    "abduction_90_otis": {
+      "sternoclavicular_r2_r": [
+        -0.69414272
+      ],
+      "sternoclavicular_r3_r": [
+        0.12803512
+      ],
+      "sternoclavicular_r1_r": [
+        0.24350285
+      ],
+      "acromioclavicular_r": [
+        0.9902063,
+        -0.11669909,
+        -0.05221732,
+        0.05609061
+      ]
+    },
+    "adduction_90_garner": {
+      "sternoclavicular_r2_r": [
+        -0.69414272
+      ],
+      "sternoclavicular_r3_r": [
+        0.12803512
+      ],
+      "sternoclavicular_r1_r": [
+        0.24350285
+      ],
+      "acromioclavicular_r": [
+        0.9902063,
+        -0.11669909,
+        -0.05221732,
+        0.05609061
+      ]
+    },
+    "internal_rotation_side_otis": {},
+    "external_rotation_side_otis": {}
+  }
+}

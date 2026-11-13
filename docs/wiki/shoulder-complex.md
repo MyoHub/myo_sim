@@ -107,7 +107,7 @@ glenoid contact, is a later step and can be added without changing the scapula.
 - **Ranges:** protraction -60 to 0 deg, elevation -10 to 35 deg (Seth's data: -49 to -12 and -8 to 16 deg), axial
   rotation -15 to +50 deg, AC cone 80 deg about rest (Seth's data without axial clavicle rotation reach 68 deg).
 - **Ligaments, residual springs and armature:** see "Girdle ligaments" below. Residual joint springs to the rest
-  posture: 30 N m/rad at the sternoclavicular elevation hinge, 35 N m/rad at the axial hinge and at the AC ball, none
+  posture: 50 N m/rad at the sternoclavicular elevation hinge, 35 N m/rad at the axial hinge and at the AC ball, none
   at the protraction hinge. AC armature 0.005 kg m2; the axial hinge needs none.
 - **Hand models** bake the arm with clavicle and scapula aligned to the thorax as before the girdle, so the hand stays
   where it was (within 1.4 mm: Seth's AC point against MoBL-ARMS's).
@@ -208,7 +208,10 @@ angle within 5 deg of rest (about one between-subject SD of the resting posture:
 free, the AC spring turns the clavicle anteriorly with the scapula's anterior tilt and the scapula moves 6.2 deg; the
 axial spring of 35 N m/rad (chosen above) holds it at 4.5 deg. The springs did not shrink with the axial rotation: AC
 and axial at 20 give 5.8 deg, and an elevation spring of 20 keeps the elevation at -4.8 deg, 1 deg from the depression
-limit, so 30 stays.
+limit, so 30 stays. After the kept-path changes and the strength calibration ("Kept muscle paths",
+"Shoulder strength") the settled arm hangs differently and an elevation spring of 30 lets the clavicle reach its
+depression limit (-5.8 deg); with the same rule the elevation spring is now 50 N m/rad (40: -5.2, 45: -4.9, 50: -4.6
+deg; scapula 4.3 deg).
 
 | Zero activation | protraction | elevation | axial | scapula | contact |
 |---|---|---|---|---|---|
@@ -216,7 +219,8 @@ limit, so 30 stays.
 | ligaments only (3 s, before the axial hinge) | +3.1 deg | -5.9 deg (limit) | - | 10.0 deg | on |
 | ligaments + residual 0/30/35 (3 s, before the axial hinge) | +2.1 deg | -3.8 deg | - | 4.4 deg | on |
 | ligaments + residual 0/30/35, axial hinge free (6 s) | +2.1 deg | -4.2 deg | -5.4 deg | 6.2 deg | on |
-| ligaments + residual 0/30/35/35 with the axial hinge (6 s, model) | +1.4 deg | -4.2 deg | -1.9 deg | 4.5 deg | on |
+| ligaments + residual 0/30/35/35 with the axial hinge (6 s) | +1.4 deg | -4.2 deg | -1.9 deg | 4.5 deg | on |
+| ligaments + residual 0/50/35/35, new paths and forces (6 s, model) | -0.8 deg | -4.6 deg | -1.2 deg | 4.3 deg | on |
 
 The scapula stays on the thorax (contact distance within 0.1 mm) in every case.
 
@@ -278,21 +282,35 @@ changes scapular angles by up to 23 deg (Kolz et al. 2020).
 `scripts/generate_scapular_muscles.py --zip <archive> --fit` writes `build/data/scapular_muscles.json` and the labelled
 generated blocks in the arm, torso and head files.
 
-- **Added per side:** TRAP1 (clavicular), TRAP2-4 (scapular superior, middle, inferior), SERR1-3, RHOM1-2, LEVS, PECMIN.
+- **Added per side:** TRAP1 (clavicular, nuchal) and TRAPocc (clavicular, occipital), TRAP2-4 (scapular superior,
+  middle, inferior), SERR1-3, RHOM1-2, LEVS1-2, PECMIN.
 - **Replaced:** SUPSP, INFSP, SUBSC by Seth's sub-region lines SUPSP1-2 (anterior, posterior), INFSP1-2 (superior,
-  inferior), SUBSC1-3 (superior, middle, inferior). DELT1-3, PECM1-3, LAT1-3, TMAJ, TMIN, CORB, BIC and TRIlong keep their
-  paths for now; the per-muscle comparison of moment arms against the literature is part of the validation.
+  inferior), SUBSC1-3 (superior, middle, inferior). The kept glenohumeral muscles are decided one by one below
+  ("Kept muscle paths").
 - **Paths:** Seth's two points per line, straight, except where a wrap changes the length along Seth's motions:
   SUPSP1-2 over Seth's humeral-head sphere, INFSP1-2 and SUBSC1-3 over Seth's scapular cylinders (his `-y` quadrant as
   the side site), SERR2-3 over spheres on `chest_r` fitted to the lengths of Seth's ellipsoidal thorax wrap (rms 0.11
   and 0.01 mm; MuJoCo wraps spheres and cylinders only). Along the 4312 assembled IK frames the lengths match Seth's
   OpenSim paths within 4.5 mm (SERR1), 3.1 mm (INFSP2) and below 3 mm elsewhere, most exactly.
-- **Cervical origins:** LEVS and TRAP1 at C1, TRAP2 and RHOM1 at C7 (Seth's points lie within 5 mm of these vertebrae):
-  on `myohead_cerv1` and `myohead_cerv7` of the muscular neck in `myofullbody`, and at the same point on the rigid
-  `neck` body in the other models, which carry no neck joints. `compose.attach_neck` re-creates the tendons that name
+- **Cervical origins:** LEVS1 and TRAP1 at C1, TRAP2 and RHOM1 at C7 (Seth's points lie within 5 mm of these
+  vertebrae), LEVS2 at C3 and TRAPocc on the skull: on `myohead_cerv1`, `_cerv3`, `_cerv7` and the skull of the
+  muscular neck in `myofullbody`, and at the same point on the rigid `neck` body in the other models, which carry no
+  neck joints.
+- **Neck lines.** Seth's levator scapulae is one line (DAS3's upper element). It is split into two slips with DAS3's
+  shares (Chadwick et al. 2014, after Klein Breteler et al. 1999): LEVS1 (C1-C2, 48 %) on Seth's line and LEVS2 (C3-C4,
+  52 %) from the tip of C3's transverse process (the most lateral vertex of the C3 mesh) with DAS3's lower-element
+  lengths (l0 0.130 m, slack 0.018 m); both insert at Seth's point, so the twist of the slips along the medial border is
+  not modelled. The total PCSA is Klein Breteler's 2.00 cm2, within Kamibayashi and Richmond 1998's 2.18 +- 0.80 cm2
+  (as reported in Vasavada et al. 2010). The clavicular trapezius has no occipital fibres in Seth's or DAS3's model;
+  TRAPocc takes 20 % of its PCSA from the superior nuchal line (medial third: the most posterior skull vertex 15-25 mm
+  from the midline) to Seth's clavicular insertion, fibre length 0.084 m (Kamibayashi and Richmond 1998), slack such
+  that the fibre is at optimal length at rest. The 20 % share has low confidence: Johnson et al. 1994 find the occipital
+  and upper nuchal fibres the smallest of the trapezius, but no share has been measured; the clavicular part as a whole
+  is 9.5 % of Klein Breteler's trapezius and 11-12 % in Stiver et al. 2021 (one specimen). `compose.attach_neck` re-creates the tendons that name
   rigid-neck sites when it swaps the neck.
-- **Forces:** PCSA x 140 N/cm2, the value Holzbaur 2005 used for the shoulder. Seth's forces are Klein Breteler 1999's
-  PCSA (one specimen) x 100 N/cm2 as in DAS3, x 1.4, that is PCSA x 140 N/cm2; the scapular muscles keep them. The cuff
+- **Forces:** PCSA x the shoulder's specific tension (111.1 N/cm2, "Shoulder strength" below). Seth's forces are Klein
+  Breteler 1999's PCSA (one specimen) x 100 N/cm2 as in DAS3, x 1.4, that is PCSA x 140 N/cm2; the scapular muscles take
+  that PCSA. The cuff
   takes Ward et al. 2006's PCSA (supraspinatus 6.65, infraspinatus 10.71, subscapularis 15.53 cm2), split by Seth's
   shares. Klein Breteler's PCSA are 1.5 to 2.7 times Langenderfer 2004's, which underlie the kept MoBL-ARMS forces.
 - **Lengths:** Ward 2006 fibre lengths for the cuff, with the tendon slack keeping Seth's optimal muscle-tendon length;
@@ -301,6 +319,74 @@ generated blocks in the arm, torso and head files.
   (slack moved for SUPSP1 and SUBSC2). Passive scale: the fitted value of the replaced muscle for the cuff, 0.65 (the
   median of the kept shoulder muscles) for the scapular muscles.
 
+## Kept muscle paths
+
+The glenohumeral muscles kept from MoBL-ARMS have their scapular and clavicular ends on bones that now move, and the
+glenohumeral zero changed. Their moment arms were compared, with the scapula fixed at rest, about the coronal,
+scaption and flexion axes from 15 to 120 deg and in rotation at the side, against Kuechle et al. 1997 and 2000,
+Ackland et al. 2008, Liu et al. 1997 and Otis et al. 1994, and against Seth's paths run in OpenSim at the same
+humerus-in-scapula orientations (Seth's points in this model reproduce OpenSim to 0.1 mm).
+
+| Muscle | Decision | Why |
+|---|---|---|
+| DELT1 | Seth's three points (humerus, acromion, clavicle) over the humeral-head sphere `SUPSP_hhead_r`; Seth's l0 and slack | The MoBL path adducted at 15 deg abduction and gave 47-50 mm of flexion at 15-45 deg (measured 20-28); rms against the data 20.3 -> 6.5 mm |
+| DELT2 | Seth's three points over `SUPSP_hhead_r`; Seth's l0 and slack; passive scale 0.65, the median of the shoulder muscles (MoBL-ARMS's 1.73 on this path held the relaxed arm 23 deg abducted) | The MoBL path gave 4 mm of abduction arm at 15 deg (measured 15-20 mm), which left the arm without abduction strength at the side; now 19 mm at 10 deg, 31 mm at 60 deg (measured 26-27) |
+| CORB, BICshort | Scapular via point dropped, path over `SUPSP_hhead_r` | The via point sits 35 mm below the joint centre and made both muscles extensors (26-35 mm) above 60 deg flexion; now flexors that change sign near 95 deg, as Seth's |
+| TRIlong | The humeral proxy origin and its 20 mm sphere dropped, path over `SUPSP_hhead_r` | The proxy point sat 2.6 mm from the origin, so the moment arm flipped between +40 and -40 mm about an arbitrary posture; at the new rest it made TRIlong an abductor and internal rotator at the side. Now an extensor and adductor (flexion -3.5, coronal -6 mm at the side), within 8 mm of Seth |
+| DELT3, PECM1-3, LAT1-3, TMAJ, TMIN, BIClong | Kept | Within the spread between the measured studies; Seth's paths are not closer (PECM's thorax ellipsoid cannot be built in MuJoCo) |
+
+The new paths take their rigid-tendon maps from the reference l0 and slack (`fit_arm_rigid_maps.py`, status adopted
+in `build/references.py`), with every other adopted arm map refitted for the girdle. On the humeral-head sphere none of
+the paths has a side site, so their length is continuous under both wrap rules.
+
+**BIClong.** Lamplot et al. 2020 measured the long-head excursion on forequarters in sagittal glenohumeral positions
+(-30, 45 and 90 deg, elbow 90 or extended) with an unloaded tendon and a neutral not defined against the scapula:
+-9.4 +- 3.9, 6.9 +- 2.5 and 8.5 +- 3.6 mm. The model gives -9.6, 14.6 and 23.1 mm, Seth's path -10.9, 12.7 and 15.8 mm.
+Extension, where the tendon is pulled taut, agrees; in flexion the path shortens and an unloaded tendon need not
+follow it, so the measured values are lower bounds. The path is unchanged from MoBL-ARMS; the difference against the
+earlier model comes from the glenohumeral zero, which now has the humerus 15-20 deg more adducted against the scapula.
+The path is kept.
+
+## Shoulder strength
+
+`scripts/fit_shoulder_strength.py --zip <archive> --fit` (`build/data/shoulder_strength.json`). One specific tension
+for every shoulder muscle: the glenohumeral muscles kept from MoBL-ARMS (PCSA of Holzbaur et al. 2005 Table 1, from
+Langenderfer et al. 2004), the rotator cuff (Ward et al. 2006) and the scapular muscles (Klein Breteler et al. 1999).
+The elbow muscles keep their forces, and passive force stays a fixed fraction of peak force. The maximal moment of a
+posture is the sum of the positive active moments of the muscles crossing the glenohumeral joint about the target axis
+plus all passive moments (no co-contraction, gravity corrected as on a dynamometer), with the humerus at the target's
+humerothoracic angles and the girdle at the nearest frame of Seth's measured motions. Targets are young men, as for the
+hand.
+
+| Target (men) | Posture | Measured, N m | Model, N m | z |
+|---|---|---|---|---|
+| Abduction (Holzbaur 2007) | 60 deg abduction, elbow extended | 74.4 +- 10.8 | 65.4 | -0.8 |
+| Adduction (Holzbaur 2007) | same | 93.7 +- 11.3 | 103.1 | +0.8 |
+| Internal rotation (Smith 2001) | 45 deg scaption, 45 deg external rotation, elbow 90 | 52.8 +- 9.9 | 71.0 | +1.8 |
+| External rotation (Smith 2001) | same | 36.2 +- 7.6 | 29.6 | -0.9 |
+| Flexion (Aronis 2025) | 90 deg flexion, elbow extended | 77.2 +- 13.8 | 61.9 | -1.1 |
+| Abduction (Harbo 2012) | arm at the side, elbow 90 assumed | 61.1 +- 14.1 | 42.0 | -1.4 |
+| Internal rotation (Roy 2009, held out) | 45 deg scaption, elbow 90 | 46.8 +- 16.5 | 60.6 | +0.8 |
+| External rotation (Roy 2009, held out) | same | 33.6 +- 9.0 | 40.5 | +0.8 |
+
+Result: **111.1 N/cm2** (rms z 1.20). Against the digitised curves without spread (as reported in Holzbaur et al.
+2005 Fig. 4), the model is low in flexion (55 against Otis's 93 N m at the side, 42 against 75 at 90 deg with the elbow
+at 90 deg, where the triceps' passive force opposes it) and high in extension and adduction at 90 deg (134 against 90,
+116 against 78). The value lies inside Holzbaur et al. 2005's 140 N/cm2 for the shoulder and below the hand's 166 N/cm2
+(`hand-function-validation.md`), which reflects PCSA measured too small in elderly cadavers rather than a tissue
+property; Klein Breteler's PCSA for the scapular muscles come from a larger specimen, so their forces are probably
+generous. Held-out girdle forces at this value: a shrug of 582 N at the acromion, between Hannah et al. 2017's seated
+0.31 body weight (about 230 N) and Garner and Shim 2008's 1101 +- 370 N with extended arms; a protraction of 840 N at
+90 deg flexion, between IJspeert et al. 2019's 384 +- 78 N (handheld) and Garner and Shim's 1117 +- 471 N.
+
+## Step time and mujoco-warp
+
+Step time on MuJoCo 4 (CPU, zero activation, best of three runs of 1000 steps): `myoarm_r` 83.3 -> 78.3 us,
+`myoarms` 170.9 -> 155.3 us, `myofullbody` 449.2 -> 455.7 us against the model before the girdle. mujoco-warp (CPU
+device) against MuJoCo at 22 of Seth's frames: ligament lengths within 2e-4 mm, girdle passive forces within 3e-5 N m;
+over 200 steps from rest, the girdle hinges agree within 0.002 deg and the AC ball within 0.02 deg, with the same
+contacts.
+
 ## Open checks limited by the passive layers
 
 The girdle's passive behaviour comes from three layers: the muscles' passive force, the ligament strands and the
@@ -308,7 +394,7 @@ residual joint springs. Each is fitted on its own data; some girdle properties d
 only be judged once each layer is complete and fitted, so they are listed here instead of being tuned through one
 layer.
 
-- **Rest posture at zero activation.** The residual springs (elevation 30, axial 35, AC 35 N m/rad) hold it within
+- **Rest posture at zero activation.** The residual springs (elevation 50, axial 35, AC 35 N m/rad; placeholders, to be revisited once every passive layer is fitted) hold it within
   5 deg; they stand in for the joint surfaces, disc and capsule and for the full scapula-thorax contact. Their values
   should fall once the scapular muscles' passive forces are fitted to data at the girdle (there is none yet: the
   scapular muscles take the median passive scale of the shoulder muscles) and the scapula has a fuller thoracic
@@ -317,17 +403,21 @@ layer.
   the ratio of the AC and axial springs below about 105 deg of elevation and by the conoid above. No torsional stiffness
   of either joint is published; the isotropic AC spring cannot be stiffer about one axis than another, while the AC
   capsule restrains posterior rotation of the clavicle more than other motions (Fukuda 1986).
-- **Conoid tension.** Taut only from about 105-120 deg of elevation, slack by 18 % at rest. In vivo it carries part of
-  the arm's weight at rest (it lengthens from supine to sitting, Izadpanah 2012); the quadratic toe without a linear
-  region does not allow both a taut rest and the measured lengthening.
+- **Conoid tension (accepted as is).** Slack by 18 % at rest, taut from about 105-120 deg of elevation. This agrees
+  with lax coracoclavicular ligaments in low elevation: the acromioclavicular capsule restrains small displacements and
+  the conoid large ones (Fukuda et al. 1986), and the conoid lengthens mainly above 60 deg (Seo et al. 2012). In vivo it
+  may also carry part of the arm's weight at rest (it lengthens from supine to sitting, Izadpanah et al. 2012); the
+  quadratic toe without a linear region does not allow both a taut rest and the measured lengthening, so this is
+  revisited with the other passive layers.
 - **Costoclavicular strand.** A single strand off the axial axis, slack by 46 % at rest; the broad ligament lies near
   the axis in vivo.
+- **Triceps passive force in elevation.** At 90 deg flexion with the elbow at 90 deg, the passive moment of the
+  glenohumeral muscles is about 30 N m, mostly the long head of the triceps; Landin and Thompson 2011 measured 12.6-14.3
+  N m in total at 80 deg scaption (another plane, so indicative). The triceps' passive scale has no shoulder data.
 - **Shrug.** No ligament or spring was fitted to the shrug trials; Peeters 2023 report about 5 deg of posterior
   clavicle rotation in a passive shrug, the replay uses about 1 deg.
 
 ## Open items
 
-Validation (scapular kinematics against Seth's data and the published rhythms, moment arms of the kept and new muscles
-against Kuechle, Otis, Liu and Ackland, strength against Holzbaur 2007, passive girdle behaviour, mujoco-warp parity and
-step time); the BIClong excursion over shoulder flexion is now 14.6 / 23.1 mm against Lamplot 2020's 6.9 / 8.5 mm
-(glenohumeral angles, scapula at rest); glenohumeral translation with the capsule; an EMG comparison.
+Passive girdle behaviour (above); moment arms of the new scapular muscles (no scapulothoracic moment-arm data were
+found); glenohumeral translation with the capsule and a glenoid contact; an EMG comparison.

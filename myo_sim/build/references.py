@@ -90,12 +90,24 @@ RAJAGOPAL2016_BODY = {  # OpenSim 4.6 on Rajagopal2016.osim; femur_r origin in t
     },
 }
 
-MOBL_ARM = {  # Holzbaur 2005 / Saul 2015; l0/lts m, alpha rad
+MOBL_ARM = {  # Holzbaur 2005 / Saul 2015 (rows with a note: their source); l0/lts m, alpha rad
     "citation": "Holzbaur et al. 2005 Ann Biomed Eng 33:829-840; Saul et al. 2015 Comput Methods Biomech Biomed Engin 18:1445-1458",
     "doi": "10.1007/s10439-005-3320-7; 10.1080/10255842.2014.916698",
     "muscles": {
-        "DELT1": {"l0": 0.0976, "lts": 0.093, "alpha": 0.383972, "status": "kept"},
-        "DELT2": {"l0": 0.1078, "lts": 0.1095, "alpha": 0.261799, "status": "adopted"},
+        "DELT1": {
+            "l0": 0.094,
+            "lts": 0.088,
+            "alpha": 0.383972,
+            "status": "adopted",
+            "note": "path, l0 and lts of Seth et al. 2019 (DeltoideusClavicle_A); MoBL-ARMS pennation",
+        },
+        "DELT2": {
+            "l0": 0.0748,
+            "lts": 0.064,
+            "alpha": 0.261799,
+            "status": "adopted",
+            "note": "path, l0 and lts of Seth et al. 2019 (DeltoideusScapula_M); MoBL-ARMS pennation",
+        },
         "DELT3": {"l0": 0.1367, "lts": 0.038, "alpha": 0.314159, "status": "adopted"},
         "TMIN": {"l0": 0.0741, "lts": 0.0713, "alpha": 0.418879, "status": "kept"},
         "TMAJ": {"l0": 0.1624, "lts": 0.02, "alpha": 0.279253, "status": "adopted"},
@@ -105,14 +117,14 @@ MOBL_ARM = {  # Holzbaur 2005 / Saul 2015; l0/lts m, alpha rad
         "LAT1": {"l0": 0.254, "lts": 0.12, "alpha": 0.436332, "status": "adopted"},
         "LAT2": {"l0": 0.2324, "lts": 0.1765, "alpha": 0.331613, "status": "adopted"},
         "LAT3": {"l0": 0.2789, "lts": 0.1403, "alpha": 0.366519, "status": "adopted"},
-        "CORB": {"l0": 0.0932, "lts": 0.097, "alpha": 0.471239, "status": "kept"},
-        "TRIlong": {"l0": 0.134, "lts": 0.143, "alpha": 0.20944, "status": "kept"},
+        "CORB": {"l0": 0.0932, "lts": 0.097, "alpha": 0.471239, "status": "adopted"},
+        "TRIlong": {"l0": 0.134, "lts": 0.143, "alpha": 0.20944, "status": "adopted"},
         "TRIlat": {"l0": 0.1138, "lts": 0.098, "alpha": 0.15708, "status": "kept"},
         "TRImed": {"l0": 0.1138, "lts": 0.0908, "alpha": 0.15708, "status": "kept"},
         "ANC": {"l0": 0.027, "lts": 0.018, "alpha": 0.0, "status": "adopted"},
         "SUP": {"l0": 0.033, "lts": 0.028, "alpha": 0.0, "status": "kept"},
         "BIClong": {"l0": 0.1157, "lts": 0.2723, "alpha": 0.0, "status": "kept"},
-        "BICshort": {"l0": 0.1321, "lts": 0.1923, "alpha": 0.0, "status": "kept"},
+        "BICshort": {"l0": 0.1321, "lts": 0.1923, "alpha": 0.0, "status": "adopted"},
         "BRA": {"l0": 0.0858, "lts": 0.0535, "alpha": 0.0, "status": "adopted"},
         "BRD": {"l0": 0.1726, "lts": 0.133, "alpha": 0.0, "status": "kept"},
         "ECRL": {"l0": 0.081, "lts": 0.244, "alpha": 0.0, "status": "kept"},

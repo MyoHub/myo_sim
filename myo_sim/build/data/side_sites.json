@@ -440,38 +440,6 @@
       "past_after_j4": 0.03
     },
     {
-      "name": "DELT1hh_ellipsoid_DELT1_2_sidesite_r",
-      "tendon": "DELT1_r_tendon",
-      "geom": "DELT1hh_ellipsoid_DELT1_r",
-      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
-      "before": {
-        "j4": 18.71,
-        "j3": 100.87,
-        "fl": 23
-      },
-      "listed_site": {
-        "direction_in_geom_frame": [
-          -0.3619,
-          -0.8384,
-          0.4075
-        ],
-        "j4": 10.02,
-        "j3": 100.87,
-        "past_j4": 10.35
-      },
-      "after": {
-        "j4": 10.02,
-        "j3": 10.02,
-        "fl": 0,
-        "chg": 0.28,
-        "chgmax": 100.86
-      },
-      "past_after_j4": 10.35,
-      "radius_m": 0.023,
-      "radius_before_m": 0.029726,
-      "radius_method": "The via point DELT1-P3 on the scapula comes within 23.2 mm of the sphere's centre in the coupled range and past its limits. With the point inside the sphere the wrap ends at once, a 10 mm jump, so the radius is the largest that keeps it outside: 23 mm. The path changes only where the wrap acts, 2.2 % of the sampled postures."
-    },
-    {
       "name": "LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r",
       "tendon": "TMAJ_r_tendon",
       "geom": "LAT_TMAJ2hh_sphere_r",
