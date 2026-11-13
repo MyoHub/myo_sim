@@ -1,0 +1,654 @@
+{
+  "format": "one row per ligament strand; positions in the body frame of 'body' (chest_r: right side, mirrored to the left)",
+  "description": "Shoulder-girdle ligaments as passive spatial tendons (scripts/fit_ligaments.py; proposal MyoHub/myo_sim#142). Force law: quadratic toe of Blankevoort 1991, F = k e^2 / (2 e_t), tension only; no damping.",
+  "modulus_note": "10 MPa: apparent modulus of the coracoclavicular ligaments, k L / A from Costic et al. 2003 (conoid 11.4, trapezoid 7.7 MPa)",
+  "references": {
+    "costic2003": "Costic RS, Vangura A Jr, Fenwick JA, Rodosky MW, Debski RE. Viscoelastic behavior and structural properties of the coracoclavicular ligaments. Scand J Med Sci Sports 13(5):305-310, 2003",
+    "flores2023": "Flores C, Celik H, Hoenecke H, D'Lima DD. Subject-specific computational modeling of acromioclavicular and coracoclavicular ligaments. J Shoulder Elbow Surg 32(3):526-532, 2023. doi:10.1016/j.jse.2022.09.004",
+    "klimkiewicz1999": "Klimkiewicz JJ, Williams GR, Sher JS, Karduna A, Des Jardins J, Iannotti JP. The acromioclavicular capsule as a restraint to posterior translation of the clavicle: a biomechanical analysis. J Shoulder Elbow Surg 8(2):119-124, 1999. doi:10.1016/s1058-2746(99)90003-4",
+    "boehm2003": "Boehm TD, Kirschner S, Fischer A, Gohlke F. The relation of the coracoclavicular ligament insertion to the acromioclavicular joint: a cadaver study of relevance to lateral clavicle resection. Acta Orthop Scand 74(6):718-721, 2003. doi:10.1080/00016470310018261",
+    "rios2007": "Rios CG, Arciero RA, Mazzocca AD. Anatomy of the clavicle and coracoid process for reconstruction of the coracoclavicular ligaments. Am J Sports Med 35(5):811-817, 2007. doi:10.1177/0363546506297536",
+    "chahla2018": "Chahla J, Marchetti DC, Moatshe G et al. Quantitative assessment of the coracoacromial and the coracoclavicular ligaments with 3-dimensional mapping of the coracoid process anatomy: a cadaveric study of surgically relevant structures. Arthroscopy 34(5), 2018. doi:10.1016/j.arthro.2017.11.033",
+    "stine2009": "Stine IA, Vangsness CT Jr. Analysis of the capsule and ligament insertions about the acromioclavicular joint: a cadaveric study. Arthroscopy 25(9):968-974, 2009. doi:10.1016/j.arthro.2009.04.072",
+    "lee2014": "Lee JT, Campbell KJ, Michalski MP et al. Surgical anatomy of the sternoclavicular joint: a qualitative and quantitative anatomical study. J Bone Joint Surg Am 96(19):e166, 2014. doi:10.2106/JBJS.M.01451",
+    "tubbs2009": "Tubbs RS, Shah NA, Sullivan BP et al. The costoclavicular ligament revisited: a functional and anatomical study. Rom J Morphol Embryol 50(3):475-479, 2009",
+    "tubbs2007": "Tubbs RS, Loukas M, Slappey JB, McEvoy WC, Linganna S, Shoja MM, Oakes WJ. Surgical and clinical anatomy of the interclavicular ligament. Surg Radiol Anat 29(5):357-360, 2007. doi:10.1007/s00276-007-0219-z",
+    "izadpanah2012": "Izadpanah K, Weitzel E, Honal M et al. In vivo analysis of coracoclavicular ligament kinematics during shoulder abduction. Am J Sports Med 40(1):185-192, 2012. doi:10.1177/0363546511423015",
+    "spencer2002": "Spencer EE Jr, Kuhn JE, Huston LJ, Carpenter JE, Hughes RE. Ligamentous restraints to anterior and posterior translation of the sternoclavicular joint. J Shoulder Elbow Surg 11(1):43-47, 2002. doi:10.1067/mse.2002.119394",
+    "blankevoort1991": "Blankevoort L, Kuiper JH, Huiskes R, Grootenboer HJ. Articular contact in a three-dimensional model of the knee. J Biomech 24(11):1019-1031, 1991. doi:10.1016/0021-9290(91)90019-j"
+  },
+  "ligaments": [
+    {
+      "name": "conoid",
+      "description": "coracoclavicular, conoid part",
+      "origin": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "clavicle_slice",
+          "from_lateral_m": 0.037,
+          "direction": [
+            -0.3,
+            -1,
+            0
+          ],
+          "source": "conoid tubercle, posteroinferior clavicle 26-47 mm medial of the AC joint (Boehm 2003; Rios 2007)"
+        },
+        "pos": [
+          -0.034433,
+          0.009934,
+          0.083363
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "landmark": {
+          "rule": "surface",
+          "bone": "scapula_r",
+          "near": [
+            -0.0605,
+            0.0041,
+            0.1056
+          ],
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "source": "superior surface of the coracoid base (knee), conoid centre 10.1 mm from the base (Chahla 2018)"
+        },
+        "pos": [
+          -0.012393,
+          -0.012836,
+          -0.041604
+        ]
+      },
+      "k_N_per_strain": 800,
+      "k_source": "Costic 2003: 70 +- 23 N/mm x 11.2 mm (n=11, bone-ligament-bone)",
+      "eps_t": 0.06,
+      "eps_rest": -0.02,
+      "eps_rest_source": "slightly slack with the arm at the side; lengthens about 3 mm with abduction to 120 deg (Izadpanah 2012)",
+      "status": "measured",
+      "references": [
+        "costic2003",
+        "boehm2003",
+        "rios2007",
+        "chahla2018",
+        "izadpanah2012"
+      ],
+      "slack_rule": "end of measured range",
+      "l0_m": 0.024456,
+      "b_N_per_m2": 11146170.3,
+      "length_rest_mm": 15.67,
+      "strain_rest": -0.3592,
+      "strain_seth_motions_p50_max": [
+        -0.337,
+        0.0722
+      ],
+      "length_change_seth_motions_mm": 14.29
+    },
+    {
+      "name": "trapezoid",
+      "description": "coracoclavicular, trapezoid part",
+      "origin": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "clavicle_slice",
+          "from_lateral_m": 0.024,
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "source": "trapezoid line, inferior clavicle, centre about 23-25 mm medial of the lateral end (Rios 2007; Boehm 2003)"
+        },
+        "pos": [
+          -0.025265,
+          0.013465,
+          0.096135
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "landmark": {
+          "rule": "coracoid",
+          "base": [
+            -0.0605,
+            0.0041,
+            0.1056
+          ],
+          "tip": [
+            -0.0268,
+            -0.0132,
+            0.1136
+          ],
+          "along_m": 0.008,
+          "source": "superior coracoid, trapezoid centre 17.7 mm from the base against the conoid's 10.1 mm (Chahla 2018)"
+        },
+        "pos": [
+          -0.004925,
+          -0.01611,
+          -0.038148
+        ]
+      },
+      "k_N_per_strain": 800,
+      "k_source": "Costic 2003: 83 +- 40 N/mm x 9.6 mm",
+      "eps_t": 0.06,
+      "eps_rest": 0.0,
+      "eps_rest_source": "near-isometric from 0 to 120 deg abduction (Izadpanah 2012)",
+      "status": "measured",
+      "references": [
+        "costic2003",
+        "rios2007",
+        "boehm2003",
+        "chahla2018",
+        "izadpanah2012"
+      ],
+      "slack_rule": "end of measured range",
+      "l0_m": 0.012809,
+      "b_N_per_m2": 40631302.9,
+      "length_rest_mm": 11.75,
+      "strain_rest": -0.0826,
+      "strain_seth_motions_p50_max": [
+        -0.0612,
+        0.086
+      ],
+      "length_change_seth_motions_mm": 4.94
+    },
+    {
+      "name": "ac_superior",
+      "description": "acromioclavicular capsule, superior part",
+      "origin": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "clavicle_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.026414,
+          0.025085,
+          0.11732
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "scapula_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.020272,
+          0.003836,
+          -0.009934
+        ]
+      },
+      "k_N_per_strain": 186,
+      "k_source": "Flores 2023 acromioclavicular capsule 33.8 N/mm x 11.0 mm = 372 N per strain (model fit), x 0.5 for the superior part (Klimkiewicz 1999: superior 56 %, posterior 25 % of the posterior restraint; anterior and inferior the rest)",
+      "eps_t": 0.06,
+      "eps_rest": 0.0,
+      "eps_rest_source": "taut at the joint's neutral position (primary restraint at small displacement, Klimkiewicz 1999)",
+      "status": "transferred",
+      "references": [
+        "flores2023",
+        "klimkiewicz1999",
+        "stine2009"
+      ],
+      "slack_rule": "rest strain",
+      "l0_m": 0.012637,
+      "b_N_per_m2": 9705737.3,
+      "length_rest_mm": 12.64,
+      "strain_rest": 0.0,
+      "strain_seth_motions_p50_max": [
+        0.0079,
+        0.0699
+      ],
+      "length_change_seth_motions_mm": 1.05
+    },
+    {
+      "name": "ac_posterior",
+      "description": "acromioclavicular capsule, posterior part",
+      "origin": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "clavicle_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            -1,
+            0,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.036272,
+          0.016337,
+          0.11643
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "scapula_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            -1,
+            0,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.019842,
+          0.000535,
+          -0.012282
+        ]
+      },
+      "k_N_per_strain": 93,
+      "k_source": "Flores 2023 acromioclavicular capsule 33.8 N/mm x 11.0 mm = 372 N per strain (model fit), x 0.25 for the posterior part (Klimkiewicz 1999: superior 56 %, posterior 25 % of the posterior restraint; anterior and inferior the rest)",
+      "eps_t": 0.06,
+      "eps_rest": 0.0,
+      "eps_rest_source": "taut at the joint's neutral position (primary restraint at small displacement, Klimkiewicz 1999)",
+      "status": "transferred",
+      "references": [
+        "flores2023",
+        "klimkiewicz1999",
+        "stine2009"
+      ],
+      "slack_rule": "end of measured range",
+      "l0_m": 0.012222,
+      "b_N_per_m2": 5188091.8,
+      "length_rest_mm": 10.84,
+      "strain_rest": -0.1133,
+      "strain_seth_motions_p50_max": [
+        -0.1066,
+        0.0659
+      ],
+      "length_change_seth_motions_mm": 3.53
+    },
+    {
+      "name": "ac_anterior",
+      "description": "acromioclavicular capsule, anterior part",
+      "origin": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "clavicle_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.018229,
+          0.022388,
+          0.114099
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "scapula_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            1,
+            0,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.006388,
+          0.000758,
+          -0.011425
+        ]
+      },
+      "k_N_per_strain": 56,
+      "k_source": "Flores 2023 acromioclavicular capsule 33.8 N/mm x 11.0 mm = 372 N per strain (model fit), x 0.15 for the anterior part (Klimkiewicz 1999: superior 56 %, posterior 25 % of the posterior restraint; anterior and inferior the rest)",
+      "eps_t": 0.06,
+      "eps_rest": 0.0,
+      "eps_rest_source": "taut at the joint's neutral position (primary restraint at small displacement, Klimkiewicz 1999)",
+      "status": "transferred",
+      "references": [
+        "flores2023",
+        "klimkiewicz1999",
+        "stine2009"
+      ],
+      "slack_rule": "end of measured range",
+      "l0_m": 0.010313,
+      "b_N_per_m2": 4387457.0,
+      "length_rest_mm": 5.95,
+      "strain_rest": -0.423,
+      "strain_seth_motions_p50_max": [
+        -0.3795,
+        0.0736
+      ],
+      "length_change_seth_motions_mm": 5.64
+    },
+    {
+      "name": "ac_inferior",
+      "description": "acromioclavicular capsule, inferior part",
+      "origin": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "clavicle_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.026242,
+          0.015058,
+          0.118234
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "landmark": {
+          "rule": "ac_capsule",
+          "bone": "scapula_r",
+          "across_m": 0.0035,
+          "radius_m": 0.006,
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "source": "capsular insertion 3.5 mm from the clavicle end and 2.8 mm from the acromial edge (Stine 2009); strand 6 mm off the joint centre"
+        },
+        "pos": [
+          -0.020851,
+          -0.002325,
+          -0.010423
+        ]
+      },
+      "k_N_per_strain": 37,
+      "k_source": "Flores 2023 acromioclavicular capsule 33.8 N/mm x 11.0 mm = 372 N per strain (model fit), x 0.1 for the inferior part (Klimkiewicz 1999: superior 56 %, posterior 25 % of the posterior restraint; anterior and inferior the rest)",
+      "eps_t": 0.06,
+      "eps_rest": 0.0,
+      "eps_rest_source": "taut at the joint's neutral position (primary restraint at small displacement, Klimkiewicz 1999)",
+      "status": "transferred",
+      "references": [
+        "flores2023",
+        "klimkiewicz1999",
+        "stine2009"
+      ],
+      "slack_rule": "rest strain",
+      "l0_m": 0.011547,
+      "b_N_per_m2": 2312670.1,
+      "length_rest_mm": 11.55,
+      "strain_rest": 0.0,
+      "strain_seth_motions_p50_max": [
+        -0.0075,
+        0.0232
+      ],
+      "length_change_seth_motions_mm": 1.28
+    },
+    {
+      "name": "sc_anterior",
+      "description": "sternoclavicular capsule, anterior",
+      "origin": {
+        "body": "chest_r",
+        "landmark": {
+          "rule": "from_sc",
+          "offset_m": [
+            0.008,
+            -0.012,
+            -0.01
+          ],
+          "source": "manubrium, 11.2 mm below the anterosuperior margin, medial of the articular cartilage (Lee 2014); placed from the SC centre (the ribcage mesh has no manubrial facet)"
+        },
+        "pos": [
+          0.016335,
+          -0.00507,
+          0.015465
+        ]
+      },
+      "insertion": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "clavicle_slice",
+          "from_medial_m": 0.004,
+          "direction": [
+            1,
+            1,
+            0
+          ],
+          "source": "anterosuperior medial clavicle (Lee 2014, 10 o'clock)"
+        },
+        "pos": [
+          0.006474,
+          0.002655,
+          -0.000316
+        ]
+      },
+      "k_N_per_strain": 220,
+      "k_source": "10 MPa x footprint-scaled area: costoclavicular 410 x 85.3 / 160.8 mm2 manubrial footprints (Lee 2014)",
+      "eps_t": 0.06,
+      "eps_rest": 0.0,
+      "eps_rest_source": "primary restraint of anterior translation (Spencer 2002); taut at neutral",
+      "status": "transferred",
+      "references": [
+        "lee2014",
+        "spencer2002",
+        "costic2003"
+      ],
+      "slack_rule": "end of measured range",
+      "l0_m": 0.019708,
+      "b_N_per_m2": 4719934.9,
+      "length_rest_mm": 19.19,
+      "strain_rest": -0.0262,
+      "strain_seth_motions_p50_max": [
+        -0.0114,
+        0.0646
+      ],
+      "length_change_seth_motions_mm": 2.66
+    },
+    {
+      "name": "sc_posterior",
+      "description": "sternoclavicular capsule, posterior",
+      "origin": {
+        "body": "chest_r",
+        "landmark": {
+          "rule": "from_sc",
+          "offset_m": [
+            -0.006,
+            -0.006,
+            -0.01
+          ],
+          "source": "manubrium, 5.4 mm below the posterosuperior margin (Lee 2014); placed from the SC centre"
+        },
+        "pos": [
+          0.002335,
+          0.00093,
+          0.015465
+        ]
+      },
+      "insertion": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "clavicle_slice",
+          "from_medial_m": 0.004,
+          "direction": [
+            -1,
+            1,
+            0
+          ],
+          "source": "posterosuperior medial clavicle (Lee 2014, 4:30)"
+        },
+        "pos": [
+          -0.014199,
+          -0.002013,
+          -0.000299
+        ]
+      },
+      "k_N_per_strain": 260,
+      "k_source": "10 MPa x footprint-scaled area: 410 x 102.7 / 160.8 (Lee 2014)",
+      "eps_t": 0.06,
+      "eps_rest": 0.0,
+      "eps_rest_source": "most important restraint to anterior and posterior translation (Spencer 2002); taut at neutral",
+      "status": "transferred",
+      "references": [
+        "lee2014",
+        "spencer2002",
+        "costic2003"
+      ],
+      "slack_rule": "end of measured range",
+      "l0_m": 0.010045,
+      "b_N_per_m2": 21473273.4,
+      "length_rest_mm": 9.58,
+      "strain_rest": -0.046,
+      "strain_seth_motions_p50_max": [
+        -0.1475,
+        0.0874
+      ],
+      "length_change_seth_motions_mm": 6.67
+    },
+    {
+      "name": "interclavicular",
+      "description": "interclavicular, one half per side",
+      "origin": {
+        "body": "chest_r",
+        "landmark": {
+          "rule": "midline",
+          "below_sc_m": 0.005,
+          "source": "midline above the jugular notch, 5 mm below the SC centres' level; the ligament runs clavicle to clavicle (Lee 2014; Tubbs 2007)"
+        },
+        "pos": [
+          0.008335,
+          0.00193,
+          0.0
+        ]
+      },
+      "insertion": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "clavicle_slice",
+          "from_medial_m": 0.004,
+          "direction": [
+            0,
+            1,
+            0
+          ],
+          "source": "superomedial clavicle (Lee 2014, 1:30)"
+        },
+        "pos": [
+          0.002677,
+          0.006554,
+          0.000697
+        ]
+      },
+      "k_N_per_strain": 260,
+      "k_source": "10 MPa x 7.2 mm x 3.6 mm (Tubbs 2007)",
+      "eps_t": 0.06,
+      "eps_rest": -0.03,
+      "eps_rest_source": "lax with the arm at the side and in elevation, taut in depression (Tubbs 2007)",
+      "status": "transferred",
+      "references": [
+        "tubbs2007",
+        "lee2014",
+        "costic2003"
+      ],
+      "slack_rule": "rest strain",
+      "l0_m": 0.030646,
+      "b_N_per_m2": 2306938.2,
+      "length_rest_mm": 29.73,
+      "strain_rest": -0.03,
+      "strain_seth_motions_p50_max": [
+        -0.0365,
+        -0.019
+      ],
+      "length_change_seth_motions_mm": 2.14
+    },
+    {
+      "name": "costoclavicular",
+      "description": "costoclavicular",
+      "origin": {
+        "body": "chest_r",
+        "landmark": {
+          "rule": "below",
+          "offset_m": [
+            0.003,
+            -0.012,
+            -0.004
+          ],
+          "source": "first rib and its cartilage, medial; 10-20 mm long (Tubbs 2009)"
+        },
+        "pos": [
+          0.012702,
+          -0.019418,
+          0.035994
+        ]
+      },
+      "insertion": {
+        "body": "clavicle_r",
+        "landmark": {
+          "rule": "clavicle_slice",
+          "from_medial_m": 0.018,
+          "direction": [
+            0,
+            -1,
+            0
+          ],
+          "source": "inferior clavicle, centre 13.8 mm lateral of the inferior SC articular margin (Lee 2014)"
+        },
+        "pos": [
+          0.00494,
+          -0.013585,
+          0.014487
+        ]
+      },
+      "k_N_per_strain": 410,
+      "k_source": "10 MPa x 12 mm x 3.4 mm (Tubbs 2009)",
+      "eps_t": 0.06,
+      "eps_rest": -0.02,
+      "eps_rest_source": "taut with abduction, protraction and retraction (Tubbs 2009)",
+      "status": "transferred",
+      "references": [
+        "tubbs2009",
+        "lee2014",
+        "costic2003"
+      ],
+      "slack_rule": "end of measured range",
+      "l0_m": 0.019434,
+      "b_N_per_m2": 9046188.9,
+      "length_rest_mm": 13.0,
+      "strain_rest": -0.3311,
+      "strain_seth_motions_p50_max": [
+        -0.2455,
+        0.085
+      ],
+      "length_change_seth_motions_mm": 9.38
+    }
+  ]
+}

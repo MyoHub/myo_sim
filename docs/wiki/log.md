@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Shoulder-girdle ligaments, residual springs and AC armature
+Changed: `scripts/fit_ligaments.py` (new), `myo_sim/build/data/ligaments.json` (new), `myo_sim/models/arm/assets/myoarm_r_{chain,assets,tendon}.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/build/data/scapulothoracic.json`, `scripts/fit_scapulothoracic.py`, `myo_sim/build/hand.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_ligaments.py` (new), `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`, `docs/wiki/hand-literature-comparison.md`
+Why: the 40 N m/rad girdle springs had no source. Ten cited ligament strands per side (coracoclavicular, acromioclavicular capsule, sternoclavicular capsule, interclavicular, costoclavicular) now act as passive spatial tendons after the #142 proposal; residual springs stay only where no ligament has a lever (SC elevation 30, AC ball 35 N m/rad), and the AC armature is the smallest value under the explicit force-velocity bound (0.005 kg m2).
+
 ## 2026-11-13 — Scapulothoracic girdle and scapular muscles in the arm models
 Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,assets,tendon,muscle}.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/models/head/assets/myohead_{chain,rigid_chain}.xml`, `myo_sim/models/contacts/myoarm_contacts.xml`, `myo_sim/models/sensors/myofullbody_sensors.xml`, `myo_sim/build/{compose,hand}.py`, `myo_sim/build/data/{scapulothoracic,scapular_muscles,postures,side_sites,hand_literature}.json`, `scripts/{fit_scapulothoracic,generate_scapular_muscles,generate_postures,validate_hand_function,hand_literature_comparison}.py`, tests, `docs/wiki/{shoulder-complex,postures,testing-guide}.md`
 Why: the scapula now glides on the thorax under its own muscles (Seth et al. 2019) instead of following the humerus through fixed rhythm equalities.

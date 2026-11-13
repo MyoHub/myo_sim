@@ -106,15 +106,73 @@ glenoid contact, is a later step and can be added without changing the scapula.
   from the mesh faces facing the humeral head: 8.8 cm2, 25.4 mm from the joint centre) and `humeral_head_centre_r`.
 - **Ranges:** protraction -60 to 0 deg, elevation -10 to 35 deg (Seth's data: -49 to -12 and -8 to 16 deg), AC cone
   80 deg about rest (Seth's data reach 68 deg).
-- **Springs and armature:** 40 N m/rad to the rest posture at the sternoclavicular hinges and the AC ball, a stand-in for
-  the sternoclavicular, acromioclavicular and coracoclavicular ligaments and resting tone, none of which is modelled
-  (no measured value; chosen as the smallest round value that keeps the girdle within a few degrees of rest under the
-  arm's weight at zero activation: without springs the clavicle drops to its elevation limit and the scapula turns by
-  up to 29 deg). AC armature 0.008 kg m2 keeps the explicit force-velocity rate of the scapula at full activation below
-  5 (7.2 without, `myo_sim.build.stability`), as the thumb CMC armature does.
+- **Ligaments, residual springs and armature:** see "Girdle ligaments" below. Residual joint springs to the rest
+  posture: 30 N m/rad at the sternoclavicular elevation hinge and 35 N m/rad at the AC ball, none at the protraction
+  hinge. AC armature 0.005 kg m2.
 - **Hand models** bake the arm with clavicle and scapula aligned to the thorax as before the girdle, so the hand stays
   where it was (within 1.4 mm: Seth's AC point against MoBL-ARMS's).
 - **Postures:** the standing posture raises the shoulders to 0.25 rad (`postures.md`).
+
+## Girdle ligaments
+
+`scripts/fit_ligaments.py --zip <archive> --fit` (table `build/data/ligaments.json`), following the explicit-ligament
+proposal (MyoHub/myo_sim#142): one straight passive spatial tendon per ligament between bone sites, tension only
+(`springlength="0 L0"`), with the quadratic toe of the Blankevoort (1991) law, F = k e^2 / (2 e_t), e_t = 0.06, as the
+polynomial stiffness `0 b 0`, b = k / (2 e_t L0^2). No damping (MuJoCo's tendon damper is not gated by the dead band).
+The toe is exact up to e_t and stiffer beyond, so the slack length keeps each strand at or below e_t along Seth's
+measured motions: L0 = max(L_rest / (1 + e_rest), L_p99 / (1 + e_t)). Sites are landmarked on this package's meshes
+from published attachment descriptions; the thorax ends sit on `chest_r` (both sides), placed from the
+sternoclavicular centre because the ribcage mesh has no manubrial facet.
+
+| Strand (per side) | k (N per unit strain) | Source of k | Attachments | Rest strain | Slack set by |
+|---|---|---|---|---|---|
+| conoid | 800 | Costic 2003: 70 +- 23 N/mm x 11.2 mm | conoid tubercle (Boehm 2003, Rios 2007); coracoid base (Chahla 2018) | -0.36 | measured range |
+| trapezoid | 800 | Costic 2003: 83 +- 40 N/mm x 9.6 mm | trapezoid line (Rios 2007); coracoid, 8 mm beyond the conoid (Chahla 2018) | -0.08 | measured range |
+| AC capsule superior / posterior / anterior / inferior | 186 / 93 / 56 / 37 | Flores 2023 (33.8 N/mm x 11.0 mm, model fit) split by Klimkiewicz 1999 | 3.5 mm either side of the joint line (Stine 2009), 6 mm off the joint centre | 0 / -0.11 / -0.42 / 0 | rest / range / range / rest |
+| SC anterior / posterior | 220 / 260 | 10 MPa x footprint-scaled area (Lee 2014) | manubrium below its anterior / posterior margin; medial clavicle (Lee 2014) | -0.03 / -0.05 | measured range |
+| interclavicular (half) | 260 | 10 MPa x 7.2 x 3.6 mm (Tubbs 2007) | superomedial clavicle to the midline (Lee 2014) | -0.03 | rest (Tubbs 2007: lax at rest) |
+| costoclavicular | 410 | 10 MPa x 12 x 3.4 mm (Tubbs 2009) | inferior clavicle 14 mm from the joint (Lee 2014); first rib below | -0.33 | measured range |
+
+10 MPa is the apparent modulus of the coracoclavicular ligaments, k L / A from Costic 2003 (conoid 11.4, trapezoid
+7.7 MPa); no tensile stiffness is published for the sternoclavicular, costoclavicular or interclavicular ligaments, and
+the AC capsule value is a model fit, so these rows are `transferred`. In the linear region the strands give k / L0 =
+800 / 24.5 mm = 33 N/mm (conoid) and 800 / 12.8 mm = 63 N/mm (trapezoid), 95 N/mm together, inside the measured range
+of the coracoclavicular complex (Harris 2000 103 +- 30, Motamedi 2000 116 +- 36, Costic 2004 61 +- 12 N/mm).
+
+**The conoid is slack at rest by 36 %.** Along Seth's motions its length changes by 14.3 mm; in vivo it lengthens by
+about 3 mm with abduction to 120 deg, 6 mm counting the move from supine to sitting (Izadpanah 2012). The difference
+comes from the clavicle: Seth's model, and this one, has no clavicular axial rotation, so the 30 deg or so of posterior
+clavicle rotation during elevation (Ludewig 2009, Sahara 2007) appears as rotation of the scapula against the clavicle,
+which stretches the coracoclavicular strands. A slack set from the rest posture would have the conoid at up to 60 %
+strain, several hundred newtons, along normal elevation. An axial clavicle rotation would let the conoid drive the
+clavicle as it does in vivo (open item).
+
+**Rest at zero activation** (`myoarm_r`, 3 s, all controls 0, from qpos0): with the ligaments alone the clavicle settles
+on its depression limit (-5.9 deg) and the scapula tilts 10 deg anteriorly. No ligament can hold either: the
+sternoclavicular centre sits at the clavicle's medial end, so the superior strands have a lever of about 6 mm about the
+elevation axis, against the 5.7 N m the arm and girdle put on it; and the anterior tilt is a rotation about the line from
+the AC joint to the thoracic contact, on which the coracoclavicular strands have no lever. In vivo the girdle rests
+similarly with and without muscle tone (sternoclavicular elevation 4 +- 5 deg in whole cadavers, Peeters 2023, against
+5.9 deg in vivo, Ludewig 2009), so the passive support is real; it comes from the joint surfaces, disc and capsule, which
+the fixed hinge cannot represent, and from contact of the whole costal surface of the scapula with the thorax, which the
+single gliding contact does not. A residual joint spring therefore stays: the smallest round values that keep every girdle
+angle within 5 deg of rest (about one between-subject SD of the resting posture: Peeters 2023 5-9 deg, Ludewig 2009) are
+30 N m/rad (elevation) and 35 N m/rad (AC ball); protraction needs none (the ligaments hold it).
+
+| Zero activation, 3 s | protraction | elevation | scapula | contact |
+|---|---|---|---|---|
+| springs 40/40/40, no ligaments (previous) | -1.1 deg | -3.4 deg | 3.9 deg | on |
+| ligaments only | +3.1 deg | -5.9 deg (limit) | 10.0 deg | on |
+| ligaments + residual 0/30/35 (model) | +2.1 deg | -3.8 deg | 4.4 deg | on |
+
+The scapula stays on the thorax (contact distance within 0.1 mm) in every case.
+
+**AC armature** (smallest value stable at the model's 2 ms Euler step with the ligaments in, by the criteria of
+`myo_sim.build.stability` and `tests/test_numerical_stability.py`): every value from 0 to 0.008 kg m2 passes the dynamic
+criteria (period-two reversals at most 2.2 % of steps against the 10 % bound at activation 0, 0.3 and 1 of all muscles
+and of the shoulder muscles; random activation stays finite). The explicit force-velocity rate at full activation sets
+it: 7.32 (0), 6.60 (0.001), 6.04 (0.002), 5.22 (0.004), 4.92 (0.005), 4.26 (0.008), against the bound of 5 (and 2 at
+0.3 activation). 0.005 kg m2 is the smallest value below it; above 0.004 the mode is dominated by `elv_angle_r`.
 
 ## Muscles
 

@@ -510,13 +510,13 @@ def compare(zf: zipfile.ZipFile, step: int) -> dict[str, Any]:
 # ----------------------------------------------------------------------------------------------- girdle A in the model
 CLAV_RANGES = ((-1.047, 0.0), (-0.175, 0.611))  # protraction, elevation (rad): Seth's data -49..-12 and -8..+16 deg, widened
 AC_RANGE = 1.4  # rad, cone about the rest orientation; Seth's data reach 68.4 deg
-# Joint springs to the rest posture (N m/rad), a stand-in for the sternoclavicular, acromioclavicular and coracoclavicular
-# ligaments and resting muscle tone, none of which is modelled: the smallest round value that keeps the girdle within
-# a few degrees of rest under the arm's weight at zero activation (no measured value; see docs/wiki/shoulder-complex.md)
-GIRDLE_STIFFNESS = {"sternoclavicular": 40.0, "acromioclavicular": 40.0}
-# AC armature (kg m2): keeps the explicit force-velocity rate of the scapula at full activation below 5
-# (myo_sim.build.stability, as the thumb CMC armature); 0.0001 gives 7.2
-AC_ARMATURE = 0.008
+# Residual joint springs to the rest posture (N m/rad) next to the ligaments (scripts/fit_ligaments.py): the smallest
+# round values that keep every girdle angle within 5 deg of rest at zero activation; the ligaments hold protraction,
+# none can hold elevation or the AC tilt (levers in docs/wiki/shoulder-complex.md)
+GIRDLE_STIFFNESS = {"sternoclavicular": [0.0, 30.0], "acromioclavicular": 35.0}  # protraction, elevation; AC ball
+# AC armature (kg m2): the smallest value keeping the explicit force-velocity rate at full activation below 5
+# (myo_sim.build.stability; 0 gives 7.3, 0.004 gives 5.2); the dynamic stability criteria pass without it
+AC_ARMATURE = 0.005
 
 
 def glenoid(path: Path = MESHES / "scapula.stl", radius: float = 0.035, cos_min: float = 0.85) -> dict[str, list[float]]:

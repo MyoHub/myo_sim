@@ -330,14 +330,19 @@ def joints_between(body1: object, body2: object) -> list[str]:
 
 
 def tendon_joints(spec: object, tendon: object) -> set[str]:
-    """Joints a tendon's length can depend on: its joint wraps, or the joints between its attachment bodies."""
+    """Joints a tendon's length can depend on: its joint wraps, or the joints between its attachment bodies.
+
+    Sites outside *spec* (a girdle ligament's thorax end, before the arm is attached) are skipped.
+    """
     joints = set()
     bodies = []
     for wrap_type, target, sidesite, _, _ in tendon_path(tendon):
         if wrap_type == WRAP.mjWRAP_JOINT:
             joints.add(target)
         elif wrap_type == WRAP.mjWRAP_SITE:
-            bodies.append(spec.site(target).parent)
+            site = spec.site(target) if target else None
+            if site is not None:
+                bodies.append(site.parent)
         elif wrap_type != WRAP.mjWRAP_PULLEY:
             bodies.append(spec.geom(target).parent)
     for other in bodies[1:]:

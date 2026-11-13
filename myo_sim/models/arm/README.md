@@ -30,6 +30,14 @@ The regression test (`tests/test_arm_rigid_conversion.py`) checks the published 
 Example fidelity check (DELT1 left/right moment-arm and force-length plot) for symmetry and muscle jumping for upper limb. The full bimanual arm muscle check can be run with `tests/debug_muscle_bimanual.py`.
 
 
+### Validated numerical settings
+
+Time step 2 ms, Euler integrator (MuJoCo's default solver settings of the model files). The stability tests
+(`tests/test_numerical_stability.py`, `tests/test_model_stability.py`) hold these. The acromioclavicular ball joint carries
+an armature of 0.005 kg m2, the smallest value that keeps the explicit force-velocity rate at full activation below 5
+(`myo_sim.build.stability`; scan in `docs/wiki/shoulder-complex.md`). The girdle ligaments are explicit tendon springs;
+at 2 ms their stiffness stays far below the explicit limit. Other time steps or integrators are not validated.
+
 ## Known limitations
 
 - [ ] With mujoco-warp older than 3.16, the tendons with a sidesite inside their wrap geom (DELT2, DELT3, PECM1, FDP4, FPL; the forearm wraps of PQ, EDC2, EDC4 and EDC5 were moved outside and the ECU has no wrap any more) can be up to about 3 mm longer on the GPU than in CPU MuJoCo, because the float32 inside-wrap solve falls back to an approximate contact point ([mujoco_warp#1713](https://github.com/google-deepmind/mujoco_warp/issues/1713)). Use mujoco-warp 3.16 or newer; `myo_sim.load_spec()` warns if an older one is installed, and `tests/test_warp_parity.py` checks this.

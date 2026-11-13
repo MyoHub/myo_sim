@@ -47,11 +47,13 @@ def test_girdle_matches_table() -> None:
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
     for side, flip in (("r", 1.0), ("l", -1.0)):
-        for name, ref in zip(("sternoclavicular_r2", "sternoclavicular_r3"), gird["clavicle"]["ref"]):
+        for name, ref, k in zip(
+            ("sternoclavicular_r2", "sternoclavicular_r3"), gird["clavicle"]["ref"], gird["clavicle"]["stiffness"]
+        ):
             joint = model.joint(f"{name}_{side}")
             assert model.qpos0[joint.qposadr[0]] == pytest.approx(ref)
             assert model.qpos_spring[joint.qposadr[0]] == pytest.approx(ref)
-            assert model.jnt_stiffness[joint.id] == gird["clavicle"]["stiffness"]
+            assert model.jnt_stiffness[joint.id] == k
         ac = model.joint(f"acromioclavicular_{side}")
         assert model.jnt_stiffness[ac.id] == gird["scapula"]["ac_stiffness"]
         assert model.dof_armature[ac.dofadr[0]] == gird["scapula"]["ac_armature"]
