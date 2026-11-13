@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Publish authoring outputs without clobbering inputs
+Changed: myo_sim/authoring/_files.py, myo_sim/authoring/cli.py, myo_sim/authoring/archive.py, tests/test_authoring_files.py, tests/test_authoring_cli.py, docs/wiki/authoring.md
+Why: shared atomic publication closes the concurrent-writer overwrite gap, CLI output guards preserve XML and patch inputs, and content detection supports archive reuse and explicit in-place ZIP edits regardless of filename extension.
+
 ## 2026-11-13 — Preserve active native assets in model archives
 Changed: myo_sim/authoring/archive.py, tests/test_authoring_archive_assets.py, docs/wiki/authoring.md
 Why: archives now follow native texture-source and VFS key precedence and skin directories, preserve inline heightfield rows and precision and attached texture defaults, and protect referenced disk assets from replacement.

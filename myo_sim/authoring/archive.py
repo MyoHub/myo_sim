@@ -6,7 +6,6 @@
 
 from __future__ import annotations
 
-import tempfile
 import xml.etree.ElementTree as ET
 import zipfile
 from pathlib import Path
@@ -17,6 +16,7 @@ import numpy as np
 
 from myo_sim.physics.joint_coupling import JointCouplings, project_joint_couplings
 
+from ._files import _output
 from .edits import _compile_source
 from .interchange import model_fingerprint
 
@@ -354,28 +354,18 @@ def save_model_archive(spec: mujoco.MjSpec, output: str | Path, *, overwrite: bo
         ValueError: Compilation, normalization or substantive equivalence fails.
     """
     output = Path(output).resolve()
-
-    def check_destination() -> None:
-        if output.exists() and (not overwrite or not output.is_file()):
-            raise FileExistsError(f"Output exists: {output}; pass overwrite=True to replace a file")
-
-    check_destination()
-    candidate = spec.copy()
-    source = _compile_source(candidate)
-    fingerprint = model_fingerprint(source)
-    assets = _bundle_assets(candidate, output=output)
-    xml = _archive_xml(candidate, source)
-    if model_fingerprint(_compile_source(candidate)) != fingerprint:
-        raise ValueError("Archive normalization changed the compiled source model")
-    output.parent.mkdir(parents=True, exist_ok=True)
-    with tempfile.TemporaryDirectory(dir=output.parent) as folder:
-        staged = Path(folder) / output.name
+    with _output(output, overwrite) as staged:
+        candidate = spec.copy()
+        source = _compile_source(candidate)
+        fingerprint = model_fingerprint(source)
+        assets = _bundle_assets(candidate, output=output)
+        xml = _archive_xml(candidate, source)
+        if model_fingerprint(_compile_source(candidate)) != fingerprint:
+            raise ValueError("Archive normalization changed the compiled source model")
         with zipfile.ZipFile(staged, "w") as archive:
             for name, contents in assets.items():
                 archive.writestr(name, contents)
             archive.writestr("__myo_sim_model__.xml", xml)
         loaded = _compile_source(mujoco.MjSpec.from_zip(staged))
         _validate_equivalence(source, loaded)
-        check_destination()
-        staged.replace(output)
     return output

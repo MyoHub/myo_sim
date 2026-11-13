@@ -18,6 +18,10 @@ uv run python -m myo_sim.authoring apply --model myoelbow --patch edits.json --o
 
 Both commands also accept `--xml source.xml` or a native model zip instead of
 `--model`. The CLI protects existing outputs unless `--overwrite` is given.
+ZIP inputs are recognized by their contents, independently of their filename
+extension. XML sources and patch JSON inputs require separate output files.
+`apply` can replace its input ZIP with `--overwrite`; a rejected patch leaves
+that ZIP unchanged.
 Create `edits.json` using the patch contract below and the fingerprint/version
 from `elbow.json`.
 
@@ -152,7 +156,8 @@ from the parent's working directory. Ambiguous basenames are refused.
 Archive validation compares the reloaded native model and
 native reference measurements with the supplied spec before replacing output.
 Existing files require `overwrite=True`; failures preserve the destination and
-source, and successful publication uses an atomic replacement.
+source, and successful publication is atomic. Without overwrite permission,
+publication also preserves an output completed by a competing writer.
 A destination that resolves to a disk asset read for the archive is refused.
 
 Native XML has finite precision. Acceptance uses these explicit tolerances:

@@ -22,7 +22,8 @@ def cli() -> ModuleType:
     return authoring_cli
 
 
-def test_cli_export_apply_and_protected_outputs(cli: ModuleType, tmp_path: Path) -> None:
+@pytest.mark.parametrize("archive_name", ["model.zip", "model.model"])
+def test_cli_export_apply_and_protected_outputs(cli: ModuleType, tmp_path: Path, archive_name: str) -> None:
     xml = tmp_path / "source.xml"
     xml.write_text(
         '<mujoco><worldbody><body name="b"><joint name="q" range="-30 30"/>'
@@ -52,7 +53,7 @@ def test_cli_export_apply_and_protected_outputs(cli: ModuleType, tmp_path: Path)
     patch.update(sites=[dict(name="s", pos=[0.2, 0, 0])], inertias=[])
     patch_file = tmp_path / "edits.json"
     patch_file.write_text(json.dumps(patch))
-    archive = tmp_path / "model.zip"
+    archive = tmp_path / archive_name
     args = [
         "apply",
         "--xml",
@@ -64,6 +65,9 @@ def test_cli_export_apply_and_protected_outputs(cli: ModuleType, tmp_path: Path)
     ]
     assert cli.main(args) == 0
     np.testing.assert_allclose(mujoco.MjSpec.from_zip(archive).compile().site("s").pos, [0.2, 0, 0])
+    roundtrip = tmp_path / "reexport.json"
+    assert cli.main(["export", "--xml", str(archive), "--output", str(roundtrip)]) == 0
+    assert next(site for site in json.loads(roundtrip.read_text())["sites"] if site["source_name"] == "s")["pos"] == [0.2, 0, 0]
     before = archive.read_bytes()
     with pytest.raises(SystemExit):
         cli.main(args)
