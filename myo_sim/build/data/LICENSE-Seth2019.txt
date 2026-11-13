@@ -1,0 +1,21 @@
+Shoulder geometry and data from Seth et al. 2019
+
+The scapulothoracic geometry in scapulothoracic.json (thoracic ellipsoid, scapular joint point, acromioclavicular
+points, sternoclavicular axes) and the values derived from it in the arm and torso files are derived from:
+
+  Seth A, Dong M, Matias R, Delp SL. Muscle contributions to upper-extremity movement and work from a
+  musculoskeletal model of the human shoulder. Frontiers in Neurorobotics 13:90, 2019. doi:10.3389/fnbot.2019.00090
+  Materials: SimTK project "thoracoscapular", https://simtk.org/projects/thoracoscapular,
+  release FrontiersPubMaterials (ThoracoscapularShoulderPaperMaterials.zip).
+
+The release carries this notice:
+
+  FrontiersPubMaterials
+  Copyright (c) 2019, Stanford University and the authors.
+  authors: Ajay Seth, Meilin Dong, Ricardo Matias, Scott Delp
+  This work is available under the Creative Commons Attribution 4.0 International Public License.
+  Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+Changes: values were converted into this package's body frames (scripts/fit_scapulothoracic.py); the
+scapulothoracic joint is represented by MuJoCo joints and a contact rather than Seth's ellipsoid joint. No file of
+the release is redistributed. The authors do not endorse this model.

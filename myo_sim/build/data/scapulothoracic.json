@@ -1,0 +1,121 @@
+{
+  "format": "myo_sim.scapulothoracic/1",
+  "description": "Scapulothoracic shoulder after Seth et al. 2019: geometry of the published OpenSim model registered into this package's frames. scripts/fit_scapulothoracic.py derives every value from the published archive.",
+  "source": {
+    "citation": "Seth A, Dong M, Matias R, Delp SL. Muscle contributions to upper-extremity movement and work from a musculoskeletal model of the human shoulder. Front Neurorobot 13:90, 2019",
+    "doi": "10.3389/fnbot.2019.00090",
+    "archive": "SimTK project thoracoscapular (https://simtk.org/projects/thoracoscapular), release FrontiersPubMaterials, ThoracoscapularShoulderPaperMaterials.zip; model Model/ThoracoscapularShoulderModel.osim (generic), IK results Results/IK/*_IK.mot",
+    "license": "CC BY 4.0; attribution in myo_sim/build/data/LICENSE-Seth2019.txt",
+    "archive_sha256": "e3f6e965b50ee8e48a892f633c4e6106653d3c1e046ec57c8ca5af2f12bb5fb2"
+  },
+  "conventions": "Lengths in m. Seth's clavicle, scapula and humerus frames equal this package's (same meshes, same frames). Thorax-frame values are given in chest_r: Seth's thorax point + shift_seth_thorax_to_chest_r, so that the sternoclavicular centres coincide. Quaternions w x y z. The left side mirrors z.",
+  "registration": {
+    "meshes": {
+      "thorax": {
+        "seth_vertices": 2771,
+        "ours_vertices": 10953,
+        "seth_to_ours_mean_mm": 0.059152211033724714,
+        "seth_to_ours_max_mm": 4.533810869456286
+      },
+      "clavicle": {
+        "seth_vertices": 203,
+        "ours_vertices": 203,
+        "seth_to_ours_mean_mm": 0.0,
+        "seth_to_ours_max_mm": 0.0
+      },
+      "scapula": {
+        "seth_vertices": 770,
+        "ours_vertices": 770,
+        "seth_to_ours_mean_mm": 0.0,
+        "seth_to_ours_max_mm": 0.0
+      },
+      "humerus": {
+        "seth_vertices": 309,
+        "ours_vertices": 309,
+        "seth_to_ours_mean_mm": 0.0,
+        "seth_to_ours_max_mm": 0.0
+      }
+    },
+    "sc_ours_in_chest_r": [
+      0.008335,
+      0.00693,
+      0.025465
+    ],
+    "sc_seth_in_thorax": [
+      0.006325,
+      0.00693,
+      0.0254644
+    ],
+    "shift_seth_thorax_to_chest_r": [
+      0.00201,
+      -0.0,
+      6e-07
+    ],
+    "ribcage_offset_from_seth_mm": [
+      5.99,
+      -5.0,
+      0.0
+    ],
+    "ribcage_offset_norm_mm": 7.8,
+    "ribcage_residual_after_offset_mm_mean_max": [
+      0.06,
+      4.53
+    ],
+    "thorax_ellipsoid": {
+      "pos_chest_r": [
+        -0.0274129,
+        -0.0173001,
+        0.0702861
+      ],
+      "quat_chest_r": [
+        0.90687,
+        0.0,
+        -0.4214104,
+        0.0
+      ],
+      "radii": [
+        0.0829975,
+        0.199991,
+        0.083001
+      ]
+    },
+    "scapula_joint_point": [
+      -0.0598196,
+      -0.0390416,
+      -0.0559802
+    ],
+    "scapula_joint_quat": [
+      0.8248083,
+      -0.1390854,
+      -0.5476239,
+      0.0213215
+    ],
+    "ac_clavicle": [
+      -0.02924,
+      0.02024,
+      0.12005
+    ],
+    "ac_scapula": [
+      -0.01357,
+      0.00011,
+      -0.01523
+    ],
+    "glenohumeral_centre_scapula": [
+      -0.0095499,
+      -0.0340014,
+      0.0089968
+    ],
+    "sternoclavicular_axes": [
+      [
+        0.0153,
+        0.9892987,
+        -0.1451
+      ],
+      [
+        -0.9944725,
+        0.0,
+        -0.104997
+      ]
+    ]
+  }
+}
