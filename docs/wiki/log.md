@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Scapulothoracic shoulder: licence, frame registration, joint design
+Changed: `myo_sim/build/data/scapulothoracic.json`, `myo_sim/build/data/LICENSE-Seth2019.txt`, `scripts/fit_scapulothoracic.py`, `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`, `docs/wiki/repository-map.md`
+Why: first steps of the Seth et al. 2019 shoulder port: CC BY 4.0 attribution, Seth's girdle geometry registered into this package's frames, and the AC-ball-plus-contact girdle chosen over the ellipsoid chain by replaying the published IK trials.
+
 ## 2026-11-13 — Thumb IP spring with the signed fit
 Changed: `myo_sim/build/data/passive_joint_moments.json` (thumb IP row signed fit; `signed_fallback` dropped), `postures.json`, `hand_literature.json` (step `spring_fallbacks`), arm tendon XML, `tests/test_muscle_passive.py` (docstring: L0 rounding), wiki, `CHANGELOG.md`
 Why: six spring rows kept a non-negative fallback flag from earlier models and were never refitted signed. Five still need it; the thumb IP fits signed now (RMS 0.016 -> 0.003 N m).
