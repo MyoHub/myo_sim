@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
+import sys
 from pathlib import Path
 
 import mujoco
@@ -12,6 +14,7 @@ import pytest
 import myo_sim
 
 DATA = Path(myo_sim.__file__).parent / "build" / "data"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "fit_scapulothoracic.py"
 
 
 def table() -> dict:
@@ -77,3 +80,25 @@ def test_girdle_matches_table() -> None:
         if model.eq_type[eq] == mujoco.mjtEq.mjEQ_JOINT:
             name = model.joint(model.eq_obj1id[eq]).name
             assert not name.startswith(("sternoclavicular", "acromioclavicular", "unrot")), name
+
+
+def test_rhythm_matches_table() -> None:
+    """The rhythm table is what the script computes from its stored frames, landmarks and literature rows."""
+    sys.path.insert(0, str(SCRIPT.parent))
+    spec = importlib.util.spec_from_file_location("fit_scapulothoracic", SCRIPT)
+    script = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(script)
+    rhythm = table()["rhythm"]
+    model_rows = script.rhythm_summary(myo_sim.load_model("myoarm_r"), rhythm["landmarks"], rhythm["frames"])
+
+    def flat(x: object, key: str = "") -> dict[str, float]:
+        if isinstance(x, dict):
+            return {k: v for name, sub in x.items() for k, v in flat(sub, f"{key}/{name}").items()}
+        if isinstance(x, list):
+            return {k: v for i, sub in enumerate(x) for k, v in flat(sub, f"{key}/{i}").items()}
+        return {key: x}
+
+    assert flat(model_rows) == pytest.approx(flat(rhythm["model"]), abs=0.011)
+    literature = script.rhythm_compare(rhythm["model"])
+    assert json.loads(json.dumps(literature)) == rhythm["literature"]
+    assert all(row["citation"] and row["location"] and row["protocol"] for row in literature)

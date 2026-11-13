@@ -227,6 +227,52 @@ and of the shoulder muscles; random activation stays finite). The explicit force
 it: 7.32 (0), 6.60 (0.001), 6.04 (0.002), 5.22 (0.004), 4.92 (0.005), 4.26 (0.008), against the bound of 5 (and 2 at
 0.3 activation). 0.005 kg m2 is the smallest value below it; above 0.004 the mode is dominated by `elv_angle_r`.
 
+## Scapulohumeral rhythm
+
+`scripts/fit_scapulothoracic.py --zip <archive> rhythm --write` (table section `rhythm`, checked by
+`tests/test_scapulothoracic_data.py`). The girdle replays Seth's measured abduction and flexion trials exactly; their
+angles are computed in `myoarm_r` as ISB angles (Wu et al. 2005), positive in the named direction, and compared with
+bone-pin data (Ludewig et al. 2009, n = 12; Braman et al. 2009, same cohort; McClure et al. 2001, n = 8) and with
+Inman et al. 1944 (as reported in McClure 2001). For each trial the raising-phase frame nearest each humerothoracic
+elevation (HT) and the frame of highest elevation are taken; values are medians over 6 trials per plane.
+
+**Landmarks.** Seth's model has a marker for every ISB landmark. They are skin markers, so AA, TS, AI, EL and EM are the
+mesh vertices nearest to them (2-15 mm). SC and GH are the joint centres, AC is the centre of the AC ball, and the
+thorax uses Seth's IJ, C7, PX and T8. The clavicle's X axis is defined at the rest posture and moves with the bone, as a
+bone-fixed sensor would.
+
+| HT 30 / 60 / 90 / 120 / max (deg) | model, abduction | Ludewig, coronal abduction | model, flexion | Ludewig, flexion |
+|---|---|---|---|---|
+| scapular upward rotation | 13 / 27 / 40 / 52 / 71 | 16 / 27 / 36 / 46 / 52 | 6 / 22 / 38 / 53 / 74 | 16 / 26 / 34 / 44 / 48 |
+| scapular internal rotation | 21 / 17 / 21 / 27 / 45 | 31 / 31 / 31 / 31 / 30 | 41 / 48 / 53 / 54 / 44 | 44 / 47 / 48 / 44 / 40 |
+| scapular posterior tilt | -10 / -10 / -9 / -9 / -14 | -11 / -6 / -2 / 4 / 7 | -7 / -6 / -8 / -10 / -16 | -10 / -6 / -2 / 5 / 8 |
+| clavicle elevation | 11 / 16 / 20 / 24 / 23 | 14 / 17 / 18 / 20 / 20 | 7 / 11 / 19 / 22 / 24 | 10 / 12 / 14 / 15 / 16 |
+| clavicle retraction | 41 / 47 / 50 / 52 / 58 | 31 / 37 / 41 / 44 / 45 | 29 / 28 / 33 / 42 / 60 | 21 / 23 / 25 / 32 / 35 |
+| clavicle posterior rotation (input) | 4 / 12 / 21 / 31 / 37 | 3 / 9 / 15 / 25 / 31 | 2 / 10 / 20 / 35 / 39 | 0 / 7 / 14 / 25 / 30 |
+| glenohumeral elevation | 15 / 32 / 50 / 67 / 83 | 9 / 31 / 54 / 75 / 84 | 29 / 51 / 67 / 81 / 86 | 14 / 33 / 56 / 77 / 85 |
+
+The model's maximum HT is 149 deg, against Ludewig's end range of 131-136 deg. At rest (qpos0) the scapula is within
+1 SD of Ludewig's Table I: upward rotation 4.5 against 5.4 +- 3.5, internal rotation 37 against 41 +- 7, anterior tilt
+8 against 14 +- 7 deg. The clavicle is elevated 8.5 against 5.9 +- 3.3 and retracted 31 against 19 +- 7 deg (+1.7 SD),
+which comes from the generic clavicle's geometry.
+
+Up to HT 60 the scapular upward rotation matches the bone-pin data. Above that, Seth's motions put more of the elevation
+into the scapula: 71-74 deg at the end against 48.6 +- 4.0 (Braman, +5.6 SD), and the glenohumeral elevation stops near
+85 deg. The GH:ST ratio is therefore about 1.2 (abduction 30-120: 1.24; flexion: 1.11), against 2.1-2.4 (Ludewig),
+1.7-2.0 (McClure) and 2.4-2.7 +- 0.8 per interval (Braman). The scapula also barely tilts posteriorly (-9 to -15 deg
+against +21 to +30 deg over the arc). Both come from the measured motions the model replays: Seth's inverse kinematics,
+from skin markers, has the same upward rotation and no tilt, and skin markers are least accurate for these two angles
+at high elevation (Karduna et al. 2001). They are not limits of the joint: the AC ball leaves tilt free for the muscles.
+Seth's abduction trials also drift from the coronal plane to a plane 65 deg forward at the top, which lowers the
+scapular internal rotation in abduction.
+
+The clavicle's posterior rotation is taken from Ludewig in the replay, so its row checks consistency only. In ISB terms
+it comes out 1-10 deg above Ludewig, because Seth's oblique protraction and elevation axes add 2-8 deg of ISB axial
+rotation on their own. Clavicle elevation rises 14-16 deg over the arc: more than the bone-pin 6 deg, less than Inman's
+radiographic 25-30 deg. In the shrug trials the clavicle elevates by 19 deg (8 to 27 deg). Ludewig's per-angle values
+are digitised means (about +-1 deg) with SE only; the choice of scapular landmarks (AA here, the AC joint in Braman)
+changes scapular angles by up to 23 deg (Kolz et al. 2020).
+
 ## Muscles
 
 `scripts/generate_scapular_muscles.py --zip <archive> --fit` writes `build/data/scapular_muscles.json` and the labelled

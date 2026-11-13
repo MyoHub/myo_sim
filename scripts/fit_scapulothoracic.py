@@ -7,6 +7,7 @@ it is committed except the derived values in ``myo_sim/build/data/scapulothoraci
 
     uv run python scripts/fit_scapulothoracic.py --zip ThoracoscapularShoulderPaperMaterials.zip register [--write]
     uv run python scripts/fit_scapulothoracic.py --zip ThoracoscapularShoulderPaperMaterials.zip compare
+    uv run python scripts/fit_scapulothoracic.py --zip ThoracoscapularShoulderPaperMaterials.zip rhythm [--write]
 
 **register** checks that Seth's clavicle, scapula and humerus meshes and frames equal this package's, places Seth's
 thorax-frame values in ``chest_r`` (shifted by the sternoclavicular offset between the two models) and writes the table.
@@ -16,6 +17,9 @@ A (sternoclavicular hinges, acromioclavicular ball joint, scapula-thorax contact
 B (Seth's ellipsoid parameterisation as a hinge/slide chain on the thorax, AC as a ``connect`` equality). The IK
 coordinates belong to Seth's scaled subject model; they are first projected onto the generic model (least change of the
 girdle coordinates that closes the AC constraint, as OpenSim's assembler does).
+
+**rhythm** computes ISB clavicle, scapula and humerus angles (Wu et al. 2005) of the model along the measured motions
+and compares them with bone-pin and radiographic studies (table section ``rhythm``).
 """
 
 from __future__ import annotations
@@ -645,6 +649,401 @@ def girdle(zf: zipfile.ZipFile, step: int = 3) -> dict[str, Any]:
     }
 
 
+# ----------------------------------------------------------------------------------------------- scapulohumeral rhythm
+RHYTHM_JOINTS = (
+    "sternoclavicular_r2_r", "sternoclavicular_r3_r", "sternoclavicular_r1_r", "acromioclavicular_r",
+    "elv_angle_r", "shoulder_elv_r", "shoulder1_r2_r", "shoulder_rot_r",
+)  # fmt: skip
+RHYTHM_BINS = (30.0, 60.0, 90.0, 120.0)  # humerothoracic elevation (deg)
+# Wu et al. 2005 (ISB) landmarks. Seth's generic model carries a marker for each (skin markers, 2-15 mm off the bone);
+# the bony landmarks are the mesh vertex nearest to that marker, the joint centres are the model's.
+ISB_LANDMARKS = {
+    "IJ": ("thorax", "ij", "incisura jugularis: Seth's marker ij (skin), in chest_r by the sternoclavicular shift"),
+    "C7": ("thorax", "c7", "spinous process of C7: Seth's marker c7 (skin), in chest_r by the sternoclavicular shift"),
+    "PX": ("thorax", "px", "processus xiphoideus: Seth's marker px (skin), in chest_r by the sternoclavicular shift"),
+    "T8": ("thorax", "t8", "spinous process of T8: Seth's marker t8 (skin), in chest_r by the sternoclavicular shift"),
+    "SC": ("clavicle", None, "sternoclavicular joint centre (clavicle_r origin; Seth's marker sc)"),
+    "AC": ("clavicle", None, "acromioclavicular joint centre (Seth's AC constraint point, centre of acromioclavicular_r)"),
+    "AA": ("scapula", "aa", "angulus acromialis: scapula mesh vertex nearest to Seth's marker aa"),
+    "TS": ("scapula", "ts", "trigonum spinae: scapula mesh vertex nearest to Seth's marker ts"),
+    "AI": ("scapula", "ai", "angulus inferior: scapula mesh vertex nearest to Seth's marker ai"),
+    "GH": ("humerus", None, "glenohumeral rotation centre (humerus_r origin; Seth's marker gu)"),
+    "EL": ("humerus", "EpL", "lateral epicondyle: humerus mesh vertex nearest to Seth's marker EpL"),
+    "EM": ("humerus", "EpM", "medial epicondyle: humerus mesh vertex nearest to Seth's marker EpM"),
+}
+ANGLES = (
+    "humerothoracic_elevation", "humerothoracic_plane", "scapula_upward_rotation", "scapula_internal_rotation",
+    "scapula_posterior_tilt", "clavicle_elevation", "clavicle_retraction", "clavicle_posterior_rotation",
+    "glenohumeral_elevation",
+)  # fmt: skip
+LUDEWIG = (
+    "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during "
+    "multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)"
+)
+MCCLURE = (
+    "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during "
+    "dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)"
+)
+BRAMAN = (
+    "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained "
+    "overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)"
+)
+INMAN = (
+    "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, "
+    "1944, as reported in McClure et al. 2001 (discussion table)"
+)
+PROTOCOL = {
+    "ludewig": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+    "mcclure": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+    "braman": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+    "inman": "radiographs, subjects and spread not stated",
+}
+# Literature rows: (source, location, plane, model plane, angle or ratio, HT (deg, "rest", "max", "change 30-120",
+# "change 30-max" or "30-120" for a ratio), mean, SD or None). Ludewig Fig. 5 is digitised (+-1 deg) and shows SE only.
+# Ludewig 2009 Fig. 5A-D, digitised (+-1 deg, GH +-1.5 deg), raising: HT -> (flexion, scapular plane, coronal abduction)
+LUDEWIG_FIG5 = {
+    "scapula_upward_rotation": {
+        30: (15.5, 15.5, 15.5),
+        60: (25.5, 26.0, 26.5),
+        90: (33.5, 34.5, 36.0),
+        120: (43.5, 43.5, 46.0),
+    },
+    "scapula_internal_rotation": {
+        30: (44.3, 38.4, 31.2),
+        60: (46.8, 38.7, 30.5),
+        90: (47.8, 38.9, 30.7),
+        120: (43.5, 37.2, 30.6),
+    },
+    "scapula_posterior_tilt": {30: (-10.4, -11.2, -10.5), 60: (-5.9, -6.8, -6.0), 90: (-1.6, -2.9, -1.7), 120: (5.4, 2.7, 3.9)},
+    "clavicle_retraction": {30: (20.5, 24.8, 31.4), 60: (22.7, 29.0, 37.3), 90: (25.0, 32.2, 40.6), 120: (31.6, 36.5, 44.1)},
+    "clavicle_elevation": {30: (10.1, 11.6, 14.3), 60: (12.1, 14.3, 16.8), 90: (13.5, 15.6, 18.1), 120: (14.5, 17.0, 19.5)},
+    "clavicle_posterior_rotation": {30: (0.0, 1.8, 3.0), 60: (6.8, 8.0, 8.8), 90: (14.0, 14.7, 15.4), 120: (24.5, 24.5, 24.5)},
+    "glenohumeral_elevation": {30: (14.0, 14.5, 9.0), 60: (33.0, 33.0, 30.5), 90: (56.0, 56.5, 54.0), 120: (77.0, 77.0, 74.5)},
+}
+FIG5 = "Fig. 5A-D, digitised"
+SLOPE = "text (regression slope GH on ST upward rotation)"
+INMAN_TABLE = "McClure 2001 discussion table"
+BRAMAN_MIN, BRAMAN_MAX = (
+    "self-selected reach, minimum elevation (about 15 deg)",
+    "self-selected reach, maximum (132.9 +- 9.9 deg)",
+)
+# Literature rows: source, location, plane, Seth trials compared, angle or "gh_st", elevation, mean, SD (None: not published).
+# Elevation: an HT bin (deg), "rest" (qpos0), "start" / "max" (first / highest frame of a trial), "change a-b" (difference
+# between two bins) or an interval for GH:ST.
+RHYTHM_LIT: tuple[tuple[str, str, str, str, str, Any, float, float | None], ...] = (
+    *(
+        ("ludewig", "Table I (mean +- SE; SD = SE x sqrt(n))", "standing, arm at the side", "rest", a, "rest", m, sd)
+        for a, m, sd in (
+            ("clavicle_retraction", 19.2, 6.6),
+            ("clavicle_elevation", 5.9, 3.3),
+            ("clavicle_posterior_rotation", 0.1, None),
+            ("scapula_internal_rotation", 41.1, 6.9),
+            ("scapula_upward_rotation", 5.4, 3.5),
+            ("scapula_posterior_tilt", -13.5, 6.9),
+            ("glenohumeral_elevation", 0.8, 3.5),
+        )
+    ),
+    *(
+        ("ludewig", FIG5, plane, trials, a, ht, values[col], None)
+        for plane, trials, col in (("coronal abduction", "abduction", 2), ("flexion", "flexion", 0))
+        for a, rows in LUDEWIG_FIG5.items()
+        for ht, values in rows.items()
+    ),
+    ("ludewig", SLOPE, "coronal abduction", "abduction", "gh_st", "30-120", 2.1, None),
+    ("ludewig", SLOPE, "flexion", "flexion", "gh_st", "30-120", 2.4, None),
+    *(
+        (
+            "ludewig",
+            "text (start to end of elevation, planes pooled)",
+            "all three planes",
+            trials,
+            a,
+            "change start-max",
+            m,
+            None,
+        )
+        for trials in ("abduction", "flexion")
+        for a, m in (
+            ("scapula_upward_rotation", 39.0),
+            ("scapula_posterior_tilt", 21.0),
+            ("clavicle_retraction", 16.0),
+            ("clavicle_elevation", 6.0),
+            ("clavicle_posterior_rotation", 31.0),
+        )
+    ),
+    *(
+        ("mcclure", "Figs 3-4, digitised (mean +- SEM)", "flexion", "flexion", a, "change 30-120", m, None)
+        for a, m in (
+            ("scapula_upward_rotation", 30.7),
+            ("scapula_posterior_tilt", 9.9),
+            ("clavicle_retraction", 9.7),
+            ("clavicle_elevation", 7.4),
+        )
+    ),
+    *(
+        (
+            "mcclure",
+            "abstract (minimum to maximum elevation, mean [SD])",
+            "scapular plane",
+            "abduction",
+            a,
+            "change start-max",
+            m,
+            sd,
+        )
+        for a, m, sd in (("scapula_upward_rotation", 50.0, 4.8), ("scapula_posterior_tilt", 30.0, 13.0))
+    ),
+    ("mcclure", "results (GH:ST from minimum elevation)", "flexion", "flexion", "gh_st", "start-max", 2.0, None),
+    ("mcclure", "results (GH:ST from minimum elevation)", "scapular plane", "abduction", "gh_st", "start-max", 1.7, None),
+    *(
+        ("braman", "Table I (raising, mean +- SD)", "self-selected reach", trials, "gh_st", interval, m, sd)
+        for trials in ("abduction", "flexion")
+        for interval, m, sd in (("30-60", 2.36, 0.75), ("60-90", 2.71, 0.85), ("90-120", 2.50, 0.90))
+    ),
+    *(
+        ("braman", "text (mean +- SD)", plane, "abduction", a, ht, m, sd)
+        for plane, ht, rows in (
+            (BRAMAN_MIN, "start", (("scapula_upward_rotation", 11.4, 5.8), ("scapula_internal_rotation", 33.2, 5.2))),
+            (BRAMAN_MIN, "start", (("scapula_posterior_tilt", -11.8, 4.9), ("glenohumeral_elevation", -7.4, 5.0))),
+            (BRAMAN_MAX, "max", (("scapula_upward_rotation", 48.6, 4.0), ("scapula_internal_rotation", 42.8, 8.7))),
+            (BRAMAN_MAX, "max", (("scapula_posterior_tilt", 9.8, 7.5), ("glenohumeral_elevation", 96.9, 5.5))),
+        )
+        for a, m, sd in rows
+    ),
+    *(
+        ("inman", INMAN_TABLE, f"{plane} 30-150 deg", plane, a, "change 30-max", m, None)
+        for plane, values in (("abduction", (40.0, 30.0, 30.0)), ("flexion", (50.0, 25.0, 30.0)))
+        for a, m in zip(("scapula_upward_rotation", "clavicle_elevation", "clavicle_posterior_rotation"), values)
+    ),
+    ("inman", "Inman 1944 (classic statement)", "abduction beyond 30 deg", "abduction", "gh_st", "30-max", 2.0, None),
+)
+
+
+def isb_landmarks(zf: zipfile.ZipFile, model: mujoco.MjModel) -> dict[str, dict[str, Any]]:
+    """The ISB landmarks in this package's body frames (see ``ISB_LANDMARKS``)."""
+    root = ET.fromstring(zf.read(GENERIC))
+    markers = {m.get("name"): vec(m.findtext("location")) for m in root.iter("Marker")}
+    shift = np.array(json.loads(DATA_PATH.read_text())["registration"]["shift_seth_thorax_to_chest_r"])
+    body = {"thorax": "chest_r", "clavicle": "clavicle_r", "scapula": "scapula_r", "humerus": "humerus_r"}
+    out = {}
+    for name, (bone, marker, definition) in ISB_LANDMARKS.items():
+        if bone == "thorax":
+            pos = markers[marker] + shift
+        elif marker is None:
+            pos = read_osim(zf)["ac_clavicle"] if name == "AC" else np.zeros(3)
+        else:
+            b = model.body(body[bone]).id
+            g = next(
+                i for i in range(model.ngeom) if model.geom_bodyid[i] == b and model.geom_type[i] == mujoco.mjtGeom.mjGEOM_MESH
+            )
+            mesh = model.geom_dataid[g]
+            v = model.mesh_vert[model.mesh_vertadr[mesh] : model.mesh_vertadr[mesh] + model.mesh_vertnum[mesh]]
+            v = v @ Rotation.from_quat(np.roll(model.geom_quat[g], -1)).as_matrix().T + model.geom_pos[g]
+            d = np.linalg.norm(v - markers[marker], axis=1)
+            pos = v[np.argmin(d)]
+            definition += f" ({1e3 * d.min():.1f} mm)"
+        out[name] = {"body": body[bone], "pos": [round(float(t), 6) for t in pos], "definition": definition}
+    # SC and AC fix only the clavicle's long axis; as with a bone-fixed sensor, its X axis (perpendicular to the long axis
+    # and the thorax Y axis) is defined at the rest posture (qpos0) and then moves with the clavicle
+    data = mujoco.MjData(model)
+    mujoco.mj_kinematics(model, data)
+    th = {k: np.array(out[k]["pos"]) for k in ("IJ", "C7", "PX", "T8")}
+    yt = data.xmat[model.body("chest_r").id].reshape(3, 3) @ ((th["IJ"] + th["C7"] - th["PX"] - th["T8"]) / 2)
+    rc = data.xmat[model.body("clavicle_r").id].reshape(3, 3)
+    zc = rc @ np.array(out["AC"]["pos"])
+    xc = rc.T @ np.cross(yt, zc)
+    out["CX"] = {
+        "body": "clavicle_r",
+        "pos": [round(float(t), 6) for t in 0.01 * xc / np.linalg.norm(xc)],
+        "definition": "point 10 mm from SC along the ISB clavicle X axis at the rest posture (qpos0), fixed on the clavicle",
+    }
+    return out
+
+
+def isb_angles(model: mujoco.MjModel, data: mujoco.MjData, landmarks: dict[str, dict[str, Any]]) -> dict[str, float]:
+    """ISB angles (Wu et al. 2005, deg) at the current ``data`` (after ``mj_kinematics``), positive = the named direction.
+
+    Thorax, clavicle, scapula and humerus frames from the landmarks; clavicle and scapula relative to the thorax as
+    Y-X-Z Cardan angles (retraction, elevation, posterior axial rotation; internal rotation, upward rotation, posterior
+    tilt), humerus elevation as the angle between the long axes (humerus Y against thorax Y or scapula Y), plane of
+    elevation of the humeral shaft from the coronal plane (0 = abduction, 90 = flexion)."""
+    p = {}
+    for name, lm in landmarks.items():
+        b = model.body(lm["body"]).id
+        p[name] = data.xpos[b] + data.xmat[b].reshape(3, 3) @ np.array(lm["pos"])
+
+    def unit(v: np.ndarray) -> np.ndarray:
+        return v / np.linalg.norm(v)
+
+    yt = unit((p["IJ"] + p["C7"]) / 2 - (p["PX"] + p["T8"]) / 2)
+    zt = unit(np.cross(p["C7"] - p["IJ"], (p["PX"] + p["T8"]) / 2 - p["IJ"]))
+    t = np.column_stack([np.cross(yt, zt), yt, zt])
+    zc = unit(p["AC"] - p["SC"])
+    xc = unit(p["CX"] - p["SC"] - ((p["CX"] - p["SC"]) @ zc) * zc)
+    c = np.column_stack([xc, np.cross(zc, xc), zc])
+    zs = unit(p["AA"] - p["TS"])
+    xs = unit(np.cross(p["TS"] - p["AI"], p["AA"] - p["AI"]))
+    s = np.column_stack([xs, np.cross(zs, xs), zs])
+    yh = unit(p["GH"] - (p["EL"] + p["EM"]) / 2)
+    cy, cx, cz = Rotation.from_matrix(t.T @ c).as_euler("YXZ", degrees=True)
+    sy, sx, sz = Rotation.from_matrix(t.T @ s).as_euler("YXZ", degrees=True)
+    shaft = -(t.T @ yh)
+    values = (
+        np.degrees(np.arccos(np.clip(yh @ yt, -1, 1))), np.degrees(np.arctan2(shaft[0], shaft[2])), -sx, sy, sz,
+        -cx, -cy, cz, np.degrees(np.arccos(np.clip(yh @ s[:, 1], -1, 1))),
+    )  # fmt: skip
+    return {k: float(v) for k, v in zip(ANGLES, values)}
+
+
+def rhythm_frame_angles(model: mujoco.MjModel, landmarks: dict[str, Any], frames: dict[str, list[float]]) -> np.ndarray:
+    """ISB angles (frames x ANGLES) of stored joint values (``RHYTHM_JOINTS``; the rest at qpos0)."""
+    data = mujoco.MjData(model)
+    out = []
+    for k in range(len(frames[RHYTHM_JOINTS[0]])):
+        data.qpos[:] = model.qpos0
+        for j in RHYTHM_JOINTS:
+            a = model.joint(j).qposadr[0]
+            v = frames[j][k]
+            data.qpos[a : a + np.size(v)] = v
+        mujoco.mj_kinematics(model, data)
+        out.append([isb_angles(model, data, landmarks)[a] for a in ANGLES])
+    return np.array(out)
+
+
+def rhythm_summary(model: mujoco.MjModel, landmarks: dict[str, Any], picks: dict[str, Any]) -> dict[str, Any]:
+    """Model rows of the rhythm table from the picked frames: per plane and bin the median and range over trials,
+    GH:ST ratios per trial (change of GH elevation over change of ST upward rotation), shrug clavicle elevation range."""
+
+    def r2(x: Any) -> Any:
+        return [round(float(v), 2) for v in x] if np.ndim(x) else round(float(x), 2)
+
+    data = mujoco.MjData(model)
+    mujoco.mj_kinematics(model, data)
+    out: dict[str, Any] = {"rest": {a: r2(v) for a, v in isb_angles(model, data, landmarks).items()}}
+    for plane in ("abduction", "flexion"):
+        bins = {key: rhythm_frame_angles(model, landmarks, f) for key, f in picks[plane].items()}
+        rows = {}
+        for key, ang in bins.items():
+            rows[key] = {"trials": len(ang)} | {
+                a: {"median": r2(np.median(ang[:, i])), "range": r2([ang[:, i].min(), ang[:, i].max()])}
+                for i, a in enumerate(ANGLES)
+            }
+        trials = {key: picks[plane][key]["trial"] for key in bins}
+        ratio = {}
+        ur, gh = ANGLES.index("scapula_upward_rotation"), ANGLES.index("glenohumeral_elevation")
+        for lo, hi in (
+            ("30", "60"),
+            ("60", "90"),
+            ("90", "120"),
+            ("30", "120"),
+            ("30", "max"),
+            ("start", "max"),
+        ):
+            per = []
+            for k, name in enumerate(trials[lo]):
+                if name in trials[hi]:
+                    d = bins[hi][trials[hi].index(name)] - bins[lo][k]
+                    per.append(d[gh] / d[ur])
+            ratio[f"{lo}-{hi}"] = {"median": r2(np.median(per)), "range": r2([min(per), max(per)]), "trials": len(per)}
+        out[plane] = rows | {"gh_st": ratio}
+    shrug = rhythm_frame_angles(model, landmarks, picks["shrug"])[:, ANGLES.index("clavicle_elevation")].reshape(-1, 2)
+    span = np.ptp(shrug, axis=1)
+    out["shrug"] = {
+        "clavicle_elevation_min_max": {"median": r2(np.median(shrug, axis=0)), "range": r2([shrug.min(), shrug.max()])},
+        "clavicle_elevation_range": {"median": r2(np.median(span)), "range": r2([span.min(), span.max()])},
+        "trials": len(shrug),
+    }
+    return out
+
+
+def rhythm_compare(model_rows: dict[str, Any]) -> list[dict[str, Any]]:
+    """Literature rows with the model value next to them and the difference (deg or ratio, and in SD where published)."""
+    cite = {"ludewig": LUDEWIG, "mcclure": MCCLURE, "braman": BRAMAN, "inman": INMAN}
+    out = []
+    for src, loc, plane, mp, quantity, ht, mean, sd in RHYTHM_LIT:
+        if quantity == "gh_st":
+            model = model_rows[mp]["gh_st"][ht]["median"]
+        elif ht == "rest":
+            model = model_rows["rest"][quantity]
+        elif str(ht).startswith("change"):
+            lo, hi = ht.split()[1].split("-")
+            model = model_rows[mp][hi][quantity]["median"] - model_rows[mp][lo][quantity]["median"]
+        else:
+            model = model_rows[mp][ht if isinstance(ht, str) else str(int(ht))][quantity]["median"]
+        row = {
+            "citation": cite[src], "location": loc, "protocol": PROTOCOL[src], "plane": plane, "model_trials": mp,
+            "quantity": quantity, "elevation_deg": ht, "mean": mean, "sd": sd, "model": round(model, 2),
+            "difference": round(model - mean, 2),
+        }  # fmt: skip
+        if sd:
+            row["difference_sd"] = round((model - mean) / sd, 2)
+        out.append(row)
+    return out
+
+
+def rhythm(zf: zipfile.ZipFile, step: int = 3) -> dict[str, Any]:
+    """Scapulohumeral rhythm of the model along Seth's measured motions against Ludewig 2009, McClure 2001, Braman 2009
+    and Inman 1944 (ISB angles; table section ``rhythm``).
+
+    The model's girdle reproduces every assembled IK frame exactly; the clavicle's axial angle follows Ludewig 2009
+    (``clavicle_axial_ik``), so that row is a consistency check, not a prediction. Per trial (raising phase, up to the
+    highest elevation) the frame nearest to each bin and the frame of highest elevation are picked; the shrug trials
+    give their lowest and highest clavicle elevation. The picked joint values are stored, so the model rows can be
+    recomputed from the table and the model alone."""
+    from generate_scapular_muscles import seth_frames
+
+    import myo_sim
+
+    model = myo_sim.load_model("myoarm_r")
+    landmarks = isb_landmarks(zf, model)
+    qpos, names, _ = seth_frames(zf, model, step, info=True)
+    data = mujoco.MjData(model)
+    ang = []
+    for q in qpos:
+        data.qpos[:] = q
+        mujoco.mj_kinematics(model, data)
+        ang.append(isb_angles(model, data, landmarks))
+    adr = {j: (model.joint(j).qposadr[0], 4 if j == "acromioclavicular_r" else 1) for j in RHYTHM_JOINTS}
+    names = np.array(names)
+    picks: dict[str, Any] = {"abduction": {}, "flexion": {}, "shrug": {"trial": []}}
+
+    def add(store: dict[str, Any], name: str, k: int) -> None:
+        store.setdefault("trial", []).append(name)
+        for j, (a, n) in adr.items():
+            v = qpos[k, a : a + n]
+            store.setdefault(j, []).append(round(float(v[0]), 6) if n == 1 else [round(float(t), 6) for t in v])
+
+    for name in sorted(set(names)):
+        idx = np.flatnonzero(names == name)
+        ht = np.array([ang[k]["humerothoracic_elevation"] for k in idx])
+        if name.startswith("shrug"):
+            el = [ang[k]["clavicle_elevation"] for k in idx]
+            add(picks["shrug"], name, idx[int(np.argmin(el))])
+            add(picks["shrug"], name, idx[int(np.argmax(el))])
+            continue
+        plane = "flexion" if name.startswith("flx") else "abduction"
+        top = int(np.argmax(ht))
+        add(picks[plane].setdefault("start", {}), name, idx[0])
+        for b in RHYTHM_BINS:
+            if ht[: top + 1].max() >= b:
+                add(picks[plane].setdefault(str(int(b)), {}), name, idx[int(np.argmin(np.abs(ht[: top + 1] - b)))])
+        add(picks[plane].setdefault("max", {}), name, idx[top])
+    model_rows = rhythm_summary(model, landmarks, picks)
+    return {
+        "description": (
+            "Scapulohumeral rhythm along Seth's 18 measured motions (assembled IK, every 3rd frame), ISB angles "
+            "(Wu et al. 2005, J Biomech 38:981-992) in myoarm_r, against bone-pin and radiographic literature. "
+            "Positive = the named direction. Per trial the raising-phase frame nearest to each humerothoracic "
+            "elevation bin (deg) and the frame of highest elevation; median and range over trials. The clavicle's "
+            "axial angle is taken from Ludewig 2009 in the replay, so its rows check consistency only."
+        ),
+        "landmarks": landmarks,
+        "model": model_rows,
+        "literature": rhythm_compare(model_rows),
+        "frames": picks,
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--zip", type=Path, required=True, help="ThoracoscapularShoulderPaperMaterials.zip from SimTK")
@@ -655,6 +1054,8 @@ def main() -> None:
     cmp_.add_argument("--step", type=int, default=3, help="use every step-th IK frame")
     gir = sub.add_parser("girdle", help="design A in the model's frames, rest posture as qpos0; --write updates the table")
     gir.add_argument("--write", action="store_true")
+    rhy = sub.add_parser("rhythm", help="scapulohumeral rhythm against the literature; --write updates the table")
+    rhy.add_argument("--write", action="store_true")
     args = parser.parse_args()
     with zipfile.ZipFile(args.zip) as zf:
         if args.cmd == "register":
@@ -672,6 +1073,14 @@ def main() -> None:
             if args.write:
                 table = json.loads(DATA_PATH.read_text())
                 table["girdle"] = values
+                DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
+                print("wrote", DATA_PATH)
+        elif args.cmd == "rhythm":
+            values = rhythm(zf)
+            print(json.dumps({k: values[k] for k in ("landmarks", "model", "literature")}, indent=1))
+            if args.write:
+                table = json.loads(DATA_PATH.read_text())
+                table["rhythm"] = values
                 DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
                 print("wrote", DATA_PATH)
         else:

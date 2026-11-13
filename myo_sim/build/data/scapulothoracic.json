@@ -274,5 +274,3874 @@
       0.196991,
       0.080001
     ]
+  },
+  "rhythm": {
+    "description": "Scapulohumeral rhythm along Seth's 18 measured motions (assembled IK, every 3rd frame), ISB angles (Wu et al. 2005, J Biomech 38:981-992) in myoarm_r, against bone-pin and radiographic literature. Positive = the named direction. Per trial the raising-phase frame nearest to each humerothoracic elevation bin (deg) and the frame of highest elevation; median and range over trials. The clavicle's axial angle is taken from Ludewig 2009 in the replay, so its rows check consistency only.",
+    "landmarks": {
+      "IJ": {
+        "body": "chest_r",
+        "pos": [
+          0.00201,
+          0.0,
+          1e-06
+        ],
+        "definition": "incisura jugularis: Seth's marker ij (skin), in chest_r by the sternoclavicular shift"
+      },
+      "C7": {
+        "body": "chest_r",
+        "pos": [
+          -0.087896,
+          0.032757,
+          1e-06
+        ],
+        "definition": "spinous process of C7: Seth's marker c7 (skin), in chest_r by the sternoclavicular shift"
+      },
+      "PX": {
+        "body": "chest_r",
+        "pos": [
+          0.071773,
+          -0.164312,
+          1e-06
+        ],
+        "definition": "processus xiphoideus: Seth's marker px (skin), in chest_r by the sternoclavicular shift"
+      },
+      "T8": {
+        "body": "chest_r",
+        "pos": [
+          -0.109145,
+          -0.154432,
+          1e-06
+        ],
+        "definition": "spinous process of T8: Seth's marker t8 (skin), in chest_r by the sternoclavicular shift"
+      },
+      "SC": {
+        "body": "clavicle_r",
+        "pos": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "definition": "sternoclavicular joint centre (clavicle_r origin; Seth's marker sc)"
+      },
+      "AC": {
+        "body": "clavicle_r",
+        "pos": [
+          -0.02924,
+          0.02024,
+          0.12005
+        ],
+        "definition": "acromioclavicular joint centre (Seth's AC constraint point, centre of acromioclavicular_r)"
+      },
+      "AA": {
+        "body": "scapula_r",
+        "pos": [
+          -0.040981,
+          -0.000997,
+          0.006505
+        ],
+        "definition": "angulus acromialis: scapula mesh vertex nearest to Seth's marker aa (12.2 mm)"
+      },
+      "TS": {
+        "body": "scapula_r",
+        "pos": [
+          -0.080921,
+          -0.00971,
+          -0.098355
+        ],
+        "definition": "trigonum spinae: scapula mesh vertex nearest to Seth's marker ts (15.4 mm)"
+      },
+      "AI": {
+        "body": "scapula_r",
+        "pos": [
+          -0.107017,
+          -0.115874,
+          -0.090894
+        ],
+        "definition": "angulus inferior: scapula mesh vertex nearest to Seth's marker ai (8.4 mm)"
+      },
+      "GH": {
+        "body": "humerus_r",
+        "pos": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "definition": "glenohumeral rotation centre (humerus_r origin; Seth's marker gu)"
+      },
+      "EL": {
+        "body": "humerus_r",
+        "pos": [
+          0.00061,
+          -0.286407,
+          0.019544
+        ],
+        "definition": "lateral epicondyle: humerus mesh vertex nearest to Seth's marker EpL (2.9 mm)"
+      },
+      "EM": {
+        "body": "humerus_r",
+        "pos": [
+          7.3e-05,
+          -0.282517,
+          -0.042841
+        ],
+        "definition": "medial epicondyle: humerus mesh vertex nearest to Seth's marker EpM (2.3 mm)"
+      },
+      "CX": {
+        "body": "clavicle_r",
+        "pos": [
+          0.009714,
+          0.000833,
+          0.002225
+        ],
+        "definition": "point 10 mm from SC along the ISB clavicle X axis at the rest posture (qpos0), fixed on the clavicle"
+      }
+    },
+    "model": {
+      "rest": {
+        "humerothoracic_elevation": 8.13,
+        "humerothoracic_plane": -106.81,
+        "scapula_upward_rotation": 4.51,
+        "scapula_internal_rotation": 37.03,
+        "scapula_posterior_tilt": -8.41,
+        "clavicle_elevation": 8.48,
+        "clavicle_retraction": 30.68,
+        "clavicle_posterior_rotation": -0.0,
+        "glenohumeral_elevation": 11.6
+      },
+      "abduction": {
+        "start": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 16.2,
+            "range": [
+              13.19,
+              17.01
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": -8.04,
+            "range": [
+              -19.91,
+              1.27
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 6.39,
+            "range": [
+              -0.16,
+              10.54
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 29.54,
+            "range": [
+              26.72,
+              44.17
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -8.93,
+            "range": [
+              -10.14,
+              -7.01
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 8.9,
+            "range": [
+              6.62,
+              11.33
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 35.61,
+            "range": [
+              25.47,
+              37.04
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 1.11,
+            "range": [
+              -1.23,
+              1.88
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 6.34,
+            "range": [
+              3.5,
+              9.99
+            ]
+          }
+        },
+        "30": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 29.75,
+            "range": [
+              29.2,
+              30.64
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": -1.02,
+            "range": [
+              -7.61,
+              6.36
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 13.18,
+            "range": [
+              6.26,
+              14.44
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 20.97,
+            "range": [
+              16.39,
+              39.32
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -9.58,
+            "range": [
+              -10.47,
+              -8.29
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 10.92,
+            "range": [
+              8.99,
+              12.51
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 41.04,
+            "range": [
+              29.6,
+              43.33
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 4.24,
+            "range": [
+              2.07,
+              5.27
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 15.22,
+            "range": [
+              13.09,
+              20.23
+            ]
+          }
+        },
+        "60": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 59.86,
+            "range": [
+              58.62,
+              60.59
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 7.67,
+            "range": [
+              -7.4,
+              13.68
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 26.78,
+            "range": [
+              21.6,
+              28.7
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 17.32,
+            "range": [
+              13.05,
+              32.23
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -9.88,
+            "range": [
+              -10.28,
+              -9.24
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 16.03,
+            "range": [
+              13.45,
+              17.03
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 46.61,
+            "range": [
+              37.43,
+              48.01
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 12.0,
+            "range": [
+              10.17,
+              12.9
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 32.29,
+            "range": [
+              30.05,
+              36.7
+            ]
+          }
+        },
+        "90": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 90.06,
+            "range": [
+              88.86,
+              90.77
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 11.61,
+            "range": [
+              -1.19,
+              23.3
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 39.98,
+            "range": [
+              38.08,
+              44.26
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 20.57,
+            "range": [
+              12.66,
+              28.52
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -8.89,
+            "range": [
+              -9.42,
+              -7.25
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 20.23,
+            "range": [
+              19.13,
+              21.01
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 49.87,
+            "range": [
+              45.54,
+              53.56
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 20.5,
+            "range": [
+              19.77,
+              20.99
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 49.61,
+            "range": [
+              45.01,
+              52.62
+            ]
+          }
+        },
+        "120": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 120.02,
+            "range": [
+              119.31,
+              120.78
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 22.24,
+            "range": [
+              0.02,
+              32.75
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 52.28,
+            "range": [
+              51.49,
+              57.49
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 27.02,
+            "range": [
+              19.96,
+              30.31
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -8.92,
+            "range": [
+              -9.52,
+              -6.18
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 23.66,
+            "range": [
+              23.17,
+              24.59
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 52.15,
+            "range": [
+              51.11,
+              56.89
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 31.45,
+            "range": [
+              30.98,
+              31.7
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 67.17,
+            "range": [
+              64.77,
+              69.04
+            ]
+          }
+        },
+        "max": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 149.56,
+            "range": [
+              142.24,
+              153.7
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 64.91,
+            "range": [
+              49.45,
+              85.59
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 71.04,
+            "range": [
+              68.82,
+              73.02
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 45.39,
+            "range": [
+              40.24,
+              51.61
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -14.01,
+            "range": [
+              -15.77,
+              -11.72
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 22.73,
+            "range": [
+              22.01,
+              23.43
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 58.08,
+            "range": [
+              54.79,
+              59.42
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 37.06,
+            "range": [
+              36.3,
+              37.39
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 83.22,
+            "range": [
+              80.34,
+              87.92
+            ]
+          }
+        },
+        "gh_st": {
+          "30-60": {
+            "median": 1.09,
+            "range": [
+              1.03,
+              1.53
+            ],
+            "trials": 6
+          },
+          "60-90": {
+            "median": 1.26,
+            "range": [
+              0.77,
+              1.59
+            ],
+            "trials": 6
+          },
+          "90-120": {
+            "median": 1.31,
+            "range": [
+              1.22,
+              1.59
+            ],
+            "trials": 6
+          },
+          "30-120": {
+            "median": 1.24,
+            "range": [
+              1.01,
+              1.38
+            ],
+            "trials": 6
+          },
+          "30-max": {
+            "median": 1.17,
+            "range": [
+              1.02,
+              1.25
+            ],
+            "trials": 6
+          },
+          "start-max": {
+            "median": 1.18,
+            "range": [
+              1.11,
+              1.33
+            ],
+            "trials": 6
+          }
+        }
+      },
+      "flexion": {
+        "start": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 13.68,
+            "range": [
+              11.24,
+              15.79
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": -15.6,
+            "range": [
+              -22.36,
+              -4.88
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 4.1,
+            "range": [
+              0.51,
+              6.41
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 37.8,
+            "range": [
+              36.18,
+              39.65
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -7.92,
+            "range": [
+              -8.43,
+              -7.85
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 7.72,
+            "range": [
+              7.32,
+              8.64
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 30.34,
+            "range": [
+              28.31,
+              31.5
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": -0.21,
+            "range": [
+              -0.75,
+              0.16
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 6.38,
+            "range": [
+              1.4,
+              7.54
+            ]
+          }
+        },
+        "30": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 29.52,
+            "range": [
+              29.16,
+              30.55
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 73.14,
+            "range": [
+              65.45,
+              75.64
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 6.34,
+            "range": [
+              4.42,
+              10.45
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 41.38,
+            "range": [
+              40.78,
+              44.15
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -6.62,
+            "range": [
+              -7.51,
+              -6.29
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 6.82,
+            "range": [
+              5.92,
+              8.47
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 29.01,
+            "range": [
+              26.72,
+              29.84
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 2.44,
+            "range": [
+              2.08,
+              3.01
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 28.51,
+            "range": [
+              26.87,
+              29.71
+            ]
+          }
+        },
+        "60": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 60.05,
+            "range": [
+              59.0,
+              60.99
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 88.99,
+            "range": [
+              84.92,
+              92.92
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 21.95,
+            "range": [
+              17.68,
+              24.74
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 48.2,
+            "range": [
+              46.99,
+              50.23
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -6.2,
+            "range": [
+              -8.07,
+              -4.92
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 11.41,
+            "range": [
+              8.47,
+              15.56
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 27.94,
+            "range": [
+              27.35,
+              29.39
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 10.19,
+            "range": [
+              9.38,
+              11.16
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 50.64,
+            "range": [
+              47.5,
+              52.02
+            ]
+          }
+        },
+        "90": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 90.32,
+            "range": [
+              89.7,
+              90.7
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 92.23,
+            "range": [
+              89.78,
+              97.89
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 37.45,
+            "range": [
+              35.26,
+              40.81
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 52.84,
+            "range": [
+              50.53,
+              54.29
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -7.97,
+            "range": [
+              -9.62,
+              -5.02
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 18.99,
+            "range": [
+              15.63,
+              21.97
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 32.5,
+            "range": [
+              30.2,
+              34.46
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 20.43,
+            "range": [
+              19.59,
+              21.16
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 67.25,
+            "range": [
+              66.69,
+              70.85
+            ]
+          }
+        },
+        "120": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 120.15,
+            "range": [
+              119.78,
+              120.94
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 91.65,
+            "range": [
+              88.77,
+              95.19
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 53.37,
+            "range": [
+              52.47,
+              56.21
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 53.71,
+            "range": [
+              52.31,
+              56.37
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -10.13,
+            "range": [
+              -12.54,
+              -8.61
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 21.67,
+            "range": [
+              20.24,
+              23.57
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 42.01,
+            "range": [
+              40.54,
+              43.39
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 34.58,
+            "range": [
+              34.0,
+              35.49
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 80.71,
+            "range": [
+              79.29,
+              83.2
+            ]
+          }
+        },
+        "max": {
+          "trials": 6,
+          "humerothoracic_elevation": {
+            "median": 148.65,
+            "range": [
+              144.15,
+              152.43
+            ]
+          },
+          "humerothoracic_plane": {
+            "median": 79.52,
+            "range": [
+              71.86,
+              91.13
+            ]
+          },
+          "scapula_upward_rotation": {
+            "median": 73.56,
+            "range": [
+              71.91,
+              75.77
+            ]
+          },
+          "scapula_internal_rotation": {
+            "median": 43.68,
+            "range": [
+              39.57,
+              50.96
+            ]
+          },
+          "scapula_posterior_tilt": {
+            "median": -15.46,
+            "range": [
+              -17.85,
+              -11.22
+            ]
+          },
+          "clavicle_elevation": {
+            "median": 23.55,
+            "range": [
+              22.53,
+              24.2
+            ]
+          },
+          "clavicle_retraction": {
+            "median": 59.88,
+            "range": [
+              57.69,
+              62.53
+            ]
+          },
+          "clavicle_posterior_rotation": {
+            "median": 39.06,
+            "range": [
+              38.52,
+              39.77
+            ]
+          },
+          "glenohumeral_elevation": {
+            "median": 85.68,
+            "range": [
+              84.65,
+              86.83
+            ]
+          }
+        },
+        "gh_st": {
+          "30-60": {
+            "median": 1.58,
+            "range": [
+              1.18,
+              1.85
+            ],
+            "trials": 6
+          },
+          "60-90": {
+            "median": 1.06,
+            "range": [
+              0.92,
+              1.3
+            ],
+            "trials": 6
+          },
+          "90-120": {
+            "median": 0.78,
+            "range": [
+              0.66,
+              1.04
+            ],
+            "trials": 6
+          },
+          "30-120": {
+            "median": 1.11,
+            "range": [
+              0.96,
+              1.27
+            ],
+            "trials": 6
+          },
+          "30-max": {
+            "median": 0.86,
+            "range": [
+              0.83,
+              0.89
+            ],
+            "trials": 6
+          },
+          "start-max": {
+            "median": 1.14,
+            "range": [
+              1.09,
+              1.24
+            ],
+            "trials": 6
+          }
+        }
+      },
+      "shrug": {
+        "clavicle_elevation_min_max": {
+          "median": [
+            8.0,
+            26.6
+          ],
+          "range": [
+            6.58,
+            28.42
+          ]
+        },
+        "clavicle_elevation_range": {
+          "median": 19.21,
+          "range": [
+            12.5,
+            20.13
+          ]
+        },
+        "trials": 6
+      }
+    },
+    "literature": [
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Table I (mean +- SE; SD = SE x sqrt(n))",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "standing, arm at the side",
+        "model_trials": "rest",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": "rest",
+        "mean": 19.2,
+        "sd": 6.6,
+        "model": 30.68,
+        "difference": 11.48,
+        "difference_sd": 1.74
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Table I (mean +- SE; SD = SE x sqrt(n))",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "standing, arm at the side",
+        "model_trials": "rest",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": "rest",
+        "mean": 5.9,
+        "sd": 3.3,
+        "model": 8.48,
+        "difference": 2.58,
+        "difference_sd": 0.78
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Table I (mean +- SE; SD = SE x sqrt(n))",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "standing, arm at the side",
+        "model_trials": "rest",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": "rest",
+        "mean": 0.1,
+        "sd": null,
+        "model": -0.0,
+        "difference": -0.1
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Table I (mean +- SE; SD = SE x sqrt(n))",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "standing, arm at the side",
+        "model_trials": "rest",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": "rest",
+        "mean": 41.1,
+        "sd": 6.9,
+        "model": 37.03,
+        "difference": -4.07,
+        "difference_sd": -0.59
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Table I (mean +- SE; SD = SE x sqrt(n))",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "standing, arm at the side",
+        "model_trials": "rest",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "rest",
+        "mean": 5.4,
+        "sd": 3.5,
+        "model": 4.51,
+        "difference": -0.89,
+        "difference_sd": -0.25
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Table I (mean +- SE; SD = SE x sqrt(n))",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "standing, arm at the side",
+        "model_trials": "rest",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": "rest",
+        "mean": -13.5,
+        "sd": 6.9,
+        "model": -8.41,
+        "difference": 5.09,
+        "difference_sd": 0.74
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Table I (mean +- SE; SD = SE x sqrt(n))",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "standing, arm at the side",
+        "model_trials": "rest",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": "rest",
+        "mean": 0.8,
+        "sd": 3.5,
+        "model": 11.6,
+        "difference": 10.8,
+        "difference_sd": 3.09
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 30,
+        "mean": 15.5,
+        "sd": null,
+        "model": 13.18,
+        "difference": -2.32
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 60,
+        "mean": 26.5,
+        "sd": null,
+        "model": 26.78,
+        "difference": 0.28
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 90,
+        "mean": 36.0,
+        "sd": null,
+        "model": 39.98,
+        "difference": 3.98
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 120,
+        "mean": 46.0,
+        "sd": null,
+        "model": 52.28,
+        "difference": 6.28
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 30,
+        "mean": 31.2,
+        "sd": null,
+        "model": 20.97,
+        "difference": -10.23
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 60,
+        "mean": 30.5,
+        "sd": null,
+        "model": 17.32,
+        "difference": -13.18
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 90,
+        "mean": 30.7,
+        "sd": null,
+        "model": 20.57,
+        "difference": -10.13
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 120,
+        "mean": 30.6,
+        "sd": null,
+        "model": 27.02,
+        "difference": -3.58
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 30,
+        "mean": -10.5,
+        "sd": null,
+        "model": -9.58,
+        "difference": 0.92
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 60,
+        "mean": -6.0,
+        "sd": null,
+        "model": -9.88,
+        "difference": -3.88
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 90,
+        "mean": -1.7,
+        "sd": null,
+        "model": -8.89,
+        "difference": -7.19
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 120,
+        "mean": 3.9,
+        "sd": null,
+        "model": -8.92,
+        "difference": -12.82
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 30,
+        "mean": 31.4,
+        "sd": null,
+        "model": 41.04,
+        "difference": 9.64
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 60,
+        "mean": 37.3,
+        "sd": null,
+        "model": 46.61,
+        "difference": 9.31
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 90,
+        "mean": 40.6,
+        "sd": null,
+        "model": 49.87,
+        "difference": 9.27
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 120,
+        "mean": 44.1,
+        "sd": null,
+        "model": 52.15,
+        "difference": 8.05
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 30,
+        "mean": 14.3,
+        "sd": null,
+        "model": 10.92,
+        "difference": -3.38
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 60,
+        "mean": 16.8,
+        "sd": null,
+        "model": 16.03,
+        "difference": -0.77
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 90,
+        "mean": 18.1,
+        "sd": null,
+        "model": 20.23,
+        "difference": 2.13
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 120,
+        "mean": 19.5,
+        "sd": null,
+        "model": 23.66,
+        "difference": 4.16
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 30,
+        "mean": 3.0,
+        "sd": null,
+        "model": 4.24,
+        "difference": 1.24
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 60,
+        "mean": 8.8,
+        "sd": null,
+        "model": 12.0,
+        "difference": 3.2
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 90,
+        "mean": 15.4,
+        "sd": null,
+        "model": 20.5,
+        "difference": 5.1
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 120,
+        "mean": 24.5,
+        "sd": null,
+        "model": 31.45,
+        "difference": 6.95
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 30,
+        "mean": 9.0,
+        "sd": null,
+        "model": 15.22,
+        "difference": 6.22
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 60,
+        "mean": 30.5,
+        "sd": null,
+        "model": 32.29,
+        "difference": 1.79
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 90,
+        "mean": 54.0,
+        "sd": null,
+        "model": 49.61,
+        "difference": -4.39
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 120,
+        "mean": 74.5,
+        "sd": null,
+        "model": 67.17,
+        "difference": -7.33
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 30,
+        "mean": 15.5,
+        "sd": null,
+        "model": 6.34,
+        "difference": -9.16
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 60,
+        "mean": 25.5,
+        "sd": null,
+        "model": 21.95,
+        "difference": -3.55
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 90,
+        "mean": 33.5,
+        "sd": null,
+        "model": 37.45,
+        "difference": 3.95
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": 120,
+        "mean": 43.5,
+        "sd": null,
+        "model": 53.37,
+        "difference": 9.87
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 30,
+        "mean": 44.3,
+        "sd": null,
+        "model": 41.38,
+        "difference": -2.92
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 60,
+        "mean": 46.8,
+        "sd": null,
+        "model": 48.2,
+        "difference": 1.4
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 90,
+        "mean": 47.8,
+        "sd": null,
+        "model": 52.84,
+        "difference": 5.04
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": 120,
+        "mean": 43.5,
+        "sd": null,
+        "model": 53.71,
+        "difference": 10.21
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 30,
+        "mean": -10.4,
+        "sd": null,
+        "model": -6.62,
+        "difference": 3.78
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 60,
+        "mean": -5.9,
+        "sd": null,
+        "model": -6.2,
+        "difference": -0.3
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 90,
+        "mean": -1.6,
+        "sd": null,
+        "model": -7.97,
+        "difference": -6.37
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": 120,
+        "mean": 5.4,
+        "sd": null,
+        "model": -10.13,
+        "difference": -15.53
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 30,
+        "mean": 20.5,
+        "sd": null,
+        "model": 29.01,
+        "difference": 8.51
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 60,
+        "mean": 22.7,
+        "sd": null,
+        "model": 27.94,
+        "difference": 5.24
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 90,
+        "mean": 25.0,
+        "sd": null,
+        "model": 32.5,
+        "difference": 7.5
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": 120,
+        "mean": 31.6,
+        "sd": null,
+        "model": 42.01,
+        "difference": 10.41
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 30,
+        "mean": 10.1,
+        "sd": null,
+        "model": 6.82,
+        "difference": -3.28
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 60,
+        "mean": 12.1,
+        "sd": null,
+        "model": 11.41,
+        "difference": -0.69
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 90,
+        "mean": 13.5,
+        "sd": null,
+        "model": 18.99,
+        "difference": 5.49
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": 120,
+        "mean": 14.5,
+        "sd": null,
+        "model": 21.67,
+        "difference": 7.17
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 30,
+        "mean": 0.0,
+        "sd": null,
+        "model": 2.44,
+        "difference": 2.44
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 60,
+        "mean": 6.8,
+        "sd": null,
+        "model": 10.19,
+        "difference": 3.39
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 90,
+        "mean": 14.0,
+        "sd": null,
+        "model": 20.43,
+        "difference": 6.43
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": 120,
+        "mean": 24.5,
+        "sd": null,
+        "model": 34.58,
+        "difference": 10.08
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 30,
+        "mean": 14.0,
+        "sd": null,
+        "model": 28.51,
+        "difference": 14.51
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 60,
+        "mean": 33.0,
+        "sd": null,
+        "model": 50.64,
+        "difference": 17.64
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 90,
+        "mean": 56.0,
+        "sd": null,
+        "model": 67.25,
+        "difference": 11.25
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "Fig. 5A-D, digitised",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": 120,
+        "mean": 77.0,
+        "sd": null,
+        "model": 80.71,
+        "difference": 3.71
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (regression slope GH on ST upward rotation)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "coronal abduction",
+        "model_trials": "abduction",
+        "quantity": "gh_st",
+        "elevation_deg": "30-120",
+        "mean": 2.1,
+        "sd": null,
+        "model": 1.24,
+        "difference": -0.86
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (regression slope GH on ST upward rotation)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "gh_st",
+        "elevation_deg": "30-120",
+        "mean": 2.4,
+        "sd": null,
+        "model": 1.11,
+        "difference": -1.29
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "change start-max",
+        "mean": 39.0,
+        "sd": null,
+        "model": 64.65,
+        "difference": 25.65
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": "change start-max",
+        "mean": 21.0,
+        "sd": null,
+        "model": -5.08,
+        "difference": -26.08
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "abduction",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": "change start-max",
+        "mean": 16.0,
+        "sd": null,
+        "model": 22.47,
+        "difference": 6.47
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "abduction",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": "change start-max",
+        "mean": 6.0,
+        "sd": null,
+        "model": 13.83,
+        "difference": 7.83
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "abduction",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": "change start-max",
+        "mean": 31.0,
+        "sd": null,
+        "model": 35.95,
+        "difference": 4.95
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "flexion",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "change start-max",
+        "mean": 39.0,
+        "sd": null,
+        "model": 69.46,
+        "difference": 30.46
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "flexion",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": "change start-max",
+        "mean": 21.0,
+        "sd": null,
+        "model": -7.54,
+        "difference": -28.54
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "flexion",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": "change start-max",
+        "mean": 16.0,
+        "sd": null,
+        "model": 29.54,
+        "difference": 13.54
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "flexion",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": "change start-max",
+        "mean": 6.0,
+        "sd": null,
+        "model": 15.83,
+        "difference": 9.83
+      },
+      {
+        "citation": "Ludewig PM, Phadke V, Braman JP, Hassett DR, Cieminski CJ, LaPrade RF. Motion of the shoulder complex during multiplanar humeral elevation. J Bone Joint Surg Am 91(2):378-389, 2009 (doi:10.2106/JBJS.G.01483)",
+        "location": "text (start to end of elevation, planes pooled)",
+        "protocol": "12 adults (SC 11), bone pins, electromagnetic tracking, ISB angles, standing, active, unloaded, raising",
+        "plane": "all three planes",
+        "model_trials": "flexion",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": "change start-max",
+        "mean": 31.0,
+        "sd": null,
+        "model": 39.27,
+        "difference": 8.27
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "Figs 3-4, digitised (mean +- SEM)",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "change 30-120",
+        "mean": 30.7,
+        "sd": null,
+        "model": 47.03,
+        "difference": 16.33
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "Figs 3-4, digitised (mean +- SEM)",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": "change 30-120",
+        "mean": 9.9,
+        "sd": null,
+        "model": -3.51,
+        "difference": -13.41
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "Figs 3-4, digitised (mean +- SEM)",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_retraction",
+        "elevation_deg": "change 30-120",
+        "mean": 9.7,
+        "sd": null,
+        "model": 13.0,
+        "difference": 3.3
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "Figs 3-4, digitised (mean +- SEM)",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": "change 30-120",
+        "mean": 7.4,
+        "sd": null,
+        "model": 14.85,
+        "difference": 7.45
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "abstract (minimum to maximum elevation, mean [SD])",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "scapular plane",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "change start-max",
+        "mean": 50.0,
+        "sd": 4.8,
+        "model": 64.65,
+        "difference": 14.65,
+        "difference_sd": 3.05
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "abstract (minimum to maximum elevation, mean [SD])",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "scapular plane",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": "change start-max",
+        "mean": 30.0,
+        "sd": 13.0,
+        "model": -5.08,
+        "difference": -35.08,
+        "difference_sd": -2.7
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "results (GH:ST from minimum elevation)",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "flexion",
+        "model_trials": "flexion",
+        "quantity": "gh_st",
+        "elevation_deg": "start-max",
+        "mean": 2.0,
+        "sd": null,
+        "model": 1.14,
+        "difference": -0.86
+      },
+      {
+        "citation": "McClure PW, Michener LA, Sennett BJ, Karduna AR. Direct 3-dimensional measurement of scapular kinematics during dynamic movements in vivo. J Shoulder Elbow Surg 10(3):269-277, 2001 (doi:10.1067/mse.2001.112954)",
+        "location": "results (GH:ST from minimum elevation)",
+        "protocol": "8 adults, scapular bone pins, electromagnetic tracking, the authors' own scapular axes (same Euler order)",
+        "plane": "scapular plane",
+        "model_trials": "abduction",
+        "quantity": "gh_st",
+        "elevation_deg": "start-max",
+        "mean": 1.7,
+        "sd": null,
+        "model": 1.18,
+        "difference": -0.52
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "Table I (raising, mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach",
+        "model_trials": "abduction",
+        "quantity": "gh_st",
+        "elevation_deg": "30-60",
+        "mean": 2.36,
+        "sd": 0.75,
+        "model": 1.09,
+        "difference": -1.27,
+        "difference_sd": -1.69
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "Table I (raising, mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach",
+        "model_trials": "abduction",
+        "quantity": "gh_st",
+        "elevation_deg": "60-90",
+        "mean": 2.71,
+        "sd": 0.85,
+        "model": 1.26,
+        "difference": -1.45,
+        "difference_sd": -1.71
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "Table I (raising, mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach",
+        "model_trials": "abduction",
+        "quantity": "gh_st",
+        "elevation_deg": "90-120",
+        "mean": 2.5,
+        "sd": 0.9,
+        "model": 1.31,
+        "difference": -1.19,
+        "difference_sd": -1.32
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "Table I (raising, mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach",
+        "model_trials": "flexion",
+        "quantity": "gh_st",
+        "elevation_deg": "30-60",
+        "mean": 2.36,
+        "sd": 0.75,
+        "model": 1.58,
+        "difference": -0.78,
+        "difference_sd": -1.04
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "Table I (raising, mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach",
+        "model_trials": "flexion",
+        "quantity": "gh_st",
+        "elevation_deg": "60-90",
+        "mean": 2.71,
+        "sd": 0.85,
+        "model": 1.06,
+        "difference": -1.65,
+        "difference_sd": -1.94
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "Table I (raising, mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach",
+        "model_trials": "flexion",
+        "quantity": "gh_st",
+        "elevation_deg": "90-120",
+        "mean": 2.5,
+        "sd": 0.9,
+        "model": 0.78,
+        "difference": -1.72,
+        "difference_sd": -1.91
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, minimum elevation (about 15 deg)",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "start",
+        "mean": 11.4,
+        "sd": 5.8,
+        "model": 6.39,
+        "difference": -5.01,
+        "difference_sd": -0.86
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, minimum elevation (about 15 deg)",
+        "model_trials": "abduction",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": "start",
+        "mean": 33.2,
+        "sd": 5.2,
+        "model": 29.54,
+        "difference": -3.66,
+        "difference_sd": -0.7
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, minimum elevation (about 15 deg)",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": "start",
+        "mean": -11.8,
+        "sd": 4.9,
+        "model": -8.93,
+        "difference": 2.87,
+        "difference_sd": 0.59
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, minimum elevation (about 15 deg)",
+        "model_trials": "abduction",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": "start",
+        "mean": -7.4,
+        "sd": 5.0,
+        "model": 6.34,
+        "difference": 13.74,
+        "difference_sd": 2.75
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, maximum (132.9 +- 9.9 deg)",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "max",
+        "mean": 48.6,
+        "sd": 4.0,
+        "model": 71.04,
+        "difference": 22.44,
+        "difference_sd": 5.61
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, maximum (132.9 +- 9.9 deg)",
+        "model_trials": "abduction",
+        "quantity": "scapula_internal_rotation",
+        "elevation_deg": "max",
+        "mean": 42.8,
+        "sd": 8.7,
+        "model": 45.39,
+        "difference": 2.59,
+        "difference_sd": 0.3
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, maximum (132.9 +- 9.9 deg)",
+        "model_trials": "abduction",
+        "quantity": "scapula_posterior_tilt",
+        "elevation_deg": "max",
+        "mean": 9.8,
+        "sd": 7.5,
+        "model": -14.01,
+        "difference": -23.81,
+        "difference_sd": -3.17
+      },
+      {
+        "citation": "Braman JP, Engel SC, LaPrade RF, Ludewig PM. In vivo assessment of scapulohumeral rhythm during unconstrained overhead reaching in asymptomatic subjects. J Shoulder Elbow Surg 18(6):960-967, 2009 (doi:10.1016/j.jse.2009.02.001)",
+        "location": "text (mean +- SD)",
+        "protocol": "12 adults (Ludewig 2009 cohort), bone pins, self-selected overhead reach (63 deg forward of coronal)",
+        "plane": "self-selected reach, maximum (132.9 +- 9.9 deg)",
+        "model_trials": "abduction",
+        "quantity": "glenohumeral_elevation",
+        "elevation_deg": "max",
+        "mean": 96.9,
+        "sd": 5.5,
+        "model": 83.22,
+        "difference": -13.68,
+        "difference_sd": -2.49
+      },
+      {
+        "citation": "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, 1944, as reported in McClure et al. 2001 (discussion table)",
+        "location": "McClure 2001 discussion table",
+        "protocol": "radiographs, subjects and spread not stated",
+        "plane": "abduction 30-150 deg",
+        "model_trials": "abduction",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "change 30-max",
+        "mean": 40.0,
+        "sd": null,
+        "model": 57.86,
+        "difference": 17.86
+      },
+      {
+        "citation": "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, 1944, as reported in McClure et al. 2001 (discussion table)",
+        "location": "McClure 2001 discussion table",
+        "protocol": "radiographs, subjects and spread not stated",
+        "plane": "abduction 30-150 deg",
+        "model_trials": "abduction",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": "change 30-max",
+        "mean": 30.0,
+        "sd": null,
+        "model": 11.81,
+        "difference": -18.19
+      },
+      {
+        "citation": "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, 1944, as reported in McClure et al. 2001 (discussion table)",
+        "location": "McClure 2001 discussion table",
+        "protocol": "radiographs, subjects and spread not stated",
+        "plane": "abduction 30-150 deg",
+        "model_trials": "abduction",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": "change 30-max",
+        "mean": 30.0,
+        "sd": null,
+        "model": 32.82,
+        "difference": 2.82
+      },
+      {
+        "citation": "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, 1944, as reported in McClure et al. 2001 (discussion table)",
+        "location": "McClure 2001 discussion table",
+        "protocol": "radiographs, subjects and spread not stated",
+        "plane": "flexion 30-150 deg",
+        "model_trials": "flexion",
+        "quantity": "scapula_upward_rotation",
+        "elevation_deg": "change 30-max",
+        "mean": 50.0,
+        "sd": null,
+        "model": 67.22,
+        "difference": 17.22
+      },
+      {
+        "citation": "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, 1944, as reported in McClure et al. 2001 (discussion table)",
+        "location": "McClure 2001 discussion table",
+        "protocol": "radiographs, subjects and spread not stated",
+        "plane": "flexion 30-150 deg",
+        "model_trials": "flexion",
+        "quantity": "clavicle_elevation",
+        "elevation_deg": "change 30-max",
+        "mean": 25.0,
+        "sd": null,
+        "model": 16.73,
+        "difference": -8.27
+      },
+      {
+        "citation": "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, 1944, as reported in McClure et al. 2001 (discussion table)",
+        "location": "McClure 2001 discussion table",
+        "protocol": "radiographs, subjects and spread not stated",
+        "plane": "flexion 30-150 deg",
+        "model_trials": "flexion",
+        "quantity": "clavicle_posterior_rotation",
+        "elevation_deg": "change 30-max",
+        "mean": 30.0,
+        "sd": null,
+        "model": 36.62,
+        "difference": 6.62
+      },
+      {
+        "citation": "Inman VT, Saunders JB, Abbott LC. Observations on the function of the shoulder joint. J Bone Joint Surg 26(1):1-30, 1944, as reported in McClure et al. 2001 (discussion table)",
+        "location": "Inman 1944 (classic statement)",
+        "protocol": "radiographs, subjects and spread not stated",
+        "plane": "abduction beyond 30 deg",
+        "model_trials": "abduction",
+        "quantity": "gh_st",
+        "elevation_deg": "30-max",
+        "mean": 2.0,
+        "sd": null,
+        "model": 1.17,
+        "difference": -0.83
+      }
+    ],
+    "frames": {
+      "abduction": {
+        "start": {
+          "trial": [
+            "abd01",
+            "abd02",
+            "abd03",
+            "abd21",
+            "abd22",
+            "abd23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.218184,
+            -0.382698,
+            -0.422366,
+            -0.38412,
+            -0.40607,
+            -0.418527
+          ],
+          "sternoclavicular_r3_r": [
+            -0.099838,
+            -0.054887,
+            -0.02772,
+            -0.103895,
+            -0.08418,
+            -0.053441
+          ],
+          "sternoclavicular_r1_r": [
+            0.000313,
+            0.002378,
+            0.004157,
+            0.002641,
+            0.00092,
+            0.002998
+          ],
+          "acromioclavicular_r": [
+            [
+              0.999515,
+              0.025288,
+              0.015693,
+              -0.009204
+            ],
+            [
+              0.999656,
+              -0.019387,
+              -0.016782,
+              0.005478
+            ],
+            [
+              0.999059,
+              -0.028804,
+              -0.030811,
+              0.010078
+            ],
+            [
+              0.9998,
+              -0.013272,
+              -0.014102,
+              -0.005077
+            ],
+            [
+              0.99947,
+              -0.007157,
+              -0.030897,
+              -0.00729
+            ],
+            [
+              0.999199,
+              -0.010552,
+              -0.038473,
+              -0.003147
+            ]
+          ],
+          "elv_angle_r": [
+            0.310536,
+            0.261372,
+            0.416674,
+            0.407455,
+            0.1655,
+            0.276543
+          ],
+          "shoulder_elv_r": [
+            0.380131,
+            0.276334,
+            0.253899,
+            0.320823,
+            0.319024,
+            0.305945
+          ],
+          "shoulder1_r2_r": [
+            -0.310536,
+            -0.261372,
+            -0.416674,
+            -0.407455,
+            -0.1655,
+            -0.276543
+          ],
+          "shoulder_rot_r": [
+            0.656844,
+            0.179008,
+            0.166366,
+            0.270796,
+            0.099331,
+            0.189569
+          ]
+        },
+        "30": {
+          "trial": [
+            "abd01",
+            "abd02",
+            "abd03",
+            "abd21",
+            "abd22",
+            "abd23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.292604,
+            -0.437633,
+            -0.498878,
+            -0.482294,
+            -0.504547,
+            -0.53024
+          ],
+          "sternoclavicular_r3_r": [
+            -0.063054,
+            -0.028278,
+            -0.008835,
+            -0.066476,
+            -0.044211,
+            -0.018339
+          ],
+          "sternoclavicular_r1_r": [
+            0.038606,
+            0.031725,
+            0.034168,
+            0.034843,
+            0.032702,
+            0.039103
+          ],
+          "acromioclavicular_r": [
+            [
+              0.999963,
+              0.003064,
+              0.007563,
+              -0.002674
+            ],
+            [
+              0.998857,
+              -0.038318,
+              -0.026595,
+              0.010432
+            ],
+            [
+              0.997523,
+              -0.040629,
+              -0.057079,
+              0.006259
+            ],
+            [
+              0.998274,
+              -0.024317,
+              -0.052628,
+              -0.009374
+            ],
+            [
+              0.997647,
+              -0.041296,
+              -0.054706,
+              0.001167
+            ],
+            [
+              0.996468,
+              -0.033101,
+              -0.07706,
+              -0.00419
+            ]
+          ],
+          "elv_angle_r": [
+            0.201619,
+            0.137029,
+            0.380238,
+            0.41946,
+            0.268266,
+            0.528783
+          ],
+          "shoulder_elv_r": [
+            0.555829,
+            0.430789,
+            0.428709,
+            0.503502,
+            0.448795,
+            0.478303
+          ],
+          "shoulder1_r2_r": [
+            -0.201619,
+            -0.137029,
+            -0.380238,
+            -0.41946,
+            -0.268266,
+            -0.528783
+          ],
+          "shoulder_rot_r": [
+            0.159807,
+            0.037499,
+            0.05016,
+            0.314434,
+            0.146885,
+            0.322213
+          ]
+        },
+        "60": {
+          "trial": [
+            "abd01",
+            "abd02",
+            "abd03",
+            "abd21",
+            "abd22",
+            "abd23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.43014,
+            -0.577581,
+            -0.609189,
+            -0.5646,
+            -0.593423,
+            -0.606546
+          ],
+          "sternoclavicular_r3_r": [
+            0.009292,
+            0.05184,
+            0.052019,
+            0.052964,
+            0.069401,
+            0.070247
+          ],
+          "sternoclavicular_r1_r": [
+            0.142586,
+            0.132626,
+            0.131341,
+            0.138967,
+            0.138288,
+            0.144099
+          ],
+          "acromioclavicular_r": [
+            [
+              0.998636,
+              -0.048404,
+              0.003197,
+              0.01929
+            ],
+            [
+              0.994499,
+              -0.090194,
+              -0.040639,
+              0.034421
+            ],
+            [
+              0.994199,
+              -0.075342,
+              -0.075481,
+              0.013937
+            ],
+            [
+              0.996047,
+              -0.067125,
+              -0.056199,
+              0.015033
+            ],
+            [
+              0.994401,
+              -0.08456,
+              -0.056518,
+              0.028675
+            ],
+            [
+              0.994376,
+              -0.07312,
+              -0.075168,
+              0.014807
+            ]
+          ],
+          "elv_angle_r": [
+            0.24215,
+            0.115085,
+            0.431741,
+            0.620729,
+            0.476411,
+            0.626861
+          ],
+          "shoulder_elv_r": [
+            0.843519,
+            0.730363,
+            0.743587,
+            0.771278,
+            0.722291,
+            0.775008
+          ],
+          "shoulder1_r2_r": [
+            -0.24215,
+            -0.115085,
+            -0.431741,
+            -0.620729,
+            -0.476411,
+            -0.626861
+          ],
+          "shoulder_rot_r": [
+            0.109785,
+            -0.12166,
+            0.153495,
+            0.442782,
+            0.259731,
+            0.386023
+          ]
+        },
+        "90": {
+          "trial": [
+            "abd01",
+            "abd02",
+            "abd03",
+            "abd21",
+            "abd22",
+            "abd23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.56695,
+            -0.652842,
+            -0.699301,
+            -0.604936,
+            -0.635017,
+            -0.641548
+          ],
+          "sternoclavicular_r3_r": [
+            0.120507,
+            0.139533,
+            0.132057,
+            0.107165,
+            0.140512,
+            0.12292
+          ],
+          "sternoclavicular_r1_r": [
+            0.265884,
+            0.246237,
+            0.25616,
+            0.270391,
+            0.262037,
+            0.268389
+          ],
+          "acromioclavicular_r": [
+            [
+              0.992975,
+              -0.095621,
+              0.010364,
+              0.068925
+            ],
+            [
+              0.987508,
+              -0.12919,
+              -0.005509,
+              0.090037
+            ],
+            [
+              0.989915,
+              -0.119066,
+              -0.047822,
+              0.060036
+            ],
+            [
+              0.994707,
+              -0.090176,
+              -0.019107,
+              0.045395
+            ],
+            [
+              0.992744,
+              -0.101463,
+              -0.028705,
+              0.057806
+            ],
+            [
+              0.993917,
+              -0.093667,
+              -0.040293,
+              0.041613
+            ]
+          ],
+          "elv_angle_r": [
+            0.2919,
+            0.174721,
+            0.417733,
+            0.661673,
+            0.504955,
+            0.597918
+          ],
+          "shoulder_elv_r": [
+            1.084411,
+            0.987196,
+            1.025131,
+            1.105377,
+            1.048818,
+            1.097643
+          ],
+          "shoulder1_r2_r": [
+            -0.2919,
+            -0.174721,
+            -0.417733,
+            -0.661673,
+            -0.504955,
+            -0.597918
+          ],
+          "shoulder_rot_r": [
+            0.281814,
+            0.027738,
+            0.19782,
+            0.500353,
+            0.356145,
+            0.393031
+          ]
+        },
+        "120": {
+          "trial": [
+            "abd01",
+            "abd02",
+            "abd03",
+            "abd21",
+            "abd22",
+            "abd23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.656469,
+            -0.725709,
+            -0.750807,
+            -0.666878,
+            -0.675193,
+            -0.671458
+          ],
+          "sternoclavicular_r3_r": [
+            0.187122,
+            0.205845,
+            0.188276,
+            0.179082,
+            0.188332,
+            0.188503
+          ],
+          "sternoclavicular_r1_r": [
+            0.431692,
+            0.417367,
+            0.41758,
+            0.440966,
+            0.436441,
+            0.440666
+          ],
+          "acromioclavicular_r": [
+            [
+              0.989689,
+              -0.101054,
+              0.026685,
+              0.097937
+            ],
+            [
+              0.982345,
+              -0.133665,
+              0.026324,
+              0.128217
+            ],
+            [
+              0.985293,
+              -0.131439,
+              0.004825,
+              0.10908
+            ],
+            [
+              0.991864,
+              -0.09531,
+              0.014109,
+              0.083205
+            ],
+            [
+              0.990934,
+              -0.099977,
+              0.013256,
+              0.088763
+            ],
+            [
+              0.992171,
+              -0.094412,
+              0.008193,
+              0.081338
+            ]
+          ],
+          "elv_angle_r": [
+            0.433549,
+            0.208575,
+            0.306472,
+            0.690686,
+            0.601244,
+            0.595711
+          ],
+          "shoulder_elv_r": [
+            1.369536,
+            1.332806,
+            1.336791,
+            1.390624,
+            1.36928,
+            1.394357
+          ],
+          "shoulder1_r2_r": [
+            -0.433549,
+            -0.208575,
+            -0.306472,
+            -0.690686,
+            -0.601244,
+            -0.595711
+          ],
+          "shoulder_rot_r": [
+            0.403606,
+            0.028693,
+            0.093987,
+            0.529577,
+            0.479921,
+            0.419865
+          ]
+        },
+        "max": {
+          "trial": [
+            "abd01",
+            "abd02",
+            "abd03",
+            "abd21",
+            "abd22",
+            "abd23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.718011,
+            -0.772856,
+            -0.770381,
+            -0.793059,
+            -0.77918,
+            -0.723058
+          ],
+          "sternoclavicular_r3_r": [
+            0.1622,
+            0.17757,
+            0.161998,
+            0.176202,
+            0.17488,
+            0.185281
+          ],
+          "sternoclavicular_r1_r": [
+            0.514642,
+            0.514642,
+            0.514642,
+            0.514642,
+            0.514642,
+            0.514642
+          ],
+          "acromioclavicular_r": [
+            [
+              0.948978,
+              -0.163503,
+              0.150497,
+              0.223735
+            ],
+            [
+              0.954452,
+              -0.170367,
+              0.120676,
+              0.213152
+            ],
+            [
+              0.952568,
+              -0.172197,
+              0.128709,
+              0.215397
+            ],
+            [
+              0.953817,
+              -0.175625,
+              0.116192,
+              0.214216
+            ],
+            [
+              0.945595,
+              -0.181454,
+              0.138148,
+              0.232034
+            ],
+            [
+              0.955356,
+              -0.157508,
+              0.131365,
+              0.212674
+            ]
+          ],
+          "elv_angle_r": [
+            0.893773,
+            0.643846,
+            0.760739,
+            0.802909,
+            0.767049,
+            0.914469
+          ],
+          "shoulder_elv_r": [
+            1.701566,
+            1.652073,
+            1.644976,
+            1.577726,
+            1.614751,
+            1.606524
+          ],
+          "shoulder1_r2_r": [
+            -0.893773,
+            -0.643846,
+            -0.760739,
+            -0.802909,
+            -0.767049,
+            -0.914469
+          ],
+          "shoulder_rot_r": [
+            0.758478,
+            0.414637,
+            0.561021,
+            0.547449,
+            0.509055,
+            0.776825
+          ]
+        }
+      },
+      "flexion": {
+        "start": {
+          "trial": [
+            "flx01",
+            "flx02",
+            "flx03",
+            "flx21",
+            "flx22",
+            "flx23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.324095,
+            -0.324722,
+            -0.317127,
+            -0.268669,
+            -0.29084,
+            -0.288512
+          ],
+          "sternoclavicular_r3_r": [
+            -0.087528,
+            -0.071013,
+            -0.079466,
+            -0.087674,
+            -0.092265,
+            -0.084636
+          ],
+          "sternoclavicular_r1_r": [
+            -0.002197,
+            -0.003644,
+            0.002302,
+            -0.002705,
+            -0.002999,
+            -5.6e-05
+          ],
+          "acromioclavicular_r": [
+            [
+              0.999976,
+              -0.006728,
+              0.00153,
+              0.00049
+            ],
+            [
+              0.999943,
+              -0.009558,
+              0.000688,
+              0.004722
+            ],
+            [
+              0.999842,
+              -0.014214,
+              0.008604,
+              0.0063
+            ],
+            [
+              0.999661,
+              0.023745,
+              0.000473,
+              -0.01067
+            ],
+            [
+              0.999861,
+              0.014444,
+              -0.000188,
+              -0.008338
+            ],
+            [
+              0.999966,
+              0.005586,
+              0.005489,
+              -0.002583
+            ]
+          ],
+          "elv_angle_r": [
+            0.347638,
+            0.275529,
+            0.207083,
+            0.215731,
+            0.116374,
+            0.09739
+          ],
+          "shoulder_elv_r": [
+            0.274783,
+            0.229357,
+            0.308692,
+            0.335986,
+            0.318408,
+            0.328685
+          ],
+          "shoulder1_r2_r": [
+            -0.347638,
+            -0.275529,
+            -0.207083,
+            -0.215731,
+            -0.116374,
+            -0.09739
+          ],
+          "shoulder_rot_r": [
+            0.603956,
+            0.464492,
+            0.610341,
+            0.429012,
+            0.483689,
+            0.490789
+          ]
+        },
+        "30": {
+          "trial": [
+            "flx01",
+            "flx02",
+            "flx03",
+            "flx21",
+            "flx22",
+            "flx23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.287067,
+            -0.253677,
+            -0.295558,
+            -0.239928,
+            -0.275448,
+            -0.286144
+          ],
+          "sternoclavicular_r3_r": [
+            -0.116857,
+            -0.097761,
+            -0.082789,
+            -0.101572,
+            -0.101362,
+            -0.071768
+          ],
+          "sternoclavicular_r1_r": [
+            0.053658,
+            0.052876,
+            0.056793,
+            0.054002,
+            0.052449,
+            0.054498
+          ],
+          "acromioclavicular_r": [
+            [
+              0.99972,
+              0.0012,
+              0.020883,
+              -0.011106
+            ],
+            [
+              0.999438,
+              -0.005297,
+              0.033073,
+              0.00099
+            ],
+            [
+              0.99915,
+              -0.023635,
+              0.03221,
+              0.010194
+            ],
+            [
+              0.999566,
+              0.012352,
+              0.024917,
+              -0.009686
+            ],
+            [
+              0.999762,
+              0.006079,
+              0.018439,
+              -0.009999
+            ],
+            [
+              0.999753,
+              -0.007412,
+              0.020809,
+              0.002275
+            ]
+          ],
+          "elv_angle_r": [
+            1.136896,
+            1.136993,
+            1.155904,
+            1.064627,
+            1.014763,
+            1.192874
+          ],
+          "shoulder_elv_r": [
+            0.625534,
+            0.596479,
+            0.572889,
+            0.644067,
+            0.630932,
+            0.597429
+          ],
+          "shoulder1_r2_r": [
+            -1.136896,
+            -1.136993,
+            -1.155904,
+            -1.064627,
+            -1.014763,
+            -1.192874
+          ],
+          "shoulder_rot_r": [
+            0.670024,
+            0.880741,
+            0.641798,
+            0.878332,
+            0.808709,
+            1.036357
+          ]
+        },
+        "60": {
+          "trial": [
+            "flx01",
+            "flx02",
+            "flx03",
+            "flx21",
+            "flx22",
+            "flx23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.256858,
+            -0.255969,
+            -0.283366,
+            -0.264904,
+            -0.273117,
+            -0.29578
+          ],
+          "sternoclavicular_r3_r": [
+            -0.069904,
+            -0.031931,
+            -0.02498,
+            0.042081,
+            -0.013916,
+            0.052642
+          ],
+          "sternoclavicular_r1_r": [
+            0.17431,
+            0.179053,
+            0.176737,
+            0.174382,
+            0.182397,
+            0.182783
+          ],
+          "acromioclavicular_r": [
+            [
+              0.997186,
+              -0.023037,
+              0.068176,
+              0.021004
+            ],
+            [
+              0.994624,
+              -0.039528,
+              0.081962,
+              0.04943
+            ],
+            [
+              0.995014,
+              -0.043942,
+              0.075551,
+              0.048037
+            ],
+            [
+              0.996449,
+              -0.029283,
+              0.059127,
+              0.052299
+            ],
+            [
+              0.997934,
+              -0.020267,
+              0.054427,
+              0.027469
+            ],
+            [
+              0.995307,
+              -0.041571,
+              0.062176,
+              0.061394
+            ]
+          ],
+          "elv_angle_r": [
+            1.422051,
+            1.416163,
+            1.33246,
+            1.426484,
+            1.338275,
+            1.448297
+          ],
+          "shoulder_elv_r": [
+            0.974057,
+            0.937571,
+            0.914103,
+            0.948121,
+            0.994906,
+            0.952815
+          ],
+          "shoulder1_r2_r": [
+            -1.422051,
+            -1.416163,
+            -1.33246,
+            -1.426484,
+            -1.338275,
+            -1.448297
+          ],
+          "shoulder_rot_r": [
+            0.832031,
+            0.890677,
+            0.783462,
+            1.119562,
+            1.01,
+            1.163822
+          ]
+        },
+        "90": {
+          "trial": [
+            "flx01",
+            "flx02",
+            "flx03",
+            "flx21",
+            "flx22",
+            "flx23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.323667,
+            -0.309417,
+            -0.382758,
+            -0.359145,
+            -0.343004,
+            -0.378395
+          ],
+          "sternoclavicular_r3_r": [
+            0.0561,
+            0.053212,
+            0.106396,
+            0.162273,
+            0.112794,
+            0.148502
+          ],
+          "sternoclavicular_r1_r": [
+            0.326785,
+            0.327067,
+            0.324553,
+            0.322084,
+            0.323511,
+            0.328192
+          ],
+          "acromioclavicular_r": [
+            [
+              0.989192,
+              -0.045858,
+              0.10457,
+              0.091985
+            ],
+            [
+              0.987526,
+              -0.046787,
+              0.112697,
+              0.099516
+            ],
+            [
+              0.986911,
+              -0.064854,
+              0.098642,
+              0.109862
+            ],
+            [
+              0.985343,
+              -0.059751,
+              0.098646,
+              0.12569
+            ],
+            [
+              0.991361,
+              -0.042298,
+              0.084482,
+              0.09098
+            ],
+            [
+              0.984605,
+              -0.065974,
+              0.101416,
+              0.126155
+            ]
+          ],
+          "elv_angle_r": [
+            1.418754,
+            1.323135,
+            1.362609,
+            1.354583,
+            1.325587,
+            1.365325
+          ],
+          "shoulder_elv_r": [
+            1.315183,
+            1.274358,
+            1.25388,
+            1.253901,
+            1.296372,
+            1.257039
+          ],
+          "shoulder1_r2_r": [
+            -1.418754,
+            -1.323135,
+            -1.362609,
+            -1.354583,
+            -1.325587,
+            -1.365325
+          ],
+          "shoulder_rot_r": [
+            1.044477,
+            1.006123,
+            1.107061,
+            1.087056,
+            1.04043,
+            1.119274
+          ]
+        },
+        "120": {
+          "trial": [
+            "flx01",
+            "flx02",
+            "flx03",
+            "flx21",
+            "flx22",
+            "flx23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.49482,
+            -0.484136,
+            -0.508963,
+            -0.523639,
+            -0.507345,
+            -0.530869
+          ],
+          "sternoclavicular_r3_r": [
+            0.134495,
+            0.127514,
+            0.162932,
+            0.185474,
+            0.145316,
+            0.15908
+          ],
+          "sternoclavicular_r1_r": [
+            0.538183,
+            0.531669,
+            0.53171,
+            0.540898,
+            0.532805,
+            0.536811
+          ],
+          "acromioclavicular_r": [
+            [
+              0.981072,
+              -0.05856,
+              0.123855,
+              0.136855
+            ],
+            [
+              0.981022,
+              -0.05731,
+              0.125824,
+              0.135942
+            ],
+            [
+              0.981456,
+              -0.062784,
+              0.115368,
+              0.139617
+            ],
+            [
+              0.976661,
+              -0.071905,
+              0.124698,
+              0.159416
+            ],
+            [
+              0.982441,
+              -0.060813,
+              0.115559,
+              0.13326
+            ],
+            [
+              0.977877,
+              -0.073619,
+              0.124108,
+              0.151442
+            ]
+          ],
+          "elv_angle_r": [
+            1.202663,
+            1.163297,
+            1.180807,
+            1.133543,
+            1.144044,
+            1.157156
+          ],
+          "shoulder_elv_r": [
+            1.573766,
+            1.542743,
+            1.550994,
+            1.516065,
+            1.532914,
+            1.514075
+          ],
+          "shoulder1_r2_r": [
+            -1.202663,
+            -1.163297,
+            -1.180807,
+            -1.133543,
+            -1.144044,
+            -1.157156
+          ],
+          "shoulder_rot_r": [
+            0.916689,
+            0.922039,
+            0.965444,
+            0.926411,
+            0.919584,
+            0.933249
+          ]
+        },
+        "max": {
+          "trial": [
+            "flx01",
+            "flx02",
+            "flx03",
+            "flx21",
+            "flx22",
+            "flx23"
+          ],
+          "sternoclavicular_r2_r": [
+            -0.764737,
+            -0.804659,
+            -0.837148,
+            -0.785115,
+            -0.795908,
+            -0.841622
+          ],
+          "sternoclavicular_r3_r": [
+            0.175362,
+            0.186946,
+            0.196503,
+            0.195925,
+            0.172415,
+            0.204464
+          ],
+          "sternoclavicular_r1_r": [
+            0.540898,
+            0.540898,
+            0.540898,
+            0.540898,
+            0.540898,
+            0.540898
+          ],
+          "acromioclavicular_r": [
+            [
+              0.947817,
+              -0.170733,
+              0.142317,
+              0.228558
+            ],
+            [
+              0.950724,
+              -0.176645,
+              0.122343,
+              0.223501
+            ],
+            [
+              0.95048,
+              -0.183743,
+              0.110597,
+              0.224934
+            ],
+            [
+              0.949594,
+              -0.17337,
+              0.12888,
+              0.227163
+            ],
+            [
+              0.957474,
+              -0.167262,
+              0.112898,
+              0.206204
+            ],
+            [
+              0.948345,
+              -0.186929,
+              0.112158,
+              0.230479
+            ]
+          ],
+          "elv_angle_r": [
+            0.899906,
+            0.901445,
+            0.840924,
+            1.01414,
+            0.921774,
+            0.881232
+          ],
+          "shoulder_elv_r": [
+            1.654738,
+            1.656825,
+            1.649147,
+            1.666501,
+            1.661258,
+            1.673439
+          ],
+          "shoulder1_r2_r": [
+            -0.899906,
+            -0.901445,
+            -0.840924,
+            -1.01414,
+            -0.921774,
+            -0.881232
+          ],
+          "shoulder_rot_r": [
+            0.678042,
+            0.633506,
+            0.544538,
+            0.776528,
+            0.534703,
+            0.55871
+          ]
+        }
+      },
+      "shrug": {
+        "trial": [
+          "shrug01",
+          "shrug01",
+          "shrug02",
+          "shrug02",
+          "shrug03",
+          "shrug03",
+          "shrug21",
+          "shrug21",
+          "shrug22",
+          "shrug22",
+          "shrug23",
+          "shrug23"
+        ],
+        "sternoclavicular_r2_r": [
+          -0.228366,
+          -0.326624,
+          -0.245614,
+          -0.352745,
+          -0.254731,
+          -0.342257,
+          -0.263901,
+          -0.381255,
+          -0.293717,
+          -0.552285,
+          -0.264894,
+          -0.594094
+        ],
+        "sternoclavicular_r3_r": [
+          -0.07606,
+          0.272497,
+          -0.070922,
+          0.276042,
+          -0.074552,
+          0.249139,
+          -0.103631,
+          0.238063,
+          -0.095203,
+          0.193284,
+          -0.078794,
+          0.131133
+        ],
+        "sternoclavicular_r1_r": [
+          0.003801,
+          0.022642,
+          0.005221,
+          0.018391,
+          0.002115,
+          0.017178,
+          -0.004518,
+          0.014981,
+          -0.003556,
+          0.027174,
+          -0.002305,
+          0.010826
+        ],
+        "acromioclavicular_r": [
+          [
+            0.999679,
+            0.003563,
+            0.024311,
+            0.006203
+          ],
+          [
+            0.995121,
+            -0.043905,
+            0.013489,
+            0.087315
+          ],
+          [
+            0.999819,
+            0.005191,
+            0.017862,
+            0.003882
+          ],
+          [
+            0.99598,
+            -0.041962,
+            -0.001005,
+            0.07913
+          ],
+          [
+            0.99987,
+            0.005685,
+            0.01494,
+            0.002278
+          ],
+          [
+            0.996508,
+            -0.038491,
+            0.000174,
+            0.074101
+          ],
+          [
+            0.99986,
+            0.009544,
+            0.012909,
+            -0.004654
+          ],
+          [
+            0.996652,
+            -0.043135,
+            -0.014947,
+            0.067822
+          ],
+          [
+            0.999965,
+            0.005241,
+            0.005117,
+            -0.004018
+          ],
+          [
+            0.99164,
+            -0.090195,
+            -0.060827,
+            0.069389
+          ],
+          [
+            0.9999,
+            0.011181,
+            0.008347,
+            -0.002184
+          ],
+          [
+            0.991587,
+            -0.064308,
+            -0.107509,
+            0.032591
+          ]
+        ],
+        "elv_angle_r": [
+          0.391745,
+          1.386371,
+          0.331617,
+          -1.721471,
+          0.313088,
+          1.216757,
+          0.175752,
+          -1.662866,
+          0.413777,
+          -1.554227,
+          0.253559,
+          -1.507972
+        ],
+        "shoulder_elv_r": [
+          0.33648,
+          0.233065,
+          0.350719,
+          -0.202384,
+          0.3315,
+          0.186175,
+          0.312709,
+          -0.201469,
+          0.301572,
+          -0.23079,
+          0.315525,
+          -0.214462
+        ],
+        "shoulder1_r2_r": [
+          -0.391745,
+          -1.386371,
+          -0.331617,
+          1.721471,
+          -0.313088,
+          -1.216757,
+          -0.175752,
+          1.662866,
+          -0.413777,
+          1.554227,
+          -0.253559,
+          1.507972
+        ],
+        "shoulder_rot_r": [
+          0.623961,
+          0.972934,
+          0.571496,
+          0.976472,
+          0.497002,
+          0.96432,
+          0.411846,
+          0.613802,
+          0.507683,
+          0.386558,
+          0.445514,
+          0.924501
+        ]
+      }
+    }
   }
 }

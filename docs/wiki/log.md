@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Scapulohumeral rhythm table
+Changed: `scripts/fit_scapulothoracic.py` (`rhythm`), `myo_sim/build/data/scapulothoracic.json` (section `rhythm`), `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`
+Why: the girdle's replayed motions are now compared in ISB angles with the bone-pin rhythms of Ludewig 2009, Braman 2009, McClure 2001 and Inman 1944.
+
 ## 2026-11-13 — Intrinsic hand fit independent of the shoulder; girdle step on the new hand
 Changed: `scripts/generate_hand_intrinsic_muscles.py`, `tests/test_passive_thenar.py`, `myo_sim/build/data/{hand_intrinsic_muscles,passive_joint_moments,postures,hand_literature}.json`, `myo_sim/models/arm/assets/myoarm_r_{chain,muscle,tendon}.xml`, `docs/wiki/hand-literature-comparison.md`
 Why: the intrinsic site fit is ill-conditioned and moved by micrometres whenever the shoulder changed the arm's world pose. It now runs with every body above the humerus on the world frame, so its inputs are the same with and without the girdle; the sites were refitted once (micrometres; passive scales kept) and the hand springs that moved by more than 1e-9 N m with them (at most 1.8e-5 N m). The girdle's literature step is recorded on the range-of-motion hand. The refit test compares the fitted moment arms, fit errors and fibre lengths with one tolerance on MuJoCo 3 and 4 instead of the site positions, which differ by up to 71 um between the versions (PI2) for 0.06 mm of moment arm.
