@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Preserve principal moments in native archives
+Changed: myo_sim/authoring/archive.py, tests/test_authoring_archive.py, docs/wiki/authoring.md
+Why: archive XML now reuses the generated-XML precision helper so valid edited planar inertias reload without balancing, changing the source, or changing fingerprint contracts.
+
 ## 2026-11-12 — Decode only exported muscle moment arms
 Changed: myo_sim/authoring/interchange.py, tests/test_authoring.py
 Why: export now reuses one muscle-only dense Jacobian buffer, avoiding unused motor rows and repeated full-actuator allocations while preserving native geared derivatives and muscle order.

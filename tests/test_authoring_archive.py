@@ -19,6 +19,29 @@ from myo_sim.authoring.archive import save_model_archive
 from myo_sim.authoring.interchange import _inertia
 
 
+@pytest.mark.parametrize("factor", [1.0189, 1.1])
+def test_archive_preserves_edited_planar_inertia(tmp_path: Path, factor: float) -> None:
+    spec = mujoco.MjSpec.from_string("""<mujoco><worldbody><body name="flat">
+      <joint/><inertial pos="0 0 0" mass="1" diaginertia=".01765 .01219 .00546"/>
+    </body></worldbody></mujoco>""")
+    moments = np.array([0.01765, 0.01219, 0.00546]) * factor**5
+    moments[0] = moments[1] + moments[2]
+    spec.body("flat").inertia = moments
+    original = spec.compile()
+    fingerprint = model_fingerprint(original)
+
+    archive = save_model_archive(spec, tmp_path / "planar.zip")
+    loaded_spec = mujoco.MjSpec.from_zip(archive)
+    loaded = loaded_spec.compile()
+
+    assert not loaded_spec.compiler.balanceinertia
+    np.testing.assert_array_equal(loaded.body_inertia, original.body_inertia)
+    np.testing.assert_array_equal(loaded.body_mass, original.body_mass)
+    np.testing.assert_array_equal(spec.body("flat").inertia, moments)
+    assert model_fingerprint(original) == fingerprint
+    assert model_fingerprint(spec.compile()) == fingerprint
+
+
 def _curves(model: mujoco.MjModel) -> tuple[np.ndarray, np.ndarray]:
     data = mujoco.MjData(model)
     lengths, moments = [], []

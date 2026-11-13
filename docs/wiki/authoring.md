@@ -153,6 +153,10 @@ source, and successful publication uses an atomic replacement.
 
 Native XML has finite precision. Acceptance uses these explicit tolerances:
 
+Explicit principal moments use the shared generated-XML precision helper, so
+edited planar inertias remain on their physical triangle without enabling
+`balanceinertia` or adjusting the source mass distribution.
+
 | Quantity | Comparison |
 |---|---|
 | Other compiled floating-point arrays, option values and model statistics | Relative `1e-5`, absolute `1e-12`. |

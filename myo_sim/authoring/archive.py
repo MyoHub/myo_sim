@@ -15,6 +15,7 @@ from typing import Any
 import mujoco
 import numpy as np
 
+from myo_sim.build.compose import apply_compiled_inertia_precision
 from myo_sim.physics.joint_coupling import JointCouplings, project_joint_couplings
 
 from .edits import _compile_source
@@ -151,6 +152,7 @@ def _archive_xml(spec: mujoco.MjSpec, model: mujoco.MjModel) -> str:
                 quat=_numbers(model.body_iquat[body_id]),
                 diaginertia=_numbers(model.body_inertia[body_id]),
             )
+    apply_compiled_inertia_precision(root, model)
     # MjsTendon has no classname reference in supported MuJoCo versions. Its
     # appearance must be explicit when otherwise-equivalent attached defaults differ.
     tendons = root.find("tendon")
@@ -325,7 +327,8 @@ def save_model_archive(spec: mujoco.MjSpec, output: str | Path, *, overwrite: bo
 
     The source is copied. Existing files require ``overwrite=True`` and are
     replaced atomically only after validation. Native XML uses finite precision:
-    compiled floats allow 1e-5 relative error, geometric quantities also allow
+    explicit principal moments retain roundtrip precision; other compiled floats
+    allow 1e-5 relative error, geometric quantities also allow
     1e-6 absolute error, and native tendon moments allow 1e-5 absolute error.
     Integer topology, object names and options are checked as well. Derived frame
     flags, visual-only hull polygon caches and external path spellings are

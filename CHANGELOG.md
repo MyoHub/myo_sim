@@ -4,6 +4,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Native archive inertia precision.** Portable archives reuse the generated-XML precision helper so valid edited planar principal moments reload without balancing or changing source-bound fingerprints.
 - **Model authoring API.** `myo_sim.authoring` exports compiled anatomy and native reference measurements, applies source-bound attachment/inertia patches to a copied `MjSpec`, and saves validated portable model archives. `python -m myo_sim.authoring` provides export/apply commands. Optional homogeneous mesh inertia estimates use `myo-sim[mesh]`. Instance edits preserve the original source; canonical contributions follow the existing chain-file and right-to-left composition workflow. Bundled model files and normal loading are unchanged.
 - **Generated XML inertia precision.** Edited principal moments are exported at roundtrip precision so planar bodies remain on the physical inertia triangle when reloaded. No balancing or mass-distribution adjustment is applied.
 
