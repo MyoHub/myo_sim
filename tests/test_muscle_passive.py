@@ -77,7 +77,8 @@ def test_physiological_muscles_keep_their_cited_fibre_length() -> None:
     for name, d in derived.items():
         a = model.actuator(name).id
         (lo, hi), (r0, r1) = model.actuator_lengthrange[a], model.actuator_gainprm[a][:2]
-        assert (hi - lo) / (r1 - r0) == pytest.approx(d["mujoco_L0_m"], abs=2e-6), name
+        # Both lengthrange ends are stored to 1 um, so L0 carries up to 1 um / (r1 - r0) of rounding on top of its own.
+        assert (hi - lo) / (r1 - r0) == pytest.approx(d["mujoco_L0_m"], abs=1e-6 / (r1 - r0) + 1e-6), name
         assert rows[name]["tendon_slack_m"]["reference_value_m"] == pytest.approx(d["mujoco_slack_m"], abs=1e-6), name
         stored = table["physiological"]["muscles"][name]["derived"]
         for key, value in d.items():

@@ -243,7 +243,7 @@ the muscles and passive moments, not a limit. Model before -> after (deg):
 | Thumb MP flexion / extension | 45 / 40 | 67.0 / 22.6 | as above, passive | active 57.0 / 13.7; Barakat: 60 / 8.1; Batmanabane & Malathi (cadaver): 47 / 16 |
 | MCP 2-5 flexion / extension | 90 / 0 | 90 / 61 (MCP pulley step) | extension: Leijnse et al. 2010, 61 ± 24 passive; flexion between 84-87 active (Mohamed Ibrahim) and 102 ± 11 passive (Leijnse) | active extension 22-26 ± 7 (Mohamed Ibrahim), 22-31 wrist neutral (Latz et al. 2019), 22-28 (Gracia-Ibáñez et al. 2017); daily activities 8 / 8 / 12 / 15 (Hayashi, Norkin & White Table 7.4); functional 1-6 (Gracia-Ibáñez) |
 | Wrist flexion / extension | 70 / 80 | 80 / 75 (wrist range step) | flexion: AAOS 80 (as reported in Norkin & White 2016); extension: Boone & Azen 1979, 75 (active mean, 109 males) | AAOS extension 70; daily activities 54 / 60 (Ryu et al. 1991); passive at 2 N m 65 ± 23 / 64 ± 10 (Crisco et al. 2011, six cadaver wrists aged 59-65); Delp et al. 1996: passive moment near zero over the central 150 deg |
-| Wrist radial / ulnar deviation | 30 / 20 | 22 / 40 (wrist range step) | radial: Boone & Azen 1979, 22 (active mean); ulnar: Ryu et al. 1991, 40 used in daily activities | AAOS 20 / 30; Boone & Azen ulnar 36; passive at 2 N m 21 ± 9 / 42 ± 7 (Crisco et al. 2011) |
+| Wrist radial / ulnar deviation | 30 / 20 | 22 / 36 (wrist range and wrist path steps) | Boone & Azen 1979, 22 / 36 (active means, as reported in Norkin & White 2016) | AAOS 20 / 30; daily activities 17 / 40 (Ryu et al. 1991); passive at 2 N m 21 ± 9 / 42 ± 7 (Crisco et al. 2011) |
 
 **Wrist.** The joint axes give +`flexion_r` = flexion (FCR and FCU shorten) and +`deviation_r` = radial
 deviation (ECRL shortens, ECU lengthens), on both hands. The previous limits, -80..70 and -20..30 deg, had
@@ -251,9 +251,12 @@ flexion/extension and radial/ulnar swapped relative to these axes: 70 flexion / 
 ulnar, where the norms give more flexion than extension and more ulnar than radial deviation. No normative
 passive wrist range in living adults was found, so each limit is the largest of the cited healthy-adult values
 (passive range exceeds active range, which exceeds the range daily tasks use): AAOS 80 / 70 / 20 / 30, Boone &
-Azen 1979 76 / 75 / 22 / 36 (active), Ryu et al. 1991 54 / 60 / 17 / 40 (daily activities), giving 80 / 75 / 22 / 40
-(flexion / extension / radial / ulnar). Crisco et al. 2011's cadaver wrists reach 42 deg ulnar deviation at 2 N m,
-so the ulnar limit is within the passive range. The limits are independent: the real envelope is oblique
+Azen 1979 76 / 75 / 22 / 36 (active), Ryu et al. 1991 54 / 60 / 17 / 40 (daily activities), giving 80 / 75 / 22
+(flexion / extension / radial). Ulnar deviation is Boone & Azen's 36 deg (as reported in Norkin & White 2016):
+Ryu's 40 deg bounds the angles used in daily tasks, measured with an electrogoniometer, rather than giving a mean
+active range, and at 40 deg the APL's fibres were stretched past their cited operating range (95th percentile
+1.27 optimal lengths, 1.25 at 36 deg). Ryu's 40 deg and Crisco et al. 2011's 42 deg in cadaver wrists at 2 N m stay
+as comparisons. The limits are independent: the real envelope is oblique
 (Crisco et al. 2011), with less ulnar deviation in extension, which the model does not restrict (open check).
 The widened ulnar range needed the EDC wrist via sites (`hand-extrinsic-muscles.md`): the old sphere wraps jumped
 in extension with ulnar deviation. The wrist springs are fitted over Formica et al. 2012's central range

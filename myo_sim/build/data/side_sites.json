@@ -698,6 +698,34 @@
           "arm_mm": -8.6,
           "sd": 4,
           "source": "garland2018 MRI"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": -17.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": -17.9,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -17.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": -16.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
         }
       ],
       "mean_targets": [
@@ -740,12 +768,31 @@
           ],
           "sign": -1,
           "margin_mm": 2
+        },
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": -1,
+          "margin_mm": 2,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
         }
       ],
       "pos": [
-        0.010895,
-        -0.011477,
-        -0.01348
+        0.011382,
+        -0.012964,
+        -0.014368
       ],
       "geom_pos_before": [
         0.0082,
@@ -754,28 +801,28 @@
       ],
       "radius_before_m": 0.001164,
       "fit": {
-        "rms_z": 0.442,
+        "rms_z": 0.306,
         "arms": {
-          "flexion_r@0": -15.83,
-          "deviation_r@0": -7.74
+          "flexion_r@0": -16.77,
+          "deviation_r@0": -7.89,
+          "flexion_r@-30": -12.57,
+          "flexion_r@-10": -15.57,
+          "flexion_r@30": -18.49
         },
         "curve_flexion_deg_mm": {
-          "-90": -1.18,
-          "-60": -6.97,
-          "-30": -12.09,
-          "0": -15.83,
-          "30": -16.96,
-          "60": -12.0
+          "-75": -4.02,
+          "-60": -7.06,
+          "-30": -12.57,
+          "0": -16.77,
+          "30": -18.49,
+          "60": -14.22,
+          "80": -3.95
         },
         "curve_deviation_deg_mm": {
-          "-30": -3.34,
-          "-20": -4.86,
-          "-10": -6.33,
-          "0": -7.74,
-          "10": -9.06,
-          "20": -10.28,
-          "30": -11.37,
-          "40": -12.32
+          "-36": -2.18,
+          "-20": -4.79,
+          "0": -7.89,
+          "22": -10.93
         }
       }
     },
@@ -956,6 +1003,27 @@
           "arm_mm": -16.7,
           "sd": 2.4,
           "source": "garland2018 MRI"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 11.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-9"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 10.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-9"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 8.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-9"
         }
       ],
       "mean_targets": [
@@ -1001,9 +1069,9 @@
         }
       ],
       "pos": [
-        0.015939,
-        -0.011783,
-        0.004225
+        0.017024,
+        -0.012054,
+        0.004573
       ],
       "geom_pos_before": [
         0.0222,
@@ -1012,30 +1080,30 @@
       ],
       "radius_before_m": 0.008,
       "fit": {
-        "rms_z": 0.571,
+        "rms_z": 0.679,
         "arms": {
-          "flexion_r@0": 7.62,
-          "deviation_r@0": -18.32
+          "flexion_r@0": 7.98,
+          "deviation_r@0": -19.23,
+          "flexion_r@-30": 9.36,
+          "flexion_r@30": 5.61
         },
         "curve_flexion_deg_mm": {
-          "-90": 1.63,
-          "-60": 7.87,
-          "-30": 8.86,
-          "0": 7.62,
-          "30": 5.34,
-          "60": 2.52
+          "-75": 6.14,
+          "-60": 8.53,
+          "-30": 9.36,
+          "0": 7.98,
+          "30": 5.61,
+          "60": 2.7,
+          "80": 0.62
         },
         "curve_deviation_deg_mm": {
-          "-30": -16.46,
-          "-20": -17.37,
-          "-10": -18.02,
-          "0": -18.32,
-          "10": -18.08,
-          "20": -16.91,
-          "30": -13.98,
-          "40": -7.9
+          "-36": -16.51,
+          "-20": -18.15,
+          "0": -19.23,
+          "22": -17.56
         }
-      }
+      },
+      "sign_note": "No sign row over combined deviation: Loren et al. 1996's ECRL polynomial (neutral forearm) crosses zero at 59 deg of flexion, so the ECRL's action at full flexion with ulnar deviation is not established; holding it there moved the neutral radial-deviation arm from -18 to -12 mm (Horii -19)."
     },
     {
       "name": "EDM_via_r",
@@ -1059,13 +1127,6 @@
           "source": "previous path"
         },
         {
-          "joint": "flexion_r",
-          "deg": 60,
-          "arm_mm": -1.9,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
           "joint": "deviation_r",
           "deg": 0,
           "arm_mm": 14.5,
@@ -1078,14 +1139,41 @@
           "arm_mm": 7.4,
           "sd": 1,
           "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 13.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-77 (EDQ)"
         }
       ],
       "mean_targets": [],
-      "sign": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
+        }
+      ],
       "pos": [
-        -0.015904,
-        -0.021642,
-        0.006252
+        -0.012496,
+        -0.011247,
+        0.009739
       ],
       "geom_pos_before": [
         -0.016643,
@@ -1094,31 +1182,27 @@
       ],
       "radius_before_m": 0.023627,
       "fit": {
-        "rms_z": 0.208,
+        "rms_z": 0.403,
         "arms": {
-          "flexion_r@-60": 17.29,
-          "flexion_r@0": 9.35,
-          "flexion_r@60": -1.24,
-          "deviation_r@0": 14.32,
-          "cmc5_flexion_r@0": 7.41
+          "flexion_r@-60": 14.83,
+          "flexion_r@0": 10.56,
+          "deviation_r@0": 12.87,
+          "cmc5_flexion_r@0": 6.38
         },
         "curve_flexion_deg_mm": {
-          "-90": 19.14,
-          "-60": 17.29,
-          "-30": 13.84,
-          "0": 9.35,
-          "30": 4.21,
-          "60": -1.24
+          "-75": 14.22,
+          "-60": 14.83,
+          "-30": 13.42,
+          "0": 10.56,
+          "30": 6.86,
+          "60": 2.64,
+          "80": -0.3
         },
         "curve_deviation_deg_mm": {
-          "-30": 18.15,
-          "-20": 17.05,
-          "-10": 15.77,
-          "0": 14.32,
-          "10": 12.74,
-          "20": 11.04,
-          "30": 9.25,
-          "40": 7.38
+          "-36": 16.01,
+          "-20": 14.86,
+          "0": 12.87,
+          "22": 10.16
         }
       }
     },
@@ -1244,59 +1328,59 @@
       "targets": [
         {
           "joint": "flexion_r",
-          "deg": -60,
-          "arm_mm": 23.9,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -30,
+          "arm_mm": 17.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
-          "deg": -30,
-          "arm_mm": 22.6,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -20,
+          "arm_mm": 17.6,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": 17.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 0,
-          "arm_mm": 16.6,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 15.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 10,
+          "arm_mm": 15.3,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": 15.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 30,
-          "arm_mm": 12.3,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "flexion_r",
-          "deg": 60,
-          "arm_mm": 7.1,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "deviation_r",
-          "deg": -20,
-          "arm_mm": 3.3,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 15.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "deviation_r",
           "deg": 0,
-          "arm_mm": -2.0,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "deviation_r",
-          "deg": 20,
-          "arm_mm": -7.5,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": -5.3,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-77"
         }
       ],
       "mean_targets": [],
@@ -1309,12 +1393,31 @@
           ],
           "sign": 1,
           "margin_mm": 3
+        },
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
         }
       ],
       "pos": [
-        0.00791,
-        -0.02591,
-        0.021325
+        0.014603,
+        -0.015897,
+        0.020178
       ],
       "geom_pos_before": [
         0.009,
@@ -1322,36 +1425,33 @@
         0.0151
       ],
       "radius_before_m": 0.0035,
-      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation; the wrap is replaced by a via site on the lunate, fitted to Brand & Hollister's wrist moment arms of the extensor digitorum (Figs 12-76 and 12-77; EDC5 keeps the previous path's deviation arms, which Brand does not give) with the extensor sign held over the whole wrist range, including combined deviation.",
       "fit": {
-        "rms_z": 0.399,
+        "rms_z": 0.123,
         "arms": {
-          "flexion_r@-60": 22.66,
-          "flexion_r@-30": 22.36,
-          "flexion_r@0": 18.24,
-          "flexion_r@30": 12.28,
-          "flexion_r@60": 5.29,
-          "deviation_r@-20": 2.17,
-          "deviation_r@0": -1.72,
-          "deviation_r@20": -5.55
+          "flexion_r@-30": 18.3,
+          "flexion_r@-20": 18.19,
+          "flexion_r@-10": 17.62,
+          "flexion_r@0": 16.71,
+          "flexion_r@10": 15.53,
+          "flexion_r@20": 14.12,
+          "flexion_r@30": 12.53,
+          "deviation_r@0": -5.98
         },
         "curve_flexion_deg_mm": {
-          "-90": 9.04,
-          "-60": 22.66,
-          "-30": 22.36,
-          "0": 18.24,
-          "30": 12.28,
-          "60": 5.29
+          "-75": 7.08,
+          "-60": 13.86,
+          "-30": 18.3,
+          "0": 16.71,
+          "30": 12.53,
+          "60": 6.99,
+          "80": 2.89
         },
         "curve_deviation_deg_mm": {
-          "-30": 4.09,
-          "-20": 2.17,
-          "-10": 0.22,
-          "0": -1.72,
-          "10": -3.65,
-          "20": -5.55,
-          "30": -7.4,
-          "40": -9.18
+          "-36": 0.27,
+          "-20": -2.54,
+          "0": -5.98,
+          "22": -9.54
         }
       }
     },
@@ -1364,59 +1464,59 @@
       "targets": [
         {
           "joint": "flexion_r",
-          "deg": -60,
-          "arm_mm": 25.1,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -30,
+          "arm_mm": 17.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
-          "deg": -30,
-          "arm_mm": 23.6,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -20,
+          "arm_mm": 17.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": 16.7,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 0,
-          "arm_mm": 17.4,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 15.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 10,
+          "arm_mm": 14.7,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": 14.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 30,
-          "arm_mm": 8.6,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "flexion_r",
-          "deg": 60,
-          "arm_mm": -1.2,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "deviation_r",
-          "deg": -20,
-          "arm_mm": 7.2,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 14.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "deviation_r",
           "deg": 0,
-          "arm_mm": 2.0,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "deviation_r",
-          "deg": 20,
-          "arm_mm": -3.3,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 0.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-77"
         }
       ],
       "mean_targets": [],
@@ -1429,12 +1529,31 @@
           ],
           "sign": 1,
           "margin_mm": 3
+        },
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
         }
       ],
       "pos": [
-        0.000333,
-        -0.0317,
-        0.01398
+        0.001985,
+        -0.012737,
+        0.015544
       ],
       "geom_pos_before": [
         -0.0097,
@@ -1442,36 +1561,33 @@
         0.0191
       ],
       "radius_before_m": 0.0035,
-      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation; the wrap is replaced by a via site on the lunate, fitted to Brand & Hollister's wrist moment arms of the extensor digitorum (Figs 12-76 and 12-77; EDC5 keeps the previous path's deviation arms, which Brand does not give) with the extensor sign held over the whole wrist range, including combined deviation.",
       "fit": {
-        "rms_z": 0.469,
+        "rms_z": 0.126,
         "arms": {
-          "flexion_r@-60": 24.85,
-          "flexion_r@-30": 21.46,
-          "flexion_r@0": 15.92,
-          "flexion_r@30": 9.1,
-          "flexion_r@60": 1.6,
-          "deviation_r@-20": 6.2,
-          "deviation_r@0": 2.13,
-          "deviation_r@20": -2.03
+          "flexion_r@-30": 18.72,
+          "flexion_r@-20": 18.03,
+          "flexion_r@-10": 17.09,
+          "flexion_r@0": 15.94,
+          "flexion_r@10": 14.63,
+          "flexion_r@20": 13.18,
+          "flexion_r@30": 11.61,
+          "deviation_r@0": 0.27
         },
         "curve_flexion_deg_mm": {
-          "-90": 22.53,
-          "-60": 24.85,
-          "-30": 21.46,
-          "0": 15.92,
-          "30": 9.1,
-          "60": 1.6
+          "-75": 11.63,
+          "-60": 17.71,
+          "-30": 18.72,
+          "0": 15.94,
+          "30": 11.61,
+          "60": 6.35,
+          "80": 2.55
         },
         "curve_deviation_deg_mm": {
-          "-30": 8.16,
-          "-20": 6.2,
-          "-10": 4.18,
-          "0": 2.13,
-          "10": 0.05,
-          "20": -2.03,
-          "30": -4.08,
-          "40": -6.1
+          "-36": 4.99,
+          "-20": 2.93,
+          "0": 0.27,
+          "22": -2.67
         }
       }
     },
@@ -1484,59 +1600,59 @@
       "targets": [
         {
           "joint": "flexion_r",
-          "deg": -60,
-          "arm_mm": 25.5,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -30,
+          "arm_mm": 17.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
-          "deg": -30,
-          "arm_mm": 23.2,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -20,
+          "arm_mm": 16.9,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": 16.1,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 0,
-          "arm_mm": 16.8,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 14.9,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 10,
+          "arm_mm": 13.9,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": 13.4,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 30,
-          "arm_mm": 13.5,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "flexion_r",
-          "deg": 60,
-          "arm_mm": 8.0,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "deviation_r",
-          "deg": -20,
-          "arm_mm": 13.9,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 13.3,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "deviation_r",
           "deg": 0,
-          "arm_mm": 8.1,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "deviation_r",
-          "deg": 20,
-          "arm_mm": 3.8,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 7.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-77"
         }
       ],
       "mean_targets": [],
@@ -1549,12 +1665,31 @@
           ],
           "sign": 1,
           "margin_mm": 3
+        },
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
         }
       ],
       "pos": [
-        -0.008162,
-        -0.019708,
-        0.019645
+        -0.005264,
+        -0.015045,
+        0.013456
       ],
       "geom_pos_before": [
         -0.010024,
@@ -1562,36 +1697,33 @@
         0.015658
       ],
       "radius_before_m": 0.0028,
-      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation; the wrap is replaced by a via site on the lunate, fitted to Brand & Hollister's wrist moment arms of the extensor digitorum (Figs 12-76 and 12-77; EDC5 keeps the previous path's deviation arms, which Brand does not give) with the extensor sign held over the whole wrist range, including combined deviation.",
       "fit": {
-        "rms_z": 0.39,
+        "rms_z": 0.133,
         "arms": {
-          "flexion_r@-60": 25.29,
-          "flexion_r@-30": 22.88,
-          "flexion_r@0": 18.66,
-          "flexion_r@30": 13.13,
-          "flexion_r@60": 6.69,
-          "deviation_r@-20": 11.85,
-          "deviation_r@0": 8.69,
-          "deviation_r@20": 5.26
+          "flexion_r@-30": 18.56,
+          "flexion_r@-20": 17.62,
+          "flexion_r@-10": 16.48,
+          "flexion_r@0": 15.18,
+          "flexion_r@10": 13.74,
+          "flexion_r@20": 12.18,
+          "flexion_r@30": 10.52,
+          "deviation_r@0": 6.93
         },
         "curve_flexion_deg_mm": {
-          "-90": 4.3,
-          "-60": 25.29,
-          "-30": 22.88,
-          "0": 18.66,
-          "30": 13.13,
-          "60": 6.69
+          "-75": 16.75,
+          "-60": 19.42,
+          "-30": 18.56,
+          "0": 15.18,
+          "30": 10.52,
+          "60": 5.05,
+          "80": 1.18
         },
         "curve_deviation_deg_mm": {
-          "-30": 13.3,
-          "-20": 11.85,
-          "-10": 10.31,
-          "0": 8.69,
-          "10": 7.0,
-          "20": 5.26,
-          "30": 3.48,
-          "40": 1.67
+          "-36": 11.55,
+          "-20": 9.63,
+          "0": 6.93,
+          "22": 3.69
         }
       }
     },
@@ -1604,38 +1736,52 @@
       "targets": [
         {
           "joint": "flexion_r",
-          "deg": -60,
-          "arm_mm": 20.8,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -30,
+          "arm_mm": 15.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
-          "deg": -30,
-          "arm_mm": 17.7,
-          "sd": 2,
-          "source": "previous path"
+          "deg": -20,
+          "arm_mm": 14.1,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": 13.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 0,
-          "arm_mm": 15.1,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 11.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 10,
+          "arm_mm": 10.3,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": 10.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "flexion_r",
           "deg": 30,
-          "arm_mm": 10.6,
-          "sd": 2,
-          "source": "previous path"
-        },
-        {
-          "joint": "flexion_r",
-          "deg": 60,
-          "arm_mm": 5.4,
-          "sd": 2,
-          "source": "previous path"
+          "arm_mm": 10.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-76"
         },
         {
           "joint": "deviation_r",
@@ -1669,12 +1815,31 @@
           ],
           "sign": 1,
           "margin_mm": 3
+        },
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
         }
       ],
       "pos": [
-        -0.008136,
-        -0.010409,
-        0.017637
+        -0.00793,
+        -0.008412,
+        0.012704
       ],
       "geom_pos_before": [
         -0.0098,
@@ -1682,36 +1847,163 @@
         0.0148
       ],
       "radius_before_m": 0.004,
-      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation; the wrap is replaced by a via site on the lunate, fitted to Brand & Hollister's wrist moment arms of the extensor digitorum (Figs 12-76 and 12-77; EDC5 keeps the previous path's deviation arms, which Brand does not give) with the extensor sign held over the whole wrist range, including combined deviation.",
       "fit": {
-        "rms_z": 0.121,
+        "rms_z": 0.079,
         "arms": {
-          "flexion_r@-60": 20.32,
-          "flexion_r@-30": 18.35,
-          "flexion_r@0": 15.0,
-          "flexion_r@30": 10.61,
-          "flexion_r@60": 5.49,
-          "deviation_r@-20": 10.0,
-          "deviation_r@0": 7.94,
-          "deviation_r@20": 5.53
+          "flexion_r@-30": 14.73,
+          "flexion_r@-20": 14.06,
+          "flexion_r@-10": 13.22,
+          "flexion_r@0": 12.22,
+          "flexion_r@10": 11.1,
+          "flexion_r@20": 9.88,
+          "flexion_r@30": 8.56,
+          "deviation_r@-20": 9.79,
+          "deviation_r@0": 7.97,
+          "deviation_r@20": 5.79
         },
         "curve_flexion_deg_mm": {
-          "-90": 0.15,
-          "-60": 20.32,
-          "-30": 18.35,
-          "0": 15.0,
-          "30": 10.61,
-          "60": 5.49
+          "-75": 11.65,
+          "-60": 14.7,
+          "-30": 14.73,
+          "0": 12.22,
+          "30": 8.56,
+          "60": 4.2,
+          "80": 1.1
         },
         "curve_deviation_deg_mm": {
-          "-30": 10.85,
-          "-20": 10.0,
-          "-10": 9.02,
-          "0": 7.94,
-          "10": 6.77,
-          "20": 5.53,
-          "30": 4.23,
-          "40": 2.89
+          "-36": 10.87,
+          "-20": 9.79,
+          "0": 7.97,
+          "22": 5.56
+        }
+      }
+    },
+    {
+      "name": "EIP_via_r",
+      "tendon": "EIP_r_tendon",
+      "geom": "ExtensorEllipse_ellipsoid_wrap_r",
+      "side": "ExtensorEllipse_ellipsoid_site_EIP_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -60,
+          "arm_mm": 16.8,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 15.8,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 12.8,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 10.1,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 60,
+          "arm_mm": 8.5,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": 6.7,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 2.8,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 20,
+          "arm_mm": -1.2,
+          "sd": 2,
+          "source": "previous path"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
+        }
+      ],
+      "pos": [
+        0.001856,
+        -0.018606,
+        0.019452
+      ],
+      "geom_pos_before": [
+        -0.00146,
+        -0.012002,
+        -0.008926
+      ],
+      "radius_before_m": 0.023741,
+      "note": "The ellipsoid wrap's moment arm stepped by up to 30 mm (a 0.3 mm length kink) in combined extension and ulnar deviation near the limits; the wrap is replaced by a via site on the lunate fitted to the previous path's arms along single-joint sweeps from neutral, with the extensor sign held over the whole range. No wrist moment arm of EIP was found in the literature used here.",
+      "start_note": "fit started from EDC2's via site (EIP runs beside EDC2 over the carpus)",
+      "fit": {
+        "rms_z": 0.194,
+        "arms": {
+          "flexion_r@-60": 15.4,
+          "flexion_r@-30": 16.63,
+          "flexion_r@0": 14.09,
+          "flexion_r@30": 9.86,
+          "flexion_r@60": 4.72,
+          "deviation_r@-20": 5.88,
+          "deviation_r@0": 3.08,
+          "deviation_r@20": 0.17
+        },
+        "curve_flexion_deg_mm": {
+          "-75": 11.3,
+          "-60": 15.4,
+          "-30": 16.63,
+          "0": 14.09,
+          "30": 9.86,
+          "60": 4.72,
+          "80": 1.03
+        },
+        "curve_deviation_deg_mm": {
+          "-36": 7.96,
+          "-20": 5.88,
+          "0": 3.08,
+          "22": -0.12
         }
       }
     }
@@ -1753,12 +2045,6 @@
         "in_mujoco3": 0.0,
         "past": 0.0,
         "past_mujoco3": 1.35
-      },
-      "EIP_r_tendon/ExtensorEllipse_ellipsoid_wrap_r": {
-        "in": 0.3,
-        "in_mujoco3": 0.3,
-        "past": 12.72,
-        "past_mujoco3": 12.72
       },
       "EIP_r_tendon/mcp2_EIP_wrap_r": {
         "in": 0.0,
@@ -1869,5 +2155,744 @@
       "method": "On the humeral cylinder the latissimus arc changes side where the segment crosses the axis: no length jump but a moment arm step of 12-19 mm, whichever side site. A sphere of the same centre and radius, without side site, has no such step (below 0.5 mm) and leaves the arms in the planes of Ackland et al. 2008 unchanged; the same on both versions. DELT2 stays on the cylinder."
     }
   ],
-  "jumps_note": "Wraps with a length jump above the tolerance on either rule, by record-jumps: largest jump in mm on the MuJoCo 4 rule in range ('in') and past the limits ('past'), and the same on the MuJoCo 3 rule."
+  "jumps_note": "Wraps with a length jump above the tolerance on either rule, by record-jumps: largest jump in mm on the MuJoCo 4 rule in range ('in') and past the limits ('past'), and the same on the MuJoCo 3 rule.",
+  "path_sites": [
+    {
+      "name": "FCU-P3_r",
+      "tendon": "FCU_r_tendon",
+      "body": "radius_r",
+      "pos": [
+        0.005723,
+        -0.1833,
+        0.002383
+      ],
+      "pos_before": [
+        0.0108,
+        -0.2233,
+        0.0097
+      ],
+      "bound_mm": 40,
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": -16.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -20,
+          "arm_mm": -18.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": -19.4,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -19.1,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 10,
+          "arm_mm": -18.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": -18.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -40,
+          "arm_mm": -11.7,
+          "sd": 3,
+          "source": "loren1996 neutral forearm"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -15.0,
+          "sd": 3,
+          "source": "loren1996 neutral forearm"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 40,
+          "arm_mm": -18.3,
+          "sd": 3,
+          "source": "loren1996 neutral forearm"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -16,
+          "sd": 3,
+          "source": "horii1993"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 14,
+          "sd": 3,
+          "source": "horii1993"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 23,
+          "sd": 3,
+          "source": "loren1996 neutral forearm"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": -1,
+          "margin_mm": 2,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
+        }
+      ],
+      "note": "FCU has no retinaculum at the wrist (it lies superficial to it and inserts on the pisiform). The forearm-side site sat a few mm proximal of the wrist axis, so in flexion the hand-side point swung past it and the muscle turned into a wrist extensor past about 72 deg of flexion; it is fitted to Brand & Hollister's flexion moment arms with the flexor sign held over the whole wrist range, including combined deviation.",
+      "fit": {
+        "rms_z": 0.424,
+        "arms": {
+          "flexion_r@-30": -12.22,
+          "flexion_r@-20": -13.74,
+          "flexion_r@-10": -14.98,
+          "flexion_r@0": -15.89,
+          "flexion_r@10": -16.41,
+          "flexion_r@30": -15.99,
+          "flexion_r@-40": -10.47,
+          "flexion_r@40": -14.92,
+          "deviation_r@0": 14.31
+        },
+        "curve_flexion_deg_mm": {
+          "-75": -3.17,
+          "-60": -6.47,
+          "-30": -12.22,
+          "0": -15.89,
+          "30": -15.99,
+          "60": -10.81,
+          "80": -4.24
+        },
+        "curve_deviation_deg_mm": {
+          "-36": 15.54,
+          "-20": 15.68,
+          "0": 14.31,
+          "22": 11.34
+        }
+      }
+    },
+    {
+      "name": "PL-P2_r",
+      "tendon": "PL_r_tendon",
+      "body": "radius_r",
+      "pos": [
+        0.016501,
+        -0.230622,
+        -0.001577
+      ],
+      "pos_before": [
+        0.0253,
+        -0.2392,
+        -0.0028
+      ],
+      "bound_mm": 25,
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": -16.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -20,
+          "arm_mm": -18.5,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": -20.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -21.8,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 10,
+          "arm_mm": -23.1,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": -24.6,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": -25.6,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-18"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -2.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-7 and 12-19 (almost a nondeviator)"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": -1,
+          "margin_mm": 2,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
+        }
+      ],
+      "note": "PL runs superficial to the flexor retinaculum to the palmar aponeurosis. The forearm-side site sat a few mm proximal of the wrist axis, so in flexion the hand-side point swung past it and the muscle turned into a wrist extensor past about 72 deg of flexion; it is fitted to Brand & Hollister's flexion moment arms with the flexor sign held over the whole wrist range, including combined deviation.",
+      "fit": {
+        "rms_z": 0.024,
+        "arms": {
+          "flexion_r@-30": -15.93,
+          "flexion_r@-20": -18.14,
+          "flexion_r@-10": -20.16,
+          "flexion_r@0": -21.95,
+          "flexion_r@10": -23.46,
+          "flexion_r@20": -24.61,
+          "flexion_r@30": -25.31,
+          "deviation_r@0": -2.02
+        },
+        "curve_flexion_deg_mm": {
+          "-75": -4.38,
+          "-60": -8.43,
+          "-30": -15.93,
+          "0": -21.95,
+          "30": -25.31,
+          "60": -22.21,
+          "80": -9.69
+        },
+        "curve_deviation_deg_mm": {
+          "-36": 3.27,
+          "-20": 0.94,
+          "0": -2.02,
+          "22": -5.12
+        }
+      }
+    },
+    {
+      "name": "FPL-P4_r",
+      "tendon": "FPL_r_tendon",
+      "body": "radius_r",
+      "pos": [
+        0.028,
+        -0.225902,
+        0.008241
+      ],
+      "pos_before": [
+        0.038,
+        -0.2317,
+        0.0158
+      ],
+      "bound_mm": 30,
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": -12.1,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-49"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -20,
+          "arm_mm": -12.4,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-49"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -10,
+          "arm_mm": -13.7,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-49"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": -15.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-49"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 10,
+          "arm_mm": -16.9,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-49"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": -18.7,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-49"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": -21.6,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-49"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 10,
+          "arm_mm": -5.5,
+          "sd": 3,
+          "source": "brand_hollister1993 Fig 12-42"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -5.0,
+          "sd": 3,
+          "source": "brand_hollister1993 Fig 12-42"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": -6.0,
+          "sd": 3,
+          "source": "brand_hollister1993 Fig 12-42"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": -1,
+          "margin_mm": 2,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
+        }
+      ],
+      "slide": {
+        "site": "FPL-P5_r",
+        "body": "capitate_r",
+        "from": [
+          0.0187,
+          0.0088,
+          -0.0155
+        ],
+        "toward": [
+          0.017915,
+          -0.005732,
+          -0.019896
+        ],
+        "max_mm": 13.2,
+        "value_mm": 13.2,
+        "pos": [
+          0.018018,
+          -0.003818,
+          -0.019317
+        ],
+        "note": "The carpal-tunnel site moves distally along its own segment toward the tangent point on FPL_ellipsoid_wrap_r, so the path distal of it and the thumb moment arms stay as they were."
+      },
+      "note": "FPL passes the carpal tunnel. The forearm-side site sat a few mm proximal of the wrist axis, so in flexion the hand-side point swung past it and the muscle turned into a wrist extensor past about 72 deg of flexion; it is fitted to Brand & Hollister's flexion moment arms with the flexor sign held over the whole wrist range, including combined deviation.",
+      "fit": {
+        "rms_z": 0.413,
+        "arms": {
+          "flexion_r@-30": -11.35,
+          "flexion_r@-20": -13.02,
+          "flexion_r@-10": -14.57,
+          "flexion_r@0": -15.95,
+          "flexion_r@10": -17.14,
+          "flexion_r@20": -18.08,
+          "flexion_r@30": -18.72,
+          "deviation_r@10": -16.02,
+          "deviation_r@0": -14.69,
+          "deviation_r@-20": -11.59
+        },
+        "curve_flexion_deg_mm": {
+          "-75": -2.7,
+          "-60": -5.72,
+          "-30": -11.35,
+          "0": -15.95,
+          "30": -18.72,
+          "60": -17.23,
+          "80": -9.19
+        },
+        "curve_deviation_deg_mm": {
+          "-36": -8.78,
+          "-20": -11.59,
+          "0": -14.69,
+          "22": -17.37
+        }
+      },
+      "box_mm": [
+        [
+          28.0,
+          48.0
+        ],
+        [
+          -1000.0,
+          1000.0
+        ],
+        [
+          -1000.0,
+          1000.0
+        ]
+      ],
+      "box_note": "kept within 10 mm of its old radial position (FPL lies on the radial half of the distal forearm, the radial-most tendon of the carpal tunnel)"
+    },
+    {
+      "name": "EPL-P6_r",
+      "tendon": "EPL_r_tendon",
+      "body": "capitate_r",
+      "pos": [
+        0.0283,
+        -0.0079,
+        0.0041
+      ],
+      "pos_before": [
+        0.0243,
+        0.0001,
+        0.0061
+      ],
+      "bound_mm": 15,
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 7.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -20,
+          "arm_mm": 8.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 7.6,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": 7.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 7.4,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 10,
+          "arm_mm": -10.0,
+          "sd": 6,
+          "source": "brand_hollister1993 Fig 12-42"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -10.5,
+          "sd": 6,
+          "source": "brand_hollister1993 Fig 12-42"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": -12.0,
+          "sd": 6,
+          "source": "brand_hollister1993 Fig 12-42"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
+        }
+      ],
+      "note": "EPL turned into a wrist flexor at the extension limit, earlier with radial deviation (-15 mm at 75 deg extension and 22 deg radial deviation). The carpal site distal of Lister's tubercle is fitted to Brand & Hollister's arms with the extensor sign held over the whole range; the thumb part of the path starts at the trapezium site and is unchanged.",
+      "fit": {
+        "rms_z": 1.538,
+        "arms": {
+          "flexion_r@-30": 15.67,
+          "flexion_r@-20": 15.24,
+          "flexion_r@0": 13.61,
+          "flexion_r@20": 11.26,
+          "flexion_r@30": 9.89,
+          "deviation_r@10": -21.57,
+          "deviation_r@0": -23.07,
+          "deviation_r@-20": -23.18
+        },
+        "curve_flexion_deg_mm": {
+          "-75": 8.56,
+          "-60": 13.7,
+          "-30": 15.67,
+          "0": 13.61,
+          "30": 9.89,
+          "60": 5.27,
+          "80": 1.92
+        },
+        "curve_deviation_deg_mm": {
+          "-36": -21.66,
+          "-20": -23.18,
+          "0": -23.07,
+          "22": -17.57
+        }
+      },
+      "box_mm": [
+        [
+          18.299999999999997,
+          28.299999999999997
+        ],
+        [
+          -7.9,
+          10.1
+        ],
+        [
+          4.1000000000000005,
+          1000.0
+        ]
+      ],
+      "box_note": "kept dorsal (no more than 2 mm palmar of its old position), within 6 mm of its old radio-ulnar position and between Lister's tubercle and the trapezium site, so that EPL runs obliquely to the thumb without a detour"
+    },
+    {
+      "name": "EPL-P5_r",
+      "tendon": "EPL_r_tendon",
+      "body": "radius_r",
+      "pos": [
+        0.0373,
+        -0.23505,
+        0.044091
+      ],
+      "pos_before": [
+        0.0423,
+        -0.2377,
+        0.0417
+      ],
+      "bound_mm": 15,
+      "box_mm": [
+        [
+          37.3,
+          47.3
+        ],
+        [
+          -237.7,
+          -225.7
+        ],
+        [
+          36.7,
+          44.7
+        ]
+      ],
+      "box_note": "radius frame: up to 12 mm proximal of its old place along the distal radius (the tendon leaves Lister's tubercle), 5 mm radio-ulnar and dorsopalmar",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 7.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -20,
+          "arm_mm": 8.0,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 7.6,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 20,
+          "arm_mm": 7.2,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 7.4,
+          "sd": 2.0,
+          "source": "brand_hollister1993 Fig 12-53"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 10,
+          "arm_mm": -10.0,
+          "sd": 6,
+          "source": "brand_hollister1993 Fig 12-42"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -10.5,
+          "sd": 6,
+          "source": "brand_hollister1993 Fig 12-42"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": -12.0,
+          "sd": 6,
+          "source": "brand_hollister1993 Fig 12-42"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -75,
+            80
+          ],
+          "sign": 1,
+          "margin_mm": 1,
+          "across": {
+            "joint": "deviation_r",
+            "deg": [
+              -36,
+              -18,
+              0,
+              11,
+              22
+            ]
+          }
+        }
+      ],
+      "note": "Fitted after EPL-P6_r: with the carpal site alone EPL still turned flexor in full extension with radial deviation.",
+      "fit": {
+        "rms_z": 0.796,
+        "arms": {
+          "flexion_r@-30": 16.15,
+          "flexion_r@-20": 15.64,
+          "flexion_r@0": 13.81,
+          "flexion_r@20": 11.21,
+          "flexion_r@30": 9.71,
+          "deviation_r@10": -18.19,
+          "deviation_r@0": -19.08,
+          "deviation_r@-20": -18.86
+        },
+        "curve_flexion_deg_mm": {
+          "-75": 10.45,
+          "-60": 14.61,
+          "-30": 16.15,
+          "0": 13.81,
+          "30": 9.71,
+          "60": 4.66,
+          "80": 1.04
+        },
+        "curve_deviation_deg_mm": {
+          "-36": -17.38,
+          "-20": -18.86,
+          "0": -19.08,
+          "22": -15.83
+        }
+      }
+    }
+  ]
 }

@@ -670,7 +670,7 @@ def _edit_site(lines: list[str], site: dict) -> None:
     import re
 
     pos = 'pos="' + " ".join(f"{v:g}" for v in site["pos"]) + '"'
-    found = [i for i, line in enumerate(lines) if f'<site name="{site["name"]}"' in line]
+    found = [i for i, line in enumerate(lines) if f'<site name="{site["name"]}"' in line and "<!--" not in line]
     if found and site["body"] == site.get("body_before", site["body"]):
         lines[found[0]] = re.sub(r'pos="[^"]*"', pos, lines[found[0]])
         return
@@ -748,6 +748,12 @@ def write_chain() -> None:
             k, indent = _after_body_tag(lines, via["body"])
             pos = " ".join(f"{v:g}" for v in via["pos"])
             lines.insert(k, f'{indent}<site name="{via["name"]}" pos="{pos}"/>')
+        # existing path sites moved by fit-vias (and a site slid along its path with them)
+        for entry in table.get("path_sites", []) if part == "arm" else []:
+            _edit_site(lines, {"name": entry["name"], "body": entry["body"], "pos": entry["pos"]})
+            if "slide" in entry:
+                slide = entry["slide"]
+                _edit_site(lines, {"name": slide["site"], "body": slide["body"], "pos": slide["pos"]})
         chain.write_text("\n".join(lines))
         tendons.write_text(text)
 
@@ -1058,7 +1064,10 @@ def side_search(name: str, wrap_key: str, n_circle: int = 720, n_sphere: int = 3
 def fit_vias(selected: tuple[str, ...] = ()) -> None:
     """Fit the via sites of ``data/side_sites.json`` to their moment-arm targets and store the positions and residuals.
 
-    The via must already be in the chain and tendon files (``write`` with any start position).
+    The via must already be in the chain and tendon files (``write`` with any start position). ``path_sites`` are
+    existing path sites fitted the same way; one of them may also slide a second site along a fixed direction
+    (``slide``). A target row may hold other joints at ``base_deg``; a sign row may repeat over the angles of another
+    joint (``across``), so that the sign holds over combined postures.
     """
     import json
     from pathlib import Path
@@ -1086,43 +1095,90 @@ def fit_vias(selected: tuple[str, ...] = ()) -> None:
             lengths.append(data.ten_length[t])
         return (lengths[1] - lengths[0]) / 2e-3 * 1e3
 
-    for via in table["vias"]:
+    def with_deg(base: dict | None, extra: dict | None) -> dict:
+        out = dict(base or {})
+        out.update({k: np.radians(v) for k, v in (extra or {}).items()})
+        return out
+
+    def grid(lo: float, hi: float, step: float) -> np.ndarray:
+        return np.unique(np.r_[np.arange(lo, hi, step), hi])
+
+    def limits_deg(joint: str) -> np.ndarray:
+        return np.degrees(model.jnt_range[model.joint(joint).id])
+
+    for via in table["vias"] + table.get("path_sites", []):
         if selected and via["name"] not in selected:
             continue
         site = model.site(via["name"]).id
         t = model.tendon(via["tendon"]).id
+        slide = via.get("slide")
+        if slide:
+            slid = model.site(slide["site"]).id
+            origin = np.array(slide["from"], float)
+            direction = np.array(slide["toward"], float) - origin
+            direction /= np.linalg.norm(direction)
+
+        def place(x: np.ndarray) -> None:
+            model.site_pos[site] = x[:3]
+            if slide:
+                model.site_pos[slid] = origin + direction * x[3]
 
         def residuals(x: np.ndarray) -> np.ndarray:
-            model.site_pos[site] = x
+            place(x)
             base = via.get("base")
-            out = [(arm(t, r["joint"], r["deg"], base) - r["arm_mm"]) / r["sd"] for r in via["targets"]]
+            out = [
+                (arm(t, r["joint"], r["deg"], with_deg(base, r.get("base_deg"))) - r["arm_mm"]) / r["sd"]
+                for r in via["targets"]
+            ]
             for r in via.get("mean_targets", []):
-                grid = np.arange(r["range_deg"][0], r["range_deg"][1] + 1, 10.0)
-                out.append((np.mean([arm(t, r["joint"], g) for g in grid]) - r["arm_mm"]) / r["sd"])
+                points = np.arange(r["range_deg"][0], r["range_deg"][1] + 1, 10.0)
+                out.append((np.mean([arm(t, r["joint"], g) for g in points]) - r["arm_mm"]) / r["sd"])
             for r in via.get("sign", []):
-                grid = np.arange(r["range_deg"][0], r["range_deg"][1] + 1, 10.0)
-                out += [max(0.0, r["margin_mm"] - r["sign"] * arm(t, r["joint"], g, base)) for g in grid]
+                across = r.get("across")
+                bases = [with_deg(base, {across["joint"]: a}) for a in across["deg"]] if across else [base]
+                for b in bases:
+                    if across:
+                        points = grid(r["range_deg"][0], r["range_deg"][1], 5.0)
+                    else:
+                        points = np.arange(r["range_deg"][0], r["range_deg"][1] + 1, 10.0)
+                    out += [max(0.0, r["margin_mm"] - r["sign"] * arm(t, r["joint"], g, b)) for g in points]
             return np.array(out)
 
+        bound = via.get("bound_mm", 20.0) * 1e-3
         start = np.array(via["pos"], float)
-        bounds = (start - 0.02, start + 0.02)
+        lower, upper = start - bound, start + bound
+        if "box_mm" in via:  # per-axis limits in the site's body frame (keeps a site on its side of a tendon sheath)
+            box = np.array(via["box_mm"], float) * 1e-3
+            lower, upper = np.maximum(lower, box[:, 0]), np.minimum(upper, box[:, 1])
+            start = np.clip(start, lower, upper)
+        if slide:
+            start = np.r_[start, slide.get("value_mm", 0.0) * 1e-3]
+            lower, upper = np.r_[lower, 0.0], np.r_[upper, slide["max_mm"] * 1e-3]
         best = None
         rng = np.random.default_rng(3)
         for k in range(6):
-            x0 = start if k == 0 else np.clip(start + rng.uniform(-0.01, 0.01, 3), *bounds)
-            fit = least_squares(residuals, x0, bounds=bounds, diff_step=1e-3, x_scale=0.003, max_nfev=60)
+            x0 = start if k == 0 else np.clip(start + rng.uniform(-bound / 2, bound / 2, start.size), lower, upper)
+            fit = least_squares(residuals, x0, bounds=(lower, upper), diff_step=1e-3, x_scale=0.003, max_nfev=60)
             if best is None or fit.cost < best.cost:
                 best = fit
-        via["pos"] = [round(float(v), 6) for v in best.x]
-        model.site_pos[site] = via["pos"]
+        place(best.x)
+        via["pos"] = [round(float(v), 6) for v in best.x[:3]]
+        if slide:
+            slide["value_mm"] = round(float(best.x[3] * 1e3), 2)
+            slide["pos"] = [round(float(v), 6) for v in origin + direction * best.x[3]]
+        place(np.r_[via["pos"], slide["value_mm"] * 1e-3] if slide else np.array(via["pos"]))
+        flexion = np.unique(np.r_[limits_deg("flexion_r"), -60, -30, 0, 30, 60].round(1))
+        deviation = np.unique(np.r_[limits_deg("deviation_r"), -20, 0].round(1))
         via["fit"] = {
             "rms_z": round(float(np.sqrt(np.mean(residuals(best.x) ** 2))), 3),
             "arms": {
-                r["joint"] + "@" + str(r["deg"]): round(float(arm(t, r["joint"], r["deg"], via.get("base"))), 2)
+                r["joint"] + "@" + str(r["deg"]) + "".join(f" {k}@{v}" for k, v in r.get("base_deg", {}).items()): round(
+                    float(arm(t, r["joint"], r["deg"], with_deg(via.get("base"), r.get("base_deg")))), 2
+                )
                 for r in via["targets"]
             },
-            "curve_flexion_deg_mm": {str(g): round(float(arm(t, "flexion_r", g)), 2) for g in range(-90, 81, 30)},
-            "curve_deviation_deg_mm": {str(g): round(float(arm(t, "deviation_r", g)), 2) for g in range(-30, 41, 10)},
+            "curve_flexion_deg_mm": {f"{g:g}": round(float(arm(t, "flexion_r", g)), 2) for g in flexion},
+            "curve_deviation_deg_mm": {f"{g:g}": round(float(arm(t, "deviation_r", g)), 2) for g in deviation},
         }
         print(via["name"], via["pos"], via["fit"], flush=True)
     path.write_text(json.dumps(table, indent=2) + "\n")

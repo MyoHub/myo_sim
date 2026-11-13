@@ -462,7 +462,7 @@
         "site:EIP-P1_r",
         "site:EIP-P2_r",
         "site:EIP-P3_r",
-        "geom:ExtensorEllipse_ellipsoid_wrap_r:ExtensorEllipse_ellipsoid_site_EIP_side_r",
+        "site:EIP_via_r",
         "site:EIP-P4_r",
         "site:EIP-P5_r",
         "geom:mcp2_EIP_wrap_r:mcp2_EIP_side_r"

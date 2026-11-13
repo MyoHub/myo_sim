@@ -83,6 +83,21 @@ def test_via_replaces_the_wrap(arm: mujoco.MjModel, via: dict) -> None:
     assert sid in path
 
 
+@pytest.mark.parametrize("entry", TABLE.get("path_sites", []), ids=lambda s: s["name"])
+def test_fitted_path_site_is_where_the_table_says(arm: mujoco.MjModel, entry: dict) -> None:
+    """A fitted path site (and the site it slides) sits where fit-vias put it, on the tendon's path."""
+    t = arm.tendon(entry["tendon"]).id
+    path = arm.wrap_objid[arm.tendon_adr[t] : arm.tendon_adr[t] + arm.tendon_num[t]]
+    sites = [(entry["name"], entry["body"], entry["pos"])]
+    if "slide" in entry:
+        sites.append((entry["slide"]["site"], entry["slide"]["body"], entry["slide"]["pos"]))
+    for name, body, pos in sites:
+        sid = arm.site(name).id
+        assert arm.body(arm.site_bodyid[sid]).name == body
+        np.testing.assert_allclose(arm.site_pos[sid], pos, atol=1e-9)
+        assert sid in path
+
+
 def _site_in_geom_frame(model, wrap, qs, script) -> np.ndarray | None:
     """Side site in the geom frame per posture, where it sits on another body than the geom."""
     if wrap.side < 0 or model.site_bodyid[wrap.side] == model.geom_bodyid[wrap.geom]:

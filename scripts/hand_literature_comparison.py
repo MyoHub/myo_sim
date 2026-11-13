@@ -243,6 +243,46 @@ def joint_ranges(model: mujoco.MjModel) -> dict[str, Any]:
     return out
 
 
+WRIST_FLEXORS = ("FCR", "FCU", "PL", "FPL")
+WRIST_SIGNED = {
+    -1.0: WRIST_FLEXORS + tuple(f"FD{h}{k}" for h in "SP" for k in (2, 3, 4, 5)),
+    1.0: ("EDC2", "EDC3", "EDC4", "EDC5", "EIP", "EDM", "EPL"),
+}
+
+
+def wrist_paths(model: mujoco.MjModel) -> dict[str, Any]:
+    """Wrist flexion arms (dL/dq, mm, + = extension) of FCR, FCU, PL and FPL at neutral and 30 deg flexion, EDC2-5 at
+    neutral, and the smallest arm of the flexors (sign flipped) and of the long extensors over the whole wrist range
+    (2 deg grid of flexion and deviation): positive when every one keeps its action everywhere."""
+    neutral = [_arms(model, f"{n}_r_tendon", {}, ("flexion_r",))[0] for n in WRIST_FLEXORS]
+    flexed = [_arms(model, f"{n}_r_tendon", {"flexion_r": np.radians(30)}, ("flexion_r",))[0] for n in WRIST_FLEXORS]
+    edc = [_arms(model, f"EDC{k}_r_tendon", {}, ("flexion_r",))[0] for k in (2, 3, 4, 5)]
+    data = mujoco.MjData(model)
+    (flo, fhi), (dlo, dhi) = _limits_deg(model, "flexion_r"), _limits_deg(model, "deviation_r")
+    flex, dev = np.arange(flo, fhi + 1e-9, 2.0), np.arange(dlo, dhi + 1e-9, 2.0)
+    margins = []
+    for sign, names in WRIST_SIGNED.items():
+        tendons = [model.tendon(f"{n}_r_tendon").id for n in names]
+        lengths = np.zeros((flex.size, dev.size, len(tendons)))
+        for i, f in enumerate(flex):
+            for j, g in enumerate(dev):
+                data.qpos[:] = model.qpos0
+                data.qpos[model.joint("flexion_r").qposadr[0]] = np.radians(f)
+                data.qpos[model.joint("deviation_r").qposadr[0]] = np.radians(g)
+                mujoco.mj_kinematics(model, data)
+                mujoco.mj_comPos(model, data)
+                mujoco.mj_tendon(model, data)
+                lengths[i, j] = data.ten_length[tendons]
+        arms = np.diff(lengths, axis=0) / np.radians(2.0) * 1e3
+        margins.append(float((sign * arms).min()))
+    return {
+        "wrist_flexor_arms_neutral": neutral,
+        "wrist_flexor_arms_flexed": flexed,
+        "edc_wrist_arms_neutral": edc,
+        "wrist_arm_sign_margin": margins,
+    }
+
+
 def _arms(model: mujoco.MjModel, tendon: str, posture: dict[str, float], joints: tuple[str, ...]) -> list[float]:
     """dL/dq (mm) of *tendon* about *joints* at *posture* (central differences)."""
     data = mujoco.MjData(model)
@@ -906,6 +946,7 @@ def measure(model_name: str = "myoarm_r") -> dict[str, Any]:
     )
     out |= interossei_lumbricals(model)
     out |= joint_ranges(model)
+    out |= wrist_paths(model)
     out |= mcp_extension(model)
     out |= pip_flexors(model)
     out |= extensor_mechanism(model)

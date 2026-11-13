@@ -368,10 +368,78 @@ range no wrist-crossing tendon jumps now.
 | EDC4 | 25.5 / 16.8 / 8.0; 8.1 | 25.3 / 18.7 / 6.7; 8.7 | 0.39 |
 | EDC5 | 20.8 / 15.1 / 5.4; 7.8 | 20.3 / 15.0 / 5.5; 7.9 | 0.12 |
 
-Holzbaur et al. 2005 give 16 mm for EDC2 at neutral. Over the new flexion range (to 80 deg) the arms of FCU, PL and
-FPL turn extensor past about 72 deg of flexion (FCU -4.6, PL -12.5, FPL -7.0 mm at 80 deg) and EDC3 and EDM turn
-flexor past about 65 deg; these paths are unchanged (the old limit was 70 deg) and stay an open check
-(`hand-literature-comparison.md`).
+Holzbaur et al. 2005 give 16 mm for EDC2 at neutral. The EDC vias were refitted to Brand & Hollister 1993 in the wrist
+path step (next section).
+
+## Wrist paths over the whole range
+
+With the flexion limit at 80 deg (wrist range step) FCU, PL and FPL turned into wrist extensors past about 72 deg of
+flexion, and EDC3, EDM and EPL turned flexor near the limits. Cause: each path is a chord from its last forearm site to its
+first hand site. A forearm site a few mm proximal of the axis (FCU 19, PL 3, FPL 10 mm) lets the hand site swing past it in
+flexion, and the arm crosses zero when the two lie on one line through the axis. Brand & Hollister 1993 (Ch. 12, cadaver,
+forearm midprone, -30..30 deg, read from the figures) measured the wrist flexion arm of every wrist-crossing tendon: the
+flexor arms stay or rise towards flexion (PL, FPL, FDS and FDP by bowstringing), the extensor arms fall slowly.
+
+**Fits.** `fit-vias` in `scripts/migrate_side_sites.py` fits each site to Brand's curve and the other cited arms, and holds
+the sign of the flexion arm over flexion -75..80 deg at deviation -36, -18, 0, 11 and 22 deg (margin 2 mm for flexors, 1 mm
+for extensors). Existing path sites are listed under `path_sites` in `build/data/side_sites.json` (the fit moves them; `write`
+puts them into the chain):
+
+- **FCU-P3_r** (radius): fitted to Brand, Loren et al. 1996 and Horii et al. 1993 (FCU has no retinaculum; it lies superficial
+  to it and inserts on the pisiform). The fit puts the site 4 mm from FCU-P2_r, so the tendon runs straight from the forearm
+  to the pisiform. FCU's `lengthrange` follows its length change at q0 (+3.4 mm), as before (`generate_extrinsic_muscles.py`).
+- **PL-P2_r** (radius): 8 mm more proximal (11 mm proximal of the axis, 27 mm palmar). Elbow arm unchanged (-4.6 mm),
+  pronation arm -3.2 -> -1.8 mm.
+- **FPL-P4_r** (radius), kept within 10 mm of its radial position (FPL is the radial-most tendon of the carpal tunnel), and
+  **FPL-P5_r** (capitate, the carpal-tunnel site) slid 13 mm distally along its own segment towards its tangent point on
+  `FPL_ellipsoid_wrap_r`. The thumb arms at neutral are unchanged; with the CMC flexed and abducted (0.5 / 0.4 rad) the wrap
+  plane follows the moved site and FPL's CMC flexion arm rises from 1.1 to 3.8 mm (Smutz et al. 1998: 14.3 mm at neutral).
+- **EPL-P5_r** (radius, Lister's tubercle) and **EPL-P6_r** (capitate), each kept in a box near its old place (no detour
+  between the tubercle and the trapezium). EPL turned flexor in full extension with radial deviation (-15 mm); its arm now
+  stays an extension arm there, but it is about twice Brand's.
+- Vias `FCR_via_r`, `ECRB_via_r` (Brand added to Horii, Loren and Garland), `EDM_via_r` and `EDC2-5_via_r` (now fitted to
+  Brand's extensor digitorum curves, Figs 12-76 and 12-77, instead of the previous path) get the same sign rows. `ECRL_via_r`
+  keeps its single-joint rows only: Loren's ECRL polynomial crosses zero at 59 deg flexion, and holding ECRL an extensor at
+  full flexion with ulnar deviation moved its neutral radial-deviation arm from -18 to -12 mm (Horii -19).
+- **EIP_via_r** (lunate) replaces the ellipsoid `ExtensorEllipse_ellipsoid_wrap_r`, whose arm stepped by up to 30 mm (a
+  0.3 mm length kink) in full extension with ulnar deviation; fitted to the previous path's arms along single-joint sweeps
+  (no EIP wrist arm in the literature used here).
+
+Flexion arms in mm, + = flexion (deviation 0), and the smallest arm over the whole 2-D range (flexors as flexion arm,
+extensors as extension arm; negative = the muscle acts the other way somewhere). Identical on MuJoCo 4.0 and 3.17:
+
+| Muscle | Before: -30 / 0 / 30 / 80 deg | After | Brand & Hollister 1993: -30 / 0 / 30 | Smallest arm over the 2-D range, before -> after |
+| --- | --- | --- | --- | --- |
+| FCR | 12.1 / 15.8 / 17.0 / 2.4 | 12.6 / 16.8 / 18.5 / 4.0 | 17.5 / 17.8 / 16.5 | 0.6 -> 1.3 |
+| FCU | 11.8 / 14.7 / 15.0 / -4.5 | 12.2 / 15.9 / 16.0 / 4.2 | 16.0 / 19.1 / 18.5 | -15.6 -> 1.1 |
+| PL | 19.9 / 25.1 / 27.2 / -12.5 | 15.9 / 21.9 / 25.3 / 9.7 | 16.0 / 21.8 / 25.6 | -18.3 -> 3.2 |
+| FPL | 8.7 / 11.2 / 12.7 / -7.0 | 11.3 / 15.9 / 18.7 / 9.2 | 12.1 / 15.2 / 21.6 | -9.7 -> 1.8 |
+| FDS2 | 10.4 / 14.1 / 22.9 / 30.5 | 10.4 / 14.1 / 22.9 / 30.5 | 11.7 / 14.4 / 19.2 | 7.3 -> 7.3 |
+| FDS3 | 10.7 / 14.6 / 23.3 / 30.5 | 10.7 / 14.6 / 23.3 / 30.5 | – | 7.5 -> 7.5 |
+| FDS4 | 11.4 / 14.9 / 23.5 / 30.4 | 11.4 / 14.9 / 23.5 / 30.4 | – | 7.7 -> 7.7 |
+| FDS5 | 11.6 / 15.3 / 24.0 / 30.9 | 11.6 / 15.3 / 24.0 / 30.9 | – | 7.8 -> 7.8 |
+| FDP2 | 8.1 / 11.6 / 20.1 / 27.9 | 8.1 / 11.6 / 20.1 / 27.9 | 10.1 / 12.5 / 18.0 | 4.4 -> 4.4 |
+| FDP3 | 8.0 / 11.7 / 20.5 / 29.0 | 8.0 / 11.7 / 20.5 / 29.0 | – | 4.0 -> 4.0 |
+| FDP4 | 7.8 / 11.8 / 20.3 / 28.2 | 7.8 / 11.8 / 20.3 / 28.2 | – | 3.7 -> 3.7 |
+| FDP5 | 7.7 / 11.6 / 19.8 / 26.9 | 7.7 / 11.6 / 19.8 / 26.9 | – | 3.4 -> 3.4 |
+| ECRL | -8.9 / -7.6 / -5.3 / -0.5 | -9.4 / -8.0 / -5.6 / -0.6 | -11.5 / -10.5 / -8.8 | -6.3 -> -7.3 |
+| ECRB | -14.0 / -11.8 / -8.3 / -0.9 | -14.6 / -12.3 / -8.7 / -1.1 | -13.8 / -13.6 / -12.5 | -0.9 -> -0.8 |
+| ECU | -8.6 / -6.1 / -2.7 / 3.4 | -8.6 / -6.1 / -2.7 / 3.4 | – | -7.4 -> -7.4 |
+| EDM | -13.8 / -9.3 / -4.2 / 4.8 | -13.4 / -10.6 / -6.9 / 0.3 | – | -6.1 -> -1.6 |
+| EIP | -15.8 / -12.8 / -10.1 / -9.1 | -16.6 / -14.1 / -9.9 / -1.0 | – | 5.8 -> 0.3 |
+| EPL | -15.2 / -13.4 / -10.4 / -3.7 | -16.1 / -13.8 / -9.7 / -1.0 | -7.0 / -7.6 / -7.4 | -15.2 -> -3.0 |
+| EPB | -3.1 / -1.0 / 1.1 / 4.4 | -3.1 / -1.0 / 1.1 / 4.4 | 3.5 / 3.8 / 4.1 | -9.3 -> -9.3 |
+| APL | 2.0 / 5.7 / 8.7 / 10.8 | 2.0 / 5.7 / 8.7 / 10.8 | 5.3 / 7.4 / 9.5 | -7.3 -> -7.3 |
+| EDC2 | -22.4 / -18.2 / -12.3 / -0.3 | -18.3 / -16.7 / -12.5 / -2.9 | -17.8 / -15.8 / -15.2 | 0.5 -> 0.8 |
+| EDC3 | -21.5 / -15.9 / -9.1 / 3.5 | -18.7 / -15.9 / -11.6 / -2.5 | -17.8 / -15.8 / -14.5 | -3.5 -> 0.9 |
+| EDC4 | -22.9 / -18.7 / -13.1 / -2.1 | -18.6 / -15.2 / -10.5 / -1.2 | -17.5 / -14.9 / -13.3 | -1.4 -> 0.7 |
+| EDC5 | -18.4 / -15.0 / -10.6 / -1.9 | -14.7 / -12.2 / -8.6 / -1.1 | -15.0 / -11.5 / -10.2 | -0.4 -> 0.9 |
+
+FDS, FDP, ECU, EPB and APL are unchanged. The FDS and FDP arms rise faster than Brand's towards flexion; ECRL, ECRB and
+ECU turn flexor at full flexion with ulnar deviation, which Loren's polynomials allow; EPB and APL run close to the axis.
+These, EPL's large extension arm and the two corner sign changes of EPL and EDM are open checks
+(`hand-literature-comparison.md`). On a 0.5 deg grid over flexion and deviation no wrist-crossing tendon length jumps and
+no arm changes by more than 1.5 mm between neighbouring cells; the wrap jump table is re-recorded.
 
 ## MCP pulleys and hyperextension
 
@@ -505,7 +573,7 @@ release step 690 -> 860), the deficit at the wrist; the release bound of EDC3-5 
 
 - An KN, Chao EY, Cooney WP, Linscheid RL. Normative model of human hand for biomechanical analysis. J Biomech 12(10):775-788, 1979.
 - An KN, Ueba Y, Chao EY, Cooney WP, Linscheid RL. Tendon excursion and moment arm of index finger muscles. J Biomech 16(6):419-425, 1983 (Table 3, Fig. 4).
-- Brand PW, Hollister AM. Clinical Mechanics of the Hand, 2nd ed. Mosby, 1993 (Table 14-1, after Ketchum & Thompson).
+- Brand PW, Hollister AM. Clinical Mechanics of the Hand, 2nd ed. Mosby, 1993 (Table 14-1, after Ketchum & Thompson; Ch. 12, wrist moment arms, Figs 12-7, 12-9, 12-18, 12-42, 12-49, 12-53, 12-58, 12-65, 12-76, 12-77).
 - Brook N, Mizrahi J, Shoham M, Dayan J. A biomechanical model of index finger dynamics. Med Eng Phys 17(1):54-63, 1995.
 - Akhbari B et al. Biomechanics of the distal radioulnar joint during in vivo forearm pronosupination. J Wrist Surg 10(3):208-215, 2021.
 - Garcia-Elias M et al. Extensor mechanism of the fingers. II. Tensile properties of components. J Hand Surg Am 16(6):1136-1140, 1991.
@@ -524,5 +592,6 @@ release step 690 -> 860), the deficit at the wrist; the release bound of EDC3-5 
 - Matsuzawa K et al. The origin structure of each finger in the flexor digitorum superficialis muscle. Surg Radiol Anat 43:3-10, 2021.
 - Murray WM, Delp SL, Buchanan TS. Variation of muscle moment arms with elbow and forearm position. J Biomech 28(5):513-525, 1995. Cited only (its forearm axis definition).
 - von Schroeder HP, Botte MJ. The functional significance of the long extensors and juncturae tendinum in finger extension. J Hand Surg Am 18(4):641-647, 1993.
+- Smutz WP et al. Mechanical advantage of the thumb muscles. J Biomech 31(6):565-570, 1998.
 - Yammine K. The anatomy and prevalence of the juncturae tendinum in the hands. Eur J Anat 19(4):351-359, 2015.
 - Zatsiorsky VM, Li ZM, Latash ML. Enslaving effects in multi-finger force production. Exp Brain Res 131:187-195, 2000.

@@ -309,10 +309,10 @@
                                         <site name="ECRB-P2_r" pos="0.029 -0.1309 0.0238"/>
                                         <site name="ECRB-P3_r" pos="0.0355 -0.228 0.0394"/>
                                         <site name="FCR-P2_r" pos="0.0211 -0.2194 0.0013"/>
-                                        <site name="FCU-P3_r" pos="0.0108 -0.2233 0.0097"/>
+                                        <site name="FCU-P3_r" pos="0.005723 -0.1833 0.002383"/>
                                         <!-- <site name="FCU-P2_r" pos="0.0101 -0.1835 0.002"/> -->
                                         <site name="FCU-P2_r" pos="0.0095 -0.1841 0.0005"/>
-                                        <site name="PL-P2_r" pos="0.0253 -0.2392 -0.0028"/>
+                                        <site name="PL-P2_r" pos="0.016501 -0.230622 -0.001577"/>
                                         <site name="PT-P5_r" pos="0.0254 -0.1088 0.0198"/>
                                         <site name="PT-P4_r" pos="0.0236 -0.0934 0.0094"/>
                                         <site name="PQ-P1_r" pos="0.0324 -0.2 0.0196"/>
@@ -337,7 +337,7 @@
                                         <site name="EPL-P2_r" pos="0.0012 -0.1367 0.0227"/>
                                         <site name="EPL-P3_r" pos="0.027 -0.2187 0.0383"/>
                                         <site name="EPL-P4_r" pos="0.0338 -0.2275 0.0461"/>
-                                        <site name="EPL-P5_r" pos="0.0423 -0.2377 0.0417"/>
+                                        <site name="EPL-P5_r" pos="0.0373 -0.23505 0.044091"/>
                                         <site name="EPB-P1_r" pos="0.0192 -0.147 0.0211"/>
                                         <site name="EPB-P2_r" pos="0.0228 -0.1586 0.0266"/>
                                         <site name="EPB-P3_r" pos="0.0383 -0.1972 0.0383"/>
@@ -345,7 +345,7 @@
                                         <site name="FPL-P1_r" pos="0.0097 -0.0946 0.0177"/>
                                         <site name="FPL-P2_r" pos="0.0166 -0.1352 0.0192"/>
                                         <site name="FPL-P3_r" pos="0.0187 -0.1793 0.0199"/>
-                                        <site name="FPL-P4_r" pos="0.038 -0.2317 0.0158"/>
+                                        <site name="FPL-P4_r" pos="0.028 -0.225902 0.008241"/>
                                         <site name="APL-P1_r" pos="0.0115 -0.0948 0.0168"/>
                                         <site name="APL-P2_r" pos="0.0303 -0.1397 0.0351"/>
                                         <site name="APL-P3_r" pos="0.0399 -0.1607 0.034"/>
@@ -367,28 +367,27 @@
                                         <site class="myoarm_marker" name="Radius_marker_r" pos="0.05749 -0.2272 0.02738"/>
 
                                         <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="myoarm_wrist">
-                                            <site name="EDC5_via_r" pos="-0.008136 -0.010409 0.017637"/>
-                                            <site name="EDC4_via_r" pos="-0.008162 -0.019708 0.019645"/>
-                                            <site name="EDC3_via_r" pos="0.000333 -0.0317 0.01398"/>
-                                            <site name="EDC2_via_r" pos="0.00791 -0.02591 0.021325"/>
-                                            <site name="EDM_via_r" pos="-0.015904 -0.021642 0.006252"/>
-                                            <site name="ECRL_via_r" pos="0.015939 -0.011783 0.004225"/>
+                                            <site name="EIP_via_r" pos="0.001856 -0.018606 0.019452"/>
+                                            <site name="EDC5_via_r" pos="-0.00793 -0.008412 0.012704"/>
+                                            <site name="EDC4_via_r" pos="-0.005264 -0.015045 0.013456"/>
+                                            <site name="EDC3_via_r" pos="0.001985 -0.012737 0.015544"/>
+                                            <site name="EDC2_via_r" pos="0.014603 -0.015897 0.020178"/>
+                                            <site name="EDM_via_r" pos="-0.012496 -0.011247 0.009739"/>
+                                            <site name="ECRL_via_r" pos="0.017024 -0.012054 0.004573"/>
                                             <site name="ECRB_via_r" pos="0.00926 -0.012606 0.01072"/>
-                                            <site name="FCR_via_r" pos="0.010895 -0.011477 -0.01348"/>
+                                            <site name="FCR_via_r" pos="0.011382 -0.012964 -0.014368"/>
                                             <!-- The mass and inertia this body got from its wrap geoms on dev: kept so the arm and the body total stay as they were. -->
                                             <inertial pos="-0.00089131 -0.00917102 -0.00186901" mass="0.16375769" quat="0.65249538 0.4123981 0.60123937 0.2066127" diaginertia="5.60932989e-05 4.97744861e-05 3.21989459e-05"/>
-                                            <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.698132 0.383972" damping="0.25"/>
+                                            <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.628319 0.383972" damping="0.25"/>
                                             <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-1.308997 1.396263" damping="0.25"/>
                                             <geom mesh="lunate_r" name="lunate_r" type="mesh"/>
                                             <geom name="WristExtensor_wrap_r" pos="0.0007 0 0.003" quat="0.807649 -0.0333177 0.588355 0.0207694" class="myoarm_wrap" size="0.008 0.02" type="cylinder"/>
                                             <geom name="WristFlexor_wrap_r" pos="0 -0.01 -0.004" quat="0.807649 -0.0333177 0.588355 0.0207694" class="myoarm_wrap" size="0.007 0.02" type="cylinder"/>
-                                            <geom name="ExtensorEllipse_ellipsoid_wrap_r" pos="-0.00145969 -0.0120017 -0.00892632" quat="0.977473 -0.106567 0.15459 0.0963907" class="myoarm_wrap" size="0.0237409"/>
                                             <!-- <geom name="PL_ellipsoid_wrap" pos="0.0170362 -0.0128706 0.0101738" quat="0.998158 -0.0141897 0.050277 0.0308429" class="myoarm_wrap" size="0.0272385"/> -->
                                             <geom name="FDS_ellipsoid_wrap_r" type="cylinder" size="0.013 0.025" pos="0.0012 -0.0057 -0.0003" euler="0.00837758 1.48 -0.0171042" class="myoarm_wrap"/>
                                             <geom name="FDP_ellipsoid_wrap_r" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0032" euler="-1.46747 1.37 0.121824" class="myoarm_wrap"/>
                                             <geom name="FPL_ellipsoid_wrap_r" type="sphere" size="0.015" pos="0.02 -0.025 -0.0033" class="myoarm_wrap"/>
 
-                                            <site name="ExtensorEllipse_ellipsoid_site_EIP_side_r" pos="-0.0195105 -0.00430577 0.0636576"/>
                                             <site name="PL_ellipsoid_site_PL_side_r" pos="-0.0286005 -0.023546 -0.0168168"/>
 
 
@@ -430,10 +429,10 @@
                                                 <site name="FDP4-P3_r" pos="0.0011 -0.0118 -0.0118"/>
                                                 <site name="FDP3-P3_r" pos="0.0034 -0.0128 -0.0114"/>
                                                 <site name="FDP2-P3_r" pos="0.009 -0.0117 -0.0121"/>
-                                                <site name="EPL-P6_r" pos="0.0243 0.0001 0.0061"/>
+                                                <site name="EPL-P6_r" pos="0.0283 -0.0079 0.0041"/>
                                                 <site name="EPB-P5_r" pos="0.0312 0.0026 -0.0033"/>
                                                 <!-- <site name="FPL-P5_r" pos="0.0179 0.0064 -0.0168"/> -->
-                                                <site name="FPL-P5_r" pos="0.0187 0.0088 -0.0155"/>
+                                                <site name="FPL-P5_r" pos="0.018018 -0.003818 -0.019317"/>
                                                 <!-- Hand intrinsic muscle sites: written by scripts/generate_hand_intrinsic_muscles.py from build/data/hand_intrinsic_muscles.json (start points from MUSIC, MIT, and Mirakhorlo et al. 2016, CC BY 4.0; licences in build/data/) -->
                                                 <site name="AdPo-P1_r" pos="0.0014 -0.008 -0.0107"/>
                                                 <site name="FPBd-P1_r" pos="0.001891 -0.006796 -0.012733"/>
