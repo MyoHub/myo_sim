@@ -148,8 +148,8 @@ the conoid by 14 mm along Seth's motions, against 3 mm with abduction to 120 deg
 | plus the AC spring (35) | 8.5 / 21.0 / 37.0 / 50.0 (the limit) | 9.5 / 29.0 / 45.5 / 50.0 |
 | plus the AC spring and an axial spring (35, 35): model | 4.5 / 10.5 / 18.5 / 32.0 | 5.0 / 15.0 / 24.0 / 30.5 |
 
-  With the ligaments and muscles alone the axial angle is set only where the conoid becomes taut, above about
-  105 deg of elevation, and there it turns the clavicle posteriorly by about the measured amount: the conoid
+  With the ligaments and muscles alone the axial angle is set only where the conoid becomes taut in this quasi-static
+  equilibrium, above about 105 deg of elevation, and there it turns the clavicle posteriorly by about the measured amount: the conoid
   cranks the clavicle as described in vivo. Below, nothing in the model holds it. The isotropic AC spring, a stand-in
   for the AC joint surfaces and capsule, turns the clavicle with the scapula and gives about 1.7 times the measured
   rotation; an equal residual spring at the axial hinge, a stand-in for the sternoclavicular disc and capsule, splits
@@ -330,7 +330,7 @@ humerus-in-scapula orientations (Seth's points in this model reproduce OpenSim t
 | Muscle | Decision | Why |
 |---|---|---|
 | DELT1 | Seth's three points (humerus, acromion, clavicle) over the humeral-head sphere `SUPSP_hhead_r`; Seth's l0 and slack | The MoBL path adducted at 15 deg abduction and gave 47-50 mm of flexion at 15-45 deg (measured 20-28); rms against the data 20.3 -> 6.5 mm |
-| DELT2 | Seth's three points over `SUPSP_hhead_r`; Seth's l0 and slack; passive scale 0.65, the median of the shoulder muscles (MoBL-ARMS's 1.73 on this path held the relaxed arm 23 deg abducted) | The MoBL path gave 4 mm of abduction arm at 15 deg (measured 15-20 mm), which left the arm without abduction strength at the side; now 19 mm at 10 deg, 31 mm at 60 deg (measured 26-27) |
+| DELT2 | Seth's three points over `SUPSP_hhead_r`; Seth's l0 and slack; passive scale 0.65, the median of the shoulder muscles (MoBL-ARMS's 1.73 on this path held the relaxed arm 23 deg abducted) | The MoBL path gave 4 mm of abduction arm at 15 deg (measured 15-20 mm), which left the arm without abduction strength at the side; now 25 mm at 15 deg and 35 mm at 60-75 deg (measured 15-20 and 26-30 mm; glenohumeral angles, scapula fixed at rest as in the cadaver studies) |
 | CORB, BICshort | Scapular via point dropped, path over `SUPSP_hhead_r` | The via point sits 35 mm below the joint centre and made both muscles extensors (26-35 mm) above 60 deg flexion; now flexors that change sign near 95 deg, as Seth's |
 | TRIlong | The humeral proxy origin and its 20 mm sphere dropped, path over `SUPSP_hhead_r` | The proxy point sat 2.6 mm from the origin, so the moment arm flipped between +40 and -40 mm about an arbitrary posture; at the new rest it made TRIlong an abductor and internal rotator at the side. Now an extensor and adductor (flexion -3.5, coronal -6 mm at the side), within 8 mm of Seth |
 | DELT3, PECM1-3, LAT1-3, TMAJ, TMIN, BIClong | Kept | Within the spread between the measured studies; Seth's paths are not closer (PECM's thorax ellipsoid cannot be built in MuJoCo) |
@@ -400,10 +400,14 @@ layer.
   scapular muscles take the median passive scale of the shoulder muscles) and the scapula has a fuller thoracic
   contact.
 - **Split of the scapula's rotation between the AC joint and the clavicle's axial rotation.** In the model it is set by
-  the ratio of the AC and axial springs below about 105 deg of elevation and by the conoid above. No torsional stiffness
+  the ratio of the AC and axial springs below about 105 deg of elevation and by the conoid above (in the quasi-static
+  equilibrium). No torsional stiffness
   of either joint is published; the isotropic AC spring cannot be stiffer about one axis than another, while the AC
   capsule restrains posterior rotation of the clavicle more than other motions (Fukuda 1986).
-- **Conoid tension (accepted as is).** Slack by 18 % at rest, taut from about 105-120 deg of elevation. This agrees
+- **Conoid tension (accepted as is).** Slack by 18 % at rest. In the quasi-static passive equilibrium of the axial
+  rotation it becomes taut from about 105-120 deg of elevation; along Seth's replayed motions its median length reaches
+  the slack length only near the end of range (median strain -0.11 at 120-140 deg and +0.01 at 140-160 deg of
+  abduction, -0.02 and +0.02 in flexion; taut in 12 % of all frames). This agrees
   with lax coracoclavicular ligaments in low elevation: the acromioclavicular capsule restrains small displacements and
   the conoid large ones (Fukuda et al. 1986), and the conoid lengthens mainly above 60 deg (Seo et al. 2012). In vivo it
   may also carry part of the arm's weight at rest (it lengthens from supine to sitting, Izadpanah et al. 2012); the

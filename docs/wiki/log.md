@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Shoulder page: DELT2 moment arms and conoid wording
+Changed: `docs/wiki/shoulder-complex.md`
+Why: the DELT2 moment arms are now given in the cadaver studies' convention (glenohumeral angles, scapula fixed at rest), and the conoid's taut range is attributed to the quasi-static equilibrium, not to Seth's replayed motions.
+
 ## 2026-11-13 — Levator scapulae slips and occipital trapezius
 Changed: `scripts/generate_scapular_muscles.py`, `myo_sim/build/data/{scapular_muscles,shoulder_strength}.json`, `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/models/head/assets/myohead_{chain,rigid_chain}.xml`, `docs/wiki/shoulder-complex.md`
 Why: the levator scapulae gets its lower (C3-C4) slip with DAS3's split, and the clavicular trapezius an occipital line (20 %, low confidence), so the neck carries the scapular muscles' cervical and occipital origins.
