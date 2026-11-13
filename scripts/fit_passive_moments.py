@@ -58,9 +58,11 @@ def kamper2002_static(p: dict[str, float], rad: np.ndarray) -> np.ndarray:
     """Kamper et al. 2002 Table 2: static passive torque (N m, +flexion), cubic in the flexion angle (rad).
 
     With ``hold_range_deg`` the torque is held at its values at the first and
-    last measured operating points instead of extrapolating the cubic.
+    last measured operating points instead of extrapolating the cubic. With
+    ``zero_shift_deg`` the cubic is re-centred: evaluated at the angle minus the
+    shift (``hold_range_deg`` then applies to the shifted angle).
     """
-    rad = np.asarray(rad, dtype=float)
+    rad = np.asarray(rad, dtype=float) - p.get("zero_shift_deg", 0.0) * DEG
     if "hold_range_deg" in p:
         rad = np.clip(rad, p["hold_range_deg"][0] * DEG, p["hold_range_deg"][1] * DEG)
     return p["c3"] * rad**3 + p["c2"] * rad**2 + p["c1"] * rad + p["c0"]

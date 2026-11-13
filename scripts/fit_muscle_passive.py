@@ -119,6 +119,7 @@ def source_moment(row: dict[str, Any], q: np.ndarray | float, wrist_deg: np.ndar
     if row["model"] == "linear_two_sided":  # Formica 2012: direction-specific stiffness about neutral
         return sign * np.where(x > 0.0, -p["k_positive"] * x, -p["k_negative"] * x)
     if row["model"] == "kamper2002_static":  # Kamper 2002 Table 2 cubic, held outside the measured angles
+        x = x - p.get("zero_shift_deg", 0.0) * DEG  # re-centred cubic (DIP rows)
         x = np.clip(x, p["hold_range_deg"][0] * DEG, p["hold_range_deg"][1] * DEG)
         return sign * (p["c3"] * x**3 + p["c2"] * x**2 + p["c1"] * x + p["c0"])
     if row["model"] == "knutson2000_total":  # Knutson 2000 Eq. (1): intrinsic (Eq. 2) plus extrinsic (Eqs. 3-4)

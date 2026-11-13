@@ -163,8 +163,11 @@ Mappings and caveats (details in each row's `notes`):
   turns back toward flexion above 45.5 deg (+0.064 N m at 90 deg), the DIP cubic reaches
   -0.25 N m at 90 deg. Kamper's simulation used the angle relative to the proximal joint;
   measured with that joint at neutral, which is what a single-joint spring reproduces.
-  The DIP cubic crosses zero near -14 deg although the paper states 7 deg as the
-  zero-torque DIP angle; used as published. Its damping B is applied (below).
+  The DIP cubic crosses zero near -13.4 deg although the paper starts its simulation at the
+  mean zero-resting-torque angles of its data, DIP 7 / PIP 7 / MCP 14 deg (Section 2.1), and its
+  PIP and MCP cubics do cross zero there (6.6 and 13.4 deg). Since the DIP rest step the DIP cubic is
+  re-centred on 7 deg (`zero_shift_deg` 20.37, shape unchanged; DIP rest posture, below). Its damping
+  B is applied (below).
 - **Li 2006** (index PIP, MCP 0 / 60 deg): kept as a validation target in the PIP row.
 - **Assumed rows** are transfers, not measurements of those joints: Barry et al. 2018 set
   the thumb MCP / IP equal to the index MCP / PIP; McFarland et al. 2023 scaled the index
@@ -306,9 +309,10 @@ then flexes to 100 deg and abducts 6.7 deg past the narrowed range, both soft li
 
 PIP hyperextension stops at 10 deg because no passive moment is measured beyond Kamper's operating points; further
 range would need an end-range stiffness without a source. The DIP was given the same -10 deg in a first trial and
-kept at 0: Kamper's DIP cubic, the only passive DIP data, crosses zero near -14 deg (the paper states 7 deg of
+kept at 0: Kamper's DIP cubic, the only passive DIP data, crossed zero near -13.4 deg as published (the paper states 7 deg of
 flexion), so the relaxed DIP joints rested on the -10 deg limit and the tenodesis DIP moved up to 7 deg (protocol
-bound 5 deg). DIP hyperextension needs a DIP passive curve whose equilibrium lies in flexion. The passive fits now span the new ranges: the
+bound 5 deg). DIP hyperextension needs a DIP passive curve whose equilibrium lies in flexion; the DIP rest step
+re-centres the cubic on 7 deg, and the extension limit stays at 0 deg (DIP rest posture, below). The passive fits now span the new ranges: the
 PIP spring rows and the extrinsic PIP joint targets fit from -10 deg, the thumb rows over their new ranges, and
 the active force-length constraint of the extrinsic fit puts the thumb at its new limits (fist and extension) while
 "full extension" of the fingers stays at straight fingers.
@@ -366,6 +370,49 @@ range for the midrange; no weight is used. Consequences: the relaxed index MCP r
 Lee & Jung 2014: 27 ± 4); with all long extensors at full activation and the IP joints held straight the MCP joints
 extend to 45 / 62 / 53 / 62 deg (pulley step 51-63), against 22-26 ± 7 deg active. Both stay open
 (`hand-literature-comparison.md`, open checks).
+
+## DIP rest posture
+
+The relaxed hand rested the DIPs on their 0 deg extension limit, where Lee & Jung 2014 measured 10 / 10 / 8 / 12 ± 5 / 5 /
+4 / 7 deg of flexion (index to little; 40 adults, arm hanging, forearm neutral). Passive DIP moment with the DIP swept, act
+= 0 and the other joints held (+ = flexion, mN m at DIP 0 deg; index / middle / ring / little):
+
+| Element | Kamper's posture (other joints 0) | Relaxed posture (MCP 48 / 38 / 6 / 1, PIP 10 / 11 / 2 / 2 deg) |
+| --- | --- | --- |
+| DIP spring (before) | -14.4 / -14.8 / -5.6 / -13.3 | same |
+| FDP | +3.1 / +3.7 / +0.7 / +0.5 | +1.7 / +2.1 / +0.6 / +0.5 |
+| interossei, EIP / EDC | -1.1 / -1.4 / -1.5 / -0.5 | -0.6 / -0.2 / -1.1 / -0.7 |
+| ORL, gravity | 0 (slack below DIP 30 deg), 0 | 0, 0 |
+| Total before | -12.4 / -12.4 / -6.4 / -13.2 | -13.3 / -12.9 / -6.0 / -13.5 |
+| Equilibrium before (deg) | -11.7 / -11.7 / none / -13.9 | -12.4 / -12.0 / none / none |
+| Total after | +17.0 (all) | +16.2 / +16.6 / +17.4 / +16.8 |
+| Equilibrium after (deg) | 7.8 / 8.1 / 6.8 / 7.0 | 7.1 / 7.8 / 7.0 / 6.9 |
+
+("none": the moment extends over the whole range.) The spring dominates: it reproduces Kamper et al. 2002's DIP cubic
+(with the muscles subtracted), and that cubic crosses zero at -13.4 deg. Kamper et al. start their simulation at the
+mean angles of zero resting torque in their data, DIP 7 / PIP 7 / MCP 14 deg (Section 2.1), and their PIP and MCP cubics do
+cross zero there (6.6 and 13.4 deg); only the DIP cubic disagrees with the stated angle. The DIP cubic is therefore shifted
+by 20.37 deg (`zero_shift_deg` in the DIP rows' `source_curve.params` and in the DIP targets of `muscle_passive.json`) so
+that it crosses zero at 7 deg; its shape, and so its stiffness, is Kamper's. It is held above the last measured operating
+point (60 deg before the shift) and extrapolated below the first one down to the extension limit (`hold_range_deg`
+[-20.37, 60] in the shifted angle). Springs and extrinsic passive parameters are refitted; the ring-finger row uses the
+signed four-segment fit of the other digits again (it had kept a non-negative fallback from an earlier model, which left
+it too soft just above the equilibrium: tenodesis ring DIP 6.9 deg against the 5 deg bound; 8.7 -> 1.5 mN m RMS).
+
+Effect (MuJoCo 4; 3.17 agrees): relaxed DIP (wrist and elbow held, act 0, 3 s) -0.1 / -0.1 / -0.0 / -0.1 -> 5.4 / 5.4 /
+4.7 / 4.4 deg, within one SD of Lee & Jung for the index, middle and ring fingers and 1.1 SD for the little finger
+(Garrett's radiographs, as cited by Lee & Jung: 9 / 14 / 17 / 22 deg); the static equilibrium is 7-8 deg and the 3 s
+settle approaches it slowly at Kamper's damping. Tenodesis DIP range 2.8 / 3.4 / 2.4 / 0.8 deg (0 before, on the limit;
+bound 5). FDP-driven DIP-PIP slope at PIP 0 / 70 / 100 deg -0.01 / 0.40 / 0.52 -> 0.67 / 0.54 / 0.72 (Leijnse et al.
+2010: 0.25 / 1.0 / 0.53 ± 0.25 / 0.31 / 0.28): the DIP now starts flexing with the PIP, all within 2 SD. Index ORL share
+of the passive DIP resistance at DIP 45 deg 30 / 23 / 15 / 7 -> 42 / 32 / 22 / 9 % at PIP 0 / 30 / 60 / 90 deg (Ueba et
+al. 2011: 25 / 31 / 18 / 3), since the re-centred cubic resists less at 45 deg. The active fist closes, lateral pinch 94.9 N;
+the self-selected grip is 446 N (461), the settled grip 277 N (322; open grip check).
+
+The DIP extension limit stays at 0 deg. With the equilibrium in flexion a hyperextension range (Leijnse et al. 2010:
+31 ± 17 passive; Mohamed Ibrahim et al. 2024: 6-8 active) is now possible, but the spring is fitted over 0..90 deg only and
+Kamper's operating points reach -10 deg before the shift (10.4 deg after), so a hyperextension limit would need an
+end-range stiffness without a source.
 
 ## RI2 path
 
