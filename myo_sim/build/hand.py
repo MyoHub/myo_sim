@@ -13,6 +13,7 @@ HAND_PREVIEW_JOINT_POSE = {
     # MoBL-ARMS zero pose (scapula frame aligned with the thorax), not at the rest posture of qpos0.
     "sternoclavicular_r2_r": 0.0,
     "sternoclavicular_r3_r": 0.0,
+    "sternoclavicular_r1_r": 0.0,
 }
 # Ball joints of the preview pose: the child body's frame aligned with its grandparent's (undoes the body quat).
 HAND_PREVIEW_ALIGNED_BALLS = ("acromioclavicular_r",)
@@ -75,6 +76,7 @@ RIGHT_HAND_REMOVED_JOINTS = frozenset(
     {
         "sternoclavicular_r2_r",
         "sternoclavicular_r3_r",
+        "sternoclavicular_r1_r",
         "acromioclavicular_r",
         "elv_angle_r",
         "shoulder_elv_r",

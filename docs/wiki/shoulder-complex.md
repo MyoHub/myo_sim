@@ -93,7 +93,7 @@ glenoid contact, is a later step and can be added without changing the scapula.
 `scripts/fit_scapulothoracic.py --zip <archive> girdle --write` (table section `girdle`).
 
 - **Joints per side:** `sternoclavicular_r2_r` and `sternoclavicular_r3_r` (Seth's and MoBL-ARMS's axes and angles),
-  the ball joint `acromioclavicular_r` at Seth's AC point, and the glenohumeral chain `elv_angle_r`, `shoulder_elv_r`
+  the clavicle's axial rotation `sternoclavicular_r1_r` (below), the ball joint `acromioclavicular_r` at Seth's AC point, and the glenohumeral chain `elv_angle_r`, `shoulder_elv_r`
   (with the `shoulder1_r2_r` convention coupling) and `shoulder_rot_r`. Contact pair `scapulothoracic_r`: the 3 mm
   sphere `scapula_glide_r` at Seth's ellipsoid point against `scapulothoracic_ellipsoid_r` on `chest_r` (condim 1).
 - **qpos0 is the rest posture** of Seth's trials (mean first frame of the 18 trials, assembled): clavicle protraction
@@ -104,14 +104,58 @@ glenoid contact, is a later step and can be added without changing the scapula.
   angles are relative to the scapula. The convention keeps its singularity: at `shoulder_elv_r` = 0 the plane of
   elevation is undefined. A ball joint would remove it (open item). Sites `glenoid_centre_r` (fossa centre and normal
   from the mesh faces facing the humeral head: 8.8 cm2, 25.4 mm from the joint centre) and `humeral_head_centre_r`.
-- **Ranges:** protraction -60 to 0 deg, elevation -10 to 35 deg (Seth's data: -49 to -12 and -8 to 16 deg), AC cone
-  80 deg about rest (Seth's data reach 68 deg).
+- **Ranges:** protraction -60 to 0 deg, elevation -10 to 35 deg (Seth's data: -49 to -12 and -8 to 16 deg), axial
+  rotation -15 to +50 deg, AC cone 80 deg about rest (Seth's data without axial clavicle rotation reach 68 deg).
 - **Ligaments, residual springs and armature:** see "Girdle ligaments" below. Residual joint springs to the rest
-  posture: 30 N m/rad at the sternoclavicular elevation hinge and 35 N m/rad at the AC ball, none at the protraction
-  hinge. AC armature 0.005 kg m2.
+  posture: 30 N m/rad at the sternoclavicular elevation hinge, 35 N m/rad at the axial hinge and at the AC ball, none
+  at the protraction hinge. AC armature 0.005 kg m2; the axial hinge needs none.
 - **Hand models** bake the arm with clavicle and scapula aligned to the thorax as before the girdle, so the hand stays
   where it was (within 1.4 mm: Seth's AC point against MoBL-ARMS's).
 - **Postures:** the standing posture raises the shoulders to 0.25 rad (`postures.md`).
+
+## Clavicle axial rotation
+
+The clavicle turns about its long axis during arm elevation: Ludewig et al. (2009, bone pins, n = 11) measured about
+31 deg of posterior rotation from rest to the end of elevation, Sahara et al. (2007, open MRI) 33 deg at maximal
+abduction. Seth's model, like MoBL-ARMS, has none, and without it the scapula's rotation against the clavicle stretches
+the conoid by 14 mm along Seth's motions, against 3 mm with abduction to 120 deg in vivo (Izadpanah 2012).
+
+- **Joint:** `sternoclavicular_r1_r`, a third hinge of the clavicle after protraction and elevation, so the order is
+  the ISB clavicle sequence (retraction, elevation, axial rotation). The axis is the line from the sternoclavicular
+  centre to the AC joint centre (the ISB clavicle z axis); positive is posterior rotation, as in Ludewig 2009. The
+  axis passes through the AC centre, so the axial rotation turns the clavicle under the scapula without moving it.
+  Range -15 to +50 deg: 30-33 deg measured at the end of elevation (above), textbook totals of 20-50 deg, a few
+  degrees of anterior rotation with protraction (Peeters 2023). No coupling to other joints: the coracoclavicular and
+  AC ligaments, the clavicular muscles and a residual spring turn it. qpos0 is axial zero.
+- **Replay of Seth's motions:** the release's IK has no axial angle, so the replay (ligament slack lengths, muscle
+  maps) takes it from Ludewig 2009 Fig. 5A, digitised: posterior rotation against humerothoracic elevation, the
+  abduction curve for the abduction and shrug trials and the flexion curve for the flexion trials, relative to the
+  curve's value at the rest posture's elevation (17.6 deg) and held beyond the end of the measured range (31 and
+  30 deg). The alternative, the axial angle that keeps the conoid at its rest length, needs 67 deg at the highest
+  elevations, twice the measured rotation, so it is not used.
+- **Conoid length along the replay:** with the measured rotation the conoid lengthens by 2.3 mm from elevation 15-45 to
+  105-135 deg in abduction and by 3 mm in flexion (medians), to 5 mm at the end of range, against 3 mm with abduction
+  to 120 deg in vivo (Izadpanah 2012); without the rotation it lengthened by 11 mm.
+- **What turns it in the model** (`scripts/fit_ligaments.py --zip <archive> --axial`: at 8 frames per 30 deg of
+  elevation in each plane, scapula, clavicle protraction and elevation and the glenohumeral angles held at Seth's
+  values, the axial angle that minimises the passive energy of the ligaments, the girdle springs, the muscles' passive
+  forces at zero activation and gravity):
+
+| Passive layers in the energy | abduction, elevation 45-75 / 75-105 / 105-135 / 135-165 deg | flexion, same bins |
+|---|---|---|
+| Ludewig 2009 (the replay's curve, medians of the same frames) | 6.7 / 12.2 / 22.8 / 29.5 | 6.5 / 15.0 / 26.3 / 31.0 |
+| ligaments and muscles only | 4.5 / -2.0 / 8.0 / 31.0 (flat, undetermined below 120) | -4.0 / 7.5 / 25.0 / 30.5 |
+| plus the AC spring (35) | 8.5 / 21.0 / 37.0 / 50.0 (the limit) | 9.5 / 29.0 / 45.5 / 50.0 |
+| plus the AC spring and an axial spring (35, 35): model | 4.5 / 10.5 / 18.5 / 32.0 | 5.0 / 15.0 / 24.0 / 30.5 |
+
+  With the ligaments and muscles alone the axial angle is set only where the conoid becomes taut, above about
+  105 deg of elevation, and there it turns the clavicle posteriorly by about the measured amount: the conoid
+  cranks the clavicle as described in vivo. Below, nothing in the model holds it. The isotropic AC spring, a stand-in
+  for the AC joint surfaces and capsule, turns the clavicle with the scapula and gives about 1.7 times the measured
+  rotation; an equal residual spring at the axial hinge, a stand-in for the sternoclavicular disc and capsule, splits
+  the rotation between the two joints and brings the equilibrium within 4.5 deg of Ludewig's means (their SD is about
+  7-10 deg). At rest the axial spring is needed as well (below). No torsional stiffness of either joint is published;
+  the value is the AC spring's, not fitted further.
 
 ## Girdle ligaments
 
@@ -126,12 +170,12 @@ sternoclavicular centre because the ribcage mesh has no manubrial facet.
 
 | Strand (per side) | k (N per unit strain) | Source of k | Attachments | Rest strain | Slack set by |
 |---|---|---|---|---|---|
-| conoid | 800 | Costic 2003: 70 +- 23 N/mm x 11.2 mm | conoid tubercle (Boehm 2003, Rios 2007); coracoid base (Chahla 2018) | -0.36 | measured range |
+| conoid | 800 | Costic 2003: 70 +- 23 N/mm x 11.2 mm | conoid tubercle (Boehm 2003, Rios 2007); coracoid base (Chahla 2018) | -0.18 | measured range |
 | trapezoid | 800 | Costic 2003: 83 +- 40 N/mm x 9.6 mm | trapezoid line (Rios 2007); coracoid, 8 mm beyond the conoid (Chahla 2018) | -0.08 | measured range |
-| AC capsule superior / posterior / anterior / inferior | 186 / 93 / 56 / 37 | Flores 2023 (33.8 N/mm x 11.0 mm, model fit) split by Klimkiewicz 1999 | 3.5 mm either side of the joint line (Stine 2009), 6 mm off the joint centre | 0 / -0.11 / -0.42 / 0 | rest / range / range / rest |
-| SC anterior / posterior | 220 / 260 | 10 MPa x footprint-scaled area (Lee 2014) | manubrium below its anterior / posterior margin; medial clavicle (Lee 2014) | -0.03 / -0.05 | measured range |
+| AC capsule superior / posterior / anterior / inferior | 186 / 93 / 56 / 37 | Flores 2023 (33.8 N/mm x 11.0 mm, model fit) split by Klimkiewicz 1999 | 3.5 mm either side of the joint line (Stine 2009), 6 mm off the joint centre | 0 / -0.05 / -0.18 / 0 | rest / range / range / rest |
+| SC anterior / posterior | 220 / 260 | 10 MPa x footprint-scaled area (Lee 2014) | manubrium below its anterior / posterior margin; medial clavicle (Lee 2014) | -0.04 / -0.05 | measured range |
 | interclavicular (half) | 260 | 10 MPa x 7.2 x 3.6 mm (Tubbs 2007) | superomedial clavicle to the midline (Lee 2014) | -0.03 | rest (Tubbs 2007: lax at rest) |
-| costoclavicular | 410 | 10 MPa x 12 x 3.4 mm (Tubbs 2009) | inferior clavicle 14 mm from the joint (Lee 2014); first rib below | -0.33 | measured range |
+| costoclavicular | 410 | 10 MPa x 12 x 3.4 mm (Tubbs 2009) | inferior clavicle 14 mm from the joint (Lee 2014); first rib below | -0.46 | measured range |
 
 10 MPa is the apparent modulus of the coracoclavicular ligaments, k L / A from Costic 2003 (conoid 11.4, trapezoid
 7.7 MPa); no tensile stiffness is published for the sternoclavicular, costoclavicular or interclavicular ligaments, and
@@ -139,15 +183,18 @@ the AC capsule value is a model fit, so these rows are `transferred`. In the lin
 800 / 24.5 mm = 33 N/mm (conoid) and 800 / 12.8 mm = 63 N/mm (trapezoid), 95 N/mm together, inside the measured range
 of the coracoclavicular complex (Harris 2000 103 +- 30, Motamedi 2000 116 +- 36, Costic 2004 61 +- 12 N/mm).
 
-**The conoid is slack at rest by 36 %.** Along Seth's motions its length changes by 14.3 mm; in vivo it lengthens by
-about 3 mm with abduction to 120 deg, 6 mm counting the move from supine to sitting (Izadpanah 2012). The difference
-comes from the clavicle: Seth's model, and this one, has no clavicular axial rotation, so the 30 deg or so of posterior
-clavicle rotation during elevation (Ludewig 2009, Sahara 2007) appears as rotation of the scapula against the clavicle,
-which stretches the coracoclavicular strands. A slack set from the rest posture would have the conoid at up to 60 %
-strain, several hundred newtons, along normal elevation. An axial clavicle rotation would let the conoid drive the
-clavicle as it does in vivo (open item).
+**The conoid is slack at rest by 18 %.** With the clavicle's axial rotation in the replay its length changes by
+8.8 mm over all of Seth's frames (14.3 mm without it), most of it between subjects and trials; the median rises by
+2-3 mm to 120 deg of elevation and 5 mm to the end of range, against 3 mm (abduction to 120 deg) and 6 mm (counting
+supine to sitting) in vivo (Izadpanah 2012). A strand 15-19 mm long that lengthens by 3-6 mm cannot be at the start of
+its toe region at rest and stay in the toe region at the end of elevation, so the conoid takes up load from about
+120 deg of elevation, which is where it turns the clavicle (above). Before the axial rotation it was slack at rest by
+36 %. The costoclavicular strand now changes by 14.3 mm (9.4 mm before) and is slack at rest by 46 %: its clavicular
+site lies 14 mm from the sternoclavicular centre but off the axial axis, so the single straight strand stretches as the
+clavicle turns, whereas the broad ligament in vivo lies close to the axis of rotation (open check).
 
-**Rest at zero activation** (`myoarm_r`, 3 s, all controls 0, from qpos0): with the ligaments alone the clavicle settles
+**Rest at zero activation** (`myoarm_r`, all controls 0, from qpos0; the arm settles within about 5 s, so the values
+are at 6 s; before the axial rotation they were taken at 3 s): with the ligaments alone the clavicle settles
 on its depression limit (-5.9 deg) and the scapula tilts 10 deg anteriorly. No ligament can hold either: the
 sternoclavicular centre sits at the clavicle's medial end, so the superior strands have a lever of about 6 mm about the
 elevation axis, against the 5.7 N m the arm and girdle put on it; and the anterior tilt is a rotation about the line from
@@ -157,13 +204,19 @@ similarly with and without muscle tone (sternoclavicular elevation 4 +- 5 deg in
 the fixed hinge cannot represent, and from contact of the whole costal surface of the scapula with the thorax, which the
 single gliding contact does not. A residual joint spring therefore stays: the smallest round values that keep every girdle
 angle within 5 deg of rest (about one between-subject SD of the resting posture: Peeters 2023 5-9 deg, Ludewig 2009) are
-30 N m/rad (elevation) and 35 N m/rad (AC ball); protraction needs none (the ligaments hold it).
+30 N m/rad (elevation) and 35 N m/rad (AC ball); protraction needs none (the ligaments hold it). With the axial hinge
+free, the AC spring turns the clavicle anteriorly with the scapula's anterior tilt and the scapula moves 6.2 deg; the
+axial spring of 35 N m/rad (chosen above) holds it at 4.5 deg. The springs did not shrink with the axial rotation: AC
+and axial at 20 give 5.8 deg, and an elevation spring of 20 keeps the elevation at -4.8 deg, 1 deg from the depression
+limit, so 30 stays.
 
-| Zero activation, 3 s | protraction | elevation | scapula | contact |
-|---|---|---|---|---|
-| springs 40/40/40, no ligaments (previous) | -1.1 deg | -3.4 deg | 3.9 deg | on |
-| ligaments only | +3.1 deg | -5.9 deg (limit) | 10.0 deg | on |
-| ligaments + residual 0/30/35 (model) | +2.1 deg | -3.8 deg | 4.4 deg | on |
+| Zero activation | protraction | elevation | axial | scapula | contact |
+|---|---|---|---|---|---|
+| springs 40/40/40, no ligaments (3 s, before the axial hinge) | -1.1 deg | -3.4 deg | - | 3.9 deg | on |
+| ligaments only (3 s, before the axial hinge) | +3.1 deg | -5.9 deg (limit) | - | 10.0 deg | on |
+| ligaments + residual 0/30/35 (3 s, before the axial hinge) | +2.1 deg | -3.8 deg | - | 4.4 deg | on |
+| ligaments + residual 0/30/35, axial hinge free (6 s) | +2.1 deg | -4.2 deg | -5.4 deg | 6.2 deg | on |
+| ligaments + residual 0/30/35/35 with the axial hinge (6 s, model) | +1.4 deg | -4.2 deg | -1.9 deg | 4.5 deg | on |
 
 The scapula stays on the thorax (contact distance within 0.1 mm) in every case.
 
@@ -201,6 +254,30 @@ generated blocks in the arm, torso and head files.
   below 0.5). Rigid-tendon maps fitted along Seth's motions and the rest posture, fibres within 0.5-1.5 optimal length
   (slack moved for SUPSP1 and SUBSC2). Passive scale: the fitted value of the replaced muscle for the cuff, 0.65 (the
   median of the kept shoulder muscles) for the scapular muscles.
+
+## Open checks limited by the passive layers
+
+The girdle's passive behaviour comes from three layers: the muscles' passive force, the ligament strands and the
+residual joint springs. Each is fitted on its own data; some girdle properties depend on all three together and can
+only be judged once each layer is complete and fitted, so they are listed here instead of being tuned through one
+layer.
+
+- **Rest posture at zero activation.** The residual springs (elevation 30, axial 35, AC 35 N m/rad) hold it within
+  5 deg; they stand in for the joint surfaces, disc and capsule and for the full scapula-thorax contact. Their values
+  should fall once the scapular muscles' passive forces are fitted to data at the girdle (there is none yet: the
+  scapular muscles take the median passive scale of the shoulder muscles) and the scapula has a fuller thoracic
+  contact.
+- **Split of the scapula's rotation between the AC joint and the clavicle's axial rotation.** In the model it is set by
+  the ratio of the AC and axial springs below about 105 deg of elevation and by the conoid above. No torsional stiffness
+  of either joint is published; the isotropic AC spring cannot be stiffer about one axis than another, while the AC
+  capsule restrains posterior rotation of the clavicle more than other motions (Fukuda 1986).
+- **Conoid tension.** Taut only from about 105-120 deg of elevation, slack by 18 % at rest. In vivo it carries part of
+  the arm's weight at rest (it lengthens from supine to sitting, Izadpanah 2012); the quadratic toe without a linear
+  region does not allow both a taut rest and the measured lengthening.
+- **Costoclavicular strand.** A single strand off the axial axis, slack by 46 % at rest; the broad ligament lies near
+  the axis in vivo.
+- **Shrug.** No ligament or spring was fitted to the shrug trials; Peeters 2023 report about 5 deg of posterior
+  clavicle rotation in a passive shrug, the replay uses about 1 deg.
 
 ## Open items
 

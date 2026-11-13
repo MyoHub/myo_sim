@@ -35,7 +35,8 @@ Example fidelity check (DELT1 left/right moment-arm and force-length plot) for s
 Time step 2 ms, Euler integrator (MuJoCo's default solver settings of the model files). The stability tests
 (`tests/test_numerical_stability.py`, `tests/test_model_stability.py`) hold these. The acromioclavicular ball joint carries
 an armature of 0.005 kg m2, the smallest value that keeps the explicit force-velocity rate at full activation below 5
-(`myo_sim.build.stability`; scan in `docs/wiki/shoulder-complex.md`). The girdle ligaments are explicit tendon springs;
+(`myo_sim.build.stability`; scan in `docs/wiki/shoulder-complex.md`); with the clavicle's axial hinge in, 0.005 still
+gives 4.94 and 0.002 gives 6.05, and the axial hinge needs none. The girdle ligaments are explicit tendon springs;
 at 2 ms their stiffness stays far below the explicit limit. Other time steps or integrators are not validated.
 
 ## Known limitations

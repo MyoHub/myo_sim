@@ -13,6 +13,8 @@ L0 = max(L_rest / (1 + e_rest), L_p99 / (1 + e_t)), the rest strain e_rest being
 
 **--fit** landmarks the sites on this package's meshes at qpos0 (rest posture) from the published attachment
 descriptions in the table, computes the lengths and writes table and XML. **--write** renders the XML from the table.
+**--axial** prints the clavicle's quasi-static axial angle along Seth's motions (``axial_equilibrium``) for three sets
+of passive layers, against the replay's curve from Ludewig et al. 2009.
 """
 
 from __future__ import annotations
@@ -30,6 +32,7 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 from generate_scapular_muscles import seth_frames  # noqa: E402
+from scipy.spatial.transform import Rotation  # noqa: E402
 
 import myo_sim  # noqa: E402
 from myo_sim.build.hand_data import write_generated_block  # noqa: E402
@@ -201,7 +204,7 @@ def fit(table: dict[str, Any], zf: zipfile.ZipFile) -> None:
         l0 = max(by_rest, by_range)
         row["slack_rule"] = "rest strain" if by_rest >= by_range else "end of measured range"
         row["l0_m"] = round(float(l0), 6)
-        row["b_N_per_m2"] = round(row["k_N_per_strain"] / (2 * row["eps_t"] * l0**2), 1)
+        row["b_N_per_m2"] = round(row["k_N_per_strain"] / (2 * row["eps_t"] * row["l0_m"] ** 2), 1)
         strain = lengths[1:, j] / l0 - 1
         row["length_rest_mm"] = round(1e3 * float(rest), 2)
         row["strain_rest"] = round(float(rest / l0 - 1), 4)
@@ -209,12 +212,82 @@ def fit(table: dict[str, Any], zf: zipfile.ZipFile) -> None:
         row["length_change_seth_motions_mm"] = round(1e3 * float(lengths[1:, j].max() - lengths[1:, j].min()), 2)
 
 
+def axial_equilibrium(
+    model: mujoco.MjModel, qpos: np.ndarray, grid: np.ndarray = np.deg2rad(np.arange(-15.0, 50.01, 1.0))
+) -> np.ndarray:
+    """Per frame, the clavicle's axial angle (rad, on *grid*) that minimises the passive energy with the scapula, the
+    clavicle's protraction and elevation and the glenohumeral angles held: ligament strands (polynomial springs),
+    joint springs of the axial hinge and the AC ball, the muscles' passive force at zero activation (work along the
+    grid) and the clavicle's weight. The AC ball takes the opposite rotation, so the scapula keeps its pose."""
+    data = mujoco.MjData(model)
+    axial, ac = model.joint("sternoclavicular_r1_r"), model.joint("acromioclavicular_r")
+    a1, aa = axial.qposadr[0], ac.qposadr[0]
+    u = model.jnt_axis[axial.id]
+    qs = Rotation.from_quat(np.roll(model.body_quat[ac.bodyid[0]], -1)).as_matrix()
+    strands = [t for t in range(model.ntendon) if model.tendon(t).name.endswith("_ligament_r")]
+    clav = model.body("clavicle_r").id
+    out = np.zeros(len(qpos))
+    for i, q in enumerate(qpos):
+        # scapula in the clavicle frame at axial zero
+        rel = Rotation.from_rotvec(u * q[a1]).as_matrix() @ qs @ Rotation.from_quat(np.roll(q[aa : aa + 4], -1)).as_matrix()
+        energy, force, length = np.zeros(len(grid)), [], []
+        for k, c in enumerate(grid):
+            qq = q.copy()
+            qq[a1] = c
+            qq[aa : aa + 4] = np.roll(Rotation.from_matrix(qs.T @ Rotation.from_rotvec(-u * c).as_matrix() @ rel).as_quat(), 1)
+            data.qpos[:], data.qvel[:], data.act[:], data.ctrl[:] = qq, 0, 0, 0
+            mujoco.mj_forward(model, data)
+            x = np.maximum(data.ten_length[strands] - model.tendon_lengthspring[strands, 1], 0)
+            energy[k] = np.sum(model.tendon_stiffnesspoly[strands, 0] * x**3 / 3)
+            th = np.linalg.norm(Rotation.from_quat(np.roll(qq[aa : aa + 4], -1)).as_rotvec())
+            energy[k] += 0.5 * model.jnt_stiffness[ac.id] * th**2 + 0.5 * model.jnt_stiffness[axial.id] * c**2
+            energy[k] -= model.body_mass[clav] * (model.opt.gravity @ data.xipos[clav])
+            force.append(data.actuator_force.copy())
+            length.append(data.actuator_length.copy())
+        f, ln = np.array(force), np.array(length)
+        work = np.concatenate([[0.0], np.cumsum(np.sum(0.5 * (f[1:] + f[:-1]) * np.diff(ln, axis=0), axis=1))])
+        out[i] = grid[np.argmin(energy - work)]
+    return out
+
+
+def axial_check(zf: zipfile.ZipFile, per_bin: int = 8, seed: int = 0) -> None:
+    """Median quasi-static axial angle per 30 deg of elevation and plane, for three sets of passive layers."""
+    model = myo_sim.load_model("myoarm_r")
+    qpos, names, elevation = seth_frames(zf, model, info=True)
+    plane = np.array(["flexion" if n.startswith("flx") else "abduction" if n.startswith("abd") else "shrug" for n in names])
+    rng = np.random.default_rng(seed)
+    a1 = model.joint("sternoclavicular_r1_r").qposadr[0]
+    k_ac, k_ax = (
+        model.jnt_stiffness[model.joint("acromioclavicular_r").id],
+        model.jnt_stiffness[model.joint("sternoclavicular_r1_r").id],
+    )
+    layers = {"ligaments and muscles": (0.0, 0.0), "plus AC spring": (k_ac, 0.0), "model (AC and axial springs)": (k_ac, k_ax)}
+    for pl in ("abduction", "flexion"):
+        bins = [
+            (lo, rng.choice(idx, min(per_bin, len(idx)), replace=False))
+            for lo in range(45, 166, 30)
+            if len(idx := np.where((plane == pl) & (elevation >= lo) & (elevation < lo + 30))[0])
+        ]
+        print(pl, "elevation bins", [f"{lo}-{lo + 30}" for lo, _ in bins])
+        print("  replay (Ludewig 2009)", [round(float(np.degrees(np.median(qpos[i, a1]))), 1) for _, i in bins])
+        for label, (ka, kx) in layers.items():
+            model.jnt_stiffness[model.joint("acromioclavicular_r").id] = ka
+            model.jnt_stiffness[model.joint("sternoclavicular_r1_r").id] = kx
+            print(f"  {label}", [round(float(np.degrees(np.median(axial_equilibrium(model, qpos[i])))), 1) for _, i in bins])
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--zip", type=Path, help="ThoracoscapularShoulderPaperMaterials.zip from SimTK (for --fit)")
     parser.add_argument("--fit", action="store_true")
     parser.add_argument("--write", action="store_true")
+    parser.add_argument("--axial", action="store_true", help="quasi-static clavicle axial angle along Seth's motions")
     args = parser.parse_args()
+    if args.axial:
+        if args.zip is None:
+            parser.error("--axial needs --zip")
+        axial_check(zipfile.ZipFile(args.zip))
+        return
     table = json.loads(TABLE.read_text())
     if args.fit:
         if args.zip is None:

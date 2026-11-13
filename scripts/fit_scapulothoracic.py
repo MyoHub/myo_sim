@@ -510,10 +510,43 @@ def compare(zf: zipfile.ZipFile, step: int) -> dict[str, Any]:
 # ----------------------------------------------------------------------------------------------- girdle A in the model
 CLAV_RANGES = ((-1.047, 0.0), (-0.175, 0.611))  # protraction, elevation (rad): Seth's data -49..-12 and -8..+16 deg, widened
 AC_RANGE = 1.4  # rad, cone about the rest orientation; Seth's data reach 68.4 deg
-# Residual joint springs to the rest posture (N m/rad) next to the ligaments (scripts/fit_ligaments.py): the smallest
-# round values that keep every girdle angle within 5 deg of rest at zero activation; the ligaments hold protraction,
-# none can hold elevation or the AC tilt (levers in docs/wiki/shoulder-complex.md)
-GIRDLE_STIFFNESS = {"sternoclavicular": [0.0, 30.0], "acromioclavicular": 35.0}  # protraction, elevation; AC ball
+# Residual joint springs to the rest posture (N m/rad) next to the ligaments (scripts/fit_ligaments.py): round values
+# that keep every girdle angle within 5 deg of rest at zero activation; the ligaments hold protraction, none can hold
+# elevation or the AC tilt (levers in docs/wiki/shoulder-complex.md). The axial clavicle hinge takes the AC value: an
+# isotropic AC spring alone turns the clavicle with the scapula, and the passive equilibrium along Seth's motions then
+# reaches about 1.7 times Ludewig 2009's posterior rotation; equal springs at both joints put it within 4.5 deg of it
+# (scripts/fit_ligaments.py --axial).
+GIRDLE_STIFFNESS = {"sternoclavicular": [0.0, 30.0], "axial": 35.0, "acromioclavicular": 35.0}
+# Clavicle axial rotation: a third sternoclavicular hinge about the line from the sternoclavicular centre to the AC
+# joint centre (the ISB clavicle z axis), applied after protraction and elevation, positive = posterior rotation
+# (Ludewig 2009's sign). Seth's model has none. Range: -15 to +50 deg; Ludewig 2009 (bone pins) reach 30-32 deg
+# posterior rotation at the end of elevation, Sahara 2007 (MRI) 33 deg at maximal abduction, textbook totals 20-50 deg;
+# anterior rotation of a few degrees with protraction (Peeters 2023). No coupling: the coracoclavicular and AC
+# ligaments, the clavicular muscles and a residual spring (below) set it.
+CLAV_AXIAL_RANGE = (-0.262, 0.873)
+# Seth's IK has no axial clavicle angle; the replay takes it from Ludewig et al. 2009 Fig. 5A (bone pins, n = 11,
+# digitised, raising): posterior rotation against humerothoracic elevation (deg), coronal abduction for the abduction
+# and shrug trials, flexion for the flexion trials; the last point is the end of range, the value is held beyond it.
+# The angle is taken relative to the curve's value at the rest posture's elevation, the rest posture being axial zero.
+CLAV_AXIAL_IK = {
+    "abduction": ((15.0, 30.0, 60.0, 90.0, 120.0, 136.0), (1.2, 3.0, 8.8, 15.4, 24.5, 31.0)),
+    "flexion": ((15.0, 30.0, 60.0, 90.0, 120.0, 131.0), (-1.2, 0.0, 6.8, 14.0, 24.5, 30.0)),
+}
+
+
+def humerothoracic_elevation(seth: Seth, q: np.ndarray) -> float:
+    """Angle (deg) between the humeral shaft (humerus y) and the thorax vertical, Seth's coordinates *q*."""
+    gh = seth.g["gh_axes"]
+    rh = seth.scapula(q)[0] @ axis_rot(gh[0], q[6]) @ axis_rot(gh[1], q[7]) @ axis_rot(gh[2], q[8])
+    return float(np.degrees(np.arccos(np.clip(rh[1, 1], -1.0, 1.0))))
+
+
+def clavicle_axial_ik(plane: str, elevation: float, rest_elevation: float) -> float:
+    """Clavicle posterior rotation (rad) for a humerothoracic elevation (deg), relative to the rest posture."""
+    x, y = CLAV_AXIAL_IK[plane]
+    return float(np.deg2rad(np.interp(elevation, x, y) - np.interp(rest_elevation, x, y)))
+
+
 # AC armature (kg m2): the smallest value keeping the explicit force-velocity rate at full activation below 5
 # (myo_sim.build.stability; 0 gives 7.3, 0.004 gives 5.2); the dynamic stability criteria pass without it
 AC_ARMATURE = 0.005
@@ -563,6 +596,7 @@ def girdle(zf: zipfile.ZipFile, step: int = 3) -> dict[str, Any]:
     trials = ik_trials(zf, seth, step)
     rest = np.mean([tr["q"][0] for tr in trials.values()], axis=0)
     rest[:6] = seth.assemble(rest[:6])
+    axial = g["ac_clavicle"] / np.linalg.norm(g["ac_clavicle"])  # the clavicle frame's origin is the SC centre
     a1, a2 = (np.asarray(a) / np.linalg.norm(a) for a in g["sc_axes"])
     r1, r2 = axis_rot(a1, rest[0]), axis_rot(a2, rest[1])
     rc, _ = seth.clavicle(rest)
@@ -588,6 +622,11 @@ def girdle(zf: zipfile.ZipFile, step: int = 3) -> dict[str, Any]:
             "ref": r6(rest[:2]),
             "stiffness": GIRDLE_STIFFNESS["sternoclavicular"],
             "range": [list(r) for r in CLAV_RANGES],
+            "axis_sternoclavicular_r1": r6(axial),
+            "axial_range": list(CLAV_AXIAL_RANGE),
+            "axial_stiffness": GIRDLE_STIFFNESS["axial"],
+            "axial_ik_ludewig2009_deg": {k: [list(v) for v in xy] for k, xy in CLAV_AXIAL_IK.items()},
+            "rest_humerothoracic_elevation_deg": round(humerothoracic_elevation(seth, rest), 2),
         },
         "scapula": {
             "pos": r6(g["ac_clavicle"] - rel @ g["ac_scapula"]),

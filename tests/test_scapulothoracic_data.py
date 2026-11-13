@@ -54,6 +54,13 @@ def test_girdle_matches_table() -> None:
             assert model.qpos0[joint.qposadr[0]] == pytest.approx(ref)
             assert model.qpos_spring[joint.qposadr[0]] == pytest.approx(ref)
             assert model.jnt_stiffness[joint.id] == k
+        axial = model.joint(f"sternoclavicular_r1_{side}")
+        np.testing.assert_allclose(
+            model.jnt_axis[axial.id], np.multiply(gird["clavicle"]["axis_sternoclavicular_r1"], [flip, flip, 1]), atol=1e-6
+        )
+        assert model.jnt_stiffness[axial.id] == gird["clavicle"]["axial_stiffness"]
+        assert model.qpos0[axial.qposadr[0]] == 0.0 == model.qpos_spring[axial.qposadr[0]]
+        np.testing.assert_allclose(axial.range, gird["clavicle"]["axial_range"])
         ac = model.joint(f"acromioclavicular_{side}")
         assert model.jnt_stiffness[ac.id] == gird["scapula"]["ac_stiffness"]
         assert model.dof_armature[ac.dofadr[0]] == gird["scapula"]["ac_armature"]

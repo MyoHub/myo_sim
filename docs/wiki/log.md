@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Clavicle axial rotation
+Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/build/data/{scapulothoracic,ligaments,scapular_muscles}.json`, `myo_sim/build/hand.py`, `scripts/{fit_scapulothoracic,fit_ligaments,generate_scapular_muscles,migrate_side_sites,validate_hand_function}.py`, tests, `docs/wiki/shoulder-complex.md`, `myo_sim/models/arm/README.md`
+Why: without axial clavicle rotation the scapula's rotation against the clavicle stretched the conoid by 14 mm along Seth's motions (3-6 mm in vivo). The new hinge `sternoclavicular_r1_r` turns about the SC-AC line; the replay takes its angle from Ludewig 2009, the ligament slack lengths and muscle maps are refitted, and a residual axial spring equal to the AC one puts the quasi-static axial angle within 4.5 deg of Ludewig's. Side-site sampling holds the scapula when the clavicle turns about its axis. Open checks that need all passive layers are listed on the page.
+
 ## 2026-11-13 — Shoulder-girdle ligaments, residual springs and AC armature
 Changed: `scripts/fit_ligaments.py` (new), `myo_sim/build/data/ligaments.json` (new), `myo_sim/models/arm/assets/myoarm_r_{chain,assets,tendon}.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/build/data/scapulothoracic.json`, `scripts/fit_scapulothoracic.py`, `myo_sim/build/hand.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_ligaments.py` (new), `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`, `docs/wiki/hand-literature-comparison.md`
 Why: the 40 N m/rad girdle springs had no source. Ten cited ligament strands per side (coracoclavicular, acromioclavicular capsule, sternoclavicular capsule, interclavicular, costoclavicular) now act as passive spatial tendons after the #142 proposal; residual springs stay only where no ligament has a lever (SC elevation 30, AC ball 35 N m/rad), and the AC armature is the smallest value under the explicit force-velocity bound (0.005 kg m2).

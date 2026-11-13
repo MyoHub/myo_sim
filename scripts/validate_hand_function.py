@@ -192,7 +192,7 @@ def build_scene(
         )
         eq.solref, eq.solimp = lock["solref"], lock["solimp"]
     # The shoulder girdle (clavicle, scapula) is fixed at its rest posture: the hand tests hold the arm still.
-    for name in ("sternoclavicular_r2_r", "sternoclavicular_r3_r", "acromioclavicular_r"):
+    for name in ("sternoclavicular_r2_r", "sternoclavicular_r3_r", "sternoclavicular_r1_r", "acromioclavicular_r"):
         if spec.joint(name) is not None:
             spec.delete(spec.joint(name))
     if edit_spec is not None:

@@ -56,16 +56,17 @@ def test_force_law_and_both_sides() -> None:
 
 
 def test_scapula_stays_on_the_thorax_near_rest_at_zero_activation() -> None:
-    """3 s at zero activation from qpos0: every girdle angle within 5 deg of rest, the scapula on its thoracic contact."""
+    """6 s at zero activation from qpos0 (the arm settles in about 5 s): every girdle angle within 5 deg of rest, the
+    scapula on its thoracic contact."""
     model = myo_sim.load_model("myoarm_r")
     data = mujoco.MjData(model)
     mujoco.mj_forward(model, data)
     scap, chest = model.body("scapula_r").id, model.body("chest_r").id
     r0 = data.xmat[chest].reshape(3, 3).T @ data.xmat[scap].reshape(3, 3)
     q0 = data.qpos.copy()
-    for _ in range(int(3.0 / model.opt.timestep)):
+    for _ in range(int(6.0 / model.opt.timestep)):
         mujoco.mj_step(model, data)
-    for name in ("sternoclavicular_r2_r", "sternoclavicular_r3_r"):
+    for name in ("sternoclavicular_r2_r", "sternoclavicular_r3_r", "sternoclavicular_r1_r"):
         adr = model.joint(name).qposadr[0]
         assert abs(np.degrees(data.qpos[adr] - q0[adr])) < 5.0, name
     r = data.xmat[chest].reshape(3, 3).T @ data.xmat[scap].reshape(3, 3)

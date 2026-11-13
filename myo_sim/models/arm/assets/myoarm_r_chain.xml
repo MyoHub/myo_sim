@@ -11,6 +11,8 @@
         <inertial diaginertia="0.001 0.001 0.001" mass="0.156" pos="-0.011096 0.0063723 0.054168" quat="0.906292 0.0334036 0.164622 -0.387838"/>
         <joint axis="0.022828 0.976038 -0.216401" name="sternoclavicular_r2_r" pos="0 0 0" range="-1.047 0.0" ref="-0.310689" springref="-0.310689"/>
         <joint axis="-0.994473 0 -0.104997" name="sternoclavicular_r3_r" pos="0 0 0" range="-0.175 0.611" ref="-0.07293" springref="-0.07293" stiffness="30"/>
+        <!-- clavicle axial rotation about the sternoclavicular-AC line, positive posterior (scapulothoracic.json) -->
+        <joint axis="-0.233534 0.161653 0.958817" name="sternoclavicular_r1_r" pos="0 0 0" range="-0.262 0.873" stiffness="35"/>
         <geom mesh="clavicle_r" name="clavicle_r" type="mesh"/>
         <site name="DELT1_DELT1-P4_r" pos="-0.014 0.01106 0.08021"/>
         <site name="PECM1_PECM1-P3_r" pos="0.0264476 0.004005 0.057232"/>

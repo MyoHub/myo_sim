@@ -34,7 +34,16 @@ from scipy.spatial.transform import Rotation
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from fit_scapulothoracic import GENERIC, Seth, axis_rot, euler_xyz, ik_trials, read_osim  # noqa: E402
+from fit_scapulothoracic import (  # noqa: E402
+    GENERIC,
+    Seth,
+    axis_rot,
+    clavicle_axial_ik,
+    euler_xyz,
+    humerothoracic_elevation,
+    ik_trials,
+    read_osim,
+)
 
 import myo_sim  # noqa: E402
 from myo_sim.build.hand_data import write_generated_block  # noqa: E402
@@ -312,19 +321,24 @@ def write(table: dict[str, Any]) -> None:
 
 
 # ----------------------------------------------------------------------------------------------- maps
-def our_qpos(model: mujoco.MjModel, seth: Seth, q: np.ndarray) -> np.ndarray:
-    """qpos of the arm for one of Seth's frames (girdle and glenohumeral; the muscles here cross neither elbow nor forearm)."""
+def our_qpos(model: mujoco.MjModel, seth: Seth, q: np.ndarray, axial: float = 0.0) -> np.ndarray:
+    """qpos of the arm for one of Seth's frames (girdle and glenohumeral; the muscles here cross neither elbow nor forearm).
+
+    *axial* is the clavicle's axial rotation, which Seth's model lacks; it turns the clavicle about the line through the
+    AC joint centre, so the scapula keeps Seth's pose and the AC ball takes the difference."""
     adr = {
         j: model.jnt_qposadr[model.joint(j).id]
-        for j in ("sternoclavicular_r2_r", "sternoclavicular_r3_r", "acromioclavicular_r")
+        for j in ("sternoclavicular_r2_r", "sternoclavicular_r3_r", "sternoclavicular_r1_r", "acromioclavicular_r")
     }
     qp = model.qpos0.copy()
     qp[adr["sternoclavicular_r2_r"]], qp[adr["sternoclavicular_r3_r"]] = q[0], q[1]
+    qp[adr["sternoclavicular_r1_r"]] = axial
+    ra = axis_rot(model.jnt_axis[model.joint("sternoclavicular_r1_r").id], axial)
     rc, _ = seth.clavicle(q)
     rs, _ = seth.scapula(q)
     qs = Rotation.from_quat(np.roll(ST["girdle"]["scapula"]["quat"], -1)).as_matrix()
     a = adr["acromioclavicular_r"]
-    qp[a : a + 4] = np.roll(Rotation.from_matrix(qs.T @ rc.T @ rs).as_quat(), 1)
+    qp[a : a + 4] = np.roll(Rotation.from_matrix(qs.T @ ra.T @ rc.T @ rs).as_quat(), 1)
     gh = seth.g["gh_axes"]
     rh_rel = axis_rot(gh[0], q[6]) @ axis_rot(gh[1], q[7]) @ axis_rot(gh[2], q[8])  # humerus in the scapula frame
     h0 = Rotation.from_quat(np.roll(ST["girdle"]["glenohumeral_frame"]["quat"], -1)).as_matrix()
@@ -344,10 +358,21 @@ def our_qpos(model: mujoco.MjModel, seth: Seth, q: np.ndarray) -> np.ndarray:
     return qp
 
 
-def seth_frames(zf: zipfile.ZipFile, model: mujoco.MjModel, step: int = 3) -> np.ndarray:
+def seth_frames(zf: zipfile.ZipFile, model: mujoco.MjModel, step: int = 3, info: bool = False) -> Any:
+    """qpos for every assembled IK frame of the archive, the clavicle's axial angle from Ludewig 2009 (fit_scapulothoracic).
+    With *info*, also each frame's trial name and humerothoracic elevation (deg)."""
     seth = Seth(read_osim(zf))
     trials = ik_trials(zf, seth, step)
-    return np.array([our_qpos(model, seth, q) for tr in trials.values() for q in tr["q"]])
+    ht0 = ST["girdle"]["clavicle"]["rest_humerothoracic_elevation_deg"]
+    out, names, elevation = [], [], []
+    for name, tr in trials.items():
+        plane = "flexion" if name.startswith("flx") else "abduction"
+        for q in tr["q"]:
+            ht = humerothoracic_elevation(seth, q)
+            out.append(our_qpos(model, seth, q, clavicle_axial_ik(plane, ht, ht0)))
+            names.append(name)
+            elevation.append(ht)
+    return (np.array(out), names, np.array(elevation)) if info else np.array(out)
 
 
 def gh_sweeps(model: mujoco.MjModel, n: int = 41) -> np.ndarray:

@@ -268,6 +268,30 @@ def apply_couplings(model, q: np.ndarray) -> None:
             a2 = model.jnt_qposadr[j2]
             x = q[..., a2] - model.qpos0[a2]
             q[..., a1] = model.qpos0[a1] + sum(c * x**i for i, c in enumerate(poly))
+    hold_scapula(model, q)
+
+
+def hold_scapula(model, q: np.ndarray) -> None:
+    """Keep the scapula's pose when the clavicle turns about its long axis, in place: the axial hinge's axis passes
+    through the AC joint centre, and the AC ball takes the opposite rotation, as the thorax contact makes it do. Ball
+    joints are never sampled here, so the AC ball is set from the axial angle alone."""
+    for side in ("r", "l"):
+        if not (_has_joint(model, f"sternoclavicular_r1_{side}") and _has_joint(model, f"acromioclavicular_{side}")):
+            continue
+        axial, ac = model.joint(f"sternoclavicular_r1_{side}"), model.joint(f"acromioclavicular_{side}")
+        w, x, y, z = model.body_quat[ac.bodyid[0]]
+        rot = np.array(
+            [
+                [1 - 2 * (y * y + z * z), 2 * (x * y - w * z), 2 * (x * z + w * y)],
+                [2 * (x * y + w * z), 1 - 2 * (x * x + z * z), 2 * (y * z - w * x)],
+                [2 * (x * z - w * y), 2 * (y * z + w * x), 1 - 2 * (x * x + y * y)],
+            ]
+        )
+        u = rot.T @ model.jnt_axis[axial.id]  # the axial axis in the scapula's frame
+        half = -0.5 * q[..., axial.qposadr[0]]
+        a = ac.qposadr[0]
+        q[..., a] = np.cos(half)
+        q[..., a + 1 : a + 4] = np.sin(half)[..., None] * u
 
 
 def sample_postures(model, n: int, seed: int, coupled: bool, margin: float = 0.0) -> np.ndarray:
@@ -927,7 +951,24 @@ def wrap_joints(model, wrap: Wrap) -> np.ndarray:
     top = min(chain, key=depth)
     chain.discard(top)
     limited = set(limited_joints(model).tolist())
-    return np.array([j for j in range(model.njnt) if int(model.jnt_bodyid[j]) in chain and j in limited], dtype=int)
+    # with the scapula held (hold_scapula), the clavicle's axial hinge moves only the clavicle itself
+    held = {model.joint(f"sternoclavicular_r1_{s}").id for s in "rl" if _has_joint(model, f"sternoclavicular_r1_{s}")}
+    return np.array(
+        [
+            j
+            for j in range(model.njnt)
+            if int(model.jnt_bodyid[j]) in chain and j in limited and (j not in held or int(model.jnt_bodyid[j]) in bodies)
+        ],
+        dtype=int,
+    )
+
+
+def _has_joint(model, name: str) -> bool:
+    try:
+        model.joint(name)
+    except KeyError:
+        return False
+    return True
 
 
 def margin_of(model, joint: int, base: float) -> float:

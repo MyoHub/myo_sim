@@ -52,10 +52,10 @@ class TestSims(unittest.TestCase):
 # first-dorsal-interosseous heads 3, hypothenar FDM and ODM 2; per hand); joints: plus CMC4 and CMC5 and the
 # four lumbrical node slides (node_LUM1-4) and three junctura node slides (node_JT3-5) per hand.
 # Actuators: plus the six deep hip muscles (pectineus, quadratus femoris, gemelli per leg).
-# Shoulder (Seth et al. 2019 girdle): per arm the ten MoBL-ARMS girdle hinges become two sternoclavicular hinges and
-# the AC ball joint (joints -7), and the scapular muscles and cuff sub-regions add 15 actuators.
+# Shoulder (Seth et al. 2019 girdle): per arm the ten MoBL-ARMS girdle hinges become three sternoclavicular hinges
+# (protraction, elevation, axial rotation) and the AC ball joint (joints -6), and the scapular muscles and cuff sub-regions add 15 actuators.
 MUSCLEMIMIC_FULLBODY_SPEC = {
-    "njnt": 127,
+    "njnt": 129,
     "nu": 468,
 }
 # myofullbody = musclemimic spec + the muscular neck (myohead), which musclemimic does not have.

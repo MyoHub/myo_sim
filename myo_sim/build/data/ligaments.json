@@ -76,15 +76,15 @@
         "izadpanah2012"
       ],
       "slack_rule": "end of measured range",
-      "l0_m": 0.024456,
-      "b_N_per_m2": 11146170.3,
+      "l0_m": 0.01921,
+      "b_N_per_m2": 18065667.4,
       "length_rest_mm": 15.67,
-      "strain_rest": -0.3592,
+      "strain_rest": -0.1842,
       "strain_seth_motions_p50_max": [
-        -0.337,
-        0.0722
+        -0.1639,
+        0.0787
       ],
-      "length_change_seth_motions_mm": 14.29
+      "length_change_seth_motions_mm": 8.84
     },
     {
       "name": "trapezoid",
@@ -144,15 +144,15 @@
         "izadpanah2012"
       ],
       "slack_rule": "end of measured range",
-      "l0_m": 0.012809,
-      "b_N_per_m2": 40631302.9,
+      "l0_m": 0.01278,
+      "b_N_per_m2": 40817559.4,
       "length_rest_mm": 11.75,
-      "strain_rest": -0.0826,
+      "strain_rest": -0.0805,
       "strain_seth_motions_p50_max": [
-        -0.0612,
-        0.086
+        -0.0863,
+        0.0901
       ],
-      "length_change_seth_motions_mm": 4.94
+      "length_change_seth_motions_mm": 4.97
     },
     {
       "name": "ac_superior",
@@ -210,14 +210,14 @@
       ],
       "slack_rule": "rest strain",
       "l0_m": 0.012637,
-      "b_N_per_m2": 9705737.3,
+      "b_N_per_m2": 9706076.9,
       "length_rest_mm": 12.64,
       "strain_rest": 0.0,
       "strain_seth_motions_p50_max": [
-        0.0079,
-        0.0699
+        0.0045,
+        0.0399
       ],
-      "length_change_seth_motions_mm": 1.05
+      "length_change_seth_motions_mm": 0.72
     },
     {
       "name": "ac_posterior",
@@ -274,15 +274,15 @@
         "stine2009"
       ],
       "slack_rule": "end of measured range",
-      "l0_m": 0.012222,
-      "b_N_per_m2": 5188091.8,
+      "l0_m": 0.011369,
+      "b_N_per_m2": 5995938.5,
       "length_rest_mm": 10.84,
-      "strain_rest": -0.1133,
+      "strain_rest": -0.0468,
       "strain_seth_motions_p50_max": [
-        -0.1066,
-        0.0659
+        -0.0431,
+        0.0693
       ],
-      "length_change_seth_motions_mm": 3.53
+      "length_change_seth_motions_mm": 2.66
     },
     {
       "name": "ac_anterior",
@@ -339,15 +339,15 @@
         "stine2009"
       ],
       "slack_rule": "end of measured range",
-      "l0_m": 0.010313,
-      "b_N_per_m2": 4387457.0,
+      "l0_m": 0.007213,
+      "b_N_per_m2": 8969638.0,
       "length_rest_mm": 5.95,
-      "strain_rest": -0.423,
+      "strain_rest": -0.175,
       "strain_seth_motions_p50_max": [
-        -0.3795,
-        0.0736
+        -0.1348,
+        0.0823
       ],
-      "length_change_seth_motions_mm": 5.64
+      "length_change_seth_motions_mm": 2.56
     },
     {
       "name": "ac_inferior",
@@ -405,14 +405,14 @@
       ],
       "slack_rule": "rest strain",
       "l0_m": 0.011547,
-      "b_N_per_m2": 2312670.1,
+      "b_N_per_m2": 2312502.2,
       "length_rest_mm": 11.55,
       "strain_rest": 0.0,
       "strain_seth_motions_p50_max": [
-        -0.0075,
-        0.0232
+        -0.0045,
+        0.0408
       ],
-      "length_change_seth_motions_mm": 1.28
+      "length_change_seth_motions_mm": 1.67
     },
     {
       "name": "sc_anterior",
@@ -464,15 +464,15 @@
         "costic2003"
       ],
       "slack_rule": "end of measured range",
-      "l0_m": 0.019708,
-      "b_N_per_m2": 4719934.9,
+      "l0_m": 0.019985,
+      "b_N_per_m2": 4590216.1,
       "length_rest_mm": 19.19,
-      "strain_rest": -0.0262,
+      "strain_rest": -0.0397,
       "strain_seth_motions_p50_max": [
-        -0.0114,
-        0.0646
+        -0.0167,
+        0.064
       ],
-      "length_change_seth_motions_mm": 2.66
+      "length_change_seth_motions_mm": 2.89
     },
     {
       "name": "sc_posterior",
@@ -524,15 +524,15 @@
         "costic2003"
       ],
       "slack_rule": "end of measured range",
-      "l0_m": 0.010045,
-      "b_N_per_m2": 21473273.4,
+      "l0_m": 0.010034,
+      "b_N_per_m2": 21520081.3,
       "length_rest_mm": 9.58,
-      "strain_rest": -0.046,
+      "strain_rest": -0.045,
       "strain_seth_motions_p50_max": [
-        -0.1475,
-        0.0874
+        -0.1365,
+        0.0854
       ],
-      "length_change_seth_motions_mm": 6.67
+      "length_change_seth_motions_mm": 6.43
     },
     {
       "name": "interclavicular",
@@ -581,14 +581,14 @@
       ],
       "slack_rule": "rest strain",
       "l0_m": 0.030646,
-      "b_N_per_m2": 2306938.2,
+      "b_N_per_m2": 2306983.6,
       "length_rest_mm": 29.73,
       "strain_rest": -0.03,
       "strain_seth_motions_p50_max": [
-        -0.0365,
-        -0.019
+        -0.0396,
+        -0.0191
       ],
-      "length_change_seth_motions_mm": 2.14
+      "length_change_seth_motions_mm": 4.04
     },
     {
       "name": "costoclavicular",
@@ -640,15 +640,15 @@
         "costic2003"
       ],
       "slack_rule": "end of measured range",
-      "l0_m": 0.019434,
-      "b_N_per_m2": 9046188.9,
+      "l0_m": 0.024222,
+      "b_N_per_m2": 5823480.3,
       "length_rest_mm": 13.0,
-      "strain_rest": -0.3311,
+      "strain_rest": -0.4633,
       "strain_seth_motions_p50_max": [
-        -0.2455,
-        0.085
+        -0.3831,
+        0.0777
       ],
-      "length_change_seth_motions_mm": 9.38
+      "length_change_seth_motions_mm": 14.33
     }
   ]
 }
