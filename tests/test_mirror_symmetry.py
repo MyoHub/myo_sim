@@ -18,7 +18,6 @@ ARM_BODY_PAIRS = (
 ARM_JOINT_PAIRS = (
     "sternoclavicular_r2",
     "sternoclavicular_r3",
-    "acromioclavicular_r1",
     "shoulder_elv",
     "elbow_flexion",
     "pro_sup",

@@ -117,5 +117,107 @@
         -0.104997
       ]
     ]
+  },
+  "girdle": {
+    "rest_posture_deg": {
+      "clav_prot": -17.8,
+      "clav_elev": -4.18,
+      "scapula_abduction": -16.36,
+      "scapula_elevation": -4.28,
+      "scapula_upward_rot": 15.53,
+      "scapula_winging": 14.82
+    },
+    "rest_joint_point_to_ellipsoid_mm": -0.0,
+    "clavicle": {
+      "quat": [
+        0.987301,
+        0.032867,
+        -0.15214,
+        0.031766
+      ],
+      "axis_sternoclavicular_r2": [
+        0.022828,
+        0.976038,
+        -0.216401
+      ],
+      "axis_sternoclavicular_r3": [
+        -0.994473,
+        0.0,
+        -0.104997
+      ],
+      "ref": [
+        -0.310689,
+        -0.07293
+      ],
+      "range": [
+        [
+          -1.047,
+          0.0
+        ],
+        [
+          -0.175,
+          0.611
+        ]
+      ]
+    },
+    "scapula": {
+      "pos": [
+        -0.009576,
+        0.022615,
+        0.124928
+      ],
+      "quat": [
+        0.952091,
+        0.003873,
+        0.296819,
+        0.073531
+      ],
+      "ac_joint_pos": [
+        -0.01357,
+        0.00011,
+        -0.01523
+      ],
+      "ac_range": 1.4,
+      "ac_data_max_deg": 68.4,
+      "contact_sphere_pos": [
+        -0.05982,
+        -0.039042,
+        -0.05598
+      ],
+      "contact_sphere_radius": 0.003
+    },
+    "glenohumeral_frame": {
+      "pos": [
+        -0.00955,
+        -0.034001,
+        0.008997
+      ],
+      "quat": [
+        0.982696,
+        -0.014501,
+        -0.145905,
+        -0.113186
+      ]
+    },
+    "glenoid": {
+      "pos": [
+        -0.02308,
+        -0.026448,
+        -0.011149
+      ],
+      "quat": [
+        0.706476,
+        0.331008,
+        0.02985,
+        0.624847
+      ],
+      "area_cm2": 8.8,
+      "centre_to_glenohumeral_mm": 25.4
+    },
+    "thorax_ellipsoid_geom_radii": [
+      0.079997,
+      0.196991,
+      0.080001
+    ]
   }
 }

@@ -68,14 +68,7 @@ RIGHT_HAND_REMOVED_JOINTS = frozenset(
     {
         "sternoclavicular_r2_r",
         "sternoclavicular_r3_r",
-        "unrotscap_r3_r",
-        "unrotscap_r2_r",
-        "acromioclavicular_r2_r",
-        "acromioclavicular_r3_r",
-        "acromioclavicular_r1_r",
-        "unrothum_r1_r",
-        "unrothum_r3_r",
-        "unrothum_r2_r",
+        "acromioclavicular_r",
         "elv_angle_r",
         "shoulder_elv_r",
         "shoulder1_r2_r",
@@ -95,7 +88,7 @@ RIGHT_HAND_REMOVED_JOINTS = frozenset(
 # turning the idiom's [1,1,1] into a real (and wildly wrong) contribution to
 # the mass matrix instead of a harmless joint-local value. See
 # https://github.com/MyoHub/myo_sim/issues/128.
-PHANTOM_SCAFFOLD_BODIES = frozenset({"clavphant", "scapphant", "humphant", "humphant1"})
+PHANTOM_SCAFFOLD_BODIES = frozenset({"humphant", "humphant1"})
 
 # Physically sane inertia floor substituted for PHANTOM_SCAFFOLD_BODIES once
 # jointless, matching the legacy static-XML numerical-conditioning

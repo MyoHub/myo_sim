@@ -4,9 +4,7 @@
     <framelinvel name="thorax_vel" objtype="body" objname="torso"/>
     <framelinvel name="cervical_spine_vel" objtype="body" objname="cervical_spine"/>
     <framelinvel name="clavicle_vel_r" objtype="body" objname="clavicle_r"/>
-    <framelinvel name="clavphant_vel_r" objtype="body" objname="clavphant_r"/>
     <framelinvel name="scapula_vel_r" objtype="body" objname="scapula_r"/>
-    <framelinvel name="scapphant_vel_r" objtype="body" objname="scapphant_r"/>
     <framelinvel name="humphant_vel_r" objtype="body" objname="humphant_r"/>
     <framelinvel name="humphant1_vel_r" objtype="body" objname="humphant1_r"/>
     <framelinvel name="humerus_vel_r" objtype="body" objname="humerus_r"/>
@@ -29,9 +27,7 @@
     <framelinvel name="midph5_vel_r" objtype="body" objname="midph5_r"/>
     <framelinvel name="distph5_vel_r" objtype="body" objname="distph5_r"/>
     <framelinvel name="clavicle_vel_l" objtype="body" objname="clavicle_l"/>
-    <framelinvel name="clavphant_vel_l" objtype="body" objname="clavphant_l"/>
     <framelinvel name="scapula_vel_l" objtype="body" objname="scapula_l"/>
-    <framelinvel name="scapphant_vel_l" objtype="body" objname="scapphant_l"/>
     <framelinvel name="humphant_vel_l" objtype="body" objname="humphant_l"/>
     <framelinvel name="humphant1_vel_l" objtype="body" objname="humphant1_l"/>
     <framelinvel name="humerus_vel_l" objtype="body" objname="humerus_l"/>
@@ -57,9 +53,7 @@
     <frameangvel name="thorax_angvel" objtype="body" objname="torso"/>
     <frameangvel name="cervical_spine_angvel" objtype="body" objname="cervical_spine"/>
     <frameangvel name="clavicle_angvel_r" objtype="body" objname="clavicle_r"/>
-    <frameangvel name="clavphant_angvel_r" objtype="body" objname="clavphant_r"/>
     <frameangvel name="scapula_angvel_r" objtype="body" objname="scapula_r"/>
-    <frameangvel name="scapphant_angvel_r" objtype="body" objname="scapphant_r"/>
     <frameangvel name="humphant_angvel_r" objtype="body" objname="humphant_r"/>
     <frameangvel name="humphant1_angvel_r" objtype="body" objname="humphant1_r"/>
     <frameangvel name="humerus_angvel_r" objtype="body" objname="humerus_r"/>
@@ -82,9 +76,7 @@
     <frameangvel name="midph5_angvel_r" objtype="body" objname="midph5_r"/>
     <frameangvel name="distph5_angvel_r" objtype="body" objname="distph5_r"/>
     <frameangvel name="clavicle_angvel_l" objtype="body" objname="clavicle_l"/>
-    <frameangvel name="clavphant_angvel_l" objtype="body" objname="clavphant_l"/>
     <frameangvel name="scapula_angvel_l" objtype="body" objname="scapula_l"/>
-    <frameangvel name="scapphant_angvel_l" objtype="body" objname="scapphant_l"/>
     <frameangvel name="humphant_angvel_l" objtype="body" objname="humphant_l"/>
     <frameangvel name="humphant1_angvel_l" objtype="body" objname="humphant1_l"/>
     <frameangvel name="humerus_angvel_l" objtype="body" objname="humerus_l"/>

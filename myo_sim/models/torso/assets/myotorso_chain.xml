@@ -526,6 +526,9 @@
                   <body name="Arm_attachment" pos="0.02 0.37 0" euler="-1.57079632679 0 1.57079632679">
                     <body name="chest_r" pos="0 0 0" euler="1.57079632679 -1.57079632679 0">
                       <inertial pos="0 0 0" mass="0.001" diaginertia="1e-6 1e-6 1e-6"/>
+                      <!-- Scapulothoracic gliding surface: Seth et al. 2019 thoracic ellipsoid less the 3 mm scapular contact sphere (build/data/scapulothoracic.json) -->
+                      <geom name="scapulothoracic_ellipsoid_r" type="ellipsoid" size="0.079997 0.196991 0.080001" pos="-0.0274129 -0.0173001 0.0702861" quat="0.90687 0 -0.4214104 0" group="4" contype="0" conaffinity="0" rgba="0.5 0.5 0.9 0.3"/>
+                      <geom name="scapulothoracic_ellipsoid_l" type="ellipsoid" size="0.079997 0.196991 0.080001" pos="-0.0274129 -0.0173001 -0.0702861" quat="0.90687 0 0.4214104 0" group="4" contype="0" conaffinity="0" rgba="0.5 0.5 0.9 0.3"/>
                       <geom class="myotorso_wrap" name="Thorax_ellipsoid" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08"/>
                       <geom class="myotorso_wrap" name="thorax_ellipsoid_l" pos="-0.0386 -0.1273 -0.0709" quat="0.98192 -0.00567093 0.166487 0.0899079" size="0.08"/>
                       <geom class="myotorso_wrap" name="Thorax_ellipsoid_PECM2" pos="-0.0386 -0.1273 0.0709" quat="0.98192 0.00567093 -0.166487 0.0899079" size="0.08" rgba="1 0 0 0"/>

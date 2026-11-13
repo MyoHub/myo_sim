@@ -4,6 +4,7 @@ from pathlib import Path
 import pytest
 
 import myo_sim
+from myo_sim.build.compose import COARSE_COLLISION_DISABLED_GEOM_BASENAMES
 from myo_sim.build.utils import add_contact_pairs
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -124,6 +125,9 @@ def test_no_static_xml_combines_conflicting_asset_files():
 def test_disabled_finger_collisions_leave_no_pairs_on_disabled_geoms(model_name):
     """Explicit pairs bypass contype/conaffinity, so they must go with the geoms they name."""
     model = myo_sim.load_spec(model_name, build_kwargs={"disable_finger_collisions": True}).compile()
-    disabled = {g for g in range(model.ngeom) if model.geom_contype[g] == 0 and model.geom_conaffinity[g] == 0}
+    # pair-only geoms (contype = conaffinity = 0 by design, e.g. the scapulothoracic contact) are not "disabled"
+    names = {f"{base}{side}" for base in COARSE_COLLISION_DISABLED_GEOM_BASENAMES for side in ("_r", "_l")}
+    disabled = {g for g in range(model.ngeom) if model.geom(g).name in names}
+    assert all(model.geom_contype[g] == 0 and model.geom_conaffinity[g] == 0 for g in disabled)
     stale = [k for k in range(model.npair) if model.pair_geom1[k] in disabled or model.pair_geom2[k] in disabled]
     assert not stale, [(model.geom(model.pair_geom1[k]).name, model.geom(model.pair_geom2[k]).name) for k in stale]

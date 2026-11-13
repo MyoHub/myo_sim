@@ -507,6 +507,95 @@ def compare(zf: zipfile.ZipFile, step: int) -> dict[str, Any]:
     return result
 
 
+# ----------------------------------------------------------------------------------------------- girdle A in the model
+CLAV_RANGES = ((-1.047, 0.0), (-0.175, 0.611))  # protraction, elevation (rad): Seth's data -49..-12 and -8..+16 deg, widened
+AC_RANGE = 1.4  # rad, cone about the rest orientation; Seth's data reach 68.4 deg
+
+
+def glenoid(path: Path = MESHES / "scapula.stl", radius: float = 0.035, cos_min: float = 0.85) -> dict[str, list[float]]:
+    """Glenoid fossa of the scapula mesh: area-weighted centre and normal of the faces near the glenohumeral centre
+    that face it. The site's z axis is the normal, its x axis the scapula's y axis made orthogonal to it."""
+    raw = path.read_bytes()
+    n = int(np.frombuffer(raw[80:84], np.uint32)[0])
+    rec = np.frombuffer(raw[84 : 84 + 50 * n], dtype=np.dtype([("n", "<f4", 3), ("v", "<f4", (3, 3)), ("a", "<u2")]))
+    v = rec["v"].astype(float)
+    c = v.mean(1)
+    nrm = np.cross(v[:, 1] - v[:, 0], v[:, 2] - v[:, 0])
+    area = np.linalg.norm(nrm, axis=1) / 2
+    nrm /= np.linalg.norm(nrm, axis=1)[:, None]
+    gh = np.array(json.loads(DATA_PATH.read_text())["registration"]["glenohumeral_centre_scapula"])
+    r = gh - c
+    d = np.linalg.norm(r, axis=1)
+    sel = (d < radius) & (np.sum(nrm * r, axis=1) / d > cos_min)
+    w = area[sel]
+    centre = (c[sel] * w[:, None]).sum(0) / w.sum()
+    z = (nrm[sel] * w[:, None]).sum(0)
+    z /= np.linalg.norm(z)
+    x = np.array([0.0, 1.0, 0.0]) - z[1] * z
+    x /= np.linalg.norm(x)
+    rot = np.column_stack([x, np.cross(z, x), z])
+    return {
+        "pos": [round(float(t), 6) for t in centre],
+        "quat": [round(float(t), 6) for t in _quat(rot)],
+        "area_cm2": round(1e4 * float(w.sum()), 2),
+        "centre_to_glenohumeral_mm": round(1e3 * float(np.linalg.norm(gh - centre)), 1),
+    }
+
+
+def girdle(zf: zipfile.ZipFile, step: int = 3) -> dict[str, Any]:
+    """Design A in the model's frames, with the rest posture of Seth's trials as ``qpos0``.
+
+    Rest: the mean first frame of the 18 trials (arm at the side), assembled. The sternoclavicular hinges keep Seth's
+    (and MoBL-ARMS's) axes and angles; their ``ref`` is the rest angle, so the clavicle body carries the rest rotation and
+    the first axis is written in the rotated frame. The scapula's body frame is its rest orientation relative to the
+    clavicle (identity of the AC ball joint), and the glenohumeral chain starts in a frame fixed on the scapula that equals
+    the thorax frame at rest, so the glenohumeral angles are relative to the scapula and zero with the arm hanging.
+    """
+    g = read_osim(zf)
+    seth = Seth(g)
+    trials = ik_trials(zf, seth, step)
+    rest = np.mean([tr["q"][0] for tr in trials.values()], axis=0)
+    rest[:6] = seth.assemble(rest[:6])
+    a1, a2 = (np.asarray(a) / np.linalg.norm(a) for a in g["sc_axes"])
+    r1, r2 = axis_rot(a1, rest[0]), axis_rot(a2, rest[1])
+    rc, _ = seth.clavicle(rest)
+    rs, ps = seth.scapula(rest)
+    rel = rc.T @ rs
+    dev = [
+        np.linalg.norm(Rotation.from_matrix(rel.T @ seth.clavicle(q)[0].T @ seth.scapula(q)[0]).as_rotvec())
+        for tr in trials.values()
+        for q in tr["q"]
+    ]
+    jp = float(seth.ellipsoid_dist(ps + rs @ g["scapula_joint_pos"])[0])
+
+    def r6(x: np.ndarray) -> list[float]:
+        return [round(float(t), 6) for t in np.ravel(x)]
+
+    return {
+        "rest_posture_deg": dict(zip(GIRDLE, [round(float(t), 2) for t in np.rad2deg(rest[:6])])),
+        "rest_joint_point_to_ellipsoid_mm": round(1e3 * jp, 4),
+        "clavicle": {
+            "quat": r6(_quat(r1 @ r2)),
+            "axis_sternoclavicular_r2": r6(r2.T @ a1),
+            "axis_sternoclavicular_r3": r6(a2),
+            "ref": r6(rest[:2]),
+            "range": [list(r) for r in CLAV_RANGES],
+        },
+        "scapula": {
+            "pos": r6(g["ac_clavicle"] - rel @ g["ac_scapula"]),
+            "quat": r6(_quat(rel)),
+            "ac_joint_pos": r6(g["ac_scapula"]),
+            "ac_range": AC_RANGE,
+            "ac_data_max_deg": round(float(np.rad2deg(max(dev))), 1),
+            "contact_sphere_pos": r6(g["scapula_joint_pos"]),
+            "contact_sphere_radius": RHO,
+        },
+        "glenohumeral_frame": {"pos": r6(g["gh_pos"]), "quat": r6(_quat(rs.T))},
+        "glenoid": glenoid(),
+        "thorax_ellipsoid_geom_radii": r6(g["ellipsoid_radii"] - RHO),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--zip", type=Path, required=True, help="ThoracoscapularShoulderPaperMaterials.zip from SimTK")
@@ -515,6 +604,8 @@ def main() -> None:
     reg.add_argument("--write", action="store_true")
     cmp_ = sub.add_parser("compare", help="replay the IK trials in girdle designs A and B")
     cmp_.add_argument("--step", type=int, default=3, help="use every step-th IK frame")
+    gir = sub.add_parser("girdle", help="design A in the model's frames, rest posture as qpos0; --write updates the table")
+    gir.add_argument("--write", action="store_true")
     args = parser.parse_args()
     with zipfile.ZipFile(args.zip) as zf:
         if args.cmd == "register":
@@ -524,6 +615,14 @@ def main() -> None:
                 table = json.loads(DATA_PATH.read_text())
                 table["registration"] = values
                 table["source"]["archive_sha256"] = hashlib.sha256(args.zip.read_bytes()).hexdigest()
+                DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
+                print("wrote", DATA_PATH)
+        elif args.cmd == "girdle":
+            values = girdle(zf)
+            print(json.dumps(values, indent=1))
+            if args.write:
+                table = json.loads(DATA_PATH.read_text())
+                table["girdle"] = values
                 DATA_PATH.write_text(json.dumps(table, indent=2) + "\n")
                 print("wrote", DATA_PATH)
         else:

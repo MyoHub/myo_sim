@@ -52,7 +52,7 @@ def test_neck_is_part_of_myofullbody_only() -> None:
         expected = 24 if name in NECK_MODELS + ("myohead",) else 0
         assert _neck_joint_count(load_model(name)) == expected, name
     full = load_model("myofullbody")
-    assert (full.njnt, full.nu, full.neq) == (165, 510, 85)
+    assert (full.njnt, full.nu, full.neq) == (151, 510, 65)
     # Neck actuators are appended after the existing torso, arm and leg actuators.
     head = load_model("myohead")
     neck_names = {head.actuator(i).name for i in range(head.nu)}

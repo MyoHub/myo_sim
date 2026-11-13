@@ -7,26 +7,22 @@
     License	:: Under Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
 ====================================================== -->
 
-    <body name="clavicle_r" pos="0 0 0" childclass="myoarm">
+        <body name="clavicle_r" pos="0 0 0" quat="0.987301 0.032867 -0.15214 0.031766" childclass="myoarm">
         <inertial diaginertia="0.001 0.001 0.001" mass="0.156" pos="-0.011096 0.0063723 0.054168" quat="0.906292 0.0334036 0.164622 -0.387838"/>
-        <joint axis="0.0153 0.989299 -0.1451" name="sternoclavicular_r2_r" pos="0 0 0" range="-0.75 -0.0"/>
-        <joint axis="-0.994473 0 -0.104997" name="sternoclavicular_r3_r" pos="0 0 0" range="0.0 0.318"/>
+        <joint axis="0.022828 0.976038 -0.216401" name="sternoclavicular_r2_r" pos="0 0 0" range="-1.047 0.0" ref="-0.310689"/>
+        <joint axis="-0.994473 0 -0.104997" name="sternoclavicular_r3_r" pos="0 0 0" range="-0.175 0.611" ref="-0.07293"/>
         <geom mesh="clavicle_r" name="clavicle_r" type="mesh"/>
         <site name="DELT1_DELT1-P4_r" pos="-0.014 0.01106 0.08021"/>
         <site name="PECM1_PECM1-P3_r" pos="0.0264476 0.004005 0.057232"/>
         <site name="PECM1_PECM1-P4_r" pos="0.00321 -0.00013 0.05113"/>
         <site class="myoarm_marker" name="Clavicle_marker_r" pos="0.01835 -0.00464 -0.00046"/>
 
-        <body name="clavphant_r" pos="-0.01433 0.02007 0.1355">
-            <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-            <joint axis="-0.994473 0 -0.104997" name="unrotscap_r3_r" pos="0 0 0" range="-0.318 -0.0"/>
-            <joint axis="0.0153 0.989299 -0.1451" name="unrotscap_r2_r" pos="0 0 0" range="0.0 0.75"/>
-            <body name="scapula_r" pos="0 0 0">
+            <body name="scapula_r" pos="-0.009576 0.022615 0.124928" quat="0.952091 0.003873 0.296819 0.073531">
                 <inertial diaginertia="0.00199576 0.00103993 0.001" mass="0.70396" pos="-0.054694 -0.035032 -0.043734" quat="0.453021 0.77921 0.0744129 0.426692"/>
-                <joint axis="0.157095 0.947269 -0.279291" name="acromioclavicular_r2_r" pos="0 0 0" range="-0.152 -0.0"/>
-                <joint axis="-0.754084 0.297594 0.585487" name="acromioclavicular_r3_r" pos="0 0 0" range="0.0 1.228"/>
-                <joint axis="0.6377 0.1186 0.7611" name="acromioclavicular_r1_r" pos="0 0 0" range="0.0 0.552"/>
+                <joint name="acromioclavicular_r" type="ball" pos="-0.01357 0.00011 -0.01523" range="0 1.4"/>
                 <geom mesh="scapula_r" name="scapula_r" type="mesh"/>
+                <geom name="scapula_glide_r" type="sphere" size="0.003" pos="-0.05982 -0.039042 -0.05598" group="4" rgba="0.8 0.7 0.5 0.8"/>
+                <site name="glenoid_centre_r" pos="-0.02308 -0.026448 -0.011149" quat="0.706476 0.331008 0.02985 0.624847"/>
                 <geom class="myoarm_wrap" name="Deltoid2_ellipsoid_r" pos="-0.0058 -0.0378 0.0096" quat="-0.423842 0.568442 0.433325 -0.556293" size="0.033"/>
                 <geom class="myoarm_wrap" name="Delt3_torus_r" pos="-0.0973 -0.0428 -0.037" quat="0.916494 0.246518 0.233162 -0.211903" size="0.04"/>
                 <geom class="myoarm_wrap" name="INFSP_torus_r" pos="-0.0561 -0.0199 -0.0112" quat="0.953924 0.0340622 0.288198 0.0762223" size="0.008"/>
@@ -70,12 +66,7 @@
                 <site name="BICshort_BICshort-P1_r" pos="0.01268 -0.03931 -0.02625"/>
                 <site name="BICshort_BICshort-P2_r" pos="0.00093 -0.06704 -0.01593"/>
                 <site class="myoarm_marker" name="Shoulder_marker_r" pos="0.0014 -0.00147 0.01369"/>
-                <body name="scapphant_r" pos="-0.00955 -0.034 0.009">
-                    <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
-                    <joint axis="0.6377 0.1186 0.7611" name="unrothum_r1_r" pos="0 0 0" range="-0.552 -0.0"/>
-                    <joint axis="-0.754084 0.297594 0.585487" name="unrothum_r3_r" pos="0 0 0" range="-1.228 -0.0"/>
-                    <joint axis="0.157095 0.947269 -0.279291" name="unrothum_r2_r" pos="0 0 0" range="0.0 0.152"/>
-                    <body name="humphant_r" pos="0 0 0">
+                    <body name="humphant_r" pos="-0.00955 -0.034001 0.008997" quat="0.982696 -0.014501 -0.145905 -0.113186">
                         <inertial diaginertia="1 1 1" mass="0.001" pos="0 0 0"/>
                         <joint name="elv_angle_r" pos="0 0 0" range="-1.658 2.269" axis="0.00479995 0.999089 0.0423995"/>
                         <body name="humphant1_r" pos="0 0 0">
@@ -85,6 +76,7 @@
                             <body name="humerus_r" pos="0 0 0">
                                 <inertial diaginertia="0.0128576 0.0121576 0.00239265" mass="1.99757" pos="0.018064 -0.140141 -0.012746" quat="0.407851 0.343714 -0.567755 0.627034"/>
                                 <joint axis="0.00479995 0.999089 0.0423995" name="shoulder_rot_r" pos="0 0 0" range="-1.658 2.094"/>
+                                <site name="humeral_head_centre_r" pos="0 0 0"/>
                                 <geom name="humerus_r" mesh="humerus_r" type="mesh"/>
                                 <geom name="humerus_coll_r" type="capsule" class="myoarm_coll" size="0.042 0.140" pos="0 -.13 0" euler="1.57079632679 0 0"/>
                                 <geom name="Elbow_PT_ECRL_wrap_r" type="sphere" size="0.027" pos="-0.005 -0.3 0.005" class="myoarm_wrap"/>
@@ -1045,6 +1037,4 @@
                     </body>
                 </body>
             </body>
-        </body>
-    </body>
 </mujocoinclude>
