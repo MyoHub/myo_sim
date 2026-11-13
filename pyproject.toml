@@ -18,6 +18,8 @@ dependencies = [
 # Array backends of myo_sim.physics; NumPy alone runs the CPU fatigue model and joint couplings.
 torch = ["torch>=2.2"]
 jax = ["jax>=0.4.20"]
+# Optional homogeneous solid-mesh inertia estimates.
+mesh = ["trimesh>=4"]
 
 [dependency-groups]
 dev = [

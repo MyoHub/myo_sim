@@ -2,6 +2,46 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Keep anatomy geometry stable at finite numeric extremes
+Changed: myo_sim/authoring/interchange.py, tests/test_authoring_interchange_numeric.py, docs/wiki/authoring.md
+Why: real-only pose validation prevents silent complex-value truncation, scaled quaternion normalization avoids overflow and underflow, and stable radial norms preserve inside-wrap flags across geometric scales without mutating source or caller arrays.
+
+## 2026-11-13 — Publish authoring outputs without clobbering inputs
+Changed: myo_sim/authoring/_files.py, myo_sim/authoring/cli.py, myo_sim/authoring/archive.py, tests/test_authoring_files.py, tests/test_authoring_cli.py, docs/wiki/authoring.md
+Why: shared atomic publication closes the concurrent-writer overwrite gap, CLI output guards preserve XML and patch inputs, and content detection supports archive reuse and explicit in-place ZIP edits regardless of filename extension.
+
+## 2026-11-13 — Preserve active native assets in model archives
+Changed: myo_sim/authoring/archive.py, tests/test_authoring_archive_assets.py, docs/wiki/authoring.md
+Why: archives now follow native texture-source and VFS key precedence and skin directories, preserve inline heightfield rows and precision and attached texture defaults, and protect referenced disk assets from replacement.
+
+## 2026-11-12 — Decode only exported muscle moment arms
+Changed: myo_sim/authoring/interchange.py, tests/test_authoring.py
+Why: export now reuses one muscle-only dense Jacobian buffer, avoiding unused motor rows and repeated full-actuator allocations while preserving native geared derivatives and muscle order.
+
+## 2026-11-12 — Avoid recompiling empty validated patches
+Changed: myo_sim/authoring/edits.py, tests/test_authoring_edits.py
+Why: an empty patch can return its already-validated copied spec without a second native compilation, while retaining source, version, list-type and static-fusion checks.
+
+## 2026-11-12 — Keep anatomy references and geometry explicit
+Changed: myo_sim/authoring/interchange.py, tests/test_authoring_equalities.py, tests/test_authoring_sdf.py, docs/wiki/authoring.md
+Why: equality IDs need native body/site namespaces for unambiguous resolution, and SDF plugin geometry must be rejected rather than represented only by its bounding size.
+
+## 2026-11-12 — Preserve custom text in native archives
+Changed: myo_sim/authoring/archive.py, tests/test_authoring_archive.py, docs/wiki/authoring.md
+Why: native XML attribute whitespace normalization could silently replace custom-text tabs and line endings with spaces; archives now preserve and compare the exact compiled text bytes.
+
+## 2026-11-12 — Keep authoring independent of editor integrations
+Changed: myo_sim/authoring/, tests/test_authoring*.py, tests/authoring_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/authoring.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
+Why: compiled anatomy, selected instance edits and native archive validation belong to a generic model-authoring contract; editor adapters and their documentation were removed while canonical chain ownership and mirroring remain unchanged.
+
+## 2026-11-12 — Preserve material colors in anatomy exports
+Changed: myo_sim/muskemo/interchange.py, tests/test_muskemo.py, docs/wiki/muskemo.md
+Why: anatomy JSON used raw geom RGBA and lost native material colors and alpha; exports now match MuJoCo's material/default override behavior without changing the source model.
+
+## 2026-11-11 — Optional source-model authoring with MuSkeMo
+Changed: myo_sim/muskemo/, tests/test_muskemo*.py, tests/muskemo_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/muskemo*.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
+Why: anatomy editing belongs with the source model library; export, Blender import, validation and selected edits now run without MyoSuite or a training dependency.
+
 ## 2026-11-11 — Keep interpreter caches out of distributions
 Changed: pyproject.toml, MANIFEST.in
 Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
