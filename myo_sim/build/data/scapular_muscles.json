@@ -1,0 +1,1166 @@
+{
+  "format": "myo_sim.scapular_muscles/1",
+  "description": "Scapular muscles and rotator-cuff sub-regions after Seth et al. 2019; scripts/generate_scapular_muscles.py",
+  "specific_tension_N_per_cm2": 140.0,
+  "specific_tension_note": "140 N/cm2: the value of Holzbaur et al. 2005 for the shoulder and the one implied by Seth's forces",
+  "gain_tail_lmin_lmax_vmax_fpmax_fvmax": [
+    0.0,
+    1.8,
+    10.0,
+    0.65,
+    1.4
+  ],
+  "wraps": {
+    "SUPSP_hhead": {
+      "body": "humerus_r",
+      "pos": [
+        -0.0008,
+        0.0048,
+        0.0023
+      ],
+      "quat": [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "Seth 2019 wrap hheadsupraTminor",
+      "type": "sphere",
+      "size": [
+        0.023473
+      ]
+    },
+    "INFSP_cylinder": {
+      "body": "scapula_r",
+      "pos": [
+        -0.05812,
+        -0.045902,
+        -0.045634
+      ],
+      "quat": [
+        0.019935,
+        0.444146,
+        0.654917,
+        -0.611082
+      ],
+      "source": "Seth 2019 wrap Infra",
+      "type": "cylinder",
+      "size": [
+        0.019735,
+        0.050581
+      ],
+      "side_site": [
+        -0.082044,
+        -0.040322,
+        -0.01474
+      ]
+    },
+    "SUBSC_cylinder": {
+      "body": "scapula_r",
+      "pos": [
+        -0.025101,
+        -0.039,
+        -0.02839
+      ],
+      "quat": [
+        0.786067,
+        0.167519,
+        -0.570941,
+        0.167519
+      ],
+      "source": "Seth 2019 wrap Subscapuralis",
+      "type": "cylinder",
+      "size": [
+        0.012556,
+        0.042838
+      ],
+      "side_site": [
+        -0.013684,
+        -0.061293,
+        -0.0302
+      ]
+    },
+    "SERR2_thorax": {
+      "body": "chest_r",
+      "type": "sphere",
+      "pos": [
+        -0.0266,
+        -0.0999,
+        0.0412
+      ],
+      "quat": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.0864
+      ],
+      "source": "fitted to Seth 2019 SerratusAnterior_M over wrap Thorax: rms 0.11 mm, max 1.02 mm (straight line: rms 8.41 mm)"
+    },
+    "SERR3_thorax": {
+      "body": "chest_r",
+      "type": "sphere",
+      "pos": [
+        -0.0113,
+        -0.1568,
+        0.0494
+      ],
+      "quat": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.094
+      ],
+      "source": "fitted to Seth 2019 SerratusAnterior_I over wrap Thorax: rms 0.01 mm, max 0.08 mm (straight line: rms 1.42 mm)"
+    }
+  },
+  "muscles": [
+    {
+      "name": "SUPSP1",
+      "seth": "Supraspinatus_A",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.048993,
+          0.001356,
+          -0.069247
+        ]
+      },
+      "insertion": {
+        "body": "humerus_r",
+        "pos": [
+          0.01778,
+          0.01764,
+          0.00965
+        ]
+      },
+      "wrap": "SUPSP_hhead",
+      "seth_parameters": {
+        "F0": 543.2,
+        "l0": 0.0554,
+        "lts": 0.031
+      },
+      "pcsa_cm2": 4.155,
+      "pcsa_source": "Ward et al. 2006 supraspinatus 6.65 cm2 x Seth's share of the muscle (0.625)",
+      "l0": 0.045,
+      "alpha_deg": 5.1,
+      "lts": 0.04616,
+      "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
+      "force_N": 581.7,
+      "fpmax": 0.288421,
+      "lts_adjusted_from": 0.0414,
+      "map": {
+        "range": [
+          0.536427,
+          1.712134
+        ],
+        "lengthrange": [
+          0.069997,
+          0.123171
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.537,
+        1.503
+      ],
+      "path_length_seth_motions_mm": [
+        70.0,
+        113.7
+      ]
+    },
+    {
+      "name": "SUPSP2",
+      "seth": "Supraspinatus_P",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.06053,
+          -0.00138,
+          -0.049453
+        ]
+      },
+      "insertion": {
+        "body": "humerus_r",
+        "pos": [
+          0.01017,
+          0.009568,
+          0.02005
+        ]
+      },
+      "wrap": "SUPSP_hhead",
+      "seth_parameters": {
+        "F0": 326.2,
+        "l0": 0.0591,
+        "lts": 0.025
+      },
+      "pcsa_cm2": 2.495,
+      "pcsa_source": "Ward et al. 2006 supraspinatus 6.65 cm2 x Seth's share of the muscle (0.375)",
+      "l0": 0.045,
+      "alpha_deg": 5.1,
+      "lts": 0.0391,
+      "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
+      "force_N": 349.3,
+      "fpmax": 0.288421,
+      "map": {
+        "range": [
+          0.61877,
+          1.475067
+        ],
+        "lengthrange": [
+          0.066689,
+          0.105368
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.684,
+        1.427
+      ],
+      "path_length_seth_motions_mm": [
+        69.6,
+        103.2
+      ]
+    },
+    {
+      "name": "INFSP1",
+      "seth": "Infraspinatus_S",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.083429,
+          -0.032271,
+          -0.086879
+        ]
+      },
+      "insertion": {
+        "body": "humerus_r",
+        "pos": [
+          -0.014334,
+          0.002719,
+          0.022204
+        ]
+      },
+      "wrap": "INFSP_cylinder",
+      "seth_parameters": {
+        "F0": 967.4,
+        "l0": 0.0698,
+        "lts": 0.05
+      },
+      "pcsa_cm2": 5.168,
+      "pcsa_source": "Ward et al. 2006 infraspinatus 10.71 cm2 x Seth's share of the muscle (0.483)",
+      "l0": 0.0657,
+      "alpha_deg": 1.4,
+      "lts": 0.0541,
+      "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
+      "force_N": 723.5,
+      "fpmax": 0.429583,
+      "map": {
+        "range": [
+          0.727553,
+          1.527628
+        ],
+        "lengthrange": [
+          0.101877,
+          0.154453
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.946,
+        1.443
+      ],
+      "path_length_seth_motions_mm": [
+        116.2,
+        148.9
+      ]
+    },
+    {
+      "name": "INFSP2",
+      "seth": "Infraspinatus_I",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.099069,
+          -0.080853,
+          -0.081261
+        ]
+      },
+      "insertion": {
+        "body": "humerus_r",
+        "pos": [
+          -0.017162,
+          -0.00573,
+          0.024807
+        ]
+      },
+      "wrap": "INFSP_cylinder",
+      "seth_parameters": {
+        "F0": 1037.4,
+        "l0": 0.0677,
+        "lts": 0.084
+      },
+      "pcsa_cm2": 5.542,
+      "pcsa_source": "Ward et al. 2006 infraspinatus 10.71 cm2 x Seth's share of the muscle (0.517)",
+      "l0": 0.0657,
+      "alpha_deg": 1.4,
+      "lts": 0.086,
+      "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
+      "force_N": 775.9,
+      "fpmax": 0.429583,
+      "map": {
+        "range": [
+          0.403624,
+          1.306402
+        ],
+        "lengthrange": [
+          0.112487,
+          0.171816
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.792,
+        1.274
+      ],
+      "path_length_seth_motions_mm": [
+        138.0,
+        169.7
+      ]
+    },
+    {
+      "name": "SUBSC1",
+      "seth": "Subscapularis_S",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.07879,
+          -0.031271,
+          -0.090268
+        ]
+      },
+      "insertion": {
+        "body": "humerus_r",
+        "pos": [
+          0.018,
+          -0.00023,
+          -0.012
+        ]
+      },
+      "wrap": "SUBSC_cylinder",
+      "seth_parameters": {
+        "F0": 540.4,
+        "l0": 0.0676,
+        "lts": 0.059
+      },
+      "pcsa_cm2": 4.189,
+      "pcsa_source": "Ward et al. 2006 subscapularis 15.53 cm2 x Seth's share of the muscle (0.270)",
+      "l0": 0.06,
+      "alpha_deg": 0.0,
+      "lts": 0.0666,
+      "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
+      "force_N": 586.5,
+      "fpmax": 0.653193,
+      "map": {
+        "range": [
+          0.694256,
+          1.411132
+        ],
+        "lengthrange": [
+          0.108255,
+          0.151268
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.728,
+        1.136
+      ],
+      "path_length_seth_motions_mm": [
+        110.3,
+        134.8
+      ]
+    },
+    {
+      "name": "SUBSC2",
+      "seth": "Subscapularis_M",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.08357,
+          -0.054912,
+          -0.074744
+        ]
+      },
+      "insertion": {
+        "body": "humerus_r",
+        "pos": [
+          0.016391,
+          0.000958,
+          -0.019435
+        ]
+      },
+      "wrap": "SUBSC_cylinder",
+      "seth_parameters": {
+        "F0": 609.0,
+        "l0": 0.0744,
+        "lts": 0.055
+      },
+      "pcsa_cm2": 4.721,
+      "pcsa_source": "Ward et al. 2006 subscapularis 15.53 cm2 x Seth's share of the muscle (0.304)",
+      "l0": 0.06,
+      "alpha_deg": 0.0,
+      "lts": 0.06477,
+      "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
+      "force_N": 660.9,
+      "fpmax": 0.653193,
+      "lts_adjusted_from": 0.0694,
+      "map": {
+        "range": [
+          0.497432,
+          1.307778
+        ],
+        "lengthrange": [
+          0.094616,
+          0.143237
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.5,
+        0.95
+      ],
+      "path_length_seth_motions_mm": [
+        94.8,
+        121.8
+      ]
+    },
+    {
+      "name": "SUBSC3",
+      "seth": "Subscapularis_I",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.095069,
+          -0.097654,
+          -0.08537
+        ]
+      },
+      "insertion": {
+        "body": "humerus_r",
+        "pos": [
+          0.010984,
+          -0.003407,
+          -0.019526
+        ]
+      },
+      "wrap": "SUBSC_cylinder",
+      "seth_parameters": {
+        "F0": 854.0,
+        "l0": 0.0721,
+        "lts": 0.059
+      },
+      "pcsa_cm2": 6.62,
+      "pcsa_source": "Ward et al. 2006 subscapularis 15.53 cm2 x Seth's share of the muscle (0.426)",
+      "l0": 0.06,
+      "alpha_deg": 0.0,
+      "lts": 0.0711,
+      "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
+      "force_N": 926.8,
+      "fpmax": 0.653193,
+      "map": {
+        "range": [
+          0.823317,
+          1.523369
+        ],
+        "lengthrange": [
+          0.120499,
+          0.162502
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.844,
+        1.221
+      ],
+      "path_length_seth_motions_mm": [
+        121.8,
+        144.4
+      ]
+    },
+    {
+      "name": "TRAP1",
+      "seth": "TrapeziusClavicle_S",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          -0.060255,
+          0.120309,
+          0.002446
+        ],
+        "hyoid": {
+          "body": "myohead_cerv1",
+          "pos": [
+            0.008095,
+            0.015229,
+            0.002446
+          ],
+          "pos_l": [
+            0.008095,
+            0.015229,
+            -0.002446
+          ]
+        },
+        "rigid": {
+          "body": "neck",
+          "pos": [
+            -0.035255,
+            0.500309,
+            0.002446
+          ],
+          "pos_l": [
+            -0.035255,
+            0.500309,
+            -0.002446
+          ]
+        }
+      },
+      "insertion": {
+        "body": "clavicle_r",
+        "pos": [
+          -0.030106,
+          0.0249,
+          0.090973
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 201.6,
+        "l0": 0.1127,
+        "lts": 0.027
+      },
+      "pcsa_cm2": 1.44,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1127,
+      "lts": 0.027,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019 (same as TRAP2's; Klein Breteler's 0.155-0.168 m does not fit this path)",
+      "force_N": 201.6,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.605294,
+          1.088113
+        ],
+        "lengthrange": [
+          0.095217,
+          0.14963
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.605,
+        1.088
+      ],
+      "path_length_seth_motions_mm": [
+        95.2,
+        149.6
+      ]
+    },
+    {
+      "name": "TRAP2",
+      "seth": "TrapeziusScapula_S",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          -0.07284,
+          0.045044,
+          -0.003626
+        ],
+        "hyoid": {
+          "body": "myohead_cerv7",
+          "pos": [
+            -0.026193,
+            0.042929,
+            -0.003626
+          ],
+          "pos_l": [
+            -0.026193,
+            0.042929,
+            0.003626
+          ]
+        },
+        "rigid": {
+          "body": "neck",
+          "pos": [
+            -0.04784,
+            0.425044,
+            -0.003626
+          ],
+          "pos_l": [
+            -0.04784,
+            0.425044,
+            0.003626
+          ]
+        }
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "pos": [
+          -0.05175,
+          0.00689,
+          -0.024441
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 1043.0,
+        "l0": 0.1127,
+        "lts": 0.027
+      },
+      "pcsa_cm2": 7.45,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1127,
+      "lts": 0.027,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 1043.0,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.587016,
+          1.149934
+        ],
+        "lengthrange": [
+          0.093157,
+          0.156598
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.587,
+        1.15
+      ],
+      "path_length_seth_motions_mm": [
+        93.2,
+        156.6
+      ]
+    },
+    {
+      "name": "TRAP3",
+      "seth": "TrapeziusScapula_M",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          -0.082479,
+          -0.000371,
+          -0.001766
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "pos": [
+          -0.058246,
+          -0.001957,
+          -0.03632
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 470.4,
+        "l0": 0.0832,
+        "lts": 0.032
+      },
+      "pcsa_cm2": 3.36,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.0832,
+      "lts": 0.032,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 470.4,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.564118,
+          1.36621
+        ],
+        "lengthrange": [
+          0.078935,
+          0.145669
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.564,
+        1.366
+      ],
+      "path_length_seth_motions_mm": [
+        78.9,
+        145.7
+      ]
+    },
+    {
+      "name": "TRAP4",
+      "seth": "TrapeziusScapula_I",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          -0.09961,
+          -0.134571,
+          0.001151
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "pos": [
+          -0.07572,
+          -0.00945,
+          -0.073864
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 414.4,
+        "l0": 0.1264,
+        "lts": 0.035
+      },
+      "pcsa_cm2": 2.96,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1264,
+      "lts": 0.035,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 414.4,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.650487,
+          1.159165
+        ],
+        "lengthrange": [
+          0.117222,
+          0.181518
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.65,
+        1.159
+      ],
+      "path_length_seth_motions_mm": [
+        117.2,
+        181.5
+      ]
+    },
+    {
+      "name": "SERR1",
+      "seth": "SerratusAnterior_S",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.04851,
+          0.009,
+          -0.08464
+        ]
+      },
+      "insertion": {
+        "body": "chest_r",
+        "pos": [
+          -0.026451,
+          -0.014528,
+          0.099348
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 387.8,
+        "l0": 0.0945,
+        "lts": 0.0
+      },
+      "pcsa_cm2": 2.77,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.0945,
+      "lts": 0.0,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 387.8,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.913282,
+          1.151917
+        ],
+        "lengthrange": [
+          0.086305,
+          0.108856
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.913,
+        1.152
+      ],
+      "path_length_seth_motions_mm": [
+        86.3,
+        108.9
+      ]
+    },
+    {
+      "name": "SERR2",
+      "seth": "SerratusAnterior_M",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.103118,
+          -0.083084,
+          -0.098597
+        ]
+      },
+      "insertion": {
+        "body": "chest_r",
+        "pos": [
+          0.018702,
+          -0.076277,
+          0.114733
+        ]
+      },
+      "wrap": "SERR2_thorax",
+      "seth_parameters": {
+        "F0": 508.0,
+        "l0": 0.1538,
+        "lts": 0.012
+      },
+      "pcsa_cm2": 3.629,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1538,
+      "lts": 0.012,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 508.1,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.648301,
+          1.204888
+        ],
+        "lengthrange": [
+          0.111709,
+          0.197312
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.648,
+        1.205
+      ],
+      "path_length_seth_motions_mm": [
+        111.7,
+        197.3
+      ]
+    },
+    {
+      "name": "SERR3",
+      "seth": "SerratusAnterior_I",
+      "origin": {
+        "body": "scapula_r",
+        "pos": [
+          -0.11355,
+          -0.112207,
+          -0.085518
+        ]
+      },
+      "insertion": {
+        "body": "chest_r",
+        "pos": [
+          0.001473,
+          -0.170496,
+          0.148246
+        ]
+      },
+      "wrap": "SERR3_thorax",
+      "seth_parameters": {
+        "F0": 430.0,
+        "l0": 0.1587,
+        "lts": 0.0
+      },
+      "pcsa_cm2": 3.071,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1587,
+      "lts": 0.0,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 429.9,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.573748,
+          1.23963
+        ],
+        "lengthrange": [
+          0.091054,
+          0.196729
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.574,
+        1.24
+      ],
+      "path_length_seth_motions_mm": [
+        91.1,
+        196.7
+      ]
+    },
+    {
+      "name": "RHOM1",
+      "seth": "Rhomboideus_S",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          -0.07129,
+          0.04018,
+          -0.002039
+        ],
+        "hyoid": {
+          "body": "myohead_cerv7",
+          "pos": [
+            -0.024643,
+            0.038065,
+            -0.002039
+          ],
+          "pos_l": [
+            -0.024643,
+            0.038065,
+            0.002039
+          ]
+        },
+        "rigid": {
+          "body": "neck",
+          "pos": [
+            -0.04629,
+            0.42018,
+            -0.002039
+          ],
+          "pos_l": [
+            -0.04629,
+            0.42018,
+            0.002039
+          ]
+        }
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "pos": [
+          -0.082669,
+          -0.022911,
+          -0.101734
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 200.2,
+        "l0": 0.0986,
+        "lts": 0.015
+      },
+      "pcsa_cm2": 1.43,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.0986,
+      "lts": 0.015,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 200.2,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.691525,
+          1.483064
+        ],
+        "lengthrange": [
+          0.083184,
+          0.16123
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.692,
+        1.483
+      ],
+      "path_length_seth_motions_mm": [
+        83.2,
+        161.2
+      ]
+    },
+    {
+      "name": "RHOM2",
+      "seth": "Rhomboideus_I",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          -0.08865,
+          -0.00927,
+          -0.000509
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "pos": [
+          -0.106256,
+          -0.106713,
+          -0.092724
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 407.4,
+        "l0": 0.1152,
+        "lts": 0.028
+      },
+      "pcsa_cm2": 2.91,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1152,
+      "lts": 0.028,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 407.4,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.708977,
+          1.455714
+        ],
+        "lengthrange": [
+          0.109674,
+          0.195698
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.709,
+        1.456
+      ],
+      "path_length_seth_motions_mm": [
+        109.7,
+        195.7
+      ]
+    },
+    {
+      "name": "LEVS",
+      "seth": "LevatorScapulae",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          -0.0328,
+          0.121061,
+          0.03108
+        ],
+        "hyoid": {
+          "body": "myohead_cerv1",
+          "pos": [
+            0.03555,
+            0.015981,
+            0.03108
+          ],
+          "pos_l": [
+            0.03555,
+            0.015981,
+            -0.03108
+          ]
+        },
+        "rigid": {
+          "body": "neck",
+          "pos": [
+            -0.0078,
+            0.501061,
+            0.03108
+          ],
+          "pos_l": [
+            -0.0078,
+            0.501061,
+            -0.03108
+          ]
+        }
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "pos": [
+          -0.07801,
+          -0.00808,
+          -0.102883
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 280.0,
+        "l0": 0.1578,
+        "lts": 0.019
+      },
+      "pcsa_cm2": 2.0,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1578,
+      "lts": 0.019,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 280.0,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.845255,
+          1.245983
+        ],
+        "lengthrange": [
+          0.152381,
+          0.215616
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.845,
+        1.246
+      ],
+      "path_length_seth_motions_mm": [
+        152.4,
+        215.6
+      ]
+    },
+    {
+      "name": "PECMIN",
+      "seth": "PectoralisMinor",
+      "origin": {
+        "body": "chest_r",
+        "pos": [
+          0.049739,
+          -0.10401,
+          0.091179
+        ]
+      },
+      "insertion": {
+        "body": "scapula_r",
+        "pos": [
+          0.010875,
+          -0.035041,
+          -0.022941
+        ]
+      },
+      "wrap": null,
+      "seth_parameters": {
+        "F0": 429.8,
+        "l0": 0.1183,
+        "lts": 0.032
+      },
+      "pcsa_cm2": 3.07,
+      "pcsa_source": "Klein Breteler et al. 1999 via DAS3 (Chadwick 2014): Seth's F0 / 140 N/cm2",
+      "l0": 0.1183,
+      "lts": 0.032,
+      "alpha_deg": 0.0,
+      "length_source": "Seth 2019",
+      "force_N": 429.8,
+      "fpmax": 0.65,
+      "map": {
+        "range": [
+          0.697492,
+          1.246758
+        ],
+        "lengthrange": [
+          0.114513,
+          0.179491
+        ]
+      },
+      "fibre_length_seth_motions": [
+        0.697,
+        1.247
+      ],
+      "path_length_seth_motions_mm": [
+        114.5,
+        179.5
+      ]
+    }
+  ]
+}

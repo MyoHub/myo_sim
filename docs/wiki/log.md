@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Scapulothoracic girdle and scapular muscles in the arm models
+Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,assets,tendon,muscle}.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/models/head/assets/myohead_{chain,rigid_chain}.xml`, `myo_sim/models/contacts/myoarm_contacts.xml`, `myo_sim/models/sensors/myofullbody_sensors.xml`, `myo_sim/build/{compose,hand}.py`, `myo_sim/build/data/{scapulothoracic,scapular_muscles,postures,side_sites,hand_literature}.json`, `scripts/{fit_scapulothoracic,generate_scapular_muscles,generate_postures,validate_hand_function,hand_literature_comparison}.py`, tests, `docs/wiki/{shoulder-complex,postures,testing-guide}.md`
+Why: the scapula now glides on the thorax under its own muscles (Seth et al. 2019) instead of following the humerus through fixed rhythm equalities.
+
 ## 2026-11-13 — Scapulothoracic shoulder: licence, frame registration, joint design
 Changed: `myo_sim/build/data/scapulothoracic.json`, `myo_sim/build/data/LICENSE-Seth2019.txt`, `scripts/fit_scapulothoracic.py`, `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`, `docs/wiki/repository-map.md`
 Why: first steps of the Seth et al. 2019 shoulder port: CC BY 4.0 attribution, Seth's girdle geometry registered into this package's frames, and the AC-ball-plus-contact girdle chosen over the ellipsoid chain by replaying the published IK trials.

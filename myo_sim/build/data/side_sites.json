@@ -472,64 +472,6 @@
       "radius_method": "The via point DELT1-P3 on the scapula comes within 23.2 mm of the sphere's centre in the coupled range and past its limits. With the point inside the sphere the wrap ends at once, a 10 mm jump, so the radius is the largest that keeps it outside: 23 mm. The path changes only where the wrap acts, 2.2 % of the sampled postures."
     },
     {
-      "name": "SUPSP_ellipsoid_SUPSP_1_sidesite_r",
-      "tendon": "SUPSP_r_tendon",
-      "geom": "SUPSP_ellipsoid_SUPSP_r",
-      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
-      "before": {
-        "j4": 3.63,
-        "j3": 7.04,
-        "fl": 24
-      },
-      "listed_site": {
-        "direction_in_geom_frame": [
-          -0.095,
-          0.0995,
-          0.9905
-        ],
-        "j4": 0.53,
-        "j3": 2.22,
-        "past_j4": 0.05
-      },
-      "after": {
-        "j4": 0.04,
-        "j3": 0.04,
-        "fl": 0,
-        "chg": 0.21,
-        "chgmax": 7.04
-      },
-      "past_after_j4": 0.05
-    },
-    {
-      "name": "SUBSCAP_ellipsoid_SUBSC_1_sidesite_r",
-      "tendon": "SUBSC_r_tendon",
-      "geom": "SUBSCAP_ellipsoid_SUBSC_r",
-      "method": "Without a side site the wrap takes the shorter arc when the segment crosses the geom and no arc otherwise, the same under both wrap rules. On a sphere the arc lies in the plane of the endpoints and the centre, so it does not change side: the length has no jump on either version.",
-      "before": {
-        "j4": 0.01,
-        "j3": 12.49,
-        "fl": 0
-      },
-      "listed_site": {
-        "direction_in_geom_frame": [
-          0.1853,
-          0.6539,
-          0.7335
-        ],
-        "j4": 0.01,
-        "j3": 0.01,
-        "past_j4": 10.6
-      },
-      "after": {
-        "j4": 0.01,
-        "j3": 0.01,
-        "fl": 0,
-        "chg": 0.02,
-        "chgmax": 12.49
-      },
-      "past_after_j4": 0.01
-    },
-    {
       "name": "LAT_TMAJ2hh_sphere_TMAJ_2_sidesite_r",
       "tendon": "TMAJ_r_tendon",
       "geom": "LAT_TMAJ2hh_sphere_r",

@@ -510,6 +510,13 @@ def compare(zf: zipfile.ZipFile, step: int) -> dict[str, Any]:
 # ----------------------------------------------------------------------------------------------- girdle A in the model
 CLAV_RANGES = ((-1.047, 0.0), (-0.175, 0.611))  # protraction, elevation (rad): Seth's data -49..-12 and -8..+16 deg, widened
 AC_RANGE = 1.4  # rad, cone about the rest orientation; Seth's data reach 68.4 deg
+# Joint springs to the rest posture (N m/rad), a stand-in for the sternoclavicular, acromioclavicular and coracoclavicular
+# ligaments and resting muscle tone, none of which is modelled: the smallest round value that keeps the girdle within
+# a few degrees of rest under the arm's weight at zero activation (no measured value; see docs/wiki/shoulder-complex.md)
+GIRDLE_STIFFNESS = {"sternoclavicular": 40.0, "acromioclavicular": 40.0}
+# AC armature (kg m2): keeps the explicit force-velocity rate of the scapula at full activation below 5
+# (myo_sim.build.stability, as the thumb CMC armature); 0.0001 gives 7.2
+AC_ARMATURE = 0.008
 
 
 def glenoid(path: Path = MESHES / "scapula.stl", radius: float = 0.035, cos_min: float = 0.85) -> dict[str, list[float]]:
@@ -579,6 +586,7 @@ def girdle(zf: zipfile.ZipFile, step: int = 3) -> dict[str, Any]:
             "axis_sternoclavicular_r2": r6(r2.T @ a1),
             "axis_sternoclavicular_r3": r6(a2),
             "ref": r6(rest[:2]),
+            "stiffness": GIRDLE_STIFFNESS["sternoclavicular"],
             "range": [list(r) for r in CLAV_RANGES],
         },
         "scapula": {
@@ -586,6 +594,8 @@ def girdle(zf: zipfile.ZipFile, step: int = 3) -> dict[str, Any]:
             "quat": r6(_quat(rel)),
             "ac_joint_pos": r6(g["ac_scapula"]),
             "ac_range": AC_RANGE,
+            "ac_stiffness": GIRDLE_STIFFNESS["acromioclavicular"],
+            "ac_armature": AC_ARMATURE,
             "ac_data_max_deg": round(float(np.rad2deg(max(dev))), 1),
             "contact_sphere_pos": r6(g["scapula_joint_pos"]),
             "contact_sphere_radius": RHO,

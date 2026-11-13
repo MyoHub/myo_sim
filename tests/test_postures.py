@@ -18,7 +18,7 @@ MAX_FOOT_FORCE_N = 150.0
 MAX_DEPTH_M = 1e-3
 # Peak joint speed over 50 ms at zero activation, per model. Passive muscle force sets it: see the wiki page.
 MAX_SPEED_50MS = {"myofullbody": 5.5, "myolegs": 3.0, "myolegs_abdomen": 3.0}
-MAX_SPEED_50MS_MUSCLES_OFF = 2.0
+MAX_SPEED_50MS_MUSCLES_OFF = 2.6  # hip flexion; 1.97 before the scapulothoracic girdle (free shoulder girdle, arms at 0.25 rad)
 # qpos0 is off the knee couplings; on MuJoCo 3 recfem takes a wrap 171 mm longer there and the first 50 ms are faster.
 # gasmed is 0.0083 optimal lengths longer at standing than at qpos0 in myolegs and myolegs_abdomen (MuJoCo 4).
 MAX_LENGTH_ABOVE_QPOS0 = 0.01
@@ -102,6 +102,8 @@ def test_couplings_hold(name):
 def test_only_the_feet_touch_at_t0(name):
     model = myo_sim.load_model(name)
     contacts, weight = SCRIPT.t0_contacts(model, _state(model, _standing_qpos(model)))
+    # the scapulae rest on the thorax by design (scapulothoracic contact)
+    contacts = [c for c in contacts if not any(g.startswith("scapula_glide_") for g in c[:2])]
     assert contacts, "the feet should be on the floor"
     assert all("foot" in geom1 + geom2 for geom1, geom2, _, _ in contacts), contacts
     assert all(force < MAX_FOOT_FORCE_N for _, _, force, _ in contacts), contacts

@@ -46,16 +46,27 @@ def fullbody():
 
 
 def _set_state(model: mujoco.MjModel, data: mujoco.MjData, path: Path) -> None:
-    """Load a name-keyed qpos / qvel / act state written from a myofullbody rollout."""
+    """Load a name-keyed qpos / qvel / act state written from a myofullbody rollout.
+
+    Joints and actuators the model no longer has (the MoBL-ARMS girdle joints and the single-line rotator cuff of the
+    recorded model) are skipped; the girdle then starts at its rest posture.
+    """
     state = json.loads(path.read_text())
+
+    def has(obj: mujoco.mjtObj, name: str) -> bool:
+        return mujoco.mj_name2id(model, obj, name) >= 0
+
     for name, values in state["qpos"].items():
-        joint = model.joint(name)
-        data.qpos[joint.qposadr[0] : joint.qposadr[0] + len(values)] = values
+        if has(mujoco.mjtObj.mjOBJ_JOINT, name):
+            joint = model.joint(name)
+            data.qpos[joint.qposadr[0] : joint.qposadr[0] + len(values)] = values
     for name, values in state["qvel"].items():
-        joint = model.joint(name)
-        data.qvel[joint.dofadr[0] : joint.dofadr[0] + len(values)] = values
+        if has(mujoco.mjtObj.mjOBJ_JOINT, name):
+            joint = model.joint(name)
+            data.qvel[joint.dofadr[0] : joint.dofadr[0] + len(values)] = values
     for name, value in state["act"].items():
-        data.act[model.actuator_actadr[model.actuator(name).id]] = value
+        if has(mujoco.mjtObj.mjOBJ_ACTUATOR, name):
+            data.act[model.actuator_actadr[model.actuator(name).id]] = value
     data.time = state["time"]
 
 

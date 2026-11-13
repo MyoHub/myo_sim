@@ -191,6 +191,10 @@ def build_scene(
             type=mujoco.mjtEq.mjEQ_JOINT, objtype=mujoco.mjtObj.mjOBJ_JOINT, name1=hand.joints[key][0], name=f"lock_{key}"
         )
         eq.solref, eq.solimp = lock["solref"], lock["solimp"]
+    # The shoulder girdle (clavicle, scapula) is fixed at its rest posture: the hand tests hold the arm still.
+    for name in ("sternoclavicular_r2_r", "sternoclavicular_r3_r", "acromioclavicular_r"):
+        if spec.joint(name) is not None:
+            spec.delete(spec.joint(name))
     if edit_spec is not None:
         edit_spec(spec, hand)
     model = spec.compile()
