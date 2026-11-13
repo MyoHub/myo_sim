@@ -405,7 +405,20 @@ def write_xml(table: dict[str, Any]) -> dict[str, tuple[float, float]]:
 
 @cache
 def _model() -> mujoco.MjModel:
-    return build_spec("myoarm_r").compile()
+    """``myoarm_r`` with every body above the humerus moved onto the world frame (positions, orientations and joint
+    anchors zeroed; their joints sit at qpos0). The fit only needs lengths from the elbow down, which do not depend on
+    where the shoulder puts the arm, but the least-squares fit is ill-conditioned enough that rounding-level changes of
+    the arm's world pose move its result by micrometres. In this frame the inputs stay bit-identical when the shoulder
+    girdle changes."""
+    model = build_spec("myoarm_r").compile()
+    body = int(model.body_parentid[model.body("humerus_r").id])
+    while body > 0:
+        model.body_pos[body] = 0.0
+        model.body_quat[body] = (1.0, 0.0, 0.0, 0.0)
+        first = model.body_jntadr[body]
+        model.jnt_pos[first : first + model.body_jntnum[body]] = 0.0
+        body = int(model.body_parentid[body])
+    return model
 
 
 class Poses:

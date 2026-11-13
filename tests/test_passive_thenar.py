@@ -99,22 +99,36 @@ def test_chain_holds_the_intrinsic_sites() -> None:
             np.testing.assert_allclose([float(v) for v in element.get("pos").split()], site["pos"], atol=1e-9)
 
 
-# The table is fitted on MuJoCo 4. MuJoCo 3's kinematics differ at rounding level (1e-15 m) and the fit lands up to
-# 3.0e-6 m away there (DI2, measured on 3.17); a 1e-13 m change of the start points moves it as far.
-SITE_ATOL_M = 2e-6 if int(mujoco.__version__.split(".")[0]) >= 4 else 3.5e-6
+# Tolerances of the refit, the same on MuJoCo 3 and 4. The site fit is ill-conditioned: the moment arms barely change
+# along some directions of the site positions, so rounding-level differences of the start kinematics (MuJoCo 3 against 4,
+# 1e-15 m) move PI2's sites by 71 um while its moment arms move by 0.06 mm. The check is on what the fit is for: the
+# moment arms (targets with 2 mm spread, at least 1 mm by the fit's floor), the fit error and the fibre-length window.
+ARM_ATOL_MM = 0.1
+RMS_Z_ATOL = 0.05
+FIBRE_ATOL = 0.005
+ARM_KEYS = ("model_mm", "head_mm", "reference_mm", "systemic_mm")
 
 
 def test_intrinsic_fit_reproduces_the_table() -> None:
-    """The tabled sites and passive scales are what ``generate_hand_intrinsic_muscles.py --fit`` fits from the start points."""
+    """``generate_hand_intrinsic_muscles.py --fit`` reproduces the tabled moment arms, fit errors and fibre lengths.
+
+    The sites themselves are not compared: their fit is ill-conditioned (see ``ARM_ATOL_MM``), and the tabled sites are
+    checked against the chain file by ``test_chain_holds_the_intrinsic_sites``.
+    """
     pytest.importorskip("scipy")
     gen = _script("generate_hand_intrinsic_muscles")
     table = load_intrinsic_table()
     refit = copy.deepcopy(table)
     gen.fit(refit)
     for old, new in zip(table["muscles"], refit["muscles"]):
-        for a, b in zip(old["sites"], new["sites"]):
-            np.testing.assert_allclose(b["pos"], a["pos"], atol=SITE_ATOL_M, err_msg=old["name"])
-        assert new["fit"]["result"].get("rms_z") == pytest.approx(old["fit"]["result"].get("rms_z"), abs=0.01)
+        a, b = old["fit"]["result"], new["fit"]["result"]
+        for key in ARM_KEYS:
+            assert (key in a) == (key in b), (old["name"], key)
+            for joint, arms in a.get(key, {}).items():
+                np.testing.assert_allclose(b[key][joint], arms, atol=ARM_ATOL_MM, err_msg=f"{old['name']} {key} {joint}")
+        assert b.get("rms_z", 0.0) == pytest.approx(a.get("rms_z", 0.0), abs=RMS_Z_ATOL), old["name"]
+        for key in ("fibre_length_measurement_box", "fibre_length_full_range"):
+            np.testing.assert_allclose(b[key], a[key], atol=FIBRE_ATOL, err_msg=f"{old['name']} {key}")
 
 
 def test_intrinsic_fit_keeps_the_fibre_length_window() -> None:

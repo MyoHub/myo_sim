@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Intrinsic hand fit independent of the shoulder; girdle step on the new hand
+Changed: `scripts/generate_hand_intrinsic_muscles.py`, `tests/test_passive_thenar.py`, `myo_sim/build/data/{hand_intrinsic_muscles,passive_joint_moments,postures,hand_literature}.json`, `myo_sim/models/arm/assets/myoarm_r_{chain,muscle,tendon}.xml`, `docs/wiki/hand-literature-comparison.md`
+Why: the intrinsic site fit is ill-conditioned and moved by micrometres whenever the shoulder changed the arm's world pose. It now runs with every body above the humerus on the world frame, so its inputs are the same with and without the girdle; the sites were refitted once (micrometres; passive scales kept) and the hand springs that moved by more than 1e-9 N m with them (at most 1.8e-5 N m). The girdle's literature step is recorded on the range-of-motion hand. The refit test compares the fitted moment arms, fit errors and fibre lengths with one tolerance on MuJoCo 3 and 4 instead of the site positions, which differ by up to 71 um between the versions (PI2) for 0.06 mm of moment arm.
+
 ## 2026-11-13 — Clavicle axial rotation
 Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/build/data/{scapulothoracic,ligaments,scapular_muscles}.json`, `myo_sim/build/hand.py`, `scripts/{fit_scapulothoracic,fit_ligaments,generate_scapular_muscles,migrate_side_sites,validate_hand_function}.py`, tests, `docs/wiki/shoulder-complex.md`, `myo_sim/models/arm/README.md`
 Why: without axial clavicle rotation the scapula's rotation against the clavicle stretched the conoid by 14 mm along Seth's motions (3-6 mm in vivo). The new hinge `sternoclavicular_r1_r` turns about the SC-AC line; the replay takes its angle from Ludewig 2009, the ligament slack lengths and muscle maps are refitted, and a residual axial spring equal to the AC one puts the quasi-static axial angle within 4.5 deg of Ludewig's. Side-site sampling holds the scapula when the clavicle turns about its axis. Open checks that need all passive layers are listed on the page.
