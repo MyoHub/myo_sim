@@ -615,19 +615,19 @@
       ]
     },
     "fist_tip_to_palm": {
-      "label": "Active fist over 12 nudged starts: fingertip to palm, digit 2 / 3 / 4 / 5, median, min, max and share of runs within 0.5 mm of the palm (negative = penetration)",
+      "label": "Active fist over nudged starts: fingertip to palm, digit 2 / 3 / 4 / 5 (negative = penetration); up to the DIP rest step median, min, max and share of 12 runs within 0.5 mm of the palm, since the thumb IP spring step share of 48 runs within 0.5 mm and median distance of those runs",
       "unit": "mm",
       "literature": [
         {
           "value": "contact (every tip reaches the palm in most runs)",
           "kind": "functional criterion (no published distance used)",
           "source": null,
-          "protocol": "FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on; every qpos of the start moved by 1e-9 x a standard normal draw, seeds 0-11"
+          "protocol": "FDS and FDP at full activation, wrist neutral, thumb locked; contacts of the model on; the start moved by 1e-9 x a standard normal draw per qpos: up to the DIP rest step every qpos of the scene, seeds 0-11; since the thumb IP spring step only the hand's own qpos (bodies from the lunate on), seeds 0-47"
         }
       ]
     },
     "fist_max_penetration": {
-      "label": "Active fist: deepest penetration of any contact pair of the hand, over the 12 nudged starts",
+      "label": "Active fist: deepest penetration of any contact pair of the hand, over the nudged starts (12 up to the DIP rest step, 48 since)",
       "unit": "mm",
       "literature": [
         {
@@ -25965,29 +25965,17 @@
           "thenar_pad_r": 26.7
         },
         "fist_tip_to_palm": {
-          "median": {
-            "2": -2.04,
-            "3": -0.58,
-            "4": -0.37,
-            "5": -0.16
-          },
-          "min": {
-            "2": -2.04,
-            "3": -0.58,
-            "4": -0.37,
-            "5": -0.16
-          },
-          "max": {
-            "2": -2.04,
-            "3": -0.58,
-            "4": -0.37,
-            "5": -0.16
-          },
           "reach_share": {
             "2": 1.0,
             "3": 1.0,
             "4": 1.0,
             "5": 1.0
+          },
+          "reached_median": {
+            "2": -2.04,
+            "3": -0.58,
+            "4": -0.37,
+            "5": -0.16
           }
         },
         "fist_max_penetration": 0.58
@@ -26505,7 +26493,8 @@
       "notes": [
         "MuJoCo 4.0.0; on 3.17 tenodesis and pinch agree (grip 451.2 / settled 282.6 N there).",
         "Relaxed thumb IP flexion (wrist and elbow held, act 0, 3 s) 10.9 -> 7.9 deg (Lee & Jung 2014: 9 +- 6); MP and CMC unchanged.",
-        "Lateral pinch 94.9 -> 93.7 N; tenodesis unchanged (index MCP range the strict xfail); grip self-selected 446.2 -> 460.9 N, settled 276.6 -> 282.8 N (open grip check)."
+        "Lateral pinch 94.9 -> 93.7 N; tenodesis unchanged (index MCP range the strict xfail); grip self-selected 446.2 -> 460.9 N, settled 276.6 -> 282.8 N (open grip check).",
+        "Fist re-recorded over 48 starts that nudge only the hand's qpos (before: 12 starts nudging every qpos of the scene, so the draws moved with the model's qpos count): every digit reaches the palm in 48 of 48 on MuJoCo 4 and 3.17 (200 of 200 in a longer run), the same outcome per seed on both. At the hand-rebuild base (before the flexion-dependent MCP abduction limit) the same protocol gives digit 3 19 of 48 (0.40), identical per seed on both versions."
       ]
     }
   ]

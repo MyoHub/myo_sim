@@ -127,10 +127,21 @@ def test_rest_check_rejects_the_overlapping_pairs_without_their_margin() -> None
 
 
 def test_active_fist_closes_without_penetration() -> None:
-    """Over the nudged starts every fingertip reaches the palm in most runs, and no paired contact goes 1 mm deep."""
-    fist = _script("hand_literature_comparison").fist()
+    """Each digit reaches the palm at its recorded rate, and no paired contact goes 1 mm deep.
+
+    The 48 starts nudge only the hand's own qpos, so the draws don't depend on the rest of the model. The rate per
+    digit is the reach share of the latest step in ``hand_literature.json``; the measured share must lie within
+    the 99 % Wilson interval of that share over 48 runs, which absorbs a run or two that land differently on
+    another MuJoCo version. Open check: up to the flexion-dependent MCP abduction limit digit 3 closed onto the
+    palm in only part of the starts and otherwise stopped on the ring finger; it now reaches it in all 48.
+    """
+    script = _script("hand_literature_comparison")
+    recorded = script.load_data()["steps"][-1]["values"]["fist_tip_to_palm"]["reach_share"]
+    fist = script.fist()
     assert fist["max_penetration_mm"] < 1.0
-    assert all(share > 0.5 for share in fist["tip_to_palm_mm"]["reach_share"].values()), fist["tip_to_palm_mm"]
+    for digit, share in fist["tip_to_palm_mm"]["reach_share"].items():
+        low, high = script.reach_share_interval(recorded[digit])
+        assert low <= share <= high, (digit, share, recorded[digit])
 
 
 def test_fingertip_soft_tissue_is_on_target() -> None:
