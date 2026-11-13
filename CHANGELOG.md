@@ -10,15 +10,15 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 | --- | --- | --- |
 | `myohand_r` | 23 / 23 / 39 | 32 / 32 / 47 |
 | `myohands` | 46 / 46 / 78 | 64 / 64 / 94 |
-| `myoarm_r` | 38 / 38 / 63 | 47 / 47 / 71 |
-| `myoarms` | 76 / 76 / 126 | 94 / 94 / 142 |
+| `myoarm_r` | 38 / 38 / 63 | 44 / 43 / 88 |
+| `myoarms` | 76 / 76 / 126 | 88 / 86 / 176 |
 | `myotorso` | 18 / 18 / 210 | unchanged |
-| `myotorso_arm_r` | 56 / 56 / 273 | 65 / 65 / 281 |
-| `myotorso_arms` | 94 / 94 / 336 | 112 / 112 / 352 |
+| `myotorso_arm_r` | 56 / 56 / 273 | 62 / 61 / 298 |
+| `myotorso_arms` | 94 / 94 / 336 | 106 / 104 / 386 |
 | `myolegs` | 35 / 34 / 80 | 35 / 34 / 86 |
 | `myolegs_abdomen` | 38 / 37 / 86 | 38 / 37 / 92 |
 | `myolegs26` | 47 / 46 / 26 | unchanged |
-| `myofullbody` | 129 / 128 / 416 | 171 / 170 / 510 |
+| `myofullbody` | 129 / 128 / 416 | 165 / 162 / 544 |
 | `myohead` (new) | – | 24 / 24 / 72 |
 
 - **Renamed:** `_r` on every right-arm joint, actuator, tendon, geom and camera; `AdP` -> `AdPt`, `FPB` -> `FPBs`, `RI2` -> `DI1d`, `UI_UB5` -> `ADM`, `LU_RB2-5` -> `LUM1-4`, `UI_UB2` -> `PI1`, `RI3` -> `DI2`, `UI_UB3` -> `DI3`, `RI4` -> `PI2`, `UI_UB4` -> `DI4`, `RI5` -> `PI3`.
@@ -27,6 +27,23 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 - **Ranges and new tendons (hand):** MCP 2-5 hyperextend to 61 deg and PIP 2-5 to 10 deg, the thumb MP and IP, the index and little-finger MCP abduction and the wrist (-75..80 flexion, -36..22 deviation) have new limits; per hand eight limited fixed tendons `digit{2-5}_mcp_abduction_flexion_limit_{pos,neg}_r` (`_l`) narrow MCP abduction in flexion. Filter them from tendon observations like the `lig_`, `node_` and `passive_` tendons.
 - **Mass:** `myofullbody` 76.51 kg (84.26 kg on `dev`, which counted the pelvis twice); head and neck 6.94 % of it, torso 15.416 kg.
 - **Dynamics:** `vmax` 10 on the forearm and hand muscles makes hand movement 2-5 times faster for the same activation; rigid-tendon maps change leg and upper-arm fibre lengths and forces. All hand, arm, leg and full-body checkpoints need retraining and parity baselines regenerating. mujoco-warp needs `nconmax` >= 64 for hand models.
+
+- **Scapulothoracic shoulder (all arm, torso-arm and full-body models).** The clavicle and scapula move on their own
+  joints after Seth et al. 2019 instead of following the humerus through ten MoBL-ARMS rhythm equalities
+  (`docs/wiki/shoulder-complex.md`).
+  - **Joints per arm:** the ten girdle hinges and the unrotate bodies go; new are `sternoclavicular_r1_r` (axial
+    rotation), `sternoclavicular_r2_r`, `sternoclavicular_r3_r` (hinges with `ref` at the rest posture) and the ball
+    joint `acromioclavicular_r` (4 qpos, 3 dof), so each arm has 3 qpos and 4 dof fewer; `elv_angle_r`, `shoulder_elv_r`,
+    `shoulder_rot_r` keep their names and axes but are now relative to the scapula, with zero = arm hanging. Contact pair
+    `scapulothoracic_r` (scapula on a thoracic ellipsoid), ten ligament strands per side (`lig_` tendons) and residual
+    girdle springs.
+  - **Actuators per arm (+17):** `TRAP1-4`, `TRAPocc`, `SERR1-3`, `RHOM1-2`, `LEVS1-2`, `PECMIN`, and `SUPSP1-2`,
+    `INFSP1-2`, `SUBSC1-3` in place of `SUPSP`, `INFSP`, `SUBSC`. `DELT1`, `DELT2` take Seth's paths; `CORB`, `BICshort`
+    and `TRIlong` lose a via point. Every shoulder muscle's force is PCSA x 111.1 N/cm2, calibrated to measured isometric
+    shoulder moments (`build/data/shoulder_strength.json`).
+  - **Downstream (MyoSuite):** observation and action layouts of every arm and full-body task change, the glenohumeral
+    angles mean something different, and arm and full-body checkpoints need retraining. Licence of the derived data:
+    `build/data/LICENSE-Seth2019.txt` (CC BY 4.0).
 
 - **`standing` posture on this model (`myofullbody`, `myolegs`, `myolegs_abdomen`; merged from 0.2.4).** The posture API of 0.2.4 (`myo_sim.list_postures()`, `add_posture_keyframes()`, `build_kwargs={"postures": ...}`, `data/postures.json`, `scripts/generate_postures.py`) replaces this line's standing-keyframe helpers; the table's values are this line's. See `docs/wiki/postures.md`.
   - **Table:** new step: both thumbs at the equilibrium of their passive moments and gravity at zero activation, computed by the script (CMC flexion -7.5, CMC abduction 21.2, MP -15.3, IP -9.7 deg). The rest holds only kinematics at knee 0, so neither the knee hinges nor the masses move it. Finger joints stay at `qpos0`: their equilibrium has no single answer without contacts.

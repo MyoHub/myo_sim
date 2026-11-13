@@ -1,7 +1,17 @@
 Shoulder geometry and data from Seth et al. 2019
 
-The scapulothoracic geometry in scapulothoracic.json (thoracic ellipsoid, scapular joint point, acromioclavicular
-points, sternoclavicular axes) and the values derived from it in the arm and torso files are derived from:
+The following data in this package are derived from the work below, together with the values computed from them in
+the arm, torso and head files:
+  - scapulothoracic.json: the scapulothoracic geometry (thoracic ellipsoid, scapular joint point, acromioclavicular
+    points, sternoclavicular axes), the girdle's rest posture and ranges, and the rhythm table, computed from the
+    release's inverse-kinematics trials;
+  - scapular_muscles.json: the attachment points, wrap geometry, maximal forces (as PCSA) and fibre and tendon
+    lengths of the trapezius, serratus anterior, rhomboids, levator scapulae, pectoralis minor and the rotator-cuff
+    sub-regions;
+  - build/references.py and the arm chain: the path points and the fibre and tendon lengths of the anterior and middle
+    deltoid (DELT1, DELT2);
+  - ligaments.json: strand lengths along the release's motions (which set the slack lengths); shoulder_strength.json:
+    girdle postures taken from the release's motions.
 
   Seth A, Dong M, Matias R, Delp SL. Muscle contributions to upper-extremity movement and work from a
   musculoskeletal model of the human shoulder. Frontiers in Neurorobotics 13:90, 2019. doi:10.3389/fnbot.2019.00090
@@ -17,5 +27,9 @@ The release carries this notice:
   Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
 
 Changes: values were converted into this package's body frames (scripts/fit_scapulothoracic.py); the
-scapulothoracic joint is represented by MuJoCo joints and a contact rather than Seth's ellipsoid joint. No file of
+scapulothoracic joint is represented by MuJoCo joints and a contact rather than Seth's ellipsoid joint; the clavicle
+gains an axial rotation and the girdle ligament strands, which the release does not have; the ellipsoidal thorax wraps
+are replaced by fitted spheres; the levator scapulae is split into two slips and the clavicular trapezius gains an
+occipital line; the rotator-cuff forces and fibre lengths follow Ward et al. 2006, and all forces follow this
+package's shoulder specific tension (scripts/generate_scapular_muscles.py, scripts/fit_shoulder_strength.py). No file of
 the release is redistributed. The authors do not endorse this model.
