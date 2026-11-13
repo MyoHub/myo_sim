@@ -131,7 +131,7 @@
           "method": "taut from the longer of its lengths with straight fingers (q0) and in the relaxed resting posture (MP 56, PIP 35, DIP 17 deg; von Schroeder & Botte 1993 Fig. 2): no force in either"
         },
         "stiffness_N_per_m": {
-          "value": 392.1,
+          "value": 399.3,
           "method": "fit (juncturae.fit)"
         },
         "rest_length_m": 0.017707
@@ -170,41 +170,41 @@
       "result": {
         "without_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.24,
-            "mcp3_flexion": 1.29,
-            "mcp4_flexion": 116.01,
-            "mcp5_flexion": -0.01
+            "mcp2_flexion": -0.12,
+            "mcp3_flexion": 0.98,
+            "mcp4_flexion": 116.31,
+            "mcp5_flexion": -0.36
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.24,
-            "mcp3_flexion": 114.73,
-            "mcp4_flexion": 0.1,
-            "mcp5_flexion": 0.04
+            "mcp2_flexion": -0.12,
+            "mcp3_flexion": 115.63,
+            "mcp4_flexion": 0.03,
+            "mcp5_flexion": -0.27
           }
         },
         "with_links_deg": {
           "EDC4_traction": {
-            "mcp2_flexion": -0.24,
-            "mcp3_flexion": 18.35,
-            "mcp4_flexion": 109.81,
-            "mcp5_flexion": 9.38
+            "mcp2_flexion": -0.12,
+            "mcp3_flexion": 18.15,
+            "mcp4_flexion": 111.57,
+            "mcp5_flexion": 14.15
           },
           "EDC3_traction": {
-            "mcp2_flexion": -0.24,
-            "mcp3_flexion": 114.45,
+            "mcp2_flexion": -0.12,
+            "mcp3_flexion": 115.34,
             "mcp4_flexion": 6.27,
-            "mcp5_flexion": 0.04
+            "mcp5_flexion": -0.27
           }
         },
         "residual_deg": [
-          -0.94,
-          -12.61,
-          -6.2,
-          -1.83,
+          -0.83,
+          -7.49,
+          -4.74,
+          -1.76,
           -7.0,
-          -0.28
+          -0.29
         ],
-        "rms_deg": 6.46
+        "rms_deg": 4.68
       },
       "own_finger_note": "mcp4 under EDC4 traction and mcp3 under EDC3 traction: target 0 deg change from the links (the pulled finger's own extension is the same with and without the juncturae: traction on one tendon or on all gave the same result, p. 643)",
       "stiffness_bounds_N_per_m": {
@@ -370,40 +370,6 @@
       "horii1993"
     ],
     "muscles": {
-      "EDC2": {
-        "method": "EDC2 wraps the sphere EDCI_torus_wrap_r (MyoHand's stand-in for MoBL's EDC index torus, in lunate_r). Its side site sat at the sphere centre, so MuJoCo applied the inside wrap (the tendon held within the sphere's circle as in a ring), whose iterative solution differs between MuJoCo (float64) and mujoco-warp (float32) when the deflection is small (up to 0.8 mm of EDC2 length in random postures). The side site moves out of the sphere on its dorsal side, so the tendon wraps over the sphere's dorsal surface like the extensor tendons over the dorsal carpus (the ordinary side wrap, which both engines resolve alike). Dorsal is +z of lunate_r (the extensor wraps ECRL, ECRB and EDC lie at +z, FCR's at -z). The distance only has to place the site outside the sphere. Its sphere sits 11 mm dorsal of the carpus, so the side site alone lifted the tendon 6 mm above its earlier path, 15.6 mm clear of the bone at the corner: a straight line clear of the dorsal wrist in flexion. The centre moves 6 mm palmar, which restores the earlier path height (18 mm dorsal of the lunate centre) and the wrist arms: 17.0 / 10.8 mm at neutral / 39 deg flexion, against 17.3 / 10.3 on dev and 16 mm in Holzbaur 2005.",
-        "sources": [],
-        "site": "EDCI_torus_site_EDC2_side_r",
-        "geom": "EDCI_torus_wrap_r",
-        "body": "lunate_r",
-        "direction_body": [
-          0.0,
-          0.0,
-          1.0
-        ],
-        "distance_radii": 2.0,
-        "pos_before": [
-          0.009,
-          -0.0149,
-          0.0211
-        ],
-        "pos": [
-          0.009,
-          -0.0149,
-          0.0221
-        ],
-        "geom_pos": [
-          0.009,
-          -0.0149,
-          0.0151
-        ],
-        "radius_m": 0.0035,
-        "geom_pos_before": [
-          0.009,
-          -0.0149,
-          0.0211
-        ]
-      },
       "PQ": {
         "method": "palmar of the ulna (the PQ wraps the ulna's palmar surface in pronation); geometry unchanged",
         "site": "PQ2_site_PQ_side_r",
@@ -444,90 +410,6 @@
           0.00082,
           -0.211535,
           0.029145
-        ]
-      },
-      "EDC5": {
-        "method": "dorsal; geometry unchanged",
-        "site": "EDCL_torus_site_EDC5_side_r",
-        "geom": "EDCL_torus_wrap_r",
-        "body": "lunate_r",
-        "geom_type": "sphere",
-        "direction_body": [
-          0.2324,
-          0.5886,
-          0.7743
-        ],
-        "distance_radii": 2.0,
-        "geom_pos_before": [
-          -0.0098,
-          -0.0133,
-          0.0148
-        ],
-        "geom_pos": [
-          -0.0098,
-          -0.0133,
-          0.0148
-        ],
-        "radius_before_m": 0.004,
-        "radius_m": 0.004,
-        "pos_before": [
-          -0.0128,
-          -0.0133,
-          0.0148
-        ],
-        "fit": {
-          "rms_old": 3.01,
-          "jump": 0.72,
-          "z": null,
-          "neutral": null,
-          "centre_shift_mm": 0
-        },
-        "pos": [
-          -0.007941,
-          -0.008591,
-          0.020994
-        ]
-      },
-      "EDC4": {
-        "method": "dorsal; sphere moved 1.0 mm and radius 3.0 -> 2.8 mm so the arm curves stay continuous (2.2 mm per 2.5 deg step with the geometry unchanged)",
-        "site": "EDCR_torus_site_EDC4_side_r",
-        "geom": "EDCR_torus_wrap_r",
-        "body": "lunate_r",
-        "geom_type": "sphere",
-        "direction_body": [
-          -0.027,
-          -0.5635,
-          0.8257
-        ],
-        "distance_radii": 2.0,
-        "geom_pos_before": [
-          -0.0098,
-          -0.0137,
-          0.0166
-        ],
-        "geom_pos": [
-          -0.010024,
-          -0.014,
-          0.015658
-        ],
-        "radius_before_m": 0.003,
-        "radius_m": 0.0028,
-        "pos_before": [
-          -0.0098,
-          -0.0137,
-          0.0166
-        ],
-        "fit": {
-          "rms_old": 1.74,
-          "jump": 1.0,
-          "z": null,
-          "neutral": null,
-          "centre_shift_mm": 1.01
-        },
-        "pos": [
-          -0.010175,
-          -0.017156,
-          0.020282
         ]
       }
     },

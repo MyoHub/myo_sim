@@ -367,14 +367,18 @@
                                         <site class="myoarm_marker" name="Radius_marker_r" pos="0.05749 -0.2272 0.02738"/>
 
                                         <body name="lunate_r" pos="0.018 -0.242 0.025" childclass="myoarm_wrist">
+                                            <site name="EDC5_via_r" pos="-0.008136 -0.010409 0.017637"/>
+                                            <site name="EDC4_via_r" pos="-0.008162 -0.019708 0.019645"/>
+                                            <site name="EDC3_via_r" pos="0.000333 -0.0317 0.01398"/>
+                                            <site name="EDC2_via_r" pos="0.00791 -0.02591 0.021325"/>
                                             <site name="EDM_via_r" pos="-0.015904 -0.021642 0.006252"/>
                                             <site name="ECRL_via_r" pos="0.015939 -0.011783 0.004225"/>
                                             <site name="ECRB_via_r" pos="0.00926 -0.012606 0.01072"/>
                                             <site name="FCR_via_r" pos="0.010895 -0.011477 -0.01348"/>
                                             <!-- The mass and inertia this body got from its wrap geoms on dev: kept so the arm and the body total stay as they were. -->
                                             <inertial pos="-0.00089131 -0.00917102 -0.00186901" mass="0.16375769" quat="0.65249538 0.4123981 0.60123937 0.2066127" diaginertia="5.60932989e-05 4.97744861e-05 3.21989459e-05"/>
-                                            <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.349066 0.523599" damping="0.25"/>
-                                            <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-1.396263 1.221730" damping="0.25"/>
+                                            <joint axis="0 0 1" name="deviation_r" pos="0 0 0" range="-0.698132 0.383972" damping="0.25"/>
+                                            <joint axis="1 0 0" name="flexion_r" pos="0 0 0" range="-1.308997 1.396263" damping="0.25"/>
                                             <geom mesh="lunate_r" name="lunate_r" type="mesh"/>
                                             <geom name="WristExtensor_wrap_r" pos="0.0007 0 0.003" quat="0.807649 -0.0333177 0.588355 0.0207694" class="myoarm_wrap" size="0.008 0.02" type="cylinder"/>
                                             <geom name="WristFlexor_wrap_r" pos="0 -0.01 -0.004" quat="0.807649 -0.0333177 0.588355 0.0207694" class="myoarm_wrap" size="0.007 0.02" type="cylinder"/>
@@ -384,20 +388,12 @@
                                             <geom name="FDP_ellipsoid_wrap_r" type="cylinder" size="0.013 0.025" pos="-0.0022 -0.0069 0.0032" euler="-1.46747 1.37 0.121824" class="myoarm_wrap"/>
                                             <geom name="FPL_ellipsoid_wrap_r" type="sphere" size="0.015" pos="0.02 -0.025 -0.0033" class="myoarm_wrap"/>
 
-                                            <geom name="EDCL_torus_wrap_r" pos="-0.0098 -0.0133 0.0148" quat="0.386237 0.907673 0.159784 0.037683" class="myoarm_wrap" size="0.004"/>
-                                            <geom name="EDCR_torus_wrap_r" pos="-0.010024 -0.014 0.015658" quat="0.516906 0.814718 -0.18962 0.1819" class="myoarm_wrap" size="0.0028"/>
-                                            <geom name="EDCM_torus_wrap_r" pos="-0.0097 -0.0117 0.0191" quat="0.516192 0.831214 -0.100219 0.180516" class="myoarm_wrap" size="0.0035"/>
-                                            <geom name="EDCI_torus_wrap_r" pos="0.009 -0.0149 0.0151" quat="0.660055 0.749868 0.0267535 0.0361877" class="myoarm_wrap" size="0.0035"/>
                                             <site name="ExtensorEllipse_ellipsoid_site_EIP_side_r" pos="-0.0195105 -0.00430577 0.0636576"/>
                                             <site name="PL_ellipsoid_site_PL_side_r" pos="-0.0286005 -0.023546 -0.0168168"/>
 
 
                                             <site name="FPL_ellipsoid_site_FPL_side_r" pos="0.017 -0.025 -0.0033"/>
 
-                                            <site name="EDCL_torus_site_EDC5_side_r" pos="-0.007941 -0.008591 0.020994"/>
-                                            <site name="EDCR_torus_site_EDC4_side_r" pos="-0.010175 -0.017156 0.020282"/>
-                                            <site name="EDCM_torus_site_EDC3_side_r" pos="-0.0007 -0.0117 0.0191"/>
-                                            <site name="EDCI_torus_site_EDC2_side_r" pos="0.009 -0.0149 0.0221"/>
                                             <site name="FDS_ellipsoid_site_FDS5_side_r" pos="0.003556 -0.004567 -0.026168"/>
                                             <site name="FDS_ellipsoid_site_FDS4_side_r" pos="0.003555 -0.00434 -0.026157"/>
                                             <site name="FDS_ellipsoid_site_FDS3_side_r" pos="0.003552 -0.003661 -0.026113"/>

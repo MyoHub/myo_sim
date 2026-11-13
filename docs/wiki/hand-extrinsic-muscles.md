@@ -198,6 +198,8 @@ muscle, so FDS2 is unchanged.
 
 ## EDC2 wrist wrap
 
+Superseded in the wrist range step: EDC2-5 now cross the wrist through via sites (Paths on MuJoCo 4, below). The history:
+
 EDC2 crosses the wrist over the sphere `EDCI_torus_wrap_r` (MyoHand's stand-in for MoBL's EDC index
 torus, in `lunate_r`). Its side site `EDCI_torus_site_EDC2_side_r` sat at the sphere's centre. A side site
 inside the geom makes MuJoCo apply the inside wrap: the tendon is held within the sphere's circle, like a
@@ -347,6 +349,29 @@ scale; at the springs' posture (elbow 90 deg, fingers extended) the muscles then
 deviation, no spring can remove that, and the total error is 0.087 N m. The fit as run is kept. Since the springs are
 fitted at Formica's own posture (`passive-moments-and-thenar.md`, springs at the posture of their data) the total is 0.016 /
 0.023 N m in flexion / deviation there, and the alternative still loses (0.063 / 0.028 N m).
+
+**EDC2-5 (wrist range step).** The four EDC tendons crossed the wrist over small spheres on the lunate
+(`EDCI`, `EDCM`, `EDCR`, `EDCL_torus_wrap_r`, MyoHand's stand-ins for MoBL's extensor tori). With the ulnar deviation
+limit at 40 deg their lengths jumped where the straight line crossed the sphere in extension with ulnar deviation: EDC3 by
+up to 10 mm (from 23 deg ulnar deviation at 22-71 deg extension), EDC5 by 7.3 mm; EDC2, EDC4 and EDC5 already jumped by
+2-6 mm inside the old range (`jumps_mm`). `migrate_side_sites.py`'s side search found no side direction without a jump on
+either rule. Each sphere is replaced by a via site `EDC{d}_via_r` on the lunate (`vias` in `side_sites.json`, path in
+`extensor_mechanism.json`), fitted to the previous path's arms along single-joint sweeps from neutral, where that path was
+continuous (flexion -60..60, deviation -20..20 deg; sign: extensor from 80 deg extension to 30 deg flexion). The spheres,
+their side sites and the `wrap_sides` entries of EDC2, EDC4 and EDC5 are gone. On a 0.5 deg grid over the whole wrist
+range no wrist-crossing tendon jumps now.
+
+| Muscle | Before: flexion arm at -60 / 0 / 60 deg; deviation arm at 0 | After | Fit (RMS z) |
+| --- | --- | --- | --- |
+| EDC2 | 23.9 / 16.6 / 7.1; -2.0 | 22.7 / 18.2 / 5.3; -1.7 | 0.40 |
+| EDC3 | 25.1 / 17.4 / -1.2; 2.0 | 24.9 / 15.9 / 1.6; 2.1 | 0.47 |
+| EDC4 | 25.5 / 16.8 / 8.0; 8.1 | 25.3 / 18.7 / 6.7; 8.7 | 0.39 |
+| EDC5 | 20.8 / 15.1 / 5.4; 7.8 | 20.3 / 15.0 / 5.5; 7.9 | 0.12 |
+
+Holzbaur et al. 2005 give 16 mm for EDC2 at neutral. Over the new flexion range (to 80 deg) the arms of FCU, PL and
+FPL turn extensor past about 72 deg of flexion (FCU -4.6, PL -12.5, FPL -7.0 mm at 80 deg) and EDC3 and EDM turn
+flexor past about 65 deg; these paths are unchanged (the old limit was 70 deg) and stay an open check
+(`hand-literature-comparison.md`).
 
 ## MCP pulleys and hyperextension
 

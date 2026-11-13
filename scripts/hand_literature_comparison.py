@@ -227,10 +227,12 @@ def _touch_angle(model: mujoco.MjModel, digit: int, sign: float) -> float:
 
 
 def joint_ranges(model: mujoco.MjModel) -> dict[str, Any]:
-    """Finger and thumb joint limits (deg, as magnitudes) and the MCP abduction arcs from the touch of the neighbour."""
+    """Wrist, finger and thumb joint limits (deg, as magnitudes) and the MCP abduction arcs from the touch of the neighbour."""
     mcp, pip, dip = (_limits_deg(model, f"{j}2_flexion_r") for j in ("mcp", "pm", "md"))
     ip, mp = _limits_deg(model, "ip_flexion_r"), _limits_deg(model, "mp_flexion_r")
+    flexion, deviation = _limits_deg(model, "flexion_r"), _limits_deg(model, "deviation_r")  # + = flexion, radial
     out: dict[str, Any] = {
+        "wrist_joint_limits": [flexion[1], abs(flexion[0]), deviation[1], abs(deviation[0])],
         "finger_joint_limits": [abs(mcp[0]), mcp[1], abs(pip[0]), pip[1], abs(dip[0]), dip[1]],
         "thumb_joint_limits": [abs(ip[0]), ip[1], abs(mp[0]), mp[1]],
         "mcp_abduction_arc": [

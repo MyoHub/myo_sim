@@ -442,7 +442,7 @@
         "site:EDC2-P1_r",
         "site:EDC2-P2_r",
         "site:EDC2-P3_r",
-        "geom:EDCI_torus_wrap_r:EDCI_torus_site_EDC2_side_r",
+        "site:EDC2_via_r",
         "site:EDC2-P4_r",
         "geom:mcp2_EDC2_wrap_r:mcp2_EDC2_side_r"
       ],
@@ -483,7 +483,7 @@
         "site:EDC3-P1_r",
         "site:EDC3-P2_r",
         "site:EDC3-P3_r",
-        "geom:EDCM_torus_wrap_r:EDCM_torus_site_EDC3_side_r",
+        "site:EDC3_via_r",
         "site:EDC3-P4_r",
         "geom:mcp3_EDC3_wrap_r:mcp3_EDC3_side_r"
       ],
@@ -503,7 +503,7 @@
         "site:EDC4-P1_r",
         "site:EDC4-P2_r",
         "site:EDC4-P3_r",
-        "geom:EDCR_torus_wrap_r:EDCR_torus_site_EDC4_side_r",
+        "site:EDC4_via_r",
         "site:EDC4-P4_r",
         "geom:mcp4_EDC4_wrap_r:mcp4_EDC4_side_r"
       ],
@@ -523,7 +523,7 @@
         "site:EDC5-P1_r",
         "site:EDC5-P2_r",
         "site:EDC5-P3_r",
-        "geom:EDCL_torus_wrap_r:EDCL_torus_site_EDC5_side_r",
+        "site:EDC5_via_r",
         "site:EDC5-P4_r",
         "geom:mcp5_EDC5_wrap_r:mcp5_EDC5_side_r"
       ],

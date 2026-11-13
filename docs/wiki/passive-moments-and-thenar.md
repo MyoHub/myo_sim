@@ -227,7 +227,7 @@ The palm pads are fitted to the fist at the flexion limits, so `scripts/fit_hand
 
 ## Finger and thumb joint ranges
 
-The thumb MP and IP rows, the PIP and DIP rows and the MCP abduction rows of the index and little finger carry a
+The wrist rows, the thumb MP and IP rows, the PIP and DIP rows and the MCP abduction rows of the index and little finger carry a
 `range` entry (value, source, status, previous value) that `fit_passive_moments.py` writes into
 `myoarm_r_chain.xml`. The rule: a joint limit is the measured maximum passive angle; active ranges are a check on
 the muscles and passive moments, not a limit. Model before -> after (deg):
@@ -242,6 +242,22 @@ the muscles and passive moments, not a limit. Model before -> after (deg):
 | Thumb IP flexion / extension | 75 / 25 | 85.8 / 34.7 | Skvarilova & Plevkova 1996, passive, 200 adults (as reported in Norkin & White 2016, Table 7.3) | active 79.1 / 23.2; Barakat et al. 2013: 88 ± 2.3 / 12 ± 9.2; AAOS 80 / 20 |
 | Thumb MP flexion / extension | 45 / 40 | 67.0 / 22.6 | as above, passive | active 57.0 / 13.7; Barakat: 60 / 8.1; Batmanabane & Malathi (cadaver): 47 / 16 |
 | MCP 2-5 flexion / extension | 90 / 0 | 90 / 61 (MCP pulley step) | extension: Leijnse et al. 2010, 61 ± 24 passive; flexion between 84-87 active (Mohamed Ibrahim) and 102 ± 11 passive (Leijnse) | active extension 22-26 ± 7 (Mohamed Ibrahim), 22-31 wrist neutral (Latz et al. 2019), 22-28 (Gracia-Ibáñez et al. 2017); daily activities 8 / 8 / 12 / 15 (Hayashi, Norkin & White Table 7.4); functional 1-6 (Gracia-Ibáñez) |
+| Wrist flexion / extension | 70 / 80 | 80 / 75 (wrist range step) | flexion: AAOS 80 (as reported in Norkin & White 2016); extension: Boone & Azen 1979, 75 (active mean, 109 males) | AAOS extension 70; daily activities 54 / 60 (Ryu et al. 1991); passive at 2 N m 65 ± 23 / 64 ± 10 (Crisco et al. 2011, six cadaver wrists aged 59-65); Delp et al. 1996: passive moment near zero over the central 150 deg |
+| Wrist radial / ulnar deviation | 30 / 20 | 22 / 40 (wrist range step) | radial: Boone & Azen 1979, 22 (active mean); ulnar: Ryu et al. 1991, 40 used in daily activities | AAOS 20 / 30; Boone & Azen ulnar 36; passive at 2 N m 21 ± 9 / 42 ± 7 (Crisco et al. 2011) |
+
+**Wrist.** The joint axes give +`flexion_r` = flexion (FCR and FCU shorten) and +`deviation_r` = radial
+deviation (ECRL shortens, ECU lengthens), on both hands. The previous limits, -80..70 and -20..30 deg, had
+flexion/extension and radial/ulnar swapped relative to these axes: 70 flexion / 80 extension and 30 radial / 20
+ulnar, where the norms give more flexion than extension and more ulnar than radial deviation. No normative
+passive wrist range in living adults was found, so each limit is the largest of the cited healthy-adult values
+(passive range exceeds active range, which exceeds the range daily tasks use): AAOS 80 / 70 / 20 / 30, Boone &
+Azen 1979 76 / 75 / 22 / 36 (active), Ryu et al. 1991 54 / 60 / 17 / 40 (daily activities), giving 80 / 75 / 22 / 40
+(flexion / extension / radial / ulnar). Crisco et al. 2011's cadaver wrists reach 42 deg ulnar deviation at 2 N m,
+so the ulnar limit is within the passive range. The limits are independent: the real envelope is oblique
+(Crisco et al. 2011), with less ulnar deviation in extension, which the model does not restrict (open check).
+The widened ulnar range needed the EDC wrist via sites (`hand-extrinsic-muscles.md`): the old sphere wraps jumped
+in extension with ulnar deviation. The wrist springs are fitted over Formica et al. 2012's central range
+(±17 deg), so the new range changes them only through the subtracted muscle moments.
 
 The ulnar limit of the index and the radial limit of the little finger stay past their contacts, so a straight
 neighbour stops the finger and a flexed one lets it cross. Goniometry of the finger joints has a standard error of

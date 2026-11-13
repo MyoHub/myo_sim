@@ -7,7 +7,7 @@
   transfers.
 - FCU: neutral moment arms within Horii 1993's bands and independent of forearm rotation.
 - FDS5: force as derived in the table.
-- Wrap sides (EDC2, EDC4, EDC5, EDM, ECRB, FCR, PQ): each side site lies outside its geom, as tabled, so
+- Wrap sides (PQ; EDC2-5, EDM, ECRB and FCR cross the wrist through via sites): each side site lies outside its geom, as tabled, so
   MuJoCo and mujoco-warp resolve the wraps alike (an inside wrap, side site at the centre, differs between them).
 - ECU: its groove via point is on the ulna in every arm, its moment arms reproduce the recorded fit and change
   with forearm rotation as measured; its path has no wrap geom left.
@@ -179,7 +179,7 @@ def test_fds5_force_follows_its_group() -> None:
     assert force / model.actuator_gainprm[model.actuator("FDS4_r").id][2] == pytest.approx(0.40 / 1.61, abs=0.05)
 
 
-WRAP_SIDES = ("EDC2", "EDC4", "EDC5", "PQ")
+WRAP_SIDES = ("PQ",)
 
 
 @pytest.mark.parametrize("muscle", WRAP_SIDES)
@@ -236,7 +236,7 @@ def test_wrap_side_lengths_agree_on_cpu_and_mujoco_warp() -> None:
     for side in table.values():
         model.site_pos[model.site(side["site"]).id] = model.geom_pos[model.geom(side["geom"]).id]
     worst = _cpu_warp_differences(model)
-    assert sum(v > 1e-5 for v in worst.values()) >= 5, worst
+    assert all(v > 1e-5 for v in worst.values()), worst
 
 
 @pytest.mark.parametrize("name", ["myoarm_r", "myoarms", "myofullbody"])

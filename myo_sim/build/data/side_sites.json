@@ -1234,6 +1234,486 @@
           "40": -9.9
         }
       }
+    },
+    {
+      "name": "EDC2_via_r",
+      "tendon": "EDC2_r_tendon",
+      "geom": "EDCI_torus_wrap_r",
+      "side": "EDCI_torus_site_EDC2_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -60,
+          "arm_mm": 23.9,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 22.6,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 16.6,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 12.3,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 60,
+          "arm_mm": 7.1,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": 3.3,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": -2.0,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 20,
+          "arm_mm": -7.5,
+          "sd": 2,
+          "source": "previous path"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -80,
+            30
+          ],
+          "sign": 1,
+          "margin_mm": 3
+        }
+      ],
+      "pos": [
+        0.00791,
+        -0.02591,
+        0.021325
+      ],
+      "geom_pos_before": [
+        0.009,
+        -0.0149,
+        0.0151
+      ],
+      "radius_before_m": 0.0035,
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "fit": {
+        "rms_z": 0.399,
+        "arms": {
+          "flexion_r@-60": 22.66,
+          "flexion_r@-30": 22.36,
+          "flexion_r@0": 18.24,
+          "flexion_r@30": 12.28,
+          "flexion_r@60": 5.29,
+          "deviation_r@-20": 2.17,
+          "deviation_r@0": -1.72,
+          "deviation_r@20": -5.55
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 9.04,
+          "-60": 22.66,
+          "-30": 22.36,
+          "0": 18.24,
+          "30": 12.28,
+          "60": 5.29
+        },
+        "curve_deviation_deg_mm": {
+          "-30": 4.09,
+          "-20": 2.17,
+          "-10": 0.22,
+          "0": -1.72,
+          "10": -3.65,
+          "20": -5.55,
+          "30": -7.4,
+          "40": -9.18
+        }
+      }
+    },
+    {
+      "name": "EDC3_via_r",
+      "tendon": "EDC3_r_tendon",
+      "geom": "EDCM_torus_wrap_r",
+      "side": "EDCM_torus_site_EDC3_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -60,
+          "arm_mm": 25.1,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 23.6,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 17.4,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 8.6,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 60,
+          "arm_mm": -1.2,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": 7.2,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 2.0,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 20,
+          "arm_mm": -3.3,
+          "sd": 2,
+          "source": "previous path"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -80,
+            30
+          ],
+          "sign": 1,
+          "margin_mm": 3
+        }
+      ],
+      "pos": [
+        0.000333,
+        -0.0317,
+        0.01398
+      ],
+      "geom_pos_before": [
+        -0.0097,
+        -0.0117,
+        0.0191
+      ],
+      "radius_before_m": 0.0035,
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "fit": {
+        "rms_z": 0.469,
+        "arms": {
+          "flexion_r@-60": 24.85,
+          "flexion_r@-30": 21.46,
+          "flexion_r@0": 15.92,
+          "flexion_r@30": 9.1,
+          "flexion_r@60": 1.6,
+          "deviation_r@-20": 6.2,
+          "deviation_r@0": 2.13,
+          "deviation_r@20": -2.03
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 22.53,
+          "-60": 24.85,
+          "-30": 21.46,
+          "0": 15.92,
+          "30": 9.1,
+          "60": 1.6
+        },
+        "curve_deviation_deg_mm": {
+          "-30": 8.16,
+          "-20": 6.2,
+          "-10": 4.18,
+          "0": 2.13,
+          "10": 0.05,
+          "20": -2.03,
+          "30": -4.08,
+          "40": -6.1
+        }
+      }
+    },
+    {
+      "name": "EDC4_via_r",
+      "tendon": "EDC4_r_tendon",
+      "geom": "EDCR_torus_wrap_r",
+      "side": "EDCR_torus_site_EDC4_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -60,
+          "arm_mm": 25.5,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 23.2,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 16.8,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 13.5,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 60,
+          "arm_mm": 8.0,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": 13.9,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 8.1,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 20,
+          "arm_mm": 3.8,
+          "sd": 2,
+          "source": "previous path"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -80,
+            30
+          ],
+          "sign": 1,
+          "margin_mm": 3
+        }
+      ],
+      "pos": [
+        -0.008162,
+        -0.019708,
+        0.019645
+      ],
+      "geom_pos_before": [
+        -0.010024,
+        -0.014,
+        0.015658
+      ],
+      "radius_before_m": 0.0028,
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "fit": {
+        "rms_z": 0.39,
+        "arms": {
+          "flexion_r@-60": 25.29,
+          "flexion_r@-30": 22.88,
+          "flexion_r@0": 18.66,
+          "flexion_r@30": 13.13,
+          "flexion_r@60": 6.69,
+          "deviation_r@-20": 11.85,
+          "deviation_r@0": 8.69,
+          "deviation_r@20": 5.26
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 4.3,
+          "-60": 25.29,
+          "-30": 22.88,
+          "0": 18.66,
+          "30": 13.13,
+          "60": 6.69
+        },
+        "curve_deviation_deg_mm": {
+          "-30": 13.3,
+          "-20": 11.85,
+          "-10": 10.31,
+          "0": 8.69,
+          "10": 7.0,
+          "20": 5.26,
+          "30": 3.48,
+          "40": 1.67
+        }
+      }
+    },
+    {
+      "name": "EDC5_via_r",
+      "tendon": "EDC5_r_tendon",
+      "geom": "EDCL_torus_wrap_r",
+      "side": "EDCL_torus_site_EDC5_side_r",
+      "body": "lunate_r",
+      "targets": [
+        {
+          "joint": "flexion_r",
+          "deg": -60,
+          "arm_mm": 20.8,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": -30,
+          "arm_mm": 17.7,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 0,
+          "arm_mm": 15.1,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 30,
+          "arm_mm": 10.6,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "flexion_r",
+          "deg": 60,
+          "arm_mm": 5.4,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": -20,
+          "arm_mm": 9.6,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 0,
+          "arm_mm": 7.8,
+          "sd": 2,
+          "source": "previous path"
+        },
+        {
+          "joint": "deviation_r",
+          "deg": 20,
+          "arm_mm": 6.1,
+          "sd": 2,
+          "source": "previous path"
+        }
+      ],
+      "mean_targets": [],
+      "sign": [
+        {
+          "joint": "flexion_r",
+          "range_deg": [
+            -80,
+            30
+          ],
+          "sign": 1,
+          "margin_mm": 3
+        }
+      ],
+      "pos": [
+        -0.008136,
+        -0.010409,
+        0.017637
+      ],
+      "geom_pos_before": [
+        -0.0098,
+        -0.0133,
+        0.0148
+      ],
+      "radius_before_m": 0.004,
+      "note": "The sphere wrap's length jumped where the tendon line crossed the sphere in combined wrist extension and ulnar deviation (up to 10 mm for EDC3 at 40 deg ulnar deviation); no side-site direction removed the jumps, so the wrap is replaced by a via site on the lunate fitted to the previous path's arms.",
+      "fit": {
+        "rms_z": 0.121,
+        "arms": {
+          "flexion_r@-60": 20.32,
+          "flexion_r@-30": 18.35,
+          "flexion_r@0": 15.0,
+          "flexion_r@30": 10.61,
+          "flexion_r@60": 5.49,
+          "deviation_r@-20": 10.0,
+          "deviation_r@0": 7.94,
+          "deviation_r@20": 5.53
+        },
+        "curve_flexion_deg_mm": {
+          "-90": 0.15,
+          "-60": 20.32,
+          "-30": 18.35,
+          "0": 15.0,
+          "30": 10.61,
+          "60": 5.49
+        },
+        "curve_deviation_deg_mm": {
+          "-30": 10.85,
+          "-20": 10.0,
+          "-10": 9.02,
+          "0": 7.94,
+          "10": 6.77,
+          "20": 5.53,
+          "30": 4.23,
+          "40": 2.89
+        }
+      }
     }
   ],
   "jumps_mm": {
@@ -1250,11 +1730,11 @@
         "past": 2.54,
         "past_mujoco3": 2.54
       },
-      "EDC5_r_tendon/EDCL_torus_wrap_r": {
-        "in": 5.78,
-        "in_mujoco3": 5.66,
-        "past": 13.96,
-        "past_mujoco3": 17.88
+      "EDC5_r_tendon/Fifthpm_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 16.94
       },
       "EDC5_r_tendon/Fifthmd_wrap_r": {
         "in": 0.0,
@@ -1262,23 +1742,11 @@
         "past": 0.0,
         "past_mujoco3": 1.35
       },
-      "EDC4_r_tendon/EDCR_torus_wrap_r": {
-        "in": 3.0,
-        "in_mujoco3": 3.04,
-        "past": 5.85,
-        "past_mujoco3": 20.29
-      },
-      "EDC3_r_tendon/EDCM_torus_wrap_r": {
-        "in": 0.13,
-        "in_mujoco3": 0.13,
-        "past": 9.78,
-        "past_mujoco3": 25.29
-      },
-      "EDC2_r_tendon/EDCI_torus_wrap_r": {
-        "in": 2.22,
-        "in_mujoco3": 2.23,
-        "past": 3.84,
-        "past_mujoco3": 22.44
+      "EDM_r_tendon/Fifthpm_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 16.94
       },
       "EDM_r_tendon/Fifthmd_wrap_r": {
         "in": 0.0,
@@ -1286,17 +1754,47 @@
         "past": 0.0,
         "past_mujoco3": 1.35
       },
+      "EIP_r_tendon/ExtensorEllipse_ellipsoid_wrap_r": {
+        "in": 0.3,
+        "in_mujoco3": 0.3,
+        "past": 12.72,
+        "past_mujoco3": 12.72
+      },
+      "EIP_r_tendon/mcp2_EIP_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 37.55
+      },
+      "PI3_r_tendon/Fifthpm_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 16.94
+      },
       "PI3_r_tendon/Fifthmd_wrap_r": {
         "in": 0.0,
         "in_mujoco3": 0.0,
         "past": 0.0,
         "past_mujoco3": 1.35
       },
+      "LUM4_r_tendon/Fifthpm_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 16.94
+      },
       "LUM4_r_tendon/Fifthmd_wrap_r": {
         "in": 0.0,
         "in_mujoco3": 0.0,
         "past": 0.0,
         "past_mujoco3": 1.35
+      },
+      "node_JT5_edc_r/Fifthpm_wrap_r": {
+        "in": 0.0,
+        "in_mujoco3": 0.0,
+        "past": 0.0,
+        "past_mujoco3": 16.94
       },
       "node_JT5_edc_r/Fifthmd_wrap_r": {
         "in": 0.0,

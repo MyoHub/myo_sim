@@ -11,7 +11,7 @@
   ``FCU-P5_r`` (chain block ``FCU hamate``); FCU's ``lengthrange`` is shifted by its length change at q0,
   so its normalised fibre length at q0 is unchanged.
 - **FDS5:** its force, PCSA times the specific tension of ``specific_tension.json``.
-- **Wrap sides** (``wrap_sides``): the side sites of EDC2's, EDC4's and EDC5's wrist wraps and of PQ's ulnar wrap, moved from inside their geoms (inside wrap) to outside (ordinary side wrap), and
+- **Wrap sides** (``wrap_sides``): the side site of PQ's ulnar wrap, moved from inside its geom (inside wrap) to outside (ordinary side wrap), and
   where tabled the geom's centre and radius.
 - **MCP and PIP pulleys** (``mcp_pulleys``, ``pip_pulleys``): cylinders on the MCP and PIP flexion axes that hold
   the extrinsic finger tendons' arms past the via-site range (chain blocks ``MCP pulleys <d>``, ``PIP pulleys <d>``).
