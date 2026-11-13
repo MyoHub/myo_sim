@@ -1010,17 +1010,22 @@ def _scaled_inertia(ref: mujoco.MjModel, i: int, s: np.ndarray, mass_ratio: floa
     return inertia, iquat
 
 
-def _on_triangle(moments: ArrayLike) -> np.ndarray:
-    """Undo rounding past the triangle inequality ``I_i <= I_j + I_k``.
+_TRIANGLE_MARGIN = 1e-5  # relative; well above the 5e-7 rounding of a six-digit XML print
 
-    A flat body sits exactly on it; one rounding step over makes MuJoCo's ``balanceinertia``
-    replace all three moments by their mean.
+
+def _on_triangle(moments: ArrayLike) -> np.ndarray:
+    """Keep a flat body's moments just inside the triangle inequality ``I_i <= I_j + I_k``.
+
+    A flat body sits on it, and rounding (in arithmetic or in a six-digit XML print) can push it
+    over; MuJoCo then refuses the model, or ``balanceinertia`` replaces all three moments by
+    their mean. Moments on or just past the bound are therefore placed ``_TRIANGLE_MARGIN``
+    inside it, so scaled specs reload from any writer.
     """
     moments = np.array(moments, dtype=float)
     for i in range(3):
         bound = moments[(i + 1) % 3] + moments[(i + 2) % 3]
-        if bound < moments[i] <= bound * (1 + 1e-9):
-            moments[i] = bound
+        if bound * (1 - _TRIANGLE_MARGIN) < moments[i] <= bound * (1 + 1e-9):
+            moments[i] = bound * (1 - _TRIANGLE_MARGIN)
     return moments
 
 

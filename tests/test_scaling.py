@@ -265,8 +265,9 @@ def test_one_factor_is_an_exact_similarity(name: str, s: float) -> None:
 
     np.testing.assert_allclose(scaled.body_mass.sum(), s**3 * ref.body_mass.sum(), rtol=1e-12)
     massive = ref.body_mass > 0
+    # flat bodies are kept _TRIANGLE_MARGIN (1e-5) inside the inertia triangle, so allow twice that here
     np.testing.assert_allclose(
-        np.sort(scaled.body_inertia[massive], axis=1), s**5 * np.sort(ref.body_inertia[massive], axis=1), rtol=1e-9
+        np.sort(scaled.body_inertia[massive], axis=1), s**5 * np.sort(ref.body_inertia[massive], axis=1), rtol=2e-5
     )
     muscles = ref.actuator_gaintype == mujoco.mjtGain.mjGAIN_MUSCLE
     np.testing.assert_allclose(scaled.actuator_lengthrange[muscles], s * ref.actuator_lengthrange[muscles], rtol=1e-12)
@@ -1509,3 +1510,15 @@ def test_imports_are_lazy() -> None:
     code = "import sys, myo_sim; print('myo_sim.scaling' in sys.modules, 'mujoco' in sys.modules)"
     result = subprocess.run([sys.executable, "-c", code], text=True, capture_output=True, check=True)
     assert result.stdout.split()[0] == "False"
+
+
+@pytest.mark.parametrize("factor", [0.95, 1.0189, 1.05, 1.10])
+def test_scaled_model_reloads_from_xml(tmp_path: Path, factor: float) -> None:
+    """A uniformly scaled myofullbody written to XML loads again: flat bodies stay inside the triangle bound."""
+    from myo_sim.build.compose import write_spec_xml
+
+    spec = myo_sim.load_spec("myofullbody")
+    scaled = scale_spec(spec, {b.name: factor for b in spec.bodies[1:]})
+    path = tmp_path / "scaled.xml"
+    write_spec_xml(scaled, path)
+    mujoco.MjModel.from_xml_path(str(path))
