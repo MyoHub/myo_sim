@@ -29,6 +29,9 @@ Why: anatomy JSON used raw geom RGBA and lost native material colors and alpha; 
 ## 2026-11-11 — Optional source-model authoring with MuSkeMo
 Changed: myo_sim/muskemo/, tests/test_muskemo*.py, tests/muskemo_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/muskemo*.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
 Why: anatomy editing belongs with the source model library; export, Blender import, validation and selected edits now run without MyoSuite or a training dependency.
+## 2026-11-12 — Preserve inertia precision in generated XML
+Changed: myo_sim/build/compose.py, tests/test_xml_inertia_precision.py, docs/wiki/build-and-composition.md
+Why: six-digit native formatting can move an edited planar body's principal moments past the inertia triangle; generated XML now preserves the compiled moments without balancing or changing them.
 
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
