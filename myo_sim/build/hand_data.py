@@ -117,6 +117,31 @@ def spring_parameters(direction: str, onset: float, stiffness: list[float]) -> t
     return [onset, SPRING_FAR], [k0, -k1, k2]
 
 
+def flexion_limit_tendons(table: dict[str, Any], row: dict[str, Any]) -> list[dict[str, Any]]:
+    """The two limited fixed tendons of *row*'s ``flexion_limit`` (right-side names), or none.
+
+    The abduction range narrows linearly from ``at_0_deg`` to ``at_90_deg`` with the flexion angle:
+    ``side * abduction + k * flexion <= c`` for the positive and the negative side, so flexing past 0 deg
+    tightens it and hyperextension leaves the joint limits in charge. Each entry gives the tendon
+    ``name``, its ``coefs`` per right-side joint and its ``upper`` length (rad).
+    """
+    spec = row.get("flexion_limit")
+    if spec is None:
+        return []
+    flexion = next(r for r in table["joints"] if r["joint"] == spec["flexion_joint"])["names"]["r"]
+    tendons = []
+    for index, side in ((1, 1.0), (0, -1.0)):  # positive limit first
+        at0, at90 = side * np.radians(spec["at_0_deg"][index]), side * np.radians(spec["at_90_deg"][index])
+        tendons.append(
+            {
+                "name": f"{row['joint']}_flexion_limit_{'pos' if side > 0 else 'neg'}_r",
+                "coefs": {row["names"]["r"]: side, flexion: float((at0 - at90) / (np.pi / 2))},
+                "upper": float(at0),
+            }
+        )
+    return tendons
+
+
 def passive_moment(row: dict[str, Any], q: np.ndarray | float) -> np.ndarray:
     """Reference moment (Nm) of one table row at joint angles *q* (rad)."""
     q = np.asarray(q, dtype=float)

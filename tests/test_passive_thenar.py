@@ -17,6 +17,7 @@ from myo_sim.build import compose
 from myo_sim.build.hand_data import (
     APPLIED_STATUSES,
     blocks_match,
+    flexion_limit_tendons,
     load_intrinsic_table,
     load_passive_moment_table,
     passive_moment,
@@ -298,6 +299,80 @@ def test_left_and_right_hands_are_symmetric(fullbody: mujoco.MjModel) -> None:
             right_geo = _tendon_geometry(fullbody, f"{muscle['name']}_r_tendon", THUMB["r"], q)
             left_geo = _tendon_geometry(fullbody, f"{muscle['name']}_l_tendon", THUMB["l"], q)
             np.testing.assert_allclose(left_geo, right_geo, atol=1e-6)
+
+
+def _limit_rows() -> list[dict]:
+    return [r for r in load_passive_moment_table()["joints"] if "flexion_limit" in r]
+
+
+def _abduction_bounds(model: mujoco.MjModel, data: mujoco.MjData, row: dict, side: str, flexion: float) -> tuple[float, float]:
+    """Abduction interval (deg) that the two limit tendons of *row* allow on *side* at MCP *flexion* (rad)."""
+    tendons = flexion_limit_tendons(load_passive_moment_table(), row)
+    flex_joint = next(j for j in tendons[0]["coefs"] if j != row["names"]["r"])
+    data.qpos[:] = model.qpos0
+    data.qpos[model.joint(_side_name(flex_joint, side)).qposadr[0]] = flexion
+    mujoco.mj_kinematics(model, data)
+    mujoco.mj_tendon(model, data)
+    # Each tendon is linear: length = side * abduction + k * flexion, with abduction 0 here.
+    bounds = []
+    for tendon in tendons:
+        t = model.tendon(_side_name(tendon["name"], side)).id
+        assert model.tendon_limited[t]
+        bounds.append(tendon["coefs"][row["names"]["r"]] * (model.tendon_range[t, 1] - data.ten_length[t]))
+    return float(np.degrees(bounds[1])), float(np.degrees(bounds[0]))
+
+
+def _side_name(name: str, side: str) -> str:
+    return name if side == "r" else f"{name[:-2]}_l"
+
+
+@pytest.mark.parametrize("name", MODELS)
+def test_mcp_abduction_range_narrows_with_flexion(name: str) -> None:
+    """Every model carries both limit tendons of each MCP 2-5 on both hands: the tabled range at 0 and 90 deg, linear between, and the
+    joint range at 0 deg flexion (collateral ligaments; ``flexion_limit`` in passive_joint_moments.json)."""
+    rows = _limit_rows()
+    assert {r["joint"] for r in rows} == {f"digit{d}_mcp_abduction" for d in (2, 3, 4, 5)}
+    model = myo_sim.load_spec(name).compile()
+    data = mujoco.MjData(model)
+    for row in rows:
+        spec = row["flexion_limit"]
+        assert set(spec["sources"]) <= set(load_passive_moment_table()["sources"])
+        for side in ("r",) if name == "myoarm_r" else ("r", "l"):
+            joint = _joint_id(model, row["names"]["r"], side)
+            np.testing.assert_allclose(np.degrees(model.jnt_range[joint]), spec["at_0_deg"], atol=1e-4)
+            for tendon in flexion_limit_tendons(load_passive_moment_table(), row):
+                t = model.tendon(_side_name(tendon["name"], side)).id
+                np.testing.assert_allclose(model.tendon_solref_lim[t], spec["solref"])
+                np.testing.assert_allclose(model.tendon_solimp_lim[t, :3], spec["solimp"])
+            for flexion_deg, expected in ((0.0, spec["at_0_deg"]), (90.0, spec["at_90_deg"])):
+                got = _abduction_bounds(model, data, row, side, np.radians(flexion_deg))
+                np.testing.assert_allclose(got, expected, atol=1e-6, err_msg=f"{row['joint']} {side} {flexion_deg}")
+            mid = _abduction_bounds(model, data, row, side, np.radians(45.0))
+            np.testing.assert_allclose(mid, np.add(spec["at_0_deg"], spec["at_90_deg"]) / 2, atol=1e-6)
+
+
+def test_cpu_and_mujoco_warp_abduction_limits_agree() -> None:
+    """With the MCP flexed and abducted past the narrowed range, mujoco-warp's tendon-limit constraint forces match MuJoCo's."""
+    mjw = pytest.importorskip("mujoco_warp")
+    wp = pytest.importorskip("warp")
+    model = myo_sim.load_spec("myoarm_r").compile()
+    model.opt.disableflags |= mujoco.mjtDisableBit.mjDSBL_CONTACT
+    data = mujoco.MjData(model)
+    dofs = []
+    for digit, abduction in ((2, 0.3), (3, -0.2), (4, 0.2), (5, -0.4)):
+        flexion, joint = model.joint(f"mcp{digit}_flexion_r"), model.joint(f"mcp{digit}_abduction_r")
+        data.qpos[flexion.qposadr[0]] = np.radians(80.0)
+        data.qpos[joint.qposadr[0]] = abduction
+        dofs += [flexion.dofadr[0], joint.dofadr[0]]
+    mujoco.mj_forward(model, data)
+    limits = data.efc_type == mujoco.mjtConstraint.mjCNSTR_LIMIT_TENDON
+    assert limits.sum() == 4
+    with wp.ScopedDevice("cpu"):
+        model_w = mjw.put_model(model)
+        data_w = mjw.put_data(model, data, njmax=max(256, 2 * data.nefc))
+        mjw.forward(model_w, data_w)
+        warp_constraint = data_w.qfrc_constraint.numpy()[0]
+    np.testing.assert_allclose(warp_constraint[dofs], data.qfrc_constraint[dofs], rtol=1e-3, atol=1e-4)
 
 
 def _equilibrium(row: dict) -> float:

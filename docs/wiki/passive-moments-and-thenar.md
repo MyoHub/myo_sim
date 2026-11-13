@@ -256,6 +256,35 @@ model's CMC5 hinge does not have, so the radiographic arcs set the limits; Erdog
 the spread fingers (index-middle 21, middle-ring 20, ring-little 30 deg; photographs) are the comparison for the
 whole hand.
 
+**MCP abduction in flexion (abduction limit step).** The MCP abduction range narrows with flexion: the collateral
+ligaments run from the dorsal side of the metacarpal head (a cam) and tighten as the joint flexes. Two limited fixed
+tendons per finger, `digit{d}_mcp_abduction_flexion_limit_{pos,neg}_r`, keep `abduction + k flexion <= c` (radial side)
+and `-abduction + k' flexion <= c'` (ulnar side), written by `fit_passive_moments.py` from the `flexion_limit` entry of
+the abduction rows. MuJoCo applies a tendon limit like a joint limit (same solref 0.02 1 and solimp 0.9 0.95 0.001), it
+works the same on MuJoCo 4, 3.17 and mujoco-warp, and the mirrored left hand keeps the coefficients (its joints keep
+the sign convention, + = radial). With the MCP hyperextended the tendons are slack and the joint limits apply.
+
+| Digit | 0 deg flexion | 45 deg | 90 deg |
+| --- | --- | --- | --- |
+| 2 (index) | -15..25 | -10..15 | -5..5 |
+| 3 (middle) | -15..15 | -10..10 | -5..5 |
+| 4 (ring) | -15..15 | -10..10 | -5..5 |
+| 5 (little) | -27..15 | -16..10 | -5..5 |
+
+No source measures the range against the flexion angle, so the shape is a judgement between the cited statements.
+Brand & Hollister 1993 (pp. 52-53): abduction and adduction are free with the finger straight and not possible in
+flexion, where the lateral motion turns into rotation about the cone axis. Minami et al. 1984 (7 index fingers,
+biplanar radiographs): the dorsal collateral fibres lengthen 3-4 mm from 0 to 80 deg flexion, most of it by 50 deg
+(constant from 50 to 70 deg). At half the width between the metacarpal-head tubercles (15.8 / 2 mm, their Table 1)
+that is the stretch of 22-29 deg of abduction, about the whole range of the straight finger. Minami et al. 1985
+(15 cadaver MCPs): abduction-adduction laxity falls with flexion, most from 0 to 45 deg, and at 75 deg the proper
+collateral ligaments carry 88-92 % of the restraint (Table IV). Schultz et al. 1987 (abstract) report a constant
+lateral deviation to 70 deg and a marked decrease beyond, from a bony block. The linear narrowing lies between
+these shapes. The 5 deg left at 90 deg is below the minimal detectable difference of abduction (5-8 deg, Trejo
+Ramirez et al. 2023), so it does not contradict 'not possible'. With the limit, the active fist closes in all 12
+runs (end MCP abduction index / middle / ring 9.5 / 1.9 / 0.6 deg, 16.8 / -12.8 / 21.3 without); the index MCP
+then flexes to 100 deg and abducts 6.7 deg past the narrowed range, both soft limits under the full flexor force.
+
 PIP hyperextension stops at 10 deg because no passive moment is measured beyond Kamper's operating points; further
 range would need an end-range stiffness without a source. The DIP was given the same -10 deg in a first trial and
 kept at 0: Kamper's DIP cubic, the only passive DIP data, crosses zero near -14 deg (the paper states 7 deg of

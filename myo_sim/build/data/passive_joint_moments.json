@@ -1,6 +1,6 @@
 {
   "format": "myo_sim.passive_joint_moments/1",
-  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation. Every applied row has a source_curve; its springs are fitted to the residual (source curve minus the model's own passive muscle moment at act = 0, at the source's posture; only its restoring part), per side of the residual's equilibrium by non-negative least squares over fit.range_rad (scripts/fit_passive_moments.py); onsets are absolute joint angles. Every row is scales_with 'none' (measured stiffness is kept unless a subject measurement exists); scales_with is provenance metadata for later subject scaling. The model itself is the generated block of myoarm_r_tendon.xml written from this table by scripts/fit_passive_moments.py; every measured and assumed row is applied (the status is provenance). A row with a damping entry sets that joint's damping (N m s/rad), written by the same script into myoarm_r_chain.xml; the other joints keep their class damping.",
+  "description": "Passive joint moments, one row per joint. A measured row gives, for each direction away from neutral, the onset angle (rad) and polynomial stiffness [k0 Nm/rad, k1 Nm/rad^2, k2 Nm/rad^3] of the restoring moment M = -(k0 x + k1 x^2 + k2 x^3) sign-adjusted per side, with x the displacement beyond the onset. Gap rows list where values could come from; no value is used without a verified source. The measured rows are neutral-centred linear stiffness (onset 0): they act over the whole joint range, not only at its end, and are validated only inside valid_range. They do not by themselves model end-range stiffening, so they will not stop a controller from resting on a hard joint limit; an end-range row needs its own source or an explicit, documented extrapolation. Every applied row has a source_curve; its springs are fitted to the residual (source curve minus the model's own passive muscle moment at act = 0, at the source's posture; only its restoring part), per side of the residual's equilibrium by non-negative least squares over fit.range_rad (scripts/fit_passive_moments.py); onsets are absolute joint angles. Every row is scales_with 'none' (measured stiffness is kept unless a subject measurement exists); scales_with is provenance metadata for later subject scaling. The model itself is the generated block of myoarm_r_tendon.xml written from this table by scripts/fit_passive_moments.py; every measured and assumed row is applied (the status is provenance). A row with a damping entry sets that joint's damping (N m s/rad), written by the same script into myoarm_r_chain.xml; the other joints keep their class damping. A row with a flexion_limit entry (the finger MCP abduction rows) gets two limited fixed tendons in the same block: its range narrows linearly from at_0_deg to at_90_deg with the named flexion joint, with the given limit solref and solimp (hand_data.flexion_limit_tendons).",
   "sources": {
     "formica2012": {
       "citation": "Formica D, Charles SK, Zollo L, Guglielmelli E, Hogan N, Krebs HI. The passive stiffness of the wrist and forearm. J Neurophysiol 108(4):1158-1166, 2012.",
@@ -85,6 +85,31 @@
     "hayashi_norkin2016": {
       "citation": "Hayashi et al. (19 daily activities, 20 subjects, electrogoniometer), as reported in Norkin CC, White DJ. Measurement of Joint Motion: A Guide to Goniometry, 5th ed., F.A. Davis, 2016, Ch. 7, Table 7.4.",
       "access": "values as tabulated by Norkin & White 2016 (range of the mean maximum MCP extension over the activities, digits 2-5: 8 / 8 / 12 / 15 deg)"
+    },
+    "minami1984": {
+      "citation": "Minami A, An KN, Cooney WP, Linscheid RL, Chao EY. Ligamentous structures of the metacarpophalangeal joint: a quantitative anatomic study. J Orthop Res 1(4):361-368, 1984.",
+      "doi": "10.1002/jor.1100010404",
+      "access": "verified from the PDF: biplanar radiographs of 7 index fingers; apparent length of the dorsal, middle and volar thirds of the radial and ulnar collateral ligaments from hyperextension to 90 deg flexion (Fig. 7 and text)"
+    },
+    "minami1985": {
+      "citation": "Minami A, An KN, Cooney WP, Linscheid RL, Chao EY. Ligament stability of the metacarpophalangeal joint: a biomechanical study. J Hand Surg Am 10(2):255-260, 1985.",
+      "doi": "10.1016/s0363-5023(85)80117-9",
+      "access": "verified from the PDF: load-displacement tests of 15 cadaver MCP joints at 0 and 75 deg flexion with sequential sectioning (Table IV: abduction-adduction) and the laxity statement of the Discussion"
+    },
+    "schultz1987": {
+      "citation": "Schultz RJ, Storace A, Krishnamurthy S. Metacarpophalangeal joint motion and the role of the collateral ligaments. Int Orthop 11(2):149-155, 1987.",
+      "doi": "10.1007/BF00266701",
+      "access": "abstract only (PubMed 3610409): triaxial goniometer in living and cadaver hands; lateral deviation constant from 0 to 70 deg flexion and markedly smaller beyond"
+    },
+    "brand_hollister1993": {
+      "citation": "Brand PW, Hollister AM. Clinical Mechanics of the Hand, 2nd ed. Mosby-Year Book, St Louis, 1993, pp. 52-53.",
+      "doi": "",
+      "access": "verified from the book: the finger MCP as a flexion axis plus a cone axis; abduction-adduction free with the finger straight, not possible in flexion (Fig. 4-13)"
+    },
+    "trejo_ramirez2023": {
+      "citation": "Trejo Ramirez MP, Evans N, Venus M, Hardwicke J, Chappell M. Reliability, accuracy, and minimal detectable difference of a mixed concept marker set for finger kinematic evaluation. Heliyon 9(11):e21608, 2023.",
+      "doi": "10.1016/j.heliyon.2023.e21608",
+      "access": "verified from the PDF (CC BY 4.0): minimal detectable difference of finger abduction 6-8 deg within and 5-8 deg between sessions"
     }
   },
   "joints": [
@@ -2282,6 +2307,35 @@
           -15.0,
           15.0
         ]
+      },
+      "flexion_limit": {
+        "flexion_joint": "digit2_mcp_flexion",
+        "at_0_deg": [
+          -15.0,
+          25.0
+        ],
+        "at_90_deg": [
+          -5.0,
+          5.0
+        ],
+        "solref": [
+          0.02,
+          1.0
+        ],
+        "solimp": [
+          0.9,
+          0.95,
+          0.001
+        ],
+        "sources": [
+          "brand_hollister1993",
+          "minami1984",
+          "minami1985",
+          "schultz1987",
+          "trejo_ramirez2023"
+        ],
+        "status": "assumed",
+        "note": "Linear cone: the abduction range narrows from its 0 deg-flexion limits to [-5, 5] deg at 90 deg MCP flexion; two limited fixed tendons per finger (abduction + k flexion <= c on each side), so hyperextension keeps the joint limits. No source gives the range against flexion angle. Brand & Hollister 1993 (pp. 52-53): abduction and adduction are free with the finger straight and not possible in flexion. Minami et al. 1984: the dorsal collateral fibres lengthen 3-4 mm from 0 to 80 deg flexion, most of it by 50 deg (constant 50-70 deg); at half the width between the metacarpal-head tubercles (15.8 / 2 mm, their Table 1) that is the stretch of 22-29 deg of abduction, i.e. about the whole range of the straight finger. Minami et al. 1985: abduction-adduction laxity falls with flexion, most from 0 to 45 deg, and at 75 deg the proper collaterals take 88-92 % of the restraint (Table IV). Schultz et al. 1987 (abstract) report the opposite shape: lateral deviation constant to 70 deg, then a marked decrease (bony block). The linear narrowing lies between these shapes. The residual 5 deg at 90 deg is below the abduction measurement's minimal detectable difference (5-8 deg, Trejo Ramirez et al. 2023), so it is not distinguishable from the 'not possible' of Brand & Hollister."
       }
     },
     {
@@ -3279,7 +3333,36 @@
       "candidate_sources": [],
       "notes": "No measured passive MCP abduction moments found for this digit.",
       "scales_with": "none",
-      "range_note": "Range kept at -15..15 deg (no change). Batmanabane & Malathi 1985 give arcs of 7.7 (middle) and 18.3 deg (ring, cadaver; 5.2 and 15.7 in living hands), but in their protocol the middle finger was held as the reference and the ring finger moves between two neighbours, so the arcs do not give a joint limit. The neighbours' contact pairs stop these fingers at 11-14 deg while they are straight."
+      "range_note": "Range kept at -15..15 deg (no change). Batmanabane & Malathi 1985 give arcs of 7.7 (middle) and 18.3 deg (ring, cadaver; 5.2 and 15.7 in living hands), but in their protocol the middle finger was held as the reference and the ring finger moves between two neighbours, so the arcs do not give a joint limit. The neighbours' contact pairs stop these fingers at 11-14 deg while they are straight.",
+      "flexion_limit": {
+        "flexion_joint": "digit3_mcp_flexion",
+        "at_0_deg": [
+          -15.0,
+          15.0
+        ],
+        "at_90_deg": [
+          -5.0,
+          5.0
+        ],
+        "solref": [
+          0.02,
+          1.0
+        ],
+        "solimp": [
+          0.9,
+          0.95,
+          0.001
+        ],
+        "sources": [
+          "brand_hollister1993",
+          "minami1984",
+          "minami1985",
+          "schultz1987",
+          "trejo_ramirez2023"
+        ],
+        "status": "assumed",
+        "note": "Linear cone: the abduction range narrows from its 0 deg-flexion limits to [-5, 5] deg at 90 deg MCP flexion; two limited fixed tendons per finger (abduction + k flexion <= c on each side), so hyperextension keeps the joint limits. No source gives the range against flexion angle. Brand & Hollister 1993 (pp. 52-53): abduction and adduction are free with the finger straight and not possible in flexion. Minami et al. 1984: the dorsal collateral fibres lengthen 3-4 mm from 0 to 80 deg flexion, most of it by 50 deg (constant 50-70 deg); at half the width between the metacarpal-head tubercles (15.8 / 2 mm, their Table 1) that is the stretch of 22-29 deg of abduction, i.e. about the whole range of the straight finger. Minami et al. 1985: abduction-adduction laxity falls with flexion, most from 0 to 45 deg, and at 75 deg the proper collaterals take 88-92 % of the restraint (Table IV). Schultz et al. 1987 (abstract) report the opposite shape: lateral deviation constant to 70 deg, then a marked decrease (bony block). The linear narrowing lies between these shapes. The residual 5 deg at 90 deg is below the abduction measurement's minimal detectable difference (5-8 deg, Trejo Ramirez et al. 2023), so it is not distinguishable from the 'not possible' of Brand & Hollister."
+      }
     },
     {
       "joint": "digit3_pip_flexion",
@@ -4249,7 +4332,36 @@
       "candidate_sources": [],
       "notes": "No measured passive MCP abduction moments found for this digit.",
       "scales_with": "none",
-      "range_note": "Range kept at -15..15 deg (no change). Batmanabane & Malathi 1985 give arcs of 7.7 (middle) and 18.3 deg (ring, cadaver; 5.2 and 15.7 in living hands), but in their protocol the middle finger was held as the reference and the ring finger moves between two neighbours, so the arcs do not give a joint limit. The neighbours' contact pairs stop these fingers at 11-14 deg while they are straight."
+      "range_note": "Range kept at -15..15 deg (no change). Batmanabane & Malathi 1985 give arcs of 7.7 (middle) and 18.3 deg (ring, cadaver; 5.2 and 15.7 in living hands), but in their protocol the middle finger was held as the reference and the ring finger moves between two neighbours, so the arcs do not give a joint limit. The neighbours' contact pairs stop these fingers at 11-14 deg while they are straight.",
+      "flexion_limit": {
+        "flexion_joint": "digit4_mcp_flexion",
+        "at_0_deg": [
+          -15.0,
+          15.0
+        ],
+        "at_90_deg": [
+          -5.0,
+          5.0
+        ],
+        "solref": [
+          0.02,
+          1.0
+        ],
+        "solimp": [
+          0.9,
+          0.95,
+          0.001
+        ],
+        "sources": [
+          "brand_hollister1993",
+          "minami1984",
+          "minami1985",
+          "schultz1987",
+          "trejo_ramirez2023"
+        ],
+        "status": "assumed",
+        "note": "Linear cone: the abduction range narrows from its 0 deg-flexion limits to [-5, 5] deg at 90 deg MCP flexion; two limited fixed tendons per finger (abduction + k flexion <= c on each side), so hyperextension keeps the joint limits. No source gives the range against flexion angle. Brand & Hollister 1993 (pp. 52-53): abduction and adduction are free with the finger straight and not possible in flexion. Minami et al. 1984: the dorsal collateral fibres lengthen 3-4 mm from 0 to 80 deg flexion, most of it by 50 deg (constant 50-70 deg); at half the width between the metacarpal-head tubercles (15.8 / 2 mm, their Table 1) that is the stretch of 22-29 deg of abduction, i.e. about the whole range of the straight finger. Minami et al. 1985: abduction-adduction laxity falls with flexion, most from 0 to 45 deg, and at 75 deg the proper collaterals take 88-92 % of the restraint (Table IV). Schultz et al. 1987 (abstract) report the opposite shape: lateral deviation constant to 70 deg, then a marked decrease (bony block). The linear narrowing lies between these shapes. The residual 5 deg at 90 deg is below the abduction measurement's minimal detectable difference (5-8 deg, Trejo Ramirez et al. 2023), so it is not distinguishable from the 'not possible' of Brand & Hollister."
+      }
     },
     {
       "joint": "digit4_pip_flexion",
@@ -5208,6 +5320,35 @@
           -15.0,
           15.0
         ]
+      },
+      "flexion_limit": {
+        "flexion_joint": "digit5_mcp_flexion",
+        "at_0_deg": [
+          -27.0,
+          15.0
+        ],
+        "at_90_deg": [
+          -5.0,
+          5.0
+        ],
+        "solref": [
+          0.02,
+          1.0
+        ],
+        "solimp": [
+          0.9,
+          0.95,
+          0.001
+        ],
+        "sources": [
+          "brand_hollister1993",
+          "minami1984",
+          "minami1985",
+          "schultz1987",
+          "trejo_ramirez2023"
+        ],
+        "status": "assumed",
+        "note": "Linear cone: the abduction range narrows from its 0 deg-flexion limits to [-5, 5] deg at 90 deg MCP flexion; two limited fixed tendons per finger (abduction + k flexion <= c on each side), so hyperextension keeps the joint limits. No source gives the range against flexion angle. Brand & Hollister 1993 (pp. 52-53): abduction and adduction are free with the finger straight and not possible in flexion. Minami et al. 1984: the dorsal collateral fibres lengthen 3-4 mm from 0 to 80 deg flexion, most of it by 50 deg (constant 50-70 deg); at half the width between the metacarpal-head tubercles (15.8 / 2 mm, their Table 1) that is the stretch of 22-29 deg of abduction, i.e. about the whole range of the straight finger. Minami et al. 1985: abduction-adduction laxity falls with flexion, most from 0 to 45 deg, and at 75 deg the proper collaterals take 88-92 % of the restraint (Table IV). Schultz et al. 1987 (abstract) report the opposite shape: lateral deviation constant to 70 deg, then a marked decrease (bony block). The linear narrowing lies between these shapes. The residual 5 deg at 90 deg is below the abduction measurement's minimal detectable difference (5-8 deg, Trejo Ramirez et al. 2023), so it is not distinguishable from the 'not possible' of Brand & Hollister."
       }
     },
     {

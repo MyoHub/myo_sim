@@ -30,6 +30,7 @@ from myo_sim.build.compose import RIGHT_ARM_CHAIN_XML, RIGHT_ARM_TENDONS_XML
 from myo_sim.build.hand_data import (
     APPLIED_STATUSES,
     PASSIVE_DATA_PATH,
+    flexion_limit_tendons,
     fold_node_forces,
     passive_moment,
     passive_tendon_name,
@@ -43,6 +44,7 @@ from myo_sim.build.hand_data import (
 SCRIPT = "fit_passive_moments.py"
 MUSCLE_PASSIVE_PATH = PASSIVE_DATA_PATH.with_name("muscle_passive.json")
 
+LIMIT_FAR = 10.0  # rad: never-reached lower bound of a one-sided tendon limit
 LIGAMENT_PREFIX = "lig_"  # passive ligament tendons (extensor mechanism ORL): part of the model's own passive moment
 DEG = np.pi / 180.0
 
@@ -358,7 +360,30 @@ def tendon_block(table: dict[str, Any]) -> str:
                     f'            <joint joint="{row["names"]["r"]}" coef="1"/>',
                     "        </fixed>",
                 ]
+    lines += limit_lines(table)
     return "".join(f"{line}\n" for line in lines)
+
+
+def limit_lines(table: dict[str, Any]) -> list[str]:
+    """Limited fixed tendons of every row with a ``flexion_limit`` (flexion-dependent MCP abduction range)."""
+    lines = []
+    for row in table["joints"]:
+        tendons = flexion_limit_tendons(table, row)
+        if not tendons:
+            continue
+        spec = row["flexion_limit"]
+        lines.append(
+            f"        <!-- {row['joint']} range narrows with flexion: {spec['at_0_deg']} deg at 0, {spec['at_90_deg']} deg at 90 deg"
+            f" ({', '.join(spec['sources'])}) -->"
+        )
+        for tendon in tendons:
+            lines.append(
+                f'        <fixed name="{tendon["name"]}" limited="true" range="{_number(-LIMIT_FAR)} {_number(round(tendon["upper"], 9))}"'
+                f' solreflimit="{" ".join(map(_number, spec["solref"]))}" solimplimit="{" ".join(map(_number, spec["solimp"]))}">'
+            )
+            lines += [f'            <joint joint="{j}" coef="{_number(round(c, 9))}"/>' for j, c in tendon["coefs"].items()]
+            lines.append("        </fixed>")
+    return lines
 
 
 def write_block(table: dict[str, Any]) -> None:
