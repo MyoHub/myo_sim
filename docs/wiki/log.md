@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Keep anatomy geometry stable at finite numeric extremes
+Changed: myo_sim/authoring/interchange.py, tests/test_authoring_interchange_numeric.py, docs/wiki/authoring.md
+Why: real-only pose validation prevents silent complex-value truncation, scaled quaternion normalization avoids overflow and underflow, and stable radial norms preserve inside-wrap flags across geometric scales without mutating source or caller arrays.
+
 ## 2026-11-13 — Publish authoring outputs without clobbering inputs
 Changed: myo_sim/authoring/_files.py, myo_sim/authoring/cli.py, myo_sim/authoring/archive.py, tests/test_authoring_files.py, tests/test_authoring_cli.py, docs/wiki/authoring.md
 Why: shared atomic publication closes the concurrent-writer overwrite gap, CLI output guards preserve XML and patch inputs, and content detection supports archive reuse and explicit in-place ZIP edits regardless of filename extension.

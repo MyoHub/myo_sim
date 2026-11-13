@@ -80,7 +80,7 @@ def _wrap_flags(model: mujoco.MjModel, data: mujoco.MjData) -> list[dict[str, An
                     element=wrap - start,
                     geom=geom,
                     sidesite=side,
-                    sidesite_inside=bool(radial @ radial < model.geom_size[geom, 0] ** 2),
+                    sidesite_inside=bool(np.hypot.reduce(radial) < model.geom_size[geom, 0]),
                 )
             )
     return flags
@@ -113,7 +113,13 @@ def export_model(
     """
     if model.nflex or model.nskin:
         raise ValueError("Flex and skin geometry cannot be represented by this anatomy format")
-    poses = np.asarray(model.qpos0[None] if qpos is None else qpos, dtype=float)
+    try:
+        poses = np.asarray(model.qpos0[None] if qpos is None else qpos)
+        if poses.dtype.kind not in "iuf":
+            raise ValueError
+        poses = poses.astype(float, copy=False)
+    except (TypeError, ValueError, OverflowError) as exc:
+        raise ValueError("qpos must contain real numbers") from exc
     if poses.ndim != 2 or poses.shape[1] != model.nq or not len(poses):
         raise ValueError(f"qpos must have nonempty shape (frames, {model.nq})")
     if not np.isfinite(poses).all():
@@ -242,10 +248,21 @@ def export_model(
         for i in range(model.neq)
     ]
     data, coupling = mujoco.MjData(model), JointCouplings.from_model(model)
+    quaternion_starts = [
+        int(address) + (3 if kind == mujoco.mjtJoint.mjJNT_FREE else 0)
+        for kind, address in zip(model.jnt_type, model.jnt_qposadr, strict=True)
+        if kind in (mujoco.mjtJoint.mjJNT_FREE, mujoco.mjtJoint.mjJNT_BALL)
+    ]
     moment = np.empty((len(muscles), model.nv))
     frames = []
     for pose in poses:
         data.qpos[:] = pose
+        # Bound the native norm without changing orientation; MuJoCo handles zero quaternions.
+        for start in quaternion_starts:
+            quaternion = data.qpos[start : start + 4]
+            scale = np.max(np.abs(quaternion))
+            if scale > 0:
+                quaternion /= scale
         mujoco.mj_normalizeQuat(model, data.qpos)
         project_joint_couplings(coupling, data.qpos)
         mujoco.mj_forward(model, data)

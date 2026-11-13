@@ -42,8 +42,11 @@ edited = apply_model_patch(source, patch)
 save_model_archive(edited, "edited-elbow.zip")
 ```
 
-Export evaluates optional `(frames, nq)` finite poses after normalizing free/ball
-quaternions and projecting active joint couplings. `joint_sweep` spans a limited,
+Export evaluates optional `(frames, nq)` finite real poses after normalizing free/ball
+quaternions and projecting active joint couplings. Normalization preserves the
+orientation of nonzero quaternions at very small and large finite magnitudes;
+all-zero quaternion blocks retain MuJoCo's identity fallback.
+`joint_sweep` spans a limited,
 independent hinge or slide joint. The source model and caller's pose array stay
 unchanged.
 
