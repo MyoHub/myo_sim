@@ -68,7 +68,10 @@ def test_xml_is_what_the_fit_script_writes() -> None:
 
 def test_physiological_muscles_keep_their_cited_fibre_length() -> None:
     """Muscles under ``physiological``: L0 and the fit's reference slack are the ones derived from the cited optimal
-    fibre length and pennation on the current path, and the fibres stay on the plateau of the active curve in range."""
+    fibre length and pennation on the current path, and the fibres stay on the plateau of the active curve in range.
+
+    L0 is compared within the rounding of the stored lengthrange: both ends are written to 1 um, so (hi - lo) / (r1 - r0)
+    can differ from the derived L0 by up to 1 um / (r1 - r0) in addition to L0's own 1 um rounding."""
     fit = _fit_script()
     table = fit.load_table()
     model = myo_sim.load_spec("myoarm_r").compile()

@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-13 — Thumb IP spring with the signed fit
+Changed: `myo_sim/build/data/passive_joint_moments.json` (thumb IP row signed fit; `signed_fallback` dropped), `postures.json`, `hand_literature.json` (step `spring_fallbacks`), arm tendon XML, `tests/test_muscle_passive.py` (docstring: L0 rounding), wiki, `CHANGELOG.md`
+Why: six spring rows kept a non-negative fallback flag from earlier models and were never refitted signed. Five still need it; the thumb IP fits signed now (RMS 0.016 -> 0.003 N m).
+
 ## 2026-11-13 — DIP passive curve re-centred on Kamper's zero-torque angle
 Changed: `myo_sim/build/data/passive_joint_moments.json` (DIP rows: `zero_shift_deg`, `hold_range_deg`, `recentre_note`, range notes; ring row signed fit), `muscle_passive.json` (DIP targets re-centred; refit), `postures.json`, `hand_literature.json` (step `dip_rest`), arm muscle and tendon XML, `scripts/fit_passive_moments.py` and `scripts/fit_muscle_passive.py` (`zero_shift_deg`), wiki pages, `CHANGELOG.md`
 Why: the relaxed hand rested the DIPs on their 0 deg extension limit (Lee & Jung 2014: 8-12 deg of flexion). Kamper et al. 2002's DIP cubic crosses zero at -13.4 deg while the paper reports 7 deg as the DIP's zero-resting-torque angle (its PIP and MCP cubics match their stated angles); the cubic is shifted to cross zero at 7 deg with its shape kept. Relaxed DIP now 4-5 deg (equilibrium 7-8); tenodesis, fist and pinch hold; settled grip open.

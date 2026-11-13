@@ -1040,13 +1040,28 @@
             <joint joint="mp_flexion_r" coef="1"/>
         </fixed>
         <!-- thumb_ip_flexion (assumed): Barry et al. 2018, doi:10.1016/j.jbiomech.2018.06.017 -->
-        <fixed name="passive_thumb_ip_flexion_pos_r" springlength="-1000 -0.11592625705499057" stiffness="0.043156719760317576 0 0.014899437620194156">
+        <fixed name="passive_thumb_ip_flexion_pos_r" springlength="-1000 -0.11592625705499057" stiffness="0.08923507474097893 -0.20361653158878762 0.21992310594651043">
             <joint joint="ip_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_ip_flexion_pos1_r" springlength="-1000 0.47912568661327026" stiffness="0.05512208309317428 0 0">
+        <fixed name="passive_thumb_ip_flexion_pos1_r" springlength="-1000 0.38951899556789704" stiffness="-0.45822422058111256 6.385884715081405 -20.331674762188303">
             <joint joint="ip_flexion_r" coef="1"/>
         </fixed>
-        <fixed name="passive_thumb_ip_flexion_neg_r" springlength="-0.11592625705499057 1000" stiffness="0.04681460158045107 0 0">
+        <fixed name="passive_thumb_ip_flexion_pos2_r" springlength="-1000 0.06271812234359553" stiffness="0.08079115499441913 -0.41356561374023804 0.5041767647888643">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_ip_flexion_pos3_r" springlength="-1000 0.48966765026566694" stiffness="0.6131824958227772 -15.721569342517908 92.31648347448615">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_ip_flexion_neg_r" springlength="-0.11592625705499057 1000" stiffness="0.20631633512383404 0.25455582895890405 0.09113158505569231">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_ip_flexion_neg1_r" springlength="-0.9598523519388965 1000" stiffness="-0.045290006693965476 -0.24733195753406542 -0.3145910890556416">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_ip_flexion_neg2_r" springlength="-0.5908836241050076 1000" stiffness="0.018277465560940006 0.05444388384002441 0.039015068803521735">
+            <joint joint="ip_flexion_r" coef="1"/>
+        </fixed>
+        <fixed name="passive_thumb_ip_flexion_neg3_r" springlength="-0.21664391444492037 1000" stiffness="-0.00820434056631212 -0.018055479982084673 -0.009448855031348223">
             <joint joint="ip_flexion_r" coef="1"/>
         </fixed>
         <!-- digit2_mcp_flexion (measured): Knutson et al. 2000, doi:10.1016/S0021-9290(00)00159-7 -->

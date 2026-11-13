@@ -409,6 +409,15 @@ of the passive DIP resistance at DIP 45 deg 30 / 23 / 15 / 7 -> 42 / 32 / 22 / 9
 al. 2011: 25 / 31 / 18 / 3), since the re-centred cubic resists less at 45 deg. The active fist closes, lateral pinch 94.9 N;
 the self-selected grip is 446 N (461), the settled grip 277 N (322; open grip check).
 
+**Spring fallbacks.** A row whose signed fit is not restoring everywhere falls back to non-negative coefficients and
+records `signed_fallback`; the flag then stayed in the table, so later refits never retried the signed fit. The ring DIP
+was one (above). Of the six other rows with the flag, five (thumb MP, PIP 2-5) are still not restoring with the signed fit,
+so their fallback is the fit's current result (RMS 0.012 / 0.026 / 0.022 / 0.016 / 0.015 N m, unchanged). The thumb IP
+row (Barry et al. 2018's transfer of Kamper's PIP curve) is restoring with the signed fit now: RMS 0.0163 -> 0.0030 N m,
+max 0.028 -> 0.011 N m. The total follows the transferred curve, including its maximum near 45 deg of IP flexion where
+Kamper's PIP cubic turns back. Relaxed thumb IP flexion 10.9 -> 7.9 deg (Lee & Jung 2014: 9 ± 6); lateral pinch 94.9 ->
+93.7 N; tenodesis and the fist unchanged.
+
 The DIP extension limit stays at 0 deg. With the equilibrium in flexion a hyperextension range (Leijnse et al. 2010:
 31 ± 17 passive; Mohamed Ibrahim et al. 2024: 6-8 active) is now possible, but the spring is fitted over 0..90 deg only and
 Kamper's operating points reach -10 deg before the shift (10.4 deg after), so a hyperextension limit would need an
