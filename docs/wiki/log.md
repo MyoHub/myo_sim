@@ -42,6 +42,10 @@ Why: anatomy JSON used raw geom RGBA and lost native material colors and alpha; 
 Changed: myo_sim/muskemo/, tests/test_muskemo*.py, tests/muskemo_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/muskemo*.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
 Why: anatomy editing belongs with the source model library; export, Blender import, validation and selected edits now run without MyoSuite or a training dependency.
 
+## 2026-11-11 — Keep interpreter caches out of distributions
+Changed: pyproject.toml, MANIFEST.in
+Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
+
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
 Why: MuJoCo 4 changes side-site semantics and moves some muscle paths, and the upcoming release would otherwise install it. The cap goes once the models are checked against the final 4.0.

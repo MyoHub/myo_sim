@@ -44,8 +44,8 @@ include = ["myo_sim*"]
 myo_sim = [
     "models/*",
     "models/**/*",
-    "build/*",
-    "build/**/*",
+    "build/README.md",
+    "build/data/*.json",
 ]
 
 [tool.pytest.ini_options]
