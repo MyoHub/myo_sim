@@ -139,8 +139,11 @@ exclude overlapping solids; the function does not infer tissue composition.
 
 `save_model_archive` bundles referenced mesh, texture, heightfield and skin files,
 writes a native zip and recompiles it with `MjSpec.from_zip` before publishing.
-Asset lookup follows `strippath` and exposed compiler asset directories. An
-attached child's relative files can use its exposed absolute mesh/texture
+Asset lookup follows `strippath` and exposed compiler asset directories. Skins
+use `meshdir`, just as in native loading. Textures bundle only their active
+source: procedural textures need no image files; a main image takes precedence
+over cube faces. Inline heightfields retain their row order and elevation
+precision. An attached child's relative files can use its exposed absolute mesh/texture
 directory, but MuJoCo does not expose the child's owning `modelfiledir`.
 MuJoCo 3.4 also lacks per-element compiler-directory access: use absolute asset
 filenames or explicit bytes in the parent `spec.assets` across supported versions.
@@ -150,6 +153,7 @@ Archive validation compares the reloaded native model and
 native reference measurements with the supplied spec before replacing output.
 Existing files require `overwrite=True`; failures preserve the destination and
 source, and successful publication uses an atomic replacement.
+A destination that resolves to a disk asset read for the archive is refused.
 
 Native XML has finite precision. Acceptance uses these explicit tolerances:
 

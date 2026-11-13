@@ -21,31 +21,39 @@ from .edits import _compile_source
 from .interchange import model_fingerprint
 
 
-def _bundle_assets(spec: mujoco.MjSpec) -> dict[str, bytes]:
+def _bundle_assets(spec: mujoco.MjSpec, *, output: Path) -> dict[str, bytes]:
     provided = dict(spec.assets)
     assets = {}
+    output = output.resolve()
     for elements, directory_attribute in (
         (spec.meshes, "meshdir"),
         (spec.textures, "texturedir"),
         (spec.hfields, None),
-        (spec.skins, None),
+        (spec.skins, "meshdir"),
     ):
         for element in elements:
             compiler = getattr(element, "compiler", spec.compiler)
             directory = getattr(compiler, directory_attribute) if directory_attribute is not None else ""
-            for filename in filter(None, (element.file, *getattr(element, "cubefiles", ()))):
+            if directory_attribute == "texturedir":
+                # Native textures use one source: procedural, one image, or faces.
+                if element.builtin != mujoco.mjtBuiltin.mjBUILTIN_NONE:
+                    continue
+                filenames = (element.file,) if element.file else element.cubefiles
+            else:
+                filenames = (element.file,)
+            for filename in filter(None, filenames):
                 name = Path(filename.replace("\\", "/")).name
                 # Native attachment uses the parent's global strippath setting.
                 resolved = name if spec.strippath else filename.replace("\\", "/")
                 reference = Path(directory) / resolved
-                aliases = [data for key, data in provided.items() if Path(key.replace("\\", "/")).name == name]
-                if aliases and any(data != aliases[0] for data in aliases[1:]):
-                    raise ValueError(f"Ambiguous asset basename {name!r}; use unique source asset names")
                 content = next(
                     (provided[key] for key in (str(reference), reference.as_posix(), resolved, name) if key in provided),
                     None,
                 )
                 if content is None:
+                    aliases = [data for key, data in provided.items() if Path(key.replace("\\", "/")).name == name]
+                    if aliases and any(data != aliases[0] for data in aliases[1:]):
+                        raise ValueError(f"Ambiguous asset basename {name!r}; use unique source asset names")
                     if aliases:
                         content = aliases[0]
                     else:
@@ -55,7 +63,10 @@ def _bundle_assets(spec: mujoco.MjSpec) -> dict[str, bytes]:
                                 "use absolute asset filenames or supply its bytes in the parent spec.assets"
                             )
                         try:
-                            content = (Path(spec.modelfiledir) / reference).read_bytes()
+                            source = Path(spec.modelfiledir) / reference
+                            if source.resolve() == output:
+                                raise ValueError(f"Archive output would overwrite a source asset: {source}")
+                            content = source.read_bytes()
                         except FileNotFoundError as exc:
                             raise ValueError(
                                 f"Cannot resolve asset {filename!r} from public source paths; an attached child-relative "
@@ -88,6 +99,7 @@ def _archive_xml(spec: mujoco.MjSpec, model: mujoco.MjModel) -> str:
             ("worldbody", "camera", "cameras"),
             ("worldbody", "light", "lights"),
             ("asset", "mesh", "meshes"),
+            ("asset", "texture", "textures"),
             ("asset", "material", "materials"),
             ("contact", "pair", "pairs"),
             ("deformable", "flex", "flexes"),
@@ -164,6 +176,12 @@ def _archive_xml(spec: mujoco.MjSpec, model: mujoco.MjModel) -> str:
         compiler.attrib.pop("texturedir", None)
     assets = root.find("asset")
     if assets is not None:
+        # Spec elevation data is bottom-to-top; XML is top-to-bottom. The 3.4
+        # writer reverses that convention, and six-digit text can flatten terrain.
+        for node, hfield in zip(assets.findall("hfield"), spec.hfields, strict=True):
+            if not hfield.file:
+                elevation = np.asarray(hfield.userdata).reshape(hfield.nrow, hfield.ncol)[::-1]
+                node.set("elevation", _numbers(elevation))
         for node in assets:
             for key in ("file", "fileback", "filedown", "filefront", "fileleft", "fileright", "fileup"):
                 if node.get(key):
@@ -345,7 +363,7 @@ def save_model_archive(spec: mujoco.MjSpec, output: str | Path, *, overwrite: bo
     candidate = spec.copy()
     source = _compile_source(candidate)
     fingerprint = model_fingerprint(source)
-    assets = _bundle_assets(candidate)
+    assets = _bundle_assets(candidate, output=output)
     xml = _archive_xml(candidate, source)
     if model_fingerprint(_compile_source(candidate)) != fingerprint:
         raise ValueError("Archive normalization changed the compiled source model")
