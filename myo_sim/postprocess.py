@@ -37,6 +37,7 @@ def disable_collisions(
     (union of both). Patterns are regular expressions matched against the whole
     name (``re.fullmatch``); selections that match nothing are skipped
     silently, so one pattern list can serve right-only and bilateral models.
+    An explicitly empty pattern collection selects nothing.
 
     Selected geoms get ``contype = conaffinity = 0``. Explicit ``<pair>``
     contacts that reference a selected geom are deleted as well, because pairs
@@ -60,7 +61,7 @@ def disable_collisions(
     """
     body_patterns = _compile_patterns(bodies)
     geom_patterns = _compile_patterns(geoms)
-    select_all = not body_patterns and not geom_patterns
+    select_all = bodies is None and geoms is None
 
     def selected(geom: mujoco.MjsGeom) -> bool:
         if select_all:

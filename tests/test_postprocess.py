@@ -34,6 +34,19 @@ def test_disable_all_collisions() -> None:
     assert data.ncon == 0
 
 
+@pytest.mark.parametrize("selection", [{"bodies": []}, {"geoms": []}, {"bodies": [], "geoms": []}])
+def test_empty_selection_keeps_collisions(selection: dict) -> None:
+    """A filtered selection with no matches must not disable the whole model."""
+    spec = mujoco.MjSpec.from_string(
+        '<mujoco><worldbody><geom name="a" size=".1"/><geom name="b" size=".1" pos="1 0 0"/>'
+        '</worldbody><contact><pair geom1="a" geom2="b"/></contact></mujoco>'
+    )
+    myo_sim.disable_collisions(spec, **selection)
+    model = spec.compile()
+    assert _collidable(model).all()
+    assert model.npair == 1
+
+
 def test_disable_by_body_pattern_keeps_the_rest() -> None:
     reference = myo_sim.load_model("myohands")
     model = myo_sim.disable_collisions(myo_sim.load_spec("myohands"), bodies=FINGER_BODIES).compile()
