@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-14 — Empty collision selections
+Changed: myo_sim/postprocess.py, tests/test_postprocess.py
+Why: explicitly empty body or geom pattern collections select nothing instead of disabling every collision in the model.
+
 ## 2026-10-29 — Model policy: values derived from public datasets
 Changed: docs/wiki/model-authoring.md
 Why: provenance rule for values derived from public datasets (the script reads the published files directly and reproduces the values from them; the raw data is never committed; values, citation, DOI and licence in `build/data/<topic>.json` with a `LICENSE-<SOURCE>.txt` next to copied or derived data); verbatim third-party copies keep their licence notice and copyright holders; marker sets are a user-applied overlay like the post-processing functions (policy 4).
