@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Skip compilation for empty posture selections
+Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
+Why: requesting no keyframes still compiled the spec, adding model-build overhead and rejecting unfinished assemblies despite making no edits.
+
 ## 2026-11-11 — Keep interpreter caches out of distributions
 Changed: pyproject.toml, MANIFEST.in
 Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
