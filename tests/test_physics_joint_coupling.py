@@ -166,6 +166,62 @@ def test_functional_projection_matches_in_place_and_leaves_inputs() -> None:
     assert projected_joint_couplings(couplings, before[0])[1] is None
 
 
+@pytest.mark.parametrize("backend", ["numpy", "torch", "torch-cuda"])
+@pytest.mark.parametrize("case", ["empty-model", "no-equalities", "inactive-only"])
+@pytest.mark.parametrize("with_velocity", [False, True])
+def test_uncoupled_functional_projection_returns_independent_arrays(backend: str, case: str, with_velocity: bool) -> None:
+    if case == "empty-model":
+        xml = "<mujoco/>"
+    else:
+        equalities = '<equality><joint joint1="a" active="false"/></equality>' if case == "inactive-only" else ""
+        xml = f'<mujoco><worldbody><body><joint name="a"/><geom size=".1"/></body></worldbody>{equalities}</mujoco>'
+    model = mujoco.MjModel.from_xml_string(xml)
+    couplings = JointCouplings.from_model(model)
+    qpos, qvel = _random_state(model, np.random.default_rng(5), (2, 3))
+    if backend == "numpy":
+        before = qpos.copy(), qvel.copy()
+        out, vel = projected_joint_couplings(couplings, qpos, qvel if with_velocity else None)
+        assert out is not qpos
+        np.testing.assert_array_equal(out, qpos)
+        out += 1
+        np.testing.assert_array_equal(qpos, before[0])
+        if with_velocity:
+            assert vel is not qvel
+            np.testing.assert_array_equal(vel, qvel)
+            vel += 1
+            np.testing.assert_array_equal(qvel, before[1])
+        else:
+            assert vel is None
+        return
+
+    torch = pytest.importorskip("torch")
+    device = "cuda" if backend == "torch-cuda" else "cpu"
+    if device == "cuda" and not torch.cuda.is_available():
+        pytest.skip("CUDA unavailable")
+    c = couplings.as_torch(device=device, dtype=torch.float64)
+    q = torch.tensor(qpos, dtype=torch.float64, device=device, requires_grad=True)
+    v = torch.tensor(qvel, dtype=torch.float64, device=device, requires_grad=True) if with_velocity else None
+    out, vel = projected_joint_couplings(c, q, v)
+    assert out is not q
+    torch.testing.assert_close(out, q)
+    if with_velocity:
+        assert vel is not v
+        torch.testing.assert_close(vel, v)
+        inputs, loss = (q, v), out.sum() + vel.sum()
+    else:
+        assert vel is None
+        inputs, loss = (q,), out.sum()
+    for source, gradient in zip(inputs, torch.autograd.grad(loss, inputs)):
+        torch.testing.assert_close(gradient, torch.ones_like(source))
+    with torch.no_grad():
+        out.add_(1)
+        if vel is not None:
+            vel.add_(1)
+    torch.testing.assert_close(q.detach(), torch.tensor(qpos, dtype=torch.float64, device=device))
+    if v is not None:
+        torch.testing.assert_close(v.detach(), torch.tensor(qvel, dtype=torch.float64, device=device))
+
+
 def test_functional_projection_gradients() -> None:
     """Torch gradients through the chain match finite differences and the chain
     rule; overwritten dependents and locked joints get none."""

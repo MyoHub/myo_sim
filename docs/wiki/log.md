@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-12 — Copy uncoupled functional projections
+Changed: myo_sim/physics/joint_coupling.py, tests/test_physics_joint_coupling.py
+Why: the functional projection returned its inputs when no joint equalities were active, so editing an output could mutate the original state; empty projections now return independent arrays while preserving Torch gradients.
+
 ## 2026-11-11 — Keep interpreter caches out of distributions
 Changed: pyproject.toml, MANIFEST.in
 Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
