@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Linear XML composition copies
+Changed: myo_sim/build/utils.py, tests/test_build_utils.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: recursive subtree copies and child-list searches repeated work during model loading; copy each node once while preserving include expansion and mirror output.
+
 ## 2026-11-11 — Keep interpreter caches out of distributions
 Changed: pyproject.toml, MANIFEST.in
 Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.

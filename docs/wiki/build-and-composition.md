@@ -160,6 +160,10 @@ A frozen dataclass that controls how `mirror_element()` transforms the right-sid
 
 Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement. Override specific fields only when the default logic produces incorrect results for a new body part.
 
+`mirror_element()` and `expand_component_element()` return independent trees and
+preserve child order, XML text and tails. Each copies a node once while walking
+the tree, avoiding repeated subtree copies during composition.
+
 ### `add_contact_pairs(spec, contacts_xml, include_pair=None)`
 
 Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<pair>` element into the `MjSpec` via `spec.add_pair()`. The optional `include_pair` callable receives the XML element and returns `False` to skip a pair (used to exclude left-arm pairs when `include_left_arm_contacts=False`).

@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import copy
 import math
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
@@ -182,11 +181,12 @@ def expand_component_element(element: ET.Element, base_path: Path) -> list[ET.El
             raise FileNotFoundError(f"MJCF include not found: {include_path} (resolved from {base_path} / {include_file!r})")
         return component_children(include_path)
 
-    expanded = copy.deepcopy(element)
-    for child in list(expanded):
-        expanded.remove(child)
-        for replacement in expand_component_element(child, base_path):
-            expanded.append(replacement)
+    # Copy this node once; recursively copying its whole subtree at every level
+    # repeats work for every ancestor in a deeply nested model.
+    expanded = ET.Element(element.tag, element.attrib)
+    expanded.text, expanded.tail = element.text, element.tail
+    for child in element:
+        expanded.extend(expand_component_element(child, base_path))
     return [expanded]
 
 
@@ -303,11 +303,10 @@ def mirror_fullinertia(element: ET.Element) -> None:
 
 
 def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
-    mirrored = copy.deepcopy(element)
-    for child in list(mirrored):
-        index = list(mirrored).index(child)
-        mirrored.remove(child)
-        mirrored.insert(index, mirror_element(child, rules))
+    """Return a mirrored copy, visiting and copying each node once."""
+    mirrored = ET.Element(element.tag, element.attrib)
+    mirrored.text, mirrored.tail = element.text, element.tail
+    mirrored.extend(mirror_element(child, rules) for child in element)
 
     for attr_name, attr_value in list(mirrored.attrib.items()):
         if attr_name in NAME_REFERENCE_ATTRS:
