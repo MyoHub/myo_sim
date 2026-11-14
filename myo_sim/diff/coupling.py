@@ -99,14 +99,18 @@ class JointCouplings:
     def expand(self, qpos_ind: torch.Tensor, qvel_ind: torch.Tensor | None = None) -> tuple[torch.Tensor, torch.Tensor | None]:
         """Full ``qpos`` (..., nq) and ``qvel`` (..., nv) from the independent coordinates and velocities."""
         lead = qpos_ind.shape[:-1]
-        d = qpos_ind[..., self.c_src_q] - self.c_src_q0
+        d = qpos_ind[..., self.c_src_q] - self.c_src_q0 if self.indep_qpos else qpos_ind.new_zeros(lead + (self.nc,))
         val, der = self._poly(d)
         val = torch.where(self.c_held, self.c_coef[:, 0], val)
         qpos = qpos_ind.new_zeros(lead + (self.nq,))
         qpos = qpos.index_copy(-1, self.ind_qadr, qpos_ind).index_copy(-1, self.c_qadr, self.c_q0 + val)
         if qvel_ind is None:
             return qpos, None
-        dq = torch.where(self.c_held, torch.zeros_like(der), der * qvel_ind[..., self.c_src_v])
+        dq = (
+            torch.where(self.c_held, torch.zeros_like(der), der * qvel_ind[..., self.c_src_v])
+            if self.nind
+            else qvel_ind.new_zeros(lead + (self.nc,))
+        )
         qvel = qvel_ind.new_zeros(lead + (self.nv,))
         qvel = qvel.index_copy(-1, self.ind_dof, qvel_ind).index_copy(-1, self.c_dof, dq)
         return qpos, qvel
