@@ -184,7 +184,7 @@ def lengthrange_from_path(
     *,
     margin_m: float = LR_MARGIN_M,
 ) -> tuple[float, float, float, float, float]:
-    """Anchor mid-path at L_norm=1; span path (+margin) over (r0,r1).
+    """Span path (+margin) over (r0,r1), anchoring mid-path at 1 when the band contains it.
 
     Returns ``(LR0, LR1, L0, r0_out, r1_out)``.
     """
@@ -195,13 +195,16 @@ def lengthrange_from_path(
     op_span = r1 - r0
     if op_span <= 1e-12:
         raise ValueError("operating range (r1-r0) too small")
-    l0 = path_span / op_span
-    lr0 = mid - (1.0 - r0) * l0
-    lr1 = lr0 + path_span
-    # Recompute r so mid stays at 1 after margin padding
-    r0_out = 1.0 - (mid - lr0) / l0
-    r1_out = r0_out + path_span / l0
-    return float(lr0), float(lr1), float(l0), float(r0_out), float(r1_out)
+    if r0 < 1.0 < r1:
+        # An asymmetric operating band needs enough length on both sides of
+        # the unit-length anchor, otherwise one end of the sampled path is lost.
+        l0 = max((mid - mtu_lo) / (1.0 - r0), (mtu_hi - mid) / (r1 - 1.0))
+        lr0 = mid - (1.0 - r0) * l0
+        lr1 = mid + (r1 - 1.0) * l0
+    else:
+        l0 = path_span / op_span
+        lr0, lr1 = mtu_lo, mtu_hi
+    return float(lr0), float(lr1), float(l0), float(r0), float(r1)
 
 
 def recalc_from_fl_bounds(

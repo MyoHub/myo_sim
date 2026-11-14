@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-14 — Keep diagnostic length ranges around the full path
+Changed: tests/recalc_from_fl_bounds.py, tests/test_muscle_length_params.py
+Why: centering an asymmetric operating band at unit fibre length could exclude a sampled path endpoint; the heuristic now spans both endpoints while preserving the requested force-length band.
+
 ## 2026-11-02 — Clarify manual muscle length audit workflow
 Changed: docs/wiki/testing-guide.md
 Why: reframed tests/test_muscle_length_params.py and tests/recalc_from_fl_bounds.py as manual regression/audit infrastructure for muscle XML changes. The helper now documents that its output is a diagnostic report of remaining lengthrange / FL-bound gaps, and that heuristic recalc proposals are not a substitute for model-specific reference/conversion evidence.

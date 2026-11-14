@@ -21,6 +21,7 @@ from recalc_from_fl_bounds import (
     MuscleParams,
     PathSample,
     fl_bound_diversity,
+    lengthrange_from_path,
     operating_band_from_fl,
     propose_for_model,
     recalc_from_fl_bounds,
@@ -110,6 +111,20 @@ def test_operating_band_from_fl_contains_one_when_possible():
     r0, r1 = operating_band_from_fl(0.5, 1.6, band_frac=0.15)
     assert r0 < 1.0 < r1
     assert 0.5 <= r0 < r1 <= 1.6
+
+
+@pytest.mark.parametrize("bounds", [(0.5, 1.6), (0.1, 1.1), (1.1, 1.6)])
+def test_asymmetric_operating_band_still_spans_path(bounds: tuple[float, float]) -> None:
+    """Re-anchoring the fibre map must not discard either end of a long path."""
+    path = PathSample(joint="j", mtu_min=0.1, mtu_max=1.1)
+    r0, r1 = operating_band_from_fl(*bounds)
+    lr0, lr1, l0, out0, out1 = lengthrange_from_path(path, r0, r1)
+    assert lr0 <= path.mtu_min - 0.005 + 1e-12
+    assert lr1 >= path.mtu_max + 0.005 - 1e-12
+    assert (out0, out1) == (r0, r1)
+    if r0 < 1 < r1:
+        mid = 0.5 * (path.mtu_min + path.mtu_max)
+        assert r0 + (mid - lr0) / l0 == pytest.approx(1)
 
 
 def test_propose_for_model_smoke_myoarm_single_muscle():
