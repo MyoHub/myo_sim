@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-14 — Reject nonfinite scaling validation records
+Changed: tests/test_opensim_pose_comparison.py, docs/wiki/log.md
+Why: NaN records could disappear in the maximum self-regression score; check finite values and exact shapes before reducing both comparison gates.
+
 ## 2026-11-03 — Scaling review: per-muscle checks, wrap paths, smaller rules
 Changed: myo_sim/scaling.py, myo_sim/scaling_checks.py, tests/test_scaling.py, docs/wiki/model-scaling.md, docs/wiki/log.md, CHANGELOG.md
 Why: review of #149. The checks pooled all muscles, the wrap fallback compared only point counts, and sites, fitted primitives, aligned bodies and explicit welds did not follow the rules. Comparison with OpenSim unchanged.

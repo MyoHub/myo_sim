@@ -74,6 +74,7 @@ def _scores(sample: Mapping[str, Any], measured: dict, reference: dict, case: st
         for metric, bound in TOLERANCES[validation.category(case)].items()
     }
     scores[WRAP] = validation.wrap_increment(myo_sim, reference["opensim"], case) / TOLERANCES[WRAP]
+    assert all(np.isfinite(value) for value in scores.values()), f"{case}: nonfinite discrepancy"
     return scores
 
 
@@ -83,10 +84,35 @@ def _regression_score(sample: Mapping[str, Any], stored: Mapping[str, Any]) -> f
     worst = 0.0
     for record, expected in stored.items():
         expected = np.asarray(expected, dtype=float)
+        actual = np.asarray(sample[record], dtype=float)
+        assert actual.shape == expected.shape, f"{record}: shape mismatch"
+        assert np.isfinite(expected).all() and np.isfinite(actual).all(), f"{record}: nonfinite value"
         if expected.size:
             allowed = limits["atol_by_record"].get(record, limits["atol"]) + limits["rtol"] * np.abs(expected)
-            worst = max(worst, float(np.max(np.abs(np.asarray(sample[record], dtype=float) - expected) / allowed)))
+            worst = max(worst, float(np.max(np.abs(actual - expected) / allowed)))
     return worst
+
+
+@pytest.mark.parametrize("value", [np.nan, np.inf, -np.inf])
+@pytest.mark.parametrize("side", ["actual", "expected"])
+def test_self_regression_refuses_nonfinite_records(value: float, side: str) -> None:
+    sample, stored = {"root_heights_m": [1.0]}, {"root_heights_m": [1.0]}
+    (sample if side == "actual" else stored)["root_heights_m"] = [value]
+    with pytest.raises(AssertionError, match="nonfinite"):
+        _regression_score(sample, stored)
+
+
+def test_self_regression_refuses_broadcastable_shape_changes() -> None:
+    with pytest.raises(AssertionError, match="shape mismatch"):
+        _regression_score({"root_heights_m": [1.0]}, {"root_heights_m": [1.0, 1.0]})
+
+
+@pytest.mark.parametrize("metric", ["discrepancy", "wrap_increment"])
+def test_cross_model_scores_refuse_nonfinite_metrics(reference: dict, monkeypatch: pytest.MonkeyPatch, metric: str) -> None:
+    monkeypatch.setattr(validation, metric, lambda *args: np.nan)
+    case = MUTATED_CASES[0]
+    with pytest.raises(AssertionError, match="nonfinite discrepancy"):
+        _scores(reference["myo_sim"]["cases"][case], reference["myo_sim"], reference, case)
 
 
 def test_the_stored_halves_match_the_fixture_and_model(reference: dict) -> None:
