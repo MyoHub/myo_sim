@@ -168,6 +168,8 @@ Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<
 
 Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported frame sensors into the `MjSpec` via `spec.add_sensor()`. `myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by adding body linear and angular velocity sensors before the leg touch sensors are attached.
 
+It imports `framelinvel`, `frameangvel`, `touch` and `jointlimitfrc` (`SENSOR_TYPE_BY_TAG`). Any other sensor tag raises `ValueError` naming the tag and the file, before a sensor is added.
+
 ### `find_body(spec, body_name)` and `find_site(spec, site_name)`
 
 Thin wrappers around `spec.body(name)` / `spec.site(name)` that raise a clear `ValueError` instead of silently propagating `None` when the name is missing (e.g. a typo'd attachment site). Prefer these over calling `spec.body()`/`spec.site()` directly when a missing name should fail loudly at build time.

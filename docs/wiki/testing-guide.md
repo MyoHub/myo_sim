@@ -9,6 +9,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_sims.py` | Static XML models load without error via `mujoco.MjModel.from_xml_path` | Always before PR |
 | `test_build_registry.py` | `BuildStrategy` enum fields, `MODEL_REGISTRY` completeness | After `compose.py` changes |
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
+| `test_sensor_includes.py` | `add_sensors` imports the supported sensor tags as native MJCF does and rejects any other tag without adding a sensor | After `build/utils.py` sensor changes |
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
 | `test_chest_ownership.py` | `chest_r` in torso chain, not arm chain; no `chest_l` in bilateral models; `chest_r` stays massless and `myofullbody` totals ~84.3 kg | After chain XML changes |
 | `test_mass_convention.py` | `myofullbody` total mass and inertia sanity, only attachment frames massless and the head holds about 6.9 % of body mass | After mass, inertia or head/torso changes |
