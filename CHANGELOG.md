@@ -5,6 +5,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 ## Unreleased
 
 - **Head and trunk mass (all models with the torso chain).** The head body now carries 5.848 kg (6.94 % of body mass, de Leva 1996) and the torso 14.897 kg instead of 18.619 kg; the total of `myofullbody` is unchanged at 84.26 kg and the whole-body centre of mass rises by 1.4 cm. The OpenSim torso mass already contained the head, so the head was previously about 2.5 % of body mass. Downstream: dynamics of every model with the torso and head change slightly; policies trained on the old masses (e.g. MyoSuite and MuscleMimic `myofullbody` checkpoints) should be re-evaluated or retrained, and MyoSuite parity baselines regenerated when it moves to this release.
+- **`add_sensors` rejects sensor tags it cannot import.** A sensor include with any tag other than `framelinvel`, `frameangvel`, `touch` or `jointlimitfrc` (for example `<gyro>` or `<framepos>`) now raises `ValueError` naming the tag and the file, and adds no sensor; before, those sensors were left out of the model without a message. The shipped includes in `models/sensors/` use only the supported tags, so no model changes.
 
 ## 0.2.5
 

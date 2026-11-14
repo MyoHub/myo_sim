@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-14 — Reject unsupported sensor tags in add_sensors
+Changed: myo_sim/build/utils.py, tests/test_sensor_includes.py, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: `add_sensors` skipped every sensor tag outside its table, so a `<gyro>` or `<framepos>` in an include vanished from the model without a message.
+
 ## 2026-11-11 — Keep interpreter caches out of distributions
 Changed: pyproject.toml, MANIFEST.in
 Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
