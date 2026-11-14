@@ -7,6 +7,7 @@ import importlib.util
 import sys
 from functools import lru_cache
 from pathlib import Path
+from types import SimpleNamespace
 
 import mujoco
 import numpy as np
@@ -322,6 +323,13 @@ def test_balance_is_what_the_wiki_says(name):
     for posture in myo_sim.list_postures(name):
         margin = SCRIPT.support_margin(model, _state(model, _key_qpos(name, posture)))
         assert margin < 0.0 if posture == "seat_off" else margin > MIN_BALANCE_MARGIN_M, posture
+
+
+@pytest.mark.parametrize("com, expected", [([0.0, 0.0, 0.0], 1.0), ([2.0, 0.0, 0.0], -1.0)])
+def test_support_margin_uses_a_planar_contact_hull(com: list[float], expected: float) -> None:
+    contacts = [SimpleNamespace(pos=np.array([x, y, 0.0])) for x, y in ((1, 1), (-1, 1), (1, -1), (-1, -1), (0, -1))]
+    data = SimpleNamespace(contact=contacts, ncon=len(contacts), subtree_com=np.array([com]))
+    assert SCRIPT.support_margin(None, data) == pytest.approx(expected)
 
 
 @pytest.mark.parametrize("name", ["myoarm_r", "myoarms", "myohand_r", "myohands"])

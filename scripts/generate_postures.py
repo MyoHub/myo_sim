@@ -624,7 +624,10 @@ def support_margin(model: mujoco.MjModel, data: mujoco.MjData) -> float:
     def half(pts: np.ndarray) -> list[np.ndarray]:
         hull: list[np.ndarray] = []
         for point in pts:
-            while len(hull) > 1 and np.cross(hull[-1] - hull[-2], point - hull[-2]) <= 0:
+            while len(hull) > 1:
+                edge, offset = hull[-1] - hull[-2], point - hull[-2]
+                if edge[0] * offset[1] - edge[1] * offset[0] > 0:
+                    break
                 hull.pop()
             hull.append(point)
         return hull[:-1]
