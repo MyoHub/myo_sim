@@ -183,6 +183,8 @@ class Actuators:
 
     def _per_actuator_act(self, act: torch.Tensor) -> torch.Tensor:
         """Activation of each actuator, (..., nu) (0 for stateless actuators)."""
+        if not self.na:
+            return act.new_zeros(act.shape[:-1] + (self.nu,))
         a = act[..., self.act_adr]
         return torch.where(self.has_act, a, torch.zeros_like(a))
 

@@ -21,6 +21,37 @@ from myo_sim.diff import MuscleTendonModel, default_side_rule  # noqa: E402
 N = 48
 
 
+def test_all_held_joints_expand_without_independent_coordinates() -> None:
+    """A held-only model has well-defined constant positions and zero velocities."""
+    from myo_sim.diff.coupling import JointCouplings
+
+    model = mujoco.MjModel.from_xml_string(
+        '<mujoco><worldbody><body><joint name="j" ref=".1"/><geom size=".1"/></body></worldbody>'
+        '<equality><joint joint1="j" polycoef=".2 9 8 7 6"/></equality></mujoco>'
+    )
+    cp = JointCouplings(model)
+    empty = torch.empty((2, 0), dtype=torch.float64)
+    qpos, qvel = cp.expand(empty, empty)
+    torch.testing.assert_close(qpos, torch.full((2, 1), model.qpos0[0] + 0.2, dtype=torch.float64))
+    torch.testing.assert_close(qvel, torch.zeros((2, 1), dtype=torch.float64))
+    torch.testing.assert_close(cp.expand(empty)[0], qpos)
+
+
+def test_stateless_actuators_have_empty_activation_dynamics() -> None:
+    """Motor-only models support the same empty activation state as MuJoCo."""
+    model = mujoco.MjModel.from_xml_string(
+        '<mujoco><worldbody><body><joint name="j"/><geom size=".1"/></body></worldbody>'
+        '<actuator><motor joint="j"/></actuator></mujoco>'
+    )
+    mt = MuscleTendonModel(model)
+    act = torch.empty((2, 0), dtype=torch.float64)
+    ctrl = torch.ones((2, 1), dtype=torch.float64)
+    torch.testing.assert_close(mt.act_dot(ctrl, act), act)
+    final, mean = mt.step_act(act, ctrl, nsteps=3)
+    torch.testing.assert_close(final, act)
+    torch.testing.assert_close(mean, act)
+
+
 def _forward(mt: MuscleTendonModel, Q, V, A, U, dtype=torch.float64):
     t = [torch.tensor(x, dtype=dtype) for x in (Q, V, A, U)]
     out = mt.forward(*t)
