@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-14 — Match generated XML materials and site groups by name
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, docs/wiki/build-and-composition.md, CHANGELOG.md
+Why: `MjSpec.to_xml()` writes frame-held geoms and sites after a body's other ones, so writing compiled materials and site groups in document order swapped them between elements of edited specs.
+
 ## 2026-11-11 — Preserve generated XML appearance
 Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
 Why: merging exported attachment defaults replaced left-arm materials and changed attachment site groups when generated XML was reloaded.

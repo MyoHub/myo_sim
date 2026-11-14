@@ -35,6 +35,8 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
 When exported attachment defaults overlap, generation writes the compiled geom
 materials and site visibility groups explicitly, alongside collision flags. This
 keeps distinct left/right materials and attachment marker groups when the XML is reloaded.
+Each value goes to the XML element of the same name (unnamed elements: by their order within their body), because
+`MjSpec.to_xml()` writes the geoms and sites a body holds in a frame after its other ones.
 
 ## Keyframes
 

@@ -790,6 +790,52 @@ def enable_floor_collision(root: ET.Element) -> None:
             geom.set("conaffinity", "1")
 
 
+def compiled_element_ids(root: ET.Element, model: mujoco.MjModel, tag: str) -> list[tuple[ET.Element, int]]:
+    """Pair every worldbody ``geom`` or ``site`` element with its id in ``model``.
+
+    ``MjSpec.to_xml()`` writes the elements a body holds in a frame after its other elements, so document
+    order is not compiled order. Named bodies and elements are matched by name. Unnamed ones keep their order
+    among the unnamed elements of their body (unnamed bodies: of the whole tree); a frame can change that
+    order too, so name the elements you create in frames.
+    """
+    body_type = mujoco.mjtObj.mjOBJ_BODY
+    element_type = getattr(mujoco.mjtObj, f"mjOBJ_{tag.upper()}")
+    count = getattr(model, f"n{tag}")
+    found: list[tuple[ET.Element, int]] = []
+    worldbody = root.find("worldbody")
+    if worldbody is not None:
+        unnamed_bodies = iter([i for i in range(1, model.nbody) if not mujoco.mj_id2name(model, body_type, i)])
+
+        def collect(parent: ET.Element, body_id: int) -> None:
+            for child in parent:
+                if child.tag == tag:
+                    found.append((child, body_id))
+                elif child.tag == "frame":
+                    collect(child, body_id)
+                elif child.tag == "body":
+                    name = child.get("name")
+                    collect(child, mujoco.mj_name2id(model, body_type, name) if name else next(unnamed_bodies, -1))
+
+        collect(worldbody, 0)
+    if len(found) != count:
+        raise ValueError(f"Generated XML has {len(found)} {tag}s, but compiled model has {count}")
+
+    unnamed: dict[int, list[int]] = {}
+    for element_id in range(count):
+        if not mujoco.mj_id2name(model, element_type, element_id):
+            body_id = int(getattr(model, f"{tag}_bodyid")[element_id])
+            unnamed.setdefault(body_id, []).append(element_id)
+    unnamed_ids = {body_id: iter(ids) for body_id, ids in unnamed.items()}
+    pairs: list[tuple[ET.Element, int]] = []
+    for element, body_id in found:
+        name = element.get("name")
+        element_id = mujoco.mj_name2id(model, element_type, name) if name else next(unnamed_ids.get(body_id, iter(())), -1)
+        pairs.append((element, element_id))
+    if sorted(element_id for _, element_id in pairs) != list(range(count)):
+        raise ValueError(f"Generated XML {tag}s do not match the names and bodies of the compiled model")
+    return pairs
+
+
 def iter_worldbody_geoms(root: ET.Element) -> list[ET.Element]:
     worldbody = root.find("worldbody")
     if worldbody is None:
@@ -810,16 +856,11 @@ def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel)
 
 def apply_compiled_visual_attributes(root: ET.Element, model: mujoco.MjModel) -> None:
     """Preserve effective materials and site groups after merging exported defaults."""
-    for geom_id, geom in enumerate(iter_worldbody_geoms(root)):
+    for geom, geom_id in compiled_element_ids(root, model, "geom"):
         material_id = int(model.geom_matid[geom_id])
         # An empty material explicitly clears any inherited class material.
         geom.set("material", model.mat(material_id).name if material_id >= 0 else "")
-
-    worldbody = root.find("worldbody")
-    sites = list(worldbody.iter("site")) if worldbody is not None else []
-    if len(sites) != model.nsite:
-        raise ValueError(f"Generated XML has {len(sites)} sites, but compiled model has {model.nsite}")
-    for site_id, site in enumerate(sites):
+    for site, site_id in compiled_element_ids(root, model, "site"):
         site.set("group", str(int(model.site_group[site_id])))
 
 

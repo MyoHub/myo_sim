@@ -5,6 +5,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 ## Unreleased
 
 - **Head and trunk mass (all models with the torso chain).** The head body now carries 5.848 kg (6.94 % of body mass, de Leva 1996) and the torso 14.897 kg instead of 18.619 kg; the total of `myofullbody` is unchanged at 84.26 kg and the whole-body centre of mass rises by 1.4 cm. The OpenSim torso mass already contained the head, so the head was previously about 2.5 % of body mass. Downstream: dynamics of every model with the torso and head change slightly; policies trained on the old masses (e.g. MyoSuite and MuscleMimic `myofullbody` checkpoints) should be re-evaluated or retrained, and MyoSuite parity baselines regenerated when it moves to this release.
+- **Generated XML keeps the compiled geom materials and site groups.** `write_spec_xml()` and `sanitize_spec_xml(..., model=...)` now write every geom's compiled `material` and every site's compiled `group`, each onto the XML element of the same name (unnamed elements: by their order within their body). Before, merging the exported default classes gave 29 left-arm geoms of the generated `myoarms` and `myofullbody` XML `MatSkin` instead of `MatSkin_l` and changed the groups of `arm_root_attach_r` and `arm_root_attach_l` on reload. Both skin materials have the same colour in the shipped models, so nothing looks different there; specs that recolour one side keep it.
 
 ## 0.2.5
 
