@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-14 — Match exported collision flags by geom name
+Changed: myo_sim/build/compose.py, tests/test_build_registry.py, CHANGELOG.md
+Why: `MjSpec.to_xml()` writes frame-held geoms after a body's other geoms, so writing compiled collision flags in document order swapped them between geoms of edited specs.
+
 ## 2026-11-11 — Keep interpreter caches out of distributions
 Changed: pyproject.toml, MANIFEST.in
 Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.

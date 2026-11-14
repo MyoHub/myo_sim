@@ -202,6 +202,20 @@ def test_generated_myofullbody_uses_musclemimic_scene(tmp_path):
     assert 'mesh name="meshscene"' not in source
 
 
+def collision_flags_by_name(model: mujoco.MjModel) -> dict[str | tuple[str, int], tuple[int, int]]:
+    """Collision flags keyed by geom name, or by body name and order among the body's unnamed geoms."""
+    flags: dict[str | tuple[str, int], tuple[int, int]] = {}
+    unnamed_count: dict[int, int] = {}
+    for geom_id in range(model.ngeom):
+        key: str | tuple[str, int] = model.geom(geom_id).name
+        if not key:
+            body_id = int(model.geom_bodyid[geom_id])
+            key = (model.body(body_id).name, unnamed_count.get(body_id, 0))
+            unnamed_count[body_id] = key[1] + 1
+        flags[key] = (int(model.geom_contype[geom_id]), int(model.geom_conaffinity[geom_id]))
+    return flags
+
+
 def test_generated_xml_preserves_geom_collision_flags(tmp_path):
     output_paths = compose.generate_xml_files(tmp_path)
 
@@ -209,8 +223,33 @@ def test_generated_xml_preserves_geom_collision_flags(tmp_path):
         built_model = load_model(model_name)
         generated_model = mujoco.MjModel.from_xml_path(str(output_path))
 
-        assert list(generated_model.geom_contype) == list(built_model.geom_contype), output_path
-        assert list(generated_model.geom_conaffinity) == list(built_model.geom_conaffinity), output_path
+        assert collision_flags_by_name(generated_model) == collision_flags_by_name(built_model), output_path
+
+
+def test_generated_xml_preserves_collision_flags_of_geoms_in_frames(tmp_path):
+    # MjSpec.to_xml() writes geoms created in a frame after the body's other geoms, and a frame's bodies first.
+    size = [0.05, 0, 0]
+    spec = mujoco.MjSpec()
+    spec.worldbody.add_frame(pos=[1, 0, 0]).add_geom(name="world_frame", size=size, contype=0, conaffinity=4)
+    body = spec.worldbody.add_body(name="body", pos=[0, 0, 1])
+    body.add_freejoint()
+    body.add_geom(name="plain_first", size=size, contype=1, conaffinity=1)
+    frame = body.add_frame(name="named_frame", pos=[0.2, 0, 0])
+    frame.add_geom(name="in_named_frame", size=size, contype=0, conaffinity=0)
+    child_in_frame = frame.add_body(name="child_in_frame")
+    child_in_frame.add_geom(size=size, contype=2, conaffinity=0)
+    child_in_frame.add_geom(size=size, contype=0, conaffinity=2)
+    body.add_frame(pos=[0, 0.2, 0]).add_geom(name="in_unnamed_frame", size=size, contype=4, conaffinity=0)
+    body.add_geom(name="plain_last", size=size, contype=1, conaffinity=2)
+    body.add_body(name="child_plain").add_geom(size=size, contype=8, conaffinity=1)
+    body.add_geom(size=size, contype=2, conaffinity=2)
+    reference = spec.compile()
+    output_path = tmp_path / "frames.xml"
+
+    compose.write_spec_xml(spec, output_path)
+    generated = mujoco.MjModel.from_xml_path(str(output_path))
+
+    assert collision_flags_by_name(generated) == collision_flags_by_name(reference)
 
 
 def test_build_kwargs_do_not_leak_into_later_builds():
