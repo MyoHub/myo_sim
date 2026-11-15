@@ -4,7 +4,16 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Empty torch fatigue selections.** `TorchFatigueState.from_mj_model()` now creates zero muscle columns for motor-only models and explicit empty selections, matching `CumulativeFatigue`; it previously allocated fatigue state for every actuator and rejected empty reset vectors.
+- **Complete imported keyframe states.** `build.utils.add_keyframes()` now preserves muscle activation, actuator control and mocap position/orientation (`act`, `ctrl`, `mpos`, `mquat`) alongside time, position and velocity. Resetting an imported keyframe previously silently used defaults for these fields. Unnamed keyframes are accepted, and omitted fields and partial state arrays retain MuJoCo's native defaults.
+
+- **`myo_sim.physics`: joint couplings and 3CC-r muscle fatigue (from MyoSuite).** `joint_coupling` puts coupled joints on their polynomials (NumPy or torch, in place or differentiable), `fatigue` holds the 3CC-r model with its cited per-group parameters (`CumulativeFatigue` in NumPy, `TorchFatigueState` batched in torch and fused with `torch.compile` on CUDA), `fatigue_jax` the same step in JAX, and `muscle_groups` the functional muscle groups. NumPy is enough to import them; torch and JAX are optional (`myo-sim[torch]`, `myo-sim[jax]`). No model file changes.
+- **Torch fatigue reset input ownership.** Reset vectors are copied before writing live compartments. NumPy and device-tensor views of active state no longer silently become zero fatigue, indexed resets can use views of fatigued state without overlapping-memory errors, and reversed float32 NumPy vectors are accepted without negative-stride errors.
+- **Torch fatigue checkpoint restore.** `TorchFatigueState.load_state_dict()` now converts and validates all three compartments before modifying live values, so a rejected checkpoint leaves the running fatigue state intact. Existing broadcast-compatible restores and buffer references are preserved.
+- **Generated XML inertia precision.** Edited principal moments are exported at roundtrip precision so planar bodies remain on the physical inertia triangle when reloaded. No balancing or mass-distribution adjustment is applied.
+
 - **Head and trunk mass (all models with the torso chain).** The head body now carries 5.848 kg (6.94 % of body mass, de Leva 1996) and the torso 14.897 kg instead of 18.619 kg; the total of `myofullbody` is unchanged at 84.26 kg and the whole-body centre of mass rises by 1.4 cm. The OpenSim torso mass already contained the head, so the head was previously about 2.5 % of body mass. Downstream: dynamics of every model with the torso and head change slightly; policies trained on the old masses (e.g. MyoSuite and MuscleMimic `myofullbody` checkpoints) should be re-evaluated or retrained, and MyoSuite parity baselines regenerated when it moves to this release.
+- **`add_sensors` rejects sensor tags it cannot import.** A sensor include with any tag other than `framelinvel`, `frameangvel`, `touch` or `jointlimitfrc` (for example `<gyro>` or `<framepos>`) now raises `ValueError` naming the tag and the file, and adds no sensor; before, those sensors were left out of the model without a message. The shipped includes in `models/sensors/` use only the supported tags, so no model changes.
 
 ## 0.2.5
 

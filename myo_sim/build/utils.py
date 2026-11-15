@@ -147,10 +147,19 @@ def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = N
 
 
 def add_sensors(spec: object, sensors_xml: Path) -> None:
-    """Add supported sensors from an MJCF include file."""
-    for sensor in ET.parse(sensors_xml).getroot().iter():
-        if sensor.tag not in SENSOR_TYPE_BY_TAG:
-            continue
+    """Add the sensors of an MJCF include file.
+
+    Raises:
+        ValueError: If the file holds a sensor tag outside ``SENSOR_TYPE_BY_TAG``; no sensor is added then.
+    """
+    sensors = [sensor for block in ET.parse(sensors_xml).getroot().iter("sensor") for sensor in block]
+    unsupported = sorted({sensor.tag for sensor in sensors} - SENSOR_TYPE_BY_TAG.keys())
+    if unsupported:
+        raise ValueError(
+            f"{sensors_xml}: unsupported sensor tags {', '.join(f'<{tag}>' for tag in unsupported)}; "
+            f"add_sensors imports only {', '.join(f'<{tag}>' for tag in SENSOR_TYPE_BY_TAG)}"
+        )
+    for sensor in sensors:
         default_objtype, default_attr = _SENSOR_DEFAULT_OBJ.get(sensor.tag, ("", None))
         objtype_name = sensor.get("objtype", default_objtype)
         objname = sensor.get("objname") or (sensor.get(default_attr) if default_attr else None)
@@ -173,7 +182,7 @@ def add_sensors(spec: object, sensors_xml: Path) -> None:
 
 
 def add_keyframes(spec: object, keyframes_xml: Path) -> None:
-    """Add keyframes from an MJCF include file.
+    """Add complete keyframe states from an MJCF include file.
 
     Kept as a spec-level step (not merged into the composed child XML) because a
     keyframe's ``qpos`` is only valid once the model's DoFs are fixed -- e.g. for
@@ -181,11 +190,11 @@ def add_keyframes(spec: object, keyframes_xml: Path) -> None:
     """
     for key in ET.parse(keyframes_xml).getroot().iter("key"):
         added = spec.add_key()
-        added.name = key.get("name")
-        if key.get("qpos"):
-            added.qpos = float_list(key.get("qpos"))
-        if key.get("qvel"):
-            added.qvel = float_list(key.get("qvel"))
+        if (name := key.get("name")) is not None:
+            added.name = name
+        for field in ("qpos", "qvel", "act", "ctrl", "mpos", "mquat"):
+            if value := key.get(field):
+                setattr(added, field, float_list(value))
         if key.get("time"):
             added.time = float(key.get("time"))
 
