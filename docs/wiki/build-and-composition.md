@@ -197,3 +197,5 @@ Full-body observation compatibility sensors live under `myo_sim/models/sensors/`
 **`find_body` / `find_site` error on missing names.** Prefer these over direct `spec.body(name)` / `spec.site(name)` calls so a typo'd attachment site fails with a clear `ValueError` at build time instead of a confusing `None`-attribute error deeper in `MjSpec.attach()`.
 
 **`balanceinertia = True` on all specs.** Every loaded spec sets `compiler.balanceinertia = True` to prevent inertia-validation errors in OpenSim-converted bodies. Do not omit this when adding new component specs.
+
+**Unnamed frame elements during export.** `write_spec_xml()` assigns temporary unique names to a copy of the spec before compiling and serializing it. This preserves compiled collision/visual attributes when frames reorder unnamed elements. Temporary names are removed from the generated XML; the caller's spec is unchanged.
