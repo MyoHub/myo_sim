@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Add muscle activation time-constant transforms
+Changed: myo_sim/physics/activation_dynamics.py, myo_sim/physics/__init__.py, tests/test_physics_activation_dynamics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: `mjDYN_MUSCLE` excitation-contraction rise and relaxation time constants (`dynprm[:, :2]`) can be scaled orthogonally on compiled models or editable specs without changing steady-state peak force, stateless muscles or geometry.
+
 ## 2026-11-15 — Muscle operating-range and moment-arm CI gates
 Changed: tests/test_muscle_operating_range.py, docs/wiki/testing-guide.md, docs/wiki/log.md
 Why: tendon, wrap or `lmax` edits can move muscles outside `[lmin, lmax]` with zero active contractile force while still compiling cleanly; fast dataset-free checks now gate active force capacity and moment-arm coupling across all composed models.

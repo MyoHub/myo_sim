@@ -20,6 +20,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_mass_convention.py` | `myofullbody` total mass and inertia sanity, only attachment frames massless and the head holds about 6.9 % of body mass | After mass, inertia or head/torso changes |
 | `test_physics_muscle_strength.py` | Active/passive force scaling, automatic force resolution, spec equivalence, coupled MVC torque probes and bounded strength calibration | After strength-transform or MVC-calibration changes |
 | `test_physics_body_mass.py` | Selected mass modes, native refreshed constants, automatic-force preservation and input ownership | After mass-transform changes |
+| `test_physics_activation_dynamics.py` | `mjDYN_MUSCLE` rise/relaxation time-constant scaling, spec equivalence, ODE trajectory response and input validation | After activation-dynamics changes |
 | `test_fragment_registry.py` | FragmentRegistry legacy entries and all composed `myo_sim.load()` names build and forward | After `__init__.py` changes |
 | `test_passive_torso_build.py` | Passive torso scaffold builds without error | After torso XML or compose changes |
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |
