@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Compare dense mass matrices across MuJoCo versions
+Changed: tests/test_physics_body_mass.py
+Why: MuJoCo 3.11 removed MjData.qM and exposes the dense conversion through the data-taking mj_fullM overload.
+
 ## 2026-11-12 — Add selected-body mass transforms
 Changed: myo_sim/physics/body_mass.py, tests/test_physics_body_mass.py, docs/wiki/model-parameters.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: represented model mass and an explicit participant/reference ratio are different inputs; model-only copy transforms preserve geometry and force capacity while refreshing native constants.

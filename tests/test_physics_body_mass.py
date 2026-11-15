@@ -35,6 +35,16 @@ def _data(model: mujoco.MjModel, activation: float) -> mujoco.MjData:
     return data
 
 
+def _mass_matrix(model: mujoco.MjModel) -> np.ndarray:
+    data = _data(model, 0.4)
+    matrix = np.empty((model.nv, model.nv))
+    if hasattr(data, "qM"):
+        mujoco.mj_fullM(model, matrix, data.qM)
+    else:
+        mujoco.mj_fullM(model, data, matrix)
+    return matrix
+
+
 def test_partial_mass_modes_are_distinct_and_preserve_automatic_strength() -> None:
     original = _model()
     ratio = scale_body_mass(original, participant_mass=90, reference_mass=60, bodies=["arm"])
@@ -68,7 +78,7 @@ def test_refreshed_constants_match_native_recompilation_with_joint_coupling() ->
     native = _model(arm_mass=6)
     for field in ("body_mass", "body_inertia", "body_subtreemass", "body_invweight0", "actuator_acc0"):
         np.testing.assert_allclose(getattr(scaled, field), getattr(native, field), rtol=1e-12, atol=1e-12)
-    np.testing.assert_allclose(_data(scaled, 0.4).qM, _data(native, 0.4).qM, rtol=1e-12)
+    np.testing.assert_allclose(_mass_matrix(scaled), _mass_matrix(native), rtol=1e-12)
     assert scaled.stat.meanmass == pytest.approx(native.stat.meanmass)
     assert scaled.stat.meaninertia == pytest.approx(native.stat.meaninertia)
     assert scaled.body_subtreemass[scaled.body("torso").id] == pytest.approx(27)
