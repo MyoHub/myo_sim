@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from types import SimpleNamespace
 from typing import Any
 from unittest.mock import MagicMock
@@ -247,6 +248,60 @@ class TestCumulativeFatigue:
         assert not np.shares_memory(f.MF, initial)
         f.reset(fatigue_reset_vec=initial)
         np.testing.assert_array_equal(f.MF, initial)
+
+    @pytest.mark.parametrize("shape", [(), (2,), (3, 1), (3, 3)])
+    def test_numpy_reset_rejects_wrong_shape_without_changing_state(self, shape: tuple[int, ...]) -> None:
+        f = _make_fatigue_model(3)
+        f.step(np.full(3, 0.6), dt=0.02)
+        before = f.state_dict()
+
+        with pytest.raises(ValueError, match="shape"):
+            f.reset(fatigue_reset_vec=np.full(shape, 0.2))
+
+        assert f.state_dict() == before
+        assert f.step(np.full(3, 0.6), dt=0.02).shape == (3,)
+
+    @pytest.mark.parametrize("field", ["MA", "MR", "MF"])
+    @pytest.mark.parametrize("invalid", [[0.2], [[0.1], [0.2], [0.3]], ["invalid"]])
+    def test_numpy_checkpoint_rejects_invalid_state_before_writing(self, field: str, invalid: list) -> None:
+        f = _make_fatigue_model(3)
+        f.step(np.full(3, 0.6), dt=0.02)
+        before = f.state_dict()
+        checkpoint = _make_fatigue_model(3).state_dict()
+        checkpoint[field] = invalid
+
+        with pytest.raises(ValueError):
+            f.load_state_dict(checkpoint)
+
+        assert f.state_dict() == before
+        assert f.step(np.full(3, 0.6), dt=0.02).shape == (3,)
+
+    @pytest.mark.parametrize("missing", ["MA", "MR", "MF"])
+    def test_numpy_checkpoint_missing_compartment_leaves_state_unchanged(self, missing: str) -> None:
+        f = _make_fatigue_model(3)
+        f.step(np.full(3, 0.6), dt=0.02)
+        before = f.state_dict()
+        checkpoint = _make_fatigue_model(3).state_dict()
+        del checkpoint[missing]
+
+        with pytest.raises(KeyError):
+            f.load_state_dict(checkpoint)
+
+        assert f.state_dict() == before
+
+    @pytest.mark.parametrize("n", [0, 3])
+    def test_numpy_checkpoint_roundtrip_preserves_next_step(self, n: int) -> None:
+        source, restored = _make_fatigue_model(n), _make_fatigue_model(n)
+        source.reset(fatigue_reset_vec=np.full(n, 0.3))
+        source.step(np.full(n, 0.7), dt=0.02)
+        checkpoint = source.state_dict()
+        restored.load_state_dict(checkpoint)
+        for actual, expected in zip(
+            restored.compute_act(np.full(n, 0.2), dt=0.02),
+            source.compute_act(np.full(n, 0.2), dt=0.02),
+        ):
+            np.testing.assert_array_equal(actual, expected)
+        assert checkpoint != restored.state_dict() or n == 0
 
     def test_custom_rates(self) -> None:
         f = _make_fatigue_model(2)
@@ -560,6 +615,41 @@ class TestCumulativeFatigue:
             np.testing.assert_allclose(gpu.MA[0].numpy(), cpu.MA, atol=1e-5)
             np.testing.assert_allclose(gpu.MF[0].numpy(), cpu.MF, atol=1e-5)
 
+    @pytest.mark.parametrize("use_uniform_params", [False, True])
+    @pytest.mark.parametrize(
+        ("actuators", "selection"),
+        [
+            ('<motor name="motor0" joint="j"/><motor name="motor1" joint="j"/>', None),
+            ('<muscle name="muscle" joint="j" lengthrange="0 1" force="1"/><motor name="motor" joint="j"/>', []),
+            ("", None),
+        ],
+        ids=["motor-only", "explicit-empty", "no-actuators"],
+    )
+    def test_empty_muscle_selection_has_no_torch_state(
+        self, actuators: str, selection: list[str] | None, use_uniform_params: bool
+    ) -> None:
+        """Empty selections must stay empty through factory, reset, step and restore."""
+        torch = pytest.importorskip("torch")
+        import mujoco
+
+        from myo_sim.physics.fatigue import CumulativeFatigue, TorchFatigueState
+
+        model = mujoco.MjModel.from_xml_string(
+            '<mujoco><worldbody><body><joint name="j"/><geom size=".1"/></body></worldbody>'
+            f"<actuator>{actuators}</actuator></mujoco>"
+        )
+        cpu = CumulativeFatigue(model, muscles=selection, use_uniform_params=use_uniform_params)
+        gpu = TorchFatigueState.from_mj_model(model, 2, muscles=selection, use_uniform_params=use_uniform_params)
+        assert cpu.na == 0
+        for compartment in (gpu.MA, gpu.MR, gpu.MF):
+            assert compartment.shape == (2, cpu.na)
+        gpu.reset(fatigue_reset_vec=np.empty(0))
+        snapshot = gpu.state_dict()
+        for _ in range(2):
+            assert gpu.step(torch.empty((2, 0)), 0.02).shape == (2, 0)
+        gpu.load_state_dict(snapshot)
+        assert gpu.state_dict() == {"MA": [[], []], "MR": [[], []], "MF": [[], []]}
+
     def test_torch_state_dtype_is_fixed(self) -> None:
         """A float64 excitation no longer switches the float32 state to float64."""
         torch = pytest.importorskip("torch")
@@ -572,6 +662,36 @@ class TestCumulativeFatigue:
         f32.step(tl.float(), 0.02)
         assert f64.MA.dtype == f64.MR.dtype == f64.MF.dtype == out.dtype == torch.float32
         torch.testing.assert_close(f64.MA, f32.MA)
+
+    @pytest.mark.parametrize("device", ["cpu", "cuda"])
+    def test_torch_snapshot_preserves_state_and_gradients(self, device: str, monkeypatch: pytest.MonkeyPatch) -> None:
+        """A JSON checkpoint works after a differentiable step without detaching live state."""
+        torch = pytest.importorskip("torch")
+        if device == "cuda" and not torch.cuda.is_available():
+            pytest.skip("CUDA unavailable")
+        from myo_sim.physics import fatigue as fatigue_module
+
+        monkeypatch.setattr(fatigue_module, "TORCH_FATIGUE_COMPILE", "0")
+        fatigue = fatigue_module.TorchFatigueState(2, 3, device=device)
+        fatigue.reset(fatigue_reset_vec=[0.1, 0.2, 0.3])
+        excitation = torch.tensor([[0.3, 0.5, 0.8], [0.2, 0.6, 0.7]], device=device, requires_grad=True)
+        fatigue.step(excitation, 0.02)
+        original = {name: getattr(fatigue, name) for name in ("MA", "MR", "MF")}
+        values = {name: state.detach().clone() for name, state in original.items()}
+        expected_gradient = torch.autograd.grad(fatigue.MA.sum(), excitation, retain_graph=True)[0]
+
+        snapshot = json.loads(json.dumps(fatigue.state_dict()))
+        restored = fatigue_module.TorchFatigueState(2, 3, device=device)
+        restored.load_state_dict(snapshot)
+        for name, state in original.items():
+            assert getattr(fatigue, name) is state
+            assert state.requires_grad and state.grad_fn is not None
+            torch.testing.assert_close(state.detach(), values[name])
+            torch.testing.assert_close(getattr(restored, name), values[name])
+        gradient = torch.autograd.grad(fatigue.MA.sum(), excitation)[0]
+        assert bool(torch.isfinite(gradient).all())
+        assert bool((gradient != 0).any())
+        torch.testing.assert_close(gradient, expected_gradient)
 
     @pytest.mark.parametrize("device", ["cpu", "cuda"])
     def test_compiled_torch_step_matches_eager(self, device: str) -> None:
@@ -703,6 +823,47 @@ class TestCumulativeFatigue:
             np.testing.assert_allclose(got, np.tile(getattr(cpu, name), (2, 1)), atol=1e-7)
         torch.testing.assert_close(gpu.MF[[0, 2]], before[[0, 2]])
 
+    @pytest.mark.parametrize("device", ["cpu", "cuda"])
+    @pytest.mark.parametrize("kind", ["list", "numpy", "numpy-reversed", "numpy-reversed32", "tensor", "tensor-grad"])
+    def test_torch_reset_accepts_vectors_on_the_state_device(self, device: str, kind: str) -> None:
+        """Tensor resets work without a host NumPy conversion, including CUDA tensors."""
+        torch = pytest.importorskip("torch")
+        from myo_sim.physics.fatigue import TorchFatigueState
+
+        if device == "cuda" and not torch.cuda.is_available():
+            pytest.skip("CUDA is unavailable")
+        fatigue = TorchFatigueState(num_envs=4, n_muscles=3, device=device)
+        fatigue.MA.fill_(0.2)
+        fatigue.MR.fill_(0.5)
+        fatigue.MF.fill_(0.3)
+        before = tuple(state.clone() for state in (fatigue.MA, fatigue.MR, fatigue.MF))
+        values = [0.1, 0.4, 0.8]
+        if kind == "list":
+            vec = values
+        elif kind == "numpy":
+            vec = np.array(values, dtype=np.float64)
+        elif kind in ("numpy-reversed", "numpy-reversed32"):
+            dtype = np.float32 if kind == "numpy-reversed32" else np.float64
+            vec = np.array(values[::-1], dtype=dtype)[::-1]
+            assert vec.strides[0] < 0
+        else:
+            vec = torch.tensor(values, dtype=torch.float64, device=device, requires_grad=kind == "tensor-grad")
+        rows = torch.tensor([1, 3], device=device)
+        fatigue.reset(rows, fatigue_reset_vec=vec)
+
+        expected_mf = torch.tensor(values, dtype=torch.float32, device=device).expand(2, -1)
+        for state, expected, original in zip(
+            (fatigue.MA, fatigue.MR, fatigue.MF),
+            (torch.zeros_like(expected_mf), 1 - expected_mf, expected_mf),
+            before,
+        ):
+            assert state.dtype == torch.float32
+            assert state.device.type == device
+            torch.testing.assert_close(state[rows], expected)
+            torch.testing.assert_close(state[[0, 2]], original[[0, 2]])
+        if isinstance(vec, torch.Tensor):
+            torch.testing.assert_close(vec.detach(), torch.tensor(values, dtype=torch.float64, device=device))
+
     def test_torch_reset_random_matches_cpu_distribution(self) -> None:
         """Random resets: seeded, per env, and the CPU construction of the state.
 
@@ -747,6 +908,9 @@ class TestCumulativeFatigue:
             gpu.reset(fatigue_reset_vec=[0.1] * 3, fatigue_reset_random=True)
         with pytest.raises(ValueError, match="length"):
             gpu.reset(fatigue_reset_vec=[0.1, 0.2])
+        for vec in (torch.tensor([0.1, 0.2]), torch.zeros(1, 3), torch.tensor(0.1)):
+            with pytest.raises(ValueError, match="length"):
+                gpu.reset(fatigue_reset_vec=vec)
         torch.testing.assert_close(gpu.MR, torch.ones(2, 3))
 
 

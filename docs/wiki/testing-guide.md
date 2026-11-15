@@ -6,9 +6,15 @@ Map of the test suite for agents working in `myo_sim`.
 
 | File | What it tests | When to run |
 |---|---|---|
+| `test_physics_fatigue.py` | Exact 3CC-r steps and NumPy/torch parity, including zero-column state for empty muscle selections | After fatigue changes; install the `torch` extra to run both backends |
+| `test_keyframe_import.py` | Imported keyframes compile and reset activation, controls and mocap state exactly like native MJCF, including omitted-field defaults | After `build.utils.add_keyframes` changes |
+| `test_torch_fatigue_reset_ownership.py` | Reset vectors viewing live compartments, selected rows, subsequent steps and preserved input gradients | After Torch fatigue reset changes; requires optional Torch, with CUDA cases skipped without a device |
+| `test_torch_fatigue_restore.py` | Failed Torch checkpoint loads preserve live compartments and the next fatigue step; valid broadcasting and buffer references are retained | After Torch fatigue restore changes; requires the optional `torch` extra, with CUDA cases skipped without a device |
 | `test_sims.py` | Static XML models load without error via `mujoco.MjModel.from_xml_path` | Always before PR |
 | `test_build_registry.py` | `BuildStrategy` enum fields, `MODEL_REGISTRY` completeness | After `compose.py` changes |
+| `test_xml_inertia_precision.py` | Edited planar inertias roundtrip without balancing; native frames and body order are retained | After serializer changes |
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
+| `test_sensor_includes.py` | `add_sensors` imports the supported sensor tags as native MJCF does and rejects any other tag without adding a sensor | After `build/utils.py` sensor changes |
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
 | `test_chest_ownership.py` | `chest_r` in torso chain, not arm chain; no `chest_l` in bilateral models; `chest_r` stays massless and `myofullbody` totals ~84.3 kg | After chain XML changes |
 | `test_mass_convention.py` | `myofullbody` total mass and inertia sanity, only attachment frames massless and the head holds about 6.9 % of body mass | After mass, inertia or head/torso changes |
@@ -26,6 +32,11 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_bimanual_muscle_symmetry.py` | Bimanual arm muscle moment arms are symmetric | Manual only |
 
 ## Fast Gate (Run Before Every PR)
+
+CI installs the locked development environment, then overrides MuJoCo with the
+matrix's floor or newest supported release (`>=3.4,<4`). Its version report and
+pytest commands use `uv run --no-sync` so uv does not restore the locked MuJoCo
+version before the checks. Keep that flag on commands after the matrix override.
 
 Run this before opening or updating a PR. It skips the two manual-only tests:
 

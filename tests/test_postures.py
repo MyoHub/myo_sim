@@ -268,3 +268,20 @@ def test_add_one_posture_by_name():
     model = spec.compile()
     assert model.nkey == named.nkey == 1
     assert np.array_equal(model.key_qpos, named.key_qpos)
+
+
+@pytest.mark.parametrize("model_name,postures", [("myoarms", None), ("myofullbody", [])])
+def test_empty_posture_selection_leaves_unfinished_spec_untouched(model_name: str, postures: list[str] | None) -> None:
+    # Editable assemblies need not compile until their bodies have mass/inertia.
+    spec = mujoco.MjSpec.from_string(
+        '<mujoco><worldbody><body name="unfinished"><joint name="hinge"/></body></worldbody>'
+        '<keyframe><key name="existing" qpos="0.2"/></keyframe></mujoco>'
+    )
+    with pytest.raises(ValueError, match="mass and inertia"):
+        spec.compile()
+
+    assert myo_sim.add_posture_keyframes(spec, model_name, postures) == []
+
+    assert len(spec.keys) == 1
+    assert spec.keys[0].name == "existing"
+    np.testing.assert_array_equal(spec.keys[0].qpos, [0.2])
