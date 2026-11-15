@@ -4,6 +4,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Selected-body mass transforms.** `myo_sim.physics.body_mass.scale_body_mass` returns a copy scaled to represented model mass or an explicit participant/reference ratio, preserving geometry and muscle strength and refreshing native constants.
 - **Isometric MVC torque probing and muscle strength calibration.** `myo_sim.physics.muscle_strength` adds `MaxTorqueMeasurement`, `StrengthCalibration`, `strength_factor_from_body_mass`, `max_torque_terms` and `calibrate_muscle_strength`, fitting bounded per-muscle strength factors to gravity-corrected isometric joint torques along coupled joint motions with pure NumPy active-set BVLS (no `scipy` runtime dependency).
 - **Model-only strength transforms.** `myo_sim.physics.muscle_strength` resolves native automatic peak force and scales active/passive force capacity on compiled models or editable specs, without importing subject fitting or environments.
 - **Empty torch fatigue selections.** `TorchFatigueState.from_mj_model()` now creates zero muscle columns for motor-only models and explicit empty selections, matching `CumulativeFatigue`; it previously allocated fatigue state for every actuator and rejected empty reset vectors.
