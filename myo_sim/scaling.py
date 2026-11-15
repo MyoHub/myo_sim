@@ -1223,7 +1223,9 @@ def _scale_muscles(
     """Optimal fibre and tendon slack lengths follow the muscle-tendon length; peak force is kept."""
     for position, actuator in enumerate(spec.actuators):
         i = ref.actuator(actuator.name).id if actuator.name else position
-        if int(ref.actuator_gaintype[i]) != int(mujoco.mjtGain.mjGAIN_MUSCLE):
+        is_muscle_gain = int(ref.actuator_gaintype[i]) == int(mujoco.mjtGain.mjGAIN_MUSCLE)
+        is_muscle_bias = int(ref.actuator_biastype[i]) == int(mujoco.mjtBias.mjBIAS_MUSCLE)
+        if not (is_muscle_gain or is_muscle_bias):
             continue
         if int(ref.actuator_trntype[i]) == int(mujoco.mjtTrn.mjTRN_TENDON):
             r = ratio[ref.actuator_trnid[i, 0]]
@@ -1232,15 +1234,15 @@ def _scale_muscles(
         else:
             r = 1.0
         actuator.lengthrange = ref.actuator_lengthrange[i] * r
-        # MuJoCo derives an automatic peak force from the (now scaled) mass.
-        if ref.actuator_gainprm[i, 2] < 0:
+        # MuJoCo derives automatic active and passive peak forces independently from the (now scaled) mass.
+        if is_muscle_gain and ref.actuator_gainprm[i, 2] < 0:
             gain = np.array(actuator.gainprm)
             gain[2] = peak_force[i]
             actuator.gainprm = gain
-            if int(ref.actuator_biastype[i]) == int(mujoco.mjtBias.mjBIAS_MUSCLE):
-                bias = np.array(actuator.biasprm)
-                bias[2] = peak_force[i]
-                actuator.biasprm = bias
+        if is_muscle_bias and ref.actuator_biasprm[i, 2] < 0:
+            bias = np.array(actuator.biasprm)
+            bias[2] = float(ref.actuator_biasprm[i, 3] / max(float(ref.actuator_acc0[i]), mujoco.mjMINVAL))
+            actuator.biasprm = bias
 
 
 def _align_roots(spec: mujoco.MjSpec, ref: mujoco.MjModel, scaled: mujoco.MjModel, factors: Mapping[str, np.ndarray]) -> None:

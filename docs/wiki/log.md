@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Resolve passive muscle peak force independently during scaling
+Changed: myo_sim/scaling.py, tests/test_scaling.py, docs/wiki/log.md
+Why: automatic active force (`gainprm[2] < 0`) previously overwrote explicit passive `biasprm[2]` and skipped automatic passive `biasprm[2] < 0` when active force was explicit (ported from MyoHub/myosuite#525 `5b855de2`).
+
 ## 2026-11-03 — Scaling review: per-muscle checks, wrap paths, smaller rules
 Changed: myo_sim/scaling.py, myo_sim/scaling_checks.py, tests/test_scaling.py, docs/wiki/model-scaling.md, docs/wiki/log.md, CHANGELOG.md
 Why: review of #149. The checks pooled all muscles, the wrap fallback compared only point counts, and sites, fitted primitives, aligned bodies and explicit welds did not follow the rules. Comparison with OpenSim unchanged.
