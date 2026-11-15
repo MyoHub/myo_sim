@@ -74,10 +74,16 @@ def test_generate_xml_files_writes_base_model_outputs(tmp_path, monkeypatch):
         def __init__(self, model_name):
             self.model_name = model_name
             self.compiler = type("Compiler", (), {"meshdir": "", "texturedir": ""})()
+            self.bodies = []
+            self.geoms = []
+            self.sites = []
             self.ngeom = 0
             self.nsite = 0
             self.geom_contype = []
             self.geom_conaffinity = []
+
+        def copy(self):
+            return FakeSpec(self.model_name)
 
         def compile(self):
             compile_calls.append(self.model_name)
@@ -220,3 +226,36 @@ def test_build_kwargs_do_not_leak_into_later_builds():
     myo_sim.load_spec("myofullbody", build_kwargs={"root_pos": (5.0, 5.0, 5.0)})
     assert MODEL_REGISTRY["myofullbody"].build_kwargs == registered
     np.testing.assert_allclose(load_model("myofullbody").body("Full Body").pos, default)
+
+
+def test_generated_xml_preserves_unnamed_elements_in_frames(tmp_path: Path) -> None:
+    spec = mujoco.MjSpec.from_string("""<mujoco>
+      <asset><material name="red" rgba="1 0 0 1"/><material name="blue" rgba="0 0 1 1"/></asset>
+      <worldbody><body>
+        <geom name="_myo_sim_export_geom_1" size=".05" pos=".5 0 0" contype="8"/>
+        <geom size=".05" pos="1 0 0" contype="1" material="red"/>
+        <frame><geom size=".05" pos="1.5 0 0" contype="2" material="blue"/>
+          <site pos="1.5 0 0" group="3"/></frame>
+        <geom size=".05" pos="2 0 0" contype="4"/>
+        <site pos="1 0 0" group="2"/>
+      </body></worldbody></mujoco>""")
+    before = spec.to_xml()
+    original = spec.compile()
+    output = tmp_path / "unnamed.xml"
+    compose.write_spec_xml(spec, output)
+    generated = mujoco.MjModel.from_xml_path(str(output))
+    for tag, attributes in (("geom", ("contype", "conaffinity", "matid")), ("site", ("group",))):
+
+        def values(model: mujoco.MjModel) -> dict[tuple[float, ...], tuple[int, ...]]:
+            positions = getattr(model, f"{tag}_pos")
+            return {
+                tuple(pos): tuple(int(getattr(model, f"{tag}_{field}")[i]) for field in attributes)
+                for i, pos in enumerate(positions)
+            }
+
+        assert values(generated) == values(original)
+    assert spec.to_xml() == before
+    root = ET.fromstring(output.read_text())
+    assert [g.get("name") for g in root.iter("geom") if g.get("name")] == ["_myo_sim_export_geom_1"]
+    assert not any(s.get("name") for s in root.iter("site"))
+    assert not any(b.get("name") for b in root.iter("body"))

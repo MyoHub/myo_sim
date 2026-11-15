@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Preserve unnamed frame elements during XML export
+Changed: myo_sim/build/compose.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md
+Why: exported frame elements change document order, so a copy receives temporary names for reliable compiled-attribute mapping before those names are removed.
+
 ## 2026-11-14 — Match generated XML materials and site groups by name
 Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, docs/wiki/build-and-composition.md, CHANGELOG.md
 Why: `MjSpec.to_xml()` writes frame-held geoms and sites after a body's other ones, so writing compiled materials and site groups in document order swapped them between elements of edited specs.
@@ -9,10 +13,6 @@ Why: `MjSpec.to_xml()` writes frame-held geoms and sites after a body's other on
 ## 2026-11-11 — Preserve generated XML appearance
 Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
 Why: merging exported attachment defaults replaced left-arm materials and changed attachment site groups when generated XML was reloaded.
-
-## 2026-11-11 — Keep interpreter caches out of distributions
-Changed: pyproject.toml, MANIFEST.in
-Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
 
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
