@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Preserve unnamed frame elements during XML export
+Changed: myo_sim/build/compose.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md
+Why: exported frame elements change document order, so a copy receives temporary names for reliable compiled-attribute mapping before those names are removed.
+
 ## 2026-11-14 — Match exported collision flags by geom name
 Changed: myo_sim/build/compose.py, tests/test_build_registry.py, CHANGELOG.md
 Why: `MjSpec.to_xml()` writes frame-held geoms after a body's other geoms, so writing compiled collision flags in document order swapped them between geoms of edited specs.
