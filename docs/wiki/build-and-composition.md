@@ -32,9 +32,25 @@ This generates:
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
+Explicit principal inertias are written from the compiled model with roundtrip
+float precision. Native six-digit formatting of edited values can otherwise
+move a planar body's moments across the inertia triangle and make the exported
+XML fail to reload. This preserves the moments; it does not enable
+`balanceinertia` or perturb the mass distribution. Other fields retain native
+XML precision.
+
+The [recorded native roundtrip matrix](../validation/xml-inertia-roundtrip.json)
+uses the pinned model-scaling PR149 head on MuJoCo 3.4, 3.9 and 3.10. All 27
+selected cases now reload; the 18 repaired cases have identical principal
+moments. Already-passing controls retain native inferred-inertia differences of
+at most 3.1e-12 kg m². This is a deterministic regression matrix, not a population
+estimate or a validation of every scaling rule.
+
 ## Keyframes
 
 `build_spec()` adds no keyframe unless called with `build_kwargs={"postures": True}` or a list of names; `myo_sim.load_model()` passes that for every model with postures. See `docs/wiki/postures.md`.
+
+`build.utils.add_keyframes(spec, path)` imports an MJCF keyframe include after the final DoF layout is fixed. It preserves the full state (`time`, `qpos`, `qvel`, `act`, `ctrl`, `mpos`, `mquat`); unnamed keys, omitted fields and partial state arrays keep MuJoCo's native defaults.
 
 ## MODEL_REGISTRY and BuildStrategy
 
@@ -168,9 +184,20 @@ the tree, avoiding repeated subtree copies during composition.
 
 Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<pair>` element into the `MjSpec` via `spec.add_pair()`. The optional `include_pair` callable receives the XML element and returns `False` to skip a pair (used to exclude left-arm pairs when `include_left_arm_contacts=False`).
 
+Pairs inherit any `class` defaults already defined in the spec; explicit pair
+attributes override those defaults. A missing default class raises `ValueError`.
+
 ### `add_sensors(spec, sensors_xml)`
 
-Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported frame sensors into the `MjSpec` via `spec.add_sensor()`. `myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by adding body linear and angular velocity sensors before the leg touch sensors are attached.
+Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported
+`framelinvel`, `frameangvel`, `touch` and `jointlimitfrc` sensors via
+`spec.add_sensor()`. Frame sensors retain their reference type/name; frame objects
+and references can be bodies, body frames (`xbody`), geoms, sites or cameras.
+The importer preserves `cutoff`, `noise`, `user` data and native unnamed sensors.
+`myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by
+adding body linear and angular velocity sensors before the leg touch sensors are attached.
+
+It imports `framelinvel`, `frameangvel`, `touch` and `jointlimitfrc` (`SENSOR_TYPE_BY_TAG`). Any other sensor tag raises `ValueError` naming the tag and the file, before a sensor is added.
 
 ### `find_body(spec, body_name)` and `find_site(spec, site_name)`
 

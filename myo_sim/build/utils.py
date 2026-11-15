@@ -79,7 +79,10 @@ SENSOR_TYPE_BY_TAG = {
 }
 SENSOR_OBJTYPE_BY_NAME = {
     "body": mujoco.mjtObj.mjOBJ_BODY,
+    "xbody": mujoco.mjtObj.mjOBJ_XBODY,
+    "geom": mujoco.mjtObj.mjOBJ_GEOM,
     "site": mujoco.mjtObj.mjOBJ_SITE,
+    "camera": mujoco.mjtObj.mjOBJ_CAMERA,
     "joint": mujoco.mjtObj.mjOBJ_JOINT,
 }
 # Default (objtype, source-attribute) per tag when objtype/objname are omitted:
@@ -132,28 +135,53 @@ def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = N
         if include_pair is not None and not include_pair(pair):
             continue
         kwargs = _contact_pair_kwargs(pair, index, existing_names)
+        class_name = pair.get("class")
+        if class_name is not None:
+            default = spec.find_default(class_name)
+            if default is None:
+                raise ValueError(f"Contact pair default class not found: {class_name!r}")
+            kwargs["default"] = default
         spec.add_pair(**kwargs)
         existing_names.add(kwargs["name"])
 
 
 def add_sensors(spec: object, sensors_xml: Path) -> None:
-    """Add supported sensors from an MJCF include file."""
-    for sensor in ET.parse(sensors_xml).getroot().iter():
-        if sensor.tag not in SENSOR_TYPE_BY_TAG:
-            continue
+    """Add the sensors of an MJCF include file.
+
+    Raises:
+        ValueError: If the file holds a sensor tag outside ``SENSOR_TYPE_BY_TAG``; no sensor is added then.
+    """
+    sensors = [sensor for block in ET.parse(sensors_xml).getroot().iter("sensor") for sensor in block]
+    unsupported = sorted({sensor.tag for sensor in sensors} - SENSOR_TYPE_BY_TAG.keys())
+    if unsupported:
+        raise ValueError(
+            f"{sensors_xml}: unsupported sensor tags {', '.join(f'<{tag}>' for tag in unsupported)}; "
+            f"add_sensors imports only {', '.join(f'<{tag}>' for tag in SENSOR_TYPE_BY_TAG)}"
+        )
+    for sensor in sensors:
         default_objtype, default_attr = _SENSOR_DEFAULT_OBJ.get(sensor.tag, ("", None))
         objtype_name = sensor.get("objtype", default_objtype)
         objname = sensor.get("objname") or (sensor.get(default_attr) if default_attr else None)
-        spec.add_sensor(
-            name=sensor.get("name"),
-            type=SENSOR_TYPE_BY_TAG[sensor.tag],
-            objtype=SENSOR_OBJTYPE_BY_NAME[objtype_name],
-            objname=objname,
-        )
+        kwargs = {
+            "name": sensor.get("name", ""),
+            "type": SENSOR_TYPE_BY_TAG[sensor.tag],
+            "objtype": SENSOR_OBJTYPE_BY_NAME[objtype_name],
+            "objname": objname,
+        }
+        if "reftype" in sensor.attrib:
+            kwargs["reftype"] = SENSOR_OBJTYPE_BY_NAME[sensor.get("reftype")]
+        if "refname" in sensor.attrib:
+            kwargs["refname"] = sensor.get("refname")
+        for attribute in ("cutoff", "noise"):
+            if attribute in sensor.attrib:
+                kwargs[attribute] = float(sensor.get(attribute))
+        if "user" in sensor.attrib:
+            kwargs["userdata"] = float_list(sensor.get("user"))
+        spec.add_sensor(**kwargs)
 
 
 def add_keyframes(spec: object, keyframes_xml: Path) -> None:
-    """Add keyframes from an MJCF include file.
+    """Add complete keyframe states from an MJCF include file.
 
     Kept as a spec-level step (not merged into the composed child XML) because a
     keyframe's ``qpos`` is only valid once the model's DoFs are fixed -- e.g. for
@@ -161,11 +189,11 @@ def add_keyframes(spec: object, keyframes_xml: Path) -> None:
     """
     for key in ET.parse(keyframes_xml).getroot().iter("key"):
         added = spec.add_key()
-        added.name = key.get("name")
-        if key.get("qpos"):
-            added.qpos = float_list(key.get("qpos"))
-        if key.get("qvel"):
-            added.qvel = float_list(key.get("qvel"))
+        if (name := key.get("name")) is not None:
+            added.name = name
+        for field in ("qpos", "qvel", "act", "ctrl", "mpos", "mquat"):
+            if value := key.get(field):
+                setattr(added, field, float_list(value))
         if key.get("time"):
             added.time = float(key.get("time"))
 
