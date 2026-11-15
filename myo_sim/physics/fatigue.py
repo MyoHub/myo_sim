@@ -13,6 +13,7 @@ import os
 import re
 import warnings
 from collections.abc import Sequence
+from functools import lru_cache
 from typing import Any
 
 import numpy as np
@@ -180,8 +181,8 @@ def _limited(xp: Any, MA: Any, MF: Any, L: Any, F: Any, rho: Any, t: Any, modes:
     return MA + g1 * y1 + h * Ay1, MF + g1 * y2 + h * Ay2
 
 
-def _free_switch_time(xp: Any, MA: Any, MF: Any, L: Any, TL: Any, thr: Any, F: Any, rho: Any) -> Any:
-    """Time the slow mode of MF reaches ``thr`` under ``C = L (TL - MA)`` (inf: never).
+def _free_switch_time(xp: Any, MA: Any, MF: Any, L: Any, TL: Any, thr: Any, F: Any, rho: Any, duration: Any) -> Any:
+    """Time the slow mode of MF reaches ``thr``; may discard crossings beyond ``duration``.
 
     Past the fast transient, ``MF(t) = M + tau (F MA* - rho M)`` with
     ``tau = (1 - e^{-rho t}) / rho`` and ``M = MF + F (MA - MA*) / (L + F - rho)``.
@@ -190,10 +191,13 @@ def _free_switch_time(xp: Any, MA: Any, MF: Any, L: Any, TL: Any, thr: Any, F: A
     MAs = L * TL / _nonzero(xp, k)
     M = MF + F * (MA - MAs) / _nonzero(xp, k - rho)
     slope = F * MAs - rho * M
-    tau = xp.where(M < thr, (thr - M) / _nonzero(xp, slope), 0.0)
+    # A rising slow mode advances at most slope * duration. Keep inactive divisions
+    # benign: their backward pass otherwise overflows at zero fatigue/recovery rates.
+    rising = (M < thr) & (slope > 0) & (thr - M < slope * duration)
+    tau = xp.where(rising, thr - M, 0.0) / _nonzero(xp, xp.where(rising, slope, 1.0))
     x = rho * xp.where(tau > 0, tau, 0.0)
     t = -xp.log1p(-xp.where(x < 1.0 - 1e-6, x, 1.0 - 1e-6)) / rho
-    return xp.where((M >= thr) | ((slope > 0) & (x < 1.0)), t, xp.inf)
+    return xp.where((M >= thr) | (rising & (x < 1.0)), t, xp.inf)
 
 
 def _bounded(xp: Any, MA: Any, MF: Any) -> tuple[Any, Any, Any]:
@@ -280,7 +284,7 @@ def three_cc_r_step(
     t_cross = xp.where(gap > 0, xp.log(xp.where(ratio > 1, ratio, 1.0)) / k1, xp.inf)
     crosses = falling & (t_cross < T)
     if xp is np:  # NumPy skips the split segments when no muscle needs them
-        t_a = _free_switch_time(xp, MA, MF, LD, TLc, thr, F, rho)
+        t_a = _free_switch_time(xp, MA, MF, LD, TLc, thr, F, rho, T)
         if not (crosses | ~falling & ((MF >= thr) | (t_a < T))).any():
             L = xp.where(falling, LR, LD)
             return _bounded(xp, *_relax(xp, MA, MF, L, TL, F, rho, T))
@@ -296,14 +300,16 @@ def three_cc_r_step(
     MAe, MFe, s, lam1, lam2 = modes
     p2 = (F * (MA1 - MAe) - (rho + lam1) * (MF1 - MFe)) / s  # slow-mode part of MF
     q = (thr - MFe) / _nonzero(xp, p2)
-    down = (q > 0) & (q < 1)
-    t_b = xp.log(xp.where(down, q, 1.0)) / lam2
+    # Only divide by the slow eigenvalue for a crossing within this step. A far
+    # future crossing can overflow float32 gradients as F and R approach zero.
+    down = (q > 0) & (q < 1) & (q > xp.exp(lam2 * T2))
+    t_b = xp.log(xp.where(down, q, 1.0)) / xp.where(down, lam2, 1.0)
     t_b = xp.where(MFe + p2 < thr, 0.0, xp.where(down, t_b, xp.inf))
     # C is continuous at MF = 1 - TL, so the regime holding the equilibrium is absorbing:
     # a limited step whose equilibrium is limited never switches (near the boundary the
     # fast transient would otherwise read as a crossing), nor a free step with a free one.
     t_b = xp.where(MFe >= thr, xp.inf, t_b)
-    t_a = _free_switch_time(xp, MA1, MF1, LD, TLc, thr, F, rho)
+    t_a = _free_switch_time(xp, MA1, MF1, LD, TLc, thr, F, rho, T2)
     t_a = xp.where(F * (LD * TLc / _nonzero(xp, LD + F)) < rho * thr, xp.inf, t_a)
     t_sw = xp.where(limited, t_b, t_a)
     d2 = xp.where(t_sw < T2, t_sw, T2)
@@ -339,7 +345,15 @@ agree to float32 round-off.
 
 _compiled_torch_step: Any = None  # torch.compile wrapper, built on first use
 _eager_keys: set[tuple] = set()  # (device, dtype, shape) whose compile failed
-_dt_tensors: dict[tuple, Any] = {}  # dt as a 0-d state tensor: no recompile per dt
+_DT_TENSOR_CACHE_SIZE = 64
+
+
+@lru_cache(maxsize=_DT_TENSOR_CACHE_SIZE)
+def _torch_dt_tensor(device: str, dtype: Any, dt: float) -> Any:
+    """An immutable scalar timestep, retaining only the most recently used values."""
+    import torch  # noqa: PLC0415
+
+    return torch.tensor(dt, dtype=dtype, device=device)
 
 
 def _torch_step(
@@ -400,8 +414,9 @@ def torch_three_cc_r_step(
 
     Compiles lazily on first use (``fullgraph``, static shapes); torch specialises
     the graph per device, dtype and shape, and passes ``dt`` as a 0-d tensor so a
-    new ``dt`` does not recompile. Falls back to the eager step, with one warning,
-    where compiling fails.
+    new ``dt`` does not recompile. A bounded cache reuses recent timestep tensors
+    without retaining every value in a variable-timestep rollout. Falls back to
+    the eager step, with one warning, where compiling fails.
 
     Args:
         MA: Active fraction, shape ``(num_envs, n_muscles)``.
@@ -439,10 +454,8 @@ def torch_three_cc_r_step(
                 dynamic=False,
                 options={"cpp.simdlen": 0},
             )
-        dt_key = (str(MA.device), MA.dtype, float(dt))
-        if dt_key not in _dt_tensors:
-            _dt_tensors[dt_key] = torch.tensor(float(dt), dtype=MA.dtype, device=MA.device)
-        return _compiled_torch_step(*args, _dt_tensors[dt_key], rest_threshold)
+        dt_tensor = _torch_dt_tensor(str(MA.device), MA.dtype, float(dt))
+        return _compiled_torch_step(*args, dt_tensor, rest_threshold)
     except Exception as err:  # any compiler failure falls back to eager
         _eager_keys.add(key)
         warnings.warn(
@@ -710,6 +723,10 @@ class CumulativeFatigue:
                 seeded ``np_random`` so that ``env.reset(seed=...)`` is
                 reproducible.  Defaults to the model's own RNG (see
                 :meth:`seed`).
+
+        Raises:
+            ValueError: Conflicting reset options or a vector whose shape is not
+                ``(na,)``. Invalid input leaves the compartments unchanged.
         """
         if fatigue_reset_random:
             if fatigue_reset_vec is not None:
@@ -723,9 +740,10 @@ class CumulativeFatigue:
             self._MR[:] = nf * (1.0 - ap)
             self._MF[:] = 1.0 - nf
         elif fatigue_reset_vec is not None:
-            if len(fatigue_reset_vec) != self.na:
-                raise ValueError(f"fatigue_reset_vec length {len(fatigue_reset_vec)} != na={self.na}")
-            self._MF = np.array(fatigue_reset_vec, dtype=float, copy=True)  # type: ignore[assignment]
+            mf = np.array(fatigue_reset_vec, dtype=float, copy=True)
+            if mf.shape != (self.na,):
+                raise ValueError(f"fatigue_reset_vec shape {mf.shape} != ({self.na},)")
+            self._MF = mf
             self._MR = 1.0 - self._MF  # type: ignore[assignment]
             self._MA = np.zeros(self.na)
         else:
@@ -750,11 +768,20 @@ class CumulativeFatigue:
         """Restore fatigue compartments from a :meth:`state_dict` snapshot.
 
         Args:
-            state: Dict produced by :meth:`state_dict`.
+            state: Dict produced by :meth:`state_dict`, with each compartment
+                a flat vector of length ``na``.
+
+        Raises:
+            KeyError: A compartment is missing.
+            ValueError: A compartment is nonnumeric or has the wrong shape.
+                All compartments are validated before replacing the live state.
         """
-        self._MA = np.array(state["MA"], dtype=float)  # type: ignore[assignment]
-        self._MR = np.array(state["MR"], dtype=float)  # type: ignore[assignment]
-        self._MF = np.array(state["MF"], dtype=float)  # type: ignore[assignment]
+        names = ("MA", "MR", "MF")
+        compartments = tuple(np.array(state[name], dtype=float) for name in names)
+        for name, values in zip(names, compartments):
+            if values.shape != (self.na,):
+                raise ValueError(f"{name} shape {values.shape} != ({self.na},)")
+        self._MA, self._MR, self._MF = compartments
 
     def seed(self, seed: int | None = None) -> list[int]:
         """Set random seed used by stochastic reset.
@@ -919,7 +946,8 @@ class TorchFatigueState:
             use_uniform_params: Use the uniform ``"Default_v2_4"`` F/R/r for
                 every muscle, as :class:`CumulativeFatigue` does.
             muscles: Muscle actuators to track (ids or names), in column order;
-                default every muscle in model order.
+                default every muscle in model order. An empty selection creates
+                state with zero muscle columns, even if the model has motors.
             rest_threshold: Commands at or below it count as rest (see
                 :class:`CumulativeFatigue`); in ``[0, 1)``.
         """
@@ -929,7 +957,7 @@ class TorchFatigueState:
         if na == 0:
             return cls(
                 num_envs=num_envs,
-                n_muscles=mj_model.nu,
+                n_muscles=na,
                 device=device,
                 rest_threshold=rest_threshold,
             )
@@ -1015,7 +1043,9 @@ class TorchFatigueState:
                 resets all environments.
             fatigue_reset_vec: If provided, ``MF = fatigue_reset_vec``,
                 ``MR = 1 - fatigue_reset_vec`` and ``MA = 0`` in every reset
-                env.  Shape ``(n_muscles,)``.
+                env. Shape ``(n_muscles,)``; an array, sequence or Torch tensor
+                (including a tensor on the simulation device). Values are copied
+                before any compartment changes, so views of live state are safe.
             fatigue_reset_random: If ``True``, draw ``nf, ap ~ U[0, 1)`` and set
                 ``MA = nf * ap``, ``MR = nf * (1 - ap)``, ``MF = 1 - nf``.
                 Cannot be combined with *fatigue_reset_vec*.
@@ -1040,9 +1070,12 @@ class TorchFatigueState:
             self.MR[rows] = nf * (1.0 - ap)
             self.MF[rows] = 1.0 - nf
         elif fatigue_reset_vec is not None:
-            mf = torch.as_tensor(np.asarray(fatigue_reset_vec, dtype=np.float32), device=self.MA.device)
+            if not torch.is_tensor(fatigue_reset_vec):
+                fatigue_reset_vec = np.array(fatigue_reset_vec, dtype=np.float32, copy=True)
+            mf = torch.as_tensor(fatigue_reset_vec, dtype=torch.float32, device=self.MA.device)
             if mf.shape != self.MA.shape[1:]:
                 raise ValueError(f"fatigue_reset_vec length {mf.numel()} != n_muscles={self.MA.shape[1]}")
+            mf = mf.clone()
             self.MA[rows] = 0.0
             self.MF[rows] = mf
             self.MR[rows] = 1.0 - mf
@@ -1057,11 +1090,13 @@ class TorchFatigueState:
         Returns:
             Dict with keys ``"MA"``, ``"MR"``, ``"MF"``, each a nested list
             of shape ``(num_envs, n_muscles)``.
+
+        The live state tensors and their autograd graphs are preserved.
         """
         return {
-            "MA": self.MA.cpu().numpy().tolist(),
-            "MR": self.MR.cpu().numpy().tolist(),
-            "MF": self.MF.cpu().numpy().tolist(),
+            "MA": self.MA.detach().cpu().numpy().tolist(),
+            "MR": self.MR.detach().cpu().numpy().tolist(),
+            "MF": self.MF.detach().cpu().numpy().tolist(),
         }
 
     def load_state_dict(self, state: dict[str, list]) -> None:
@@ -1070,9 +1105,14 @@ class TorchFatigueState:
         Args:
             state: Dict produced by :meth:`state_dict`.  Shape must be
                 compatible with the current ``(num_envs, n_muscles)`` tensors.
+                Broadcast-compatible values remain supported. Missing, nonnumeric
+                or incompatible entries are rejected before any compartment changes.
         """
         import torch  # noqa: PLC0415
 
-        self.MA.copy_(torch.tensor(state["MA"], dtype=torch.float32, device=self.MA.device))
-        self.MR.copy_(torch.tensor(state["MR"], dtype=torch.float32, device=self.MR.device))
-        self.MF.copy_(torch.tensor(state["MF"], dtype=torch.float32, device=self.MF.device))
+        values = {}
+        for name in ("MA", "MR", "MF"):
+            target = getattr(self, name)
+            values[name] = torch.tensor(state[name], dtype=torch.float32, device=target.device).expand_as(target)
+        for name, value in values.items():
+            getattr(self, name).copy_(value)

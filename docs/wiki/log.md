@@ -5,10 +5,69 @@ Append-only maintenance log, most recent first.
 ## 2026-11-12 — Add model-only muscle strength transforms
 Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md, docs/wiki/index.md
 Why: native active/passive force scaling and automatic-force resolution can be reused without importing subject fitting, environments or MyoSuite.
+## 2026-11-11 — Preserve native sensor and contact settings
+Changed: myo_sim/build/utils.py, tests/test_native_includes.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: include imports discarded sensor reference frames and common options, lost pair class defaults and rejected unnamed sensors on MuJoCo 3.4.
+
+## 2026-11-12 — Skip compilation for empty posture selections
+Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
+Why: requesting no keyframes still compiled the spec, adding model-build overhead and rejecting unfinished assemblies despite making no edits.
+
+## 2026-11-12 — Copy uncoupled functional projections
+Changed: myo_sim/physics/joint_coupling.py, tests/test_physics_joint_coupling.py
+Why: the functional projection returned its inputs when no joint equalities were active, so editing an output could mutate the original state; empty projections now return independent arrays while preserving Torch gradients.
+
+## 2026-11-14 — Reject unsupported sensor tags in add_sensors
+Changed: myo_sim/build/utils.py, tests/test_sensor_includes.py, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: `add_sensors` skipped every sensor tag outside its table, so a `<gyro>` or `<framepos>` in an include vanished from the model without a message.
 
 ## 2026-11-11 — Keep interpreter caches out of distributions
 Changed: pyproject.toml, MANIFEST.in
 Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
+
+## 2026-11-11 — Preserve the MuJoCo CI matrix overrides
+Changed: .github/workflows/ci.yml, docs/wiki/testing-guide.md
+Why: ordinary uv run restored locked MuJoCo 3.9 after the matrix installed its requested version; reporting and tests now keep the override, and latest stays below MuJoCo 4.
+
+## 2026-11-11 — Preserve empty torch fatigue selections
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: the torch model factory used every actuator as a fallback for an empty muscle selection, so motor-only models and explicit empty selections disagreed with the CPU factory and could not reset with an empty fatigue vector.
+
+## 2026-11-11 — Preserve complete imported keyframe state
+Changed: myo_sim/build/utils.py, tests/test_keyframe_import.py, CHANGELOG.md, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md
+Why: spec-level keyframe import discarded activation, control and mocap state and rejected unnamed keys even though native MJCF keyframes support them.
+
+## 2026-11-12 — Own Torch fatigue reset values before state writes
+Changed: myo_sim/physics/fatigue.py, tests/test_torch_fatigue_reset_ownership.py, tests/test_physics_fatigue.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: a reset vector viewing live MA was overwritten before MF received it, selected-row resets could reject a valid MF view due to overlapping storage, and float32 reversed NumPy vectors retained unsupported negative strides during conversion.
+
+## 2026-11-11 — Reset Torch fatigue directly from tensors
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: converting reset vectors through NumPy rejected device tensors and tensors requiring gradients; direct Torch conversion preserves the state device, float32 dtype and vector shape checks.
+
+## 2026-11-11 — Snapshot differentiable Torch fatigue state
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: serializing a state after a gradient-tracked step raised instead of producing a checkpoint; snapshots now detach only the exported values and preserve live gradients.
+
+## 2026-11-11 — Validate NumPy fatigue state dimensions before updates
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: multidimensional reset vectors and incompatible checkpoints could replace fixed-size muscle compartments or partially overwrite state before failing; validate all inputs before mutation.
+
+## 2026-11-11 — Bound compiled fatigue timestep caching
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue_cache.py
+Why: varying timesteps retained a scalar Torch tensor for every distinct value for the process lifetime; a bounded LRU keeps recent immutable scalars while preserving graph reuse.
+
+## 2026-11-11 — Keep zero-rate fatigue gradients finite
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue_gradients.py
+Why: unused slow-mode switching calculations overflowed float32 backward passes when fatigue and recovery were disabled, even for a zero-length step; inactive divisions now use benign operands.
+
+## 2026-11-12 — Validate Torch fatigue restores before mutation
+Changed: myo_sim/physics/fatigue.py, tests/test_torch_fatigue_restore.py, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: a missing, nonnumeric or incompatible later compartment in a checkpoint previously left earlier live compartments overwritten after the restore failed.
+
+## 2026-11-12 — Preserve inertia precision in generated XML
+Changed: myo_sim/build/compose.py, tests/test_xml_inertia_precision.py, docs/wiki/build-and-composition.md
+Why: six-digit native formatting can move an edited planar body's principal moments past the inertia triangle; generated XML now preserves the compiled moments without balancing or changing them.
 
 ## 2026-11-05 — Stay below MuJoCo 4
 Changed: pyproject.toml, uv.lock, CHANGELOG.md
