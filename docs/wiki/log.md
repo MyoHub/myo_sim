@@ -2,6 +2,9 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-11 — Linear XML composition copies
+Changed: myo_sim/build/utils.py, tests/test_build_utils.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: recursive subtree copies and child-list searches repeated work during model loading; copy each node once while preserving include expansion and mirror output.
 ## 2026-11-11 — Preserve native sensor and contact settings
 Changed: myo_sim/build/utils.py, tests/test_native_includes.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
 Why: include imports discarded sensor reference frames and common options, lost pair class defaults and rejected unnamed sensors on MuJoCo 3.4.
