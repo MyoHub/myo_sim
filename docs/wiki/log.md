@@ -2,6 +2,9 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Add isometric MVC torque probing and muscle strength calibration
+Changed: myo_sim/physics/muscle_strength.py, myo_sim/physics/__init__.py, tests/test_physics_muscle_strength.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: move isometric MVC torque probing (`max_torque_terms`) and per-muscle bounded least-squares strength calibration (`calibrate_muscle_strength`, pure NumPy BVLS) from MyoHub/myosuite#649 into `myo_sim` so models can be personalized to measured joint torques without MyoSuite or SciPy.
 ## 2026-11-12 — Add model-only muscle strength transforms
 Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md, docs/wiki/index.md
 Why: native active/passive force scaling and automatic-force resolution can be reused without importing subject fitting, environments or MyoSuite.
