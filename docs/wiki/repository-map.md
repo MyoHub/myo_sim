@@ -31,6 +31,7 @@ myo_sim/              # installable Python package
     muscle_strength.py # native peak-force resolution, strength transforms and MVC torque calibration
     body_mass.py      # selected-body mass/inertia transforms with refreshed constants
     activation_dynamics.py # mjDYN_MUSCLE activation and deactivation time-constant transforms
+    joint_mechanics.py # passive joint damping, stiffness and range-of-motion copy transforms
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
