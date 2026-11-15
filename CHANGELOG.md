@@ -4,6 +4,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Model-only strength transforms.** `myo_sim.physics.muscle_strength` resolves native automatic peak force and scales active/passive force capacity on compiled models or editable specs, without importing subject fitting or environments.
 - **Empty torch fatigue selections.** `TorchFatigueState.from_mj_model()` now creates zero muscle columns for motor-only models and explicit empty selections, matching `CumulativeFatigue`; it previously allocated fatigue state for every actuator and rejected empty reset vectors.
 - **Complete imported keyframe states.** `build.utils.add_keyframes()` now preserves muscle activation, actuator control and mocap position/orientation (`act`, `ctrl`, `mpos`, `mquat`) alongside time, position and velocity. Resetting an imported keyframe previously silently used defaults for these fields. Unnamed keyframes are accepted, and omitted fields and partial state arrays retain MuJoCo's native defaults.
 
