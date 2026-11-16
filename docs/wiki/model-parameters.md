@@ -62,3 +62,22 @@ result is an independent compiled-model copy with MuJoCo constants refreshed.
 Automatic muscle forces are frozen before mass changes alter their `acc0`.
 This does not infer density distributions, resize anatomy or choose a strength
 factor from body mass.
+
+## Muscle activation time constants
+
+```python
+from myo_sim.physics.activation_dynamics import (
+    activation_time_constants,
+    scale_activation_time_constants,
+    scale_activation_time_constants_spec,
+)
+
+tau_act, tau_deact = activation_time_constants(model)
+scale_activation_time_constants(model, act_factors=1.5, deact_factors=2.0)
+scale_activation_time_constants_spec(spec, 1.25)
+```
+
+Factors are positive finite scalars or `(nu,)` arrays; `deact_factors` defaults
+to `act_factors` when omitted. Only `mjDYN_MUSCLE` actuators are updated
+(`actuator_dynprm[:, 0]` and `actuator_dynprm[:, 1]`); motors, stateless muscles,
+peak active/passive force capacities, geometry and clamps remain unchanged.
