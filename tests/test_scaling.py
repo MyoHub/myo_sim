@@ -768,6 +768,28 @@ def test_mass_scales_with_volume_and_strength_is_kept() -> None:
     np.testing.assert_allclose(_peak_force(same), _peak_force(ref))
 
 
+def test_active_and_passive_peak_forces_resolve_independently() -> None:
+    spec = myo_sim.load_spec("myoelbow")
+    act0, act1 = spec.actuators[0], spec.actuators[1]
+    gain0, bias0 = np.array(act0.gainprm), np.array(act0.biasprm)
+    gain0[2], gain0[3], bias0[2] = -1.0, 200.0, 20.0
+    act0.gainprm, act0.biasprm = gain0, bias0
+    gain1, bias1 = np.array(act1.gainprm), np.array(act1.biasprm)
+    gain1[2], bias1[2], bias1[3] = 150.0, -1.0, 120.0
+    act1.gainprm, act1.biasprm = gain1, bias1
+
+    ref = spec.copy().compile()
+    body_name = next(b.name for b in spec.bodies[1:] if b.name and ref.body(b.name).mass[0] > 0)
+    scaled = scale_spec(spec, {body_name: 1.1}).compile()
+
+    expected_active_0 = 200.0 / max(float(ref.actuator_acc0[0]), mujoco.mjMINVAL)
+    expected_passive_1 = 120.0 / max(float(ref.actuator_acc0[1]), mujoco.mjMINVAL)
+    np.testing.assert_allclose(scaled.actuator_gainprm[0, 2], expected_active_0)
+    np.testing.assert_allclose(scaled.actuator_biasprm[0, 2], 20.0)
+    np.testing.assert_allclose(scaled.actuator_gainprm[1, 2], 150.0)
+    np.testing.assert_allclose(scaled.actuator_biasprm[1, 2], expected_passive_1)
+
+
 @pytest.mark.parametrize("total,expected", [(None, [80, 20]), (50, [40, 10])])
 def test_compiler_total_mass_is_resolved_before_scaling(total: float | None, expected: list[float]) -> None:
     spec = mujoco.MjSpec.from_string("""<mujoco><compiler settotalmass="30"/>

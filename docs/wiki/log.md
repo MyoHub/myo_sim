@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Resolve passive muscle peak force independently during scaling
+Changed: myo_sim/scaling.py, tests/test_scaling.py, docs/wiki/log.md
+Why: automatic active force (`gainprm[2] < 0`) previously overwrote explicit passive `biasprm[2]` and skipped automatic passive `biasprm[2] < 0` when active force was explicit (ported from MyoHub/myosuite#525 `5b855de2`).
+
 ## 2026-11-14 — Reject nonfinite scaling validation records
 Changed: tests/test_opensim_pose_comparison.py, docs/wiki/log.md
 Why: NaN records could disappear in the maximum self-regression score; check finite values and exact shapes before reducing both comparison gates.
