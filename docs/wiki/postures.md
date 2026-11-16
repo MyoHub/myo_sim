@@ -32,7 +32,7 @@ The script also prints the tables below (`--report`). To change the pose, edit t
 - `myo_sim.list_postures(name)` gives the postures of a model, in keyframe order.
 - Adding an empty posture selection, including all postures of a model that has none, returns an empty list without compiling or modifying the spec. This is safe during unfinished model assembly.
 - `myo_sim.add_posture_keyframes(spec, model_name)` adds them to an edited spec (pass a list of names to add only those), matched by joint name: joints the spec no longer has are skipped and joints the table does not list stay at `qpos0`. The root keeps the spec's x, y and orientation, apart from the table's `root_y_offset` and `root_quat` for the tilt of `myolegs_abdomen`, which apply in the root's frame.
-- `MjSpec.attach` keeps the keyframe under the attach prefix: two bodies attached with `a_` and `b_` give `a_standing` and `b_standing`, each with the other body at its `qpos0`. Tested on MuJoCo 3.4, 3.9, 3.11 and 3.17.
+- `MjSpec.attach` keeps the keyframe under the attach prefix: two bodies attached with `a_` and `b_` give `a_standing` and `b_standing`, each with the other body at its `qpos0`. Tested on MuJoCo 3.9, 3.11, 3.17 and 4.0.1.
 
 ## Measurements
 
