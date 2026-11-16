@@ -52,3 +52,10 @@ Append at the top of `docs/wiki/log.md` (most recent first):
 Changed: <file(s)>
 Why: <one sentence>
 ```
+
+`log.md` is a changelog, not a lab notebook. Hard limits:
+
+- **`Why:` is one sentence.** Not one paragraph, not "one sentence plus supporting detail" — one sentence. If the change needs more explanation than that, it belongs in a PR description, a model README's "Known limitations"/"Changelog" section, or a code comment near the change — not in this file.
+- **No investigation narrative.** Don't log what you tried and ruled out, intermediate numbers, or how you debugged something. Log the conclusion and the file it landed in.
+- **No paths outside the shipped package.** Never reference `sandbox/`, scratch scripts, or anything not committed to the repo — a reader without that untracked/local content can't follow the reference, and it won't exist in their clone. If a change was validated with an exploratory script, say what was validated, not where the script lives.
+- **One entry per logical change**, not one entry per work session. If a session touches five files for one reason, that's one entry.

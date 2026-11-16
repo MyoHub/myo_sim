@@ -47,7 +47,7 @@ def test_chest_scaffold_carries_no_phantom_mass(model_name):
 
 
 def test_fullbody_total_mass_is_anthropometrically_consistent():
-    """myofullbody should weigh ~84.3 kg, matching the MuscleMimic reference model."""
+    """myofullbody weighs ~76.5 kg, with the pelvis counted once (the MuscleMimic reference model counts it twice)."""
     model = load_spec("myofullbody").compile()
 
-    assert model.body_mass.sum() == pytest.approx(84.3, abs=0.3)
+    assert model.body_mass.sum() == pytest.approx(76.51, abs=0.1)

@@ -78,6 +78,35 @@ uv run pytest tests/test_leg_muscle_symmetry.py
 
 ---
 
+## Method: rigid-tendon maps from a published OpenSim muscle
+
+This is the identification method for a muscle-parameter refit (see *Provenance*: cited table values in
+`myo_sim/build/references.py`, fit scripts under `scripts/fit_*.py`, output committed in `*_muscle.xml`).
+The raw OpenSim model and any motion-capture or simulator trajectories stay out of the repository.
+
+MuJoCo maps path length \(L\) linearly to normalised fibre length. Fit that line to the published rigid-tendon
+fibre length \(\sqrt{\max(L-l_{ts},0)^2+(l_0\sin\alpha_0)^2}/l_0\) over the **full joint range**, not a gait
+sample — MuJoCo extrapolates outside `lengthrange`, which is how semimembranosus reached \(\ell_n\sim 2.9\).
+
+```bash
+uv run python scripts/fit_leg_rigid_maps.py --write
+uv run python scripts/fit_leg_passive.py --write
+uv run python scripts/fit_arm_rigid_maps.py --write
+uv run pytest tests/test_leg_rigid_conversion.py tests/test_leg_passive.py tests/test_arm_rigid_conversion.py
+```
+
+The passive fit starts from the rigid-tendon maps and `build/data/leg_passive_start.json`, so a rerun does not build on its
+own earlier result; copy the errors it prints to `SILDER2007["validation"]`. Rerun all of it after a change to the leg's
+joints or paths.
+
+Cited table values live in `myo_sim/build/references.py`. Fit grids and optimizer output stay in the
+fit scripts; `load()` does not read them. Adopt a muscle when fibre-length RMSE vs the published
+rigid-tendon length falls and isometric force RMSE does not rise by more than 2 % of \(F_0\).
+`recfem`, `vaslat` and `glmax3` stay on the previous maps (`status: kept`). Citations sit in
+`myo_sim/build/references.py`.
+
+---
+
 ## Adding a wrapping object
 
 Wrapping geoms live in `*_chain.xml` on the body they geometrically belong to. Use the part-specific wrap default class, e.g. `class="myolegs_wrap"`.
@@ -95,7 +124,18 @@ Then reference them in the tendon:
 <geom geom="NewMuscle_wrap_r" sidesite="NewMuscle_wrap_sidesite_r"/>
 ```
 
-Both the geom and sidesite must be on the same body (or a nearby body if the muscle spans bodies). If the sidesite is missing or on a different body from the geom, MuJoCo will error at load time.
+The side site normally sits on the geom's body; a site on a body that turns with the tendon's endpoint is also valid (`SUP`). A name that does not exist is an error at load time.
+
+### Side sites and MuJoCo 4
+
+MuJoCo 4 is the reference for tendon paths, fits and recorded errors. It follows the winding of the polyline endpoint, side site, endpoint, and a tendon snaps only when an endpoint crosses the ray opposite the side site. MuJoCo 3 used a half-plane test and the arc nearest the site, with jumps at other postures. Choose a path for MuJoCo 4 first: continuity in range and past the limits, then moment arms against the literature. Where candidates are near-equal on MuJoCo 4, take the one that also works on MuJoCo 3 and say so. MuJoCo 3 differences are stated in `build/data/side_sites.json` and `docs/wiki/log.md`.
+
+- **On a sphere, usually no side site.** The wrap then takes the shorter arc when the segment crosses the geom, in the plane through the endpoints and the centre. It cannot change side, and the path is the same under both rules.
+- **On a cylinder, a side site in the middle of the wrapped arc.** Without one the arc changes side where the segment crosses the axis: no length jump, but a moment arm step.
+- **A small peg is a via site.** A sphere of a millimetre or two that only holds a tendon on one side gives snaps; fit a via site to the moment arms instead.
+- **Keep endpoints out of the geom.** A via point inside the circle ends the wrap at once.
+
+`scripts/migrate_side_sites.py` has a copy of both rules, the side direction search, `fit-vias` and `record-jumps`; `tests/test_side_sites.py` fails if a wrap jumps by more than `jumps_mm` allows on the MuJoCo 4 rule.
 
 ---
 
@@ -122,7 +162,7 @@ Both the geom and sidesite must be on the same body (or a nearby body if the mus
 The codebase enforces a strict "right side is the source of truth" policy.
 
 - Never hand-edit a left-side XML. The left side is derived automatically by mirroring the right-side chain file in `myo_sim/build/compose.py` using `build_mirrored_child_xml()`.
-- Muscle names, site names, geom names, joint names, and body names all carry `_r` (right) or `_l` (left) suffixes. Always use `_r` in your source files.
+- Muscle names, site names, geom names, joint names, camera names and body names all carry `_r` (right) or `_l` (left) suffixes. Always use `_r` in your source files. A muscle's tendon is named after its actuator (`OP_r` -> `OP_r_tendon`); the mirroring turns `_r_tendon` into `_l_tendon`. `tests/test_naming.py` checks the arm.
 - The mirror arithmetic — z-axis position reflection, x/y axis negation, quaternion conjugate — is implemented by `MirrorRules` in `myo_sim/build/utils.py`. If a body has an unusual orientation that requires a different mirroring axis, add it to `MirrorRules.body_pos_x_mirror_names`.
 - Verify that left/right symmetry holds by running the symmetry analysis scripts:
 

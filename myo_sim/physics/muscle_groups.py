@@ -99,6 +99,20 @@ MUSCLE_FMG = {
     "RI5": "Hand-Interossei",
     "LU_RB5": "Hand-Lumbricals",
     "UI_UB5": "Hand-Interossei",
+    # Hand muscles after the hand rebuild (MyoHub/myo_sim#147); the names above are the earlier hand's.
+    "DI1d": "Hand-First-Dorsal-Interossei",
+    "DI1s": "Hand-First-Dorsal-Interossei",
+    **{f"DI{i}": "Hand-Interossei" for i in range(2, 5)},
+    **{f"PI{i}": "Hand-Interossei" for i in range(1, 4)},
+    **{f"LUM{i}": "Hand-Lumbricals" for i in range(1, 5)},
+    "AdPt": "Hand-Adductor-Pollicis",
+    "AdPo": "Hand-Adductor-Pollicis",
+    "APB": "Hand-Thenar",
+    "FPBs": "Hand-Thenar",
+    "FPBd": "Hand-Thenar",
+    "ADM": "Hand-Hypothenar",
+    "FDM": "Hand-Hypothenar",
+    "ODM": "Hand-Hypothenar",
     "extn": "Finger",
     "adabR": "Finger",
     "adabL": "Finger",
@@ -150,6 +164,8 @@ MUSCLE_FMG = {
     "glmin2_r": "Hip-Abductor",
     "glmin3_l": "Hip-Abductor",
     "glmin3_r": "Hip-Abductor",
+    "gem_l": "Hip-Lateral-Rotator",
+    "gem_r": "Hip-Lateral-Rotator",
     "grac_l": "Hip-Adductor",  # "Hip-Flexor"
     "grac_r": "Hip-Adductor",  # "Hip-Flexor"
     "iliacus_l": "Hip-Flexor",
@@ -158,10 +174,14 @@ MUSCLE_FMG = {
     "perbrev_r": "Ankle-Plantarflexor",
     "perlong_l": "Ankle-Plantarflexor",
     "perlong_r": "Ankle-Plantarflexor",
+    "pect_l": "Hip-Adductor",
+    "pect_r": "Hip-Adductor",
     "piri_l": "Hip-Lateral-Rotator",
     "piri_r": "Hip-Lateral-Rotator",
     "psoas_l": "Hip-Flexor",
     "psoas_r": "Hip-Flexor",
+    "quad_fem_l": "Hip-Lateral-Rotator",
+    "quad_fem_r": "Hip-Lateral-Rotator",
     "recfem_l": "Knee-Extensor",  # also "Hip-Flexor"
     "recfem_r": "Knee-Extensor",  # also "Hip-Flexor"
     "sart_l": "Hip-Flexor",  # "Thigh-Hamstring" (or rather "Knee-Flexor")

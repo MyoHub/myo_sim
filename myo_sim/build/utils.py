@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import math
+import re
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any
 
 import mujoco
 
@@ -21,6 +23,8 @@ NAME_REFERENCE_ATTRS = {
     "joint2",
     "joint",
     "tendon",
+    "tendon1",
+    "tendon2",
 }
 
 
@@ -32,7 +36,8 @@ class MirrorRules:
     common_names: frozenset[str] = frozenset({"texgeom", "geom"})
     body_pos_x_mirror_names: frozenset[str] = frozenset()
     lowercase_geom_prefixes: tuple[str, ...] = ("Thorax_ellipsoid",)
-    replacements: tuple[tuple[str, str], ...] = ()
+    # Muscle tendons are named after their actuator (``OP_r`` -> ``OP_r_tendon``), so the side sits inside the name.
+    replacements: tuple[tuple[str, str], ...] = (("_r_tendon", "_l_tendon"),)
     prefix_replacements: tuple[tuple[str, str], ...] = ()
     mirror_file_attributes: bool = False
 
@@ -43,6 +48,27 @@ def find_body(spec: object, body_name: str) -> object:
     if body is None:
         raise ValueError(f"Body not found: {body_name!r}")
     return body
+
+
+# Element lists that MjSpec.attach copies by resolving their references.
+ATTACH_CHECKED_LISTS = ("tendons", "actuators", "equalities", "sensors", "pairs", "excludes")
+
+
+def attach_checked(parent: mujoco.MjSpec, child: mujoco.MjSpec, prefix: str = "", suffix: str = "", **where: Any) -> object:
+    """Attach ``child`` to ``parent`` like ``MjSpec.attach``, but fail if an element is lost.
+
+    MjSpec.attach silently leaves out an element whose references don't resolve, such as a
+    tendon over a misspelled site, together with the actuator on it.
+
+    Raises:
+        ValueError: naming every named tendon, actuator, equality, sensor, pair or exclude lost.
+    """
+    expected = {(kind, prefix + e.name + suffix) for kind in ATTACH_CHECKED_LISTS for e in getattr(child, kind) if e.name}
+    frame = parent.attach(child, prefix=prefix, suffix=suffix, **where)
+    present = {(kind, e.name) for kind in ATTACH_CHECKED_LISTS for e in getattr(parent, kind)}
+    if lost := sorted(expected - present):
+        raise ValueError(f"MjSpec.attach left out elements with unresolved references: {lost}")
+    return frame
 
 
 def find_site(spec: object, site_name: str) -> object:
@@ -355,7 +381,10 @@ def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
         elif attr_name in {"pos", "scale", "ipos"}:
             mirror_xyz_attribute(mirrored, attr_name, rules)
         elif attr_name == "axis":
-            mirror_axial_attribute(mirrored, attr_name)
+            if mirrored.tag == "joint" and mirrored.get("type") == "slide":
+                mirror_xyz_attribute(mirrored, attr_name, rules)  # a translation axis mirrors like a position
+            else:
+                mirror_axial_attribute(mirrored, attr_name)
         elif attr_name == "euler":
             if mirrored.tag == "camera":
                 mirror_camera_euler(mirrored)
@@ -478,3 +507,33 @@ def build_child_xml_from_components(
         child_root.append(child)
 
     return ET.tostring(root, encoding="unicode")
+
+
+# Index of each muscle attribute in a <general> muscle's gainprm / biasprm (MuJoCo's mju_muscleGain layout).
+MUSCLE_PRM_INDEX = {"force": 2, "vmax": 6, "fpmax": 7}
+
+
+def muscle_tag(text: str, name: str) -> str:
+    """The one ``<muscle>`` or ``<general>`` actuator element named *name* in MJCF *text*."""
+    tags = re.findall(rf'<(?:muscle|general) name="{re.escape(name)}"[^>]*?/>', text)
+    if len(tags) != 1:
+        raise ValueError(f"expected one muscle {name}, found {len(tags)}")
+    return tags[0]
+
+
+def set_muscle_attribute(tag: str, attr: str, value: float | str) -> str:
+    """Set ``force``, ``vmax``, ``fpmax`` or ``lengthrange`` on a ``<muscle>`` or ``<general>`` muscle element.
+
+    A ``<general>`` muscle keeps force, vmax and fpmax in ``gainprm`` and ``biasprm`` (both are written); a ``<muscle>``
+    takes them as attributes. *value* is written as given when it is a string.
+    """
+    if tag.startswith("<general") and attr in MUSCLE_PRM_INDEX:
+        for prm in ("gainprm", "biasprm"):
+            vals = re.search(rf'{prm}="([^"]*)"', tag).group(1).split()
+            vals[MUSCLE_PRM_INDEX[attr]] = value if isinstance(value, str) else repr(float(value))
+            tag = re.sub(rf'{prm}="[^"]*"', f'{prm}="{" ".join(vals)}"', tag, count=1)
+        return tag
+    text = value if isinstance(value, str) else repr(float(value))
+    if re.search(rf'\s{attr}\s*=\s*"', tag):
+        return re.sub(rf'(\s){attr}\s*=\s*"[^"]*"', rf'\g<1>{attr}="{text}"', tag, count=1)
+    return tag.replace(' class="', f' {attr}="{text}" class="', 1)

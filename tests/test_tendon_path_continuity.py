@@ -29,7 +29,11 @@ def test_arm_tendon_lengths_continuous_over_elbow_sweep(arms, side):
     data = mujoco.MjData(model)
     elbow = model.joint(f"elbow_flexion_{side}")
     pro_sup = model.joint(f"pro_sup_{side}")
-    tendons = [t for t in range(model.ntendon) if model.tendon(t).name.endswith("_l") == (side == "l")]
+    tendons = [
+        t
+        for t in range(model.ntendon)
+        if ("_l_" in model.tendon(t).name or model.tendon(t).name.endswith("_l")) == (side == "l")
+    ]
     angles = np.arange(elbow.range[0] - LIMIT_MARGIN, elbow.range[1] + LIMIT_MARGIN, ELBOW_STEP)
 
     worst = (0.0, "", 0.0, 0.0)

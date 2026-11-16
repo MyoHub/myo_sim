@@ -1,0 +1,186 @@
+{
+  "provenance": {
+    "source": "myolegs_muscle.xml before the first passive fit (6e25bd0^)",
+    "use": "Starting point of scripts/fit_leg_passive.py, so that a rerun does not build on its own earlier result: fpmax of every fitted muscle, and range and lengthrange of the fitted muscles without a rigid-tendon map (scripts/fit_leg_rigid_maps.py writes the others).",
+    "documentation": "docs/wiki/model-authoring.md"
+  },
+  "muscles": {
+    "semimem_r": {
+      "fpmax": 1.5
+    },
+    "semiten_r": {
+      "fpmax": 1.57478
+    },
+    "bflh_r": {
+      "fpmax": 1.5
+    },
+    "bfsh_r": {
+      "fpmax": 1.58092
+    },
+    "recfem_r": {
+      "fpmax": 1.78166,
+      "range": [
+        0.1,
+        1.8
+      ],
+      "lengthrange": [
+        0.423402,
+        0.713662
+      ]
+    },
+    "vaslat_r": {
+      "fpmax": 2.0,
+      "range": [
+        0.754438,
+        1.8
+      ],
+      "lengthrange": [
+        0.295592,
+        0.476057
+      ]
+    },
+    "vasmed_r": {
+      "fpmax": 1.40617
+    },
+    "vasint_r": {
+      "fpmax": 0.993224
+    },
+    "gasmed_r": {
+      "fpmax": 1.5,
+      "range": [
+        0.268198,
+        1.500818
+      ],
+      "lengthrange": [
+        0.412394,
+        0.475258
+      ]
+    },
+    "gaslat_r": {
+      "fpmax": 1.90363
+    },
+    "soleus_r": {
+      "fpmax": 1.5467,
+      "range": [
+        0.360484,
+        1.51929
+      ],
+      "lengthrange": [
+        0.292617,
+        0.343605
+      ]
+    },
+    "tibpost_r": {
+      "fpmax": 1.34057,
+      "range": [
+        0.627194,
+        1.23083
+      ],
+      "lengthrange": [
+        0.304488,
+        0.327305
+      ]
+    },
+    "fdl_r": {
+      "fpmax": 1.8954,
+      "range": [
+        0.598501,
+        1.22918
+      ],
+      "lengthrange": [
+        0.405466,
+        0.433594
+      ]
+    },
+    "fhl_r": {
+      "fpmax": 1.03099
+    },
+    "perlong_r": {
+      "fpmax": 1.14971
+    },
+    "perbrev_r": {
+      "fpmax": 1.80009
+    },
+    "iliacus_r": {
+      "fpmax": 1.82107,
+      "range": [
+        0.24456,
+        1.23695
+      ],
+      "lengthrange": [
+        0.122191,
+        0.22798
+      ]
+    },
+    "psoas_r": {
+      "fpmax": 1.47869
+    },
+    "tfl_r": {
+      "fpmax": 1.5,
+      "range": [
+        0.637403,
+        1.262865
+      ],
+      "lengthrange": [
+        0.51005,
+        0.569469
+      ]
+    },
+    "sart_r": {
+      "fpmax": 0.806615
+    },
+    "glmax1_r": {
+      "fpmax": 1.86621,
+      "range": [
+        0.680894,
+        1.34594
+      ],
+      "lengthrange": [
+        0.148932,
+        0.246694
+      ]
+    },
+    "glmax2_r": {
+      "fpmax": 1.22459
+    },
+    "glmax3_r": {
+      "fpmax": 1.37074,
+      "range": [
+        1.36664,
+        1.8
+      ],
+      "lengthrange": [
+        0.297946,
+        0.474778
+      ]
+    },
+    "addmagDist_r": {
+      "fpmax": 1.60782
+    },
+    "addmagIsch_r": {
+      "fpmax": 1.6643,
+      "range": [
+        0.662907,
+        1.54717
+      ],
+      "lengthrange": [
+        0.319889,
+        0.458011
+      ]
+    },
+    "addmagMid_r": {
+      "fpmax": 1.69396
+    },
+    "addmagProx_r": {
+      "fpmax": 1.38182,
+      "range": [
+        0.1628,
+        1.1024
+      ],
+      "lengthrange": [
+        0.0575158,
+        0.156738
+      ]
+    }
+  }
+}

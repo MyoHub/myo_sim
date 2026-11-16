@@ -14,7 +14,7 @@ MuJoCo musculoskeletal model of the human torso (lumbar spine and abdomen), deri
 ## Reference model
 
 - **Source:** [Constrained Lumbar Spine model - 210](https://simtk.org/projects/lumbarspine)
-- **Paper:** Walia et al., 2025. MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton. IROS 2025. ([IEEE](https://ieeexplore.ieee.org/document/11063132))
+- **Paper:** Walia et al., 2025. MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton. ICORR 2025. ([IEEE](https://ieeexplore.ieee.org/document/11063132))
 
 ## Fidelity
 
@@ -37,6 +37,8 @@ Example fidelity check (IL_L1 left/right moment-arm and force-length plot) for s
 
 ## Changelog
 
+**2026-08-02** — Restored anatomical optimal fiber length (`L0`) and tendon slack length (`LT`) from Lumbar_C_238.osim for 15 of 16 severely-inflated muscles (`L0` 5-30x anatomical) and 5 additional moderately-inflated muscles (`EO4`, `IL_R5`, `LTpT_T5`, `Ps_L1_VB`, `QL_ant_I.2-T12`, `MF_m2t.1`, `MF_m3t.1`, `MF_m3t.2`, `MF_m3t.3`, `MF_m4.laminar`, `MF_m4s`, `MF_m5s`, `Ps_L1_L2_IVD`, `QL_mid_L3-12.2` and `LTpL_L4` with a documented compromise). `QL_post_I.3-L3` was left unfixed — its own `lengthrange[0]≈1cm` looks non-physiological and needs remeasurement, not a parameter retune. A broader ~80-muscle tier of less-severe `L0` inflation (ratio 1.2-5x) remains, deliberately deferred. Verified against `myoTorsoPoseFixed-v0` in myosuite4 (random-action rollout, no NaN/instability). See `docs/wiki/log.md` (2026-08-02 entries) for full detail and the per-muscle rationale.
+
 **2026-06-05** — Moved chest ownership to myotorso; added unit tests.
 
 **2026-06-04** — Removed deprecated myolegs_abdomen from fragment catalog and registry; introduced passive torso model loading functions; refactored myotorso to use one model and remove joints.
@@ -48,9 +50,11 @@ Example fidelity check (IL_L1 left/right moment-arm and force-length plot) for s
 ```bibtex
 @inproceedings{Walia2025,
   title     = {MyoBack: A Musculoskeletal Model of the Human Back with Integrated Exoskeleton},
-  author    = {Walia, Rohan and Garzon, Kevin and Billot, Morgane and Subramanian, Swathika and Wang, Huiyi and Refai, Mohamed Irfan and Durandau, Guillaume},
-  booktitle = {2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  author    = {Walia, Rohan and Billot, Morgane and Garzon-Aguirre, Kevin and Subramanian, Swathika and Wang, Huiyi and Refai, Mohamed Irfan and Durandau, Guillaume},
+  booktitle = {2025 International Conference on Rehabilitation Robotics (ICORR)},
+  pages     = {128--135},
   year      = {2025},
+  doi       = {10.1109/ICORR66766.2025.11063132},
   url       = {https://ieeexplore.ieee.org/document/11063132},
 }
 ```

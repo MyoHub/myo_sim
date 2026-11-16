@@ -41,14 +41,17 @@ def hand_with_torso() -> mujoco.MjModel:
     return m
 
 
-def test_njnt_equals_23(hand_only, hand_with_torso):
-    assert hand_only.njnt == 23
-    assert hand_with_torso.njnt == 23
+def test_njnt_equals_32(hand_only, hand_with_torso):
+    # 23 joints of the static myohand from main plus CMC4 and CMC5 and the four lumbrical and three junctura node slides.
+    assert hand_only.njnt == 32
+    assert hand_with_torso.njnt == 32
 
 
-def test_nu_equals_39(hand_only, hand_with_torso):
-    assert hand_only.nu == 39
-    assert hand_with_torso.nu == 39
+def test_nu_equals_47(hand_only, hand_with_torso):
+    # 39 actuators of the static myohand from main plus 8 hand-rebuild intrinsic muscles
+    # (AdPt, FPBs, APB, AdPo, FPBd, DI1s, FDM, ODM; RI2 became DI1d and UI_UB5 ADM).
+    assert hand_only.nu == 47
+    assert hand_with_torso.nu == 47
 
 
 def test_joint_names_match(hand_only, hand_with_torso):

@@ -1,0 +1,17 @@
+Attachment points from Mirakhorlo et al. 2016
+
+Some hand intrinsic muscle sites of this package (fit start points, recorded as "mirakhorlo2016" in
+hand_intrinsic_muscles.json) are derived from the attachment points published in:
+
+  Mirakhorlo M, Visser JMA, Goislard de Monsabert BAAX, van der Helm FCT, Maas H, Veeger HEJ.
+  Anatomical parameters for musculoskeletal modeling of the hand and wrist.
+  International Biomechanics 3(1):40-49, 2016. doi:10.1080/23335432.2016.1191373
+  Supplementary data: doi:10.6084/m9.figshare.4434791
+
+The article and its supplementary data are published under the Creative Commons Attribution 4.0
+International licence (CC BY 4.0), https://creativecommons.org/licenses/by/4.0/.
+
+Changes: the points were mapped from the authors' specimen onto the MyoHand skeleton (a similarity fit
+of the wrist, thumb CMC and MCP 2-5 joint centres, then per-segment frames for the phalanges) and then
+moved by scripts/generate_hand_intrinsic_muscles.py --fit to fit published moment arms. The authors do
+not endorse this model.

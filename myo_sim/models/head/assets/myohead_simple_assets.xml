@@ -12,8 +12,8 @@
 ====================================================== -->
 
     <asset>
-        <texture name="tex_myohead" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
-        <material name="mat_myohead" texture="tex_myohead" texuniform="true"/>
+        <texture name="myohead_texskin" builtin="flat" height="762" mark="cross" markrgb="1 .9 .9" rgb1="1 1 1" rgb2="1 1 1" type="cube" width="127"/>
+        <material name="myohead_matskin" texture="myohead_texskin" texuniform="true"/>
 
         <mesh file="meshes/hat_cervical.stl" name="hat_cervical"/>
         <mesh file="meshes/hat_jaw.stl" name="hat_jaw"/>
@@ -23,7 +23,7 @@
      <default>
         <default class="myohead">
             <joint armature="0.01" damping="0.5" limited="true"/>
-            <geom margin="0.001" material="mat_myohead" rgba="0.8 0.8 0.8 1" conaffinity="0" contype="0"/>
+            <geom margin="0.001" material="myohead_matskin" rgba="0.8 0.8 0.8 1" conaffinity="0" contype="0"/>
             <site size="0.001 0.005 0.005" group="3"/>
             <tendon rgba="0.95 0.3 0.3 1" width="0.001"/>
         </default>
