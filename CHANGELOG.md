@@ -4,6 +4,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Passive joint mechanics transforms.** `myo_sim.physics.joint_mechanics.scale_joint_mechanics` returns an independent model copy with scaled passive damping, stiffness and `qpos0`-anchored range of motion on independent 1-DOF joints while preserving `mjEQ_JOINT` couplings, automatic muscle force capacity and refreshed native constants.
 - **Muscle activation time-constant transforms.** `myo_sim.physics.activation_dynamics` reads and scales `mjDYN_MUSCLE` activation and deactivation time constants (`tau_act`, `tau_deact`) on compiled models or editable specs without altering force capacity, stateless actuators or geometry.
 - **Selected-body mass transforms.** `myo_sim.physics.body_mass.scale_body_mass` returns a copy scaled to represented model mass or an explicit participant/reference ratio, preserving geometry and muscle strength and refreshing native constants.
 - **Isometric MVC torque probing and muscle strength calibration.** `myo_sim.physics.muscle_strength` adds `MaxTorqueMeasurement`, `StrengthCalibration`, `strength_factor_from_body_mass`, `max_torque_terms` and `calibrate_muscle_strength`, fitting bounded per-muscle strength factors to gravity-corrected isometric joint torques along coupled joint motions with pure NumPy active-set BVLS (no `scipy` runtime dependency).

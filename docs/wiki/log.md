@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Add passive joint mechanics transforms
+Changed: myo_sim/physics/joint_mechanics.py, myo_sim/physics/__init__.py, tests/test_physics_joint_mechanics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: passive joint damping, stiffness and `qpos0`-anchored range of motion can be scaled on independent 1-DOF joints without fighting `mjEQ_JOINT` couplings or changing automatic muscle peak forces.
+
 ## 2026-11-15 — Add muscle activation time-constant transforms
 Changed: myo_sim/physics/activation_dynamics.py, myo_sim/physics/__init__.py, tests/test_physics_activation_dynamics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: `mjDYN_MUSCLE` excitation-contraction rise and relaxation time constants (`dynprm[:, :2]`) can be scaled orthogonally on compiled models or editable specs without changing steady-state peak force, stateless muscles or geometry.

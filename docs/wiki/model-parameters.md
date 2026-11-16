@@ -81,3 +81,20 @@ Factors are positive finite scalars or `(nu,)` arrays; `deact_factors` defaults
 to `act_factors` when omitted. Only `mjDYN_MUSCLE` actuators are updated
 (`actuator_dynprm[:, 0]` and `actuator_dynprm[:, 1]`); motors, stateless muscles,
 peak active/passive force capacities, geometry and clamps remain unchanged.
+
+## Passive joint mechanics
+
+```python
+from myo_sim.physics.joint_mechanics import scale_joint_mechanics
+
+stiffer = scale_joint_mechanics(model, damping=2.0, stiffness=1.5)
+reduced_rom = scale_joint_mechanics(model, range_scale=0.75, joints=["elbow_flexion_r"])
+```
+
+`joints=None` selects all independent 1-DOF (`hinge` and `slide`) joints,
+skipping `free`/`ball` joints and dependent joints driven by active `mjEQ_JOINT`
+equalities. `damping` and `stiffness` accept non-negative finite scalars or
+`(n_selected,)` arrays; `range_scale` accepts positive finite values and scales
+limited joint intervals `[lo, hi]` around `clip(qpos0, lo, hi)` so reference
+postures remain limit-free. Automatic muscle peak forces are frozen before
+`mj_setConst` refreshes derived model constants on the returned copy.
