@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-16 — Shoulder: integrated stability and independent mechanics checks
+Changed: `tests/test_girdle_stability.py` (new), `scripts/validate_shoulder_mechanics.py` (new), `docs/validation/shoulder-mechanics.json` (new), `docs/wiki/{shoulder-complex,testing-guide,repository-map}.md`, `CHANGELOG.md`
+Why: the girdle models are checked for stability under random activation on CPU MuJoCo and mujoco-warp, and their moment arms and isometric strength are compared with data not used to build them.
+
 ## 2026-11-16 — Merge the hand rebuild (flexor curves, dev) into the shoulder
 Changed: `myo_sim/build/data/hand_literature.json` (both branches' steps, step `girdle_flexor_merge`), `docs/wiki/hand-literature-comparison.md`, `docs/wiki/log.md`, `myo_sim/physics/muscle_groups.py` (cuff sub-regions, `Shoulder-Girdle`), `myo_sim/physics/joint_coupling.py` (docstring), `CHANGELOG.md`
 Why: the shoulder lands after MyoHub/myo_sim#147, so it carries that branch's flexor fix and dev merge, with the hand-literature steps of both kept and the merged model's hand values recorded.

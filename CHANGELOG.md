@@ -46,6 +46,12 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
     `build/data/LICENSE-Seth2019.txt` (CC BY 4.0).
   - **Fatigue groups:** `myo_sim.physics` groups `SUPSP1-2`, `INFSP1-2` and `SUBSC1-3` with their muscle and the
     scapular muscles as `Shoulder-Girdle`, which takes the Shoulder row of the 3CC-r parameters.
+  - **Checks:** `myoarms`, `myotorso_arms` and `myofullbody` stay finite and within bounds on joint speed, penetration
+    and constraint violation under random activation from rest and from girdle postures, on CPU MuJoCo and mujoco-warp
+    (`tests/test_girdle_stability.py`); CPU step time is unchanged (`myofullbody` 490 against 505 us). Moment arms and
+    isometric strength against data not used in the fit: `scripts/validate_shoulder_mechanics.py`
+    (`docs/validation/shoulder-mechanics.json`); the pectoralis major, posterior deltoid and the cuff off its main
+    action differ most from cadaver moment arms.
 
 - **`standing` posture on this model (`myofullbody`, `myolegs`, `myolegs_abdomen`; merged from 0.2.4).** The posture API of 0.2.4 (`myo_sim.list_postures()`, `add_posture_keyframes()`, `build_kwargs={"postures": ...}`, `data/postures.json`, `scripts/generate_postures.py`) replaces this line's standing-keyframe helpers; the table's values are this line's. See `docs/wiki/postures.md`.
   - **Table:** new step: both thumbs at the equilibrium of their passive moments and gravity at zero activation, computed by the script (CMC flexion -7.5, CMC abduction 21.2, MP -15.3, IP -9.7 deg). The rest holds only kinematics at knee 0, so neither the knee hinges nor the masses move it. Finger joints stay at `qpos0`: their equilibrium has no single answer without contacts.
