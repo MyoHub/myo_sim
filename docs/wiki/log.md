@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-16 — Finger flexors keep active force with the hand flat
+Changed: `myoarm_r_muscle.xml` (`FDS3_r`, `FDP2_r`, `FDP3_r`, `FPL_r` as `<general>` muscles), `myo_sim/build/utils.py` (`muscle_tag`, `set_muscle_attribute`), `scripts/fit_muscle_passive.py` (passive curve from `biasprm`), `scripts/fit_specific_tension.py`, `scripts/generate_extrinsic_muscles.py`, `hand_literature.json` (step `flexor_active_fl`), wiki, `CHANGELOG.md`
+Why: MyoHub/myo_sim#196 (Finding A) found FDS3 and FDP3 without active force at `qpos0`: the per-muscle `lmax` bounds fitted to the earlier operating ranges no longer covered them after the passive slack fit. Only the active curve is widened, so every passive fit result stays as it was.
+
 ## 2026-11-13 — Thumb IP spring with the signed fit
 Changed: `myo_sim/build/data/passive_joint_moments.json` (thumb IP row signed fit; `signed_fallback` dropped), `postures.json`, `hand_literature.json` (step `spring_fallbacks`), arm tendon XML, `tests/test_muscle_passive.py` (docstring: L0 rounding), wiki, `CHANGELOG.md`
 Why: six spring rows kept a non-negative fallback flag from earlier models and were never refitted signed. Five still need it; the thumb IP fits signed now (RMS 0.016 -> 0.003 N m).

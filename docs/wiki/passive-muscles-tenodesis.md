@@ -140,8 +140,11 @@ Active force-length factor (fist: every joint at its flexion limit):
 The extensors are at 0.50 or more in full extension with the wrist extended 30 deg. With
 #123's force-length widths (`(lmax - lmin) / 2`, 0.42-0.55 L0 for these flexors) the fibre
 excursion from the wrist-flexed fist to the flat hand (0.55-0.67 L0) does not fit in one
-window for FDS3, FDS5, FDP2, FDP3 and FDP4, so these flexors lose force with the hand flat
-(FDS3, FDP2 and FDP3: none). In the same way EDC3, EPL and EPB have less than half their
+window for FDS3, FDS5, FDP2, FDP3 and FDP4, so these flexors lose force with the hand flat.
+FDS3, FDP2, FDP3 and FPL therefore have a wider active curve than passive one: they are `<general>` muscles whose
+`gainprm` ends at MuJoCo's default `lmax` 1.6 while `biasprm` keeps the fitted bounds, which the passive fit reads.
+With the hand flat their active factor is now 0.35 (FDS3), 0.26 (FDP2), 0.57 (FDP3) and 0.72 (FPL); it was zero for FDS3
+and FDP3. In the same way EDC3, EPL and EPB have less than half their
 force in a fist. Compliant tendons would change these operating ranges; compliant tendons are planned as a later step.
 
 The fitted values are for MuJoCo's rigid-tendon muscle: its active and passive force-length

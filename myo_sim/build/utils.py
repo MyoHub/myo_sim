@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import math
+import re
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
@@ -479,3 +480,33 @@ def build_child_xml_from_components(
         child_root.append(child)
 
     return ET.tostring(root, encoding="unicode")
+
+
+# Index of each muscle attribute in a <general> muscle's gainprm / biasprm (MuJoCo's mju_muscleGain layout).
+MUSCLE_PRM_INDEX = {"force": 2, "vmax": 6, "fpmax": 7}
+
+
+def muscle_tag(text: str, name: str) -> str:
+    """The one ``<muscle>`` or ``<general>`` actuator element named *name* in MJCF *text*."""
+    tags = re.findall(rf'<(?:muscle|general) name="{re.escape(name)}"[^>]*?/>', text)
+    if len(tags) != 1:
+        raise ValueError(f"expected one muscle {name}, found {len(tags)}")
+    return tags[0]
+
+
+def set_muscle_attribute(tag: str, attr: str, value: float | str) -> str:
+    """Set ``force``, ``vmax``, ``fpmax`` or ``lengthrange`` on a ``<muscle>`` or ``<general>`` muscle element.
+
+    A ``<general>`` muscle keeps force, vmax and fpmax in ``gainprm`` and ``biasprm`` (both are written); a ``<muscle>``
+    takes them as attributes. *value* is written as given when it is a string.
+    """
+    if tag.startswith("<general") and attr in MUSCLE_PRM_INDEX:
+        for prm in ("gainprm", "biasprm"):
+            vals = re.search(rf'{prm}="([^"]*)"', tag).group(1).split()
+            vals[MUSCLE_PRM_INDEX[attr]] = value if isinstance(value, str) else repr(float(value))
+            tag = re.sub(rf'{prm}="[^"]*"', f'{prm}="{" ".join(vals)}"', tag, count=1)
+        return tag
+    text = value if isinstance(value, str) else repr(float(value))
+    if re.search(rf'\s{attr}\s*=\s*"', tag):
+        return re.sub(rf'(\s){attr}\s*=\s*"[^"]*"', rf'\g<1>{attr}="{text}"', tag, count=1)
+    return tag.replace(' class="', f' {attr}="{text}" class="', 1)
