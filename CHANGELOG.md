@@ -22,7 +22,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 | `myohead` (new) | – | 24 / 24 / 72 |
 
 - **Renamed:** `_r` on every right-arm joint, actuator, tendon, geom and camera; `AdP` -> `AdPt`, `FPB` -> `FPBs`, `RI2` -> `DI1d`, `UI_UB5` -> `ADM`, `LU_RB2-5` -> `LUM1-4`, `UI_UB2` -> `PI1`, `RI3` -> `DI2`, `UI_UB3` -> `DI3`, `RI4` -> `PI2`, `UI_UB4` -> `DI4`, `RI5` -> `PI3`.
-- **New actuators:** per hand `AdPo`, `FPBd`, `DI1s`, `FDM`, `ODM`; per leg `pect`, `quad_fem`, `gem`; in `myofullbody` the 72 neck muscles, last.
+- **New actuators:** per hand `AdPo`, `FPBd`, `DI1s`, `FDM`, `ODM`; per leg `pect`, `quad_fem`, `gem`; in `myofullbody` the 72 neck muscles, last. `myo_sim.physics` gives the renamed and new hand muscles and the three hip muscles their functional groups for fatigue; the neck muscles use the `Default` row.
 - **New joints:** per hand `cmc4_flexion`, `cmc5_flexion`, `node_LUM1-4`, `node_JT3-5`; in `myofullbody` 24 neck joints after the lumbar joints, so every arm and leg index moves. Build joint lists by name; filter `node_` joints and `lig_`, `node_`, `passive_` tendons from observations.
 - **Ranges and new tendons (hand):** MCP 2-5 hyperextend to 61 deg and PIP 2-5 to 10 deg, the thumb MP and IP, the index and little-finger MCP abduction and the wrist (-75..80 flexion, -36..22 deviation) have new limits; per hand eight limited fixed tendons `digit{2-5}_mcp_abduction_flexion_limit_{pos,neg}_r` (`_l`) narrow MCP abduction in flexion. Filter them from tendon observations like the `lig_`, `node_` and `passive_` tendons.
 - **Mass:** `myofullbody` 76.51 kg (84.26 kg on `dev`, which counted the pelvis twice); head and neck 6.94 % of it, torso 15.416 kg.
@@ -281,6 +281,25 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ### Changed
 - **Head and trunk mass (all models with the torso chain).** The head body now carries 5.848 kg (6.94 % of body mass, de Leva 1996) and the torso 14.897 kg instead of 18.619 kg; the total of the rigid-head full body is unchanged at 84.26 kg and its whole-body centre of mass rises by 1.4 cm; with the neck, `myofullbody` totals 84.08 kg (see above). The OpenSim torso mass already contained the head, so the head was previously about 2.5 % of body mass. Downstream: dynamics of every model with the torso and head change slightly; policies trained on the old masses (e.g. MyoSuite and MuscleMimic `myofullbody` checkpoints) should be re-evaluated or retrained, and MyoSuite parity baselines regenerated when it moves to this release.
+
+### Added
+- **Model-only strength transforms.** `myo_sim.physics.muscle_strength` resolves native automatic peak force and scales active/passive force capacity on compiled models or editable specs, without importing subject fitting or environments.
+- **Isometric MVC torque probing and muscle strength calibration.** `myo_sim.physics.muscle_strength` adds `MaxTorqueMeasurement`, `StrengthCalibration`, `strength_factor_from_body_mass`, `max_torque_terms` and `calibrate_muscle_strength`, fitting bounded per-muscle strength factors to gravity-corrected isometric joint torques along coupled joint motions with pure NumPy active-set BVLS (no `scipy` runtime dependency).
+- **Selected-body mass transforms.** `myo_sim.physics.body_mass.scale_body_mass` returns a copy scaled to represented model mass or an explicit participant/reference ratio, preserving geometry and muscle strength and refreshing native constants.
+
+### Fixed
+- **Empty torch fatigue selections.** `TorchFatigueState.from_mj_model()` now creates zero muscle columns for motor-only models and explicit empty selections, matching `CumulativeFatigue`; it previously allocated fatigue state for every actuator and rejected empty reset vectors.
+- **Torch fatigue reset input ownership.** Reset vectors are copied before writing live compartments. NumPy and device-tensor views of active state no longer silently become zero fatigue, indexed resets can use views of fatigued state without overlapping-memory errors, and reversed float32 NumPy vectors are accepted without negative-stride errors.
+- **Torch fatigue checkpoint restore.** `TorchFatigueState.load_state_dict()` now converts and validates all three compartments before modifying live values, so a rejected checkpoint leaves the running fatigue state intact. Existing broadcast-compatible restores and buffer references are preserved.
+- **Complete imported keyframe states.** `build.utils.add_keyframes()` now preserves muscle activation, actuator control and mocap position/orientation (`act`, `ctrl`, `mpos`, `mquat`) alongside time, position and velocity. Resetting an imported keyframe previously silently used defaults for these fields. Unnamed keyframes are accepted, and omitted fields and partial state arrays retain MuJoCo's native defaults.
+- **Generated XML inertia precision.** Edited principal moments are exported at roundtrip precision so planar bodies remain on the physical inertia triangle when reloaded. No balancing or mass-distribution adjustment is applied.
+- **`add_sensors` rejects sensor tags it cannot import.** A sensor include with any tag other than `framelinvel`, `frameangvel`, `touch` or `jointlimitfrc` (for example `<gyro>` or `<framepos>`) now raises `ValueError` naming the tag and the file, and adds no sensor; before, those sensors were left out of the model without a message. The shipped includes in `models/sensors/` use only the supported tags, so no model changes.
+
+## 0.2.5
+
+The body of 0.2.4: no model file changes, so every model array is identical to 0.2.4. This release adds runtime code.
+
+- **`myo_sim.physics`: joint couplings and 3CC-r muscle fatigue (from MyoSuite).** `joint_coupling` puts coupled joints on their polynomials (NumPy or torch, in place or differentiable), `fatigue` holds the 3CC-r model with its cited per-group parameters (`CumulativeFatigue` in NumPy, `TorchFatigueState` batched in torch and fused with `torch.compile` on CUDA), `fatigue_jax` the same step in JAX, and `muscle_groups` the functional muscle groups. NumPy is enough to import them; torch and JAX are optional (`myo-sim[torch]`, `myo-sim[jax]`). No model file changes.
 
 ## 0.2.4
 

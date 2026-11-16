@@ -6,16 +6,24 @@ Map of the test suite for agents working in `myo_sim`.
 
 | File | What it tests | When to run |
 |---|---|---|
+| `test_physics_fatigue.py` | Exact 3CC-r steps and NumPy/torch parity, including zero-column state for empty muscle selections | After fatigue changes; install the `torch` extra to run both backends |
+| `test_keyframe_import.py` | Imported keyframes compile and reset activation, controls and mocap state exactly like native MJCF, including omitted-field defaults | After `build.utils.add_keyframes` changes |
+| `test_torch_fatigue_reset_ownership.py` | Reset vectors viewing live compartments, selected rows, subsequent steps and preserved input gradients | After Torch fatigue reset changes; requires optional Torch, with CUDA cases skipped without a device |
+| `test_torch_fatigue_restore.py` | Failed Torch checkpoint loads preserve live compartments and the next fatigue step; valid broadcasting and buffer references are retained | After Torch fatigue restore changes; requires the optional `torch` extra, with CUDA cases skipped without a device |
 | `test_sims.py` | Static XML models load without error via `mujoco.MjModel.from_xml_path` | Always before PR |
 | `test_head_build.py` | Neck passive mechanics, muscle parameters, preservation of full-body landmarks/actuators, cervical inertias and no ringing at the 2 ms step | After neck assets, mass or composition changes |
 | `test_build_registry.py` | `BuildStrategy` enum fields, `MODEL_REGISTRY` completeness | After `compose.py` changes |
+| `test_xml_inertia_precision.py` | Edited planar inertias roundtrip without balancing; native frames and body order are retained | After serializer changes |
 | `test_contact_paths.py` | Contacts are centralized in `contacts/`, not embedded in `assets/` | After XML or `compose.py` changes |
+| `test_sensor_includes.py` | `add_sensors` imports the supported sensor tags as native MJCF does and rejects any other tag without adding a sensor | After `build/utils.py` sensor changes |
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
 | `test_chest_ownership.py` | `chest_r` in torso chain, not arm chain; no `chest_l` in bilateral models; `chest_r` stays massless and `myofullbody` totals ~76.5 kg | After chain XML changes |
 | `test_knee_coupling_ranges.py` | Every coordinate the knee drives stays inside its declared range along its coupling polynomial | After knee chain XML or coupling changes |
 | `test_knee_joint_centre.py` | The femur's origin seen from the tibia against stored OpenSim values on both knees, with the knee's couplings active | After knee chain XML changes |
 | `test_pelvis_mass_once.py` | In the four models with legs the sacrum is massless beside the legs' pelvis; the sacrum moves only in those models | After torso or leg chain mass changes |
 | `test_mass_convention.py` | `myofullbody` total mass (76.5 kg) and inertia sanity, only attachment frames massless, skull and cervical chain (`myohead_base` subtree) hold 6.94 % of body mass; part models keep the rigid head at 5.329 kg | After mass, inertia or head/torso changes |
+| `test_physics_muscle_strength.py` | Active/passive force scaling, automatic force resolution, spec equivalence, coupled MVC torque probes and bounded strength calibration | After strength-transform or MVC-calibration changes |
+| `test_physics_body_mass.py` | Selected mass modes, native refreshed constants, automatic-force preservation and input ownership | After mass-transform changes |
 | `test_fragment_registry.py` | FragmentRegistry legacy entries and all composed `myo_sim.load()` names build and forward | After `__init__.py` changes |
 | `test_passive_torso_build.py` | Passive torso scaffold builds without error | After torso XML or compose changes |
 | `test_legs_abdomen_build.py` | `myolegs_abdomen` model builds without error | After legs or abdomen changes |
@@ -51,6 +59,11 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_hand_grip.py` | Maximum power grip after McFarland et al. 2023 (`scripts/validate_hand_function.py`, `build/data/hand_function.json`): the cached optimum of the model it runs on (band, wrist balance, penetration; whole-finger shares settled, against Kong et al. 2011) and against weak flexors; skipped without a cached optimum for the model. `MYO_SIM_SLOW=1` adds the optimisation and posture sensitivity | After hand muscle, tendon, spring or chain changes |
 
 ## Fast Gate (Run Before Every PR)
+
+CI installs the locked development environment, then overrides MuJoCo with the
+matrix's floor or newest supported release (`>=3.4,<4`). Its version report and
+pytest commands use `uv run --no-sync` so uv does not restore the locked MuJoCo
+version before the checks. Keep that flag on commands after the matrix override.
 
 Run this before opening or updating a PR. It skips the two manual-only tests:
 

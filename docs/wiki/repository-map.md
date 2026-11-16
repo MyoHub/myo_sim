@@ -28,6 +28,13 @@ myo_sim/              # installable Python package
     leg_passive.py       # library for scripts/fit_leg_passive.py
     keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
     data/             # JSON provenance and fitting input of the intrinsic muscles and passive springs
+  physics/            # runtime physics the models need beyond MuJoCo (NumPy core; torch/JAX lazily)
+    joint_coupling.py # put coupled joints (mjEQ_JOINT) on their polynomials
+    fatigue.py        # 3CC-r muscle fatigue: NumPy, batched torch (torch.compile on CUDA)
+    fatigue_jax.py    # the same fatigue step in JAX
+    muscle_groups.py  # functional muscle groups, keys of the fatigue parameters
+    muscle_strength.py # native peak-force resolution, strength transforms and MVC torque calibration
+    body_mass.py      # selected-body mass/inertia transforms with refreshed constants
 scripts/
   fit_passive_moments.py       # refits passive springs, rewrites their block in myoarm_r_tendon.xml
   generate_hand_intrinsic_muscles.py # fits (--fit) and writes the intrinsic sites and blocks in the arm XML, the lumbrical nodes (--place-nodes) and their ties
@@ -52,6 +59,7 @@ tests/
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
   test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
+  test_physics_*.py                # myo_sim.physics: couplings, fatigue (NumPy/torch/JAX), endurance times
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py

@@ -26,6 +26,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/hand-literature-comparison.md` — the hand against published data after each step of the hand rebuild (generated tables: model value, literature value ± spread, reference, protocol)
 - `docs/wiki/postures.md` — the posture keyframes: pose, API, measurements and literature comparison
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
+- `docs/wiki/model-parameters.md` — native muscle strength transforms, isometric MVC torque calibration and selected-body mass transforms
 - `docs/wiki/log.md` — append-only wiki maintenance log
 
 Open issues: https://github.com/MyoHub/myo_sim/issues
