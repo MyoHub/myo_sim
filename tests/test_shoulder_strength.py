@@ -38,10 +38,14 @@ def test_calibration_reproduces_the_table() -> None:
     table = script.load_table()
     refit = copy.deepcopy(table)
     rig = script.Rig()
-    script.fit(refit, rig)
+    old = table["fit"]["result"]
+    held = "refit_value_N_per_cm2" in old  # value kept from an earlier fit (fit_shoulder_strength.py --hold)
+    script.fit(refit, rig, hold=old["value_N_per_cm2"] if held else None)
     script.girdle_check(refit, rig)
-    old, new = table["fit"]["result"], refit["fit"]["result"]
+    new = refit["fit"]["result"]
     assert new["value_N_per_cm2"] == pytest.approx(old["value_N_per_cm2"], abs=0.1)
+    if held:
+        assert new["refit_value_N_per_cm2"] == pytest.approx(old["refit_value_N_per_cm2"], abs=0.1)
     for name, row in old["targets"].items():
         assert new["targets"][name]["model_Nm"] == pytest.approx(row["model_Nm"], abs=0.2), name
     for name, row in table["fit"]["girdle_checks"].items():

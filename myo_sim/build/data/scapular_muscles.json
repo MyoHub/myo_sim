@@ -30,56 +30,6 @@
         0.023473
       ]
     },
-    "INFSP_cylinder": {
-      "body": "scapula_r",
-      "pos": [
-        -0.05812,
-        -0.045902,
-        -0.045634
-      ],
-      "quat": [
-        0.019935,
-        0.444146,
-        0.654917,
-        -0.611082
-      ],
-      "source": "Seth 2019 wrap Infra",
-      "type": "cylinder",
-      "size": [
-        0.019735,
-        0.050581
-      ],
-      "side_site": [
-        -0.082044,
-        -0.040322,
-        -0.01474
-      ]
-    },
-    "SUBSC_cylinder": {
-      "body": "scapula_r",
-      "pos": [
-        -0.025101,
-        -0.039,
-        -0.02839
-      ],
-      "quat": [
-        0.786067,
-        0.167519,
-        -0.570941,
-        0.167519
-      ],
-      "source": "Seth 2019 wrap Subscapuralis",
-      "type": "cylinder",
-      "size": [
-        0.012556,
-        0.042838
-      ],
-      "side_site": [
-        -0.013684,
-        -0.061293,
-        -0.0302
-      ]
-    },
     "SERR2_thorax": {
       "body": "chest_r",
       "type": "sphere",
@@ -244,7 +194,15 @@
           0.022204
         ]
       },
-      "wrap": "INFSP_cylinder",
+      "wrap": "SUPSP_hhead",
+      "via": {
+        "body": "humerus_r",
+        "pos": [
+          -0.018351,
+          -0.002477,
+          0.01923
+        ]
+      },
       "seth_parameters": {
         "F0": 967.4,
         "l0": 0.0698,
@@ -254,27 +212,28 @@
       "pcsa_source": "Ward et al. 2006 infraspinatus 10.71 cm2 x Seth's share of the muscle (0.483)",
       "l0": 0.0657,
       "alpha_deg": 1.4,
-      "lts": 0.0541,
+      "lts": 0.05931,
       "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
       "force_N": 574.2,
       "fpmax": 0.429583,
+      "lts_adjusted_from": 0.0541,
       "map": {
         "range": [
-          0.727553,
-          1.527628
+          0.657251,
+          1.621732
         ],
         "lengthrange": [
-          0.101877,
-          0.154453
+          0.102468,
+          0.165847
         ]
       },
       "fibre_length_seth_motions": [
-        0.946,
-        1.443
+        0.965,
+        1.5
       ],
       "path_length_seth_motions_mm": [
-        116.2,
-        148.9
+        122.7,
+        157.9
       ]
     },
     {
@@ -296,7 +255,15 @@
           0.024807
         ]
       },
-      "wrap": "INFSP_cylinder",
+      "wrap": "SUPSP_hhead",
+      "via": {
+        "body": "humerus_r",
+        "pos": [
+          -0.001572,
+          0.017195,
+          0.023997
+        ]
+      },
       "seth_parameters": {
         "F0": 1037.4,
         "l0": 0.0677,
@@ -306,27 +273,28 @@
       "pcsa_source": "Ward et al. 2006 infraspinatus 10.71 cm2 x Seth's share of the muscle (0.517)",
       "l0": 0.0657,
       "alpha_deg": 1.4,
-      "lts": 0.086,
+      "lts": 0.10369,
       "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
       "force_N": 615.7,
       "fpmax": 0.429583,
+      "lts_adjusted_from": 0.086,
       "map": {
         "range": [
-          0.403624,
-          1.306402
+          0.582575,
+          1.500115
         ],
         "lengthrange": [
-          0.112487,
-          0.171816
+          0.141939,
+          0.202235
         ]
       },
       "fibre_length_seth_motions": [
-        0.792,
-        1.274
+        0.82,
+        1.5
       ],
       "path_length_seth_motions_mm": [
-        138.0,
-        169.7
+        157.5,
+        202.2
       ]
     },
     {
@@ -348,7 +316,15 @@
           -0.012
         ]
       },
-      "wrap": "SUBSC_cylinder",
+      "wrap": "SUPSP_hhead",
+      "via": {
+        "body": "humerus_r",
+        "pos": [
+          0.022058,
+          0.009685,
+          -0.006569
+        ]
+      },
       "seth_parameters": {
         "F0": 540.4,
         "l0": 0.0676,
@@ -364,21 +340,21 @@
       "fpmax": 0.653193,
       "map": {
         "range": [
-          0.694256,
-          1.411132
+          0.703221,
+          1.593809
         ],
         "lengthrange": [
-          0.108255,
-          0.151268
+          0.108793,
+          0.162229
         ]
       },
       "fibre_length_seth_motions": [
-        0.728,
-        1.136
+        0.78,
+        1.38
       ],
       "path_length_seth_motions_mm": [
-        110.3,
-        134.8
+        113.4,
+        149.4
       ]
     },
     {
@@ -400,7 +376,15 @@
           -0.019435
         ]
       },
-      "wrap": "SUBSC_cylinder",
+      "wrap": "SUPSP_hhead",
+      "via": {
+        "body": "humerus_r",
+        "pos": [
+          0.019879,
+          0.015071,
+          -0.007286
+        ]
+      },
       "seth_parameters": {
         "F0": 609.0,
         "l0": 0.0744,
@@ -410,28 +394,27 @@
       "pcsa_source": "Ward et al. 2006 subscapularis 15.53 cm2 x Seth's share of the muscle (0.304)",
       "l0": 0.06,
       "alpha_deg": 0.0,
-      "lts": 0.06477,
+      "lts": 0.0694,
       "length_source": "Ward 2006 fibre length; tendon slack keeps Seth's optimal muscle-tendon length",
       "force_N": 524.5,
       "fpmax": 0.653193,
-      "lts_adjusted_from": 0.0694,
       "map": {
         "range": [
-          0.497432,
-          1.307778
+          0.707939,
+          1.567242
         ],
         "lengthrange": [
-          0.094616,
-          0.143237
+          0.111876,
+          0.163434
         ]
       },
       "fibre_length_seth_motions": [
-        0.5,
-        0.95
+        0.708,
+        1.375
       ],
       "path_length_seth_motions_mm": [
-        94.8,
-        121.8
+        111.9,
+        151.9
       ]
     },
     {
@@ -453,7 +436,15 @@
           -0.019526
         ]
       },
-      "wrap": "SUBSC_cylinder",
+      "wrap": "SUPSP_hhead",
+      "via": {
+        "body": "humerus_r",
+        "pos": [
+          0.0047,
+          -0.008606,
+          -0.021707
+        ]
+      },
       "seth_parameters": {
         "F0": 854.0,
         "l0": 0.0721,
@@ -469,21 +460,21 @@
       "fpmax": 0.653193,
       "map": {
         "range": [
-          0.823317,
-          1.523369
+          0.935278,
+          1.730426
         ],
         "lengthrange": [
-          0.120499,
-          0.162502
+          0.127217,
+          0.174926
         ]
       },
       "fibre_length_seth_motions": [
-        0.844,
-        1.221
+        0.939,
+        1.358
       ],
       "path_length_seth_motions_mm": [
-        121.8,
-        144.4
+        127.4,
+        152.6
       ]
     },
     {

@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-16 — Shoulder: paths fitted to cadaver moment arms
+Changed: `scripts/fit_shoulder_paths.py` (new), `myo_sim/build/data/shoulder_paths.json` (new), `tests/test_shoulder_paths.py` (new), `scripts/generate_scapular_muscles.py` (cuff via sites), `scripts/validate_shoulder_mechanics.py` (fitted curves marked), `myo_sim/build/data/scapular_muscles.json`, `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/build/data/LICENSE-Seth2019.txt`, `docs/validation/shoulder-mechanics.json`, `docs/wiki/{shoulder-complex,testing-guide,repository-map}.md`, `CHANGELOG.md`
+Why: the independent mechanics check found the middle and posterior deltoid and the infraspinatus and subscapularis off the cadaver moment arms; one site per line is now fitted to those curves (marked as fitted in the validation). The pectoralis major and supraspinatus stay: no anatomical path met their flexion and rotation data (recorded in the wiki).
+
 ## 2026-11-16 — Shoulder: integrated stability and independent mechanics checks
 Changed: `tests/test_girdle_stability.py` (new), `scripts/validate_shoulder_mechanics.py` (new), `docs/validation/shoulder-mechanics.json` (new), `docs/wiki/{shoulder-complex,testing-guide,repository-map}.md`, `CHANGELOG.md`
 Why: the girdle models are checked for stability under random activation on CPU MuJoCo and mujoco-warp, and their moment arms and isometric strength are compared with data not used to build them.

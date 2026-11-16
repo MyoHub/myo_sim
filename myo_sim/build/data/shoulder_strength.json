@@ -421,65 +421,66 @@
     "published_range": "25-100 N/cm2 in most muscle models; 140 N/cm2 for the shoulder and elbow in Holzbaur et al. 2005; the hand and wrist of this package 166 N/cm2 (specific_tension.json)",
     "result": {
       "value_N_per_cm2": 111.1,
-      "rms_z": 1.2,
+      "rms_z": 1.08,
       "targets": {
         "abduction_60": {
-          "model_Nm": 65.4,
-          "z": -0.83
+          "model_Nm": 81.0,
+          "z": 0.61
         },
         "adduction_60": {
-          "model_Nm": 103.1,
-          "z": 0.83
+          "model_Nm": 99.3,
+          "z": 0.5
         },
         "internal_rotation_scaption_45": {
-          "model_Nm": 71.0,
-          "z": 1.84
+          "model_Nm": 66.4,
+          "z": 1.38
         },
         "external_rotation_scaption_45": {
-          "model_Nm": 29.6,
-          "z": -0.86
+          "model_Nm": 26.3,
+          "z": -1.31
         },
         "flexion_90": {
-          "model_Nm": 61.9,
-          "z": -1.11
+          "model_Nm": 87.5,
+          "z": 0.75
         },
         "abduction_side": {
-          "model_Nm": 42.0,
-          "z": -1.36
+          "model_Nm": 40.3,
+          "z": -1.48
         },
         "internal_rotation_scaption_30": {
-          "model_Nm": 60.6,
-          "z": 0.84
+          "model_Nm": 55.2,
+          "z": 0.51
         },
         "external_rotation_scaption_30": {
-          "model_Nm": 40.5,
-          "z": 0.77
+          "model_Nm": 33.2,
+          "z": -0.05
         },
         "flexion_side_otis": {
-          "model_Nm": 54.7
+          "model_Nm": 74.3
         },
         "flexion_90_otis": {
-          "model_Nm": 41.6
+          "model_Nm": 67.2
         },
         "extension_side_garner": {
-          "model_Nm": 93.3
+          "model_Nm": 80.6
         },
         "extension_90_garner": {
-          "model_Nm": 134.4
+          "model_Nm": 127.2
         },
         "abduction_90_otis": {
-          "model_Nm": 60.6
+          "model_Nm": 74.5
         },
         "adduction_90_garner": {
-          "model_Nm": 116.2
+          "model_Nm": 110.2
         },
         "internal_rotation_side_otis": {
-          "model_Nm": 60.1
+          "model_Nm": 54.1
         },
         "external_rotation_side_otis": {
-          "model_Nm": 41.2
+          "model_Nm": 31.4
         }
-      }
+      },
+      "refit_value_N_per_cm2": 104.2
     },
     "girdle_checks": {
       "shrug": {

@@ -17,6 +17,7 @@ test need no archive.
 
     uv run python scripts/fit_shoulder_strength.py --zip ThoracoscapularShoulderPaperMaterials.zip --fit
     uv run python scripts/fit_shoulder_strength.py --write
+    uv run python scripts/fit_shoulder_strength.py --hold   # keep the value, recompute moments after path changes
 """
 
 from __future__ import annotations
@@ -168,8 +169,11 @@ def measure(table: dict[str, Any], rig: Rig) -> dict[str, tuple[np.ndarray, np.n
     return {t["name"]: rig.moments_per_newton(t, table["girdle_poses"][t["name"]]) for t in table["targets"]}
 
 
-def fit(table: dict[str, Any], rig: Rig) -> None:
-    """Weighted least squares of (model - mean) / SD over the fit targets (the moment is linear in the value)."""
+def fit(table: dict[str, Any], rig: Rig, hold: float | None = None) -> None:
+    """Weighted least squares of (model - mean) / SD over the fit targets (the moment is linear in the value).
+
+    With *hold*, the moments are evaluated at that value instead and the least-squares value is only recorded
+    (``refit_value_N_per_cm2``): the calibration stays while paths change."""
     per_n = measure(table, rig)
     fit_rows = [t for t in table["targets"] if t["fit"]]
     a = np.array(
@@ -178,7 +182,8 @@ def fit(table: dict[str, Any], rig: Rig) -> None:
     b = np.array([model_moment(table, per_n[t["name"]], rig, 0.0) for t in fit_rows])
     mean = np.array([t["mean_Nm"] for t in fit_rows])
     w = 1.0 / np.array([t["sd_Nm"] for t in fit_rows]) ** 2
-    sigma = round(float(np.sum(w * a * (mean - b)) / np.sum(w * a * a)), 1)
+    refit = round(float(np.sum(w * a * (mean - b)) / np.sum(w * a * a)), 1)
+    sigma = refit if hold is None else hold
     results = {}
     for t in table["targets"]:
         value = model_moment(table, per_n[t["name"]], rig, sigma)
@@ -188,6 +193,8 @@ def fit(table: dict[str, Any], rig: Rig) -> None:
         results[t["name"]] = row
     z = np.array([results[t["name"]]["z"] for t in fit_rows])
     table["fit"]["result"] = {"value_N_per_cm2": sigma, "rms_z": round(float(np.sqrt(np.mean(z**2))), 2), "targets": results}
+    if hold is not None:
+        table["fit"]["result"]["refit_value_N_per_cm2"] = refit
 
 
 def girdle_check(table: dict[str, Any], rig: Rig) -> None:
@@ -252,6 +259,7 @@ def main() -> None:
     parser.add_argument("--zip", type=Path, help="ThoracoscapularShoulderPaperMaterials.zip from SimTK (for --fit)")
     parser.add_argument("--fit", action="store_true")
     parser.add_argument("--write", action="store_true")
+    parser.add_argument("--hold", action="store_true", help="keep the tabled value; recompute the moments and checks")
     args = parser.parse_args()
     table = load_table()
     if args.fit:
@@ -262,6 +270,11 @@ def main() -> None:
         girdle_check(table, rig)
         TABLE.write_text(json.dumps(table, indent=2) + "\n")
         write(table)
+    elif args.hold:
+        rig = Rig()
+        fit(table, rig, hold=table["fit"]["result"]["value_N_per_cm2"])
+        girdle_check(table, rig)
+        TABLE.write_text(json.dumps(table, indent=2) + "\n")
     elif args.write:
         write(table)
     result = load_table()["fit"]

@@ -16,22 +16,22 @@
      -2.38
     ],
     "infraspinatus": [
-     -4.27,
-     -1.17,
-     1.9,
-     4.66,
-     6.82,
-     8.14,
-     8.25
+     0.71,
+     5.38,
+     9.4,
+     12.5,
+     14.71,
+     16.16,
+     16.94
     ],
     "subscapularis": [
-     4.27,
-     0.82,
-     -2.55,
-     -5.61,
-     -8.18,
-     -10.13,
-     -11.84
+     6.44,
+     3.57,
+     0.52,
+     -2.46,
+     -5.19,
+     -7.53,
+     -10.64
     ],
     "teres minor": [
      -15.5,
@@ -52,22 +52,22 @@
      33.02
     ],
     "middle deltoid": [
-     24.76,
-     28.33,
-     32.19,
-     34.55,
-     34.94,
-     32.67,
-     17.38
+     22.54,
+     22.84,
+     25.6,
+     27.0,
+     26.68,
+     24.24,
+     12.06
     ],
     "posterior deltoid": [
-     10.08,
-     5.41,
-     0.11,
-     -5.23,
-     -9.99,
-     -13.66,
-     -17.08
+     7.22,
+     6.11,
+     4.5,
+     2.5,
+     0.28,
+     -1.97,
+     -5.76
     ],
     "pectoralis major": [
      -21.9,
@@ -108,22 +108,22 @@
      3.63
     ],
     "infraspinatus": [
-     -1.49,
-     0.88,
-     3.2,
-     5.33,
-     7.13,
-     8.48,
-     9.46
+     5.23,
+     8.69,
+     11.27,
+     13.08,
+     14.7,
+     15.56,
+     13.98
     ],
     "subscapularis": [
-     0.47,
-     -1.29,
-     -2.93,
-     -4.32,
-     -5.36,
-     -6.0,
-     -5.99
+     5.36,
+     3.91,
+     2.3,
+     0.66,
+     -0.92,
+     -2.37,
+     -5.93
     ],
     "teres minor": [
      -15.55,
@@ -144,22 +144,22 @@
      28.66
     ],
     "middle deltoid": [
-     23.43,
-     26.93,
-     30.99,
-     33.67,
-     34.51,
-     32.89,
-     19.48
+     24.5,
+     25.41,
+     28.19,
+     29.47,
+     28.82,
+     25.74,
+     11.21
     ],
     "posterior deltoid": [
-     -14.8,
-     -14.91,
-     -14.04,
-     -12.33,
-     -9.98,
-     -7.13,
-     -0.61
+     -5.36,
+     -4.58,
+     -3.52,
+     -2.27,
+     -0.88,
+     0.55,
+     3.24
     ],
     "pectoralis major": [
      -7.86,
@@ -200,22 +200,22 @@
      -1.52
     ],
     "infraspinatus": [
-     0.79,
-     -3.4,
-     -7.34,
-     -10.66,
-     -13.09,
-     -14.49,
-     -14.11
+     7.32,
+     5.31,
+     3.17,
+     1.01,
+     -1.47,
+     -4.23,
+     -10.05
     ],
     "subscapularis": [
-     -6.67,
-     -4.61,
-     -2.66,
-     -0.81,
-     1.13,
-     3.21,
-     7.74
+     0.53,
+     3.37,
+     5.7,
+     7.53,
+     9.34,
+     10.68,
+     10.97
     ],
     "teres minor": [
      -8.96,
@@ -236,22 +236,22 @@
      22.59
     ],
     "middle deltoid": [
-     10.24,
-     14.07,
-     17.85,
-     22.23,
-     25.67,
-     27.87,
-     27.02
+     16.88,
+     17.46,
+     20.98,
+     23.52,
+     24.79,
+     24.46,
+     17.79
     ],
     "posterior deltoid": [
-     -45.34,
-     -38.67,
-     -31.28,
-     -23.31,
-     -14.92,
-     -6.27,
-     11.22
+     -22.45,
+     -18.91,
+     -14.69,
+     -10.01,
+     -5.02,
+     0.12,
+     10.23
     ],
     "pectoralis major": [
      19.35,
@@ -294,26 +294,26 @@
      17.78
     ],
     "infraspinatus": [
-     15.21,
-     19.34,
-     22.79,
-     25.3,
-     26.56,
-     26.19,
-     23.72,
-     18.55,
-     10.07
+     19.79,
+     21.08,
+     21.84,
+     22.81,
+     23.37,
+     22.95,
+     21.36,
+     18.64,
+     14.64
     ],
     "subscapularis": [
-     -4.25,
-     -11.38,
-     -17.02,
-     -19.44,
-     -19.57,
-     -18.26,
-     -15.88,
-     -12.7,
-     -8.98
+     -12.4,
+     -15.09,
+     -16.64,
+     -17.88,
+     -18.81,
+     -19.21,
+     -19.13,
+     -18.64,
+     -17.75
     ],
     "teres minor": [
      3.9,
@@ -338,26 +338,26 @@
      -1.61
     ],
     "middle deltoid": [
-     0.39,
-     0.09,
-     -0.21,
-     -0.5,
+     -0.14,
+     -0.3,
+     -0.46,
+     -0.61,
      -0.76,
-     -0.98,
-     -1.13,
-     -1.21,
-     -1.21
+     -0.86,
+     -0.92,
+     -0.9,
+     -0.81
     ],
     "posterior deltoid": [
-     5.77,
-     7.46,
-     8.74,
-     9.46,
-     9.48,
-     8.92,
-     7.75,
-     5.99,
-     3.71
+     2.99,
+     3.82,
+     4.42,
+     4.74,
+     4.75,
+     4.42,
+     3.77,
+     2.83,
+     1.67
     ],
     "pectoralis major": [
      5.29,
@@ -441,7 +441,8 @@
     "in_band": 1,
     "within_5mm": 4,
     "n": 7,
-    "max_excess_mm": 9.88
+    "max_excess_mm": 9.88,
+    "path_fitted": false
    },
    {
     "plane": "coronal",
@@ -460,13 +461,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     -4.27,
-     -1.17,
-     1.9,
-     4.66,
-     6.82,
-     8.14,
-     8.25
+     0.71,
+     5.38,
+     9.4,
+     12.5,
+     14.71,
+     16.16,
+     16.94
     ],
     "band_lo_mm": [
      9,
@@ -486,10 +487,11 @@
      10,
      5.5
     ],
-    "in_band": 3,
-    "within_5mm": 5,
+    "in_band": 1,
+    "within_5mm": 4,
     "n": 7,
-    "max_excess_mm": 13.27
+    "max_excess_mm": 11.44,
+    "path_fitted": true
    },
    {
     "plane": "coronal",
@@ -508,13 +510,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     4.27,
-     0.82,
-     -2.55,
-     -5.61,
-     -8.18,
-     -10.13,
-     -11.84
+     6.44,
+     3.57,
+     0.52,
+     -2.46,
+     -5.19,
+     -7.53,
+     -10.64
     ],
     "band_lo_mm": [
      1,
@@ -534,10 +536,11 @@
      -9,
      -8
     ],
-    "in_band": 1,
-    "within_5mm": 7,
+    "in_band": 0,
+    "within_5mm": 4,
     "n": 7,
-    "max_excess_mm": 3.84
+    "max_excess_mm": 5.57,
+    "path_fitted": true
    },
    {
     "plane": "coronal",
@@ -585,7 +588,8 @@
     "in_band": 0,
     "within_5mm": 2,
     "n": 7,
-    "max_excess_mm": 11.5
+    "max_excess_mm": 11.5,
+    "path_fitted": false
    },
    {
     "plane": "coronal",
@@ -633,7 +637,8 @@
     "in_band": 2,
     "within_5mm": 7,
     "n": 7,
-    "max_excess_mm": 3.02
+    "max_excess_mm": 3.02,
+    "path_fitted": false
    },
    {
     "plane": "coronal",
@@ -652,13 +657,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     24.76,
-     28.33,
-     32.19,
-     34.55,
-     34.94,
-     32.67,
-     17.38
+     22.54,
+     22.84,
+     25.6,
+     27.0,
+     26.68,
+     24.24,
+     12.06
     ],
     "band_lo_mm": [
      15,
@@ -678,10 +683,11 @@
      30,
      28
     ],
-    "in_band": 0,
-    "within_5mm": 2,
+    "in_band": 2,
+    "within_5mm": 6,
     "n": 7,
-    "max_excess_mm": 10.62
+    "max_excess_mm": 15.94,
+    "path_fitted": true
    },
    {
     "plane": "coronal",
@@ -700,13 +706,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     10.08,
-     5.41,
-     0.11,
-     -5.23,
-     -9.99,
-     -13.66,
-     -17.08
+     7.22,
+     6.11,
+     4.5,
+     2.5,
+     0.28,
+     -1.97,
+     -5.76
     ],
     "band_lo_mm": [
      -11,
@@ -726,10 +732,11 @@
      28,
      2
     ],
-    "in_band": 2,
-    "within_5mm": 4,
+    "in_band": 4,
+    "within_5mm": 6,
     "n": 7,
-    "max_excess_mm": 19.08
+    "max_excess_mm": 7.76,
+    "path_fitted": true
    },
    {
     "plane": "coronal",
@@ -777,7 +784,8 @@
     "in_band": 2,
     "within_5mm": 5,
     "n": 7,
-    "max_excess_mm": 9.0
+    "max_excess_mm": 9.0,
+    "path_fitted": false
    },
    {
     "plane": "coronal",
@@ -825,7 +833,8 @@
     "in_band": 0,
     "within_5mm": 4,
     "n": 7,
-    "max_excess_mm": 7.16
+    "max_excess_mm": 7.16,
+    "path_fitted": false
    },
    {
     "plane": "coronal",
@@ -873,7 +882,8 @@
     "in_band": 4,
     "within_5mm": 6,
     "n": 7,
-    "max_excess_mm": 5.48
+    "max_excess_mm": 5.48,
+    "path_fitted": false
    },
    {
     "plane": "scaption",
@@ -918,7 +928,8 @@
     "in_band": 6,
     "within_5mm": 6,
     "n": 6,
-    "max_excess_mm": 0.0
+    "max_excess_mm": 0.0,
+    "path_fitted": false
    },
    {
     "plane": "scaption",
@@ -935,12 +946,12 @@
      "kuechle1997"
     ],
     "model_mm": [
-     0.47,
-     -1.29,
-     -2.93,
-     -4.32,
-     -5.36,
-     -6.0
+     5.36,
+     3.91,
+     2.3,
+     0.66,
+     -0.92,
+     -2.37
     ],
     "band_lo_mm": [
      0,
@@ -959,9 +970,10 @@
      10
     ],
     "in_band": 0,
-    "within_5mm": 2,
+    "within_5mm": 1,
     "n": 6,
-    "max_excess_mm": 16.36
+    "max_excess_mm": 12.37,
+    "path_fitted": true
    },
    {
     "plane": "scaption",
@@ -1004,7 +1016,8 @@
     "in_band": 0,
     "within_5mm": 4,
     "n": 6,
-    "max_excess_mm": 8.19
+    "max_excess_mm": 8.19,
+    "path_fitted": false
    },
    {
     "plane": "scaption",
@@ -1021,12 +1034,12 @@
      "kuechle1997"
     ],
     "model_mm": [
-     23.43,
-     26.93,
-     30.99,
-     33.67,
-     34.51,
-     32.89
+     24.5,
+     25.41,
+     28.19,
+     29.47,
+     28.82,
+     25.74
     ],
     "band_lo_mm": [
      19,
@@ -1045,9 +1058,10 @@
      22.5
     ],
     "in_band": 0,
-    "within_5mm": 1,
+    "within_5mm": 5,
     "n": 6,
-    "max_excess_mm": 10.39
+    "max_excess_mm": 5.5,
+    "path_fitted": true
    },
    {
     "plane": "scaption",
@@ -1064,12 +1078,12 @@
      "kuechle1997"
     ],
     "model_mm": [
-     -14.8,
-     -14.91,
-     -14.04,
-     -12.33,
-     -9.98,
-     -7.13
+     -5.36,
+     -4.58,
+     -3.52,
+     -2.27,
+     -0.88,
+     0.55
     ],
     "band_lo_mm": [
      -6,
@@ -1088,9 +1102,10 @@
      11
     ],
     "in_band": 0,
-    "within_5mm": 0,
+    "within_5mm": 3,
     "n": 6,
-    "max_excess_mm": 18.13
+    "max_excess_mm": 10.45,
+    "path_fitted": true
    },
    {
     "plane": "scaption",
@@ -1133,7 +1148,8 @@
     "in_band": 0,
     "within_5mm": 0,
     "n": 6,
-    "max_excess_mm": 31.08
+    "max_excess_mm": 31.08,
+    "path_fitted": false
    },
    {
     "plane": "scaption",
@@ -1176,7 +1192,8 @@
     "in_band": 0,
     "within_5mm": 2,
     "n": 6,
-    "max_excess_mm": 16.8
+    "max_excess_mm": 16.8,
+    "path_fitted": false
    },
    {
     "plane": "scaption",
@@ -1219,7 +1236,8 @@
     "in_band": 0,
     "within_5mm": 5,
     "n": 6,
-    "max_excess_mm": 10.9
+    "max_excess_mm": 10.9,
+    "path_fitted": false
    },
    {
     "plane": "flexion",
@@ -1266,7 +1284,8 @@
     "in_band": 0,
     "within_5mm": 1,
     "n": 7,
-    "max_excess_mm": 20.29
+    "max_excess_mm": 20.29,
+    "path_fitted": false
    },
    {
     "plane": "flexion",
@@ -1285,13 +1304,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     0.79,
-     -3.4,
-     -7.34,
-     -10.66,
-     -13.09,
-     -14.49,
-     -14.11
+     7.32,
+     5.31,
+     3.17,
+     1.01,
+     -1.47,
+     -4.23,
+     -10.05
     ],
     "band_lo_mm": [
      -4,
@@ -1311,10 +1330,11 @@
      8.9,
      11.25
     ],
-    "in_band": 0,
-    "within_5mm": 2,
+    "in_band": 1,
+    "within_5mm": 3,
     "n": 7,
-    "max_excess_mm": 17.11
+    "max_excess_mm": 13.05,
+    "path_fitted": true
    },
    {
     "plane": "flexion",
@@ -1333,13 +1353,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     -6.67,
-     -4.61,
-     -2.66,
-     -0.81,
-     1.13,
-     3.21,
-     7.74
+     0.53,
+     3.37,
+     5.7,
+     7.53,
+     9.34,
+     10.68,
+     10.97
     ],
     "band_lo_mm": [
      4.5,
@@ -1359,10 +1379,11 @@
      0.7,
      -2.3
     ],
-    "in_band": 1,
-    "within_5mm": 3,
+    "in_band": 2,
+    "within_5mm": 4,
     "n": 7,
-    "max_excess_mm": 11.17
+    "max_excess_mm": 13.27,
+    "path_fitted": true
    },
    {
     "plane": "flexion",
@@ -1410,7 +1431,8 @@
     "in_band": 2,
     "within_5mm": 6,
     "n": 7,
-    "max_excess_mm": 5.91
+    "max_excess_mm": 5.91,
+    "path_fitted": false
    },
    {
     "plane": "flexion",
@@ -1458,7 +1480,8 @@
     "in_band": 2,
     "within_5mm": 7,
     "n": 7,
-    "max_excess_mm": 3.19
+    "max_excess_mm": 3.19,
+    "path_fitted": false
    },
    {
     "plane": "flexion",
@@ -1477,13 +1500,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     10.24,
-     14.07,
-     17.85,
-     22.23,
-     25.67,
-     27.87,
-     27.02
+     16.88,
+     17.46,
+     20.98,
+     23.52,
+     24.79,
+     24.46,
+     17.79
     ],
     "band_lo_mm": [
      0,
@@ -1503,10 +1526,11 @@
      10,
      11
     ],
-    "in_band": 4,
-    "within_5mm": 4,
+    "in_band": 2,
+    "within_5mm": 5,
     "n": 7,
-    "max_excess_mm": 17.87
+    "max_excess_mm": 14.46,
+    "path_fitted": true
    },
    {
     "plane": "flexion",
@@ -1525,13 +1549,13 @@
      "kuechle1997"
     ],
     "model_mm": [
-     -45.34,
-     -38.67,
-     -31.28,
-     -23.31,
-     -14.92,
-     -6.27,
-     11.22
+     -22.45,
+     -18.91,
+     -14.69,
+     -10.01,
+     -5.02,
+     0.12,
+     10.23
     ],
     "band_lo_mm": [
      -31,
@@ -1551,10 +1575,11 @@
      -22,
      -17
     ],
-    "in_band": 2,
-    "within_5mm": 3,
+    "in_band": 5,
+    "within_5mm": 5,
     "n": 7,
-    "max_excess_mm": 28.22
+    "max_excess_mm": 27.23,
+    "path_fitted": true
    },
    {
     "plane": "flexion",
@@ -1602,7 +1627,8 @@
     "in_band": 1,
     "within_5mm": 1,
     "n": 7,
-    "max_excess_mm": 45.84
+    "max_excess_mm": 45.84,
+    "path_fitted": false
    },
    {
     "plane": "flexion",
@@ -1650,7 +1676,8 @@
     "in_band": 4,
     "within_5mm": 5,
     "n": 7,
-    "max_excess_mm": 18.91
+    "max_excess_mm": 18.91,
+    "path_fitted": false
    },
    {
     "plane": "flexion",
@@ -1698,7 +1725,8 @@
     "in_band": 2,
     "within_5mm": 5,
     "n": 7,
-    "max_excess_mm": 12.29
+    "max_excess_mm": 12.29,
+    "path_fitted": false
    },
    {
     "plane": "rotation",
@@ -1753,7 +1781,8 @@
     "in_band": 0,
     "within_5mm": 2,
     "n": 9,
-    "max_excess_mm": 21.78
+    "max_excess_mm": 21.78,
+    "path_fitted": false
    },
    {
     "plane": "rotation",
@@ -1773,15 +1802,15 @@
      "kuechle2000"
     ],
     "model_mm": [
-     15.21,
-     19.34,
-     22.79,
-     25.3,
-     26.56,
-     26.19,
-     23.72,
-     18.55,
-     10.07
+     19.79,
+     21.08,
+     21.84,
+     22.81,
+     23.37,
+     22.95,
+     21.36,
+     18.64,
+     14.64
     ],
     "band_lo_mm": [
      24.5,
@@ -1806,9 +1835,10 @@
      18
     ],
     "in_band": 0,
-    "within_5mm": 6,
+    "within_5mm": 9,
     "n": 9,
-    "max_excess_mm": 9.29
+    "max_excess_mm": 4.71,
+    "path_fitted": true
    },
    {
     "plane": "rotation",
@@ -1828,15 +1858,15 @@
      "kuechle2000"
     ],
     "model_mm": [
-     -4.25,
-     -11.38,
-     -17.02,
-     -19.44,
-     -19.57,
-     -18.26,
-     -15.88,
-     -12.7,
-     -8.98
+     -12.4,
+     -15.09,
+     -16.64,
+     -17.88,
+     -18.81,
+     -19.21,
+     -19.13,
+     -18.64,
+     -17.75
     ],
     "band_lo_mm": [
      -14,
@@ -1861,9 +1891,10 @@
      -25
     ],
     "in_band": 0,
-    "within_5mm": 4,
+    "within_5mm": 6,
     "n": 9,
-    "max_excess_mm": 16.02
+    "max_excess_mm": 7.25,
+    "path_fitted": true
    },
    {
     "plane": "rotation",
@@ -1918,7 +1949,8 @@
     "in_band": 0,
     "within_5mm": 5,
     "n": 9,
-    "max_excess_mm": 13.1
+    "max_excess_mm": 13.1,
+    "path_fitted": false
    },
    {
     "plane": "rotation",
@@ -1973,7 +2005,8 @@
     "in_band": 0,
     "within_5mm": 5,
     "n": 9,
-    "max_excess_mm": 14.39
+    "max_excess_mm": 14.39,
+    "path_fitted": false
    },
    {
     "plane": "rotation",
@@ -1993,15 +2026,15 @@
      "kuechle2000"
     ],
     "model_mm": [
-     5.77,
-     7.46,
-     8.74,
-     9.46,
-     9.48,
-     8.92,
-     7.75,
-     5.99,
-     3.71
+     2.99,
+     3.82,
+     4.42,
+     4.74,
+     4.75,
+     4.42,
+     3.77,
+     2.83,
+     1.67
     ],
     "band_lo_mm": [
      -3.5,
@@ -2026,9 +2059,10 @@
      0
     ],
     "in_band": 0,
-    "within_5mm": 1,
+    "within_5mm": 2,
     "n": 9,
-    "max_excess_mm": 14.36
+    "max_excess_mm": 9.64,
+    "path_fitted": false
    }
   ],
   "gatti2007_scaption_60": {
@@ -2041,7 +2075,7 @@
     "in_range": true
    },
    "infraspinatus": {
-    "model_mm": 5.33,
+    "model_mm": 13.08,
     "range_mm": [
      0.0,
      22.0
@@ -2057,12 +2091,12 @@
     "in_range": true
    },
    "subscapularis": {
-    "model_mm": -4.32,
+    "model_mm": 0.66,
     "range_mm": [
      -1.0,
      13.6
     ],
-    "in_range": false
+    "in_range": true
    }
   },
   "hik2019_pooled_peaks": {
@@ -2071,7 +2105,7 @@
     "pooled_peak_mm": 33.9
    },
    "scaption/middle deltoid": {
-    "model_peak_mm": 34.51,
+    "model_peak_mm": 29.47,
     "pooled_peak_mm": 33.4
    },
    "scaption/supraspinatus": {
@@ -2083,11 +2117,11 @@
     "pooled_peak_mm": -51.7
    },
    "rotation/infraspinatus": {
-    "model_peak_mm": 26.56,
+    "model_peak_mm": 23.37,
     "pooled_peak_mm": 24.5
    },
    "rotation/subscapularis": {
-    "model_peak_mm": -19.57,
+    "model_peak_mm": -19.21,
     "pooled_peak_mm": -20.6
    }
   }
@@ -2134,6 +2168,23 @@
     -0.06007652,
     -0.07190734,
     0.00760694
+   ]
+  },
+  "aronis_flexion_160": {
+   "sternoclavicular_r2_r": [
+    -0.81980696
+   ],
+   "sternoclavicular_r3_r": [
+    0.19742588
+   ],
+   "sternoclavicular_r1_r": [
+    0.54089848
+   ],
+   "acromioclavicular_r": [
+    0.95003249,
+    -0.18056575,
+    0.11701157,
+    0.22614722
    ]
   },
   "saul_abduction_60": {
@@ -2292,24 +2343,7 @@
     0.10483588
    ]
   },
-  "harbo_abduction_side": {},
-  "aronis_flexion_160": {
-   "sternoclavicular_r2_r": [
-    -0.81980696
-   ],
-   "sternoclavicular_r3_r": [
-    0.19742588
-   ],
-   "sternoclavicular_r1_r": [
-    0.54089848
-   ],
-   "acromioclavicular_r": [
-    0.95003249,
-    -0.18056575,
-    0.11701157,
-    0.22614722
-   ]
-  }
+  "harbo_abduction_side": {}
  },
  "strength": [
   {
@@ -2325,9 +2359,9 @@
    "direction": "internal_rotation",
    "mean_Nm": 46.8,
    "sd_Nm": 16.5,
-   "model_Nm": 60.6,
-   "model_thorax_axis_Nm": 60.6,
-   "z": 0.84
+   "model_Nm": 55.2,
+   "model_thorax_axis_Nm": 55.2,
+   "z": 0.51
   },
   {
    "name": "roy_external_rotation",
@@ -2342,9 +2376,9 @@
    "direction": "external_rotation",
    "mean_Nm": 33.6,
    "sd_Nm": 9.0,
-   "model_Nm": 40.5,
-   "model_thorax_axis_Nm": 40.5,
-   "z": 0.77
+   "model_Nm": 33.2,
+   "model_thorax_axis_Nm": 33.2,
+   "z": -0.05
   },
   {
    "name": "aronis_flexion_160",
@@ -2359,9 +2393,9 @@
    "direction": "elevation",
    "mean_Nm": 43.2,
    "sd_Nm": 10.8,
-   "model_Nm": 49.0,
-   "model_thorax_axis_Nm": 40.1,
-   "z": 0.53
+   "model_Nm": 57.4,
+   "model_thorax_axis_Nm": 41.9,
+   "z": 1.31
   },
   {
    "name": "saul_abduction_60",
@@ -2376,9 +2410,9 @@
    "direction": "elevation",
    "mean_Nm": 58.1,
    "sd_Nm": 14.9,
-   "model_Nm": 62.4,
-   "model_thorax_axis_Nm": 65.4,
-   "z": 0.29
+   "model_Nm": 76.0,
+   "model_thorax_axis_Nm": 81.0,
+   "z": 1.2
   },
   {
    "name": "saul_adduction_60",
@@ -2393,9 +2427,9 @@
    "direction": "depression",
    "mean_Nm": 75.7,
    "sd_Nm": 18.3,
-   "model_Nm": 102.3,
-   "model_thorax_axis_Nm": 103.1,
-   "z": 1.46
+   "model_Nm": 98.6,
+   "model_thorax_axis_Nm": 99.3,
+   "z": 1.25
   },
   {
    "name": "otis_flexion_side",
@@ -2410,9 +2444,9 @@
    "direction": "elevation",
    "mean_Nm": 93.0,
    "sd_Nm": null,
-   "model_Nm": 54.7,
-   "model_thorax_axis_Nm": 54.7,
-   "ratio": 0.59
+   "model_Nm": 74.3,
+   "model_thorax_axis_Nm": 74.3,
+   "ratio": 0.8
   },
   {
    "name": "otis_flexion_90",
@@ -2427,9 +2461,9 @@
    "direction": "elevation",
    "mean_Nm": 75.0,
    "sd_Nm": null,
-   "model_Nm": 36.0,
-   "model_thorax_axis_Nm": 41.6,
-   "ratio": 0.48
+   "model_Nm": 56.9,
+   "model_thorax_axis_Nm": 67.2,
+   "ratio": 0.76
   },
   {
    "name": "otis_abduction_90",
@@ -2444,9 +2478,9 @@
    "direction": "elevation",
    "mean_Nm": 57.5,
    "sd_Nm": null,
-   "model_Nm": 58.8,
-   "model_thorax_axis_Nm": 60.6,
-   "ratio": 1.02
+   "model_Nm": 68.2,
+   "model_thorax_axis_Nm": 74.5,
+   "ratio": 1.19
   },
   {
    "name": "otis_internal_rotation_side",
@@ -2461,9 +2495,9 @@
    "direction": "internal_rotation",
    "mean_Nm": 48.0,
    "sd_Nm": null,
-   "model_Nm": 60.1,
-   "model_thorax_axis_Nm": 60.1,
-   "ratio": 1.25
+   "model_Nm": 54.1,
+   "model_thorax_axis_Nm": 54.1,
+   "ratio": 1.13
   },
   {
    "name": "otis_external_rotation_side",
@@ -2478,9 +2512,9 @@
    "direction": "external_rotation",
    "mean_Nm": 43.0,
    "sd_Nm": null,
-   "model_Nm": 41.2,
-   "model_thorax_axis_Nm": 41.2,
-   "ratio": 0.96
+   "model_Nm": 31.4,
+   "model_thorax_axis_Nm": 31.4,
+   "ratio": 0.73
   },
   {
    "name": "holzbaur_abduction_60",
@@ -2495,9 +2529,9 @@
    "direction": "elevation",
    "mean_Nm": 74.4,
    "sd_Nm": 10.8,
-   "model_Nm": 62.4,
-   "model_thorax_axis_Nm": 65.4,
-   "z": -1.11
+   "model_Nm": 76.0,
+   "model_thorax_axis_Nm": 81.0,
+   "z": 0.15
   },
   {
    "name": "holzbaur_adduction_60",
@@ -2512,9 +2546,9 @@
    "direction": "depression",
    "mean_Nm": 93.7,
    "sd_Nm": 11.3,
-   "model_Nm": 102.3,
-   "model_thorax_axis_Nm": 103.1,
-   "z": 0.76
+   "model_Nm": 98.6,
+   "model_thorax_axis_Nm": 99.3,
+   "z": 0.44
   },
   {
    "name": "smith_internal_rotation",
@@ -2529,9 +2563,9 @@
    "direction": "internal_rotation",
    "mean_Nm": 52.8,
    "sd_Nm": 9.9,
-   "model_Nm": 71.0,
-   "model_thorax_axis_Nm": 71.0,
-   "z": 1.84
+   "model_Nm": 66.4,
+   "model_thorax_axis_Nm": 66.4,
+   "z": 1.38
   },
   {
    "name": "smith_external_rotation",
@@ -2546,9 +2580,9 @@
    "direction": "external_rotation",
    "mean_Nm": 36.2,
    "sd_Nm": 7.6,
-   "model_Nm": 29.6,
-   "model_thorax_axis_Nm": 29.6,
-   "z": -0.86
+   "model_Nm": 26.3,
+   "model_thorax_axis_Nm": 26.3,
+   "z": -1.31
   },
   {
    "name": "aronis_flexion_90",
@@ -2563,9 +2597,9 @@
    "direction": "elevation",
    "mean_Nm": 77.2,
    "sd_Nm": 13.8,
-   "model_Nm": 54.8,
-   "model_thorax_axis_Nm": 61.9,
-   "z": -1.63
+   "model_Nm": 75.7,
+   "model_thorax_axis_Nm": 87.5,
+   "z": -0.11
   },
   {
    "name": "harbo_abduction_side",
@@ -2580,9 +2614,9 @@
    "direction": "elevation",
    "mean_Nm": 61.1,
    "sd_Nm": 14.1,
-   "model_Nm": 42.0,
-   "model_thorax_axis_Nm": 42.0,
-   "z": -1.36
+   "model_Nm": 40.3,
+   "model_thorax_axis_Nm": 40.3,
+   "z": -1.48
   }
  ]
 }
