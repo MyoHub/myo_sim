@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Muscle operating-range and moment-arm CI gates
+Changed: tests/test_muscle_operating_range.py, docs/wiki/testing-guide.md, docs/wiki/log.md
+Why: tendon, wrap or `lmax` edits can move muscles outside `[lmin, lmax]` with zero active contractile force while still compiling cleanly; fast dataset-free checks now gate active force capacity and moment-arm coupling across all composed models.
+
 ## 2026-11-15 — Add isometric MVC torque probing and muscle strength calibration
 Changed: myo_sim/physics/muscle_strength.py, myo_sim/physics/__init__.py, tests/test_physics_muscle_strength.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: move isometric MVC torque probing (`max_torque_terms`) and per-muscle bounded least-squares strength calibration (`calibrate_muscle_strength`, pure NumPy BVLS) from MyoHub/myosuite#649 into `myo_sim` so models can be personalized to measured joint torques without MyoSuite or SciPy.

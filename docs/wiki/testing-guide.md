@@ -26,6 +26,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_leg_muscle_symmetry.py` | Leg muscle moment arms are symmetric between left and right | After `myolegs` XML changes |
 | `test_torso_muscle_symmetry.py` | Torso muscle moment arms are symmetric between left and right | After `myotorso` XML changes |
 | `test_model_stability.py` | Every composed model steps without going non-finite; `myofullbody` survives random-activation rollouts (3 seeds) from qpos0 and from a stored state where BIClong grazed its former elbow wrap | After XML, tendon or wrap changes |
+| `test_muscle_operating_range.py` | Every muscle actuator across composed models has valid lengthrange/gain parameters, active contractile force inside `[lmin, lmax]` at its reference pose and across ROM, and non-zero moment-arm coupling | After muscle, tendon, wrap or joint-range changes |
 | `test_tendon_path_continuity.py` | No arm tendon length jumps by more than 1 mm per 1e-3 rad over the elbow range plus 0.13 rad past each limit, for 9 forearm rotations | After arm tendon, wrap or sidesite changes |
 | `test_warp_parity.py` | Every tendon length in `myohands` and `myoarms` matches between CPU MuJoCo and mujoco-warp over random postures (to 1e-5 m) | After tendon or wrap changes; skipped without mujoco-warp or a CUDA device, and an expected failure on mujoco-warp < 3.16 for tendons with a sidesite inside their wrap geom |
 | `test_warp_version_warning.py` | `load_spec()` warns once when mujoco-warp < 3.16 is installed and the model has arm or hand tendons; silent otherwise |
