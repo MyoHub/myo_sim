@@ -68,6 +68,7 @@ import numpy as np
 import myo_sim
 from myo_sim.build.hand_data import fold_node_forces, place_tendon_nodes
 from myo_sim.build.rigid_conversion import actuator_lengths, joint_ranges, rigid_equivalent_fiber_length, sample_postures
+from myo_sim.build.utils import muscle_tag, set_muscle_attribute
 
 DATA_PATH = Path(__file__).parents[1] / "myo_sim" / "build" / "data" / "muscle_passive.json"
 VALIDATION_SCRIPT = Path(__file__).with_name("validate_hand_function.py")
@@ -174,9 +175,9 @@ def passive_force(
     """
     force = np.zeros_like(lengths)
     for k, name in enumerate(names):
-        g = model.actuator_gainprm[model.actuator(name).id]
-        scale = g[7] if fpmax is None else fpmax[k]
-        force[..., k] = -g[2] * passive_fl(normalised_length(model, name, lengths[..., k], shift[k]), g[5], scale)
+        b = model.actuator_biasprm[model.actuator(name).id]  # passive curve; gainprm may widen the active bounds
+        scale = b[7] if fpmax is None else fpmax[k]
+        force[..., k] = -b[2] * passive_fl(normalised_length(model, name, lengths[..., k], shift[k]), b[5], scale)
     return force
 
 
@@ -416,15 +417,15 @@ def write_muscle_xml(ranges: dict[str, list[float]], fpmax: dict[str, float], pa
     """Set ``lengthrange`` and ``fpmax`` of each named muscle in *path* (no ``fpmax`` at the default), rest unchanged."""
     text = path.read_text()
     for name, (lo, hi) in ranges.items():
-        pattern = re.compile(rf'<muscle name="{re.escape(name)}"[^>]*?/>')
-        tags = pattern.findall(text)
-        if len(tags) != 1:
-            raise ValueError(f"{path.name}: expected one muscle {name}, found {len(tags)}")
-        tag = re.sub(r'lengthrange="[^"]*"', f'lengthrange="{lo!r} {hi!r}"', tags[0])
-        tag = re.sub(r' fpmax="[^"]*"', "", tag)
-        if abs(fpmax[name] - FPMAX_REFERENCE) > 1e-12:
-            tag = tag.replace(' class="', f' fpmax="{fpmax[name]!r}" class="', 1)
-        text = text.replace(tags[0], tag)
+        old = muscle_tag(text, name)
+        tag = set_muscle_attribute(old, "lengthrange", f"{lo!r} {hi!r}")
+        if tag.startswith("<general"):
+            tag = set_muscle_attribute(tag, "fpmax", fpmax[name])
+        else:
+            tag = re.sub(r' fpmax="[^"]*"', "", tag)
+            if abs(fpmax[name] - FPMAX_REFERENCE) > 1e-12:
+                tag = set_muscle_attribute(tag, "fpmax", fpmax[name])
+        text = text.replace(old, tag)
     path.write_text(text)
 
 
@@ -436,6 +437,11 @@ def write_force_velocity(table: dict[str, Any], path: Path = ASSETS_XML) -> None
         raise ValueError(f"{path.name}: expected one myoarm_forearm_muscle default")
     vmax = table["force_velocity"]["vmax"]["value"]
     path.write_text(pattern.sub(rf'\g<1> vmax="{vmax:g}"/>', text))
+    # <general> forearm muscles carry vmax in gainprm / biasprm[6] instead of inheriting the class value
+    muscles = MUSCLE_XML.read_text()
+    for old in re.findall(r'<general name="[^"]+" class="myoarm_forearm_muscle"[^>]*?/>', muscles):
+        muscles = muscles.replace(old, set_muscle_attribute(old, "vmax", f"{vmax:g}"))
+    MUSCLE_XML.write_text(muscles)
 
 
 def _minimize(cost: Callable[[np.ndarray], float], starts: list[np.ndarray], bounds: list[tuple[float, float]]) -> np.ndarray:

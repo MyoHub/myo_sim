@@ -17,7 +17,6 @@ import argparse
 import dataclasses
 import importlib.util
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -27,6 +26,7 @@ import numpy as np
 
 from myo_sim.build.compose import RIGHT_ARM_MUSCLES_XML
 from myo_sim.build.hand_data import DATA_DIR, INTRINSIC_DATA_PATH
+from myo_sim.build.utils import muscle_tag, set_muscle_attribute
 
 DATA_PATH = DATA_DIR / "specific_tension.json"
 EXTRINSIC_DATA_PATH = DATA_DIR / "extrinsic_muscles.json"
@@ -192,10 +192,8 @@ def fit(table: dict[str, Any]) -> None:
 
 def extrinsic_muscles_xml(text: str, table: dict[str, Any], sigma: float) -> str:
     for name, row in table["extrinsic_pcsa"].items():
-        tags = re.findall(rf'<muscle name="{name}_r"[^>]*?/>', text)
-        if len(tags) != 1:
-            raise ValueError(f"expected one muscle {name}")
-        text = text.replace(tags[0], re.sub(r'force\s*=\s*"[^"]*"', f'force="{row["cm2"] * sigma:.1f}"', tags[0]))
+        tag = muscle_tag(text, f"{name}_r")
+        text = text.replace(tag, set_muscle_attribute(tag, "force", f"{row['cm2'] * sigma:.1f}"))
     return text
 
 

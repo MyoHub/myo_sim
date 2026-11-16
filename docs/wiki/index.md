@@ -27,6 +27,7 @@ When a wiki page is stale, update it in the same PR as the code change and appen
 - `docs/wiki/shoulder-complex.md` — scapulothoracic shoulder after Seth et al. 2019 (in progress): source and licence, frame registration, the joint-design comparison (A: AC ball joint and scapula-thorax contact; B: ellipsoid chain and AC connect), the glenohumeral joint
 - `docs/wiki/postures.md` — the posture keyframes: pose, API, measurements and literature comparison
 - `docs/wiki/testing-guide.md` — test suite map and fast gate command
+- `docs/wiki/model-parameters.md` — native muscle strength transforms, isometric MVC torque calibration and selected-body mass transforms
 - `docs/wiki/log.md` — append-only wiki maintenance log
 
 Open issues: https://github.com/MyoHub/myo_sim/issues

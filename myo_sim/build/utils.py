@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import copy
 import math
+import re
 import xml.etree.ElementTree as ET
 from dataclasses import dataclass
 from pathlib import Path
@@ -105,7 +105,10 @@ SENSOR_TYPE_BY_TAG = {
 }
 SENSOR_OBJTYPE_BY_NAME = {
     "body": mujoco.mjtObj.mjOBJ_BODY,
+    "xbody": mujoco.mjtObj.mjOBJ_XBODY,
+    "geom": mujoco.mjtObj.mjOBJ_GEOM,
     "site": mujoco.mjtObj.mjOBJ_SITE,
+    "camera": mujoco.mjtObj.mjOBJ_CAMERA,
     "joint": mujoco.mjtObj.mjOBJ_JOINT,
 }
 # Default (objtype, source-attribute) per tag when objtype/objname are omitted:
@@ -158,28 +161,53 @@ def add_contact_pairs(spec: object, contacts_xml: Path, include_pair: object = N
         if include_pair is not None and not include_pair(pair):
             continue
         kwargs = _contact_pair_kwargs(pair, index, existing_names)
+        class_name = pair.get("class")
+        if class_name is not None:
+            default = spec.find_default(class_name)
+            if default is None:
+                raise ValueError(f"Contact pair default class not found: {class_name!r}")
+            kwargs["default"] = default
         spec.add_pair(**kwargs)
         existing_names.add(kwargs["name"])
 
 
 def add_sensors(spec: object, sensors_xml: Path) -> None:
-    """Add supported sensors from an MJCF include file."""
-    for sensor in ET.parse(sensors_xml).getroot().iter():
-        if sensor.tag not in SENSOR_TYPE_BY_TAG:
-            continue
+    """Add the sensors of an MJCF include file.
+
+    Raises:
+        ValueError: If the file holds a sensor tag outside ``SENSOR_TYPE_BY_TAG``; no sensor is added then.
+    """
+    sensors = [sensor for block in ET.parse(sensors_xml).getroot().iter("sensor") for sensor in block]
+    unsupported = sorted({sensor.tag for sensor in sensors} - SENSOR_TYPE_BY_TAG.keys())
+    if unsupported:
+        raise ValueError(
+            f"{sensors_xml}: unsupported sensor tags {', '.join(f'<{tag}>' for tag in unsupported)}; "
+            f"add_sensors imports only {', '.join(f'<{tag}>' for tag in SENSOR_TYPE_BY_TAG)}"
+        )
+    for sensor in sensors:
         default_objtype, default_attr = _SENSOR_DEFAULT_OBJ.get(sensor.tag, ("", None))
         objtype_name = sensor.get("objtype", default_objtype)
         objname = sensor.get("objname") or (sensor.get(default_attr) if default_attr else None)
-        spec.add_sensor(
-            name=sensor.get("name"),
-            type=SENSOR_TYPE_BY_TAG[sensor.tag],
-            objtype=SENSOR_OBJTYPE_BY_NAME[objtype_name],
-            objname=objname,
-        )
+        kwargs = {
+            "name": sensor.get("name", ""),
+            "type": SENSOR_TYPE_BY_TAG[sensor.tag],
+            "objtype": SENSOR_OBJTYPE_BY_NAME[objtype_name],
+            "objname": objname,
+        }
+        if "reftype" in sensor.attrib:
+            kwargs["reftype"] = SENSOR_OBJTYPE_BY_NAME[sensor.get("reftype")]
+        if "refname" in sensor.attrib:
+            kwargs["refname"] = sensor.get("refname")
+        for attribute in ("cutoff", "noise"):
+            if attribute in sensor.attrib:
+                kwargs[attribute] = float(sensor.get(attribute))
+        if "user" in sensor.attrib:
+            kwargs["userdata"] = float_list(sensor.get("user"))
+        spec.add_sensor(**kwargs)
 
 
 def add_keyframes(spec: object, keyframes_xml: Path) -> None:
-    """Add keyframes from an MJCF include file.
+    """Add complete keyframe states from an MJCF include file.
 
     Kept as a spec-level step (not merged into the composed child XML) because a
     keyframe's ``qpos`` is only valid once the model's DoFs are fixed -- e.g. for
@@ -187,11 +215,11 @@ def add_keyframes(spec: object, keyframes_xml: Path) -> None:
     """
     for key in ET.parse(keyframes_xml).getroot().iter("key"):
         added = spec.add_key()
-        added.name = key.get("name")
-        if key.get("qpos"):
-            added.qpos = float_list(key.get("qpos"))
-        if key.get("qvel"):
-            added.qvel = float_list(key.get("qvel"))
+        if (name := key.get("name")) is not None:
+            added.name = name
+        for field in ("qpos", "qvel", "act", "ctrl", "mpos", "mquat"):
+            if value := key.get(field):
+                setattr(added, field, float_list(value))
         if key.get("time"):
             added.time = float(key.get("time"))
 
@@ -207,11 +235,12 @@ def expand_component_element(element: ET.Element, base_path: Path) -> list[ET.El
             raise FileNotFoundError(f"MJCF include not found: {include_path} (resolved from {base_path} / {include_file!r})")
         return component_children(include_path)
 
-    expanded = copy.deepcopy(element)
-    for child in list(expanded):
-        expanded.remove(child)
-        for replacement in expand_component_element(child, base_path):
-            expanded.append(replacement)
+    # Copy this node once; recursively copying its whole subtree at every level
+    # repeats work for every ancestor in a deeply nested model.
+    expanded = ET.Element(element.tag, element.attrib)
+    expanded.text, expanded.tail = element.text, element.tail
+    for child in element:
+        expanded.extend(expand_component_element(child, base_path))
     return [expanded]
 
 
@@ -328,11 +357,10 @@ def mirror_fullinertia(element: ET.Element) -> None:
 
 
 def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
-    mirrored = copy.deepcopy(element)
-    for child in list(mirrored):
-        index = list(mirrored).index(child)
-        mirrored.remove(child)
-        mirrored.insert(index, mirror_element(child, rules))
+    """Return a mirrored copy, visiting and copying each node once."""
+    mirrored = ET.Element(element.tag, element.attrib)
+    mirrored.text, mirrored.tail = element.text, element.tail
+    mirrored.extend(mirror_element(child, rules) for child in element)
 
     for attr_name, attr_value in list(mirrored.attrib.items()):
         if attr_name in NAME_REFERENCE_ATTRS:
@@ -479,3 +507,33 @@ def build_child_xml_from_components(
         child_root.append(child)
 
     return ET.tostring(root, encoding="unicode")
+
+
+# Index of each muscle attribute in a <general> muscle's gainprm / biasprm (MuJoCo's mju_muscleGain layout).
+MUSCLE_PRM_INDEX = {"force": 2, "vmax": 6, "fpmax": 7}
+
+
+def muscle_tag(text: str, name: str) -> str:
+    """The one ``<muscle>`` or ``<general>`` actuator element named *name* in MJCF *text*."""
+    tags = re.findall(rf'<(?:muscle|general) name="{re.escape(name)}"[^>]*?/>', text)
+    if len(tags) != 1:
+        raise ValueError(f"expected one muscle {name}, found {len(tags)}")
+    return tags[0]
+
+
+def set_muscle_attribute(tag: str, attr: str, value: float | str) -> str:
+    """Set ``force``, ``vmax``, ``fpmax`` or ``lengthrange`` on a ``<muscle>`` or ``<general>`` muscle element.
+
+    A ``<general>`` muscle keeps force, vmax and fpmax in ``gainprm`` and ``biasprm`` (both are written); a ``<muscle>``
+    takes them as attributes. *value* is written as given when it is a string.
+    """
+    if tag.startswith("<general") and attr in MUSCLE_PRM_INDEX:
+        for prm in ("gainprm", "biasprm"):
+            vals = re.search(rf'{prm}="([^"]*)"', tag).group(1).split()
+            vals[MUSCLE_PRM_INDEX[attr]] = value if isinstance(value, str) else repr(float(value))
+            tag = re.sub(rf'{prm}="[^"]*"', f'{prm}="{" ".join(vals)}"', tag, count=1)
+        return tag
+    text = value if isinstance(value, str) else repr(float(value))
+    if re.search(rf'\s{attr}\s*=\s*"', tag):
+        return re.sub(rf'(\s){attr}\s*=\s*"[^"]*"', rf'\g<1>{attr}="{text}"', tag, count=1)
+    return tag.replace(' class="', f' {attr}="{text}" class="', 1)

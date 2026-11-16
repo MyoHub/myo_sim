@@ -2,6 +2,26 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-16 — Merge the hand rebuild (flexor curves, dev) into the shoulder
+Changed: `myo_sim/build/data/hand_literature.json` (both branches' steps, step `girdle_flexor_merge`), `docs/wiki/hand-literature-comparison.md`, `docs/wiki/log.md`, `myo_sim/physics/muscle_groups.py` (cuff sub-regions, `Shoulder-Girdle`), `myo_sim/physics/joint_coupling.py` (docstring), `CHANGELOG.md`
+Why: the shoulder lands after MyoHub/myo_sim#147, so it carries that branch's flexor fix and dev merge, with the hand-literature steps of both kept and the merged model's hand values recorded.
+
+## 2026-11-16 — Merge dev (integrated bugfixes, muscle strength and body-mass scaling)
+Changed: `CHANGELOG.md` (dev's entries under Added and Fixed, the 0.2.5 section), `docs/wiki/repository-map.md`, `docs/wiki/testing-guide.md`, `docs/wiki/postures.md`, `myo_sim/physics/muscle_groups.py` (functional groups of the rebuilt hand muscles and the deep hip muscles), `pyproject.toml` (ship `build/data/LICENSE-*.txt`), CI's latest-MuJoCo pin, `uv.lock`
+Why: MyoHub/myo_sim#147 review. The head and torso masses, `mass.py` and the mass convention test keep this branch's values after the pelvis was counted once (#155); dev's copies are the earlier #138 step.
+
+## 2026-11-16 — Finger flexors keep active force with the hand flat
+Changed: `myoarm_r_muscle.xml` (`FDS3_r`, `FDP2_r`, `FDP3_r`, `FPL_r` as `<general>` muscles), `myo_sim/build/utils.py` (`muscle_tag`, `set_muscle_attribute`), `scripts/fit_muscle_passive.py` (passive curve from `biasprm`), `scripts/fit_specific_tension.py`, `scripts/generate_extrinsic_muscles.py`, `hand_literature.json` (step `flexor_active_fl`), wiki, `CHANGELOG.md`
+Why: MyoHub/myo_sim#196 (Finding A) found FDS3 and FDP3 without active force at `qpos0`: the per-muscle `lmax` bounds fitted to the earlier operating ranges no longer covered them after the passive slack fit. Only the active curve is widened, so every passive fit result stays as it was.
+
+## 2026-11-15 — Add isometric MVC torque probing and muscle strength calibration
+Changed: myo_sim/physics/muscle_strength.py, myo_sim/physics/__init__.py, tests/test_physics_muscle_strength.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: move isometric MVC torque probing (`max_torque_terms`) and per-muscle bounded least-squares strength calibration (`calibrate_muscle_strength`, pure NumPy BVLS) from MyoHub/myosuite#649 into `myo_sim` so models can be personalized to measured joint torques without MyoSuite or SciPy.
+
+## 2026-11-14 — Reject unsupported sensor tags in add_sensors
+Changed: myo_sim/build/utils.py, tests/test_sensor_includes.py, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: `add_sensors` skipped every sensor tag outside its table, so a `<gyro>` or `<framepos>` in an include vanished from the model without a message.
+
 ## 2026-11-13 — Shoulder page: DELT2 moment arms and conoid wording
 Changed: `docs/wiki/shoulder-complex.md`
 Why: the DELT2 moment arms are now given in the cadaver studies' convention (glenohumeral angles, scapula fixed at rest), and the conoid's taut range is attributed to the quasi-static equilibrium, not to Seth's replayed motions.
@@ -73,6 +93,78 @@ Why: past 0 deg the flexors lost their MCP moment arm and EDC2 and EDC3 turned f
 ## 2026-11-12 — Finger and thumb joint ranges from range-of-motion data
 Changed: `myo_sim/build/data/passive_joint_moments.json` (`range` entries and sources), `myoarm_r_chain.xml` (ranges), `muscle_passive.json`, `hand_intrinsic_muscles.json`, `extrinsic_muscles.json`, `hand_pads.json`, `postures.json`, arm muscle and tendon XML (refits), `hand_literature.json`, `scripts/hand_literature_comparison.py` (`joint_ranges`), `tests/test_passive_thenar.py`, `docs/wiki/{passive-moments-and-thenar,hand-literature-comparison}.md`, `CHANGELOG.md`
 Why: the thumb, PIP extension and index and little-finger abduction limits had no cited source and now follow measured passive ranges.
+
+## 2026-11-12 — Add selected-body mass transforms
+Changed: myo_sim/physics/body_mass.py, tests/test_physics_body_mass.py, docs/wiki/model-parameters.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: represented model mass and an explicit participant/reference ratio are different inputs; model-only copy transforms preserve geometry and force capacity while refreshing native constants.
+
+## 2026-11-12 — Add model-only muscle strength transforms
+Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md, docs/wiki/index.md
+Why: native active/passive force scaling and automatic-force resolution can be reused without importing subject fitting, environments or MyoSuite.
+
+## 2026-11-12 — Skip compilation for empty posture selections
+Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
+Why: requesting no keyframes still compiled the spec, adding model-build overhead and rejecting unfinished assemblies despite making no edits.
+
+## 2026-11-12 — Copy uncoupled functional projections
+Changed: myo_sim/physics/joint_coupling.py, tests/test_physics_joint_coupling.py
+Why: the functional projection returned its inputs when no joint equalities were active, so editing an output could mutate the original state; empty projections now return independent arrays while preserving Torch gradients.
+
+## 2026-11-12 — Own Torch fatigue reset values before state writes
+Changed: myo_sim/physics/fatigue.py, tests/test_torch_fatigue_reset_ownership.py, tests/test_physics_fatigue.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: a reset vector viewing live MA was overwritten before MF received it, selected-row resets could reject a valid MF view due to overlapping storage, and float32 reversed NumPy vectors retained unsupported negative strides during conversion.
+
+## 2026-11-12 — Validate Torch fatigue restores before mutation
+Changed: myo_sim/physics/fatigue.py, tests/test_torch_fatigue_restore.py, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: a missing, nonnumeric or incompatible later compartment in a checkpoint previously left earlier live compartments overwritten after the restore failed.
+
+## 2026-11-12 — Preserve inertia precision in generated XML
+Changed: myo_sim/build/compose.py, tests/test_xml_inertia_precision.py, docs/wiki/build-and-composition.md
+Why: six-digit native formatting can move an edited planar body's principal moments past the inertia triangle; generated XML now preserves the compiled moments without balancing or changing them.
+
+## 2026-11-11 — Linear XML composition copies
+Changed: myo_sim/build/utils.py, tests/test_build_utils.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: recursive subtree copies and child-list searches repeated work during model loading; copy each node once while preserving include expansion and mirror output.
+
+## 2026-11-11 — Preserve native sensor and contact settings
+Changed: myo_sim/build/utils.py, tests/test_native_includes.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: include imports discarded sensor reference frames and common options, lost pair class defaults and rejected unnamed sensors on MuJoCo 3.4.
+
+## 2026-11-11 — Keep interpreter caches out of distributions
+Changed: pyproject.toml, MANIFEST.in
+Why: recursive build-package data globs bundled local Python bytecode; explicitly include build documentation and posture tables, and exclude cached bytecode from both distribution formats while retaining Python sources and model assets.
+
+## 2026-11-11 — Preserve the MuJoCo CI matrix overrides
+Changed: .github/workflows/ci.yml, docs/wiki/testing-guide.md
+Why: ordinary uv run restored locked MuJoCo 3.9 after the matrix installed its requested version; reporting and tests now keep the override, and latest stays below MuJoCo 4.
+
+## 2026-11-11 — Preserve empty torch fatigue selections
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py, CHANGELOG.md, docs/wiki/testing-guide.md
+Why: the torch model factory used every actuator as a fallback for an empty muscle selection, so motor-only models and explicit empty selections disagreed with the CPU factory and could not reset with an empty fatigue vector.
+
+## 2026-11-11 — Preserve complete imported keyframe state
+Changed: myo_sim/build/utils.py, tests/test_keyframe_import.py, CHANGELOG.md, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md
+Why: spec-level keyframe import discarded activation, control and mocap state and rejected unnamed keys even though native MJCF keyframes support them.
+
+## 2026-11-11 — Reset Torch fatigue directly from tensors
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: converting reset vectors through NumPy rejected device tensors and tensors requiring gradients; direct Torch conversion preserves the state device, float32 dtype and vector shape checks.
+
+## 2026-11-11 — Snapshot differentiable Torch fatigue state
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: serializing a state after a gradient-tracked step raised instead of producing a checkpoint; snapshots now detach only the exported values and preserve live gradients.
+
+## 2026-11-11 — Validate NumPy fatigue state dimensions before updates
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue.py
+Why: multidimensional reset vectors and incompatible checkpoints could replace fixed-size muscle compartments or partially overwrite state before failing; validate all inputs before mutation.
+
+## 2026-11-11 — Bound compiled fatigue timestep caching
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue_cache.py
+Why: varying timesteps retained a scalar Torch tensor for every distinct value for the process lifetime; a bounded LRU keeps recent immutable scalars while preserving graph reuse.
+
+## 2026-11-11 — Keep zero-rate fatigue gradients finite
+Changed: myo_sim/physics/fatigue.py, tests/test_physics_fatigue_gradients.py
+Why: unused slow-mode switching calculations overflowed float32 backward passes when fatigue and recovery were disabled, even for a zero-length step; inactive divisions now use benign operands.
 
 ## 2026-11-06 — Joint springs fitted at the posture of their data
 Changed: `scripts/fit_passive_moments.py` (`source_posture`), `myo_sim/build/data/passive_joint_moments.json` (rows name their source posture), `muscle_passive.json` (Formica posture: forearm neutral explicit, protocol note), `myoarm_r_tendon.xml` (wrist springs), `hand_literature.json`, `tests/test_muscle_passive.py`, `docs/wiki/{passive-moments-and-thenar,hand-extrinsic-muscles,hand-literature-comparison}.md`, `CHANGELOG.md`

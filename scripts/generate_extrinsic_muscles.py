@@ -45,6 +45,7 @@ from myo_sim.build.compose import (
     build_spec,
 )
 from myo_sim.build.hand_data import DATA_DIR, load_intrinsic_table, place_tendon_nodes, write_generated_block
+from myo_sim.build.utils import muscle_tag, set_muscle_attribute
 
 SCRIPT = "generate_extrinsic_muscles.py"
 DATA_PATH = DATA_DIR / "extrinsic_muscles.json"
@@ -254,11 +255,8 @@ def muscles_with_revisions(text: str, table: dict[str, Any], fcu_length_q0: floa
         ("FCU_r", "lengthrange", f"{lo!r} {hi!r}"),
         ("FDS5_r", "force", f"{table['fds5']['force_N']['value']:.4f}"),
     ):
-        tags = re.findall(rf'<muscle name="{name}"[^>]*?/>', text)
-        if len(tags) != 1:
-            raise ValueError(f"expected one muscle {name}")
-        tag = re.sub(rf'{attr}\s*=\s*"[^"]*"', f'{attr}="{value}"', tags[0])
-        text = text.replace(tags[0], tag)
+        tag = muscle_tag(text, name)
+        text = text.replace(tag, set_muscle_attribute(tag, attr, value))
     return text
 
 
