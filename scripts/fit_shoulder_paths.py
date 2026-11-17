@@ -1,32 +1,25 @@
 #!/usr/bin/env python3
-"""Shoulder muscle path sites fitted to measured glenohumeral moment arms (``build/data/shoulder_paths.json``).
+"""Candidate shoulder path sites fitted to cadaver moment arms, checked on held-out data (``build/data/shoulder_paths.json``).
 
-Paths changed after the independent mechanics check (``validate_shoulder_mechanics.py``), each with one free site per
-line and the path's other elements fixed:
+A candidate frees one site of a muscle path and places it against the fit-set studies of
+``validate_shoulder_mechanics.py`` (``FIT_SET``: the Hik and Ackland 2019 re-plots of Kuechle 1997 and 2000 and Ackland
+2008, signs corrected there), in its cadaver convention (scapula fixed at rest, elbow 90 deg): the excess outside their
+band, a pull to the band's middle (0.2), a smoothness term on the curve (0.3) and the path length at qpos0 within 5 mm
+of the current path (so the fibre and slack lengths keep their meaning); least squares from the current site and from
+eight seeded random starts. The candidate is then compared with the current path on the held-out moment-arm checks
+(the other studies' curves, including Otis 1994 and Axford 2025; rotation arms in scaption; Langenderfer et al. 2006;
+Gatti et al. 2007's ranges; the pooled peaks). It is adopted, by writing the site into the arm chain, only if it gains
+on the fit set and loses no held-out check. No candidate has met that so far, so the model's paths are unchanged.
+``EXPLORED`` records the designs tried during development for the other muscles.
 
-- **DELT2:** Seth's acromial via point (``DELT2_DELT2-P3_r``) moves within 8 mm of where it was; the scaption peak is
-  held at or above 29.5 mm (Hik and Ackland 2019's pooled 33.4 mm less 4 mm).
-- **DELT3:** the scapular via ``DELT3_DELT3-P2_r`` replaces MoBL-ARMS's two wraps (``Delt3_torus_r``,
-  ``delt3hum_ellipsoid_DELT3_r``); it stays 28-45 mm from the glenohumeral centre, outside the humeral head and cuff,
-  behind the joint. The rotation curve of Kuechle 2000 is left out of this fit (its sign is in question, see the wiki).
-- **INFSP1-2, SUBSC1-3:** the humeral-head sphere ``SUPSP_hhead_r`` (no side site) and a humeral via ``<name>-V1_r``
-  25-40 mm from its centre replace Seth's scapular cylinders, so the lines wrap the head about the rotation axis.
-
-The fit uses the cadaver convention and the literature curves of ``validate_shoulder_mechanics.py`` (scapula fixed at
-rest, elbow 90 deg): the excess outside the studies' band, a pull to the band's middle (0.2) and a smoothness term on the
-curve (0.3), least squares from the stored start and from four seeded random starts. Those curves are then no longer
-held out for these muscles; the validation marks them, and Gatti et al. 2007's ranges, the pooled peaks of the other
-muscles and the strength rows stay independent.
-
-    uv run python scripts/fit_shoulder_paths.py            # print the current fit
-    uv run python scripts/fit_shoulder_paths.py --fit      # refit, write the table and the XML
+    uv run python scripts/fit_shoulder_paths.py            # evaluate the stored candidates
+    uv run python scripts/fit_shoulder_paths.py --fit      # refit the candidates and write the table
 """
 
 from __future__ import annotations
 
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 from typing import Any
@@ -36,43 +29,34 @@ import numpy as np
 from scipy.optimize import least_squares
 
 sys.path.insert(0, str(Path(__file__).parent))
-import generate_scapular_muscles as gsm  # noqa: E402
 import validate_shoulder_mechanics as vsm  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 TABLE = ROOT / "myo_sim" / "build" / "data" / "shoulder_paths.json"
-CHAIN = ROOT / "myo_sim" / "models" / "arm" / "assets" / "myoarm_r_chain.xml"
 H = 1e-4  # rad, central difference of the path length
-W_MID, W_SMOOTH, W_PEAK = 0.2, 0.3, 30.0
-PI = np.pi
-HHEAD = "SUPSP_hhead_r"
+W_MID, W_SMOOTH, W_PEAK, W_LENGTH = 0.2, 0.3, 30.0, 5.0
+REST_TOL_MM = 5.0  # path length at qpos0 within this of the current path
 
-# Free sites: "box" = body-frame position within half_mm of the start; "polar" = (rho, polar angle from the body's +y,
-# azimuth from +x towards +z) about a centre. Cuff vias are polar about the humeral-head sphere's centre.
-DESIGNS: list[dict[str, Any]] = [
+# Free sites: body-frame position within half_mm per axis of the current site.
+CANDIDATES: list[dict[str, Any]] = [
     {
         "muscle": "middle deltoid",
         "actuators": ["DELT2"],
-        "sites": {"DELT2_DELT2-P3_r": {"kind": "box", "half_mm": 8.0, "start": [-0.005138, -0.006741, 0.031029]}},  # Seth's point
-        "peak_min_mm": {"scaption": 29.5},
+        "sites": {"DELT2_DELT2-P3_r": {"half_mm": 8.0}},  # Seth's acromial via point
+        "peak_min_mm": {"scaption": 29.5},  # Hik and Ackland's pooled 33.4 mm less 4
     },
-    {
-        "muscle": "posterior deltoid",
-        "actuators": ["DELT3"],
-        "sites": {"DELT3_DELT3-P2_r": {"kind": "polar", "centre": "glenohumeral", "rho_mm": [28.0, 45.0], "theta": [0.3, 2.8], "phi": [PI / 2, 1.5 * PI]}},
-        "planes": ["coronal", "scaption", "flexion"],
-    },
-    {
-        "muscle": "infraspinatus",
-        "actuators": ["INFSP1", "INFSP2"],
-        "sites": {f"INFSP{k}-V1_r": {"kind": "polar", "centre": "humeral_head", "rho_mm": [25.0, 40.0], "theta": [0.0, 3.0], "phi": [0.0, 2 * PI]} for k in (1, 2)},
-    },
-    {
-        "muscle": "subscapularis",
-        "actuators": ["SUBSC1", "SUBSC2", "SUBSC3"],
-        "sites": {f"SUBSC{k}-V1_r": {"kind": "polar", "centre": "humeral_head", "rho_mm": [25.0, 40.0], "theta": [0.0, 3.0], "phi": [-PI, PI]} for k in (1, 2, 3)},
-    },
-]  # fmt: skip
+]
+# Designs tried during development with the same objective (fit set within 5 mm, current path -> design; the rotation
+# signs of Kuechle 2000 before the full-text check for SUPSP) and not kept.
+EXPLORED = {
+    "DELT3": "MoBL-ARMS's two wraps replaced by its scapular via 28-45 mm from the joint: 16 -> 14 of 29; the held-out "
+    "Otis 1994 and Axford 2025 curves have the posterior deltoid an adductor in scaption, as the current path",
+    "INFSP1-2": "humeral-head sphere and a humeral via 25-40 mm from its centre instead of Seth's cylinder: 19 -> 19 of 29 "
+    "(rotation 6 -> 8 of 9); held out, Langenderfer 2006 8 -> 6 of 10 (rotation arm 4-5 mm above it)",
+    "SUBSC1-3": "the same design as INFSP: 16 -> 12 of 29",
+    "SUPSP1-2": "a humeral via within 0.3 rad of the rotation axis: rotation 2 -> 5 of 9 but an adductor above 75 deg "
+    "in coronal abduction and flexion; 13 -> 14 of 29 over all studies",
+}
 
 
 class Grid:
@@ -120,71 +104,51 @@ class Grid:
         return out
 
 
-def bands(muscle: str) -> dict[tuple[str, float], tuple[float, float]]:
-    """(plane, angle) -> (low, high) over the studies of ``validate_shoulder_mechanics.LIT_CURVES``."""
+# Fit-set curves left out of the fit: (plane, muscle, study) -> reason. Curves given as a band of uncertain sign get a
+# low weight.
+FIT_EXCLUDE = {("coronal", "posterior deltoid", "kuechle1997"): "conflicts with Ackland 2008 (-11 to +2 against +7 to +28 mm)"}
+W_UNCERTAIN = 0.3
+
+
+def bands(muscle: str) -> dict[tuple[str, float], tuple[float, float, float]]:
+    """(plane, angle) -> (low, high, weight) over the fit-set studies (``validate_shoulder_mechanics.FIT_SET``)."""
     out = {}
     for plane, studies in vsm.LIT_CURVES.items():
         grid = vsm.ROT if plane == "rotation" else vsm.ELEV
         for i, a in enumerate(grid):
-            vals = [v[muscle][i] for v in studies.values() if muscle in v and i < len(v[muscle])]
+            vals, weight = [], 1.0
+            for k, v in studies.items():
+                if k not in vsm.FIT_SET or muscle not in v or i >= len(v[muscle]) or (plane, muscle, k) in FIT_EXCLUDE:
+                    continue
+                if isinstance(v[muscle][i], tuple):
+                    weight = W_UNCERTAIN
+                vals += list(np.atleast_1d(v[muscle][i]))
             if vals:
-                out[(plane, a)] = (min(vals), max(vals))
+                out[(plane, a)] = (min(vals), max(vals), weight)
     return out
 
 
-def centres(m: mujoco.MjModel) -> dict[str, np.ndarray]:
-    return {"glenohumeral": m.body_pos[m.body("humphant_r").id].copy(), "humeral_head": m.geom_pos[m.geom(HHEAD).id].copy()}
-
-
-def polar_to_pos(x: np.ndarray, centre: np.ndarray) -> np.ndarray:
-    rho, th, ph = x
-    return centre + rho * np.array([np.sin(th) * np.cos(ph), np.cos(th), np.sin(th) * np.sin(ph)])
-
-
-def pos_to_polar(p: np.ndarray, centre: np.ndarray) -> np.ndarray:
-    v = np.asarray(p) - centre
-    rho = np.linalg.norm(v)
-    return np.array([rho, np.arccos(v[1] / rho), np.arctan2(v[2], v[0])])
-
-
 class Fit:
-    """One design: free sites of a muscle group against its literature bands."""
+    """One design: free sites of a muscle group against its fit-set bands."""
 
     def __init__(self, design: dict[str, Any], m: mujoco.MjModel, grid: Grid) -> None:
         self.design, self.m, self.d, self.grid = design, m, mujoco.MjData(m), grid
         self.tendons = [m.actuator_trnid[m.actuator(f"{a}_r").id, 0] for a in design["actuators"]]
         self.weights = np.array([m.actuator(f"{a}_r").gainprm[2] for a in design["actuators"]])
         self.band = bands(design["muscle"])
-        self.centre = centres(m)
-        self.sites = list(design["sites"])
         self.lb, self.ub, self.x0 = [], [], []
         for name, spec in design["sites"].items():
-            pos = m.site_pos[m.site(name).id]
-            if spec["kind"] == "box":
-                h = spec["half_mm"] / 1e3
-                start = np.array(spec.get("start", pos))
-                self.lb += list(start - h)
-                self.ub += list(start + h)
-                self.x0 += list(pos)
-            else:
-                c = self.centre[spec["centre"]]
-                x = pos_to_polar(pos, c)
-                if spec["phi"][0] > x[2]:
-                    x[2] += 2 * PI
-                elif spec["phi"][1] < x[2]:
-                    x[2] -= 2 * PI
-                self.lb += [spec["rho_mm"][0] / 1e3, spec["theta"][0], spec["phi"][0]]
-                self.ub += [spec["rho_mm"][1] / 1e3, spec["theta"][1], spec["phi"][1]]
-                self.x0 += list(x)
+            h = spec["half_mm"] / 1e3
+            start = m.site_pos[m.site(name).id].copy()
+            self.lb += list(start - h)
+            self.ub += list(start + h)
+            self.x0 += list(start)
         self.lb, self.ub = np.array(self.lb), np.array(self.ub)
+        self.rest_ref = self.rest_lengths_mm()
         self.x0 = np.clip(np.array(self.x0), self.lb + 1e-9, self.ub - 1e-9)
 
     def positions(self, x: np.ndarray) -> dict[str, np.ndarray]:
-        out = {}
-        for k, (name, spec) in enumerate(self.design["sites"].items()):
-            xi = x[3 * k : 3 * k + 3]
-            out[name] = xi.copy() if spec["kind"] == "box" else polar_to_pos(xi, self.centre[spec["centre"]])
-        return out
+        return {name: x[3 * k : 3 * k + 3].copy() for k, name in enumerate(self.design["sites"])}
 
     def curve(self, x: np.ndarray) -> np.ndarray:
         """Force-weighted moment arm (mm) of the group per grid key."""
@@ -199,16 +163,23 @@ class Fit:
         r = []
         for i, key in enumerate(self.grid.keys):
             if key in self.band and (planes is None or key[0] in planes):
-                lo, hi = self.band[key]
-                r += [max(lo - arm[i], arm[i] - hi, 0.0), W_MID * (arm[i] - 0.5 * (lo + hi))]
+                lo, hi, w = self.band[key]
+                r += [w * max(lo - arm[i], arm[i] - hi, 0.0), w * W_MID * (arm[i] - 0.5 * (lo + hi))]
         for plane in ("coronal", "scaption", "flexion", "rotation"):
             r += list(W_SMOOTH * np.diff(arm[[i for i, k in enumerate(self.grid.keys) if k[0] == plane]], 2))
         for plane, low in self.design.get("peak_min_mm", {}).items():
             peak = arm[[i for i, k in enumerate(self.grid.keys) if k[0] == plane]].max()
             r.append(W_PEAK * max(0.0, low - peak))
+        r += list(W_LENGTH * np.maximum(0.0, np.abs(self.rest_lengths_mm() - self.rest_ref) - REST_TOL_MM))
         return np.array(r)
 
-    def run(self, starts: int = 4, seed: int = 0) -> np.ndarray:
+    def rest_lengths_mm(self) -> np.ndarray:
+        self.d.qpos[:] = self.m.qpos0
+        mujoco.mj_kinematics(self.m, self.d)
+        mujoco.mj_tendon(self.m, self.d)
+        return 1e3 * self.d.ten_length[self.tendons]
+
+    def run(self, starts: int = 8, seed: int = 0) -> np.ndarray:
         rng = np.random.default_rng(seed)
         best = None
         for k in range(starts + 1):
@@ -234,54 +205,74 @@ class Fit:
                 "within_5mm": int(sum(e <= 5 for e in exc)),
                 "n": len(exc),
             }
-        return {"cost": round(float(0.5 * np.sum(self.residual(x) ** 2)), 3), "planes": rows}  # fmt: skip
+        rest = {
+            a: [round(float(v), 2), round(float(r), 2)]
+            for a, v, r in zip(self.design["actuators"], self.rest_lengths_mm(), self.rest_ref)
+        }
+        return {"cost": round(float(0.5 * np.sum(self.residual(x) ** 2)), 3), "planes": rows, "rest_length_mm_new_old": rest}
 
 
-def write_chain_sites(sites: dict[str, list[float]]) -> None:
-    """Set the pos of hand-written arm sites (the kept MoBL-ARMS / Seth paths) in the chain file."""
-    text = CHAIN.read_text()
-    for name, pos in sites.items():
-        pattern = re.compile(rf'(<site name="{re.escape(name)}" pos=")[^"]*(")')
-        text, n = pattern.subn(lambda mm: mm.group(1) + " ".join(f"{v:.6g}" for v in pos) + mm.group(2), text)
-        if n != 1:
-            raise SystemExit(f"{name}: {n} sites in {CHAIN.name}")
-    CHAIN.write_text(text)
+def held_out(arm: vsm.Arm) -> dict[str, Any]:
+    """The held-out moment-arm checks of ``validate_shoulder_mechanics`` for the model as it stands."""
+    curves = vsm.moment_arm_curves(arm)
+    ma = vsm.compare_moment_arms(curves)
+    held = [r for r in ma["curves"] if r["set"] == "held out"]
+    lang = vsm.langenderfer(arm)["rows"]
+    rot = vsm.scaption_rotation(arm)
+    peaks = ma["hik2019_pooled_peaks"].values()
+    return {
+        "curves_within_5mm": int(sum(r["within_5mm"] for r in held)),
+        "curves_in_band": int(sum(r["in_band"] for r in held)),
+        "scaption_rotation_within_5mm": int(sum(r["within_5mm"] for r in rot)),
+        "langenderfer_within_5mm": int(sum(r["within_5mm"] for r in lang)),
+        "gatti_in_range": int(sum(v["in_range"] for v in ma["gatti2007_scaption_60"].values())),
+        "peaks_within_4mm": int(sum(abs(v["model_peak_mm"] - v["pooled_peak_mm"]) <= 4.0 for v in peaks)),
+    }
+
+
+def fit_set_within_5mm(summary: dict[str, Any]) -> int:
+    return sum(v["within_5mm"] for v in summary["planes"].values())
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--fit", action="store_true", help="refit and write the table and the XML")
+    parser.add_argument("--fit", action="store_true", help="refit the candidates and write the table")
     args = parser.parse_args()
     arm = vsm.Arm()
     grid = Grid(arm)
-    table = json.loads(TABLE.read_text())
-    out = {"format": "myo_sim.shoulder_paths/1", "description": __doc__.split("\n\n")[0], "mujoco": mujoco.__version__}
-    out["provenance"] = table.get("provenance", {})
-    out["designs"], out["cuff_vias"], out["kept_sites"] = [], {}, {}
-    for design in DESIGNS:
+    stored = json.loads(TABLE.read_text()) if TABLE.exists() else {}
+    out = {"format": "myo_sim.shoulder_paths/2", "description": __doc__.split("\n\n")[0], "mujoco": mujoco.__version__}
+    out["fit_studies"] = list(vsm.FIT_SET)
+    out["fit_excluded"] = {"/".join(k): v for k, v in FIT_EXCLUDE.items()}
+    out["candidates"], out["explored"] = [], EXPLORED
+    for k, design in enumerate(CANDIDATES):
         f = Fit(design, arm.model, grid)
-        x = f.run() if args.fit else f.x0
-        pos = f.positions(x)
-        s = f.summary(x)
-        print(design["muscle"], s["cost"], {p: f"{v['within_5mm']}/{v['n']}" for p, v in s["planes"].items()})
-        for name, p in pos.items():
-            body = arm.model.body(arm.model.site_bodyid[arm.model.site(name).id]).name
-            entry = {"body": body, "pos": [round(float(v), 6) for v in p]}
-            (out["cuff_vias"] if name.endswith("-V1_r") else out["kept_sites"])[
-                name.split("-V1_r")[0] if name.endswith("-V1_r") else name
-            ] = entry
-        entry = {"muscle": design["muscle"], "actuators": design["actuators"], "free_sites": list(pos)}
-        entry["planes"] = design.get("planes", ["coronal", "scaption", "flexion", "rotation"])
-        out["designs"].append({**entry, "fit": s})
+        x_current = f.x0.copy()
+        current = {"fit": f.summary(x_current), "held_out": held_out(arm)}
+        if args.fit:
+            x = f.run()
+        else:
+            x = np.concatenate([stored["candidates"][k]["sites"][n]["pos"] for n in design["sites"]])
+        candidate = {"fit": f.summary(x), "held_out": held_out(arm)}
+        f.curve(x_current)  # back to the model's sites
+        gain = fit_set_within_5mm(candidate["fit"]) > fit_set_within_5mm(current["fit"])
+        losses = [key for key, v in current["held_out"].items() if candidate["held_out"][key] < v]
+        out["candidates"].append(
+            {
+                "muscle": design["muscle"],
+                "actuators": design["actuators"],
+                "sites": {n: {"current": [round(float(v), 6) for v in x_current[3 * i : 3 * i + 3]],
+                              "pos": [round(float(v), 6) for v in x[3 * i : 3 * i + 3]]} for i, n in enumerate(design["sites"])},
+                "current": current,
+                "candidate": candidate,
+                "adopted": bool(gain and not losses),
+                "held_out_losses": losses,
+            }
+        )  # fmt: skip
+        print(design["muscle"], "fit set", fit_set_within_5mm(current["fit"]), "->", fit_set_within_5mm(candidate["fit"]),
+              "held-out losses", losses)  # fmt: skip
     if args.fit:
         TABLE.write_text(json.dumps(out, indent=1) + "\n")
-        write_chain_sites({k: v["pos"] for k, v in out["kept_sites"].items()})
-        muscles = json.loads(gsm.TABLE.read_text())
-        for row in muscles["muscles"]:
-            if row["name"] in out["cuff_vias"]:
-                row["via"] = out["cuff_vias"][row["name"]]
-        gsm.TABLE.write_text(json.dumps(muscles, indent=2) + "\n")
-        gsm.write(muscles)
         print("wrote", TABLE.relative_to(ROOT))
 
 

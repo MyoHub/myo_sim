@@ -9,8 +9,13 @@ Two checks on ``myoarm_r``, written to ``docs/validation/shoulder-mechanics.json
   sagittal flexion; axial rotation at the side), moment arm = -dL/dtheta of each muscle. Muscles split into sub-regions
   are combined weighted by peak force (the arm of their summed force). Literature curves are the primary studies as
   re-plotted by Hik and Ackland 2019 (digitised at 15 deg steps), the experimental ranges of Gatti et al. 2007 and the
-  pooled peaks of Hik and Ackland 2019 Table 2. The band at an angle is the range over the studies. Curves that
-  ``fit_shoulder_paths.py`` used to place path sites are marked (``path_fitted``) and are not held out.
+  pooled peaks of Hik and Ackland 2019 Table 2. The band at an angle is the range over the studies of a set: the fit
+  set (``FIT_SET``: Kuechle 1997 and 2000, Ackland 2008), which ``fit_shoulder_paths.py`` may use to place path sites
+  (rows it used are marked ``path_fitted``), and the held-out studies (Liu 1997, Hughes 1998, and Otis 1994 and Axford
+  2025 from their regression equations). Rotation arms in scaption (Otis 1994, Axford 2025), Langenderfer et al.
+  2006's rotation arms, Gatti's ranges (which include Otis 1994), the pooled peaks and every strength row are held out
+  from the path fit as well; for the pectoralis, latissimus and teres major, which have no independent curves, Kuechle
+  1997 and Ackland 2008 are compared one against the other (leave one study out).
 - **Isometric shoulder strength** with ``myo_sim.physics.muscle_strength.max_torque_terms`` at full activation of each
   muscle with a positive moment plus all passive moments (no co-contraction, gravity corrected): the humerus at the
   trial's humerothoracic angles, the girdle at the frame of Seth et al. 2019's measured motions nearest in elevation
@@ -72,6 +77,15 @@ MUSCLES = {
 # Moment arms (mm; + abduction / flexion / external rotation) digitised from Hik and Ackland 2019 Figs 2, 4, 6, 8,
 # which re-plot each primary study at 15 deg steps (about +-1 mm against the primaries). Elevation curves at
 # ELEV[:len(values)]; rotation curves at ROT.
+# Signs corrected against the primaries. Kuechle 2000 (full text: figures and Table 1 plot + = internal rotation;
+# neutral = humeral shaft parallel to the vertebral border, anterior humerus perpendicular to the infraspinous fossa)
+# has at the side, in cm: subscapularis 2.18, teres minor -2.00, infraspinatus -2.34, supraspinatus -0.27, latissimus
+# 0.82, anterior deltoid 0.68, middle deltoid -0.02, teres major 0.67, posterior deltoid -0.39, pectoralis major 1.84.
+# Hik and Ackland's re-plot keeps Kuechle's sign for the supraspinatus, posterior deltoid and pectoralis major, so those
+# three are negated here (+ = external rotation); the latissimus and teres major, "relatively unchanged by rotation",
+# take their Table 1 means. Teres minor in scaption is an adductor (Kuechle 1997 as tabulated by Gatti 2007: -5 / -13 mm
+# at 30 / 60 deg). Kuechle 1997's infraspinatus in scaption has no reliable sign (re-plot -8 to +4, Gatti +4 at 30 deg):
+# a band of 0 to +4 mm, a (low, high) pair per angle.
 LIT_CURVES: dict[str, dict[str, dict[str, list[float]]]] = {
     "coronal": {
         "kuechle1997": {
@@ -102,6 +116,8 @@ LIT_CURVES: dict[str, dict[str, dict[str, list[float]]]] = {
     "scaption": {
         "kuechle1997": {
             "supraspinatus": [19, 16, 12.5, 7, 3, 0],
+            "infraspinatus": [(0, 4)] * 6,
+            "teres minor": [-1.25, -5.5, -9, -12.5, -13.25, -14],
             "subscapularis": [0, 3, 7.5, 12, 11, 10],
             "anterior deltoid": [13.5, 18, 21.25, 24.5, 24.75, 25],
             "middle deltoid": [19, 21, 24.5, 28, 25.25, 22.5],
@@ -141,15 +157,122 @@ LIT_CURVES: dict[str, dict[str, dict[str, list[float]]]] = {
     "rotation": {
         # Kuechle 2000, arm at the side; digitised at -60, -45, -30, -15, 0, 15, 30, 45, 60 deg.
         "kuechle2000": {
-            "supraspinatus": [-1.5, -1.5, -1.75, -2.1, -2.5, -3.25, -3.75, -4, -4],
+            "supraspinatus": [1.5, 1.5, 1.75, 2.1, 2.5, 3.25, 3.75, 4, 4],
             "infraspinatus": [24.5, 24.5, 24.5, 24.4, 24, 23.25, 22, 20.25, 18],
             "subscapularis": [-14, -16.25, -18.5, -20.6, -22.5, -24, -24.75, -25, -25],
             "teres minor": [17, 18.5, 19.5, 20.35, 21.5, 21.1, 20.5, 19, 16],
             "anterior deltoid": [-2.5, -0.6, -1, -3, -6, -9.8, -13, -15.3, -16],
-            "posterior deltoid": [-3.5, -4.6, -5, -4.9, -4.5, -4.9, -3.5, -1.5, 0],
+            "posterior deltoid": [3.5, 4.6, 5, 4.9, 4.5, 4.9, 3.5, 1.5, 0],
+            "pectoralis major": [-10, -14.5, -17.5, -19.25, -20],
+            "latissimus dorsi": [-8.2] * 9,
+            "teres major": [-6.7] * 9,
         },
     },
 }
+# Otis et al. 1994 (J Bone Joint Surg Am 76:667, Tables I-II, full text): excursion (cm) = C0 + C1 rotation + C2 abduction
+# + C3 rotation x abduction for the cuff portions, D0 + D1 rotation + D2 abduction + D3 abduction^2 for the deltoid (deg;
+# rotation + external; abduction in the scapular plane, 0-75 deg, scapula fixed). Moment arm = -d(excursion)/d(angle);
+# a muscle's value is the mean over its portions. Held out.
+OTIS_1994 = {
+    "supraspinatus": [("cuff", 0.00354, -0.0439, -0.000113), ("cuff", -0.0130, -0.0471, 0.000084)],
+    "infraspinatus": [("cuff", -0.0403, -0.0295, 0.000277), ("cuff", -0.0386, -0.0146, 0.00008), ("cuff", -0.0402, -0.00939, 0.0001)],
+    "teres minor": [("cuff", -0.0356, 0.00379, -0.000037)],
+    "subscapularis": [("cuff", 0.043, -0.0238, -0.000321), ("cuff", 0.0451, -0.0128, -0.000074), ("cuff", 0.0416, -0.00747, -0.000007)],
+    "anterior deltoid": [("deltoid", 0.00813, 0.0123, -0.000429)],
+    "middle deltoid": [("deltoid", -0.0047, -0.0247, -0.000260)],
+    "posterior deltoid": [("deltoid", -0.00621, 0.0954, -0.000558)],
+}  # fmt: skip
+CM_PER_DEG = 10.0 * 180.0 / np.pi  # cm/deg -> mm/rad
+
+
+def otis(muscle: str, abduction: float, rotation: float, axis: str) -> float:
+    """Otis 1994 moment arm (mm; + abduction or external rotation) at *abduction*, *rotation* (deg, + external)."""
+    vals = []
+    for kind, c1, c2, c3 in OTIS_1994[muscle]:
+        if axis == "abduction":
+            d = c2 + (c3 * rotation if kind == "cuff" else 2 * c3 * abduction)
+        else:
+            d = c1 + (c3 * abduction if kind == "cuff" else 0.0)
+        vals.append(-d * CM_PER_DEG)
+    return float(np.mean(vals))
+
+
+# Axford et al. 2025 (J Biomech 182:112561, supplementary Appendix C): mean moment arms (mm) of eight specimens as
+# polynomials in glenohumeral elevation (10-60 deg), plane of elevation (deg anterior of the scapular plane, -20 to 60)
+# and axial rotation (+ internal); the elevation arm + elevates, the rotation arm + rotates internally. Held out. The
+# scapular plane is taken as this validation's scaption plane (30 deg), so flexion is their plane 60.
+AXFORD_2025_COLUMNS = ("anterior deltoid", "middle deltoid", "posterior deltoid", "subscapularis inferior",
+                       "subscapularis superior", "supraspinatus", "infraspinatus", "teres minor")  # fmt: skip
+AXFORD_2025_TERMS = {  # (elevation, plane, rotation) exponents -> coefficients in AXFORD_2025_COLUMNS order
+    "elevation": [
+        ((0, 0, 1), (0.029397, -0.011327, -0.011536, 0.0, -0.172682, 0.027714, 0.13287, -0.006304)),
+        ((0, 0, 2), (0.000237, 0.0, 0.0, 0.0, 0.0, 0.000298, 0.0, 0.0)),
+        ((0, 1, 0), (0.457079, -0.268827, -0.380154, 0.0, -0.008439, 0.195658, 0.098613, -0.005594)),
+        ((0, 1, 1), (0.001162, 0.000285, 4.1e-05, 0.0, 0.001005, 0.000736, 0.0006, 0.0)),
+        ((0, 1, 2), (1e-06, 0.0, 0.0, 0.0, 0.0, 2e-06, 0.0, 0.0)),
+        ((0, 2, 0), (-0.000105, -0.000989, 0.000457, 0.0, -0.000687, -0.004388, -0.000673, 0.0)),
+        ((0, 2, 1), (0.0, 0.0, 0.0, 0.0, 0.0, -3e-06, 0.0, 0.0)),
+        ((1, 0, 0), (-0.085268, 0.0, 0.039602, 0.0, 0.0, -0.152412, 0.0, 0.0)),
+        ((1, 0, 1), (-0.000313, 0.0, 0.0, 0.0, 0.0, -0.001751, 0.0, 0.0)),
+        ((1, 0, 2), (0.0, 0.0, 0.0, 0.0, 0.0, -1.1e-05, 0.0, 0.0)),
+        ((1, 1, 0), (-0.001492, 0.0, 0.0, 0.0, 0.0, 3.1e-05, 0.0, 0.0)),
+        ((1, 1, 1), (0.0, 0.0, 0.0, 0.0, 0.0, 5.4e-05, 0.0, 0.0)),
+        ((1, 2, 0), (0.0, 0.0, 0.0, 0.0, 0.0, 4e-06, 0.0, 0.0)),
+        ((2, 0, 0), (0.001755, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)),
+        ((0, 0, 0), (12.341921, 23.363708, -11.79823, 0.071579, 8.792102, 27.214272, 16.835917, -8.414295)),
+        ((0, 3, 0), (-1.1e-05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)),
+    ],
+    "rotation": [
+        ((0, 0, 1), (-0.043136, 0.0, 0.0, 0.0, 0.00793, 0.00481, 0.025976, -0.011604)),
+        ((0, 1, 0), (-0.07953, -0.038597, -0.017769, 0.0, 0.026863, 0.013931, 0.058433, -0.003465)),
+        ((0, 1, 1), (-9.1e-05, 0.0, 0.0, 0.0, 0.0, -0.000499, 0.0, 0.0)),
+        ((0, 2, 0), (0.000114, 0.000251, -5.5e-05, 0.0, 0.00016, -0.000579, -6.9e-05, 0.0)),
+        ((0, 2, 1), (2e-06, 0.0, 0.0, 0.0, 0.0, 6e-06, 0.0, 0.0)),
+        ((1, 0, 0), (0.029397, -0.011327, -0.011536, 0.0, -0.172682, 0.027714, 0.13287, -0.006304)),
+        ((1, 0, 1), (0.000473, 0.0, 0.0, 0.0, 0.0, 0.000596, 0.0, 0.0)),
+        ((1, 1, 0), (0.001162, 0.000285, 4.1e-05, 0.0, 0.001005, 0.000736, 0.0006, 0.0)),
+        ((1, 1, 1), (2e-06, 0.0, 0.0, 0.0, 0.0, 4e-06, 0.0, 0.0)),
+        ((1, 2, 0), (0.0, 0.0, 0.0, 0.0, 0.0, -3e-06, 0.0, 0.0)),
+        ((2, 0, 0), (-0.000157, 0.0, 0.0, 0.0, 0.0, -0.000875, 0.0, 0.0)),
+        ((2, 0, 1), (0.0, 0.0, 0.0, 0.0, 0.0, -1.1e-05, 0.0, 0.0)),
+        ((2, 1, 0), (0.0, 0.0, 0.0, 0.0, 0.0, 2.7e-05, 0.0, 0.0)),
+        ((0, 0, 0), (2.5898, -2.138277, -5.198167, 22.79269, 22.845373, -3.573477, -24.12935, -20.16155)),
+        ((0, 3, 0), (0.0, 0.0, 0.0, 0.0, 0.0, 7e-06, 0.0, 0.0)),
+    ],
+}  # fmt: skip
+
+
+def axford(muscle: str, elevation: float, plane: float, rotation: float, axis: str) -> float:
+    """Axford 2025 moment arm (mm; + elevation or external rotation); subscapularis = mean of its two regions."""
+    cols = ("subscapularis inferior", "subscapularis superior") if muscle == "subscapularis" else (muscle,)
+    terms = AXFORD_2025_TERMS[axis]
+    vals = []
+    for col in cols:
+        k = AXFORD_2025_COLUMNS.index(col)
+        vals.append(sum(c[k] * elevation**e * plane**p * rotation**r for (e, p, r), c in terms))
+    value = float(np.mean(vals))
+    return value if axis == "elevation" else -value
+
+
+OTIS_ELEV = tuple(e for e in ELEV if e <= 75)
+AXFORD_ELEV = tuple(e for e in ELEV if e <= 60)
+LIT_CURVES["scaption"]["otis1994"] = {m: [round(otis(m, e, 0.0, "abduction"), 1) for e in OTIS_ELEV] for m in OTIS_1994}
+LIT_CURVES["scaption"]["axford2025"] = {m: [round(axford(m, e, 0.0, 0.0, "elevation"), 1) for e in AXFORD_ELEV] for m in ("anterior deltoid", "middle deltoid", "posterior deltoid", "subscapularis", "supraspinatus", "infraspinatus", "teres minor")}  # fmt: skip
+LIT_CURVES["flexion"]["axford2025"] = {m: [round(axford(m, e, 60.0, 0.0, "elevation"), 1) for e in AXFORD_ELEV] for m in LIT_CURVES["scaption"]["axford2025"]}  # fmt: skip
+# Rotation arms in scaption (rotation 0) at elevated positions, held out: (muscle, elevation) -> {study: mm}.
+SCAPTION_ROTATION_ELEV = (15, 30, 45, 60)
+SCAPTION_ROTATION = {
+    (m, e): {
+        **({"otis1994": round(otis(m, e, 0.0, "rotation"), 1)} if m in OTIS_1994 else {}),
+        **({"axford2025": round(axford(m, e, 0.0, 0.0, "rotation"), 1)} if m in LIT_CURVES["scaption"]["axford2025"] else {}),
+    }
+    for m in ("supraspinatus", "infraspinatus", "subscapularis", "teres minor", "anterior deltoid", "middle deltoid", "posterior deltoid")
+    for e in SCAPTION_ROTATION_ELEV
+}  # fmt: skip
+
+# Studies the path fit may use (fit_shoulder_paths.py); every other curve, Gatti's ranges, the pooled peaks and the
+# strength rows are held out from it.
+FIT_SET = ("kuechle1997", "kuechle2000", "ackland2008")
 # Gatti et al. 2007 Table 3: range of the experimental studies at 60 deg glenohumeral angle in scaption (mm).
 GATTI_60 = {
     "supraspinatus": (7.0, 27.0),
@@ -157,6 +280,22 @@ GATTI_60 = {
     "teres minor": (-13.0, -2.2),
     "subscapularis": (-1.0, 13.6),
 }
+# Langenderfer et al. 2006 (J Orthop Res 24:1737, PMC1551907; held out): rotation moment arms (mm, + = external) in
+# scaption at 10 and 60 deg glenohumeral elevation, the mean over 45 deg internal to 90 deg external rotation in 15 deg
+# steps, neutral = the epicondylar axis in the scapular plane (30 deg internal rotation in this convention); sub-region
+# values pooled over both elevations. Model sub-regions: SUPSP1 anterior, SUPSP2 posterior, INFSP1 the superior two
+# and INFSP2 the inferior two of the four infraspinatus regions.
+LANGENDERFER_2006 = {
+    ("supraspinatus", 10): 4.1,
+    ("supraspinatus", 60): 3.7,
+    ("infraspinatus", 10): 17.2,
+    ("infraspinatus", 60): 12.7,
+    ("teres minor", 10): 15.6,
+    ("teres minor", 60): 19.4,
+}
+LANGENDERFER_2006_REGIONS = {"SUPSP1": 0.5, "SUPSP2": 6.0, "INFSP1": (12.7 + 13.5) / 2, "INFSP2": (16.3 + 17.3) / 2}
+LANGENDERFER_ROT = tuple(range(-45, 91, 15))  # deg external from their neutral
+LANGENDERFER_NEUTRAL_INTERNAL = 30.0
 # Hik and Ackland 2019 Table 2: pooled peak moment arms (mm) over the studies.
 HIK_PEAKS = {
     ("scaption", "anterior deltoid"): 33.9,
@@ -314,53 +453,140 @@ def moment_arm_curves(arm: Arm) -> dict[str, dict[str, list[float]]]:
 
 
 def path_fitted() -> set[tuple[str, str]]:
-    """(plane, muscle) curves that ``fit_shoulder_paths.py`` used to place path sites; they are no longer held out."""
+    """(plane, muscle) curves that an adopted ``fit_shoulder_paths.py`` candidate was fitted to; they are not held out."""
     if not PATHS.exists():
         return set()
-    out = set()
-    for d in json.loads(PATHS.read_text())["designs"]:
-        for plane in d.get("planes", ("coronal", "scaption", "flexion", "rotation")):
-            out.add((plane, d["muscle"]))
-    return out
+    return {
+        (plane, c["muscle"])
+        for c in json.loads(PATHS.read_text())["candidates"]
+        if c["adopted"]
+        for plane in PLANES | {"rotation": 0}
+    }
+
+
+def langenderfer(arm: Arm) -> dict[str, Any]:
+    """Rotation arms in scaption averaged over Langenderfer et al. 2006's rotation range (held out)."""
+    names = sorted({m for (m, _) in LANGENDERFER_2006} | set(LANGENDERFER_2006_REGIONS))
+    per: dict[int, dict[str, float]] = {}
+    for e in (10, 60):
+        vals: dict[str, list[float]] = {n: [] for n in names}
+        for a in LANGENDERFER_ROT:
+            r = LANGENDERFER_NEUTRAL_INTERNAL - a  # internal rotation in this convention
+            q = arm.qpos(PLANES["scaption"], e, r, 90.0, {})
+            u = arm.axis(lambda x, e=e, r=r: arm.humerothoracic(PLANES["scaption"], e, r - np.degrees(x)))  # + = external
+            arms = arm.moment_arms(q, u)
+            for n in names:
+                if n in MUSCLES:
+                    vals[n].append(1e3 * arm.combined(arms, MUSCLES[n]))
+                else:
+                    vals[n].append(1e3 * arms[arm.model.actuator(f"{n}_r").id])
+        per[e] = {n: float(np.mean(v)) for n, v in vals.items()}
+    rows = []
+    for (muscle, e), lit in LANGENDERFER_2006.items():
+        x = per[e][muscle]
+        rows.append(
+            {
+                "muscle": muscle,
+                "elevation_deg": e,
+                "model_mm": round(x, 1),
+                "measured_mm": lit,
+                "within_5mm": bool(abs(x - lit) <= 5),
+            }
+        )
+    for name, lit in LANGENDERFER_2006_REGIONS.items():
+        x = (per[10][name] + per[60][name]) / 2
+        rows.append(
+            {
+                "muscle": name,
+                "elevation_deg": "10, 60",
+                "model_mm": round(x, 1),
+                "measured_mm": round(lit, 1),
+                "within_5mm": bool(abs(x - lit) <= 5),
+            }
+        )
+    return {"rows": rows}
+
+
+def scaption_rotation(arm: Arm) -> list[dict[str, Any]]:
+    """Rotation arms (+ = external) in scaption at rotation 0 against Otis 1994 and Axford 2025 (held out)."""
+    rows = []
+    for e in SCAPTION_ROTATION_ELEV:
+        q = arm.qpos(PLANES["scaption"], e, 0.0, 90.0, {})
+        u = arm.axis(lambda x, e=e: arm.humerothoracic(PLANES["scaption"], e, -np.degrees(x)))
+        arms = arm.moment_arms(q, u)
+        for (muscle, elev), lit in SCAPTION_ROTATION.items():
+            if elev != e:
+                continue
+            x = 1e3 * arm.combined(arms, MUSCLES[muscle])
+            for study, v in lit.items():
+                rows.append({"muscle": muscle, "elevation_deg": e, "study": study, "model_mm": round(x, 1), "measured_mm": v,
+                             "within_5mm": bool(abs(x - v) <= 5)})  # fmt: skip
+    return rows
+
+
+def leave_one_study_out(model: dict[str, dict[str, list[float]]]) -> list[dict[str, Any]]:
+    """Kuechle 1997 against Ackland 2008 per curve, with the model's rms difference to each (the between-study spread is
+    the tolerance where no independent curve exists: pectoralis major, latissimus dorsi, teres major)."""
+    rows = []
+    for plane in ("coronal", "flexion"):
+        for muscle in ("pectoralis major", "latissimus dorsi", "teres major"):
+            k, a = LIT_CURVES[plane]["kuechle1997"][muscle], LIT_CURVES[plane]["ackland2008"][muscle]
+            n = min(len(k), len(a))
+            x = np.array(model[plane][muscle][:n])
+            k, a = np.array(k[:n]), np.array(a[:n])
+            rms = lambda d: round(float(np.sqrt(np.mean(d**2))), 1)  # noqa: E731
+            rows.append(
+                {
+                    "plane": plane,
+                    "muscle": muscle,
+                    "angles_deg": list(ELEV[:n]),
+                    "kuechle_vs_ackland_rms_mm": rms(k - a),
+                    "model_vs_kuechle_rms_mm": rms(x - k),
+                    "model_vs_ackland_rms_mm": rms(x - a),
+                }
+            )
+    return rows
 
 
 def compare_moment_arms(model: dict[str, dict[str, list[float]]]) -> dict[str, Any]:
-    """Per plane and muscle: the band over the studies at each angle, the model's excess outside it."""
+    """Per plane, muscle and study set: the band over the studies at each angle, the model's excess outside it."""
     fitted = path_fitted()
     rows = []
     for plane, studies in LIT_CURVES.items():
         grid = ROT if plane == "rotation" else ELEV
         for muscle in MUSCLES:
-            curves = {s: v[muscle] for s, v in studies.items() if muscle in v}
-            if not curves:
-                continue
-            lo, hi, excess = [], [], []
-            for i, angle in enumerate(grid):
-                vals = [c[i] for c in curves.values() if i < len(c)]
-                if not vals:
+            for subset in ("fit set", "held out"):
+                curves = {s: v[muscle] for s, v in studies.items() if muscle in v and (s in FIT_SET) == (subset == "fit set")}
+                if not curves:
                     continue
-                a, b = min(vals), max(vals)
-                x = model[plane][muscle][i]
-                lo.append(a)
-                hi.append(b)
-                excess.append(round(max(a - x, x - b, 0.0), 2))
-            n = len(excess)
-            rows.append(
-                {
-                    "plane": plane,
-                    "muscle": muscle,
-                    "angles_deg": list(grid[:n]),
-                    "studies": sorted(curves),
-                    "model_mm": model[plane][muscle][:n],
-                    "band_lo_mm": lo,
-                    "band_hi_mm": hi,
-                    "in_band": sum(e == 0 for e in excess),
-                    "within_5mm": sum(e <= 5 for e in excess),
-                    "n": n,
-                    "max_excess_mm": max(excess),
-                    "path_fitted": (plane, muscle) in fitted,
-                }
-            )
+                lo, hi, excess = [], [], []
+                for i, angle in enumerate(grid):
+                    vals = [float(v) for c in curves.values() if i < len(c) for v in np.atleast_1d(c[i])]
+                    if not vals:
+                        continue
+                    a, b = min(vals), max(vals)
+                    x = model[plane][muscle][i]
+                    lo.append(a)
+                    hi.append(b)
+                    excess.append(round(max(a - x, x - b, 0.0), 2))
+                n = len(excess)
+                rows.append(
+                    {
+                        "plane": plane,
+                        "muscle": muscle,
+                        "set": subset,
+                        "angles_deg": list(grid[:n]),
+                        "studies": sorted(curves),
+                        "model_mm": model[plane][muscle][:n],
+                        "band_lo_mm": lo,
+                        "band_hi_mm": hi,
+                        "in_band": sum(e == 0 for e in excess),
+                        "within_5mm": sum(e <= 5 for e in excess),
+                        "n": n,
+                        "max_excess_mm": max(excess),
+                        "path_fitted": subset == "fit set" and (plane, muscle) in fitted,
+                    }
+                )
     gatti = {}
     i60 = ELEV.index(60)
     for muscle, (a, b) in GATTI_60.items():
@@ -371,6 +597,31 @@ def compare_moment_arms(model: dict[str, dict[str, list[float]]]) -> dict[str, A
         vals = np.array(model[plane][muscle])
         peaks[f"{plane}/{muscle}"] = {"model_peak_mm": float(vals[np.argmax(np.sign(lit) * vals)]), "pooled_peak_mm": lit}
     return {"curves": rows, "gatti2007_scaption_60": gatti, "hik2019_pooled_peaks": peaks}
+
+
+def held_out(result: dict[str, Any]) -> dict[str, Any]:
+    """Summary of the checks held out from the path fit (and the fit-set curves for comparison)."""
+    ma = result["moment_arms"]
+
+    def counts(rows: list[dict[str, Any]]) -> dict[str, int]:
+        return {k: int(sum(r[k] for r in rows)) for k in ("in_band", "within_5mm", "n")}
+
+    peaks = ma["hik2019_pooled_peaks"].values()
+    with_sd = [r for r in result["strength"] if r.get("sd_Nm")]
+    return {
+        "fit_set_curves": counts([r for r in ma["curves"] if r["set"] == "fit set"]),
+        "curves": counts([r for r in ma["curves"] if r["set"] == "held out"]),
+        "gatti_in_range": int(sum(v["in_range"] for v in ma["gatti2007_scaption_60"].values())),
+        "gatti_n": len(ma["gatti2007_scaption_60"]),
+        "langenderfer_within_5mm": int(sum(r["within_5mm"] for r in ma["langenderfer2006"]["rows"])),
+        "langenderfer_n": len(ma["langenderfer2006"]["rows"]),
+        "scaption_rotation_within_5mm": int(sum(r["within_5mm"] for r in ma["scaption_rotation"])),
+        "scaption_rotation_n": len(ma["scaption_rotation"]),
+        "peaks_within_4mm": int(sum(abs(v["model_peak_mm"] - v["pooled_peak_mm"]) <= 4.0 for v in peaks)),
+        "peaks_n": len(peaks),
+        "strength_within_1p5sd": int(sum(abs(r["z"]) <= 1.5 for r in with_sd)),
+        "strength_with_sd": len(with_sd),
+    }
 
 
 def posture_of(trial: dict[str, Any], table: dict[str, Any]) -> dict[str, Any]:
@@ -442,28 +693,54 @@ def wiki_block(result: dict[str, Any]) -> str:
     ma = result["moment_arms"]
     lines = [BEGIN, "", "**Moment arms** (mm; + abduction, flexion or external rotation; scapula fixed at rest).", ""]
     lines += [
-        "| Plane | Muscle | Angles (deg) | Model | Studies' band (low / high) | In band | Within 5 mm | Max excess | Path fitted |"
+        "| Plane | Muscle | Set | Studies | Angles (deg) | Model | Studies' band (low / high) | In band | Within 5 mm "
+        "| Max excess | Path fitted |"
     ]
-    lines += ["|---|---|---|---|---|---|---|---|---|"]
+    lines += ["|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in ma["curves"]:
         band = " / ".join(f"{a:.0f}..{b:.0f}" for a, b in zip(r["band_lo_mm"], r["band_hi_mm"]))
         lines.append(
-            f"| {r['plane']} | {r['muscle']} | {r['angles_deg'][0]}-{r['angles_deg'][-1]} | {_fmt(r['model_mm'])} | {band} "
-            f"| {r['in_band']}/{r['n']} | {r['within_5mm']}/{r['n']} | {r['max_excess_mm']:.1f} | {'yes' if r.get('path_fitted') else 'no'} |"
+            f"| {r['plane']} | {r['muscle']} | {r['set']} | {', '.join(r['studies'])} | {r['angles_deg'][0]}-{r['angles_deg'][-1]} "
+            f"| {_fmt(r['model_mm'])} | {band} | {r['in_band']}/{r['n']} | {r['within_5mm']}/{r['n']} "
+            f"| {r['max_excess_mm']:.1f} | {'yes' if r.get('path_fitted') else 'no'} |"
         )
-    tot = sum(r["n"] for r in ma["curves"])
-    inb = sum(r["in_band"] for r in ma["curves"])
-    w5 = sum(r["within_5mm"] for r in ma["curves"])
-    held = [r for r in ma["curves"] if not r.get("path_fitted")]
-    lines += ["", f"All curves: {inb} of {tot} points in the band, {w5} within 5 mm of it."]
+    h = result["held_out"]
     lines += [
-        f"Curves not used to fit a path: {sum(r['in_band'] for r in held)} of {sum(r['n'] for r in held)} in the band, "
-        f"{sum(r['within_5mm'] for r in held)} within 5 mm.",
+        "",
+        f"Fit set ({', '.join(FIT_SET)}): {h['fit_set_curves']['in_band']} of {h['fit_set_curves']['n']} points in the "
+        f"band, {h['fit_set_curves']['within_5mm']} within 5 mm.",
+        f"Held out from the path fit: curves of the other studies {h['curves']['in_band']} of {h['curves']['n']} in the "
+        f"band, {h['curves']['within_5mm']} within 5 mm; Langenderfer 2006 rotation arms within 5 mm "
+        f"{h['langenderfer_within_5mm']} of {h['langenderfer_n']}; rotation arms in scaption (Otis 1994, Axford 2025) "
+        f"{h['scaption_rotation_within_5mm']} of {h['scaption_rotation_n']}; Gatti 2007 ranges {h['gatti_in_range']} of {h['gatti_n']}; pooled "
+        f"peaks within 4 mm {h['peaks_within_4mm']} of {h['peaks_n']}; strength rows with a spread within 1.5 SD "
+        f"{h['strength_within_1p5sd']} of {h['strength_with_sd']}.",
         "",
     ]
     lines += ["| Gatti et al. 2007, scaption at 60 deg | Model | Experimental range |", "|---|---|---|"]
     for k, v in ma["gatti2007_scaption_60"].items():
         lines.append(f"| {k} | {v['model_mm']:.1f} | {v['range_mm'][0]:g} to {v['range_mm'][1]:g} |")
+    lines += [
+        "",
+        "| Langenderfer et al. 2006 (held out), scaption, mean over 45 IR to 90 ER | Elevation (deg) | Model | Measured |",
+    ]
+    lines += ["|---|---|---|---|"]
+    for r in ma["langenderfer2006"]["rows"]:
+        lines.append(f"| {r['muscle']} | {r['elevation_deg']} | {r['model_mm']:.1f} | {r['measured_mm']:g} |")
+    lines += ["", "| Rotation arm in scaption, rotation 0 (held out) | Elevation (deg) | Study | Model | Measured |"]
+    lines += ["|---|---|---|---|---|"]
+    for r in ma["scaption_rotation"]:
+        lines.append(f"| {r['muscle']} | {r['elevation_deg']} | {r['study']} | {r['model_mm']:.1f} | {r['measured_mm']:g} |")
+    lines += [
+        "",
+        "| Leave one study out | Plane | Kuechle 1997 vs Ackland 2008, rms | Model vs Kuechle, rms | Model vs Ackland, rms |",
+    ]
+    lines += ["|---|---|---|---|---|"]
+    for r in ma["leave_one_study_out"]:
+        lines.append(
+            f"| {r['muscle']} | {r['plane']} ({r['angles_deg'][0]}-{r['angles_deg'][-1]} deg) | {r['kuechle_vs_ackland_rms_mm']:.1f} "
+            f"| {r['model_vs_kuechle_rms_mm']:.1f} | {r['model_vs_ackland_rms_mm']:.1f} |"
+        )
     lines += ["", "| Hik and Ackland 2019 Table 2, pooled peak | Model peak | Pooled peak |", "|---|---|---|"]
     for k, v in ma["hik2019_pooled_peaks"].items():
         lines.append(f"| {k.replace('/', ', ')} | {v['model_peak_mm']:.1f} | {v['pooled_peak_mm']:g} |")
@@ -473,7 +750,7 @@ def wiki_block(result: dict[str, Any]) -> str:
         "",
     ]
     lines += [
-        "| Trial | Posture (plane / elevation / rotation / elbow, deg) | Measured | Model | Model, thorax axis | z or ratio | Used in fit |"
+        "| Trial | Posture (plane / elevation / rotation / elbow, deg) | Measured | Model | Model, thorax axis | z or ratio | Used in the tension fit |"
     ]
     lines += ["|---|---|---|---|---|---|---|"]
     for r in sorted(result["strength"], key=lambda r: r["fit"]):
@@ -516,7 +793,11 @@ def main() -> None:
         "strength_sources": STRENGTH_SOURCES,
         "girdle_poses": girdle_poses(table, args.zip, previous),
     }
+    result["moment_arms"]["langenderfer2006"] = langenderfer(arm)
+    result["moment_arms"]["leave_one_study_out"] = leave_one_study_out(curves)
+    result["moment_arms"]["scaption_rotation"] = scaption_rotation(arm)
     result["strength"] = strength(arm, table, result["girdle_poses"])
+    result["held_out"] = held_out(result)
     print(wiki_block(result))
     if args.write:
         OUT.parent.mkdir(parents=True, exist_ok=True)

@@ -29,9 +29,7 @@ The release carries this notice:
 Changes: values were converted into this package's body frames (scripts/fit_scapulothoracic.py); the
 scapulothoracic joint is represented by MuJoCo joints and a contact rather than Seth's ellipsoid joint; the clavicle
 gains an axial rotation and the girdle ligament strands, which the release does not have; the ellipsoidal thorax wraps
-are replaced by fitted spheres; the infraspinatus and subscapularis lines cross the humeral-head sphere and a fitted
-humeral via site instead of Seth's scapular cylinders, and the middle deltoid's acromial point is moved by 11 mm, both
-fitted to measured moment arms (scripts/fit_shoulder_paths.py); the levator scapulae is split into two slips and the clavicular trapezius gains an
+are replaced by fitted spheres; the levator scapulae is split into two slips and the clavicular trapezius gains an
 occipital line; the rotator-cuff forces and fibre lengths follow Ward et al. 2006, and all forces follow this
 package's shoulder specific tension (scripts/generate_scapular_muscles.py, scripts/fit_shoulder_strength.py). No file of
 the release is redistributed. The authors do not endorse this model.

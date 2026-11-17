@@ -1,385 +1,204 @@
 {
- "format": "myo_sim.shoulder_paths/1",
- "description": "Shoulder muscle path sites fitted to measured glenohumeral moment arms (``build/data/shoulder_paths.json``).",
+ "format": "myo_sim.shoulder_paths/2",
+ "description": "Candidate shoulder path sites fitted to cadaver moment arms, checked on held-out data (``build/data/shoulder_paths.json``).",
  "mujoco": "4.0.1",
- "provenance": {},
- "designs": [
+ "fit_studies": [
+  "kuechle1997",
+  "kuechle2000",
+  "ackland2008"
+ ],
+ "fit_excluded": {
+  "coronal/posterior deltoid/kuechle1997": "conflicts with Ackland 2008 (-11 to +2 against +7 to +28 mm)"
+ },
+ "candidates": [
   {
    "muscle": "middle deltoid",
    "actuators": [
     "DELT2"
    ],
-   "free_sites": [
-    "DELT2_DELT2-P3_r"
-   ],
-   "fit": {
-    "cost": 359.669,
-    "planes": {
-     "coronal": {
-      "model_mm": [
-       22.54,
-       22.84,
-       25.6,
-       27.0,
-       26.68,
-       24.24,
-       12.06
-      ],
-      "in_band": 1,
-      "within_5mm": 6,
-      "n": 7
-     },
-     "scaption": {
-      "model_mm": [
-       24.5,
-       25.41,
-       28.19,
-       29.47,
-       28.82,
-       25.74,
-       11.21
-      ],
-      "in_band": 0,
-      "within_5mm": 5,
-      "n": 6
-     },
-     "flexion": {
-      "model_mm": [
-       16.88,
-       17.46,
-       20.98,
-       23.52,
-       24.79,
-       24.46,
-       17.79
-      ],
-      "in_band": 2,
-      "within_5mm": 5,
-      "n": 7
-     },
-     "rotation": {
-      "model_mm": [
-       -0.14,
-       -0.3,
-       -0.46,
-       -0.61,
-       -0.76,
-       -0.86,
-       -0.92,
-       -0.9,
-       -0.81
-      ],
-      "in_band": 0,
-      "within_5mm": 0,
-      "n": 0
-     }
+   "sites": {
+    "DELT2_DELT2-P3_r": {
+     "current": [
+      -0.005138,
+      -0.006741,
+      0.031029
+     ],
+     "pos": [
+      0.002213,
+      -0.014741,
+      0.028309
+     ]
     }
    },
-   "planes": [
-    "coronal",
-    "scaption",
-    "flexion",
-    "rotation"
-   ]
-  },
-  {
-   "muscle": "posterior deltoid",
-   "actuators": [
-    "DELT3"
-   ],
-   "free_sites": [
-    "DELT3_DELT3-P2_r"
-   ],
-   "fit": {
-    "cost": 821.381,
-    "planes": {
-     "coronal": {
-      "model_mm": [
-       7.22,
-       6.11,
-       4.5,
-       2.5,
-       0.28,
-       -1.97,
-       -5.76
-      ],
-      "in_band": 4,
-      "within_5mm": 6,
-      "n": 7
+   "current": {
+    "fit": {
+     "cost": 679.07,
+     "planes": {
+      "coronal": {
+       "model_mm": [
+        24.76,
+        28.33,
+        32.19,
+        34.55,
+        34.94,
+        32.67,
+        17.38
+       ],
+       "in_band": 0,
+       "within_5mm": 2,
+       "n": 7
+      },
+      "scaption": {
+       "model_mm": [
+        23.43,
+        26.93,
+        30.99,
+        33.67,
+        34.51,
+        32.89,
+        19.48
+       ],
+       "in_band": 0,
+       "within_5mm": 1,
+       "n": 6
+      },
+      "flexion": {
+       "model_mm": [
+        10.24,
+        14.07,
+        17.85,
+        22.23,
+        25.67,
+        27.87,
+        27.02
+       ],
+       "in_band": 4,
+       "within_5mm": 4,
+       "n": 7
+      },
+      "rotation": {
+       "model_mm": [
+        0.39,
+        0.09,
+        -0.21,
+        -0.5,
+        -0.76,
+        -0.98,
+        -1.13,
+        -1.21,
+        -1.21
+       ],
+       "in_band": 0,
+       "within_5mm": 0,
+       "n": 0
+      }
      },
-     "scaption": {
-      "model_mm": [
-       -5.36,
-       -4.58,
-       -3.52,
-       -2.27,
-       -0.88,
-       0.55,
-       3.24
-      ],
-      "in_band": 0,
-      "within_5mm": 3,
-      "n": 6
-     },
-     "flexion": {
-      "model_mm": [
-       -22.45,
-       -18.9,
-       -14.69,
-       -10.01,
-       -5.02,
-       0.12,
-       10.23
-      ],
-      "in_band": 5,
-      "within_5mm": 5,
-      "n": 7
-     },
-     "rotation": {
-      "model_mm": [
-       2.98,
-       3.82,
-       4.42,
-       4.74,
-       4.75,
-       4.42,
-       3.77,
-       2.83,
-       1.67
-      ],
-      "in_band": 0,
-      "within_5mm": 2,
-      "n": 9
+     "rest_length_mm_new_old": {
+      "DELT2": [
+       158.06,
+       158.06
+      ]
      }
+    },
+    "held_out": {
+     "curves_within_5mm": 36,
+     "curves_in_band": 9,
+     "scaption_rotation_within_5mm": 44,
+     "langenderfer_within_5mm": 8,
+     "gatti_in_range": 3,
+     "peaks_within_4mm": 5
     }
    },
-   "planes": [
-    "coronal",
-    "scaption",
-    "flexion"
-   ]
-  },
-  {
-   "muscle": "infraspinatus",
-   "actuators": [
-    "INFSP1",
-    "INFSP2"
-   ],
-   "free_sites": [
-    "INFSP1-V1_r",
-    "INFSP2-V1_r"
-   ],
-   "fit": {
-    "cost": 333.947,
-    "planes": {
-     "coronal": {
-      "model_mm": [
-       0.71,
-       5.38,
-       9.4,
-       12.5,
-       14.71,
-       16.16,
-       16.94
-      ],
-      "in_band": 1,
-      "within_5mm": 4,
-      "n": 7
+   "candidate": {
+    "fit": {
+     "cost": 359.669,
+     "planes": {
+      "coronal": {
+       "model_mm": [
+        22.54,
+        22.84,
+        25.6,
+        27.0,
+        26.68,
+        24.24,
+        12.06
+       ],
+       "in_band": 1,
+       "within_5mm": 6,
+       "n": 7
+      },
+      "scaption": {
+       "model_mm": [
+        24.5,
+        25.41,
+        28.19,
+        29.47,
+        28.82,
+        25.74,
+        11.21
+       ],
+       "in_band": 0,
+       "within_5mm": 5,
+       "n": 6
+      },
+      "flexion": {
+       "model_mm": [
+        16.88,
+        17.46,
+        20.98,
+        23.52,
+        24.79,
+        24.46,
+        17.79
+       ],
+       "in_band": 2,
+       "within_5mm": 5,
+       "n": 7
+      },
+      "rotation": {
+       "model_mm": [
+        -0.14,
+        -0.3,
+        -0.46,
+        -0.61,
+        -0.76,
+        -0.86,
+        -0.92,
+        -0.9,
+        -0.81
+       ],
+       "in_band": 0,
+       "within_5mm": 0,
+       "n": 0
+      }
      },
-     "scaption": {
-      "model_mm": [
-       5.24,
-       8.69,
-       11.27,
-       13.08,
-       14.7,
-       15.56,
-       13.98
-      ],
-      "in_band": 0,
-      "within_5mm": 0,
-      "n": 0
-     },
-     "flexion": {
-      "model_mm": [
-       7.32,
-       5.31,
-       3.17,
-       1.01,
-       -1.47,
-       -4.23,
-       -10.05
-      ],
-      "in_band": 1,
-      "within_5mm": 3,
-      "n": 7
-     },
-     "rotation": {
-      "model_mm": [
-       19.79,
-       21.08,
-       21.84,
-       22.81,
-       23.37,
-       22.95,
-       21.36,
-       18.64,
-       14.64
-      ],
-      "in_band": 0,
-      "within_5mm": 9,
-      "n": 9
+     "rest_length_mm_new_old": {
+      "DELT2": [
+       157.71,
+       158.06
+      ]
      }
+    },
+    "held_out": {
+     "curves_within_5mm": 35,
+     "curves_in_band": 10,
+     "scaption_rotation_within_5mm": 43,
+     "langenderfer_within_5mm": 8,
+     "gatti_in_range": 3,
+     "peaks_within_4mm": 5
     }
    },
-   "planes": [
-    "coronal",
-    "scaption",
-    "flexion",
-    "rotation"
-   ]
-  },
-  {
-   "muscle": "subscapularis",
-   "actuators": [
-    "SUBSC1",
-    "SUBSC2",
-    "SUBSC3"
-   ],
-   "free_sites": [
-    "SUBSC1-V1_r",
-    "SUBSC2-V1_r",
-    "SUBSC3-V1_r"
-   ],
-   "fit": {
-    "cost": 588.708,
-    "planes": {
-     "coronal": {
-      "model_mm": [
-       6.44,
-       3.57,
-       0.52,
-       -2.46,
-       -5.19,
-       -7.53,
-       -10.64
-      ],
-      "in_band": 0,
-      "within_5mm": 4,
-      "n": 7
-     },
-     "scaption": {
-      "model_mm": [
-       5.36,
-       3.91,
-       2.3,
-       0.66,
-       -0.92,
-       -2.37,
-       -5.93
-      ],
-      "in_band": 0,
-      "within_5mm": 1,
-      "n": 6
-     },
-     "flexion": {
-      "model_mm": [
-       0.53,
-       3.37,
-       5.7,
-       7.53,
-       9.34,
-       10.68,
-       10.97
-      ],
-      "in_band": 2,
-      "within_5mm": 4,
-      "n": 7
-     },
-     "rotation": {
-      "model_mm": [
-       -12.4,
-       -15.09,
-       -16.64,
-       -17.88,
-       -18.81,
-       -19.21,
-       -19.13,
-       -18.64,
-       -17.75
-      ],
-      "in_band": 0,
-      "within_5mm": 6,
-      "n": 9
-     }
-    }
-   },
-   "planes": [
-    "coronal",
-    "scaption",
-    "flexion",
-    "rotation"
+   "adopted": false,
+   "held_out_losses": [
+    "curves_within_5mm",
+    "scaption_rotation_within_5mm"
    ]
   }
  ],
- "cuff_vias": {
-  "INFSP1": {
-   "body": "humerus_r",
-   "pos": [
-    -0.018351,
-    -0.002477,
-    0.01923
-   ]
-  },
-  "INFSP2": {
-   "body": "humerus_r",
-   "pos": [
-    -0.001572,
-    0.017195,
-    0.023997
-   ]
-  },
-  "SUBSC1": {
-   "body": "humerus_r",
-   "pos": [
-    0.022058,
-    0.009685,
-    -0.006569
-   ]
-  },
-  "SUBSC2": {
-   "body": "humerus_r",
-   "pos": [
-    0.019879,
-    0.015071,
-    -0.007286
-   ]
-  },
-  "SUBSC3": {
-   "body": "humerus_r",
-   "pos": [
-    0.0047,
-    -0.008606,
-    -0.021707
-   ]
-  }
- },
- "kept_sites": {
-  "DELT2_DELT2-P3_r": {
-   "body": "scapula_r",
-   "pos": [
-    0.002213,
-    -0.014741,
-    0.028309
-   ]
-  },
-  "DELT3_DELT3-P2_r": {
-   "body": "scapula_r",
-   "pos": [
-    -0.036913,
-    -0.028365,
-    0.010874
-   ]
-  }
+ "explored": {
+  "DELT3": "MoBL-ARMS's two wraps replaced by its scapular via 28-45 mm from the joint: 16 -> 14 of 29; the held-out Otis 1994 and Axford 2025 curves have the posterior deltoid an adductor in scaption, as the current path",
+  "INFSP1-2": "humeral-head sphere and a humeral via 25-40 mm from its centre instead of Seth's cylinder: 19 -> 19 of 29 (rotation 6 -> 8 of 9); held out, Langenderfer 2006 8 -> 6 of 10 (rotation arm 4-5 mm above it)",
+  "SUBSC1-3": "the same design as INFSP: 16 -> 12 of 29",
+  "SUPSP1-2": "a humeral via within 0.3 rad of the rotation axis: rotation 2 -> 5 of 9 but an adductor above 75 deg in coronal abduction and flexion; 13 -> 14 of 29 over all studies"
  }
 }

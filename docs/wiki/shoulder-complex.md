@@ -288,11 +288,10 @@ generated blocks in the arm, torso and head files.
   inferior), SUBSC1-3 (superior, middle, inferior). The kept glenohumeral muscles are decided one by one below
   ("Kept muscle paths").
 - **Paths:** Seth's two points per line, straight, except where a wrap changes the length along Seth's motions:
-  SUPSP1-2 over Seth's humeral-head sphere, INFSP1-2 and SUBSC1-3 over the same sphere and a fitted humeral via site
-  ("Paths fitted to moment arms"; first over Seth's scapular cylinders), SERR2-3 over spheres on `chest_r` fitted to the lengths of Seth's ellipsoidal thorax wrap (rms 0.11
+  SUPSP1-2 over Seth's humeral-head sphere, INFSP1-2 and SUBSC1-3 over Seth's scapular cylinders (his `-y` quadrant as
+  the side site), SERR2-3 over spheres on `chest_r` fitted to the lengths of Seth's ellipsoidal thorax wrap (rms 0.11
   and 0.01 mm; MuJoCo wraps spheres and cylinders only). Along the 4312 assembled IK frames the lengths match Seth's
-  OpenSim paths within 4.5 mm (SERR1), 3.1 mm (INFSP2) and below 3 mm elsewhere, most exactly (before the
-  infraspinatus and subscapularis paths were refitted).
+  OpenSim paths within 4.5 mm (SERR1), 3.1 mm (INFSP2) and below 3 mm elsewhere, most exactly.
 - **Cervical origins:** LEVS1 and TRAP1 at C1, TRAP2 and RHOM1 at C7 (Seth's points lie within 5 mm of these
   vertebrae), LEVS2 at C3 and TRAPocc on the skull: on `myohead_cerv1`, `_cerv3`, `_cerv7` and the skull of the
   muscular neck in `myofullbody`, and at the same point on the rigid `neck` body in the other models, which carry no
@@ -334,8 +333,7 @@ humerus-in-scapula orientations (Seth's points in this model reproduce OpenSim t
 | DELT2 | Seth's three points over `SUPSP_hhead_r`; Seth's l0 and slack; passive scale 0.65, the median of the shoulder muscles (MoBL-ARMS's 1.73 on this path held the relaxed arm 23 deg abducted) | The MoBL path gave 4 mm of abduction arm at 15 deg (measured 15-20 mm), which left the arm without abduction strength at the side; now 25 mm at 15 deg and 35 mm at 60-75 deg (measured 15-20 and 26-30 mm; glenohumeral angles, scapula fixed at rest as in the cadaver studies) |
 | CORB, BICshort | Scapular via point dropped, path over `SUPSP_hhead_r` | The via point sits 35 mm below the joint centre and made both muscles extensors (26-35 mm) above 60 deg flexion; now flexors that change sign near 95 deg, as Seth's |
 | TRIlong | The humeral proxy origin and its 20 mm sphere dropped, path over `SUPSP_hhead_r` | The proxy point sat 2.6 mm from the origin, so the moment arm flipped between +40 and -40 mm about an arbitrary posture; at the new rest it made TRIlong an abductor and internal rotator at the side. Now an extensor and adductor (flexion -3.5, coronal -6 mm at the side), within 8 mm of Seth |
-| DELT3 | MoBL-ARMS's two wraps dropped, its scapular via point fitted ("Paths fitted to moment arms") | Adducted throughout scaption |
-| PECM1-3, LAT1-3, TMAJ, TMIN, BIClong | Kept | Within the spread between the measured studies; Seth's paths are not closer (PECM: "Paths fitted to moment arms") |
+| DELT3, PECM1-3, LAT1-3, TMAJ, TMIN, BIClong | Kept | Within the spread between the measured studies; Seth's paths are not closer; fitted candidates in "Path candidates fitted to moment arms" |
 
 The new paths take their rigid-tendon maps from the reference l0 and slack (`fit_arm_rigid_maps.py`, status adopted
 in `build/references.py`), with every other adopted arm map refitted for the girdle. On the humeral-head sphere none of
@@ -349,58 +347,71 @@ follow it, so the measured values are lower bounds. The path is unchanged from M
 earlier model comes from the glenohumeral zero, which now has the humerus 15-20 deg more adducted against the scapula.
 The path is kept.
 
-## Paths fitted to moment arms
+## Path candidates fitted to moment arms
 
-`scripts/fit_shoulder_paths.py --fit` (`build/data/shoulder_paths.json`). After the independent check below, the paths
-furthest from the cadaver moment arms got one free site per line, fitted to the literature curves of
-`validate_shoulder_mechanics.py` in the same convention (scapula fixed at rest, elbow 90 deg): the excess outside the
-studies' band, a pull to the band's middle (weight 0.2) and a smoothness term along each curve (0.3), from the stored
-start and four seeded random starts. Every other element of the path stays. These curves are no longer independent for
-the fitted muscles; the validation marks them ("Path fitted"), and Gatti et al. 2007's ranges, the pooled peaks and the
-strength rows stay held out. No changed path has a side site, so each is the same under MuJoCo 4.0.1 and 3.17.
+`scripts/fit_shoulder_paths.py` (`build/data/shoulder_paths.json`) tests whether moving one site of a path brings it
+closer to the cadaver moment arms, with a clean split between the data a path may be fitted to and the data that check
+it. **Fit set:** Kuechle et al. 1997 and 2000 and Ackland et al. 2008, as re-plotted by Hik and Ackland 2019, signs
+corrected (below). **Held out:** Liu et al. 1997 and Hughes et al. 1998 (re-plots), Otis et al. 1994 and Axford et al.
+2025 (their regression equations), rotation arms in scaption from the last two, Langenderfer et al. 2006's rotation
+arms, Gatti et al. 2007's ranges, Hik and Ackland's pooled peaks and every strength row. A candidate's free site is
+placed in the convention of `validate_shoulder_mechanics.py` (scapula fixed at rest, elbow 90 deg) by least squares on
+the excess outside the fit set's band, a pull to the band's middle (weight 0.2), a smoothness term along each curve
+(0.3) and the path length at `qpos0` within 5 mm of the current path, so that the fibre and slack lengths keep their
+meaning. It is adopted only if it gains on the fit set and loses no held-out check. **No candidate met that, and the
+paths are those of 7525e79.**
 
-| Muscle | Path change | Within 5 mm, before -> after (coronal / scaption / flexion / rotation) |
-|---|---|---|
-| DELT2 | Seth's acromial via `DELT2_DELT2-P3_r` moves 11 mm (7 mm anterior, 8 mm inferior, 3 mm medial; bound 8 mm per axis), to 29.7 mm from the joint centre. The scaption peak is held at 29.5 mm or more (Hik and Ackland's pooled 33.4 less 4) | 2/7 -> 6/7, 1/6 -> 5/6, 4/7 -> 5/7 |
-| DELT3 | `Delt3_torus_r` and `delt3hum_ellipsoid_DELT3_r` (and their side sites) removed; the scapular via `DELT3_DELT3-P2_r` moves to 28 mm from the joint centre, 27 mm behind and 6 mm above it (bounds 28-45 mm, behind the joint): the wrap over the posterior head and cuff as one point. Kuechle 2000's rotation curve is not used (below) | 4/7 -> 6/7, 0/6 -> 3/6, 3/7 -> 5/7, 1/9 -> 2/9 |
-| INFSP1-2 | Seth's scapular cylinder replaced by the humeral-head sphere `SUPSP_hhead_r` (no side site) and a humeral via `INFSP{1,2}-V1_r` 25 mm from its centre (bounds 25-40 mm): the line wraps the head about the rotation axis | 5/7 -> 4/7, -, 2/7 -> 3/7, 6/9 -> 9/9 |
-| SUBSC1-3 | the same with `SUBSC{1,2,3}-V1_r` | 7/7 -> 4/7, 2/6 -> 1/6, 3/7 -> 4/7, 4/9 -> 6/9 |
+| Muscle | Candidate | Fit set within 5 mm | Held out |
+|---|---|---|---|
+| DELT2 | Seth's acromial via `DELT2_DELT2-P3_r` moved 11 mm (bound 8 mm per axis; scaption peak held at 29.5 mm or more) | 7 -> 16 of 20 | curves 36 -> 35 within 5 mm (Otis's 36 mm at 75 deg scaption), scaption rotation 44 -> 43, pooled peak 34.5 -> 29.5 against 33.4 mm; Harbo 2012's abduction at the side -1.42 -> -1.53 SD |
+| DELT3 | MoBL-ARMS's two wraps replaced by its scapular via 28-45 mm from the joint | 16 -> 14 of 29 | Otis and Axford have the posterior deltoid an adductor in scaption (-7 to -45 mm), as the current path (5 of 5 within 5 mm) |
+| INFSP1-2 | humeral-head sphere and a humeral via 25-40 mm from its centre instead of Seth's cylinder | 19 -> 19 of 29 (rotation 6 -> 8 of 9) | Langenderfer 8 -> 6 of 10 (rotation arm 4-5 mm above it) |
+| SUBSC1-3 | the same as INFSP | 16 -> 12 of 29 | - |
+| SUPSP1-2 | a humeral via within 0.3 rad of the rotation axis | rotation 2 -> 5 of 9 (before the Kuechle 2000 sign check), an adductor above 75 deg | - |
 
-- **Infraspinatus:** the rotation arm stays at 20-23 mm from 60 deg internal to 15 deg external rotation and falls to
-  15 mm at 60 deg external (Kuechle 2000: 24.5 to 18 mm; before 15, 27 and 10 mm). Pooled peak 23.4 against 24.5 mm. In
-  flexion it is a flexor to 60 deg and an extensor beyond 75 deg (-10 mm at 120 deg, against +3 to +11).
-- **Subscapularis:** the rotation arm is -12 to -19 mm over the range (Kuechle 2000 -14 to -25; before it fell to -4 and
-  -9 mm at the ends); pooled peak -19.2 against -20.6 mm. In scaption it abducts at low angles and adducts above 75 deg
-  (+5 to -2 mm; Gatti's range at 60 deg is -1 to 13.6, the model 0.7 mm), where Kuechle 1997 has it abducting by
-  10-12 mm. Coronal abduction now lies 3-6 mm above the two studies' curves.
-- **Middle deltoid:** 4-8 mm lower than Seth's path at 30-90 deg; still up to 5.5 mm above Kuechle 1997 in scaption and
-  up to 14 mm above Ackland 2008 in flexion, and at 120 deg coronal abduction it falls to 12 mm (Ackland 28). The pooled
-  peak (33.4 mm) and Kuechle's curve (peak 28 mm) cannot both be met; the fit keeps the peak within 4 mm.
-- **Posterior deltoid:** turns from adductor to abductor near 90 deg in scaption (Kuechle: near 40 deg) and stays an
-  extensor in flexion to 90 deg; at 120 deg flexion it flexes (+10 against Ackland's -17 mm). Its rotation arm is +2 to
-  +5 mm (external). The digitised Kuechle 2000 curve is -4 to 0 mm (internal), but the abstract ranks the posterior
-  deltoid as an external rotator after infraspinatus and teres minor, so the re-plot's sign is in question, as for the
-  latissimus, teres major and pectoralis curves (Hik and Ackland 2019's caveat); the fit leaves it out.
-- **Rigid maps:** the cuff maps are refitted along Seth's motions by `generate_scapular_muscles.py --fit` (slack moved
-  where a fibre leaves 0.5-1.5 l0: INFSP1 0.0541 -> 0.0593 m, INFSP2 0.0860 -> 0.1037 m, SUBSC2 0.0648 -> 0.0694 m);
-  DELT2 and DELT3 by `fit_arm_rigid_maps.py` (MoBL-ARMS l0 and slack; DELT3's fibres now span 0.54-0.91 l0 over the
-  arm's range, 0.37-1.17 before). Forces and the specific tension are unchanged.
+DELT2 is evaluated by the script; the other rows were explored during development with the same objective and are
+recorded in its `EXPLORED`. Without the rest-length constraint, the infraspinatus and subscapularis candidates lengthened
+their paths by up to 47 mm and cut external-rotation strength at the side to 0.73 x Otis 1990.
 
-**Not changed.**
+**Signs of the re-plotted curves.** Kuechle 2000's figures and Table 1 plot + = internal rotation (neutral: humeral
+shaft parallel to the vertebral border of the scapula, anterior humerus perpendicular to the infraspinous fossa). At
+the side, in cm: subscapularis 2.18, teres minor -2.00, infraspinatus -2.34, supraspinatus -0.27, latissimus 0.82,
+anterior deltoid 0.68, middle deltoid -0.02, teres major 0.67, posterior deltoid -0.39, pectoralis major 1.84. Hik and
+Ackland's re-plot keeps Kuechle's sign for the supraspinatus, posterior deltoid and pectoralis major, so these are
+negated here; latissimus and teres major, "relatively unchanged by rotation", take their Table 1 means (-8.2 and -6.7
+mm, + = external). Otis 1994 and Axford 2025 agree: the supraspinatus and posterior deltoid rotate externally by 3-5 mm
+in low scaption. Teres minor in scaption is an adductor (Kuechle 1997 as tabulated by Gatti 2007: -5 / -13 mm at 30 /
+60 deg; Otis -2, Axford -8 mm). Kuechle 1997's infraspinatus in scaption has no reliable sign (re-plot -8 to +4 mm)
+and enters as a band of 0 to +4 mm with low weight; Otis and Axford put it at +10 to +17 mm. Kuechle 1997's posterior
+deltoid in coronal abduction (+7 to +28 mm) conflicts with Ackland (-11 to +2) and is left out of the fit.
 
-- **Pectoralis major.** No path built from the muscle's attachments gives the measured flexion arms. Seth's three lines
-  with his thoracic ellipsoid, run in OpenSim, give -1 to -15 mm (force-weighted) from 60 to 120 deg flexion; the same
-  lines straight in MuJoCo reproduce his lengths along his motions within 2.5 mm rms (the ellipsoid barely touches in
-  these postures) and give the same arms, with scaption -15 to +5 mm against Kuechle's -21 to -41. A thorax-fixed via
-  per head, fitted like the paths above, reaches 5 of 20 points within 5 mm (the current path 6): the sternocostal heads
-  stay extensors in flexion, as a line from the chest wall to the humerus must be once the insertion is above it. Only
-  humeral vias 50 mm behind or below the head, which also turn the muscle into an external rotator, reach the flexion
-  data (13 of 20). The measured flexion arms of 15-20 mm at 60-120 deg (Kuechle 1997, Ackland 2008's sub-region mean)
-  are therefore not reproduced, and the path stays MoBL-ARMS's.
-- **Supraspinatus.** A humeral via near the top of the head (within 0.3 rad of the rotation axis) brings the rotation
-  arm to -7 to +5 mm (5 of 9 within 5 mm, before 2) but turns the muscle into an adductor above 75 deg in coronal
-  abduction and flexion (-6 mm at 90 deg against +4 to +13); the totals do not improve (14 against 13 of 29 within
-  5 mm), so the path stays Seth's.
+**What the held-out data say.** Several gate-2 gaps were sign errors of the re-plot: with the corrected signs the
+posterior deltoid's rotation arm is within 5 mm at every angle (before 1 of 9), and the supraspinatus at the side is an
+external rotator in Kuechle 2000, Otis 1994 and Langenderfer 2006. Others were curves of one study that the held-out
+studies contradict: the posterior deltoid as an abductor in scaption (Kuechle 1997 only) and the middle deltoid's
+smaller arm in scaption (Otis has 32-36 mm at 60-75 deg, the pooled peak 33.4 mm). The held-out data confirm other gaps:
+the infraspinatus abducts by 10-17 mm in scaption and flexes by 20 mm (Axford) where the model gives -1 to +7 and -3 to
+-11 mm; its rotation arm in scaption is 26-28 mm against 18-22 mm (Otis, Axford). The subscapularis abducts in scaption
+(+4 to +8 mm, Otis and Axford; the model 0 to -5), the anterior deltoid's arm in scaption is 1-10 mm larger than
+Otis's and Axford's at 15-45 deg, and the middle deltoid flexes by 4 mm in Axford against 10-22 mm.
+
+**Known limits.**
+
+- **Pectoralis major.** The cadaver curves were measured without a chest wall, so a path wrapped over the thorax cannot
+  reproduce them. Seth's three lines with his thoracic ellipsoid, run in OpenSim, give -1 to -15 mm (force-weighted)
+  from 60 to 120 deg flexion; the same lines straight in MuJoCo reproduce his lengths along his motions within 2.5 mm rms
+  and give the same arms. A thorax-fixed via per head reached 5 of 20 points within 5 mm (the current path 6); only
+  humeral vias 50 mm behind or below the head, which also turn the muscle into an external rotator, reached the flexion
+  data. A per-head path is a later step. Without an independent curve, Kuechle 1997 and Ackland 2008 are compared one
+  against the other (leave one study out): in coronal abduction the model is 4 mm (rms) from Ackland and 29 mm from
+  Kuechle, which differ by 28 mm; in flexion 27 mm from both, which differ by 7 mm.
+- **Supraspinatus.** Rotation arm -14 to +18 mm at the side against +1.5 to +4 mm (Kuechle 2000) and +4 mm
+  (Langenderfer 2006); in Langenderfer's protocol the model has -0.9 / +3.1 mm at 10 / 60 deg scaption against 4.1 / 3.7,
+  and its anterior and posterior regions -2.6 and +7.2 mm against +0.5 and +6.0. Next: two lines with insertions inside
+  Mochizuki et al. 2009's footprint (the anterior part of the superior facet) over a humeral-head sphere of the head's
+  radius + 2-3 mm with a superior side site; targets -8 to +2 (front) and -2 to +8 mm (back) at the side.
+- **Infraspinatus and subscapularis** (Seth's paths): as above; the candidates tried so far traded one study against
+  another.
 
 ## Shoulder strength
 
@@ -413,23 +424,21 @@ plus all passive moments (no co-contraction, gravity corrected as on a dynamomet
 humerothoracic angles and the girdle at the nearest frame of Seth's measured motions. Targets are young men, as for the
 hand.
 
-| Target (men) | Posture | Measured, N m | Model at the fit, N m | z | Model after the path fit, N m | z |
-|---|---|---|---|---|---|---|
-| Abduction (Holzbaur 2007) | 60 deg abduction, elbow extended | 74.4 +- 10.8 | 65.4 | -0.8 | 81.0 | +0.6 |
-| Adduction (Holzbaur 2007) | same | 93.7 +- 11.3 | 103.1 | +0.8 | 99.3 | +0.5 |
-| Internal rotation (Smith 2001) | 45 deg scaption, 45 deg external rotation, elbow 90 | 52.8 +- 9.9 | 71.0 | +1.8 | 66.4 | +1.4 |
-| External rotation (Smith 2001) | same | 36.2 +- 7.6 | 29.6 | -0.9 | 26.3 | -1.3 |
-| Flexion (Aronis 2025) | 90 deg flexion, elbow extended | 77.2 +- 13.8 | 61.9 | -1.1 | 87.5 | +0.7 |
-| Abduction (Harbo 2012) | arm at the side, elbow 90 assumed | 61.1 +- 14.1 | 42.0 | -1.4 | 40.3 | -1.5 |
-| Internal rotation (Roy 2009, held out) | 45 deg scaption, elbow 90 | 46.8 +- 16.5 | 60.6 | +0.8 | 55.2 | +0.5 |
-| External rotation (Roy 2009, held out) | same | 33.6 +- 9.0 | 40.5 | +0.8 | 33.2 | -0.0 |
+| Target (men) | Posture | Measured, N m | Model, N m | z |
+|---|---|---|---|---|
+| Abduction (Holzbaur 2007) | 60 deg abduction, elbow extended | 74.4 +- 10.8 | 65.4 | -0.8 |
+| Adduction (Holzbaur 2007) | same | 93.7 +- 11.3 | 103.1 | +0.8 |
+| Internal rotation (Smith 2001) | 45 deg scaption, 45 deg external rotation, elbow 90 | 52.8 +- 9.9 | 71.0 | +1.8 |
+| External rotation (Smith 2001) | same | 36.2 +- 7.6 | 29.6 | -0.9 |
+| Flexion (Aronis 2025) | 90 deg flexion, elbow extended | 77.2 +- 13.8 | 61.9 | -1.1 |
+| Abduction (Harbo 2012) | arm at the side, elbow 90 assumed | 61.1 +- 14.1 | 42.0 | -1.4 |
+| Internal rotation (Roy 2009, held out) | 45 deg scaption, elbow 90 | 46.8 +- 16.5 | 60.6 | +0.8 |
+| External rotation (Roy 2009, held out) | same | 33.6 +- 9.0 | 40.5 | +0.8 |
 
-Result: **111.1 N/cm2** (rms z 1.20). The value is kept after the path fit ("Paths fitted to moment arms";
-`fit_shoulder_strength.py --hold` recomputes the moments): rms z 1.08 there, and a refit would give 104.2 N/cm2 (rms z
-1.01). Against the digitised curves without spread (as reported in Holzbaur et al. 2005 Fig. 4), the model at the fit
-was low in flexion (55 against Otis's 93 N m at the side, 42 against 75 at 90 deg with the elbow at 90 deg, where the
-triceps' passive force opposes it) and high in extension and adduction at 90 deg (134 against 90, 116 against 78);
-after the path fit 74 and 67, and 127 and 110 N m (thorax axis). The value lies inside Holzbaur et al. 2005's 140 N/cm2 for the shoulder and below the hand's 166 N/cm2
+Result: **111.1 N/cm2** (rms z 1.20). Against the digitised curves without spread (as reported in Holzbaur et al.
+2005 Fig. 4), the model is low in flexion (55 against Otis's 93 N m at the side, 42 against 75 at 90 deg with the elbow
+at 90 deg, where the triceps' passive force opposes it) and high in extension and adduction at 90 deg (134 against 90,
+116 against 78). The value lies inside Holzbaur et al. 2005's 140 N/cm2 for the shoulder and below the hand's 166 N/cm2
 (`hand-function-validation.md`), which reflects PCSA measured too small in elderly cadavers rather than a tissue
 property; Klein Breteler's PCSA for the scapular muscles come from a larger specimen, so their forces are probably
 generous. Held-out girdle forces at this value: a shrug of 582 N at the acromion, between Hannah et al. 2017's seated
@@ -478,135 +487,226 @@ mujoco-warp 4.0.1, CUDA graph, 1024 worlds, random activation):
 ## Independent validation
 
 `scripts/validate_shoulder_mechanics.py --write` (`docs/validation/shoulder-mechanics.json`) compares the model with
-data that were not used to build it; nothing is fitted here. The moment-arm curves of the muscles whose paths were
-later fitted to them ("Paths fitted to moment arms") are marked "Path fitted" and are no longer held out. Moment arms are taken in the cadaver convention (scapula and
+data that were not used to build it; nothing is fitted here. Moment arms are taken in the cadaver convention (scapula and
 clavicle fixed at the rest posture, elbow 90 deg, humerus turned about thorax axes, scaption 30 deg forward of the
-frontal plane); muscles split into regions are combined weighted by peak force. Literature curves are the primary
-studies as re-plotted by Hik and Ackland 2019 (Kuechle et al. 1997 and 2000, Ackland et al. 2008, Liu et al. 1997,
-Hughes et al. 1998; digitised at 15 deg steps from 15 deg, about +-1 mm), with Gatti et al. 2007's range of seven
-studies and Hik and Ackland's pooled peaks. The band at an angle is the range over the studies, a single curve where
-only one study measured that muscle and plane, so "within 5 mm" (about one specimen SD in these studies) is the more
-useful count. Kuechle 1997's scaption infraspinatus and teres minor are left out: Gatti 2007 reports them with the
-opposite sign. Strength uses `myo_sim.physics.muscle_strength.max_torque_terms` about the glenohumeral hinge of the
-trial (the GH axes move with the scapula), and the ball-joint rig of `fit_shoulder_strength.py` about the thorax axis for
-comparison; the rows marked "used in fit" calibrated the specific tension and are shown for reference. The
-scapulohumeral rhythm is compared with bone-pin data in "Scapulohumeral rhythm" above.
+frontal plane); muscles split into regions are combined weighted by peak force. Literature curves are split into a
+**fit set** (Kuechle et al. 1997 and 2000, Ackland et al. 2008, as re-plotted by Hik and Ackland 2019; digitised at 15
+deg steps from 15 deg, about +-1 mm), which path candidates may be fitted to, and **held-out** studies: Liu et al. 1997
+and Hughes et al. 1998 (re-plots), Otis et al. 1994 and Axford et al. 2025 (their regression equations: Otis's in
+scaption at 0-75 deg, Axford's in their scapular plane, taken as scaption, and 60 deg anterior of it, taken as flexion,
+at 10-60 deg). Signs follow the primary papers ("Path candidates fitted to moment arms"). Further held-out checks:
+rotation arms in scaption at rotation 0 (Otis, Axford), Langenderfer et al. 2006's rotation arms (mean over 45 deg
+internal to 90 deg external rotation at 10 and 60 deg scaption, neutral with the epicondylar axis in the scapular
+plane), Gatti et al. 2007's ranges and Hik and Ackland's pooled peaks; for the pectoralis, latissimus and teres major,
+which have no independent curves, Kuechle 1997 and Ackland 2008 are compared one against the other. The band at an angle
+is the range over the studies of the set, a single curve where only one study measured that muscle and plane, so
+"within 5 mm" (about one specimen SD in these studies) is the more useful count. Strength uses
+`myo_sim.physics.muscle_strength.max_torque_terms` about the glenohumeral hinge of the trial (the GH axes move with the
+scapula), and the ball-joint rig of `fit_shoulder_strength.py` about the thorax axis for comparison; the rows marked
+"used in the tension fit" calibrated the specific tension and are shown for reference. The scapulohumeral rhythm is
+compared with bone-pin data in "Scapulohumeral rhythm" above.
 
 <!-- BEGIN generated by scripts/validate_shoulder_mechanics.py; do not edit by hand -->
 
 **Moment arms** (mm; + abduction, flexion or external rotation; scapula fixed at rest).
 
-| Plane | Muscle | Angles (deg) | Model | Studies' band (low / high) | In band | Within 5 mm | Max excess | Path fitted |
-|---|---|---|---|---|---|---|---|---|
-| coronal | supraspinatus | 15-120 | 14 / 14 / 12 / 11 / 8 / 5 / -2 | 23..26 / 19..20 / 16..19 / 14..17 / 11..15 / 4..13 / 8..8 | 1/7 | 4/7 | 9.9 | no |
-| coronal | infraspinatus | 15-120 | 1 / 5 / 9 / 12 / 15 / 16 / 17 | 9..11 / 6..12 / 2..12 / 0..12 / -1..12 / -3..10 / 6..6 | 1/7 | 4/7 | 11.4 | yes |
-| coronal | subscapularis | 15-120 | 6 / 4 / 1 / -2 / -5 / -8 / -11 | 1..2 / -2..-2 / -5..-5 / -8..-8 / -12..-10 / -14..-9 / -8..-8 | 0/7 | 4/7 | 5.6 | yes |
-| coronal | teres minor | 15-120 | -16 / -13 / -11 / -7 / -4 / 0 / 8 | -4..0 / -2..2 / 0..5 / 2..10 / 3..13 / 5..14 / 5..5 | 0/7 | 2/7 | 11.5 | no |
-| coronal | anterior deltoid | 15-120 | 4 / 11 / 17 / 22 / 27 / 31 / 33 | 5..6 / 10..12 / 15..17 / 20..22 / 25..25 / 26..28 / 30..30 | 2/7 | 7/7 | 3.0 | no |
-| coronal | middle deltoid | 15-120 | 23 / 23 / 26 / 27 / 27 / 24 / 12 | 15..20 / 21..21 / 24..25 / 26..27 / 27..30 / 24..30 / 28..28 | 2/7 | 6/7 | 15.9 | yes |
-| coronal | posterior deltoid | 15-120 | 7 / 6 / 4 / 2 / 0 / -2 / -6 | -11..7 / -6..8 / -4..11 / -2..15 / 0..21 / 1..28 / 2..2 | 4/7 | 6/7 | 7.8 | yes |
-| coronal | pectoralis major | 15-120 | -22 / -21 / -19 / -16 / -12 / -8 / 1 | -55..-17 / -54..-20 / -50..-21 / -43..-20 / -36..-17 / -31..-14 / -8..-8 | 2/7 | 5/7 | 9.0 | no |
-| coronal | latissimus dorsi | 15-120 | -8 / -17 / -23 / -27 / -28 / -27 / -22 | -30..-11 / -36..-22 / -38..-29 / -39..-34 / -39..-34 / -38..-31 / -18..-18 | 0/7 | 4/7 | 7.2 | no |
-| coronal | teres major | 15-120 | -21 / -32 / -38 / -41 / -41 / -38 / -27 | -43..-16 / -48..-26 / -49..-34 / -48..-40 / -46..-45 / -46..-44 / -28..-28 | 4/7 | 6/7 | 5.5 | no |
-| scaption | supraspinatus | 15-90 | 21 / 22 / 23 / 22 / 20 / 16 | 19..27 / 16..30 / 12..28 / 7..24 / 3..23 / 0..22 | 6/6 | 6/6 | 0.0 | no |
-| scaption | subscapularis | 15-90 | 5 / 4 / 2 / 1 / -1 / -2 | 0..0 / 3..3 / 8..8 / 12..12 / 11..11 / 10..10 | 0/6 | 1/6 | 12.4 | yes |
-| scaption | anterior deltoid | 15-90 | 13 / 19 / 25 / 29 / 32 / 33 | 14..14 / 18..18 / 21..21 / 24..24 / 25..25 / 25..25 | 0/6 | 4/6 | 8.2 | no |
-| scaption | middle deltoid | 15-90 | 24 / 25 / 28 / 29 / 29 / 26 | 19..19 / 21..21 / 24..24 / 28..28 / 25..25 / 22..22 | 0/6 | 5/6 | 5.5 | yes |
-| scaption | posterior deltoid | 15-90 | -5 / -5 / -4 / -2 / -1 / 1 | -6..-6 / -2..-2 / 1..1 / 4..4 / 8..8 / 11..11 | 0/6 | 3/6 | 10.4 | yes |
-| scaption | pectoralis major | 15-90 | -8 / -10 / -11 / -11 / -11 / -9 | -36..-36 / -41..-41 / -36..-36 / -31..-31 / -26..-26 / -21..-21 | 0/6 | 0/6 | 31.1 | no |
-| scaption | latissimus dorsi | 15-90 | -23 / -30 / -33 / -33 / -32 / -28 | -40..-40 / -44..-44 / -42..-42 / -40..-40 / -36..-36 / -32..-32 | 0/6 | 2/6 | 16.8 | no |
-| scaption | teres major | 15-90 | -38 / -45 / -48 / -47 / -43 / -38 | -42..-42 / -56..-56 / -51..-51 / -46..-46 / -40..-40 / -34..-34 | 0/6 | 5/6 | 10.9 | no |
-| flexion | supraspinatus | 15-120 | 16 / 15 / 14 / 12 / 10 / 7 / -2 | 36..36 / 31..31 / 26..26 / 20..20 / 16..16 / 12..12 / 5..5 | 0/7 | 1/7 | 20.3 | no |
-| flexion | infraspinatus | 15-120 | 7 / 5 / 3 / 1 / -1 / -4 / -10 | -4..0 / -1..0 / 1..2 / 1..5 / 2..7 / 2..9 / 3..11 | 1/7 | 3/7 | 13.1 | yes |
-| flexion | subscapularis | 15-120 | 1 / 3 / 6 / 8 / 9 / 11 / 11 | 4..15 / 6..16 / 4..12 / 1..8 / 0..4 / 1..1 / -2..-2 | 2/7 | 4/7 | 13.3 | yes |
-| flexion | teres minor | 15-120 | -9 / -10 / -10 / -10 / -9 / -8 / -3 | -18..-1 / -16..-6 / -15..-11 / -15..-13 / -16..-10 / -7..-7 / 2..2 | 2/7 | 6/7 | 5.9 | no |
-| flexion | anterior deltoid | 15-120 | 25 / 31 / 35 / 38 / 39 / 38 / 23 | 20..28 / 28..28 / 28..32 / 26..36 / 26..38 / 25..40 / 25..40 | 2/7 | 7/7 | 3.2 | no |
-| flexion | middle deltoid | 15-120 | 17 / 17 / 21 / 24 / 25 / 24 / 18 | 0..13 / 3..18 / 5..22 / 7..23 / 9..20 / 10..10 / 11..11 | 2/7 | 5/7 | 14.5 | yes |
-| flexion | posterior deltoid | 15-120 | -22 / -19 / -15 / -10 / -5 / 0 / 10 | -31..-20 / -33..-18 / -31..-14 / -30..-8 / -27..-4 / -22..-22 / -17..-17 | 5/7 | 5/7 | 27.2 | yes |
-| flexion | pectoralis major | 15-120 | 19 / 9 / -3 / -14 / -23 / -28 / -31 | -1..10 / 8..17 / 16..20 / 20..20 / 19..20 / 17..17 / 15..15 | 1/7 | 1/7 | 45.8 | no |
-| flexion | latissimus dorsi | 15-120 | -36 / -37 / -37 / -34 / -30 / -24 / -11 | -34..-8 / -38..-12 / -40..-13 / -38..-12 / -35..-9 / -5..-5 / -1..-1 | 4/7 | 5/7 | 18.9 | no |
-| flexion | teres major | 15-120 | -47 / -50 / -49 / -45 / -40 / -33 / -16 | -44..-36 / -50..-48 / -54..-48 / -54..-47 / -52..-52 / -45..-45 / -20..-20 | 2/7 | 5/7 | 12.3 | no |
-| rotation | supraspinatus | -60-60 | -14 / -12 / -9 / -6 / -1 / 4 / 10 / 14 / 18 | -2..-2 / -2..-2 / -2..-2 / -2..-2 / -2..-2 / -3..-3 / -4..-4 / -4..-4 / -4..-4 | 0/9 | 2/9 | 21.8 | no |
-| rotation | infraspinatus | -60-60 | 20 / 21 / 22 / 23 / 23 / 23 / 21 / 19 / 15 | 24..24 / 24..24 / 24..24 / 24..24 / 24..24 / 23..23 / 22..22 / 20..20 / 18..18 | 0/9 | 9/9 | 4.7 | yes |
-| rotation | subscapularis | -60-60 | -12 / -15 / -17 / -18 / -19 / -19 / -19 / -19 / -18 | -14..-14 / -16..-16 / -18..-18 / -21..-21 / -22..-22 / -24..-24 / -25..-25 / -25..-25 / -25..-25 | 0/9 | 6/9 | 7.2 | yes |
-| rotation | teres minor | -60-60 | 4 / 8 / 12 / 15 / 17 / 19 / 19 / 18 / 16 | 17..17 / 18..18 / 20..20 / 20..20 / 22..22 / 21..21 / 20..20 / 19..19 / 16..16 | 0/9 | 5/9 | 13.1 | no |
-| rotation | anterior deltoid | -60-60 | 0 / 0 / -0 / -1 / -1 / -1 / -2 / -2 / -2 | -2..-2 / -1..-1 / -1..-1 / -3..-3 / -6..-6 / -10..-10 / -13..-13 / -15..-15 / -16..-16 | 0/9 | 5/9 | 14.4 | no |
-| rotation | posterior deltoid | -60-60 | 3 / 4 / 4 / 5 / 5 / 4 / 4 / 3 / 2 | -4..-4 / -5..-5 / -5..-5 / -5..-5 / -4..-4 / -5..-5 / -4..-4 / -2..-2 / 0..0 | 0/9 | 2/9 | 9.6 | no |
+| Plane | Muscle | Set | Studies | Angles (deg) | Model | Studies' band (low / high) | In band | Within 5 mm | Max excess | Path fitted |
+|---|---|---|---|---|---|---|---|---|---|---|
+| coronal | supraspinatus | fit set | ackland2008, kuechle1997 | 15-120 | 14 / 14 / 12 / 11 / 8 / 5 / -2 | 23..26 / 19..20 / 16..19 / 14..17 / 11..15 / 4..13 / 8..8 | 1/7 | 4/7 | 9.9 | no |
+| coronal | infraspinatus | fit set | ackland2008, kuechle1997 | 15-120 | -4 / -1 / 2 / 5 / 7 / 8 / 8 | 9..11 / 6..12 / 2..12 / 0..12 / -1..12 / -3..10 / 6..6 | 3/7 | 5/7 | 13.3 | no |
+| coronal | subscapularis | fit set | ackland2008, kuechle1997 | 15-120 | 4 / 1 / -3 / -6 / -8 / -10 / -12 | 1..2 / -2..-2 / -5..-5 / -8..-8 / -12..-10 / -14..-9 / -8..-8 | 1/7 | 7/7 | 3.8 | no |
+| coronal | teres minor | fit set | ackland2008, kuechle1997 | 15-120 | -16 / -13 / -11 / -7 / -4 / 0 / 8 | -4..0 / -2..2 / 0..5 / 2..10 / 3..13 / 5..14 / 5..5 | 0/7 | 2/7 | 11.5 | no |
+| coronal | anterior deltoid | fit set | ackland2008, kuechle1997 | 15-120 | 4 / 11 / 17 / 22 / 27 / 31 / 33 | 5..6 / 10..12 / 15..17 / 20..22 / 25..25 / 26..28 / 30..30 | 2/7 | 7/7 | 3.0 | no |
+| coronal | middle deltoid | fit set | ackland2008, kuechle1997 | 15-120 | 25 / 28 / 32 / 35 / 35 / 33 / 17 | 15..20 / 21..21 / 24..25 / 26..27 / 27..30 / 24..30 / 28..28 | 0/7 | 2/7 | 10.6 | no |
+| coronal | posterior deltoid | fit set | ackland2008, kuechle1997 | 15-120 | 10 / 5 / 0 / -5 / -10 / -14 / -17 | -11..7 / -6..8 / -4..11 / -2..15 / 0..21 / 1..28 / 2..2 | 2/7 | 4/7 | 19.1 | no |
+| coronal | pectoralis major | fit set | ackland2008, kuechle1997 | 15-120 | -22 / -21 / -19 / -16 / -12 / -8 / 1 | -55..-17 / -54..-20 / -50..-21 / -43..-20 / -36..-17 / -31..-14 / -8..-8 | 2/7 | 5/7 | 9.0 | no |
+| coronal | latissimus dorsi | fit set | ackland2008, kuechle1997 | 15-120 | -8 / -17 / -23 / -27 / -28 / -27 / -22 | -30..-11 / -36..-22 / -38..-29 / -39..-34 / -39..-34 / -38..-31 / -18..-18 | 0/7 | 4/7 | 7.2 | no |
+| coronal | teres major | fit set | ackland2008, kuechle1997 | 15-120 | -21 / -32 / -38 / -41 / -41 / -38 / -27 | -43..-16 / -48..-26 / -49..-34 / -48..-40 / -46..-45 / -46..-44 / -28..-28 | 4/7 | 6/7 | 5.5 | no |
+| scaption | supraspinatus | fit set | kuechle1997 | 15-90 | 21 / 22 / 23 / 22 / 20 / 16 | 19..19 / 16..16 / 12..12 / 7..7 / 3..3 / 0..0 | 0/6 | 1/6 | 17.3 | no |
+| scaption | supraspinatus | held out | axford2025, hughes1998, liu1997, otis1994 | 15-90 | 21 / 22 / 23 / 22 / 20 / 16 | 25..27 / 23..30 / 20..28 / 18..26 / 19..26 / 16..22 | 4/6 | 6/6 | 3.5 | no |
+| scaption | infraspinatus | fit set | kuechle1997 | 15-90 | -1 / 1 / 3 / 5 / 7 / 8 | 0..4 / 0..4 / 0..4 / 0..4 / 0..4 / 0..4 | 2/6 | 6/6 | 4.5 | no |
+| scaption | infraspinatus | held out | axford2025, otis1994 | 15-75 | -1 / 1 / 3 / 5 / 7 | 10..17 / 10..17 / 10..17 / 10..17 / 10..10 | 0/5 | 2/5 | 11.7 | no |
+| scaption | subscapularis | fit set | kuechle1997 | 15-90 | 0 / -1 / -3 / -4 / -5 / -6 | 0..0 / 3..3 / 8..8 / 12..12 / 11..11 / 10..10 | 0/6 | 2/6 | 16.4 | no |
+| scaption | subscapularis | held out | axford2025, otis1994 | 15-75 | 0 / -1 / -3 / -4 / -5 | 4..8 / 4..8 / 4..8 / 4..8 / 8..8 | 0/5 | 1/5 | 13.8 | no |
+| scaption | teres minor | fit set | kuechle1997 | 15-90 | -16 / -12 / -9 / -4 / -0 / 4 | -1..-1 / -6..-6 / -9..-9 / -12..-12 / -13..-13 / -14..-14 | 0/6 | 1/6 | 18.3 | no |
+| scaption | teres minor | held out | axford2025, otis1994 | 15-75 | -16 / -12 / -9 / -4 / -0 | -8..-2 / -8..-2 / -8..-2 / -8..-2 / -2..-2 | 1/5 | 4/5 | 7.2 | no |
+| scaption | anterior deltoid | fit set | kuechle1997 | 15-90 | 13 / 19 / 25 / 29 / 32 / 33 | 14..14 / 18..18 / 21..21 / 24..24 / 25..25 / 25..25 | 0/6 | 4/6 | 8.2 | no |
+| scaption | anterior deltoid | held out | axford2025, otis1994 | 15-75 | 13 / 19 / 25 / 29 / 32 | 0..12 / 8..11 / 12..15 / 14..22 / 30..30 | 0/5 | 2/5 | 9.4 | no |
+| scaption | middle deltoid | fit set | kuechle1997 | 15-90 | 23 / 27 / 31 / 34 / 35 / 33 | 19..19 / 21..21 / 24..24 / 28..28 / 25..25 / 22..22 | 0/6 | 1/6 | 10.4 | no |
+| scaption | middle deltoid | held out | axford2025, otis1994 | 15-75 | 23 / 27 / 31 / 34 / 35 | 19..23 / 23..23 / 23..28 / 23..32 / 36..36 | 0/5 | 5/5 | 3.5 | no |
+| scaption | posterior deltoid | fit set | kuechle1997 | 15-90 | -15 / -15 / -14 / -12 / -10 / -7 | -6..-6 / -2..-2 / 1..1 / 4..4 / 8..8 / 11..11 | 0/6 | 0/6 | 18.1 | no |
+| scaption | posterior deltoid | held out | axford2025, otis1994 | 15-75 | -15 / -15 / -14 / -12 / -10 | -45..-11 / -36..-11 / -26..-10 / -16..-9 / -7..-7 | 4/5 | 5/5 | 3.3 | no |
+| scaption | pectoralis major | fit set | kuechle1997 | 15-90 | -8 / -10 / -11 / -11 / -11 / -9 | -36..-36 / -41..-41 / -36..-36 / -31..-31 / -26..-26 / -21..-21 | 0/6 | 0/6 | 31.1 | no |
+| scaption | latissimus dorsi | fit set | kuechle1997 | 15-90 | -23 / -30 / -33 / -33 / -32 / -28 | -40..-40 / -44..-44 / -42..-42 / -40..-40 / -36..-36 / -32..-32 | 0/6 | 2/6 | 16.8 | no |
+| scaption | teres major | fit set | kuechle1997 | 15-90 | -38 / -45 / -48 / -47 / -43 / -38 | -42..-42 / -56..-56 / -51..-51 / -46..-46 / -40..-40 / -34..-34 | 0/6 | 5/6 | 10.9 | no |
+| flexion | supraspinatus | fit set | ackland2008 | 15-120 | 16 / 15 / 14 / 12 / 10 / 7 / -2 | 36..36 / 31..31 / 26..26 / 20..20 / 16..16 / 12..12 / 5..5 | 0/7 | 1/7 | 20.3 | no |
+| flexion | supraspinatus | held out | axford2025 | 15-60 | 16 / 15 / 14 / 12 | 21..21 / 19..19 / 17..17 / 15..15 | 0/4 | 3/4 | 5.4 | no |
+| flexion | infraspinatus | fit set | ackland2008, kuechle1997 | 15-120 | 1 / -3 / -7 / -11 / -13 / -14 / -14 | -4..0 / -1..0 / 1..2 / 1..5 / 2..7 / 2..9 / 3..11 | 0/7 | 2/7 | 17.1 | no |
+| flexion | infraspinatus | held out | axford2025 | 15-60 | 1 / -3 / -7 / -11 | 20..20 / 20..20 / 20..20 / 20..20 | 0/4 | 0/4 | 31.0 | no |
+| flexion | subscapularis | fit set | ackland2008, kuechle1997 | 15-120 | -7 / -5 / -3 / -1 / 1 / 3 / 8 | 4..15 / 6..16 / 4..12 / 1..8 / 0..4 / 1..1 / -2..-2 | 1/7 | 3/7 | 11.2 | no |
+| flexion | subscapularis | held out | axford2025 | 15-60 | -7 / -5 / -3 / -1 | 3..3 / 3..3 / 3..3 / 3..3 | 0/4 | 1/4 | 9.6 | no |
+| flexion | teres minor | fit set | ackland2008, kuechle1997 | 15-120 | -9 / -10 / -10 / -10 / -9 / -8 / -3 | -18..-1 / -16..-6 / -15..-11 / -15..-13 / -16..-10 / -7..-7 / 2..2 | 2/7 | 6/7 | 5.9 | no |
+| flexion | teres minor | held out | axford2025 | 15-60 | -9 / -10 / -10 / -10 | -9..-9 / -9..-9 / -9..-9 / -9..-9 | 0/4 | 4/4 | 1.8 | no |
+| flexion | anterior deltoid | fit set | ackland2008, kuechle1997 | 15-120 | 25 / 31 / 35 / 38 / 39 / 38 / 23 | 20..28 / 28..28 / 28..32 / 26..36 / 26..38 / 25..40 / 25..40 | 2/7 | 7/7 | 3.2 | no |
+| flexion | anterior deltoid | held out | axford2025 | 15-60 | 25 / 31 / 35 / 38 | 35..35 / 33..33 / 33..33 / 33..33 | 0/4 | 2/4 | 10.1 | no |
+| flexion | middle deltoid | fit set | ackland2008, kuechle1997 | 15-120 | 10 / 14 / 18 / 22 / 26 / 28 / 27 | 0..13 / 3..18 / 5..22 / 7..23 / 9..20 / 10..10 / 11..11 | 4/7 | 4/7 | 17.9 | no |
+| flexion | middle deltoid | held out | axford2025 | 15-60 | 10 / 14 / 18 / 22 | 4..4 / 4..4 / 4..4 / 4..4 | 0/4 | 0/4 | 18.5 | no |
+| flexion | posterior deltoid | fit set | ackland2008, kuechle1997 | 15-120 | -45 / -39 / -31 / -23 / -15 / -6 / 11 | -31..-20 / -33..-18 / -31..-14 / -30..-8 / -27..-4 / -22..-22 / -17..-17 | 2/7 | 3/7 | 28.2 | no |
+| flexion | posterior deltoid | held out | axford2025 | 15-60 | -45 / -39 / -31 / -23 | -32..-32 / -32..-32 / -31..-31 / -31..-31 | 0/4 | 1/4 | 12.9 | no |
+| flexion | pectoralis major | fit set | ackland2008, kuechle1997 | 15-120 | 19 / 9 / -3 / -14 / -23 / -28 / -31 | -1..10 / 8..17 / 16..20 / 20..20 / 19..20 / 17..17 / 15..15 | 1/7 | 1/7 | 45.8 | no |
+| flexion | latissimus dorsi | fit set | ackland2008, kuechle1997 | 15-120 | -36 / -37 / -37 / -34 / -30 / -24 / -11 | -34..-8 / -38..-12 / -40..-13 / -38..-12 / -35..-9 / -5..-5 / -1..-1 | 4/7 | 5/7 | 18.9 | no |
+| flexion | teres major | fit set | ackland2008, kuechle1997 | 15-120 | -47 / -50 / -49 / -45 / -40 / -33 / -16 | -44..-36 / -50..-48 / -54..-48 / -54..-47 / -52..-52 / -45..-45 / -20..-20 | 2/7 | 5/7 | 12.3 | no |
+| rotation | supraspinatus | fit set | kuechle2000 | -60-60 | -14 / -12 / -9 / -6 / -1 / 4 / 10 / 14 / 18 | 2..2 / 2..2 / 2..2 / 2..2 / 2..2 / 3..3 / 4..4 / 4..4 / 4..4 | 0/9 | 2/9 | 15.9 | no |
+| rotation | infraspinatus | fit set | kuechle2000 | -60-60 | 15 / 19 / 23 / 25 / 27 / 26 / 24 / 19 / 10 | 24..24 / 24..24 / 24..24 / 24..24 / 24..24 / 23..23 / 22..22 / 20..20 / 18..18 | 0/9 | 6/9 | 9.3 | no |
+| rotation | subscapularis | fit set | kuechle2000 | -60-60 | -4 / -11 / -17 / -19 / -20 / -18 / -16 / -13 / -9 | -14..-14 / -16..-16 / -18..-18 / -21..-21 / -22..-22 / -24..-24 / -25..-25 / -25..-25 / -25..-25 | 0/9 | 4/9 | 16.0 | no |
+| rotation | teres minor | fit set | kuechle2000 | -60-60 | 4 / 8 / 12 / 15 / 17 / 19 / 19 / 18 / 16 | 17..17 / 18..18 / 20..20 / 20..20 / 22..22 / 21..21 / 20..20 / 19..19 / 16..16 | 0/9 | 5/9 | 13.1 | no |
+| rotation | anterior deltoid | fit set | kuechle2000 | -60-60 | 0 / 0 / -0 / -1 / -1 / -1 / -2 / -2 / -2 | -2..-2 / -1..-1 / -1..-1 / -3..-3 / -6..-6 / -10..-10 / -13..-13 / -15..-15 / -16..-16 | 0/9 | 5/9 | 14.4 | no |
+| rotation | posterior deltoid | fit set | kuechle2000 | -60-60 | 6 / 7 / 9 / 9 / 9 / 9 / 8 / 6 / 4 | 4..4 / 5..5 / 5..5 / 5..5 / 4..4 / 5..5 / 4..4 / 2..2 / 0..0 | 0/9 | 9/9 | 5.0 | no |
+| rotation | pectoralis major | fit set | kuechle2000 | -60-0 | 5 / 0 / -5 / -10 / -14 | -10..-10 / -14..-14 / -18..-18 / -19..-19 / -20..-20 | 0/5 | 0/5 | 15.3 | no |
+| rotation | latissimus dorsi | fit set | kuechle2000 | -60-60 | 4 / -1 / -5 / -8 / -11 / -13 / -14 / -13 / -12 | -8..-8 / -8..-8 / -8..-8 / -8..-8 / -8..-8 / -8..-8 / -8..-8 / -8..-8 / -8..-8 | 0/9 | 5/9 | 11.8 | no |
+| rotation | teres major | fit set | kuechle2000 | -60-60 | 4 / 0 / -4 / -7 / -10 / -12 / -13 / -13 / -12 | -7..-7 / -7..-7 / -7..-7 / -7..-7 / -7..-7 / -7..-7 / -7..-7 / -7..-7 / -7..-7 | 0/9 | 3/9 | 10.9 | no |
 
-All curves: 43 of 242 points in the band, 145 within 5 mm of it.
-Curves not used to fit a path: 26 of 150 in the band, 84 within 5 mm.
+Fit set (kuechle1997, kuechle2000, ackland2008): 35 of 277 points in the band, 144 within 5 mm.
+Held out from the path fit: curves of the other studies 9 of 64 in the band, 36 within 5 mm; Langenderfer 2006 rotation arms within 5 mm 8 of 10; rotation arms in scaption (Otis 1994, Axford 2025) 44 of 56; Gatti 2007 ranges 3 of 4; pooled peaks within 4 mm 5 of 6; strength rows with a spread within 1.5 SD 9 of 11.
 
 | Gatti et al. 2007, scaption at 60 deg | Model | Experimental range |
 |---|---|---|
 | supraspinatus | 22.2 | 7 to 27 |
-| infraspinatus | 13.1 | 0 to 22 |
+| infraspinatus | 5.3 | 0 to 22 |
 | teres minor | -4.4 | -13 to -2.2 |
-| subscapularis | 0.7 | -1 to 13.6 |
+| subscapularis | -4.3 | -1 to 13.6 |
+
+| Langenderfer et al. 2006 (held out), scaption, mean over 45 IR to 90 ER | Elevation (deg) | Model | Measured |
+|---|---|---|---|
+| supraspinatus | 10 | -0.9 | 4.1 |
+| supraspinatus | 60 | 3.1 | 3.7 |
+| infraspinatus | 10 | 20.5 | 17.2 |
+| infraspinatus | 60 | 17.4 | 12.7 |
+| teres minor | 10 | 13.3 | 15.6 |
+| teres minor | 60 | 13.0 | 19.4 |
+| SUPSP1 | 10, 60 | -2.6 | 0.5 |
+| SUPSP2 | 10, 60 | 7.2 | 6 |
+| INFSP1 | 10, 60 | 16.9 | 13.1 |
+| INFSP2 | 10, 60 | 20.8 | 16.8 |
+
+| Rotation arm in scaption, rotation 0 (held out) | Elevation (deg) | Study | Model | Measured |
+|---|---|---|---|---|
+| supraspinatus | 15 | otis1994 | 0.3 | 2.8 |
+| supraspinatus | 15 | axford2025 | 0.3 | 3.4 |
+| infraspinatus | 15 | otis1994 | 27.8 | 21.4 |
+| infraspinatus | 15 | axford2025 | 27.8 | 22.1 |
+| subscapularis | 15 | otis1994 | -21.8 | -23.6 |
+| subscapularis | 15 | axford2025 | -21.8 | -21.5 |
+| teres minor | 15 | otis1994 | 18.3 | 20.7 |
+| teres minor | 15 | axford2025 | 18.3 | 20.3 |
+| anterior deltoid | 15 | otis1994 | -1.0 | -4.7 |
+| anterior deltoid | 15 | axford2025 | -1.0 | -3 |
+| middle deltoid | 15 | otis1994 | -1.3 | 2.7 |
+| middle deltoid | 15 | axford2025 | -1.3 | 2.3 |
+| posterior deltoid | 15 | otis1994 | 9.3 | 3.6 |
+| posterior deltoid | 15 | axford2025 | 9.3 | 5.4 |
+| supraspinatus | 30 | otis1994 | 1.8 | 3 |
+| supraspinatus | 30 | axford2025 | 1.8 | 3.5 |
+| infraspinatus | 30 | otis1994 | 27.6 | 20.1 |
+| infraspinatus | 30 | axford2025 | 27.6 | 20.1 |
+| subscapularis | 30 | otis1994 | -22.5 | -22.5 |
+| subscapularis | 30 | axford2025 | -22.5 | -20.2 |
+| teres minor | 30 | otis1994 | 18.8 | 21 |
+| teres minor | 30 | axford2025 | 18.8 | 20.4 |
+| anterior deltoid | 30 | otis1994 | -0.9 | -4.7 |
+| anterior deltoid | 30 | axford2025 | -0.9 | -3.3 |
+| middle deltoid | 30 | otis1994 | -1.7 | 2.7 |
+| middle deltoid | 30 | axford2025 | -1.7 | 2.5 |
+| posterior deltoid | 30 | otis1994 | 9.1 | 3.6 |
+| posterior deltoid | 30 | axford2025 | 9.1 | 5.5 |
+| supraspinatus | 45 | otis1994 | 3.2 | 3.1 |
+| supraspinatus | 45 | axford2025 | 3.2 | 4.1 |
+| infraspinatus | 45 | otis1994 | 25.9 | 18.8 |
+| infraspinatus | 45 | axford2025 | 25.9 | 18.2 |
+| subscapularis | 45 | otis1994 | -21.7 | -21.3 |
+| subscapularis | 45 | axford2025 | -21.7 | -18.9 |
+| teres minor | 45 | otis1994 | 18.6 | 21.4 |
+| teres minor | 45 | axford2025 | 18.6 | 20.4 |
+| anterior deltoid | 45 | otis1994 | -0.8 | -4.7 |
+| anterior deltoid | 45 | axford2025 | -0.8 | -3.6 |
+| middle deltoid | 45 | otis1994 | -2.0 | 2.7 |
+| middle deltoid | 45 | axford2025 | -2.0 | 2.6 |
+| posterior deltoid | 45 | otis1994 | 8.8 | 3.6 |
+| posterior deltoid | 45 | axford2025 | 8.8 | 5.7 |
+| supraspinatus | 60 | otis1994 | 4.8 | 3.2 |
+| supraspinatus | 60 | axford2025 | 4.8 | 5.1 |
+| infraspinatus | 60 | otis1994 | 22.9 | 17.5 |
+| infraspinatus | 60 | axford2025 | 22.9 | 16.2 |
+| subscapularis | 60 | otis1994 | -19.5 | -20.2 |
+| subscapularis | 60 | axford2025 | -19.5 | -17.6 |
+| teres minor | 60 | otis1994 | 17.9 | 21.7 |
+| teres minor | 60 | axford2025 | 17.9 | 20.5 |
+| anterior deltoid | 60 | otis1994 | -0.8 | -4.7 |
+| anterior deltoid | 60 | axford2025 | -0.8 | -3.8 |
+| middle deltoid | 60 | otis1994 | -2.2 | 2.7 |
+| middle deltoid | 60 | axford2025 | -2.2 | 2.8 |
+| posterior deltoid | 60 | otis1994 | 8.4 | 3.6 |
+| posterior deltoid | 60 | axford2025 | 8.4 | 5.9 |
+
+| Leave one study out | Plane | Kuechle 1997 vs Ackland 2008, rms | Model vs Kuechle, rms | Model vs Ackland, rms |
+|---|---|---|---|---|
+| pectoralis major | coronal (15-90 deg) | 27.5 | 28.9 | 4.4 |
+| latissimus dorsi | coronal (15-90 deg) | 11.1 | 15.8 | 5.5 |
+| teres major | coronal (15-90 deg) | 15.9 | 12.6 | 5.2 |
+| pectoralis major | flexion (15-75 deg) | 6.5 | 27.4 | 26.9 |
+| latissimus dorsi | flexion (15-75 deg) | 26.4 | 3.5 | 24.0 |
+| teres major | flexion (15-60 deg) | 6.2 | 1.8 | 7.5 |
 
 | Hik and Ackland 2019 Table 2, pooled peak | Model peak | Pooled peak |
 |---|---|---|
 | scaption, anterior deltoid | 33.2 | 33.9 |
-| scaption, middle deltoid | 29.5 | 33.4 |
+| scaption, middle deltoid | 34.5 | 33.4 |
 | scaption, supraspinatus | 22.7 | 26.4 |
 | scaption, teres major | -47.7 | -51.7 |
-| rotation, infraspinatus | 23.4 | 24.5 |
-| rotation, subscapularis | -19.2 | -20.6 |
+| rotation, infraspinatus | 26.6 | 24.5 |
+| rotation, subscapularis | -19.6 | -20.6 |
 
 **Isometric strength** (N m; men; probe about the glenohumeral hinge, and about the thorax axis as in the fit).
 
-| Trial | Posture (plane / elevation / rotation / elbow, deg) | Measured | Model | Model, thorax axis | z or ratio | Used in fit |
+| Trial | Posture (plane / elevation / rotation / elbow, deg) | Measured | Model | Model, thorax axis | z or ratio | Used in the tension fit |
 |---|---|---|---|---|---|---|
-| internal rotation (roy2009) | 30 / 45 / 0 / 90 | 46.8 +- 16.5 | 55.2 | 55.2 | z +0.5 | no |
-| external rotation (roy2009) | 30 / 45 / 0 / 90 | 33.6 +- 9 | 33.2 | 33.2 | z -0.1 | no |
-| elevation (aronis2025) | 90 / 160 / 0 / 0 | 43.2 +- 10.8 | 57.4 | 41.9 | z +1.3 | no |
-| elevation (saul2015) | 0 / 60 / 0 / 0 | 58.1 +- 14.9 | 76.0 | 81.0 | z +1.2 | no |
-| depression (saul2015) | 0 / 60 / 0 / 0 | 75.7 +- 18.3 | 98.6 | 99.3 | z +1.2 | no |
-| elevation (otis1990) | 90 / 10 / 0 / 90 | 93 (no spread) | 74.3 | 74.3 | x 0.80 | no |
-| elevation (otis1990) | 90 / 90 / 0 / 90 | 75 (no spread) | 56.9 | 67.2 | x 0.76 | no |
-| elevation (otis1990) | 0 / 90 / 0 / 90 | 57.5 (no spread) | 68.2 | 74.5 | x 1.19 | no |
-| internal rotation (otis1990) | 0 / 10 / 0 / 90 | 48 (no spread) | 54.1 | 54.1 | x 1.13 | no |
-| external rotation (otis1990) | 0 / 10 / 0 / 90 | 43 (no spread) | 31.4 | 31.4 | x 0.73 | no |
-| elevation (holzbaur2007) | 0 / 60 / 0 / 0 | 74.4 +- 10.8 | 76.0 | 81.0 | z +0.1 | yes |
-| depression (holzbaur2007) | 0 / 60 / 0 / 0 | 93.7 +- 11.3 | 98.6 | 99.3 | z +0.4 | yes |
-| internal rotation (smith2001) | 40 / 45 / -45 / 90 | 52.8 +- 9.9 | 66.4 | 66.4 | z +1.4 | yes |
-| external rotation (smith2001) | 40 / 45 / -45 / 90 | 36.2 +- 7.6 | 26.3 | 26.3 | z -1.3 | yes |
-| elevation (aronis2025) | 90 / 90 / 0 / 0 | 77.2 +- 13.8 | 75.7 | 87.5 | z -0.1 | yes |
-| elevation (harbo2012) | 0 / 10 / 0 / 90 | 61.1 +- 14.1 | 40.3 | 40.3 | z -1.5 | yes |
+| internal rotation (roy2009) | 30 / 45 / 0 / 90 | 46.8 +- 16.5 | 60.6 | 60.6 | z +0.8 | no |
+| external rotation (roy2009) | 30 / 45 / 0 / 90 | 33.6 +- 9 | 40.5 | 40.5 | z +0.8 | no |
+| elevation (aronis2025) | 90 / 160 / 0 / 0 | 43.2 +- 10.8 | 49.0 | 40.1 | z +0.5 | no |
+| elevation (saul2015) | 0 / 60 / 0 / 0 | 58.1 +- 14.9 | 62.4 | 65.4 | z +0.3 | no |
+| depression (saul2015) | 0 / 60 / 0 / 0 | 75.7 +- 18.3 | 102.3 | 103.1 | z +1.5 | no |
+| elevation (otis1990) | 90 / 10 / 0 / 90 | 93 (no spread) | 54.7 | 54.7 | x 0.59 | no |
+| elevation (otis1990) | 90 / 90 / 0 / 90 | 75 (no spread) | 36.0 | 41.6 | x 0.48 | no |
+| elevation (otis1990) | 0 / 90 / 0 / 90 | 57.5 (no spread) | 58.8 | 60.6 | x 1.02 | no |
+| internal rotation (otis1990) | 0 / 10 / 0 / 90 | 48 (no spread) | 60.1 | 60.1 | x 1.25 | no |
+| external rotation (otis1990) | 0 / 10 / 0 / 90 | 43 (no spread) | 41.2 | 41.2 | x 0.96 | no |
+| elevation (holzbaur2007) | 0 / 60 / 0 / 0 | 74.4 +- 10.8 | 62.4 | 65.4 | z -1.1 | yes |
+| depression (holzbaur2007) | 0 / 60 / 0 / 0 | 93.7 +- 11.3 | 102.3 | 103.1 | z +0.8 | yes |
+| internal rotation (smith2001) | 40 / 45 / -45 / 90 | 52.8 +- 9.9 | 71.0 | 71.0 | z +1.8 | yes |
+| external rotation (smith2001) | 40 / 45 / -45 / 90 | 36.2 +- 7.6 | 29.6 | 29.6 | z -0.9 | yes |
+| elevation (aronis2025) | 90 / 90 / 0 / 0 | 77.2 +- 13.8 | 54.8 | 61.9 | z -1.6 | yes |
+| elevation (harbo2012) | 0 / 10 / 0 / 90 | 61.1 +- 14.1 | 42.0 | 42.0 | z -1.4 | yes |
 
 <!-- END generated by scripts/validate_shoulder_mechanics.py -->
 
-**Moment arms.** 43 of 242 points lie in the studies' band and 145 within 5 mm of it (before the path fit 39 and 126);
-of the 150 points on curves not used to fit a path, 26 and 84 (26 and 83 before). Close: the anterior deltoid in every
-plane, the supraspinatus in scaption (all points in the band), the teres major, the infraspinatus in rotation (all
-points within 5 mm), Gatti's 60 deg ranges for all four cuff muscles (the subscapularis now inside), and all six pooled
-peaks of Hik and Ackland within 4 mm (the middle deltoid's 29.5 against 33.4 mm at the limit the path fit held). Off:
+**Moment arms.** Fit set: 144 of 277 points within 5 mm of the band. Held out: 36 of 64 curve points within 5 mm,
+rotation arms in scaption 44 of 56, Langenderfer 2006 8 of 10, Gatti's ranges 3 of 4, pooled peaks 5 of 6 within 4 mm
+(teres major 4.0 mm off). The agreements and gaps are discussed in "Path candidates fitted to moment arms"; in short:
+close are the anterior deltoid on the fit set, the supraspinatus in scaption (all held-out curves within 5 mm), the
+teres major, the subscapularis' and teres minor's rotation arms, and the posterior deltoid in scaption and rotation once
+the signs are corrected; off are the pectoralis major, the supraspinatus' rotation arm, the infraspinatus in scaption
+and flexion and its rotation arm in scaption, the subscapularis in scaption, the middle deltoid in flexion (Ackland,
+Axford) and the latissimus in flexion, which follows Kuechle (-34 to -40 mm) and not Ackland (-8 to -13 mm); the two
+studies differ by 26 mm (rms) themselves.
 
-- **Pectoralis major:** too small an adductor in scaption (-8 to -11 against Kuechle's -21 to -41 mm), and in flexion an
-  extensor above 45 deg (-14 to -31 against +15 to +20 mm). No anatomical path reaches the flexion data ("Paths fitted
-  to moment arms").
-- **Supraspinatus:** half Ackland's flexion arm, 9-10 mm below both studies in coronal abduction at 15-30 deg, and a
-  rotation arm that changes sign over the range (-14 to +18 against -2 to -4 mm; anterior and posterior regions act in
-  opposite directions). A via that fixes the rotation arm costs the abduction arm above 75 deg.
-- **Subscapularis in scaption** abducts by 5 mm at 15 deg and adducts above 75 deg, where Kuechle has 10-12 mm of
-  abduction; in coronal abduction it is 3-6 mm above the studies.
-- **Infraspinatus in flexion** extends above 75 deg (-10 mm at 120 deg against +3 to +11).
-- **Deltoid:** the middle deltoid is up to 14 mm above Ackland in flexion and falls to 12 mm at 120 deg coronal
-  abduction (Ackland 28); the posterior deltoid turns into an abductor in scaption near 90 deg, not 40 deg, and flexes
-  at 120 deg flexion (+10 against -17 mm).
-- **Latissimus in flexion** follows Kuechle (-34 to -40 mm) and not Ackland (-8 to -13 mm); the two studies differ by
-  20-30 mm themselves.
-
-**Strength** (specific tension kept at 111.1 N/cm2 after the path fit). Every held-out row with a spread is within
-1.5 SD: rotation in scaption (Roy 2009, +0.5 and -0.1 SD), flexion at 160 deg (Aronis 2025, +1.3 SD; the girdle at
-Seth's highest flexion frame, 149 deg) and Saul et al. 2015's middle-aged men (abduction and adduction +1.2 SD).
-Against Otis et al. 1990 (no spread) internal rotation agrees (x 1.13), abduction at 90 deg is high (x 1.19), and
-flexion is low at the side and at 90 deg with the elbow at 90 deg (x 0.80, x 0.76; before x 0.59, x 0.48) and external
-rotation at the side low (x 0.73; before x 0.96). The flexion gain does not come from the pectoralis major, whose path
-is unchanged, but from the middle deltoid and the infraspinatus, which now flex at the side (12 and 9 N m at Otis's
-posture); the triceps' passive moment at 90 deg flexion remains. External rotation fell because the infraspinatus
-slack lengths moved with the new path (shorter fibres at the side) and the subscapularis' passive moment grew. Probing about the
-glenohumeral hinge or about the thorax axis differs by up to 16 N m only where the scapula has rotated far (160 deg
-flexion, 90 deg with the elbow flexed).
+**Strength.** Every held-out row with a spread is within 1.5 SD: rotation in scaption (Roy 2009, +0.8 SD each),
+flexion at 160 deg (Aronis 2025, +0.5 SD; the girdle at Seth's highest flexion frame, 149 deg) and Saul et al. 2015's
+middle-aged men (abduction +0.3, adduction +1.5 SD; adduction is above the young men's mean as well). Against Otis
+et al. 1990 (no spread) abduction at 90 deg and external rotation agree (x 1.02, x 0.96), internal rotation is high
+(x 1.25) and flexion is low at the side and at 90 deg with the elbow at 90 deg (x 0.59, x 0.48), as the fit's flexion
+rows: the triceps' passive moment at 90 deg flexion and the extension arms of the pectoralis major's sternocostal heads
+in flexion. Probing about the glenohumeral hinge or about the thorax axis differs by up to 9 N m only where the scapula
+has rotated far (160 deg flexion, 90 deg with the elbow flexed).
 
 ## Open checks limited by the passive layers
 
@@ -644,7 +744,7 @@ layer.
 
 ## Open items
 
-Pectoralis major in flexion and scaption, the supraspinatus's rotation arm, the subscapularis in scaption and the sign
-of Kuechle 2000's posterior-deltoid rotation curve in Hik and Ackland's re-plot ("Paths fitted to moment arms"); the
-specific tension after the path fit (kept at 111.1, a refit gives 104.2 N/cm2); passive girdle behaviour (above); moment arms of the new scapular muscles (no scapulothoracic moment-arm data were
+Shoulder paths ("Path candidates fitted to moment arms"): the pectoralis major (a per-head path for curves measured
+without a chest wall), the supraspinatus (two lines in the measured footprint, next), the infraspinatus and
+subscapularis in scaption and flexion; passive girdle behaviour (above); moment arms of the new scapular muscles (no scapulothoracic moment-arm data were
 found); glenohumeral translation with the capsule and a glenoid contact; an EMG comparison.

@@ -41,15 +41,6 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
     `INFSP1-2`, `SUBSC1-3` in place of `SUPSP`, `INFSP`, `SUBSC`. `DELT1`, `DELT2` take Seth's paths; `CORB`, `BICshort`
     and `TRIlong` lose a via point. Every shoulder muscle's force is PCSA x 111.1 N/cm2, calibrated to measured isometric
     shoulder moments (`build/data/shoulder_strength.json`).
-  - **Paths fitted to cadaver moment arms** (`scripts/fit_shoulder_paths.py`, `build/data/shoulder_paths.json`): one
-    site per line placed against the moment-arm curves of the validation (scapula fixed, elbow 90 deg). `DELT2`'s
-    acromial via moves 11 mm; `DELT3` passes its scapular via 28 mm behind the joint centre instead of `Delt3_torus_r`
-    and `delt3hum_ellipsoid_DELT3_r` (removed with their side sites); `INFSP1-2` and `SUBSC1-3` cross the humeral-head
-    sphere and a humeral via (`<muscle>-V1_r`, new sites). Within 5 mm of the studies' band: middle deltoid 7 -> 16 of
-    20 points, posterior deltoid 8 -> 16 of 29, infraspinatus 13 -> 16 of 23 (rotation 9 of 9), subscapularis 16 -> 15
-    of 29 (rotation 4 -> 6 of 9, Gatti 2007's scaption range now met). Rigid maps of these muscles refitted. Same paths
-    on MuJoCo 4.0.1 and 3.17. The pectoralis major and supraspinatus paths stay (no anatomical path met their flexion
-    and rotation data, `docs/wiki/shoulder-complex.md`).
   - **Downstream (MyoSuite):** observation and action layouts of every arm and full-body task change, the glenohumeral
     angles mean something different, and arm and full-body checkpoints need retraining. Licence of the derived data:
     `build/data/LICENSE-Seth2019.txt` (CC BY 4.0).
@@ -59,8 +50,11 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
     and constraint violation under random activation from rest and from girdle postures, on CPU MuJoCo and mujoco-warp
     (`tests/test_girdle_stability.py`); CPU step time is unchanged (`myofullbody` 490 against 505 us). Moment arms and
     isometric strength against data not used in the fit: `scripts/validate_shoulder_mechanics.py`
-    (`docs/validation/shoulder-mechanics.json`); the pectoralis major in flexion and scaption, the supraspinatus in
-    rotation and flexion and the subscapularis in scaption differ most from cadaver moment arms.
+    (`docs/validation/shoulder-mechanics.json`), with the literature split into a fit set (Kuechle 1997 and 2000, Ackland
+    2008) and held-out studies (Liu 1997, Hughes 1998, Otis 1994, Axford 2025, Langenderfer 2006), signs of the
+    re-plotted curves checked against the primary papers. Path candidates fitted to the fit set
+    (`scripts/fit_shoulder_paths.py`) did not improve the held-out checks, so the paths are unchanged; the pectoralis
+    major, the supraspinatus' rotation arm and the infraspinatus and subscapularis in scaption differ most.
 
 - **`standing` posture on this model (`myofullbody`, `myolegs`, `myolegs_abdomen`; merged from 0.2.4).** The posture API of 0.2.4 (`myo_sim.list_postures()`, `add_posture_keyframes()`, `build_kwargs={"postures": ...}`, `data/postures.json`, `scripts/generate_postures.py`) replaces this line's standing-keyframe helpers; the table's values are this line's. See `docs/wiki/postures.md`.
   - **Table:** new step: both thumbs at the equilibrium of their passive moments and gravity at zero activation, computed by the script (CMC flexion -7.5, CMC abduction 21.2, MP -15.3, IP -9.7 deg). The rest holds only kinematics at knee 0, so neither the knee hinges nor the masses move it. Finger joints stay at `qpos0`: their equilibrium has no single answer without contacts.

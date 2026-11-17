@@ -11,10 +11,9 @@ then fits each muscle's rigid-tendon map along Seth's measured motions (the rele
 the table again. **--write** renders the XML blocks from the table alone.
 
 Paths: Seth's two points per line, straight, except where a wrap changes the length along the measured motions: the
-supraspinatus over Seth's humeral-head sphere, and serratus anterior M and I over thorax spheres fitted to the lengths
-of Seth's ellipsoid wrap. Infraspinatus and subscapularis cross the same humeral-head sphere and then a via site on the
-humerus (``-V1``), fitted to measured moment arms by ``fit_shoulder_paths.py`` (``shoulder_paths.json``); Seth's
-scapular cylinders put their rotation arms off the head and are not used. Forces: PCSA x the table's specific tension. Fibre lengths: Ward 2006 for the cuff (Seth's optimal
+supraspinatus over Seth's humeral-head sphere, infraspinatus and subscapularis over Seth's scapular cylinders (their
+``-y`` quadrant as a side site), and serratus anterior M and I over thorax spheres fitted to the lengths of Seth's
+ellipsoid wrap. Forces: PCSA x the table's specific tension. Fibre lengths: Ward 2006 for the cuff (Seth's optimal
 muscle-tendon length kept, so the tendon takes the difference), Seth's otherwise.
 """
 
@@ -71,11 +70,11 @@ FPMAX = {"supraspinatus": 0.288421, "infraspinatus": 0.429583, "subscapularis": 
 ROWS = (
     ("SUPSP1", "Supraspinatus_A", "supraspinatus", "SUPSP_hhead"),
     ("SUPSP2", "Supraspinatus_P", "supraspinatus", "SUPSP_hhead"),
-    ("INFSP1", "Infraspinatus_S", "infraspinatus", "SUPSP_hhead"),
-    ("INFSP2", "Infraspinatus_I", "infraspinatus", "SUPSP_hhead"),
-    ("SUBSC1", "Subscapularis_S", "subscapularis", "SUPSP_hhead"),
-    ("SUBSC2", "Subscapularis_M", "subscapularis", "SUPSP_hhead"),
-    ("SUBSC3", "Subscapularis_I", "subscapularis", "SUPSP_hhead"),
+    ("INFSP1", "Infraspinatus_S", "infraspinatus", "INFSP_cylinder"),
+    ("INFSP2", "Infraspinatus_I", "infraspinatus", "INFSP_cylinder"),
+    ("SUBSC1", "Subscapularis_S", "subscapularis", "SUBSC_cylinder"),
+    ("SUBSC2", "Subscapularis_M", "subscapularis", "SUBSC_cylinder"),
+    ("SUBSC3", "Subscapularis_I", "subscapularis", "SUBSC_cylinder"),
     ("TRAP1", "TrapeziusClavicle_S", "klein_breteler", None),
     ("TRAP2", "TrapeziusScapula_S", "klein_breteler", None),
     ("TRAP3", "TrapeziusScapula_M", "klein_breteler", None),
@@ -161,15 +160,11 @@ def seth_wraps(zf: zipfile.ZipFile) -> dict[str, dict[str, Any]]:
             out["side_site"] = _r(pos + rot @ np.array([0.0, -2 * r, 0.0]))
         return out
 
-    return {"SUPSP_hhead": geom("hheadsupraTminor", "humerus_r", "SUPSP_hhead")}
-
-
-def fitted_vias() -> dict[str, dict[str, Any]]:
-    """Humeral via sites of the cuff lines fitted by ``fit_shoulder_paths.py`` (``shoulder_paths.json``), by muscle."""
-    path = DATA / "shoulder_paths.json"
-    if not path.exists():
-        return {}
-    return {name: {"body": s["body"], "pos": s["pos"]} for name, s in json.loads(path.read_text())["cuff_vias"].items()}
+    return {
+        "SUPSP_hhead": geom("hheadsupraTminor", "humerus_r", "SUPSP_hhead"),
+        "INFSP_cylinder": geom("Infra", "scapula_r", "INFSP_cylinder"),
+        "SUBSC_cylinder": geom("Subscapuralis", "scapula_r", "SUBSC_cylinder"),
+    }
 
 
 def fitted_thorax_spheres() -> dict[str, dict[str, Any]]:
@@ -290,7 +285,6 @@ def derive(zf: zipfile.ZipFile) -> dict[str, Any]:
     shift = np.array(ST["registration"]["shift_seth_thorax_to_chest_r"])
     wraps = {**seth_wraps(zf), **fitted_thorax_spheres()}
     tension = json.loads((DATA_DIR / "shoulder_strength.json").read_text())["fit"]["result"]["value_N_per_cm2"]
-    vias = fitted_vias()
     rows = []
     for name, sname, src, wrap in ROWS:
         s = seth[sname]
@@ -303,7 +297,6 @@ def derive(zf: zipfile.ZipFile) -> dict[str, Any]:
             "origin": {"body": BODY[b1], "pos": _r(p1)},
             "insertion": {"body": BODY[b2], "pos": _r(p2)},
             "wrap": wrap,
-            **({"via": vias[name]} if name in vias else {}),
             "seth_parameters": {"F0": s["F"], "l0": s["l0"], "lts": s["lts"]},
         }
         if src == "klein_breteler":
@@ -382,8 +375,6 @@ def blocks(table: dict[str, Any]) -> dict[tuple[Path, str], str]:
                     add(TORSO, "chest_r", _site(name[:-2] + "_l", np.array(end["pos"]) * [1, 1, -1]), pad["torso"])
             else:
                 add(CHAIN, end["body"], _site(name, end["pos"]), pad["arm"])
-        if "via" in row:
-            add(CHAIN, row["via"]["body"], _site(f"{row['name']}-V1_r", row["via"]["pos"]), pad["arm"])
     for key, w in wraps.items():
         if w["body"] == "chest_r":
             for side, flip in (("r", False), ("l", True)):
@@ -398,8 +389,6 @@ def blocks(table: dict[str, Any]) -> dict[tuple[Path, str], str]:
         if row["wrap"]:
             side = f' sidesite="{row["wrap"]}_sidesite_r"' if "side_site" in wraps[row["wrap"]] else ""
             path.append(f'<geom geom="{row["wrap"]}_r"{side}/>')
-        if "via" in row:
-            path.append(f'<site site="{row["name"]}-V1_r"/>')
         path.append(f'<site site="{site_name(row, 2)}"/>')
         tendon.append(f'        <spatial name="{row["name"]}_r_tendon" class="myoarm_upperarm_muscle">')
         tendon += ["            " + p for p in path] + ["        </spatial>"]
