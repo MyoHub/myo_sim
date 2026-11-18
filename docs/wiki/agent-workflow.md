@@ -5,7 +5,7 @@ Required workflow for any task in this repository. Follow in order.
 ## Before starting
 
 1. Read `docs/wiki/index.md` and the wiki pages relevant to your task.
-2. Read `CLAUDE.md`.
+2. Read `AGENTS.md` (`CLAUDE.md` imports it).
 3. Read every file you plan to edit before touching it.
 4. Grep for existing implementations before adding new helpers, strategies, or contact files.
 
