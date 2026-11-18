@@ -2,6 +2,22 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-15 — Add passive joint mechanics transforms
+Changed: myo_sim/physics/joint_mechanics.py, myo_sim/physics/__init__.py, tests/test_physics_joint_mechanics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: passive joint damping, stiffness and `qpos0`-anchored range of motion can be scaled on independent 1-DOF joints without fighting `mjEQ_JOINT` couplings or changing automatic muscle peak forces.
+
+## 2026-11-15 — Add muscle activation time-constant transforms
+Changed: myo_sim/physics/activation_dynamics.py, myo_sim/physics/__init__.py, tests/test_physics_activation_dynamics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: `mjDYN_MUSCLE` excitation-contraction rise and relaxation time constants (`dynprm[:, :2]`) can be scaled orthogonally on compiled models or editable specs without changing steady-state peak force, stateless muscles or geometry.
+
+## 2026-11-15 — Muscle operating-range and moment-arm CI gates
+Changed: tests/test_muscle_operating_range.py, docs/wiki/testing-guide.md, docs/wiki/log.md
+Why: tendon, wrap or `lmax` edits can move muscles outside `[lmin, lmax]` with zero active contractile force while still compiling cleanly; fast dataset-free checks now gate active force capacity and moment-arm coupling across all composed models.
+
+## 2026-11-15 — Add isometric MVC torque probing and muscle strength calibration
+Changed: myo_sim/physics/muscle_strength.py, myo_sim/physics/__init__.py, tests/test_physics_muscle_strength.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: move isometric MVC torque probing (`max_torque_terms`) and per-muscle bounded least-squares strength calibration (`calibrate_muscle_strength`, pure NumPy BVLS) from MyoHub/myosuite#649 into `myo_sim` so models can be personalized to measured joint torques without MyoSuite or SciPy.
+
 ## 2026-11-13 — Keep anatomy geometry stable at finite numeric extremes
 Changed: myo_sim/authoring/interchange.py, tests/test_authoring_interchange_numeric.py, docs/wiki/authoring.md
 Why: real-only pose validation prevents silent complex-value truncation, scaled quaternion normalization avoids overflow and underflow, and stable radial norms preserve inside-wrap flags across geometric scales without mutating source or caller arrays.
@@ -13,6 +29,14 @@ Why: shared atomic publication closes the concurrent-writer overwrite gap, CLI o
 ## 2026-11-13 — Preserve active native assets in model archives
 Changed: myo_sim/authoring/archive.py, tests/test_authoring_archive_assets.py, docs/wiki/authoring.md
 Why: archives now follow native texture-source and VFS key precedence and skin directories, preserve inline heightfield rows and precision and attached texture defaults, and protect referenced disk assets from replacement.
+
+## 2026-11-12 — Add selected-body mass transforms
+Changed: myo_sim/physics/body_mass.py, tests/test_physics_body_mass.py, docs/wiki/model-parameters.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: represented model mass and an explicit participant/reference ratio are different inputs; model-only copy transforms preserve geometry and force capacity while refreshing native constants.
+
+## 2026-11-12 — Add model-only muscle strength transforms
+Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md, docs/wiki/index.md
+Why: native active/passive force scaling and automatic-force resolution can be reused without importing subject fitting, environments or MyoSuite.
 
 ## 2026-11-12 — Decode only exported muscle moment arms
 Changed: myo_sim/authoring/interchange.py, tests/test_authoring.py
@@ -38,9 +62,14 @@ Why: compiled anatomy, selected instance edits and native archive validation bel
 Changed: myo_sim/muskemo/interchange.py, tests/test_muskemo.py, docs/wiki/muskemo.md
 Why: anatomy JSON used raw geom RGBA and lost native material colors and alpha; exports now match MuJoCo's material/default override behavior without changing the source model.
 
+## 2026-11-11 — Linear XML composition copies
+Changed: myo_sim/build/utils.py, tests/test_build_utils.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: recursive subtree copies and child-list searches repeated work during model loading; copy each node once while preserving include expansion and mirror output.
+
 ## 2026-11-11 — Optional source-model authoring with MuSkeMo
 Changed: myo_sim/muskemo/, tests/test_muskemo*.py, tests/muskemo_support.py, pyproject.toml, uv.lock, .github/workflows/ci.yml, README.md, CHANGELOG.md, docs/wiki/muskemo*.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md
 Why: anatomy editing belongs with the source model library; export, Blender import, validation and selected edits now run without MyoSuite or a training dependency.
+
 ## 2026-11-11 — Preserve native sensor and contact settings
 Changed: myo_sim/build/utils.py, tests/test_native_includes.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
 Why: include imports discarded sensor reference frames and common options, lost pair class defaults and rejected unnamed sensors on MuJoCo 3.4.
