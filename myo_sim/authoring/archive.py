@@ -239,12 +239,13 @@ def _compare(name: str, before: Any, after: Any, *, atol: float = 1e-12) -> None
 def _poses(model: mujoco.MjModel) -> list[np.ndarray]:
     couplings = JointCouplings.from_model(model)
     dependent = set(couplings.dep_qpos.tolist()) | set(couplings.locked_qpos.tolist())
+    scalar_types = (int(mujoco.mjtJoint.mjJNT_HINGE), int(mujoco.mjtJoint.mjJNT_SLIDE))
     poses = [model.qpos0.copy(), *[pose.copy() for pose in model.key_qpos[:2]]]
     for direction in (-1, 1):
         pose = model.qpos0.copy()
         for j in range(model.njnt):
             address = model.jnt_qposadr[j]
-            if model.jnt_type[j] in (mujoco.mjtJoint.mjJNT_HINGE, mujoco.mjtJoint.mjJNT_SLIDE) and address not in dependent:
+            if int(model.jnt_type[j]) in scalar_types and address not in dependent:
                 if model.jnt_limited[j]:
                     low, high = model.jnt_range[j]
                     pose[address] = np.clip(pose[address] + direction * 0.1 * (high - low), low, high)
@@ -288,7 +289,7 @@ def _validate_equivalence(source: mujoco.MjModel, loaded: mujoco.MjModel) -> Non
         "nuserdata",
     ):
         _compare(name, getattr(source, name), getattr(loaded, name))
-    mesh_geoms = source.geom_type == mujoco.mjtGeom.mjGEOM_MESH
+    mesh_geoms = source.geom_type == int(mujoco.mjtGeom.mjGEOM_MESH)
     paired = np.concatenate((source.pair_geom1, source.pair_geom2))
     visual_meshes = not (
         np.any(source.geom_contype[mesh_geoms] | source.geom_conaffinity[mesh_geoms]) or np.any(mesh_geoms[paired])

@@ -382,7 +382,7 @@ def test_archive_checks_native_tendon_curves(tmp_path: Path, monkeypatch: pytest
             data.ten_length[0] = np.nan  # Matching invalid source/reload measurements must still fail.
         elif measurement == "moment-nan":
             data.ten_J.flat[0] = np.nan
-        elif calls % 2 == 0:
+        elif calls % 2 == 0 and data.joint("r_elbow_flex").qpos[0] > model.joint("r_elbow_flex").qpos0[0]:
             data.ten_length[0] += 0.001
 
     monkeypatch.setattr(mujoco, "mj_forward", changed)

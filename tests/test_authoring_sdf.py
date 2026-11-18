@@ -31,7 +31,7 @@ def native_sdf() -> mujoco.MjModel:
         if "unrecognized plugin 'mujoco.sdf.torus'" in message:
             pytest.skip(f"This native MuJoCo build does not provide its bundled SDF torus plugin: {error}")
         raise
-    assert model.geom_type[0] == mujoco.mjtGeom.mjGEOM_SDF
+    assert int(model.geom_type[0]) == int(mujoco.mjtGeom.mjGEOM_SDF)
     assert model.nmesh == 1 and model.mesh_vertnum[0] > 0
     return model
 

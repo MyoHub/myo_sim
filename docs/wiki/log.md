@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-18 — Use native integer type codes in anatomy and archive checks
+Changed: myo_sim/authoring/interchange.py, myo_sim/authoring/archive.py, tests/test_authoring_archive.py, tests/test_authoring_sdf.py
+Why: some MuJoCo and NumPy wheel combinations skipped scalar joints, quaternion blocks and tendon wraps when comparing model array entries to Python enums.
+
 ## 2026-11-15 — Add passive joint mechanics transforms
 Changed: myo_sim/physics/joint_mechanics.py, myo_sim/physics/__init__.py, tests/test_physics_joint_mechanics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: passive joint damping, stiffness and `qpos0`-anchored range of motion can be scaled on independent 1-DOF joints without fighting `mjEQ_JOINT` couplings or changing automatic muscle peak forces.

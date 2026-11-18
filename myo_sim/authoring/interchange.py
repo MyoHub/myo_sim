@@ -24,7 +24,7 @@ SCHEMA_VERSION = 2
 def _peak_force(model: mujoco.MjModel) -> np.ndarray:
     """Resolve MuJoCo's automatic muscle peak force from scale and acceleration."""
     force = np.array(model.actuator_gainprm[:, 2], dtype=np.float64)
-    auto = (force < 0) & (model.actuator_gaintype == mujoco.mjtGain.mjGAIN_MUSCLE)
+    auto = (force < 0) & (model.actuator_gaintype == int(mujoco.mjtGain.mjGAIN_MUSCLE))
     force[auto] = model.actuator_gainprm[auto, 3] / np.maximum(model.actuator_acc0[auto], mujoco.mjMINVAL)
     return force
 
@@ -66,14 +66,15 @@ def _wrap_flags(model: mujoco.MjModel, data: mujoco.MjData) -> list[dict[str, An
     for tendon in range(model.ntendon):
         start = int(model.tendon_adr[tendon])
         for wrap in range(start, start + int(model.tendon_num[tendon])):
-            if model.wrap_type[wrap] not in (mujoco.mjtWrap.mjWRAP_SPHERE, mujoco.mjtWrap.mjWRAP_CYLINDER):
+            wrap_type = int(model.wrap_type[wrap])
+            if wrap_type not in (int(mujoco.mjtWrap.mjWRAP_SPHERE), int(mujoco.mjtWrap.mjWRAP_CYLINDER)):
                 continue
             side = int(model.wrap_prm[wrap])
             if side < 0:
                 continue
             geom = int(model.wrap_objid[wrap])
             local = data.geom_xmat[geom].reshape(3, 3).T @ (data.site_xpos[side] - data.geom_xpos[geom])
-            radial = local[:2] if model.wrap_type[wrap] == mujoco.mjtWrap.mjWRAP_CYLINDER else local
+            radial = local[:2] if wrap_type == int(mujoco.mjtWrap.mjWRAP_CYLINDER) else local
             flags.append(
                 dict(
                     tendon=tendon,
@@ -135,8 +136,8 @@ def export_model(
             ("tendon", model.ntendon),
         )
     }
-    muscles = np.flatnonzero(model.actuator_gaintype == mujoco.mjtGain.mjGAIN_MUSCLE)
-    if any(model.actuator_trntype[a] != mujoco.mjtTrn.mjTRN_TENDON for a in muscles):
+    muscles = np.flatnonzero(model.actuator_gaintype == int(mujoco.mjtGain.mjGAIN_MUSCLE))
+    if any(model.actuator_trntype[a] != int(mujoco.mjtTrn.mjTRN_TENDON) for a in muscles):
         raise ValueError("Muscles without tendon transmission are unsupported")
     force = _peak_force(model)
     fingerprint = model_fingerprint(model)
@@ -183,12 +184,13 @@ def export_model(
     for t in range(model.ntendon):
         elements = []
         for w in range(model.tendon_adr[t], model.tendon_adr[t] + model.tendon_num[t]):
+            wrap_type = int(model.wrap_type[w])
             element = dict(
-                type=mujoco.mjtWrap(int(model.wrap_type[w])).name.removeprefix("mjWRAP_"),
+                type=mujoco.mjtWrap(wrap_type).name.removeprefix("mjWRAP_"),
                 object=int(model.wrap_objid[w]),
                 parameter=float(model.wrap_prm[w]),
             )
-            if model.wrap_type[w] in (mujoco.mjtWrap.mjWRAP_SPHERE, mujoco.mjtWrap.mjWRAP_CYLINDER):
+            if wrap_type in (int(mujoco.mjtWrap.mjWRAP_SPHERE), int(mujoco.mjtWrap.mjWRAP_CYLINDER)):
                 element["sidesite"] = int(model.wrap_prm[w]) if model.wrap_prm[w] >= 0 else None
             elements.append(element)
         tendons.append(dict(id=t, name=names["tendon"][t], elements=elements))
@@ -214,15 +216,16 @@ def export_model(
     colors[uses_material] = model.mat_rgba[model.geom_matid[uses_material]]
     geoms = []
     for i in range(model.ngeom):
+        geom_type = int(model.geom_type[i])
         geom = dict(
             id=i,
             name=names["geom"][i],
             body=int(model.geom_bodyid[i]),
-            type=mujoco.mjtGeom(int(model.geom_type[i])).name.removeprefix("mjGEOM_"),
+            type=mujoco.mjtGeom(geom_type).name.removeprefix("mjGEOM_"),
             size=model.geom_size[i].tolist(),
             rgba=colors[i].tolist(),
         )
-        if model.geom_type[i] == mujoco.mjtGeom.mjGEOM_MESH:
+        if geom_type == int(mujoco.mjtGeom.mjGEOM_MESH):
             mesh = model.geom_dataid[i]
             va, vn = model.mesh_vertadr[mesh], model.mesh_vertnum[mesh]
             fa, fn = model.mesh_faceadr[mesh], model.mesh_facenum[mesh]
@@ -230,9 +233,9 @@ def export_model(
                 vertices=model.mesh_vert[va : va + vn].tolist(),
                 faces=model.mesh_face[fa : fa + fn].tolist(),
             )
-        elif model.geom_type[i] == mujoco.mjtGeom.mjGEOM_HFIELD:
+        elif geom_type == int(mujoco.mjtGeom.mjGEOM_HFIELD):
             raise ValueError("Heightfields are unsupported; export an anatomy-only model")
-        elif model.geom_type[i] == mujoco.mjtGeom.mjGEOM_SDF:
+        elif geom_type == int(mujoco.mjtGeom.mjGEOM_SDF):
             raise ValueError("SDF geometry is unsupported; export an anatomy-only model")
         geoms.append(geom)
     equalities = [
@@ -249,9 +252,9 @@ def export_model(
     ]
     data, coupling = mujoco.MjData(model), JointCouplings.from_model(model)
     quaternion_starts = [
-        int(address) + (3 if kind == mujoco.mjtJoint.mjJNT_FREE else 0)
+        int(address) + (3 if kind == int(mujoco.mjtJoint.mjJNT_FREE) else 0)
         for kind, address in zip(model.jnt_type, model.jnt_qposadr, strict=True)
-        if kind in (mujoco.mjtJoint.mjJNT_FREE, mujoco.mjtJoint.mjJNT_BALL)
+        if kind in (int(mujoco.mjtJoint.mjJNT_FREE), int(mujoco.mjtJoint.mjJNT_BALL))
     ]
     moment = np.empty((len(muscles), model.nv))
     frames = []
@@ -339,7 +342,7 @@ def joint_sweep(model: mujoco.MjModel, joint: str, samples: int = 21) -> np.ndar
         ``(samples, nq)`` poses; export projects dependent coordinates.
     """
     j = model.joint(joint)
-    if j.type[0] not in (mujoco.mjtJoint.mjJNT_HINGE, mujoco.mjtJoint.mjJNT_SLIDE):
+    if j.type[0] not in (int(mujoco.mjtJoint.mjJNT_HINGE), int(mujoco.mjtJoint.mjJNT_SLIDE)):
         raise ValueError("A sweep requires a scalar hinge or slide joint")
     if not j.limited[0] or samples < 2:
         raise ValueError("A sweep requires a limited joint and at least two samples")
@@ -354,5 +357,5 @@ def _joint_equalities(model: mujoco.MjModel) -> list[dict[str, Any]]:
     return [
         dict(object1=int(model.eq_obj1id[i]), active=bool(model.eq_active0[i]))
         for i in range(model.neq)
-        if model.eq_type[i] == mujoco.mjtEq.mjEQ_JOINT
+        if model.eq_type[i] == int(mujoco.mjtEq.mjEQ_JOINT)
     ]
