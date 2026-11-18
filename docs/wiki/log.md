@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-18 — Preserve unrelated settings in physics copy transforms
+Changed: myo_sim/physics/body_mass.py, myo_sim/physics/joint_mechanics.py, tests/test_physics_body_mass.py, tests/test_physics_joint_mechanics.py, docs/wiki/model-parameters.md
+Why: refreshing native constants overwrote custom visualization statistics and runtime-edited connect anchors; retain these settings while mass-dependent default statistics still follow body-mass changes.
+
 ## 2026-11-18 — Match posture coordinates to edited joint layouts
 Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
 Why: assigning a free-root height or a scalar angle after a joint replacement could overwrite an unrelated coordinate in the standing keyframe.

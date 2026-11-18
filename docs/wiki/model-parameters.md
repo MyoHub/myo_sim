@@ -60,6 +60,9 @@ explicitly when those must remain unchanged. Selected inertias scale by the same
 factor as mass; geometry, COM, inertial frames and strength are preserved. The
 result is an independent compiled-model copy with MuJoCo constants refreshed.
 Automatic muscle forces are frozen before mass changes alter their `acc0`.
+Equality settings, including runtime-edited connect anchors, and geometric
+statistics (`center`, `extent`, `meansize`) stay unchanged. Default `meanmass`
+and `meaninertia` follow the scaled model; custom values are preserved.
 This does not infer density distributions, resize anatomy or choose a strength
 factor from body mass.
 
@@ -98,3 +101,6 @@ equalities. `damping` and `stiffness` accept non-negative finite scalars or
 limited joint intervals `[lo, hi]` around `clip(qpos0, lo, hi)` so reference
 postures remain limit-free. Automatic muscle peak forces are frozen before
 `mj_setConst` refreshes derived model constants on the returned copy.
+Equality settings, including runtime-edited connect anchors, and all model
+statistics are preserved because these transforms change neither geometry nor
+mass.

@@ -9,10 +9,12 @@ import numpy as np
 import pytest
 
 from myo_sim.physics.body_mass import scale_body_mass
+from myo_sim.physics.joint_mechanics import scale_joint_mechanics
 
 
-def _model(arm_mass: float = 3.0) -> mujoco.MjModel:
+def _model(arm_mass: float = 3.0, *, statistic: str = "") -> mujoco.MjModel:
     return mujoco.MjModel.from_xml_string(f"""<mujoco><compiler angle="radian"/>
+      {statistic}
       <worldbody><body name="torso"><geom size=".1" mass="20"/>
         <body name="arm"><joint name="elbow" axis="0 1 0" range="0 3"/>
           <geom type="capsule" size=".04" fromto="0 0 0 1 0 0" mass="{arm_mass}"/>
@@ -96,6 +98,43 @@ def test_default_selection_includes_fixed_bodies_and_empty_muscle_models() -> No
         '<mujoco><worldbody><body name="a"><geom size=".1" mass="1"/></body></worldbody></mujoco>'
     )
     assert scale_body_mass(no_muscle, represented_mass=2).body("a").mass[0] == pytest.approx(2)
+
+
+@pytest.mark.parametrize("statistic", ["", '<statistic meanmass="7" meaninertia="2" meansize="3" extent="5" center="1 2 3"/>'])
+def test_mass_scaling_preserves_statistics_like_native_recompilation(statistic: str) -> None:
+    original = _model(statistic=statistic)
+    scaled = scale_body_mass(original, represented_mass=6, bodies=["arm"])
+    native = _model(arm_mass=6, statistic=statistic)
+    for field in ("meanmass", "meaninertia", "meansize", "extent", "center"):
+        if hasattr(native.stat, field):
+            np.testing.assert_allclose(getattr(scaled.stat, field), getattr(native.stat, field), rtol=1e-12)
+
+
+@pytest.mark.parametrize("transform", ["mass", "mechanics"])
+def test_model_transforms_preserve_runtime_connect_anchors(transform: str) -> None:
+    original = mujoco.MjModel.from_xml_string(
+        '<mujoco><worldbody><body name="link"><joint name="hinge" damping=".1"/>'
+        '<geom size=".1" mass="1"/></body><body name="target" pos="1 0 0"/></worldbody>'
+        '<equality><connect body1="link" body2="target" anchor=".2 0 0"/></equality></mujoco>'
+    )
+    # A grasp may change either local anchor after compilation.
+    original.eq_data[0, 3:6] = [-0.7, 0.1, 0.0]
+    before = original.eq_data.copy()
+    scaled = (
+        scale_body_mass(original, represented_mass=2, bodies=["link"])
+        if transform == "mass"
+        else scale_joint_mechanics(original, damping=2)
+    )
+    np.testing.assert_array_equal(original.eq_data, before)
+    np.testing.assert_array_equal(scaled.eq_data, before)
+    errors = []
+    for model in (original, scaled):
+        data = mujoco.MjData(model)
+        data.qpos[:] = 0.25
+        mujoco.mj_forward(model, data)
+        errors.append(data.efc_pos.copy())
+    assert np.linalg.norm(errors[0]) > 0.1
+    np.testing.assert_array_equal(errors[1], errors[0])
 
 
 @pytest.mark.parametrize(
