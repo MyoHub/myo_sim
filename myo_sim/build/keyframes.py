@@ -49,8 +49,8 @@ def list_postures(model_name: str) -> list[str]:
 def posture_qpos(model: "mujoco.MjModel", entry: dict[str, Any]) -> "np.ndarray":
     """``qpos`` of a table entry on a compiled model, matched by joint name.
 
-    Joints the model does not have are skipped and joints the entry does not list stay
-    at ``qpos0``. The root keeps its x, y and orientation and takes its height from the entry.
+    Scalar values apply to hinge and slide joints. A free joint named ``root`` takes
+    its height from the entry. All other coordinates retain their ``qpos0`` values.
 
     Args:
         model: Compiled model.
@@ -62,12 +62,13 @@ def posture_qpos(model: "mujoco.MjModel", entry: dict[str, Any]) -> "np.ndarray"
     import mujoco
 
     qpos = model.qpos0.copy()
+    scalar_types = (int(mujoco.mjtJoint.mjJNT_HINGE), int(mujoco.mjtJoint.mjJNT_SLIDE))
     for joint_id in range(model.njnt):
         name = mujoco.mj_id2name(model, mujoco.mjtObj.mjOBJ_JOINT, joint_id)
-        if name in entry["joints"]:
+        if name in entry["joints"] and int(model.jnt_type[joint_id]) in scalar_types:
             qpos[model.jnt_qposadr[joint_id]] = entry["joints"][name]
     root_id = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, ROOT_JOINT)
-    if root_id >= 0:
+    if root_id >= 0 and int(model.jnt_type[root_id]) == int(mujoco.mjtJoint.mjJNT_FREE):
         qpos[model.jnt_qposadr[root_id] + 2] = entry["root_z"]
     return qpos
 
