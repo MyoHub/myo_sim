@@ -845,11 +845,7 @@ def iter_worldbody_geoms(root: ET.Element) -> list[ET.Element]:
 
 def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel) -> None:
     """Preserve collision flags that can be lost through exported default inheritance."""
-    geoms = iter_worldbody_geoms(root)
-    if len(geoms) != model.ngeom:
-        raise ValueError(f"Generated XML has {len(geoms)} geoms, but compiled model has {model.ngeom}")
-
-    for geom_id, geom in enumerate(geoms):
+    for geom, geom_id in compiled_element_ids(root, model, "geom"):
         geom.set("contype", str(int(model.geom_contype[geom_id])))
         geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
 
@@ -862,6 +858,8 @@ def apply_compiled_visual_attributes(root: ET.Element, model: mujoco.MjModel) ->
         geom.set("material", model.mat(material_id).name if material_id >= 0 else "")
     for site, site_id in compiled_element_ids(root, model, "site"):
         site.set("group", str(int(model.site_group[site_id])))
+
+
 def apply_compiled_inertia_precision(root: ET.Element, model: mujoco.MjModel) -> None:
     """Keep principal moments on their physical triangle after XML rounding.
 
@@ -905,9 +903,29 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjMo
 
 def write_spec_xml(spec: mujoco.MjSpec, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    model = spec.compile()
+    export = spec.copy()
+    temporary_names: dict[str, set[str]] = {}
+    for tag in ("body", "geom", "site"):
+        elements = list(getattr(export, "bodies" if tag == "body" else f"{tag}s"))
+        used = {element.name for element in elements}
+        temporary_names[tag] = set()
+        for index, element in enumerate(elements):
+            if not element.name:
+                name = f"_myo_sim_export_{tag}_{index}"
+                while name in used:
+                    name += "_"
+                element.name = name
+                used.add(name)
+                temporary_names[tag].add(name)
+    model = export.compile()
     asset_dir = os.path.relpath(ROOT, output_path.parent)
-    output_path.write_text(sanitize_spec_xml(spec.to_xml(), asset_dir=asset_dir, model=model))
+    root = ET.fromstring(sanitize_spec_xml(export.to_xml(), asset_dir=asset_dir, model=model))
+    for tag, names in temporary_names.items():
+        for element in root.iter(tag):
+            if element.get("name") in names:
+                del element.attrib["name"]
+    ET.indent(root, space="  ")
+    output_path.write_text(ET.tostring(root, encoding="unicode") + "\n")
 
 
 def generate_xml_files(output_root: Path = ROOT) -> list[Path]:
