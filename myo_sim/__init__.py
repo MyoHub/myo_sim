@@ -2,6 +2,8 @@ from importlib.metadata import PackageNotFoundError, version
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Optional
 
+from myo_sim.build.head import add_ocular_rig as add_ocular_rig
+from myo_sim.build.head import unlock_head_joints as unlock_head_joints
 from myo_sim.build.keyframes import add_posture_keyframes as add_posture_keyframes
 from myo_sim.build.keyframes import list_postures as list_postures
 from myo_sim.fragments import FragmentInfo as FragmentInfo

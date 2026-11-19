@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-19 — Add opt-in cervical articulation and ocular/IMU head rig helpers
+Changed: myo_sim/build/head.py, myo_sim/build/compose.py, myo_sim/__init__.py, myo_sim/models/head/README.md, docs/wiki/build-and-composition.md, docs/wiki/log.md, tests/test_head_rig.py
+Why: `myohead_rigid_chain.xml` leaves `neck_rotation` and `neck_flexion` commented out so default assemblies keep a zero-DOF rigid head, which forced callers needing active head motion, gaze cameras or vestibular head IMU sensors to edit XML includes by hand. Opt-in `unlock_head_joints` and `add_ocular_rig` helpers (and `build_kwargs` hooks applied before posture keyframe generation) expose articulated neck DOFs and calibrated ocular/IMU sensors without changing any default model's DOF or actuator layout.
+
 ## 2026-11-18 — AGENTS.md is the instruction file; CLAUDE.md imports it
 Changed: AGENTS.md, CLAUDE.md, docs/wiki/agent-workflow.md, docs/wiki/index.md, docs/wiki/log.md
 Why: AGENTS.md was a symlink to CLAUDE.md, which checkouts without symlink support (Windows by default) write as a one-line text file, so agents that read AGENTS.md saw no instructions. AGENTS.md now holds the text; CLAUDE.md links it for readers and imports it for Claude Code with `@AGENTS.md`.

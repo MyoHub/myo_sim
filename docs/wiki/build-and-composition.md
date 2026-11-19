@@ -95,6 +95,8 @@ estimate or a validation of every scaling rule.
 - `include_fullbody_contacts`: whether `myofullbody_contacts.xml` pairs are injected.
 - `add_root_freejoint`: adds a free joint to the root body (needed for locomotion models).
 - `root_pos`: initial position of the root body in world space.
+- `unlock_head_joints`: unlocks `neck_rotation` and `neck_flexion` (plus `neck_bending` when `head_roll=True` and position servos when `head_actuators=True`) via `myo_sim.build.head.unlock_head_joints`.
+- `add_ocular_rig`: attaches `gaze_origin` / `gaze_forward` sites, `eye_l` / `eye_r` / `head_fovea` / `head_periphery` cameras, and `head_imu` sensors via `myo_sim.build.head.add_ocular_rig`.
 - `mirror_rules`: a `MirrorRules` instance controlling how names and geometry are transformed during mirroring.
 
 ## How to Add a New Composed Model
