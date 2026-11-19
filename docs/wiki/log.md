@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
+Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
+Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.
+
 ## 2026-11-18 — Include non-muscle bias forces in strength calibration
 Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md
 Why: zero-control non-muscle actuators can exert force, so dropping their bias made fitted MVC torque disagree with native MuJoCo in mixed muscle/servo models.
