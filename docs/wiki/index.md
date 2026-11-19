@@ -4,7 +4,7 @@ Read this file before making any substantial change to this repository.
 
 ## Source-of-truth priority
 
-Code > CLAUDE.md > wiki. If a wiki page contradicts the code, the code wins. When you discover a discrepancy, update the wiki in the same changeset as the code.
+Code > AGENTS.md > wiki. If a wiki page contradicts the code, the code wins. When you discover a discrepancy, update the wiki in the same changeset as the code.
 
 When a wiki page is stale, update it in the same PR as the code change and append an entry to `docs/wiki/log.md`.
 

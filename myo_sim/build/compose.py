@@ -836,13 +836,6 @@ def compiled_element_ids(root: ET.Element, model: mujoco.MjModel, tag: str) -> l
     return pairs
 
 
-def iter_worldbody_geoms(root: ET.Element) -> list[ET.Element]:
-    worldbody = root.find("worldbody")
-    if worldbody is None:
-        return []
-    return list(worldbody.iter("geom"))
-
-
 def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel) -> None:
     """Preserve collision flags that can be lost through exported default inheritance."""
     for geom, geom_id in compiled_element_ids(root, model, "geom"):
