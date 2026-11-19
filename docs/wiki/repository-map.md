@@ -32,6 +32,7 @@ myo_sim/              # installable Python package
     body_mass.py      # selected-body mass/inertia transforms with refreshed constants
     activation_dynamics.py # mjDYN_MUSCLE activation and deactivation time-constant transforms
     joint_mechanics.py # passive joint damping, stiffness and range-of-motion copy transforms
+  authoring/          # compiled anatomy, selected instance edits, native archive validation and CLI
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -44,6 +45,7 @@ tests/
   test_passive_torso_build.py / test_legs_abdomen_build.py
   test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
   test_physics_*.py                # myo_sim.physics: couplings, fatigue (NumPy/torch/JAX), endurance times
+  test_authoring*.py               # anatomy/patch contract, source immutability and portable archives
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -62,6 +64,7 @@ docs/wiki/            # canonical wiki location
 | Add a mesh | `myo_sim/models/meshes/` |
 | Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
+| Export compiled anatomy, customize a model instance or save a native archive | `myo_sim/authoring/`; see `docs/wiki/authoring.md` |
 
 ## Publishing
 
