@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-18 — Match posture coordinates to edited joint layouts
+Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
+Why: assigning a free-root height or a scalar angle after a joint replacement could overwrite an unrelated coordinate in the standing keyframe.
+
 ## 2026-11-18 — AGENTS.md is the instruction file; CLAUDE.md imports it
 Changed: AGENTS.md, CLAUDE.md, docs/wiki/agent-workflow.md, docs/wiki/index.md, docs/wiki/log.md
 Why: AGENTS.md was a symlink to CLAUDE.md, which checkouts without symlink support (Windows by default) write as a one-line text file, so agents that read AGENTS.md saw no instructions. AGENTS.md now holds the text; CLAUDE.md links it for readers and imports it for Claude Code with `@AGENTS.md`.

@@ -198,6 +198,29 @@ def test_adding_twice_keeps_one_keyframe():
     assert spec.compile().nkey == 1
 
 
+def test_standing_on_a_hinged_root_keeps_hip_adduction_at_rest() -> None:
+    spec = myo_sim.load_spec("myolegs")
+    spec.joint("root").type = mujoco.mjtJoint.mjJNT_HINGE
+    myo_sim.add_posture_keyframes(spec, "myolegs")
+
+    model = spec.compile()
+    data = mujoco.MjData(model)
+    mujoco.mj_resetDataKeyframe(model, data, model.key("standing").id)
+    hip = model.joint("hip_adduction_r")
+    np.testing.assert_array_equal(data.joint("hip_adduction_r").qpos, hip.qpos0)
+    ankle = load_posture_table()["models"]["myolegs"]["standing"]["joints"]["ankle_angle_r"]
+    assert data.joint("ankle_angle_r").qpos[0] == pytest.approx(ankle)
+
+
+def test_scalar_posture_value_preserves_a_replacement_free_joint() -> None:
+    spec = mujoco.MjSpec.from_string(
+        '<mujoco><worldbody><body pos="1 2 3"><freejoint name="shoulder_elv_r"/><geom size=".1"/></body></worldbody></mujoco>'
+    )
+    myo_sim.add_posture_keyframes(spec, "myofullbody")
+    model = spec.compile()
+    np.testing.assert_array_equal(_standing_qpos(model), model.qpos0)
+
+
 def test_attach_to_an_empty_spec():
     reference = myo_sim.load_model("myofullbody")
     parent = mujoco.MjSpec()
