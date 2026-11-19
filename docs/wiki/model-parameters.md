@@ -36,8 +36,11 @@ at steady activation, without gravity, rejecting force clamps, multi-state
 actuators, gravity compensation and stateless muscle control clamps that exclude
 `[0, 1]`. `calibrate_muscle_strength` fits bounded linear least-squares strength
 factors (pure NumPy active-set BVLS, no `scipy` runtime dependency) regularized
-weakly toward `prior`. Net joint torques do not identify individual synergists,
-so the fitted factors represent effective strength. Task/checkpoint provenance
+weakly toward `prior`. Non-muscle actuators remain at zero control/activation;
+their zero-input forces (such as a position servo's bias) and the joints' passive
+torque are included as fixed contributions rather than fitted strength. Net
+joint torques do not identify individual synergists, so the fitted factors
+represent effective strength. Task/checkpoint provenance
 and the legacy gain-only sarcopenia convention remain in downstream applications.
 
 ## Selected-body mass

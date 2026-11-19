@@ -212,6 +212,40 @@ def test_calibration_recovers_a_known_subject_and_matches_scipy(elbow: mujoco.Mj
         assert abs(cal.factors[ids].mean() - value) < 0.05
 
 
+@pytest.mark.parametrize("direction", [1.0, -1.0])
+def test_calibration_includes_zero_input_non_muscle_forces(direction: float) -> None:
+    model = mujoco.MjModel.from_xml_string(
+        '<mujoco><compiler angle="radian"/><worldbody><body>'
+        '<joint name="elbow" range="0 3" stiffness="2"/><geom size=".1" mass="1"/>'
+        "</body></worldbody><actuator>"
+        '<muscle name="agonist" joint="elbow" gear="-1" lengthrange="-3 0" force="100"/>'
+        '<position name="brace" joint="elbow" kp="10"/>'
+        "</actuator></mujoco>"
+    )
+    # Reverse the muscle without changing its operating length or the brace.
+    if direction < 0:
+        model.actuator_gear[0, 0] = 1.0
+        model.actuator_lengthrange[0] = [0.0, 3.0]
+    trial = MaxTorqueMeasurement("elbow", np.array([1.0]), 50.0, direction)
+    original = copy.deepcopy(model)
+    calibration = calibrate_muscle_strength(model, [trial], regularization=0.0)
+    np.testing.assert_array_equal(model.actuator_gainprm, original.actuator_gainprm)
+    np.testing.assert_array_equal(model.actuator_biasprm, original.actuator_biasprm)
+    assert calibration.factors[1] == 1.0
+    np.testing.assert_array_equal(calibration.involved, [True, False])
+    for candidate, expected in ((original, calibration.nominal), (model, calibration.predicted)):
+        if candidate is model:
+            scale_muscle_strength(candidate, calibration.factors)
+        data = mujoco.MjData(candidate)
+        data.qpos[:] = trial.qpos
+        data.act[:] = 1.0
+        # Zero control still leaves the brace's -10 N m position bias.
+        mujoco.mj_forward(candidate, data)
+        native = direction * (data.qfrc_actuator[0] + data.qfrc_passive[0])
+        np.testing.assert_allclose(expected, [native], rtol=1e-9)
+    np.testing.assert_allclose(calibration.predicted, calibration.measured, rtol=1e-9)
+
+
 def test_bvls_matches_scipy_lsq_linear_across_regimes() -> None:
     rng = np.random.default_rng(42)
     for m, n in ((8, 5), (3, 12), (10, 10)):
