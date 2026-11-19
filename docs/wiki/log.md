@@ -6,6 +6,14 @@ Append-only maintenance log, most recent first.
 Changed: AGENTS.md, CLAUDE.md, docs/wiki/agent-workflow.md, docs/wiki/index.md, docs/wiki/log.md
 Why: AGENTS.md was a symlink to CLAUDE.md, which checkouts without symlink support (Windows by default) write as a one-line text file, so agents that read AGENTS.md saw no instructions. AGENTS.md now holds the text; CLAUDE.md links it for readers and imports it for Claude Code with `@AGENTS.md`.
 
+## 2026-11-15 — Preserve unnamed frame elements during XML export
+Changed: myo_sim/build/compose.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md
+Why: exported frame elements change document order, so a copy receives temporary names for reliable compiled-attribute mapping before those names are removed.
+
+## 2026-11-14 — Match exported collision flags by geom name
+Changed: myo_sim/build/compose.py, tests/test_build_registry.py, CHANGELOG.md
+Why: `MjSpec.to_xml()` writes frame-held geoms after a body's other geoms, so writing compiled collision flags in document order swapped them between geoms of edited specs.
+
 ## 2026-11-15 — Add passive joint mechanics transforms
 Changed: myo_sim/physics/joint_mechanics.py, myo_sim/physics/__init__.py, tests/test_physics_joint_mechanics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: passive joint damping, stiffness and `qpos0`-anchored range of motion can be scaled on independent 1-DOF joints without fighting `mjEQ_JOINT` couplings or changing automatic muscle peak forces.
