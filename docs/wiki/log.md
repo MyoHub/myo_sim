@@ -10,9 +10,17 @@ Why: AGENTS.md was a symlink to CLAUDE.md, which checkouts without symlink suppo
 Changed: myo_sim/build/compose.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md
 Why: exported frame elements change document order, so a copy receives temporary names for reliable compiled-attribute mapping before those names are removed.
 
+## 2026-11-14 — Match generated XML materials and site groups by name
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, docs/wiki/build-and-composition.md, CHANGELOG.md
+Why: `MjSpec.to_xml()` writes frame-held geoms and sites after a body's other ones, so writing compiled materials and site groups in document order swapped them between elements of edited specs.
+
 ## 2026-11-14 — Match exported collision flags by geom name
 Changed: myo_sim/build/compose.py, tests/test_build_registry.py, CHANGELOG.md
 Why: `MjSpec.to_xml()` writes frame-held geoms after a body's other geoms, so writing compiled collision flags in document order swapped them between geoms of edited specs.
+
+## 2026-11-11 — Preserve generated XML appearance
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: merging exported attachment defaults replaced left-arm materials and changed attachment site groups when generated XML was reloaded.
 
 ## 2026-11-15 — Add passive joint mechanics transforms
 Changed: myo_sim/physics/joint_mechanics.py, myo_sim/physics/__init__.py, tests/test_physics_joint_mechanics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
