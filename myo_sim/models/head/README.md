@@ -17,7 +17,8 @@ A simplified rigid kinematic head-and-neck model (no muscle actuators) derived f
 
 ## Manual adjustments
 
-- Joint `neck_rotation` and `neck_flexion` are commented out in `myohead_rigid_chain.xml`, producing a fully locked (zero-DOF) rigid head used when the torso chain is composed. Uncomment both joints there to restore the standard two-DOF neck configuration.
+- Joint `neck_rotation` and `neck_flexion` are commented out in `myohead_rigid_chain.xml`, producing a fully locked (zero-DOF) rigid head by default when the torso chain is composed.
+- Call `myo_sim.unlock_head_joints(spec)` (or pass `build_kwargs={"unlock_head_joints": True}` to `myo_sim.load_spec`) to restore the 2-DOF (or 3-DOF with `include_roll=True`) cervical joints and optional position servos (`add_actuators=True`), and `myo_sim.add_ocular_rig(spec)` (`build_kwargs={"add_ocular_rig": True}`) to attach binocular/dual-FOV head cameras, gaze sites, and `head_imu` sensors.
 
 ## Changelog
 

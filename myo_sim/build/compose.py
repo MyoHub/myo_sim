@@ -32,6 +32,7 @@ from myo_sim import MODELS_DIR
 
 try:
     from .hand import prune_arm_spec_to_hand
+    from .head import add_ocular_rig, unlock_head_joints
     from .keyframes import add_posture_keyframes
     from .utils import (
         MirrorRules,
@@ -44,6 +45,7 @@ try:
     )
 except ImportError:
     from hand import prune_arm_spec_to_hand
+    from head import add_ocular_rig, unlock_head_joints
     from keyframes import add_posture_keyframes
     from utils import (
         MirrorRules,
@@ -695,6 +697,14 @@ def build_spec(
     if registration.build_kwargs.get("disable_finger_collisions", False):
         # Again on the composed spec: its explicit pairs are only added after the arms are built.
         disable_finger_collision(spec)
+    if registration.build_kwargs.get("unlock_head_joints", False):
+        unlock_head_joints(
+            spec,
+            include_roll=bool(registration.build_kwargs.get("head_roll", False)),
+            add_actuators=bool(registration.build_kwargs.get("head_actuators", False)),
+        )
+    if registration.build_kwargs.get("add_ocular_rig", False):
+        add_ocular_rig(spec)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
     postures = registration.build_kwargs.get("postures", False)

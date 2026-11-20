@@ -2,6 +2,9 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-19 — Add opt-in cervical articulation and ocular/IMU head rig helpers
+Changed: myo_sim/build/head.py, myo_sim/build/compose.py, myo_sim/__init__.py, myo_sim/models/head/README.md, docs/wiki/build-and-composition.md, docs/wiki/log.md, tests/test_head_rig.py
+Why: `myohead_rigid_chain.xml` leaves `neck_rotation` and `neck_flexion` commented out so default assemblies keep a zero-DOF rigid head, which forced callers needing active head motion, gaze cameras or vestibular head IMU sensors to edit XML includes by hand. Opt-in `unlock_head_joints` and `add_ocular_rig` helpers (and `build_kwargs` hooks applied before posture keyframe generation) expose articulated neck DOFs and calibrated ocular/IMU sensors without changing any default model's DOF or actuator layout.
 ## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
 Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.
