@@ -51,8 +51,7 @@ def _character_bounds(model: mujoco.MjModel, data: mujoco.MjData) -> tuple[np.nd
 def _character_forward_azimuth(model: mujoco.MjModel, data: mujoco.MjData) -> float:
     """World-frame heading (deg) of the character's own anterior (+X) axis.
 
-    Different build strategies apply different root body orientations (e.g.
-    build_torso_abdomen_spec's TORSO_ABDOMEN_ROOT_QUAT), so a fixed world
+    Build strategies may apply different root body orientations, so a fixed world
     azimuth points the camera at a different side of the character depending
     on which strategy built it. Body 1 -- the top of each spec's own
     kinematic tree -- always has +X as anterior, so deriving the camera

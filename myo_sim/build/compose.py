@@ -21,7 +21,7 @@ import os
 import sys
 import time
 import xml.etree.ElementTree as ET
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from pathlib import Path
 from typing import Any, Literal, Optional
@@ -32,6 +32,7 @@ from myo_sim import MODELS_DIR
 
 try:
     from .hand import prune_arm_spec_to_hand
+    from .keyframes import add_posture_keyframes
     from .utils import (
         MirrorRules,
         add_contact_pairs,
@@ -43,6 +44,7 @@ try:
     )
 except ImportError:
     from hand import prune_arm_spec_to_hand
+    from keyframes import add_posture_keyframes
     from utils import (
         MirrorRules,
         add_contact_pairs,
@@ -97,7 +99,6 @@ LEGS26_CHAIN_XML = ROOT / "leg" / "assets" / "myolegs26_chain.xml"
 TORSO_ROOT_BODY = "Torso"
 RIGHT_ARM_ATTACH_SITE = "arm_attach_r"
 LEFT_ARM_ATTACH_SITE = "arm_attach_l"
-TORSO_ABDOMEN_ROOT_QUAT = (0.707388, 0, 0, -0.706825)
 ROOT_POS = (0, 0, 1)
 
 LEFT_ARM_STRATEGY_MIRROR_RIGHT = "mirror_right_to_left"
@@ -511,7 +512,6 @@ def build_torso_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     abdomen = _build_torso_abdomen_from_xml(registration)
     root_body = find_body(abdomen, "root")
     root_body.pos = registration.build_kwargs.get("root_pos", ROOT_POS)
-    root_body.quat = TORSO_ABDOMEN_ROOT_QUAT
     return abdomen
 
 
@@ -521,6 +521,7 @@ def build_legs_abdomen_spec(registration: ModelRegistration) -> mujoco.MjSpec:
     root_body.add_freejoint(name="root")
     legs_frame = root_body.add_frame(name="legs_attach")
     abdomen.attach(build_legs_spec(registration), prefix="", suffix="", frame=legs_frame)
+    add_contact_pairs(abdomen, LEG_CONTACTS_XML)
 
     return abdomen
 
@@ -658,6 +659,10 @@ def build_spec(
         model_name: Key into MODEL_REGISTRY (e.g. "myotorso_arms").
         build_kwargs: Passed along to builder function.
                       TODO: raise error if unused kwarg supplied.
+                      ``{"postures": True}`` adds all of the model's postures as
+                      keyframes and ``{"postures": ["standing"]}`` the named ones.
+                      Without it the spec has no keyframe, so joints can still be
+                      deleted from it; see myo_sim.build.keyframes.
         inertia_floor: Optional numerical-conditioning floor for
             auto/mesh-derived body inertia, applied via the compiler's
             ``boundinertia`` attribute (MuJoCo clamps a body's principal
@@ -682,12 +687,19 @@ def build_spec(
         available = ", ".join(sorted(MODEL_REGISTRY))
         raise ValueError(f"Unknown model selection: {model_name}. Available: {available}") from exc
 
-    build_kwargs = build_kwargs or {}
-    registration.build_kwargs.update(build_kwargs)
+    if build_kwargs:
+        # A copy: the registry entry is shared by every later build and alias.
+        registration = replace(registration, build_kwargs={**registration.build_kwargs, **build_kwargs})
 
     spec = SPEC_BUILDERS[registration.build_strategy](registration)
+    if registration.build_kwargs.get("disable_finger_collisions", False):
+        # Again on the composed spec: its explicit pairs are only added after the arms are built.
+        disable_finger_collision(spec)
     if inertia_floor is not None:
         apply_inertia_floor(spec, inertia_floor)
+    postures = registration.build_kwargs.get("postures", False)
+    if postures:
+        add_posture_keyframes(spec, model_name, None if postures is True else postures)
     return spec
 
 
@@ -778,22 +790,87 @@ def enable_floor_collision(root: ET.Element) -> None:
             geom.set("conaffinity", "1")
 
 
-def iter_worldbody_geoms(root: ET.Element) -> list[ET.Element]:
+def compiled_element_ids(root: ET.Element, model: mujoco.MjModel, tag: str) -> list[tuple[ET.Element, int]]:
+    """Pair every worldbody ``geom`` or ``site`` element with its id in ``model``.
+
+    ``MjSpec.to_xml()`` writes the elements a body holds in a frame after its other elements, so document
+    order is not compiled order. Named bodies and elements are matched by name. Unnamed ones keep their order
+    among the unnamed elements of their body (unnamed bodies: of the whole tree); a frame can change that
+    order too, so name the elements you create in frames.
+    """
+    body_type = mujoco.mjtObj.mjOBJ_BODY
+    element_type = getattr(mujoco.mjtObj, f"mjOBJ_{tag.upper()}")
+    count = getattr(model, f"n{tag}")
+    found: list[tuple[ET.Element, int]] = []
     worldbody = root.find("worldbody")
-    if worldbody is None:
-        return []
-    return list(worldbody.iter("geom"))
+    if worldbody is not None:
+        unnamed_bodies = iter([i for i in range(1, model.nbody) if not mujoco.mj_id2name(model, body_type, i)])
+
+        def collect(parent: ET.Element, body_id: int) -> None:
+            for child in parent:
+                if child.tag == tag:
+                    found.append((child, body_id))
+                elif child.tag == "frame":
+                    collect(child, body_id)
+                elif child.tag == "body":
+                    name = child.get("name")
+                    collect(child, mujoco.mj_name2id(model, body_type, name) if name else next(unnamed_bodies, -1))
+
+        collect(worldbody, 0)
+    if len(found) != count:
+        raise ValueError(f"Generated XML has {len(found)} {tag}s, but compiled model has {count}")
+
+    unnamed: dict[int, list[int]] = {}
+    for element_id in range(count):
+        if not mujoco.mj_id2name(model, element_type, element_id):
+            body_id = int(getattr(model, f"{tag}_bodyid")[element_id])
+            unnamed.setdefault(body_id, []).append(element_id)
+    unnamed_ids = {body_id: iter(ids) for body_id, ids in unnamed.items()}
+    pairs: list[tuple[ET.Element, int]] = []
+    for element, body_id in found:
+        name = element.get("name")
+        element_id = mujoco.mj_name2id(model, element_type, name) if name else next(unnamed_ids.get(body_id, iter(())), -1)
+        pairs.append((element, element_id))
+    if sorted(element_id for _, element_id in pairs) != list(range(count)):
+        raise ValueError(f"Generated XML {tag}s do not match the names and bodies of the compiled model")
+    return pairs
 
 
 def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel) -> None:
     """Preserve collision flags that can be lost through exported default inheritance."""
-    geoms = iter_worldbody_geoms(root)
-    if len(geoms) != model.ngeom:
-        raise ValueError(f"Generated XML has {len(geoms)} geoms, but compiled model has {model.ngeom}")
-
-    for geom_id, geom in enumerate(geoms):
+    for geom, geom_id in compiled_element_ids(root, model, "geom"):
         geom.set("contype", str(int(model.geom_contype[geom_id])))
         geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
+
+
+def apply_compiled_visual_attributes(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Preserve effective materials and site groups after merging exported defaults."""
+    for geom, geom_id in compiled_element_ids(root, model, "geom"):
+        material_id = int(model.geom_matid[geom_id])
+        # An empty material explicitly clears any inherited class material.
+        geom.set("material", model.mat(material_id).name if material_id >= 0 else "")
+    for site, site_id in compiled_element_ids(root, model, "site"):
+        site.set("group", str(int(model.site_group[site_id])))
+
+
+def apply_compiled_inertia_precision(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Keep principal moments on their physical triangle after XML rounding.
+
+    Native XML uses six significant digits for edited values. A planar body's
+    largest moment can round above the sum of the other two, so a valid model
+    no longer compiles. Preserve the moments themselves rather than changing
+    them or enabling the compiler's averaging fallback.
+    """
+    worldbody = root.find("worldbody")
+    if worldbody is None:
+        return
+    bodies = list(worldbody.iter("body"))
+    if len(bodies) != model.nbody - 1:
+        raise ValueError(f"Generated XML has {len(bodies)} bodies, but compiled model has {model.nbody - 1}")
+    for body_id, body in enumerate(bodies, 1):
+        inertial = body.find("inertial")
+        if inertial is not None:
+            inertial.set("diaginertia", " ".join(format(float(value), ".17g") for value in model.body_inertia[body_id]))
 
 
 def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjModel | None = None) -> str:
@@ -811,15 +888,37 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjMo
     enable_floor_collision(root)
     if model is not None:
         apply_compiled_geom_collision_flags(root, model)
+        apply_compiled_visual_attributes(root, model)
+        apply_compiled_inertia_precision(root, model)
     ET.indent(root, space="  ")
     return ET.tostring(root, encoding="unicode") + "\n"
 
 
 def write_spec_xml(spec: mujoco.MjSpec, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    model = spec.compile()
+    export = spec.copy()
+    temporary_names: dict[str, set[str]] = {}
+    for tag in ("body", "geom", "site"):
+        elements = list(getattr(export, "bodies" if tag == "body" else f"{tag}s"))
+        used = {element.name for element in elements}
+        temporary_names[tag] = set()
+        for index, element in enumerate(elements):
+            if not element.name:
+                name = f"_myo_sim_export_{tag}_{index}"
+                while name in used:
+                    name += "_"
+                element.name = name
+                used.add(name)
+                temporary_names[tag].add(name)
+    model = export.compile()
     asset_dir = os.path.relpath(ROOT, output_path.parent)
-    output_path.write_text(sanitize_spec_xml(spec.to_xml(), asset_dir=asset_dir, model=model))
+    root = ET.fromstring(sanitize_spec_xml(export.to_xml(), asset_dir=asset_dir, model=model))
+    for tag, names in temporary_names.items():
+        for element in root.iter(tag):
+            if element.get("name") in names:
+                del element.attrib["name"]
+    ET.indent(root, space="  ")
+    output_path.write_text(ET.tostring(root, encoding="unicode") + "\n")
 
 
 def generate_xml_files(output_root: Path = ROOT) -> list[Path]:

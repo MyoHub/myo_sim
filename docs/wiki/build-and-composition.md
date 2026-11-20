@@ -4,13 +4,13 @@ Reference for agents editing the MjSpec composition pipeline in `myo_sim/build/c
 
 ## Overview
 
-`build_spec(name: str)` is the core entry point; `build_model(name: str)` is a thin convenience wrapper (`build_spec(name).compile()`) for callers who just want a compiled `MjModel`. Both:
+`build_spec(name: str)` is the core entry point; callers who just want a compiled `MjModel` use `build_spec(name).compile()` or `myo_sim.load_model(name)`. `build_spec`:
 
 1. Look up `name` in `MODEL_REGISTRY` to get a `ModelRegistration`.
 2. Dispatch to the matching builder function via `SPEC_BUILDERS[registration.build_strategy]`.
-3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, and injects contact pairs / sensors as needed. Every builder returns an editable `MjSpec` (not a compiled `MjModel`) — `build_spec()` stops there so callers can edit further before compiling; `build_model()` compiles it for you.
+3. The builder loads component specs, attaches them using MuJoCo's `MjSpec.attach()` API, and injects contact pairs / sensors as needed. Every builder returns an editable `MjSpec` (not a compiled `MjModel`) — `build_spec()` stops there so callers can edit further before compiling; `myo_sim.load_model()` compiles it for you.
 
-`myo_sim.load_spec(name)` / `myo_sim.load_model(name)` / `myo_sim.load(name)` (in `myo_sim/__init__.py`) are the package-level entry points most consumers should use instead of calling `compose.py` directly — they also resolve packaged legacy static XMLs and legacy aliases (`hand`, `myoarm`, ...), which `build_spec`/`build_model` do not.
+`myo_sim.load_spec(name)` / `myo_sim.load_model(name)` / `myo_sim.load(name)` (in `myo_sim/__init__.py`) are the package-level entry points most consumers should use instead of calling `compose.py` directly — they also resolve packaged legacy static XMLs and legacy aliases (`hand`, `myoarm`, ...), which `build_spec` does not.
 
 All file paths are resolved relative to `MODELS_DIR` (the packaged `myo_sim/models/` directory). The `compiler_meshdir` for child XMLs is always set to `MODELS_DIR` (the repo root of the models tree) so that relative mesh paths inside the XML resolve correctly.
 
@@ -31,6 +31,31 @@ This generates:
 - `myo_sim/models/myofullbody.xml`
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
+
+When exported attachment defaults overlap, generation writes the compiled geom
+materials and site visibility groups explicitly, alongside collision flags. This
+keeps distinct left/right materials and attachment marker groups when the XML is reloaded.
+Each value goes to the XML element of the same name (unnamed elements: by their order within their body), because
+`MjSpec.to_xml()` writes the geoms and sites a body holds in a frame after its other ones.
+Explicit principal inertias are written from the compiled model with roundtrip
+float precision. Native six-digit formatting of edited values can otherwise
+move a planar body's moments across the inertia triangle and make the exported
+XML fail to reload. This preserves the moments; it does not enable
+`balanceinertia` or perturb the mass distribution. Other fields retain native
+XML precision.
+
+The [recorded native roundtrip matrix](../validation/xml-inertia-roundtrip.json)
+uses the pinned model-scaling PR149 head on MuJoCo 3.4, 3.9 and 3.10. All 27
+selected cases now reload; the 18 repaired cases have identical principal
+moments. Already-passing controls retain native inferred-inertia differences of
+at most 3.1e-12 kg m². This is a deterministic regression matrix, not a population
+estimate or a validation of every scaling rule.
+
+## Keyframes
+
+`build_spec()` adds no keyframe unless called with `build_kwargs={"postures": True}` or a list of names; `myo_sim.load_model()` passes that for every model with postures. See `docs/wiki/postures.md`.
+
+`build.utils.add_keyframes(spec, path)` imports an MJCF keyframe include after the final DoF layout is fixed. It preserves the full state (`time`, `qpos`, `qvel`, `act`, `ctrl`, `mpos`, `mquat`); unnamed keys, omitted fields and partial state arrays keep MuJoCo's native defaults.
 
 ## MODEL_REGISTRY and BuildStrategy
 
@@ -86,7 +111,7 @@ Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec o
        MY_NEW_MODEL = "my_new_model"
    ```
 
-2. **Write a builder function** following the existing pattern. It receives a `ModelRegistration` and must return an editable `MjSpec` (not a compiled `MjModel` — compilation happens later, in `build_model()` or by the caller):
+2. **Write a builder function** following the existing pattern. It receives a `ModelRegistration` and must return an editable `MjSpec` (not a compiled `MjModel` — compilation happens later, in `myo_sim.load_model()` or by the caller):
    ```python
    def build_my_new_spec(registration: ModelRegistration) -> mujoco.MjSpec:
        torso = load_torso_spec(registration)  # or load_passive_torso_spec
@@ -156,13 +181,28 @@ A frozen dataclass that controls how `mirror_element()` transforms the right-sid
 
 Default `MirrorRules()` handles the standard `_r` → `_l` suffix replacement. Override specific fields only when the default logic produces incorrect results for a new body part.
 
+`mirror_element()` and `expand_component_element()` return independent trees and
+preserve child order, XML text and tails. Each copies a node once while walking
+the tree, avoiding repeated subtree copies during composition.
+
 ### `add_contact_pairs(spec, contacts_xml, include_pair=None)`
 
 Parses a contacts XML file (from `myo_sim/models/contacts/`) and injects each `<pair>` element into the `MjSpec` via `spec.add_pair()`. The optional `include_pair` callable receives the XML element and returns `False` to skip a pair (used to exclude left-arm pairs when `include_left_arm_contacts=False`).
 
+Pairs inherit any `class` defaults already defined in the spec; explicit pair
+attributes override those defaults. A missing default class raises `ValueError`.
+
 ### `add_sensors(spec, sensors_xml)`
 
-Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported frame sensors into the `MjSpec` via `spec.add_sensor()`. `myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by adding body linear and angular velocity sensors before the leg touch sensors are attached.
+Parses a sensors XML file (from `myo_sim/models/sensors/`) and injects supported
+`framelinvel`, `frameangvel`, `touch` and `jointlimitfrc` sensors via
+`spec.add_sensor()`. Frame sensors retain their reference type/name; frame objects
+and references can be bodies, body frames (`xbody`), geoms, sites or cameras.
+The importer preserves `cutoff`, `noise`, `user` data and native unnamed sensors.
+`myofullbody_sensors.xml` restores the MuscleMimic full-body observation layout by
+adding body linear and angular velocity sensors before the leg touch sensors are attached.
+
+It imports `framelinvel`, `frameangvel`, `touch` and `jointlimitfrc` (`SENSOR_TYPE_BY_TAG`). Any other sensor tag raises `ValueError` naming the tag and the file, before a sensor is added.
 
 ### `find_body(spec, body_name)` and `find_site(spec, site_name)`
 
@@ -193,3 +233,5 @@ Full-body observation compatibility sensors live under `myo_sim/models/sensors/`
 **`find_body` / `find_site` error on missing names.** Prefer these over direct `spec.body(name)` / `spec.site(name)` calls so a typo'd attachment site fails with a clear `ValueError` at build time instead of a confusing `None`-attribute error deeper in `MjSpec.attach()`.
 
 **`balanceinertia = True` on all specs.** Every loaded spec sets `compiler.balanceinertia = True` to prevent inertia-validation errors in OpenSim-converted bodies. Do not omit this when adding new component specs.
+
+**Unnamed frame elements during export.** `write_spec_xml()` assigns temporary unique names to a copy of the spec before compiling and serializing it. This preserves compiled collision/visual attributes when frames reorder unnamed elements. Temporary names are removed from the generated XML; the caller's spec is unchanged.

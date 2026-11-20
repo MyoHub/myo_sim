@@ -21,9 +21,21 @@ myo_sim/              # installable Python package
     scene/            # scene wrapper XMLs for rendering
     textures/         # shared textures
   build/
-    compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec()/build_model(), SPEC_BUILDERS
+    compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
+    keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
+    data/             # tables written by scripts/, with provenance
+  physics/            # runtime physics the models need beyond MuJoCo (NumPy core; torch/JAX lazily)
+    joint_coupling.py # put coupled joints (mjEQ_JOINT) on their polynomials
+    fatigue.py        # 3CC-r muscle fatigue: NumPy, batched torch (torch.compile on CUDA)
+    fatigue_jax.py    # the same fatigue step in JAX
+    muscle_groups.py  # functional muscle groups, keys of the fatigue parameters
+    muscle_strength.py # native peak-force resolution, strength transforms and MVC torque calibration
+    body_mass.py      # selected-body mass/inertia transforms with refreshed constants
+    activation_dynamics.py # mjDYN_MUSCLE activation and deactivation time-constant transforms
+    joint_mechanics.py # passive joint damping, stiffness and range-of-motion copy transforms
+    hill_muscle.py    # portable Hill-type muscle curves (NumPy/torch) and joint-torque MjSpec compiler
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -37,6 +49,8 @@ tests/
   test_scaling.py                  # scale_spec rules, refit, checks, OpenSim file route
   test_opensim_comparison.py       # scale_spec against stored OpenSim ModelScaler results (data/opensim_scaling/)
   test_opensim_pose_comparison.py  # the same over a pose grid: moment arms, fibre length, force and torque
+  test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
+  test_physics_*.py                # myo_sim.physics: couplings, fatigue (NumPy/torch/JAX), endurance times
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -55,5 +69,22 @@ docs/wiki/            # canonical wiki location
 | Add a composed model | `myo_sim/build/compose.py` — new `BuildStrategy`, builder, `SPEC_BUILDERS` and `MODEL_REGISTRY` entries |
 | Add cross-part contact pairs | `myo_sim/models/contacts/` then `add_contact_pairs()` in `build/compose.py` |
 | Add a mesh | `myo_sim/models/meshes/` |
+| Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
 | Change a scaling rule or an OpenSim segment map | `myo_sim/scaling.py`, `myo_sim/opensim_scales.py`; see `docs/wiki/model-scaling.md` |
+
+## Publishing
+
+After merging the release PR, run **Publish to PyPI and GitHub** from Actions on `main`.
+The workflow reads the stable `X.Y.Z` version from the built wheel, publishes to PyPI
+using the existing `pypi` environment and Trusted Publisher, then tags the exact build
+commit as `vX.Y.Z`. It creates a GitHub release with generated notes and attaches the
+same wheel and source archive before publishing the release. It never bumps versions
+or writes to `main`. A tag pointing to another commit fails before the PyPI upload.
+
+If GitHub release creation fails after PyPI succeeds, use **Re-run failed jobs** on
+that run. The release job reuses the original artifacts, accepts an existing tag only
+at the original commit, and resumes an existing draft/release. Do not restart the whole
+workflow for an already published version: PyPI rejects duplicate uploads by design.
+Tag creation requires the repository's tag rules to permit the Actions token to create
+`v*` tags; the workflow does not bypass rules.

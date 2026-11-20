@@ -37,7 +37,7 @@ Every nested default class and every material name must be scoped to the part wi
 
 **Naming rule for `*_assets.xml` files:** all nested default class names must be scoped to the body part — never use generic names like `wrap`, `marker`, `muscle`, `coll`, `elbow`, `wrist`, or `fingers`. Use `myotorso_wrap`, `myoarm_wrap`, `myotorso_marker`, `myoarm_marker`, `myoarm_muscle`, `myoarm_elbow`, `myolegs_wrap`, `myolegs_coll`, etc. — one consistent `<part>_<role>` pattern per body part, applied to every nested class in the file, not just some of them.
 
-**Composition rule:** multi-part assemblies must use `build_model()` in `myo_sim/build/compose.py`, which uses MjSpec attachment with independent per-child namespaces and sidesteps class name collisions entirely. Sharing `class="main"` across two included files is accepted by MuJoCo 3.8 — it is the nested sub-class names (e.g. `wrap`, `marker`) that must be unique. The naming rule above ensures this.
+**Composition rule:** multi-part assemblies must use `build_spec()` in `myo_sim/build/compose.py`, which uses MjSpec attachment with independent per-child namespaces and sidesteps class name collisions entirely. Sharing `class="main"` across two included files is accepted by MuJoCo 3.8 — it is the nested sub-class names (e.g. `wrap`, `marker`) that must be unique. The naming rule above ensures this.
 
 ## Python
 

@@ -1,6 +1,8 @@
 from pathlib import Path
 
 import mujoco
+import numpy as np
+import pytest
 
 from myo_sim import load_model
 
@@ -91,3 +93,22 @@ def test_myolegs_abdomen_builds_from_registered_spec():
     assert id_for(model, mujoco.mjtObj.mjOBJ_BODY, "lumbar5") >= 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "iliacus_r") >= 0
     assert id_for(model, mujoco.mjtObj.mjOBJ_ACTUATOR, "iliacus_l") >= 0
+
+
+def contact_pairs(model) -> set[tuple[str, str]]:
+    return {(model.geom(model.pair_geom1[k]).name, model.geom(model.pair_geom2[k]).name) for k in range(model.npair)}
+
+
+def test_myolegs_abdomen_keeps_the_leg_contact_pairs():
+    assert contact_pairs(load_model("myolegs_abdomen")) == contact_pairs(load_model("myolegs"))
+
+
+@pytest.mark.parametrize("name,reference", (("myotorso_abdomen", "myotorso"), ("myolegs_abdomen", "myolegs")))
+def test_abdomen_variants_face_like_their_full_models(name, reference):
+    orientations = []
+    for model_name in (name, reference):
+        model = load_model(model_name)
+        data = mujoco.MjData(model)
+        mujoco.mj_kinematics(model, data)
+        orientations.append(data.xmat[model.body("lumbar5").id].reshape(3, 3))
+    np.testing.assert_allclose(orientations[0], orientations[1], atol=1e-9)

@@ -182,7 +182,6 @@
             <site site="BIClong_BIClong-P6_r"/>
             <site site="BIClong_BIClong-P7_r"/>
             <site site="BIClong_BIClong-P8_r"/>
-            <geom geom="Elbow_BIC_BRD_ellipsoid_BIClong" sidesite="Elbow_BIC_BRD_ellipsoid_BIClong_7_sidesite_r"/>
             <site site="BIClong_BIClong-P10_r"/>
             <site site="BIClong_BIClong-P11_r"/>
         </spatial>

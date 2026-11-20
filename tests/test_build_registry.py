@@ -3,6 +3,7 @@ from dataclasses import fields
 from pathlib import Path
 
 import mujoco
+import numpy as np
 
 import myo_sim
 from myo_sim import load_model
@@ -73,9 +74,16 @@ def test_generate_xml_files_writes_base_model_outputs(tmp_path, monkeypatch):
         def __init__(self, model_name):
             self.model_name = model_name
             self.compiler = type("Compiler", (), {"meshdir": "", "texturedir": ""})()
+            self.bodies = []
+            self.geoms = []
+            self.sites = []
             self.ngeom = 0
+            self.nsite = 0
             self.geom_contype = []
             self.geom_conaffinity = []
+
+        def copy(self):
+            return FakeSpec(self.model_name)
 
         def compile(self):
             compile_calls.append(self.model_name)
@@ -201,6 +209,20 @@ def test_generated_myofullbody_uses_musclemimic_scene(tmp_path):
     assert 'mesh name="meshscene"' not in source
 
 
+def collision_flags_by_name(model: mujoco.MjModel) -> dict[str | tuple[str, int], tuple[int, int]]:
+    """Collision flags keyed by geom name, or by body name and order among the body's unnamed geoms."""
+    flags: dict[str | tuple[str, int], tuple[int, int]] = {}
+    unnamed_count: dict[int, int] = {}
+    for geom_id in range(model.ngeom):
+        key: str | tuple[str, int] = model.geom(geom_id).name
+        if not key:
+            body_id = int(model.geom_bodyid[geom_id])
+            key = (model.body(body_id).name, unnamed_count.get(body_id, 0))
+            unnamed_count[body_id] = key[1] + 1
+        flags[key] = (int(model.geom_contype[geom_id]), int(model.geom_conaffinity[geom_id]))
+    return flags
+
+
 def test_generated_xml_preserves_geom_collision_flags(tmp_path):
     output_paths = compose.generate_xml_files(tmp_path)
 
@@ -208,5 +230,71 @@ def test_generated_xml_preserves_geom_collision_flags(tmp_path):
         built_model = load_model(model_name)
         generated_model = mujoco.MjModel.from_xml_path(str(output_path))
 
-        assert list(generated_model.geom_contype) == list(built_model.geom_contype), output_path
-        assert list(generated_model.geom_conaffinity) == list(built_model.geom_conaffinity), output_path
+        assert collision_flags_by_name(generated_model) == collision_flags_by_name(built_model), output_path
+
+
+def test_generated_xml_preserves_collision_flags_of_geoms_in_frames(tmp_path):
+    # MjSpec.to_xml() writes geoms created in a frame after the body's other geoms, and a frame's bodies first.
+    size = [0.05, 0, 0]
+    spec = mujoco.MjSpec()
+    spec.worldbody.add_frame(pos=[1, 0, 0]).add_geom(name="world_frame", size=size, contype=0, conaffinity=4)
+    body = spec.worldbody.add_body(name="body", pos=[0, 0, 1])
+    body.add_freejoint()
+    body.add_geom(name="plain_first", size=size, contype=1, conaffinity=1)
+    frame = body.add_frame(name="named_frame", pos=[0.2, 0, 0])
+    frame.add_geom(name="in_named_frame", size=size, contype=0, conaffinity=0)
+    child_in_frame = frame.add_body(name="child_in_frame")
+    child_in_frame.add_geom(size=size, contype=2, conaffinity=0)
+    child_in_frame.add_geom(size=size, contype=0, conaffinity=2)
+    body.add_frame(pos=[0, 0.2, 0]).add_geom(name="in_unnamed_frame", size=size, contype=4, conaffinity=0)
+    body.add_geom(name="plain_last", size=size, contype=1, conaffinity=2)
+    body.add_body(name="child_plain").add_geom(size=size, contype=8, conaffinity=1)
+    body.add_geom(size=size, contype=2, conaffinity=2)
+    reference = spec.compile()
+    output_path = tmp_path / "frames.xml"
+
+    compose.write_spec_xml(spec, output_path)
+    generated = mujoco.MjModel.from_xml_path(str(output_path))
+
+    assert collision_flags_by_name(generated) == collision_flags_by_name(reference)
+
+
+def test_build_kwargs_do_not_leak_into_later_builds():
+    registered = dict(MODEL_REGISTRY["myofullbody"].build_kwargs)
+    default = load_model("myofullbody").body("Full Body").pos.copy()
+    myo_sim.load_spec("myofullbody", build_kwargs={"root_pos": (5.0, 5.0, 5.0)})
+    assert MODEL_REGISTRY["myofullbody"].build_kwargs == registered
+    np.testing.assert_allclose(load_model("myofullbody").body("Full Body").pos, default)
+
+
+def test_generated_xml_preserves_unnamed_elements_in_frames(tmp_path: Path) -> None:
+    spec = mujoco.MjSpec.from_string("""<mujoco>
+      <asset><material name="red" rgba="1 0 0 1"/><material name="blue" rgba="0 0 1 1"/></asset>
+      <worldbody><body>
+        <geom name="_myo_sim_export_geom_1" size=".05" pos=".5 0 0" contype="8"/>
+        <geom size=".05" pos="1 0 0" contype="1" material="red"/>
+        <frame><geom size=".05" pos="1.5 0 0" contype="2" material="blue"/>
+          <site pos="1.5 0 0" group="3"/></frame>
+        <geom size=".05" pos="2 0 0" contype="4"/>
+        <site pos="1 0 0" group="2"/>
+      </body></worldbody></mujoco>""")
+    before = spec.to_xml()
+    original = spec.compile()
+    output = tmp_path / "unnamed.xml"
+    compose.write_spec_xml(spec, output)
+    generated = mujoco.MjModel.from_xml_path(str(output))
+    for tag, attributes in (("geom", ("contype", "conaffinity", "matid")), ("site", ("group",))):
+
+        def values(model: mujoco.MjModel) -> dict[tuple[float, ...], tuple[int, ...]]:
+            positions = getattr(model, f"{tag}_pos")
+            return {
+                tuple(pos): tuple(int(getattr(model, f"{tag}_{field}")[i]) for field in attributes)
+                for i, pos in enumerate(positions)
+            }
+
+        assert values(generated) == values(original)
+    assert spec.to_xml() == before
+    root = ET.fromstring(output.read_text())
+    assert [g.get("name") for g in root.iter("geom") if g.get("name")] == ["_myo_sim_export_geom_1"]
+    assert not any(s.get("name") for s in root.iter("site"))
+    assert not any(b.get("name") for b in root.iter("body"))
