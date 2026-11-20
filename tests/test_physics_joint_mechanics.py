@@ -20,10 +20,12 @@ def _coupled_model(
     elbow_damping: float = 0.4,
     elbow_stiffness: float = 1.2,
     elbow_hi: float = 2.0,
+    statistic: str = "",
 ) -> mujoco.MjModel:
     xml = f"""
     <mujoco>
       <compiler angle="radian"/>
+      {statistic}
       <worldbody>
         <site name="origin" pos="0 0 0.3"/>
         <body name="free_prop" pos="0.5 0 0.2">
@@ -113,6 +115,16 @@ def test_zero_damping_and_stiffness_are_supported() -> None:
     elbow_id = original.joint("elbow").id
     assert frictionless.dof_damping[original.jnt_dofadr[elbow_id]] == 0.0
     assert frictionless.jnt_stiffness[elbow_id] == 0.0
+
+
+@pytest.mark.parametrize("statistic", ["", '<statistic meanmass="7" meaninertia="2" meansize="3" extent="5" center="1 2 3"/>'])
+def test_mechanics_scaling_preserves_statistics_like_native_recompilation(statistic: str) -> None:
+    original = _coupled_model(statistic=statistic)
+    scaled = scale_joint_mechanics(original, damping=2, joints=["elbow"])
+    native = _coupled_model(elbow_damping=0.8, statistic=statistic)
+    for field in ("meanmass", "meaninertia", "meansize", "extent", "center"):
+        if hasattr(native.stat, field):
+            np.testing.assert_allclose(getattr(scaled.stat, field), getattr(native.stat, field), rtol=1e-12)
 
 
 @pytest.mark.parametrize(

@@ -853,6 +853,16 @@ def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel)
         geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
 
 
+def apply_compiled_visual_attributes(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Preserve effective materials and site groups after merging exported defaults."""
+    for geom, geom_id in compiled_element_ids(root, model, "geom"):
+        material_id = int(model.geom_matid[geom_id])
+        # An empty material explicitly clears any inherited class material.
+        geom.set("material", model.mat(material_id).name if material_id >= 0 else "")
+    for site, site_id in compiled_element_ids(root, model, "site"):
+        site.set("group", str(int(model.site_group[site_id])))
+
+
 def apply_compiled_inertia_precision(root: ET.Element, model: mujoco.MjModel) -> None:
     """Keep principal moments on their physical triangle after XML rounding.
 
@@ -888,6 +898,7 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjMo
     enable_floor_collision(root)
     if model is not None:
         apply_compiled_geom_collision_flags(root, model)
+        apply_compiled_visual_attributes(root, model)
         apply_compiled_inertia_precision(root, model)
     ET.indent(root, space="  ")
     return ET.tostring(root, encoding="unicode") + "\n"

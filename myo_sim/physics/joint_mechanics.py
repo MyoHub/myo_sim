@@ -89,7 +89,8 @@ def scale_joint_mechanics(
 
     Returns:
         Independent ``MjModel`` copy with refreshed ``mj_setConst`` constants
-        and preserved automatic muscle peak forces.
+        and preserved automatic muscle peak forces, equality settings and
+        model statistics.
     """
     jnt_ids = _select_independent_joints(model, joints)
     n_sel = len(jnt_ids)
@@ -122,16 +123,17 @@ def scale_joint_mechanics(
             raise ValueError("scaled joint ranges must be finite and non-degenerate")
         new_ranges[limited] = scaled_lim
 
-    has_meaninertia = hasattr(model.stat, "meaninertia")
-    default_meaninertia = has_meaninertia and bool(
-        np.isclose(model.stat.meaninertia, float(np.mean(model.dof_M0)) if model.nv else 1.0, rtol=1e-12, atol=1e-12)
-    )
     out = copy.deepcopy(model)
     scale_muscle_strength(out, 1.0)
     out.dof_damping[dof_ids] = new_damping
     out.jnt_stiffness[jnt_ids] = new_stiffness
     out.jnt_range[jnt_ids] = new_ranges
     mujoco.mj_setConst(out, mujoco.MjData(out))
-    if has_meaninertia and not default_meaninertia:
-        out.stat.meaninertia = model.stat.meaninertia
+    # setConst also reanchors body connect constraints and resets statistics.
+    # Joint mechanics change neither their geometry nor the model's inertia.
+    out.eq_data[:] = model.eq_data
+    for field in ("meanmass", "meaninertia", "meansize", "extent"):
+        if hasattr(model.stat, field):
+            setattr(out.stat, field, getattr(model.stat, field))
+    out.stat.center[:] = model.stat.center
     return out

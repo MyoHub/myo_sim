@@ -32,6 +32,7 @@ myo_sim/              # installable Python package
     body_mass.py      # selected-body mass/inertia transforms with refreshed constants
     activation_dynamics.py # mjDYN_MUSCLE activation and deactivation time-constant transforms
     joint_mechanics.py # passive joint damping, stiffness and range-of-motion copy transforms
+    hill_muscle.py    # portable Hill-type muscle curves (NumPy/torch) and joint-torque MjSpec compiler
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness

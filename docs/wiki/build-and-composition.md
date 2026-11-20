@@ -32,6 +32,11 @@ This generates:
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
+When exported attachment defaults overlap, generation writes the compiled geom
+materials and site visibility groups explicitly, alongside collision flags. This
+keeps distinct left/right materials and attachment marker groups when the XML is reloaded.
+Each value goes to the XML element of the same name (unnamed elements: by their order within their body), because
+`MjSpec.to_xml()` writes the geoms and sites a body holds in a frame after its other ones.
 Explicit principal inertias are written from the compiled model with roundtrip
 float precision. Native six-digit formatting of edited values can otherwise
 move a planar body's moments across the inertia triangle and make the exported

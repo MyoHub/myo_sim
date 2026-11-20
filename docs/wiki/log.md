@@ -5,6 +5,21 @@ Append-only maintenance log, most recent first.
 ## 2026-11-19 — Add opt-in cervical articulation and ocular/IMU head rig helpers
 Changed: myo_sim/build/head.py, myo_sim/build/compose.py, myo_sim/__init__.py, myo_sim/models/head/README.md, docs/wiki/build-and-composition.md, docs/wiki/log.md, tests/test_head_rig.py
 Why: `myohead_rigid_chain.xml` leaves `neck_rotation` and `neck_flexion` commented out so default assemblies keep a zero-DOF rigid head, which forced callers needing active head motion, gaze cameras or vestibular head IMU sensors to edit XML includes by hand. Opt-in `unlock_head_joints` and `add_ocular_rig` helpers (and `build_kwargs` hooks applied before posture keyframe generation) expose articulated neck DOFs and calibrated ocular/IMU sensors without changing any default model's DOF or actuator layout.
+## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
+Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
+Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.
+
+## 2026-11-18 — Include non-muscle bias forces in strength calibration
+Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md
+Why: zero-control non-muscle actuators can exert force, so dropping their bias made fitted MVC torque disagree with native MuJoCo in mixed muscle/servo models.
+
+## 2026-11-18 — Preserve unrelated settings in physics copy transforms
+Changed: myo_sim/physics/body_mass.py, myo_sim/physics/joint_mechanics.py, tests/test_physics_body_mass.py, tests/test_physics_joint_mechanics.py, docs/wiki/model-parameters.md
+Why: refreshing native constants overwrote custom visualization statistics and runtime-edited connect anchors; retain these settings while mass-dependent default statistics still follow body-mass changes.
+
+## 2026-11-18 — Match posture coordinates to edited joint layouts
+Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
+Why: assigning a free-root height or a scalar angle after a joint replacement could overwrite an unrelated coordinate in the standing keyframe.
 
 ## 2026-11-18 — AGENTS.md is the instruction file; CLAUDE.md imports it
 Changed: AGENTS.md, CLAUDE.md, docs/wiki/agent-workflow.md, docs/wiki/index.md, docs/wiki/log.md
@@ -14,9 +29,17 @@ Why: AGENTS.md was a symlink to CLAUDE.md, which checkouts without symlink suppo
 Changed: myo_sim/build/compose.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md
 Why: exported frame elements change document order, so a copy receives temporary names for reliable compiled-attribute mapping before those names are removed.
 
+## 2026-11-14 — Match generated XML materials and site groups by name
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, docs/wiki/build-and-composition.md, CHANGELOG.md
+Why: `MjSpec.to_xml()` writes frame-held geoms and sites after a body's other ones, so writing compiled materials and site groups in document order swapped them between elements of edited specs.
+
 ## 2026-11-14 — Match exported collision flags by geom name
 Changed: myo_sim/build/compose.py, tests/test_build_registry.py, CHANGELOG.md
 Why: `MjSpec.to_xml()` writes frame-held geoms after a body's other geoms, so writing compiled collision flags in document order swapped them between geoms of edited specs.
+
+## 2026-11-11 — Preserve generated XML appearance
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: merging exported attachment defaults replaced left-arm materials and changed attachment site groups when generated XML was reloaded.
 
 ## 2026-11-15 — Add passive joint mechanics transforms
 Changed: myo_sim/physics/joint_mechanics.py, myo_sim/physics/__init__.py, tests/test_physics_joint_mechanics.py, docs/wiki/index.md, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
