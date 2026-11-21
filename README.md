@@ -86,3 +86,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 ## License
 
 Apache 2.0 — see [LICENSE](LICENSE).
+
+The shoulder girdle, scapular muscles and some upper-arm muscle paths use data derived from Seth et al. 2019
+(SimTK "thoracoscapular", CC BY 4.0); attribution and changes in
+[myo_sim/build/data/LICENSE-Seth2019.txt](myo_sim/build/data/LICENSE-Seth2019.txt).

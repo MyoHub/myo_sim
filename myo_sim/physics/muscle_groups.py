@@ -10,6 +10,7 @@ FUNCTIONAL_MUSCLE_GROUPS = {
     "Shoulder-Abductor",
     "Shoulder-External-Rotator",  # rotator cuff; resolves to the Shoulder row
     "Shoulder-Internal-Rotator",
+    "Shoulder-Girdle",  # scapular muscles; resolves to the Shoulder row
     "Elbow-Pronator",  # forearm rotators (radioulnar joints); resolve to the Elbow row
     "Elbow-Supinator",
     "Ankle-Dorsiflexor",
@@ -42,6 +43,28 @@ MUSCLE_FMG = {
     "SUPSP": "Shoulder-Abductor",
     "INFSP": "Shoulder-External-Rotator",
     "SUBSC": "Shoulder-Internal-Rotator",
+    # Rotator-cuff sub-regions and scapular muscles of the scapulothoracic shoulder (Seth et al. 2019).
+    **dict.fromkeys(("SUPSP1", "SUPSP2"), "Shoulder-Abductor"),
+    **dict.fromkeys(("INFSP1", "INFSP2"), "Shoulder-External-Rotator"),
+    **dict.fromkeys(("SUBSC1", "SUBSC2", "SUBSC3"), "Shoulder-Internal-Rotator"),
+    **dict.fromkeys(
+        (
+            "TRAP1",
+            "TRAPocc",
+            "TRAP2",
+            "TRAP3",
+            "TRAP4",
+            "SERR1",
+            "SERR2",
+            "SERR3",
+            "RHOM1",
+            "RHOM2",
+            "LEVS1",
+            "LEVS2",
+            "PECMIN",
+        ),
+        "Shoulder-Girdle",
+    ),
     "TMIN": "Shoulder-External-Rotator",
     "TMAJ": "Shoulder-Adductor",
     "PECM1": "Shoulder-Adductor",

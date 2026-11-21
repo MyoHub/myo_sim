@@ -1,0 +1,104 @@
+"""Seth et al. 2019 shoulder table: provenance, licence and the frame registration against the current model."""
+
+from __future__ import annotations
+
+import importlib.util
+import json
+import sys
+from pathlib import Path
+
+import mujoco
+import numpy as np
+import pytest
+
+import myo_sim
+
+DATA = Path(myo_sim.__file__).parent / "build" / "data"
+SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "fit_scapulothoracic.py"
+
+
+def table() -> dict:
+    return json.loads((DATA / "scapulothoracic.json").read_text())
+
+
+def test_source_and_licence() -> None:
+    src = table()["source"]
+    assert "10.3389/fnbot.2019.00090" == src["doi"]
+    assert "CC BY 4.0" in src["license"]
+    text = (DATA / "LICENSE-Seth2019.txt").read_text()
+    assert "Creative Commons Attribution 4.0" in text and "do not endorse" in text
+
+
+def test_registration_matches_model() -> None:
+    """The sternoclavicular centre the table was registered on is still where the arm attaches in chest_r."""
+    reg = table()["registration"]
+    for name in ("clavicle", "scapula", "humerus"):
+        assert reg["meshes"][name]["seth_to_ours_max_mm"] < 1e-3
+    model = myo_sim.load_model("myoarm_r")
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    chest = model.body("chest_r").id
+    sc = data.xmat[chest].reshape(3, 3).T @ (data.xpos[model.body("clavicle_r").id] - data.xpos[chest])
+    np.testing.assert_allclose(sc, reg["sc_ours_in_chest_r"], atol=1e-6)
+    np.testing.assert_allclose(np.add(reg["sc_seth_in_thorax"], reg["shift_seth_thorax_to_chest_r"]), sc, atol=1e-6)
+
+
+def test_girdle_matches_table() -> None:
+    """Design A in the arm chain: the values of the table, and the rest posture (qpos0) on the thoracic ellipsoid."""
+    gird = table()["girdle"]
+    model = myo_sim.load_model("myoarms")
+    data = mujoco.MjData(model)
+    mujoco.mj_forward(model, data)
+    for side, flip in (("r", 1.0), ("l", -1.0)):
+        for name, ref, k in zip(
+            ("sternoclavicular_r2", "sternoclavicular_r3"), gird["clavicle"]["ref"], gird["clavicle"]["stiffness"]
+        ):
+            joint = model.joint(f"{name}_{side}")
+            assert model.qpos0[joint.qposadr[0]] == pytest.approx(ref)
+            assert model.qpos_spring[joint.qposadr[0]] == pytest.approx(ref)
+            assert model.jnt_stiffness[joint.id] == k
+        axial = model.joint(f"sternoclavicular_r1_{side}")
+        np.testing.assert_allclose(
+            model.jnt_axis[axial.id], np.multiply(gird["clavicle"]["axis_sternoclavicular_r1"], [flip, flip, 1]), atol=1e-6
+        )
+        assert model.jnt_stiffness[axial.id] == gird["clavicle"]["axial_stiffness"]
+        assert model.qpos0[axial.qposadr[0]] == 0.0 == model.qpos_spring[axial.qposadr[0]]
+        np.testing.assert_allclose(axial.range, gird["clavicle"]["axial_range"])
+        ac = model.joint(f"acromioclavicular_{side}")
+        assert model.jnt_stiffness[ac.id] == gird["scapula"]["ac_stiffness"]
+        assert model.dof_armature[ac.dofadr[0]] == gird["scapula"]["ac_armature"]
+        assert ac.type[0] == mujoco.mjtJoint.mjJNT_BALL and ac.range[1] == pytest.approx(gird["scapula"]["ac_range"])
+        np.testing.assert_allclose(
+            model.body(f"scapula_{side}").pos, np.multiply(gird["scapula"]["pos"], [1, 1, flip]), atol=1e-6
+        )
+        ell, ball = model.geom(f"scapulothoracic_ellipsoid_{side}").id, model.geom(f"scapula_glide_{side}").id
+        dist = mujoco.mj_geomDistance(model, data, ell, ball, 0.05, np.zeros(6))
+        assert abs(dist) < 1e-5, f"{side}: rest posture {1e3 * dist:.4f} mm off the thoracic ellipsoid"
+        assert model.pair(f"scapulothoracic_{side}").dim[0] == 1
+    # no rhythm couplings are left on the girdle
+    for eq in range(model.neq):
+        if model.eq_type[eq] == mujoco.mjtEq.mjEQ_JOINT:
+            name = model.joint(model.eq_obj1id[eq]).name
+            assert not name.startswith(("sternoclavicular", "acromioclavicular", "unrot")), name
+
+
+def test_rhythm_matches_table() -> None:
+    """The rhythm table is what the script computes from its stored frames, landmarks and literature rows."""
+    sys.path.insert(0, str(SCRIPT.parent))
+    spec = importlib.util.spec_from_file_location("fit_scapulothoracic", SCRIPT)
+    script = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(script)
+    rhythm = table()["rhythm"]
+    model_rows = script.rhythm_summary(myo_sim.load_model("myoarm_r"), rhythm["landmarks"], rhythm["frames"])
+
+    def flat(x: object, key: str = "") -> dict[str, float]:
+        if isinstance(x, dict):
+            return {k: v for name, sub in x.items() for k, v in flat(sub, f"{key}/{name}").items()}
+        if isinstance(x, list):
+            return {k: v for i, sub in enumerate(x) for k, v in flat(sub, f"{key}/{i}").items()}
+        return {key: x}
+
+    assert flat(model_rows) == pytest.approx(flat(rhythm["model"]), abs=0.011)
+    literature = script.rhythm_compare(rhythm["model"])
+    assert json.loads(json.dumps(literature)) == rhythm["literature"]
+    assert all(row["citation"] and row["location"] and row["protocol"] for row in literature)

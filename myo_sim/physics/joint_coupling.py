@@ -6,7 +6,7 @@ quartic in their offsets from the reference positions ``qpos0``::
     y - y0 = c0 + c1 (x - x0) + c2 (x - x0)^2 + c3 (x - x0)^3 + c4 (x - x0)^4
 
 or locks ``y - y0 = c0`` when there is no master. The knee mechanism (tibia
-translations, patella) and the shoulder rhythm of the myo_sim models are such
+translations, patella), the glenohumeral angle convention and the CMC4-5 coupling of the myo_sim models are such
 couplings. MuJoCo enforces them softly: a state written directly (``qpos0``, a
 keyframe, a clip frame, reset noise) that is off the polynomials is pulled back
 over the next steps, and until then ``actuator_moment`` describes a pose the

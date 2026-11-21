@@ -1,0 +1,4092 @@
+{
+ "format": "shoulder-mechanics-validation-v1",
+ "description": "Two checks on ``myoarm_r``, written to ``docs/validation/shoulder-mechanics.json`` and the generated tables of\n``docs/wiki/shoulder-complex.md`` (\"Independent validation\"):",
+ "mujoco": "4.0.1",
+ "model": "myoarm_r",
+ "moment_arms": {
+  "model": {
+   "coronal": {
+    "supraspinatus": [
+     14.06,
+     13.6,
+     12.46,
+     10.6,
+     8.04,
+     4.88,
+     -2.38
+    ],
+    "infraspinatus": [
+     -4.27,
+     -1.17,
+     1.9,
+     4.66,
+     6.82,
+     8.14,
+     8.25
+    ],
+    "subscapularis": [
+     4.27,
+     0.82,
+     -2.55,
+     -5.61,
+     -8.18,
+     -10.13,
+     -11.84
+    ],
+    "teres minor": [
+     -15.5,
+     -13.43,
+     -10.66,
+     -7.37,
+     -3.72,
+     0.09,
+     7.52
+    ],
+    "anterior deltoid": [
+     4.47,
+     11.49,
+     16.8,
+     22.42,
+     27.19,
+     30.81,
+     33.02
+    ],
+    "middle deltoid": [
+     24.76,
+     28.33,
+     32.19,
+     34.55,
+     34.94,
+     32.67,
+     17.38
+    ],
+    "posterior deltoid": [
+     10.08,
+     5.41,
+     0.11,
+     -5.23,
+     -9.99,
+     -13.66,
+     -17.08
+    ],
+    "pectoralis major": [
+     -21.9,
+     -20.99,
+     -18.8,
+     -15.67,
+     -11.88,
+     -7.66,
+     1.3
+    ],
+    "latissimus dorsi": [
+     -7.76,
+     -16.59,
+     -22.96,
+     -26.64,
+     -27.92,
+     -27.26,
+     -21.65
+    ],
+    "teres major": [
+     -21.0,
+     -31.89,
+     -38.49,
+     -41.2,
+     -40.81,
+     -38.02,
+     -27.47
+    ]
+   },
+   "scaption": {
+    "supraspinatus": [
+     21.42,
+     22.43,
+     22.69,
+     22.18,
+     20.26,
+     16.43,
+     3.63
+    ],
+    "infraspinatus": [
+     -1.49,
+     0.88,
+     3.2,
+     5.33,
+     7.13,
+     8.48,
+     9.46
+    ],
+    "subscapularis": [
+     0.47,
+     -1.29,
+     -2.93,
+     -4.32,
+     -5.36,
+     -6.0,
+     -5.99
+    ],
+    "teres minor": [
+     -15.55,
+     -12.34,
+     -8.56,
+     -4.41,
+     -0.08,
+     4.26,
+     12.21
+    ],
+    "anterior deltoid": [
+     13.38,
+     19.2,
+     24.51,
+     28.84,
+     31.87,
+     33.19,
+     28.66
+    ],
+    "middle deltoid": [
+     23.43,
+     26.93,
+     30.99,
+     33.67,
+     34.51,
+     32.89,
+     19.48
+    ],
+    "posterior deltoid": [
+     -14.8,
+     -14.91,
+     -14.04,
+     -12.33,
+     -9.98,
+     -7.13,
+     -0.61
+    ],
+    "pectoralis major": [
+     -7.86,
+     -9.92,
+     -11.03,
+     -11.21,
+     -10.58,
+     -9.3,
+     -5.43
+    ],
+    "latissimus dorsi": [
+     -22.95,
+     -29.5,
+     -32.7,
+     -33.16,
+     -31.52,
+     -28.3,
+     -18.57
+    ],
+    "teres major": [
+     -37.93,
+     -45.1,
+     -47.66,
+     -46.73,
+     -43.23,
+     -37.82,
+     -23.13
+    ]
+   },
+   "flexion": {
+    "supraspinatus": [
+     15.71,
+     15.32,
+     14.23,
+     12.42,
+     9.94,
+     6.67,
+     -1.52
+    ],
+    "infraspinatus": [
+     0.79,
+     -3.4,
+     -7.34,
+     -10.66,
+     -13.09,
+     -14.49,
+     -14.11
+    ],
+    "subscapularis": [
+     -6.67,
+     -4.61,
+     -2.66,
+     -0.81,
+     1.13,
+     3.21,
+     7.74
+    ],
+    "teres minor": [
+     -8.96,
+     -10.09,
+     -10.49,
+     -10.17,
+     -9.2,
+     -7.67,
+     -3.41
+    ],
+    "anterior deltoid": [
+     24.73,
+     30.53,
+     35.19,
+     38.32,
+     39.4,
+     37.71,
+     22.59
+    ],
+    "middle deltoid": [
+     10.24,
+     14.07,
+     17.85,
+     22.23,
+     25.67,
+     27.87,
+     27.02
+    ],
+    "posterior deltoid": [
+     -45.34,
+     -38.67,
+     -31.28,
+     -23.31,
+     -14.92,
+     -6.27,
+     11.22
+    ],
+    "pectoralis major": [
+     19.35,
+     8.95,
+     -3.0,
+     -14.15,
+     -22.69,
+     -28.12,
+     -31.14
+    ],
+    "latissimus dorsi": [
+     -35.53,
+     -37.41,
+     -36.58,
+     -33.78,
+     -29.53,
+     -24.21,
+     -11.47
+    ],
+    "teres major": [
+     -47.02,
+     -49.75,
+     -48.81,
+     -45.22,
+     -39.71,
+     -32.78,
+     -16.14
+    ]
+   },
+   "rotation": {
+    "supraspinatus": [
+     -14.38,
+     -11.89,
+     -9.01,
+     -5.58,
+     -1.34,
+     3.89,
+     9.57,
+     14.47,
+     17.78
+    ],
+    "infraspinatus": [
+     15.21,
+     19.34,
+     22.79,
+     25.3,
+     26.56,
+     26.19,
+     23.72,
+     18.55,
+     10.07
+    ],
+    "subscapularis": [
+     -4.25,
+     -11.38,
+     -17.02,
+     -19.44,
+     -19.57,
+     -18.26,
+     -15.88,
+     -12.7,
+     -8.98
+    ],
+    "teres minor": [
+     3.9,
+     7.97,
+     11.69,
+     14.87,
+     17.32,
+     18.83,
+     19.17,
+     18.16,
+     15.67
+    ],
+    "anterior deltoid": [
+     0.5,
+     0.02,
+     -0.44,
+     -0.84,
+     -1.17,
+     -1.41,
+     -1.57,
+     -1.63,
+     -1.61
+    ],
+    "middle deltoid": [
+     0.39,
+     0.09,
+     -0.21,
+     -0.5,
+     -0.76,
+     -0.98,
+     -1.13,
+     -1.21,
+     -1.21
+    ],
+    "posterior deltoid": [
+     5.77,
+     7.46,
+     8.74,
+     9.46,
+     9.48,
+     8.92,
+     7.75,
+     5.99,
+     3.71
+    ],
+    "pectoralis major": [
+     5.29,
+     0.03,
+     -5.31,
+     -10.14,
+     -14.03,
+     -16.76,
+     -18.05,
+     -17.63,
+     -16.15
+    ],
+    "latissimus dorsi": [
+     3.56,
+     -0.67,
+     -4.81,
+     -8.41,
+     -11.15,
+     -12.87,
+     -13.56,
+     -13.3,
+     -12.22
+    ],
+    "teres major": [
+     4.24,
+     0.26,
+     -3.75,
+     -7.37,
+     -10.27,
+     -12.26,
+     -13.26,
+     -13.3,
+     -12.47
+    ]
+   }
+  },
+  "curves": [
+   {
+    "plane": "coronal",
+    "muscle": "supraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     14.06,
+     13.6,
+     12.46,
+     10.6,
+     8.04,
+     4.88,
+     -2.38
+    ],
+    "band_lo_mm": [
+     23.0,
+     19.0,
+     16.0,
+     14.0,
+     11.0,
+     4.0,
+     7.5
+    ],
+    "band_hi_mm": [
+     26.0,
+     20.0,
+     19.0,
+     17.0,
+     15.0,
+     13.0,
+     7.5
+    ],
+    "in_band": 1,
+    "within_5mm": 4,
+    "n": 7,
+    "max_excess_mm": 9.88,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "infraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -4.27,
+     -1.17,
+     1.9,
+     4.66,
+     6.82,
+     8.14,
+     8.25
+    ],
+    "band_lo_mm": [
+     9.0,
+     6.0,
+     2.0,
+     0.0,
+     -1.0,
+     -3.0,
+     5.5
+    ],
+    "band_hi_mm": [
+     11.0,
+     11.5,
+     12.0,
+     11.5,
+     11.5,
+     10.0,
+     5.5
+    ],
+    "in_band": 3,
+    "within_5mm": 5,
+    "n": 7,
+    "max_excess_mm": 13.27,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "subscapularis",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     4.27,
+     0.82,
+     -2.55,
+     -5.61,
+     -8.18,
+     -10.13,
+     -11.84
+    ],
+    "band_lo_mm": [
+     1.0,
+     -2.0,
+     -5.0,
+     -8.0,
+     -11.5,
+     -13.5,
+     -8.0
+    ],
+    "band_hi_mm": [
+     1.5,
+     -2.0,
+     -5.0,
+     -8.0,
+     -9.5,
+     -9.0,
+     -8.0
+    ],
+    "in_band": 1,
+    "within_5mm": 7,
+    "n": 7,
+    "max_excess_mm": 3.84,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "teres minor",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -15.5,
+     -13.43,
+     -10.66,
+     -7.37,
+     -3.72,
+     0.09,
+     7.52
+    ],
+    "band_lo_mm": [
+     -4.0,
+     -2.0,
+     0.0,
+     2.0,
+     3.0,
+     5.0,
+     5.0
+    ],
+    "band_hi_mm": [
+     0.0,
+     2.0,
+     5.0,
+     9.5,
+     13.0,
+     14.0,
+     5.0
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 7,
+    "max_excess_mm": 11.5,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "anterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     4.47,
+     11.49,
+     16.8,
+     22.42,
+     27.19,
+     30.81,
+     33.02
+    ],
+    "band_lo_mm": [
+     5.0,
+     10.0,
+     15.0,
+     20.0,
+     25.0,
+     26.0,
+     30.0
+    ],
+    "band_hi_mm": [
+     5.5,
+     11.5,
+     17.0,
+     22.0,
+     25.0,
+     28.0,
+     30.0
+    ],
+    "in_band": 2,
+    "within_5mm": 7,
+    "n": 7,
+    "max_excess_mm": 3.02,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "middle deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     24.76,
+     28.33,
+     32.19,
+     34.55,
+     34.94,
+     32.67,
+     17.38
+    ],
+    "band_lo_mm": [
+     15.0,
+     21.0,
+     24.0,
+     26.0,
+     27.0,
+     24.0,
+     28.0
+    ],
+    "band_hi_mm": [
+     19.5,
+     21.0,
+     25.0,
+     27.0,
+     30.0,
+     30.0,
+     28.0
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 7,
+    "max_excess_mm": 10.62,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "posterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     10.08,
+     5.41,
+     0.11,
+     -5.23,
+     -9.99,
+     -13.66,
+     -17.08
+    ],
+    "band_lo_mm": [
+     -11.0,
+     -6.0,
+     -4.0,
+     -2.0,
+     0.0,
+     1.0,
+     2.0
+    ],
+    "band_hi_mm": [
+     7.0,
+     8.0,
+     11.0,
+     15.0,
+     21.0,
+     28.0,
+     2.0
+    ],
+    "in_band": 2,
+    "within_5mm": 4,
+    "n": 7,
+    "max_excess_mm": 19.08,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "pectoralis major",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -21.9,
+     -20.99,
+     -18.8,
+     -15.67,
+     -11.88,
+     -7.66,
+     1.3
+    ],
+    "band_lo_mm": [
+     -55.0,
+     -54.0,
+     -49.5,
+     -43.0,
+     -36.0,
+     -31.0,
+     -7.7
+    ],
+    "band_hi_mm": [
+     -17.3,
+     -20.3,
+     -20.7,
+     -20.3,
+     -16.7,
+     -14.3,
+     -7.7
+    ],
+    "in_band": 2,
+    "within_5mm": 5,
+    "n": 7,
+    "max_excess_mm": 9.0,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "latissimus dorsi",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -7.76,
+     -16.59,
+     -22.96,
+     -26.64,
+     -27.92,
+     -27.26,
+     -21.65
+    ],
+    "band_lo_mm": [
+     -30.0,
+     -36.0,
+     -38.0,
+     -39.0,
+     -39.0,
+     -38.5,
+     -17.7
+    ],
+    "band_hi_mm": [
+     -11.3,
+     -21.5,
+     -28.7,
+     -33.8,
+     -34.5,
+     -31.3,
+     -17.7
+    ],
+    "in_band": 0,
+    "within_5mm": 4,
+    "n": 7,
+    "max_excess_mm": 7.16,
+    "path_fitted": false
+   },
+   {
+    "plane": "coronal",
+    "muscle": "teres major",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -21.0,
+     -31.89,
+     -38.49,
+     -41.2,
+     -40.81,
+     -38.02,
+     -27.47
+    ],
+    "band_lo_mm": [
+     -43.0,
+     -48.0,
+     -49.0,
+     -48.0,
+     -46.0,
+     -46.0,
+     -28.0
+    ],
+    "band_hi_mm": [
+     -16.0,
+     -26.0,
+     -34.0,
+     -40.0,
+     -45.0,
+     -43.5,
+     -28.0
+    ],
+    "in_band": 4,
+    "within_5mm": 6,
+    "n": 7,
+    "max_excess_mm": 5.48,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "supraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     21.42,
+     22.43,
+     22.69,
+     22.18,
+     20.26,
+     16.43
+    ],
+    "band_lo_mm": [
+     19.0,
+     16.0,
+     12.5,
+     7.0,
+     3.0,
+     0.0
+    ],
+    "band_hi_mm": [
+     19.0,
+     16.0,
+     12.5,
+     7.0,
+     3.0,
+     0.0
+    ],
+    "in_band": 0,
+    "within_5mm": 1,
+    "n": 6,
+    "max_excess_mm": 17.26,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "supraspinatus",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "axford2025",
+     "hughes1998",
+     "liu1997",
+     "otis1994"
+    ],
+    "model_mm": [
+     21.42,
+     22.43,
+     22.69,
+     22.18,
+     20.26,
+     16.43
+    ],
+    "band_lo_mm": [
+     24.9,
+     22.6,
+     20.4,
+     18.1,
+     19.3,
+     15.8
+    ],
+    "band_hi_mm": [
+     27.0,
+     30.0,
+     28.0,
+     26.1,
+     26.1,
+     22.0
+    ],
+    "in_band": 4,
+    "within_5mm": 6,
+    "n": 6,
+    "max_excess_mm": 3.48,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "infraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -1.49,
+     0.88,
+     3.2,
+     5.33,
+     7.13,
+     8.48
+    ],
+    "band_lo_mm": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ],
+    "band_hi_mm": [
+     4.0,
+     4.0,
+     4.0,
+     4.0,
+     4.0,
+     4.0
+    ],
+    "in_band": 2,
+    "within_5mm": 6,
+    "n": 6,
+    "max_excess_mm": 4.48,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "infraspinatus",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "studies": [
+     "axford2025",
+     "otis1994"
+    ],
+    "model_mm": [
+     -1.49,
+     0.88,
+     3.2,
+     5.33,
+     7.13
+    ],
+    "band_lo_mm": [
+     10.2,
+     10.2,
+     10.2,
+     10.2,
+     10.2
+    ],
+    "band_hi_mm": [
+     16.8,
+     16.8,
+     16.8,
+     16.8,
+     10.2
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 5,
+    "max_excess_mm": 11.69,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "subscapularis",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     0.47,
+     -1.29,
+     -2.93,
+     -4.32,
+     -5.36,
+     -6.0
+    ],
+    "band_lo_mm": [
+     0.0,
+     3.0,
+     7.5,
+     12.0,
+     11.0,
+     10.0
+    ],
+    "band_hi_mm": [
+     0.0,
+     3.0,
+     7.5,
+     12.0,
+     11.0,
+     10.0
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 6,
+    "max_excess_mm": 16.36,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "subscapularis",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "studies": [
+     "axford2025",
+     "otis1994"
+    ],
+    "model_mm": [
+     0.47,
+     -1.29,
+     -2.93,
+     -4.32,
+     -5.36
+    ],
+    "band_lo_mm": [
+     4.4,
+     4.4,
+     4.4,
+     4.4,
+     8.4
+    ],
+    "band_hi_mm": [
+     8.4,
+     8.4,
+     8.4,
+     8.4,
+     8.4
+    ],
+    "in_band": 0,
+    "within_5mm": 1,
+    "n": 5,
+    "max_excess_mm": 13.76,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "teres minor",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -15.55,
+     -12.34,
+     -8.56,
+     -4.41,
+     -0.08,
+     4.26
+    ],
+    "band_lo_mm": [
+     -1.25,
+     -5.5,
+     -9.0,
+     -12.5,
+     -13.25,
+     -14.0
+    ],
+    "band_hi_mm": [
+     -1.25,
+     -5.5,
+     -9.0,
+     -12.5,
+     -13.25,
+     -14.0
+    ],
+    "in_band": 0,
+    "within_5mm": 1,
+    "n": 6,
+    "max_excess_mm": 18.26,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "teres minor",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "studies": [
+     "axford2025",
+     "otis1994"
+    ],
+    "model_mm": [
+     -15.55,
+     -12.34,
+     -8.56,
+     -4.41,
+     -0.08
+    ],
+    "band_lo_mm": [
+     -8.4,
+     -8.4,
+     -8.4,
+     -8.4,
+     -2.2
+    ],
+    "band_hi_mm": [
+     -2.2,
+     -2.2,
+     -2.2,
+     -2.2,
+     -2.2
+    ],
+    "in_band": 1,
+    "within_5mm": 4,
+    "n": 5,
+    "max_excess_mm": 7.15,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "anterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     13.38,
+     19.2,
+     24.51,
+     28.84,
+     31.87,
+     33.19
+    ],
+    "band_lo_mm": [
+     13.5,
+     18.0,
+     21.25,
+     24.5,
+     24.75,
+     25.0
+    ],
+    "band_hi_mm": [
+     13.5,
+     18.0,
+     21.25,
+     24.5,
+     24.75,
+     25.0
+    ],
+    "in_band": 0,
+    "within_5mm": 4,
+    "n": 6,
+    "max_excess_mm": 8.19,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "anterior deltoid",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "studies": [
+     "axford2025",
+     "otis1994"
+    ],
+    "model_mm": [
+     13.38,
+     19.2,
+     24.51,
+     28.84,
+     31.87
+    ],
+    "band_lo_mm": [
+     0.3,
+     7.7,
+     12.1,
+     13.5,
+     29.8
+    ],
+    "band_hi_mm": [
+     11.5,
+     11.4,
+     15.1,
+     22.4,
+     29.8
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 5,
+    "max_excess_mm": 9.41,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "middle deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     23.43,
+     26.93,
+     30.99,
+     33.67,
+     34.51,
+     32.89
+    ],
+    "band_lo_mm": [
+     19.0,
+     21.0,
+     24.5,
+     28.0,
+     25.25,
+     22.5
+    ],
+    "band_hi_mm": [
+     19.0,
+     21.0,
+     24.5,
+     28.0,
+     25.25,
+     22.5
+    ],
+    "in_band": 0,
+    "within_5mm": 1,
+    "n": 6,
+    "max_excess_mm": 10.39,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "middle deltoid",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "studies": [
+     "axford2025",
+     "otis1994"
+    ],
+    "model_mm": [
+     23.43,
+     26.93,
+     30.99,
+     33.67,
+     34.51
+    ],
+    "band_lo_mm": [
+     18.6,
+     23.1,
+     23.4,
+     23.4,
+     36.5
+    ],
+    "band_hi_mm": [
+     23.4,
+     23.4,
+     27.6,
+     32.0,
+     36.5
+    ],
+    "in_band": 0,
+    "within_5mm": 5,
+    "n": 5,
+    "max_excess_mm": 3.53,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "posterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -14.8,
+     -14.91,
+     -14.04,
+     -12.33,
+     -9.98,
+     -7.13
+    ],
+    "band_lo_mm": [
+     -6.0,
+     -2.0,
+     1.0,
+     4.0,
+     7.5,
+     11.0
+    ],
+    "band_hi_mm": [
+     -6.0,
+     -2.0,
+     1.0,
+     4.0,
+     7.5,
+     11.0
+    ],
+    "in_band": 0,
+    "within_5mm": 0,
+    "n": 6,
+    "max_excess_mm": 18.13,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "posterior deltoid",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "studies": [
+     "axford2025",
+     "otis1994"
+    ],
+    "model_mm": [
+     -14.8,
+     -14.91,
+     -14.04,
+     -12.33,
+     -9.98
+    ],
+    "band_lo_mm": [
+     -45.1,
+     -35.5,
+     -25.9,
+     -16.3,
+     -6.7
+    ],
+    "band_hi_mm": [
+     -11.2,
+     -10.6,
+     -10.0,
+     -9.4,
+     -6.7
+    ],
+    "in_band": 4,
+    "within_5mm": 5,
+    "n": 5,
+    "max_excess_mm": 3.28,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "pectoralis major",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -7.86,
+     -9.92,
+     -11.03,
+     -11.21,
+     -10.58,
+     -9.3
+    ],
+    "band_lo_mm": [
+     -36.0,
+     -41.0,
+     -36.0,
+     -31.0,
+     -26.0,
+     -21.0
+    ],
+    "band_hi_mm": [
+     -36.0,
+     -41.0,
+     -36.0,
+     -31.0,
+     -26.0,
+     -21.0
+    ],
+    "in_band": 0,
+    "within_5mm": 0,
+    "n": 6,
+    "max_excess_mm": 31.08,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "latissimus dorsi",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -22.95,
+     -29.5,
+     -32.7,
+     -33.16,
+     -31.52,
+     -28.3
+    ],
+    "band_lo_mm": [
+     -39.75,
+     -44.0,
+     -42.0,
+     -40.0,
+     -36.0,
+     -32.0
+    ],
+    "band_hi_mm": [
+     -39.75,
+     -44.0,
+     -42.0,
+     -40.0,
+     -36.0,
+     -32.0
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 6,
+    "max_excess_mm": 16.8,
+    "path_fitted": false
+   },
+   {
+    "plane": "scaption",
+    "muscle": "teres major",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "studies": [
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -37.93,
+     -45.1,
+     -47.66,
+     -46.73,
+     -43.23,
+     -37.82
+    ],
+    "band_lo_mm": [
+     -42.0,
+     -56.0,
+     -51.0,
+     -46.0,
+     -40.0,
+     -34.0
+    ],
+    "band_hi_mm": [
+     -42.0,
+     -56.0,
+     -51.0,
+     -46.0,
+     -40.0,
+     -34.0
+    ],
+    "in_band": 0,
+    "within_5mm": 5,
+    "n": 6,
+    "max_excess_mm": 10.9,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "supraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008"
+    ],
+    "model_mm": [
+     15.71,
+     15.32,
+     14.23,
+     12.42,
+     9.94,
+     6.67,
+     -1.52
+    ],
+    "band_lo_mm": [
+     36.0,
+     31.0,
+     26.0,
+     20.5,
+     15.5,
+     11.5,
+     5.0
+    ],
+    "band_hi_mm": [
+     36.0,
+     31.0,
+     26.0,
+     20.5,
+     15.5,
+     11.5,
+     5.0
+    ],
+    "in_band": 0,
+    "within_5mm": 1,
+    "n": 7,
+    "max_excess_mm": 20.29,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "supraspinatus",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "axford2025"
+    ],
+    "model_mm": [
+     15.71,
+     15.32,
+     14.23,
+     12.42
+    ],
+    "band_lo_mm": [
+     21.1,
+     19.1,
+     17.0,
+     15.0
+    ],
+    "band_hi_mm": [
+     21.1,
+     19.1,
+     17.0,
+     15.0
+    ],
+    "in_band": 0,
+    "within_5mm": 3,
+    "n": 4,
+    "max_excess_mm": 5.39,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "infraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     0.79,
+     -3.4,
+     -7.34,
+     -10.66,
+     -13.09,
+     -14.49,
+     -14.11
+    ],
+    "band_lo_mm": [
+     -4.0,
+     -1.0,
+     1.25,
+     1.0,
+     2.0,
+     2.5,
+     3.0
+    ],
+    "band_hi_mm": [
+     0.0,
+     0.0,
+     1.5,
+     5.0,
+     6.55,
+     8.9,
+     11.25
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 7,
+    "max_excess_mm": 17.11,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "infraspinatus",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "axford2025"
+    ],
+    "model_mm": [
+     0.79,
+     -3.4,
+     -7.34,
+     -10.66
+    ],
+    "band_lo_mm": [
+     20.3,
+     20.3,
+     20.3,
+     20.3
+    ],
+    "band_hi_mm": [
+     20.3,
+     20.3,
+     20.3,
+     20.3
+    ],
+    "in_band": 0,
+    "within_5mm": 0,
+    "n": 4,
+    "max_excess_mm": 30.96,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "subscapularis",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -6.67,
+     -4.61,
+     -2.66,
+     -0.81,
+     1.13,
+     3.21,
+     7.74
+    ],
+    "band_lo_mm": [
+     4.5,
+     6.0,
+     4.0,
+     1.0,
+     0.0,
+     0.7,
+     -2.3
+    ],
+    "band_hi_mm": [
+     15.3,
+     15.7,
+     12.3,
+     8.3,
+     4.3,
+     0.7,
+     -2.3
+    ],
+    "in_band": 1,
+    "within_5mm": 3,
+    "n": 7,
+    "max_excess_mm": 11.17,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "subscapularis",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "axford2025"
+    ],
+    "model_mm": [
+     -6.67,
+     -4.61,
+     -2.66,
+     -0.81
+    ],
+    "band_lo_mm": [
+     2.9,
+     2.9,
+     2.9,
+     2.9
+    ],
+    "band_hi_mm": [
+     2.9,
+     2.9,
+     2.9,
+     2.9
+    ],
+    "in_band": 0,
+    "within_5mm": 1,
+    "n": 4,
+    "max_excess_mm": 9.57,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "teres minor",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -8.96,
+     -10.09,
+     -10.49,
+     -10.17,
+     -9.2,
+     -7.67,
+     -3.41
+    ],
+    "band_lo_mm": [
+     -18.0,
+     -16.0,
+     -15.0,
+     -15.0,
+     -16.0,
+     -7.0,
+     2.5
+    ],
+    "band_hi_mm": [
+     -1.0,
+     -6.0,
+     -11.0,
+     -13.0,
+     -10.0,
+     -7.0,
+     2.5
+    ],
+    "in_band": 2,
+    "within_5mm": 6,
+    "n": 7,
+    "max_excess_mm": 5.91,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "teres minor",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "axford2025"
+    ],
+    "model_mm": [
+     -8.96,
+     -10.09,
+     -10.49,
+     -10.17
+    ],
+    "band_lo_mm": [
+     -8.7,
+     -8.7,
+     -8.7,
+     -8.7
+    ],
+    "band_hi_mm": [
+     -8.7,
+     -8.7,
+     -8.7,
+     -8.7
+    ],
+    "in_band": 0,
+    "within_5mm": 4,
+    "n": 4,
+    "max_excess_mm": 1.79,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "anterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     24.73,
+     30.53,
+     35.19,
+     38.32,
+     39.4,
+     37.71,
+     22.59
+    ],
+    "band_lo_mm": [
+     20.0,
+     28.0,
+     28.0,
+     26.0,
+     26.0,
+     25.4,
+     24.8
+    ],
+    "band_hi_mm": [
+     28.0,
+     28.0,
+     32.0,
+     36.0,
+     38.0,
+     40.0,
+     40.0
+    ],
+    "in_band": 2,
+    "within_5mm": 7,
+    "n": 7,
+    "max_excess_mm": 3.19,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "anterior deltoid",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "axford2025"
+    ],
+    "model_mm": [
+     24.73,
+     30.53,
+     35.19,
+     38.32
+    ],
+    "band_lo_mm": [
+     34.8,
+     33.3,
+     32.7,
+     32.8
+    ],
+    "band_hi_mm": [
+     34.8,
+     33.3,
+     32.7,
+     32.8
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 4,
+    "max_excess_mm": 10.07,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "middle deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     10.24,
+     14.07,
+     17.85,
+     22.23,
+     25.67,
+     27.87,
+     27.02
+    ],
+    "band_lo_mm": [
+     0.0,
+     3.0,
+     5.0,
+     7.0,
+     9.0,
+     10.0,
+     11.0
+    ],
+    "band_hi_mm": [
+     13.0,
+     18.0,
+     22.0,
+     23.0,
+     20.0,
+     10.0,
+     11.0
+    ],
+    "in_band": 4,
+    "within_5mm": 4,
+    "n": 7,
+    "max_excess_mm": 17.87,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "middle deltoid",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "axford2025"
+    ],
+    "model_mm": [
+     10.24,
+     14.07,
+     17.85,
+     22.23
+    ],
+    "band_lo_mm": [
+     3.7,
+     3.7,
+     3.7,
+     3.7
+    ],
+    "band_hi_mm": [
+     3.7,
+     3.7,
+     3.7,
+     3.7
+    ],
+    "in_band": 0,
+    "within_5mm": 0,
+    "n": 4,
+    "max_excess_mm": 18.53,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "posterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -45.34,
+     -38.67,
+     -31.28,
+     -23.31,
+     -14.92,
+     -6.27,
+     11.22
+    ],
+    "band_lo_mm": [
+     -31.0,
+     -33.0,
+     -31.0,
+     -30.0,
+     -27.0,
+     -22.0,
+     -17.0
+    ],
+    "band_hi_mm": [
+     -20.0,
+     -18.0,
+     -14.0,
+     -8.0,
+     -4.0,
+     -22.0,
+     -17.0
+    ],
+    "in_band": 2,
+    "within_5mm": 3,
+    "n": 7,
+    "max_excess_mm": 28.22,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "posterior deltoid",
+    "set": "held out",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "axford2025"
+    ],
+    "model_mm": [
+     -45.34,
+     -38.67,
+     -31.28,
+     -23.31
+    ],
+    "band_lo_mm": [
+     -32.4,
+     -31.8,
+     -31.2,
+     -30.6
+    ],
+    "band_hi_mm": [
+     -32.4,
+     -31.8,
+     -31.2,
+     -30.6
+    ],
+    "in_band": 0,
+    "within_5mm": 1,
+    "n": 4,
+    "max_excess_mm": 12.94,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "pectoralis major",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     19.35,
+     8.95,
+     -3.0,
+     -14.15,
+     -22.69,
+     -28.12,
+     -31.14
+    ],
+    "band_lo_mm": [
+     -1.0,
+     8.0,
+     16.0,
+     20.0,
+     19.3,
+     17.3,
+     14.7
+    ],
+    "band_hi_mm": [
+     9.7,
+     17.0,
+     19.7,
+     20.3,
+     20.0,
+     17.3,
+     14.7
+    ],
+    "in_band": 1,
+    "within_5mm": 1,
+    "n": 7,
+    "max_excess_mm": 45.84,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "latissimus dorsi",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -35.53,
+     -37.41,
+     -36.58,
+     -33.78,
+     -29.53,
+     -24.21,
+     -11.47
+    ],
+    "band_lo_mm": [
+     -34.0,
+     -38.0,
+     -40.0,
+     -38.0,
+     -35.0,
+     -5.3,
+     -1.3
+    ],
+    "band_hi_mm": [
+     -8.0,
+     -12.2,
+     -12.7,
+     -11.5,
+     -8.8,
+     -5.3,
+     -1.3
+    ],
+    "in_band": 4,
+    "within_5mm": 5,
+    "n": 7,
+    "max_excess_mm": 18.91,
+    "path_fitted": false
+   },
+   {
+    "plane": "flexion",
+    "muscle": "teres major",
+    "set": "fit set",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90,
+     120
+    ],
+    "studies": [
+     "ackland2008",
+     "kuechle1997"
+    ],
+    "model_mm": [
+     -47.02,
+     -49.75,
+     -48.81,
+     -45.22,
+     -39.71,
+     -32.78,
+     -16.14
+    ],
+    "band_lo_mm": [
+     -44.5,
+     -50.0,
+     -54.0,
+     -54.0,
+     -52.0,
+     -45.0,
+     -20.0
+    ],
+    "band_hi_mm": [
+     -36.0,
+     -48.0,
+     -48.5,
+     -47.0,
+     -52.0,
+     -45.0,
+     -20.0
+    ],
+    "in_band": 2,
+    "within_5mm": 5,
+    "n": 7,
+    "max_excess_mm": 12.29,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "supraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     -14.38,
+     -11.89,
+     -9.01,
+     -5.58,
+     -1.34,
+     3.89,
+     9.57,
+     14.47,
+     17.78
+    ],
+    "band_lo_mm": [
+     1.5,
+     1.5,
+     1.75,
+     2.1,
+     2.5,
+     3.25,
+     3.75,
+     4.0,
+     4.0
+    ],
+    "band_hi_mm": [
+     1.5,
+     1.5,
+     1.75,
+     2.1,
+     2.5,
+     3.25,
+     3.75,
+     4.0,
+     4.0
+    ],
+    "in_band": 0,
+    "within_5mm": 2,
+    "n": 9,
+    "max_excess_mm": 15.88,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "infraspinatus",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     15.21,
+     19.34,
+     22.79,
+     25.3,
+     26.56,
+     26.19,
+     23.72,
+     18.55,
+     10.07
+    ],
+    "band_lo_mm": [
+     24.5,
+     24.5,
+     24.5,
+     24.4,
+     24.0,
+     23.25,
+     22.0,
+     20.25,
+     18.0
+    ],
+    "band_hi_mm": [
+     24.5,
+     24.5,
+     24.5,
+     24.4,
+     24.0,
+     23.25,
+     22.0,
+     20.25,
+     18.0
+    ],
+    "in_band": 0,
+    "within_5mm": 6,
+    "n": 9,
+    "max_excess_mm": 9.29,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "subscapularis",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     -4.25,
+     -11.38,
+     -17.02,
+     -19.44,
+     -19.57,
+     -18.26,
+     -15.88,
+     -12.7,
+     -8.98
+    ],
+    "band_lo_mm": [
+     -14.0,
+     -16.25,
+     -18.5,
+     -20.6,
+     -22.5,
+     -24.0,
+     -24.75,
+     -25.0,
+     -25.0
+    ],
+    "band_hi_mm": [
+     -14.0,
+     -16.25,
+     -18.5,
+     -20.6,
+     -22.5,
+     -24.0,
+     -24.75,
+     -25.0,
+     -25.0
+    ],
+    "in_band": 0,
+    "within_5mm": 4,
+    "n": 9,
+    "max_excess_mm": 16.02,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "teres minor",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     3.9,
+     7.97,
+     11.69,
+     14.87,
+     17.32,
+     18.83,
+     19.17,
+     18.16,
+     15.67
+    ],
+    "band_lo_mm": [
+     17.0,
+     18.5,
+     19.5,
+     20.35,
+     21.5,
+     21.1,
+     20.5,
+     19.0,
+     16.0
+    ],
+    "band_hi_mm": [
+     17.0,
+     18.5,
+     19.5,
+     20.35,
+     21.5,
+     21.1,
+     20.5,
+     19.0,
+     16.0
+    ],
+    "in_band": 0,
+    "within_5mm": 5,
+    "n": 9,
+    "max_excess_mm": 13.1,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "anterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     0.5,
+     0.02,
+     -0.44,
+     -0.84,
+     -1.17,
+     -1.41,
+     -1.57,
+     -1.63,
+     -1.61
+    ],
+    "band_lo_mm": [
+     -2.5,
+     -0.6,
+     -1.0,
+     -3.0,
+     -6.0,
+     -9.8,
+     -13.0,
+     -15.3,
+     -16.0
+    ],
+    "band_hi_mm": [
+     -2.5,
+     -0.6,
+     -1.0,
+     -3.0,
+     -6.0,
+     -9.8,
+     -13.0,
+     -15.3,
+     -16.0
+    ],
+    "in_band": 0,
+    "within_5mm": 5,
+    "n": 9,
+    "max_excess_mm": 14.39,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "posterior deltoid",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     5.77,
+     7.46,
+     8.74,
+     9.46,
+     9.48,
+     8.92,
+     7.75,
+     5.99,
+     3.71
+    ],
+    "band_lo_mm": [
+     3.5,
+     4.6,
+     5.0,
+     4.9,
+     4.5,
+     4.9,
+     3.5,
+     1.5,
+     0.0
+    ],
+    "band_hi_mm": [
+     3.5,
+     4.6,
+     5.0,
+     4.9,
+     4.5,
+     4.9,
+     3.5,
+     1.5,
+     0.0
+    ],
+    "in_band": 0,
+    "within_5mm": 9,
+    "n": 9,
+    "max_excess_mm": 4.98,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "pectoralis major",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     5.29,
+     0.03,
+     -5.31,
+     -10.14,
+     -14.03
+    ],
+    "band_lo_mm": [
+     -10.0,
+     -14.5,
+     -17.5,
+     -19.25,
+     -20.0
+    ],
+    "band_hi_mm": [
+     -10.0,
+     -14.5,
+     -17.5,
+     -19.25,
+     -20.0
+    ],
+    "in_band": 0,
+    "within_5mm": 0,
+    "n": 5,
+    "max_excess_mm": 15.29,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "latissimus dorsi",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     3.56,
+     -0.67,
+     -4.81,
+     -8.41,
+     -11.15,
+     -12.87,
+     -13.56,
+     -13.3,
+     -12.22
+    ],
+    "band_lo_mm": [
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2
+    ],
+    "band_hi_mm": [
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2,
+     -8.2
+    ],
+    "in_band": 0,
+    "within_5mm": 5,
+    "n": 9,
+    "max_excess_mm": 11.76,
+    "path_fitted": false
+   },
+   {
+    "plane": "rotation",
+    "muscle": "teres major",
+    "set": "fit set",
+    "angles_deg": [
+     -60,
+     -45,
+     -30,
+     -15,
+     0,
+     15,
+     30,
+     45,
+     60
+    ],
+    "studies": [
+     "kuechle2000"
+    ],
+    "model_mm": [
+     4.24,
+     0.26,
+     -3.75,
+     -7.37,
+     -10.27,
+     -12.26,
+     -13.26,
+     -13.3,
+     -12.47
+    ],
+    "band_lo_mm": [
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7
+    ],
+    "band_hi_mm": [
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7,
+     -6.7
+    ],
+    "in_band": 0,
+    "within_5mm": 3,
+    "n": 9,
+    "max_excess_mm": 10.94,
+    "path_fitted": false
+   }
+  ],
+  "gatti2007_scaption_60": {
+   "supraspinatus": {
+    "model_mm": 22.18,
+    "range_mm": [
+     7.0,
+     27.0
+    ],
+    "in_range": true
+   },
+   "infraspinatus": {
+    "model_mm": 5.33,
+    "range_mm": [
+     0.0,
+     22.0
+    ],
+    "in_range": true
+   },
+   "teres minor": {
+    "model_mm": -4.41,
+    "range_mm": [
+     -13.0,
+     -2.2
+    ],
+    "in_range": true
+   },
+   "subscapularis": {
+    "model_mm": -4.32,
+    "range_mm": [
+     -1.0,
+     13.6
+    ],
+    "in_range": false
+   }
+  },
+  "hik2019_pooled_peaks": {
+   "scaption/anterior deltoid": {
+    "model_peak_mm": 33.19,
+    "pooled_peak_mm": 33.9
+   },
+   "scaption/middle deltoid": {
+    "model_peak_mm": 34.51,
+    "pooled_peak_mm": 33.4
+   },
+   "scaption/supraspinatus": {
+    "model_peak_mm": 22.69,
+    "pooled_peak_mm": 26.4
+   },
+   "scaption/teres major": {
+    "model_peak_mm": -47.66,
+    "pooled_peak_mm": -51.7
+   },
+   "rotation/infraspinatus": {
+    "model_peak_mm": 26.56,
+    "pooled_peak_mm": 24.5
+   },
+   "rotation/subscapularis": {
+    "model_peak_mm": -19.57,
+    "pooled_peak_mm": -20.6
+   }
+  },
+  "langenderfer2006": {
+   "rows": [
+    {
+     "muscle": "supraspinatus",
+     "elevation_deg": 10,
+     "model_mm": -0.9,
+     "measured_mm": 4.1,
+     "within_5mm": false
+    },
+    {
+     "muscle": "supraspinatus",
+     "elevation_deg": 60,
+     "model_mm": 3.1,
+     "measured_mm": 3.7,
+     "within_5mm": true
+    },
+    {
+     "muscle": "infraspinatus",
+     "elevation_deg": 10,
+     "model_mm": 20.5,
+     "measured_mm": 17.2,
+     "within_5mm": true
+    },
+    {
+     "muscle": "infraspinatus",
+     "elevation_deg": 60,
+     "model_mm": 17.4,
+     "measured_mm": 12.7,
+     "within_5mm": true
+    },
+    {
+     "muscle": "teres minor",
+     "elevation_deg": 10,
+     "model_mm": 13.3,
+     "measured_mm": 15.6,
+     "within_5mm": true
+    },
+    {
+     "muscle": "teres minor",
+     "elevation_deg": 60,
+     "model_mm": 13.0,
+     "measured_mm": 19.4,
+     "within_5mm": false
+    },
+    {
+     "muscle": "SUPSP1",
+     "elevation_deg": "10, 60",
+     "model_mm": -2.6,
+     "measured_mm": 0.5,
+     "within_5mm": true
+    },
+    {
+     "muscle": "SUPSP2",
+     "elevation_deg": "10, 60",
+     "model_mm": 7.2,
+     "measured_mm": 6.0,
+     "within_5mm": true
+    },
+    {
+     "muscle": "INFSP1",
+     "elevation_deg": "10, 60",
+     "model_mm": 16.9,
+     "measured_mm": 13.1,
+     "within_5mm": true
+    },
+    {
+     "muscle": "INFSP2",
+     "elevation_deg": "10, 60",
+     "model_mm": 20.8,
+     "measured_mm": 16.8,
+     "within_5mm": true
+    }
+   ]
+  },
+  "leave_one_study_out": [
+   {
+    "plane": "coronal",
+    "muscle": "pectoralis major",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "kuechle_vs_ackland_rms_mm": 27.5,
+    "model_vs_kuechle_rms_mm": 28.9,
+    "model_vs_ackland_rms_mm": 4.4
+   },
+   {
+    "plane": "coronal",
+    "muscle": "latissimus dorsi",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "kuechle_vs_ackland_rms_mm": 11.1,
+    "model_vs_kuechle_rms_mm": 15.8,
+    "model_vs_ackland_rms_mm": 5.5
+   },
+   {
+    "plane": "coronal",
+    "muscle": "teres major",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "kuechle_vs_ackland_rms_mm": 15.9,
+    "model_vs_kuechle_rms_mm": 12.6,
+    "model_vs_ackland_rms_mm": 5.2
+   },
+   {
+    "plane": "flexion",
+    "muscle": "pectoralis major",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "kuechle_vs_ackland_rms_mm": 6.5,
+    "model_vs_kuechle_rms_mm": 27.4,
+    "model_vs_ackland_rms_mm": 26.9
+   },
+   {
+    "plane": "flexion",
+    "muscle": "latissimus dorsi",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60,
+     75
+    ],
+    "kuechle_vs_ackland_rms_mm": 26.4,
+    "model_vs_kuechle_rms_mm": 3.5,
+    "model_vs_ackland_rms_mm": 24.0
+   },
+   {
+    "plane": "flexion",
+    "muscle": "teres major",
+    "angles_deg": [
+     15,
+     30,
+     45,
+     60
+    ],
+    "kuechle_vs_ackland_rms_mm": 6.2,
+    "model_vs_kuechle_rms_mm": 1.8,
+    "model_vs_ackland_rms_mm": 7.5
+   }
+  ],
+  "scaption_rotation": [
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 15,
+    "study": "otis1994",
+    "model_mm": 0.3,
+    "measured_mm": 2.8,
+    "within_5mm": true
+   },
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 15,
+    "study": "axford2025",
+    "model_mm": 0.3,
+    "measured_mm": 3.4,
+    "within_5mm": true
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 15,
+    "study": "otis1994",
+    "model_mm": 27.8,
+    "measured_mm": 21.4,
+    "within_5mm": false
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 15,
+    "study": "axford2025",
+    "model_mm": 27.8,
+    "measured_mm": 22.1,
+    "within_5mm": false
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 15,
+    "study": "otis1994",
+    "model_mm": -21.8,
+    "measured_mm": -23.6,
+    "within_5mm": true
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 15,
+    "study": "axford2025",
+    "model_mm": -21.8,
+    "measured_mm": -21.5,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 15,
+    "study": "otis1994",
+    "model_mm": 18.3,
+    "measured_mm": 20.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 15,
+    "study": "axford2025",
+    "model_mm": 18.3,
+    "measured_mm": 20.3,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 15,
+    "study": "otis1994",
+    "model_mm": -1.0,
+    "measured_mm": -4.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 15,
+    "study": "axford2025",
+    "model_mm": -1.0,
+    "measured_mm": -3.0,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 15,
+    "study": "otis1994",
+    "model_mm": -1.3,
+    "measured_mm": 2.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 15,
+    "study": "axford2025",
+    "model_mm": -1.3,
+    "measured_mm": 2.3,
+    "within_5mm": true
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 15,
+    "study": "otis1994",
+    "model_mm": 9.3,
+    "measured_mm": 3.6,
+    "within_5mm": false
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 15,
+    "study": "axford2025",
+    "model_mm": 9.3,
+    "measured_mm": 5.4,
+    "within_5mm": true
+   },
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 30,
+    "study": "otis1994",
+    "model_mm": 1.8,
+    "measured_mm": 3.0,
+    "within_5mm": true
+   },
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 30,
+    "study": "axford2025",
+    "model_mm": 1.8,
+    "measured_mm": 3.5,
+    "within_5mm": true
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 30,
+    "study": "otis1994",
+    "model_mm": 27.6,
+    "measured_mm": 20.1,
+    "within_5mm": false
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 30,
+    "study": "axford2025",
+    "model_mm": 27.6,
+    "measured_mm": 20.1,
+    "within_5mm": false
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 30,
+    "study": "otis1994",
+    "model_mm": -22.5,
+    "measured_mm": -22.5,
+    "within_5mm": true
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 30,
+    "study": "axford2025",
+    "model_mm": -22.5,
+    "measured_mm": -20.2,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 30,
+    "study": "otis1994",
+    "model_mm": 18.8,
+    "measured_mm": 21.0,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 30,
+    "study": "axford2025",
+    "model_mm": 18.8,
+    "measured_mm": 20.4,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 30,
+    "study": "otis1994",
+    "model_mm": -0.9,
+    "measured_mm": -4.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 30,
+    "study": "axford2025",
+    "model_mm": -0.9,
+    "measured_mm": -3.3,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 30,
+    "study": "otis1994",
+    "model_mm": -1.7,
+    "measured_mm": 2.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 30,
+    "study": "axford2025",
+    "model_mm": -1.7,
+    "measured_mm": 2.5,
+    "within_5mm": true
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 30,
+    "study": "otis1994",
+    "model_mm": 9.1,
+    "measured_mm": 3.6,
+    "within_5mm": false
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 30,
+    "study": "axford2025",
+    "model_mm": 9.1,
+    "measured_mm": 5.5,
+    "within_5mm": true
+   },
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 45,
+    "study": "otis1994",
+    "model_mm": 3.2,
+    "measured_mm": 3.1,
+    "within_5mm": true
+   },
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 45,
+    "study": "axford2025",
+    "model_mm": 3.2,
+    "measured_mm": 4.1,
+    "within_5mm": true
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 45,
+    "study": "otis1994",
+    "model_mm": 25.9,
+    "measured_mm": 18.8,
+    "within_5mm": false
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 45,
+    "study": "axford2025",
+    "model_mm": 25.9,
+    "measured_mm": 18.2,
+    "within_5mm": false
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 45,
+    "study": "otis1994",
+    "model_mm": -21.7,
+    "measured_mm": -21.3,
+    "within_5mm": true
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 45,
+    "study": "axford2025",
+    "model_mm": -21.7,
+    "measured_mm": -18.9,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 45,
+    "study": "otis1994",
+    "model_mm": 18.6,
+    "measured_mm": 21.4,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 45,
+    "study": "axford2025",
+    "model_mm": 18.6,
+    "measured_mm": 20.4,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 45,
+    "study": "otis1994",
+    "model_mm": -0.8,
+    "measured_mm": -4.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 45,
+    "study": "axford2025",
+    "model_mm": -0.8,
+    "measured_mm": -3.6,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 45,
+    "study": "otis1994",
+    "model_mm": -2.0,
+    "measured_mm": 2.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 45,
+    "study": "axford2025",
+    "model_mm": -2.0,
+    "measured_mm": 2.6,
+    "within_5mm": true
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 45,
+    "study": "otis1994",
+    "model_mm": 8.8,
+    "measured_mm": 3.6,
+    "within_5mm": false
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 45,
+    "study": "axford2025",
+    "model_mm": 8.8,
+    "measured_mm": 5.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 60,
+    "study": "otis1994",
+    "model_mm": 4.8,
+    "measured_mm": 3.2,
+    "within_5mm": true
+   },
+   {
+    "muscle": "supraspinatus",
+    "elevation_deg": 60,
+    "study": "axford2025",
+    "model_mm": 4.8,
+    "measured_mm": 5.1,
+    "within_5mm": true
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 60,
+    "study": "otis1994",
+    "model_mm": 22.9,
+    "measured_mm": 17.5,
+    "within_5mm": false
+   },
+   {
+    "muscle": "infraspinatus",
+    "elevation_deg": 60,
+    "study": "axford2025",
+    "model_mm": 22.9,
+    "measured_mm": 16.2,
+    "within_5mm": false
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 60,
+    "study": "otis1994",
+    "model_mm": -19.5,
+    "measured_mm": -20.2,
+    "within_5mm": true
+   },
+   {
+    "muscle": "subscapularis",
+    "elevation_deg": 60,
+    "study": "axford2025",
+    "model_mm": -19.5,
+    "measured_mm": -17.6,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 60,
+    "study": "otis1994",
+    "model_mm": 17.9,
+    "measured_mm": 21.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "teres minor",
+    "elevation_deg": 60,
+    "study": "axford2025",
+    "model_mm": 17.9,
+    "measured_mm": 20.5,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 60,
+    "study": "otis1994",
+    "model_mm": -0.8,
+    "measured_mm": -4.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "anterior deltoid",
+    "elevation_deg": 60,
+    "study": "axford2025",
+    "model_mm": -0.8,
+    "measured_mm": -3.8,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 60,
+    "study": "otis1994",
+    "model_mm": -2.2,
+    "measured_mm": 2.7,
+    "within_5mm": true
+   },
+   {
+    "muscle": "middle deltoid",
+    "elevation_deg": 60,
+    "study": "axford2025",
+    "model_mm": -2.2,
+    "measured_mm": 2.8,
+    "within_5mm": false
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 60,
+    "study": "otis1994",
+    "model_mm": 8.4,
+    "measured_mm": 3.6,
+    "within_5mm": true
+   },
+   {
+    "muscle": "posterior deltoid",
+    "elevation_deg": 60,
+    "study": "axford2025",
+    "model_mm": 8.4,
+    "measured_mm": 5.9,
+    "within_5mm": true
+   }
+  ]
+ },
+ "strength_sources": {
+  "roy2009": "Roy et al. 2009 Table 2, men 18-39 y, dominant side, seated, 45 deg scaption, elbow 90 deg",
+  "aronis2025": "Aronis et al. 2025 Table 1, men (n = 14), standing, elbow extended, gravity torque added",
+  "saul2015": "Saul et al. 2015 Table 2, middle-aged men (46-60 y, n = 5), Holzbaur 2007's protocol",
+  "otis1990": "Otis et al. 1990, 36 young men, as reported in Holzbaur et al. 2005 Fig. 4 (digitised, no spread)",
+  "holzbaur2007": "Holzbaur et al. 2007 Table 1, men (n = 5), 60 deg abduction, elbow extended",
+  "smith2001": "Smith et al. 2001 Tables 2-3, men (n = 5), 45 deg scaption, 45 deg external rotation, elbow 90 deg",
+  "harbo2012": "Harbo et al. 2012 Table 3, men (n = 79), arm at the side"
+ },
+ "girdle_poses": {
+  "roy_internal_rotation": {
+   "sternoclavicular_r2_r": [
+    -0.56569849
+   ],
+   "sternoclavicular_r3_r": [
+    0.01198869
+   ],
+   "sternoclavicular_r1_r": [
+    0.07681915
+   ],
+   "acromioclavicular_r": [
+    0.99557133,
+    -0.06007652,
+    -0.07190734,
+    0.00760694
+   ]
+  },
+  "roy_external_rotation": {
+   "sternoclavicular_r2_r": [
+    -0.56569849
+   ],
+   "sternoclavicular_r3_r": [
+    0.01198869
+   ],
+   "sternoclavicular_r1_r": [
+    0.07681915
+   ],
+   "acromioclavicular_r": [
+    0.99557133,
+    -0.06007652,
+    -0.07190734,
+    0.00760694
+   ]
+  },
+  "aronis_flexion_160": {
+   "sternoclavicular_r2_r": [
+    -0.81980696
+   ],
+   "sternoclavicular_r3_r": [
+    0.19742588
+   ],
+   "sternoclavicular_r1_r": [
+    0.54089848
+   ],
+   "acromioclavicular_r": [
+    0.95003249,
+    -0.18056575,
+    0.11701157,
+    0.22614722
+   ]
+  },
+  "saul_abduction_60": {
+   "sternoclavicular_r2_r": [
+    -0.59679466
+   ],
+   "sternoclavicular_r3_r": [
+    0.05730075
+   ],
+   "sternoclavicular_r1_r": [
+    0.12704613
+   ],
+   "acromioclavicular_r": [
+    0.99463332,
+    -0.06782091,
+    -0.07737565,
+    0.01085798
+   ]
+  },
+  "saul_adduction_60": {
+   "sternoclavicular_r2_r": [
+    -0.59679466
+   ],
+   "sternoclavicular_r3_r": [
+    0.05730075
+   ],
+   "sternoclavicular_r1_r": [
+    0.12704613
+   ],
+   "acromioclavicular_r": [
+    0.99463332,
+    -0.06782091,
+    -0.07737565,
+    0.01085798
+   ]
+  },
+  "otis_flexion_side": {},
+  "otis_flexion_90": {
+   "sternoclavicular_r2_r": [
+    -0.39866616
+   ],
+   "sternoclavicular_r3_r": [
+    0.08908228
+   ],
+   "sternoclavicular_r1_r": [
+    0.26128718
+   ],
+   "acromioclavicular_r": [
+    0.98719196,
+    -0.08081788,
+    0.08905017,
+    0.10483588
+   ]
+  },
+  "otis_abduction_90": {
+   "sternoclavicular_r2_r": [
+    -0.69414272
+   ],
+   "sternoclavicular_r3_r": [
+    0.12803512
+   ],
+   "sternoclavicular_r1_r": [
+    0.24350285
+   ],
+   "acromioclavicular_r": [
+    0.9902063,
+    -0.11669909,
+    -0.05221732,
+    0.05609061
+   ]
+  },
+  "otis_internal_rotation_side": {},
+  "otis_external_rotation_side": {},
+  "holzbaur_abduction_60": {
+   "sternoclavicular_r2_r": [
+    -0.59679466
+   ],
+   "sternoclavicular_r3_r": [
+    0.05730075
+   ],
+   "sternoclavicular_r1_r": [
+    0.12704613
+   ],
+   "acromioclavicular_r": [
+    0.99463332,
+    -0.06782091,
+    -0.07737565,
+    0.01085798
+   ]
+  },
+  "holzbaur_adduction_60": {
+   "sternoclavicular_r2_r": [
+    -0.59679466
+   ],
+   "sternoclavicular_r3_r": [
+    0.05730075
+   ],
+   "sternoclavicular_r1_r": [
+    0.12704613
+   ],
+   "acromioclavicular_r": [
+    0.99463332,
+    -0.06782091,
+    -0.07737565,
+    0.01085798
+   ]
+  },
+  "smith_internal_rotation": {
+   "sternoclavicular_r2_r": [
+    -0.56569849
+   ],
+   "sternoclavicular_r3_r": [
+    0.01198869
+   ],
+   "sternoclavicular_r1_r": [
+    0.07681915
+   ],
+   "acromioclavicular_r": [
+    0.99557133,
+    -0.06007652,
+    -0.07190734,
+    0.00760694
+   ]
+  },
+  "smith_external_rotation": {
+   "sternoclavicular_r2_r": [
+    -0.56569849
+   ],
+   "sternoclavicular_r3_r": [
+    0.01198869
+   ],
+   "sternoclavicular_r1_r": [
+    0.07681915
+   ],
+   "acromioclavicular_r": [
+    0.99557133,
+    -0.06007652,
+    -0.07190734,
+    0.00760694
+   ]
+  },
+  "aronis_flexion_90": {
+   "sternoclavicular_r2_r": [
+    -0.39866616
+   ],
+   "sternoclavicular_r3_r": [
+    0.08908228
+   ],
+   "sternoclavicular_r1_r": [
+    0.26128718
+   ],
+   "acromioclavicular_r": [
+    0.98719196,
+    -0.08081788,
+    0.08905017,
+    0.10483588
+   ]
+  },
+  "harbo_abduction_side": {}
+ },
+ "strength": [
+  {
+   "name": "roy_internal_rotation",
+   "source": "roy2009",
+   "fit": false,
+   "posture": {
+    "plane_deg": 30,
+    "elevation_deg": 45,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "internal_rotation",
+   "mean_Nm": 46.8,
+   "sd_Nm": 16.5,
+   "model_Nm": 60.6,
+   "model_thorax_axis_Nm": 60.6,
+   "z": 0.84
+  },
+  {
+   "name": "roy_external_rotation",
+   "source": "roy2009",
+   "fit": false,
+   "posture": {
+    "plane_deg": 30,
+    "elevation_deg": 45,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "external_rotation",
+   "mean_Nm": 33.6,
+   "sd_Nm": 9.0,
+   "model_Nm": 40.5,
+   "model_thorax_axis_Nm": 40.5,
+   "z": 0.77
+  },
+  {
+   "name": "aronis_flexion_160",
+   "source": "aronis2025",
+   "fit": false,
+   "posture": {
+    "plane_deg": 90,
+    "elevation_deg": 160,
+    "rotation_deg": 0,
+    "elbow_deg": 0
+   },
+   "direction": "elevation",
+   "mean_Nm": 43.2,
+   "sd_Nm": 10.8,
+   "model_Nm": 49.0,
+   "model_thorax_axis_Nm": 40.1,
+   "z": 0.53
+  },
+  {
+   "name": "saul_abduction_60",
+   "source": "saul2015",
+   "fit": false,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 60,
+    "rotation_deg": 0,
+    "elbow_deg": 0
+   },
+   "direction": "elevation",
+   "mean_Nm": 58.1,
+   "sd_Nm": 14.9,
+   "model_Nm": 62.4,
+   "model_thorax_axis_Nm": 65.4,
+   "z": 0.29
+  },
+  {
+   "name": "saul_adduction_60",
+   "source": "saul2015",
+   "fit": false,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 60,
+    "rotation_deg": 0,
+    "elbow_deg": 0
+   },
+   "direction": "depression",
+   "mean_Nm": 75.7,
+   "sd_Nm": 18.3,
+   "model_Nm": 102.3,
+   "model_thorax_axis_Nm": 103.1,
+   "z": 1.46
+  },
+  {
+   "name": "otis_flexion_side",
+   "source": "otis1990",
+   "fit": false,
+   "posture": {
+    "plane_deg": 90,
+    "elevation_deg": 10,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "elevation",
+   "mean_Nm": 93.0,
+   "sd_Nm": null,
+   "model_Nm": 54.7,
+   "model_thorax_axis_Nm": 54.7,
+   "ratio": 0.59
+  },
+  {
+   "name": "otis_flexion_90",
+   "source": "otis1990",
+   "fit": false,
+   "posture": {
+    "plane_deg": 90,
+    "elevation_deg": 90,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "elevation",
+   "mean_Nm": 75.0,
+   "sd_Nm": null,
+   "model_Nm": 36.0,
+   "model_thorax_axis_Nm": 41.6,
+   "ratio": 0.48
+  },
+  {
+   "name": "otis_abduction_90",
+   "source": "otis1990",
+   "fit": false,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 90,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "elevation",
+   "mean_Nm": 57.5,
+   "sd_Nm": null,
+   "model_Nm": 58.8,
+   "model_thorax_axis_Nm": 60.6,
+   "ratio": 1.02
+  },
+  {
+   "name": "otis_internal_rotation_side",
+   "source": "otis1990",
+   "fit": false,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 10,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "internal_rotation",
+   "mean_Nm": 48.0,
+   "sd_Nm": null,
+   "model_Nm": 60.1,
+   "model_thorax_axis_Nm": 60.1,
+   "ratio": 1.25
+  },
+  {
+   "name": "otis_external_rotation_side",
+   "source": "otis1990",
+   "fit": false,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 10,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "external_rotation",
+   "mean_Nm": 43.0,
+   "sd_Nm": null,
+   "model_Nm": 41.2,
+   "model_thorax_axis_Nm": 41.2,
+   "ratio": 0.96
+  },
+  {
+   "name": "holzbaur_abduction_60",
+   "source": "holzbaur2007",
+   "fit": true,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 60,
+    "rotation_deg": 0,
+    "elbow_deg": 0
+   },
+   "direction": "elevation",
+   "mean_Nm": 74.4,
+   "sd_Nm": 10.8,
+   "model_Nm": 62.4,
+   "model_thorax_axis_Nm": 65.4,
+   "z": -1.11
+  },
+  {
+   "name": "holzbaur_adduction_60",
+   "source": "holzbaur2007",
+   "fit": true,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 60,
+    "rotation_deg": 0,
+    "elbow_deg": 0
+   },
+   "direction": "depression",
+   "mean_Nm": 93.7,
+   "sd_Nm": 11.3,
+   "model_Nm": 102.3,
+   "model_thorax_axis_Nm": 103.1,
+   "z": 0.76
+  },
+  {
+   "name": "smith_internal_rotation",
+   "source": "smith2001",
+   "fit": true,
+   "posture": {
+    "plane_deg": 40,
+    "elevation_deg": 45,
+    "rotation_deg": -45,
+    "elbow_deg": 90
+   },
+   "direction": "internal_rotation",
+   "mean_Nm": 52.8,
+   "sd_Nm": 9.9,
+   "model_Nm": 71.0,
+   "model_thorax_axis_Nm": 71.0,
+   "z": 1.84
+  },
+  {
+   "name": "smith_external_rotation",
+   "source": "smith2001",
+   "fit": true,
+   "posture": {
+    "plane_deg": 40,
+    "elevation_deg": 45,
+    "rotation_deg": -45,
+    "elbow_deg": 90
+   },
+   "direction": "external_rotation",
+   "mean_Nm": 36.2,
+   "sd_Nm": 7.6,
+   "model_Nm": 29.6,
+   "model_thorax_axis_Nm": 29.6,
+   "z": -0.86
+  },
+  {
+   "name": "aronis_flexion_90",
+   "source": "aronis2025",
+   "fit": true,
+   "posture": {
+    "plane_deg": 90,
+    "elevation_deg": 90,
+    "rotation_deg": 0,
+    "elbow_deg": 0
+   },
+   "direction": "elevation",
+   "mean_Nm": 77.2,
+   "sd_Nm": 13.8,
+   "model_Nm": 54.8,
+   "model_thorax_axis_Nm": 61.9,
+   "z": -1.63
+  },
+  {
+   "name": "harbo_abduction_side",
+   "source": "harbo2012",
+   "fit": true,
+   "posture": {
+    "plane_deg": 0,
+    "elevation_deg": 10,
+    "rotation_deg": 0,
+    "elbow_deg": 90
+   },
+   "direction": "elevation",
+   "mean_Nm": 61.1,
+   "sd_Nm": 14.1,
+   "model_Nm": 42.0,
+   "model_thorax_axis_Nm": 42.0,
+   "z": -1.36
+  }
+ ],
+ "held_out": {
+  "fit_set_curves": {
+   "in_band": 35,
+   "within_5mm": 144,
+   "n": 277
+  },
+  "curves": {
+   "in_band": 9,
+   "within_5mm": 36,
+   "n": 64
+  },
+  "gatti_in_range": 3,
+  "gatti_n": 4,
+  "langenderfer_within_5mm": 8,
+  "langenderfer_n": 10,
+  "scaption_rotation_within_5mm": 44,
+  "scaption_rotation_n": 56,
+  "peaks_within_4mm": 5,
+  "peaks_n": 6,
+  "strength_within_1p5sd": 9,
+  "strength_with_sd": 11
+ }
+}

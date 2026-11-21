@@ -16,7 +16,7 @@ Composed models can have named starting postures, stored as keyframes. At presen
 
 `scripts/generate_postures.py` writes `myo_sim/build/data/postures.json` from `qpos0` of each composed model, in up to six steps:
 
-1. Raise `shoulder_elv_r` and `shoulder_elv_l` to 0.10 rad (5.7 deg), the plane of elevation staying at 0. The humerus then clears the thorax by 6.2 mm (0.05 rad leaves 2 mm of overlap, 0.08 rad clears it by 3 mm). This is a clearance value, not a measured arm posture. The scapular joints follow through their couplings.
+1. Raise `shoulder_elv_r` and `shoulder_elv_l` to 0.25 rad (14.3 deg), the plane of elevation staying at 0. With the shoulder girdle at its rest posture (qpos0, Seth et al. 2019; `shoulder-complex.md`) the humerus then clears the thorax by 5.3 mm (0.15 rad leaves 3.3 mm of overlap, 0.2 rad clears it by 1.5 mm). This is a clearance value, not a measured arm posture; the glenohumeral angles are relative to the scapula.
 2. Evaluate every joint coupling from its polynomial, so that couplings hold to rounding.
 3. Bisect the ankle angle until heel and forefoot are level (0.012 rad, 0.7 deg of dorsiflexion).
 4. Lower the root until the feet are 0.1 mm above the floor. That is inside the 1 mm contact margin of the foot geoms, so the feet carry the weight from t = 0.

@@ -1,6 +1,10 @@
 <?xml version="1.0" ?>
 <mujocoinclude>
     <contact>
+        <!-- Scapulothoracic gliding (Seth et al. 2019 ellipsoid): frictionless, unilateral -->
+        <pair name="scapulothoracic_r" geom1="scapulothoracic_ellipsoid_r" geom2="scapula_glide_r" condim="1" solref="0.008 1" solimp="0.95 0.99 0.001 0.5 2"/>
+        <pair name="scapulothoracic_l" geom1="scapulothoracic_ellipsoid_l" geom2="scapula_glide_l" condim="1" solref="0.008 1" solimp="0.95 0.99 0.001 0.5 2"/>
+
         <pair geom1="humerus_coll_r" geom2="thorax_coll1" condim="3" />
         <pair geom1="radius_coll_r" geom2="thorax_coll1" condim="3" />
         <pair geom1="radius_coll_r" geom2="thorax_coll2" condim="3" />

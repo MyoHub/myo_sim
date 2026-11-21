@@ -31,7 +31,7 @@ import mujoco
 from myo_sim import MODELS_DIR
 
 try:
-    from .hand import prune_arm_spec_to_hand, prune_rigid_pairs
+    from .hand import TENDON_ATTRIBUTES, add_tendon, prune_arm_spec_to_hand, prune_rigid_pairs, tendon_path
     from .head import build_head_spec
     from .keyframes import add_posture_keyframes
     from .utils import (
@@ -45,7 +45,7 @@ try:
         find_site,
     )
 except ImportError:
-    from hand import prune_arm_spec_to_hand, prune_rigid_pairs
+    from hand import TENDON_ATTRIBUTES, add_tendon, prune_arm_spec_to_hand, prune_rigid_pairs, tendon_path
     from head import build_head_spec
     from keyframes import add_posture_keyframes
     from utils import (
@@ -287,9 +287,30 @@ def attach_neck(torso: mujoco.MjSpec) -> None:
     equalities come after those of the arms and legs. The torso part models
     keep the rigid head.
     """
-    torso.delete(find_body(torso, "neck"))
+    # Arm muscles that arise on the cervical spine (levator scapulae, upper trapezius, superior rhomboid) name sites
+    # that both necks define. Deleting the rigid neck would take those tendons with it, so they and every tendon
+    # after them are re-created, in the same order, once the muscular neck is attached.
+    neck = find_body(torso, "neck")
+    neck_sites = {site.name for body in [neck, *_descendants(neck)] for site in body.sites}
+    tendons = list(torso.tendons)
+    first = next((i for i, t in enumerate(tendons) if any(w[1] in neck_sites for w in tendon_path(t))), None)
+    saved = []
+    if first is not None:
+        saved = [(t.name, {a: getattr(t, a) for a in TENDON_ATTRIBUTES}, tendon_path(t)) for t in tendons[first:]]
+        for tendon in tendons[first:]:
+            torso.delete(tendon)
+    torso.delete(neck)
+    for name, attributes, path in saved:
+        add_tendon(torso, name, attributes, path)
     head_frame = find_body(torso, "head_attach").add_frame(name="myohead_attach")
     attach_checked(torso, build_head_spec(), prefix="", suffix="", frame=head_frame)
+
+
+def _descendants(body: mujoco.MjsBody) -> list[mujoco.MjsBody]:
+    out = []
+    for child in body.bodies:
+        out += [child, *_descendants(child)]
+    return out
 
 
 def build_torso_body_spec(registration: ModelRegistration) -> mujoco.MjSpec:

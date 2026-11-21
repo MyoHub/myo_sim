@@ -9,7 +9,15 @@ HAND_PREVIEW_JOINT_POSE = {
     "elv_angle_r": 1.57,
     "shoulder_elv_r": 1.57,
     "shoulder_rot_r": -1.57,
+    # The hand models keep the hand where it was before the scapulothoracic girdle: clavicle and scapula in the
+    # MoBL-ARMS zero pose (scapula frame aligned with the thorax), not at the rest posture of qpos0.
+    "sternoclavicular_r2_r": 0.0,
+    "sternoclavicular_r3_r": 0.0,
+    "sternoclavicular_r1_r": 0.0,
 }
+# Ball joints of the preview pose: the child body's frame aligned with its grandparent's (undoes the body quat).
+HAND_PREVIEW_ALIGNED_BALLS = ("acromioclavicular_r",)
+HAND_PREVIEW_ALIGNED_FRAMES = ("humphant",)
 
 
 RIGHT_HAND_ACTUATORS = frozenset(
@@ -68,14 +76,8 @@ RIGHT_HAND_REMOVED_JOINTS = frozenset(
     {
         "sternoclavicular_r2_r",
         "sternoclavicular_r3_r",
-        "unrotscap_r3_r",
-        "unrotscap_r2_r",
-        "acromioclavicular_r2_r",
-        "acromioclavicular_r3_r",
-        "acromioclavicular_r1_r",
-        "unrothum_r1_r",
-        "unrothum_r3_r",
-        "unrothum_r2_r",
+        "sternoclavicular_r1_r",
+        "acromioclavicular_r",
         "elv_angle_r",
         "shoulder_elv_r",
         "shoulder1_r2_r",
@@ -95,7 +97,7 @@ RIGHT_HAND_REMOVED_JOINTS = frozenset(
 # turning the idiom's [1,1,1] into a real (and wildly wrong) contribution to
 # the mass matrix instead of a harmless joint-local value. See
 # https://github.com/MyoHub/myo_sim/issues/128.
-PHANTOM_SCAFFOLD_BODIES = frozenset({"clavphant", "scapphant", "humphant", "humphant1"})
+PHANTOM_SCAFFOLD_BODIES = frozenset({"humphant", "humphant1"})
 
 # Physically sane inertia floor substituted for PHANTOM_SCAFFOLD_BODIES once
 # jointless, matching the legacy static-XML numerical-conditioning
@@ -330,14 +332,19 @@ def joints_between(body1: object, body2: object) -> list[str]:
 
 
 def tendon_joints(spec: object, tendon: object) -> set[str]:
-    """Joints a tendon's length can depend on: its joint wraps, or the joints between its attachment bodies."""
+    """Joints a tendon's length can depend on: its joint wraps, or the joints between its attachment bodies.
+
+    Sites outside *spec* (a girdle ligament's thorax end, before the arm is attached) are skipped.
+    """
     joints = set()
     bodies = []
     for wrap_type, target, sidesite, _, _ in tendon_path(tendon):
         if wrap_type == WRAP.mjWRAP_JOINT:
             joints.add(target)
         elif wrap_type == WRAP.mjWRAP_SITE:
-            bodies.append(spec.site(target).parent)
+            site = spec.site(target) if target else None
+            if site is not None:
+                bodies.append(site.parent)
         elif wrap_type != WRAP.mjWRAP_PULLEY:
             bodies.append(spec.geom(target).parent)
     for other in bodies[1:]:
@@ -432,9 +439,20 @@ def bake_current_body_poses(spec: object, model: mujoco.MjModel, data: mujoco.Mj
 
 
 def bake_hand_preview_pose(spec: object, side: str) -> None:
+    # Legacy placement (see HAND_PREVIEW_JOINT_POSE): with the scapula aligned to the thorax, the glenohumeral frame
+    # is the thorax frame as before the girdle; the welded hand keeps only the baked poses.
+    for name in HAND_PREVIEW_ALIGNED_FRAMES:
+        body = spec.body(add_side_suffix(name, side))
+        if body is not None:
+            body.quat = [1.0, 0.0, 0.0, 0.0]
     model = spec.compile()
     data = mujoco.MjData(model)
     apply_joint_pose(data, model, HAND_PREVIEW_JOINT_POSE, side)
+    for name in HAND_PREVIEW_ALIGNED_BALLS:
+        joint = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, side_name(name, side))
+        if joint >= 0:
+            adr = model.jnt_qposadr[joint]
+            data.qpos[adr : adr + 4] = quaternion_inverse(model.body_quat[model.jnt_bodyid[joint]])
     mujoco.mj_forward(model, data)
     bake_current_body_poses(spec, model, data)
 

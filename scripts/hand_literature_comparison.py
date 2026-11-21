@@ -894,8 +894,8 @@ ACKLAND_REGIONS = {
     "lat2": "LAT2",
     "lat3": "LAT3",
     "tmaj": "TMAJ",
-    "supsp": "SUPSP",
-    "subsc": "SUBSC",
+    "supsp": "SUPSP1",
+    "subsc": "SUBSC2",
 }
 ACKLAND_PLANES_DEG = (30.0, 0.0, 90.0)  # elv_angle of scaption, coronal-plane abduction, sagittal-plane flexion
 

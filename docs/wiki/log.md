@@ -2,6 +2,18 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-16 — Shoulder: fit set and held-out literature, path candidates
+Changed: `scripts/validate_shoulder_mechanics.py` (fit set and held-out studies reported apart; Kuechle 2000 signs from its full text; Otis 1994 and Axford 2025 regression equations, Langenderfer 2006, rotation arms in scaption, leave one study out), `scripts/fit_shoulder_paths.py` (new), `myo_sim/build/data/shoulder_paths.json` (new), `tests/test_shoulder_paths.py` (new), `docs/validation/shoulder-mechanics.json`, `docs/wiki/{shoulder-complex,testing-guide,repository-map}.md`, `CHANGELOG.md`
+Why: the independent mechanics check found shoulder paths off the cadaver moment arms. Candidates fitted to Kuechle and Ackland only were checked on held-out studies; none improved them, and several gaps came from sign errors of the re-plot or from curves of one study that the held-out data contradict. No model file changes.
+
+## 2026-11-16 — Shoulder: integrated stability and independent mechanics checks
+Changed: `tests/test_girdle_stability.py` (new), `scripts/validate_shoulder_mechanics.py` (new), `docs/validation/shoulder-mechanics.json` (new), `docs/wiki/{shoulder-complex,testing-guide,repository-map}.md`, `CHANGELOG.md`
+Why: the girdle models are checked for stability under random activation on CPU MuJoCo and mujoco-warp, and their moment arms and isometric strength are compared with data not used to build them.
+
+## 2026-11-16 — Merge the hand rebuild (flexor curves, dev) into the shoulder
+Changed: `myo_sim/build/data/hand_literature.json` (both branches' steps, step `girdle_flexor_merge`), `docs/wiki/hand-literature-comparison.md`, `docs/wiki/log.md`, `myo_sim/physics/muscle_groups.py` (cuff sub-regions, `Shoulder-Girdle`), `myo_sim/physics/joint_coupling.py` (docstring), `CHANGELOG.md`
+Why: the shoulder lands after MyoHub/myo_sim#147, so it carries that branch's flexor fix and dev merge, with the hand-literature steps of both kept and the merged model's hand values recorded.
+
 ## 2026-11-16 — Merge dev (integrated bugfixes, muscle strength and body-mass scaling)
 Changed: `CHANGELOG.md` (dev's entries under Added and Fixed, the 0.2.5 section), `docs/wiki/repository-map.md`, `docs/wiki/testing-guide.md`, `docs/wiki/postures.md`, `myo_sim/physics/muscle_groups.py` (functional groups of the rebuilt hand muscles and the deep hip muscles), `pyproject.toml` (ship `build/data/LICENSE-*.txt`), CI's latest-MuJoCo pin, `uv.lock`
 Why: MyoHub/myo_sim#147 review. The head and torso masses, `mass.py` and the mass convention test keep this branch's values after the pelvis was counted once (#155); dev's copies are the earlier #138 step.
@@ -17,6 +29,42 @@ Why: move isometric MVC torque probing (`max_torque_terms`) and per-muscle bound
 ## 2026-11-14 — Reject unsupported sensor tags in add_sensors
 Changed: myo_sim/build/utils.py, tests/test_sensor_includes.py, docs/wiki/build-and-composition.md, docs/wiki/testing-guide.md, CHANGELOG.md
 Why: `add_sensors` skipped every sensor tag outside its table, so a `<gyro>` or `<framepos>` in an include vanished from the model without a message.
+
+## 2026-11-13 — Shoulder page: DELT2 moment arms and conoid wording
+Changed: `docs/wiki/shoulder-complex.md`
+Why: the DELT2 moment arms are now given in the cadaver studies' convention (glenohumeral angles, scapula fixed at rest), and the conoid's taut range is attributed to the quasi-static equilibrium, not to Seth's replayed motions.
+
+## 2026-11-13 — Levator scapulae slips and occipital trapezius
+Changed: `scripts/generate_scapular_muscles.py`, `myo_sim/build/data/{scapular_muscles,shoulder_strength}.json`, `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/models/head/assets/myohead_{chain,rigid_chain}.xml`, `docs/wiki/shoulder-complex.md`
+Why: the levator scapulae gets its lower (C3-C4) slip with DAS3's split, and the clavicular trapezius an occipital line (20 %, low confidence), so the neck carries the scapular muscles' cervical and occipital origins.
+
+## 2026-11-13 — Kept shoulder paths and shoulder strength
+Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/build/references.py`, `myo_sim/build/data/{side_sites,scapular_muscles,shoulder_strength,scapulothoracic,hand_literature}.json`, `scripts/{fit_shoulder_strength,generate_scapular_muscles}.py`, `tests/test_shoulder_strength.py`, `docs/wiki/{shoulder-complex,testing-guide,repository-map}.md`
+Why: DELT1 and DELT2 take Seth's paths, CORB, BICshort and TRIlong lose the via points that turned their moment arms wrong with the moving scapula, and one specific tension (111.1 N/cm2) calibrated to measured isometric shoulder moments replaces 140 N/cm2 for every shoulder muscle; with them the sternoclavicular elevation spring follows its rule to 50 N m/rad.
+
+## 2026-11-13 — Scapulohumeral rhythm table
+Changed: `scripts/fit_scapulothoracic.py` (`rhythm`), `myo_sim/build/data/scapulothoracic.json` (section `rhythm`), `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`
+Why: the girdle's replayed motions are now compared in ISB angles with the bone-pin rhythms of Ludewig 2009, Braman 2009, McClure 2001 and Inman 1944.
+
+## 2026-11-13 — Intrinsic hand fit independent of the shoulder; girdle step on the new hand
+Changed: `scripts/generate_hand_intrinsic_muscles.py`, `tests/test_passive_thenar.py`, `myo_sim/build/data/{hand_intrinsic_muscles,passive_joint_moments,postures,hand_literature}.json`, `myo_sim/models/arm/assets/myoarm_r_{chain,muscle,tendon}.xml`, `docs/wiki/hand-literature-comparison.md`
+Why: the intrinsic site fit is ill-conditioned and moved by micrometres whenever the shoulder changed the arm's world pose. It now runs with every body above the humerus on the world frame, so its inputs are the same with and without the girdle; the sites were refitted once (micrometres; passive scales kept) and the hand springs that moved by more than 1e-9 N m with them (at most 1.8e-5 N m). The girdle's literature step is recorded on the range-of-motion hand. The refit test compares the fitted moment arms, fit errors and fibre lengths with one tolerance on MuJoCo 3 and 4 instead of the site positions, which differ by up to 71 um between the versions (PI2) for 0.06 mm of moment arm.
+
+## 2026-11-13 — Clavicle axial rotation
+Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,tendon,muscle}.xml`, `myo_sim/build/data/{scapulothoracic,ligaments,scapular_muscles}.json`, `myo_sim/build/hand.py`, `scripts/{fit_scapulothoracic,fit_ligaments,generate_scapular_muscles,migrate_side_sites,validate_hand_function}.py`, tests, `docs/wiki/shoulder-complex.md`, `myo_sim/models/arm/README.md`
+Why: without axial clavicle rotation the scapula's rotation against the clavicle stretched the conoid by 14 mm along Seth's motions (3-6 mm in vivo). The new hinge `sternoclavicular_r1_r` turns about the SC-AC line; the replay takes its angle from Ludewig 2009, the ligament slack lengths and muscle maps are refitted, and a residual axial spring equal to the AC one puts the quasi-static axial angle within 4.5 deg of Ludewig's. Side-site sampling holds the scapula when the clavicle turns about its axis. Open checks that need all passive layers are listed on the page.
+
+## 2026-11-13 — Shoulder-girdle ligaments, residual springs and AC armature
+Changed: `scripts/fit_ligaments.py` (new), `myo_sim/build/data/ligaments.json` (new), `myo_sim/models/arm/assets/myoarm_r_{chain,assets,tendon}.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/build/data/scapulothoracic.json`, `scripts/fit_scapulothoracic.py`, `myo_sim/build/hand.py`, `scripts/hand_literature_comparison.py`, `myo_sim/build/data/hand_literature.json`, `tests/test_ligaments.py` (new), `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`, `docs/wiki/hand-literature-comparison.md`
+Why: the 40 N m/rad girdle springs had no source. Ten cited ligament strands per side (coracoclavicular, acromioclavicular capsule, sternoclavicular capsule, interclavicular, costoclavicular) now act as passive spatial tendons after the #142 proposal; residual springs stay only where no ligament has a lever (SC elevation 30, AC ball 35 N m/rad), and the AC armature is the smallest value under the explicit force-velocity bound (0.005 kg m2).
+
+## 2026-11-13 — Scapulothoracic girdle and scapular muscles in the arm models
+Changed: `myo_sim/models/arm/assets/myoarm_r_{chain,assets,tendon,muscle}.xml`, `myo_sim/models/torso/assets/myotorso_chain.xml`, `myo_sim/models/head/assets/myohead_{chain,rigid_chain}.xml`, `myo_sim/models/contacts/myoarm_contacts.xml`, `myo_sim/models/sensors/myofullbody_sensors.xml`, `myo_sim/build/{compose,hand}.py`, `myo_sim/build/data/{scapulothoracic,scapular_muscles,postures,side_sites,hand_literature}.json`, `scripts/{fit_scapulothoracic,generate_scapular_muscles,generate_postures,validate_hand_function,hand_literature_comparison}.py`, tests, `docs/wiki/{shoulder-complex,postures,testing-guide}.md`
+Why: the scapula now glides on the thorax under its own muscles (Seth et al. 2019) instead of following the humerus through fixed rhythm equalities.
+
+## 2026-11-13 — Scapulothoracic shoulder: licence, frame registration, joint design
+Changed: `myo_sim/build/data/scapulothoracic.json`, `myo_sim/build/data/LICENSE-Seth2019.txt`, `scripts/fit_scapulothoracic.py`, `tests/test_scapulothoracic_data.py`, `docs/wiki/shoulder-complex.md`, `docs/wiki/index.md`, `docs/wiki/testing-guide.md`, `docs/wiki/repository-map.md`
+Why: first steps of the Seth et al. 2019 shoulder port: CC BY 4.0 attribution, Seth's girdle geometry registered into this package's frames, and the AC-ball-plus-contact girdle chosen over the ellipsoid chain by replaying the published IK trials.
 
 ## 2026-11-13 — Thumb IP spring with the signed fit
 Changed: `myo_sim/build/data/passive_joint_moments.json` (thumb IP row signed fit; `signed_fallback` dropped), `postures.json`, `hand_literature.json` (step `spring_fallbacks`), arm tendon XML, `tests/test_muscle_passive.py` (docstring: L0 rounding), wiki, `CHANGELOG.md`

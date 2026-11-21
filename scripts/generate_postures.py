@@ -30,7 +30,7 @@ from myo_sim.build.compose import build_spec  # noqa: E402
 from myo_sim.build.keyframes import POSTURES_PATH, ROOT_JOINT  # noqa: E402
 
 MODELS = ("myofullbody", "myolegs", "myolegs_abdomen")
-SHOULDER_ELV_RAD = 0.10  # 5.7 deg: humerus to thorax clearance of 6.2 mm, see the wiki page
+SHOULDER_ELV_RAD = 0.25  # 14.3 deg: humerus to thorax clearance of 5.3 mm with the scapula at rest, see the wiki page
 FLOOR_CLEARANCE_M = 1e-4  # inside the 1 mm contact margin of the foot geoms, so the feet carry the weight at t = 0
 HEEL_GEOM = "foot_col1_{side}"
 FOREFOOT_GEOM = "bofoot_col2_{side}"

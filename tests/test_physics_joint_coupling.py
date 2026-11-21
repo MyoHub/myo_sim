@@ -262,7 +262,7 @@ def test_as_torch_casts_values_and_keeps_addresses() -> None:
 
 @pytest.mark.parametrize("name", ["myolegs", "myoarm_r"])
 def test_composed_model_states_land_on_their_couplings(name: str) -> None:
-    """Random states of a composed model (knee mechanism, shoulder rhythm) end on every coupling."""
+    """Random states of a composed model (knee mechanism, glenohumeral convention, CMC4-5) end on every coupling."""
     import myo_sim
 
     model = myo_sim.load_spec(name).compile()
