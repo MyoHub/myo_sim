@@ -52,3 +52,7 @@ Every nested default class and every material name must be scoped to the part wi
 - Push to your fork; open PRs against `dev`, not `main`.
 - PR body: plain prose, no headers, no emojis. Describe the problem, the change, and non-obvious tradeoffs.
 - One logical change per commit. Amend before reviewers arrive; use new commits after.
+
+## Ownership and reuse gate
+
+Follow the ownership and minimum-change review in [AGENTS.md](../../AGENTS.md). Search both MyoHub repositories, name the reused primitives and justify each new abstraction. Review the actual diff for duplicated transformations and code that can be removed; lint success alone does not clear this gate.
