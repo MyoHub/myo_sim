@@ -6,6 +6,7 @@
 from myo_sim.physics.muscle_strength import (
     MaxTorqueMeasurement,
     calibrate_muscle_strength,
+    max_joint_torque,
     max_torque_terms,
     peak_force,
     scale_muscle_strength,
@@ -17,6 +18,8 @@ force = peak_force(model)                         # active peak force per actuat
 passive = peak_force(model, model.actuator_biasprm)
 scale_muscle_strength(model, 0.8)                   # compiled model, in place
 scale_muscle_strength_spec(spec, per_actuator)      # spec, in place; returns spec
+scale_muscle_strength(model, 1.3, muscles=["BIClong", "BRA"])   # selected muscles only
+torque, agonists = max_joint_torque(model, qpos_90deg, "r_elbow_flex", max_activation=caps)
 
 trials = [MaxTorqueMeasurement("r_elbow_flex", qpos_90deg, torque=62.0)]
 cal = calibrate_muscle_strength(model, trials, prior=strength_factor_from_body_mass(68.0, 75.2))
@@ -29,6 +32,17 @@ together; other gain/bias laws, geometry, activation dynamics and clamps stay
 unchanged. Automatic forces are resolved using MuJoCo's `scale/acc0` rule before
 explicit values are written. The spec variant compiles a copy to preserve the
 caller's editable frames, and validates every factor before changing parameters.
+
+`muscles` (keyword-only) restricts scaling to distinct, named muscle actuators;
+only their gain/bias force parameters are written, every other actuator stays
+bit-identical (an unselected automatic force stays automatic), and only the
+selected factors are validated. Unknown, duplicate or non-muscle names raise
+before any change. `max_joint_torque` returns the signed net maximal torque of
+one independent hinge or slide joint (passive muscle and joint-spring torque
+plus the active torque of the agonists, whose names it returns) for a
+coupling-projected `(nq,)` posture and a direction of `+1` or `-1`. Optional
+`max_activation` caps in `[0, 1]` (e.g. `1 - fatigue`) apply to active force
+only. It reuses the `max_torque_terms` probe and its model restrictions.
 
 `max_torque_terms` evaluates each actuator's active and passive torque plus the
 joint springs along the joint's coupled motion (via `myo_sim.physics.joint_coupling`)

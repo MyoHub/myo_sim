@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-23 — Select muscles when scaling strength; add max_joint_torque
+Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md, docs/wiki/testing-guide.md, CHANGELOG.md, docs/wiki/log.md
+Why: downstream participant calibration scaled agonist subsets and probed joint torque capacity with fatigue caps in application code; both are model-level and now live here, with every unselected actuator left bit-identical.
+
 ## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
 Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.
