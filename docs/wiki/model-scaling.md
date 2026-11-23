@@ -51,6 +51,12 @@ Each body has factors `(sx, sy, sz)` along its own axes, the convention of OpenS
 - **OpenSim files.** A ScaleSet or a scaled `.osim`. The file's Rajagopal segments are mapped onto the composed models (`Full Body` root) or the stand-alone leg (`root`, `torso`). A model takes the segments it has; a body takes the factors of its nearest mapped ancestor. During parsing the factors are converted between the axis conventions of OpenSim (y-up) and of each body, since most bodies kept OpenSim's frames and a few are z-up.
 - **Point correspondences.** `(model_points, measured_points)`: points on the body in its frame and the same points measured in metres in any right-handed frame, NaN rows ignored. Points spanning all three directions (at least four) give three factors by least squares with a nuisance rotation; two points or points on a plane give one factor, the ratio of their spreads. A fit outside 0.5 to 2 is refused, since it usually means millimetres or mismatched points.
 
+## Scale groups and inheritance
+
+`default_scale_groups(spec, *, bilateral_symmetry=True)` returns the anatomical segments present in a spec (`pelvis`, `sacrum`, `torso`, `clavicle`, `femur`, `tibia`, `talus`, `humerus`, `ulna`, `lunate`) as groups of body names, with `_l`/`_r` bodies in one group when symmetric and one body per group otherwise. Segments a spec lacks are left out (`myolegs` has no arm segments); a spec with none of them gets one group per body, pairing `_l`/`_r`. Use it to fit one factor per group.
+
+`inherited_scales(spec, scales)` gives every body under the free-joint roots (all worldbody children when there is no free joint) the factor of its nearest ancestor in `scales`, or its own; unlisted roots get 1.0. `scale_spec(spec, inherited_scales(spec, factors))` then scales a segment's children with it.
+
 ## Operating-curve refit
 
 The rule above sets each muscle's lengths from one pose. Under per-axis or per-segment factors a muscle's excursion does not change as its length does, so its normalised operating curve drifts. `fit_length_ranges` is a separate step, adapted from the idea of Modenese et al. (2016) of preserving the normalised operating curve over the joint ranges: over random poses, `L_ref = a + b L_scaled`, and the muscle's `lengthrange` becomes `(range_ref - a) / b`. MuJoCo derives optimal fibre length and tendon slack length from that range, so both are refitted. Poses where a wrap changes its path are left out. A muscle with R² below `min_r2` (default 0.9) keeps its range.
@@ -161,7 +167,7 @@ Effect of the refit on `myolegs`, as the 99th percentile over all muscles and 20
 
 ## Tests
 
-`tests/test_scaling.py` runs on synthetic specs (nested rotated frames, every orientation type, a wrapping tendon, a coupled slide, a tied slide node, ligaments, an automatic peak force), `myolegs` and `myofullbody`. One factor must be an exact similarity: every site, spatial tendon and muscle length grows by `s`, muscle forces stay, mass grows by `s^3` and inertia by `s^5`. `tests/test_opensim_comparison.py` holds the first table of the comparison to its bounds, and each bound must fail on a known-bad factor.
+`tests/test_scale_groups.py` covers the groups and the inheritance on a synthetic tree, `myolegs` and `myofullbody`. `tests/test_scaling.py` runs on synthetic specs (nested rotated frames, every orientation type, a wrapping tendon, a coupled slide, a tied slide node, ligaments, an automatic peak force), `myolegs` and `myofullbody`. One factor must be an exact similarity: every site, spatial tendon and muscle length grows by `s`, muscle forces stay, mass grows by `s^3` and inertia by `s^5`. `tests/test_opensim_comparison.py` holds the first table of the comparison to its bounds, and each bound must fail on a known-bad factor.
 
 `tests/test_opensim_pose_comparison.py` does three things for the pose grid:
 - It holds the grid to its bounds.

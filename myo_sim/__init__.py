@@ -13,6 +13,8 @@ if TYPE_CHECKING:
 
     from myo_sim.build.compose import CollisionMode as CollisionMode
     from myo_sim.scaling import ScaleReport as ScaleReport
+    from myo_sim.scaling import default_scale_groups as default_scale_groups
+    from myo_sim.scaling import inherited_scales as inherited_scales
     from myo_sim.scaling import model_digest as model_digest
     from myo_sim.scaling import scale_report as scale_report
     from myo_sim.scaling import scale_spec as scale_spec
@@ -79,6 +81,8 @@ def _composed_models() -> frozenset[str]:
 # stays free of a MuJoCo dependency.
 _LAZY_EXPORTS: dict[str, str] = {
     "ScaleReport": "scaling",
+    "default_scale_groups": "scaling",
+    "inherited_scales": "scaling",
     "model_digest": "scaling",
     "scale_report": "scaling",
     "scale_spec": "scaling",

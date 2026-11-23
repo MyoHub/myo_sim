@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import hashlib
 import os
+import re
 from collections.abc import Iterator, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import Any, TypeGuard
@@ -31,6 +32,19 @@ Scales = Mapping[str, Any] | str | os.PathLike[str]
 _AXES = {"x": 0, "y": 1, "z": 2}
 _ORIENT = mujoco.mjtOrientation
 _UNIT = np.ones(3)
+# Anatomical segments of the composed models, as one group each (left and right together).
+_SEGMENT_GROUPS = (
+    ("pelvis",),
+    ("sacrum",),
+    ("torso",),
+    ("clavicle_l", "clavicle_r"),
+    ("femur_l", "femur_r"),
+    ("tibia_l", "tibia_r"),
+    ("talus_l", "talus_r"),
+    ("humerus_l", "humerus_r"),
+    ("ulna_l", "ulna_r"),
+    ("lunate_l", "lunate_r"),
+)
 # Fitted factors outside this range usually mean wrong units or correspondences.
 _FIT_BOUNDS = (0.5, 2.0)
 # The point fit stops here: mismatched points can otherwise shrink a factor until it underflows.
@@ -112,6 +126,71 @@ def segment_factors(long_axis: str, long: float, trans: float) -> np.ndarray:
     factors = np.full(3, float(trans))
     factors[_AXES[long_axis]] = float(long)
     return factors
+
+
+def default_scale_groups(spec: mujoco.MjSpec, *, bilateral_symmetry: bool = True) -> tuple[tuple[str, ...], ...]:
+    """Group the bodies of ``spec`` that share one scale factor.
+
+    Uses the anatomical segments present in the spec (pelvis, torso, femur, tibia, ...). A spec
+    without any of them gets one group per body, with ``_l``/``_r`` bodies paired when symmetric.
+
+    Args:
+        spec: Model to group.
+        bilateral_symmetry: Put left and right bodies of a segment in one group; otherwise each
+            body is its own group.
+
+    Returns:
+        Groups of body names, for fitting one factor per group.
+    """
+    body_names = [b.name for b in spec.bodies if b.name and b.name != "world"]
+    name_set = set(body_names)
+    groups: list[tuple[str, ...]] = []
+    for known in _SEGMENT_GROUPS:
+        present = tuple(b for b in known if b in name_set)
+        if bilateral_symmetry or len(present) == 1:
+            groups.append(present)
+        else:
+            groups.extend((b,) for b in present)
+    groups = [g for g in groups if g]
+    if groups:
+        return tuple(groups)
+
+    covered: set[str] = set()
+    for name in body_names:
+        if name in covered:
+            continue
+        pair = (name,)
+        match = re.match(r"^(.*)_(l|r)$", name)
+        if bilateral_symmetry and match:
+            pair = tuple(b for b in (f"{match.group(1)}_l", f"{match.group(1)}_r") if b in name_set)
+        groups.append(pair)
+        covered.update(pair)
+    return tuple(groups)
+
+
+def inherited_scales(spec: mujoco.MjSpec, scales: Mapping[str, float]) -> dict[str, float]:
+    """Give every body the factor of its nearest ancestor in ``scales``, or its own.
+
+    Args:
+        spec: Model whose body tree is walked from the free-joint roots, or from all children of
+            the worldbody when there is no free joint.
+        scales: Body name -> factor. Roots not listed get 1.0.
+
+    Returns:
+        Body name -> factor for the bodies under those roots.
+    """
+    out: dict[str, float] = {}
+    roots = [b for b in spec.worldbody.bodies if any(j.type == mujoco.mjtJoint.mjJNT_FREE for j in b.joints)]
+    roots = roots or list(spec.worldbody.bodies)
+
+    def walk(body: mujoco.MjsBody, parent: float) -> None:
+        out[body.name] = factor = scales.get(body.name, parent)
+        for child in body.bodies:
+            walk(child, factor)
+
+    for root in roots:
+        walk(root, scales.get(root.name, 1.0))
+    return out
 
 
 def scale_spec(spec: mujoco.MjSpec, scales: Scales, *, total_mass: float | None = None) -> mujoco.MjSpec:
