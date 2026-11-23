@@ -23,10 +23,12 @@ from collections.abc import Mapping
 from pathlib import Path
 from typing import Any
 
+import mujoco
 import numpy as np
 import pytest
 
-from myo_sim import scaling
+import myo_sim
+from myo_sim import scale_spec, scaling
 from scripts import validate_opensim_scaling as validation
 
 TOLERANCES = json.loads(validation.POSE_TOLERANCES.read_text())
@@ -157,6 +159,107 @@ def test_self_regression_rejects_every_mutation(case: str, reference: dict, muta
 def test_the_myo_sim_half_reproduces_its_stored_baseline(reference: dict, measured: dict) -> None:
     for case, values in reference["myo_sim"]["cases"].items():
         assert _regression_score(measured["cases"][case], values) <= 1, case
+
+
+def _affine_inertia(inertia: np.ndarray, factors: np.ndarray, mass_ratio: float) -> np.ndarray:
+    """Inertia after stretching the mass distribution by ``factors`` (the documented rule)."""
+    second = 0.5 * np.trace(inertia) * np.eye(3) - inertia
+    second = mass_ratio * np.diag(factors) @ second @ np.diag(factors)
+    return np.trace(second) * np.eye(3) - second
+
+
+def test_mass_scaling_matches_opensim(reference: dict, measured: dict) -> None:
+    """Per-body mass ratios agree with OpenSim in every compared case, inertia ratios under one factor."""
+    for case in SCALED_CASES:
+        ratios = [
+            np.array(half["cases"][case]["body_mass_kg"]) / np.array(half["cases"]["nominal"]["body_mass_kg"])
+            for half in (measured, reference["opensim"])
+        ]
+        np.testing.assert_allclose(ratios[0], ratios[1], rtol=0, atol=1e-12, err_msg=case)
+        if validation.category(case) == "uniform":
+            inertia = [
+                np.diagonal(half["cases"][case]["body_inertia_kgm2"], axis1=1, axis2=2)
+                / np.diagonal(half["cases"]["nominal"]["body_inertia_kgm2"], axis1=1, axis2=2)
+                for half in (measured, reference["opensim"])
+            ]
+            np.testing.assert_allclose(inertia[0], inertia[1], rtol=0, atol=1e-10, err_msg=case)
+
+
+def test_inertia_follows_the_affine_rule(measured: dict) -> None:
+    # 10 kg, diagonal inertia (0.1, 0.2, 0.25), factors (1.2, 0.8, 1.1); "keep" rescales to the nominal mass.
+    factors = np.array([1.2, 0.8, 1.1])
+    for total_mass, mass_ratio in ((None, float(np.prod(factors))), (10.0, 1.0)):
+        spec = mujoco.MjSpec.from_string(
+            '<mujoco><worldbody><body name="probe"><freejoint/><inertial mass="10" pos="0 0 0" '
+            'diaginertia=".1 .2 .25"/></body></worldbody></mujoco>'
+        )
+        model = scale_spec(spec, {"probe": factors}, total_mass=total_mass).compile()
+        assert model.body_mass[1] == pytest.approx(10.0 * mass_ratio, rel=1e-12)
+        np.testing.assert_allclose(
+            validation._inertia_in(model, 1, np.eye(3)),
+            _affine_inertia(np.diag([0.1, 0.2, 0.25]), factors, mass_ratio),
+            rtol=1e-12,
+            atol=1e-15,
+        )
+    # MyoLeg's pelvis and right-leg bodies, in their own frames.
+    recipe = validation.pose_fixture()["cases"]["anisotropic_volume"]["factors"]
+    scaled, nominal = (measured["cases"][case] for case in ("anisotropic_volume", "nominal"))
+    for index, body in enumerate(validation.POSE_BODIES):
+        expected = _affine_inertia(
+            np.array(nominal["body_inertia_kgm2"][index]),
+            np.array(recipe[body]),
+            scaled["body_mass_kg"][index] / nominal["body_mass_kg"][index],
+        )
+        np.testing.assert_allclose(scaled["body_inertia_kgm2"][index], expected, rtol=1e-10, atol=1e-14, err_msg=body)
+
+
+def _axes_along_pelvis(model: mujoco.MjModel, body: str) -> np.ndarray:
+    """For each axis of ``body``, the pelvis (OpenSim) axis it lies along."""
+    data = mujoco.MjData(model)
+    mujoco.mj_kinematics(model, data)
+    turn = data.xmat[model.body("pelvis").id].reshape(3, 3).T @ data.xmat[model.body(body).id].reshape(3, 3)
+    return np.argmax(np.abs(turn), axis=0)
+
+
+def _local_records(model: mujoco.MjModel) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    """Positions of the root's child bodies, then torso primitive geom positions, torso inertia and head_attach position."""
+    root, torso = model.body("Full Body").id, model.body("torso").id
+    primitives = (model.geom_bodyid == torso) & (model.geom_type != mujoco.mjtGeom.mjGEOM_MESH)
+    rot = np.zeros(9)
+    mujoco.mju_quat2Mat(rot, model.body_iquat[torso])
+    rot = rot.reshape(3, 3)
+    return (
+        model.body_pos[model.body_parentid == root],
+        model.geom_pos[primitives],
+        rot @ np.diag(model.body_inertia[torso]) @ rot.T,
+        model.body_pos[model.body("head_attach").id],
+    )
+
+
+def test_root_and_torso_take_opensim_axes(tmp_path: Path) -> None:
+    """MyoLeg's root is rotated against the pelvis; factors per OpenSim axis must land on the axes pointing the same way."""
+    factors = np.array([1.1, 1.2, 1.3])
+    spec = myo_sim.load_spec("myolegs")
+    nominal = spec.copy().compile()
+    root_factors = factors[_axes_along_pelvis(nominal, "Full Body")]
+    torso_factors = factors[_axes_along_pelvis(nominal, "torso")]
+    assert not np.array_equal(root_factors, factors)
+    children, geoms, inertia, head = _local_records(nominal)
+
+    def matches(model: mujoco.MjModel) -> bool:
+        scaled_children, scaled_geoms, scaled_inertia, scaled_head = _local_records(model)
+        expected = _affine_inertia(inertia, torso_factors, float(np.prod(factors)))
+        return (
+            np.allclose(scaled_children, children * root_factors, rtol=0, atol=1e-12)
+            and np.allclose(scaled_geoms, geoms * torso_factors, rtol=0, atol=1e-12)
+            and np.allclose(scaled_inertia, expected, rtol=1e-10, atol=1e-14)
+            and np.allclose(scaled_head, head * torso_factors, rtol=0, atol=1e-12)
+        )
+
+    path = validation.write_scale_set({"pelvis": factors, "torso": factors}, tmp_path / "scale.xml")
+    assert matches(scale_spec(spec, path).compile())
+    # The known-bad mapping: OpenSim factors along each body's own axes.
+    assert not matches(scale_spec(spec, {"Full Body": factors, "lumbar5": factors}).compile())
 
 
 def test_root_height_regression_sees_unscaled_feet(reference: dict, monkeypatch: pytest.MonkeyPatch) -> None:
