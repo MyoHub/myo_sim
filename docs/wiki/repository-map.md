@@ -23,8 +23,9 @@ myo_sim/              # installable Python package
     hand.py           # prune_arm_spec_to_hand()
     keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
     data/             # tables written by scripts/, with provenance
+  fingerprint.py      # musculoskeletal_fingerprint(): hash of a compiled model's musculoskeletal content
   physics/            # runtime physics the models need beyond MuJoCo (NumPy core; torch/JAX lazily)
-    joint_coupling.py # put coupled joints (mjEQ_JOINT) on their polynomials
+    joint_coupling.py # put coupled joints (mjEQ_JOINT) and moving tendon-node slides on their constraints
     fatigue.py        # 3CC-r muscle fatigue: NumPy, batched torch (torch.compile on CUDA)
     fatigue_jax.py    # the same fatigue step in JAX
     muscle_groups.py  # functional muscle groups, keys of the fatigue parameters

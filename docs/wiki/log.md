@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-23 — Add musculoskeletal fingerprint and tendon-node projection
+Changed: myo_sim/fingerprint.py, myo_sim/physics/joint_coupling.py, tests/test_fingerprint.py, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md
+Why: tie EMG validation reports and other results to the exact model they used, with the same hash MyoSuite computes today; the tendon-node projection it needs lives with the other joint-coupling projections.
+
 ## 2026-11-16 â€” Add portable Hill-type muscle curves and joint-torque MjSpec compiler
 Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.
