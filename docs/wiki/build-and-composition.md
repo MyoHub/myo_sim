@@ -208,6 +208,10 @@ It imports `framelinvel`, `frameangvel`, `touch` and `jointlimitfrc` (`SENSOR_TY
 
 Thin wrappers around `spec.body(name)` / `spec.site(name)` that raise a clear `ValueError` instead of silently propagating `None` when the name is missing (e.g. a typo'd attachment site). Prefer these over calling `spec.body()`/`spec.site()` directly when a missing name should fail loudly at build time.
 
+### `delete_joint(spec, joint)`, `delete_tendon(spec, tendon)` and `immobilize_subtree(spec, body)`
+
+`myo_sim.build.spec_edit` deletes elements together with everything that references them, so the edited spec still compiles. `delete_tendon` removes the tendon, the actuators on it (and their sensors), tendon equalities naming it and its sensors. `delete_joint` removes the joint, the fixed tendons that use it (via `delete_tendon`), joint equalities naming it, joint and jointinparent actuators on it (and their sensors) and its sensors. `immobilize_subtree` deletes every joint of a body and its descendants and returns the joint names in traversal order; sites, geoms and bodies stay. `spec.delete(joint)` alone leaves dangling references that fail at compile time.
+
 ## Contact Injection Pattern
 
 Contacts are stored in separate XML files under `myo_sim/models/contacts/`:

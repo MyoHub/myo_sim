@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-23 — Add dependency-safe joint and tendon deletion for MjSpec
+Changed: myo_sim/build/spec_edit.py, tests/test_spec_edit.py, docs/wiki/build-and-composition.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md, docs/wiki/log.md
+Why: downstream environments (MyoSuite arm-reach, table-tennis, MuscleMimic finger removal) each carried their own copy of this deletion code; one tested implementation avoids dangling tendons, equalities, actuators and sensors after `spec.delete(joint)`.
+
 ## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
 Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.

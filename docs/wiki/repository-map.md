@@ -21,6 +21,7 @@ myo_sim/              # installable Python package
     compose.py        # MODEL_REGISTRY, BuildStrategy, build_spec(), SPEC_BUILDERS
     utils.py          # MirrorRules, mirror_element(), add_contact_pairs(), XML composition helpers
     hand.py           # prune_arm_spec_to_hand()
+    spec_edit.py      # delete_joint(), delete_tendon(), immobilize_subtree(): deletion with all dependents
     keyframes.py      # list_postures(), add_posture_keyframes(), reads data/postures.json
     data/             # tables written by scripts/, with provenance
   physics/            # runtime physics the models need beyond MuJoCo (NumPy core; torch/JAX lazily)
@@ -36,6 +37,7 @@ myo_sim/              # installable Python package
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
+  test_spec_edit.py                # dependency-safe joint/tendon deletion
   test_contact_paths.py            # contacts centralized, not embedded
   test_mirror_symmetry.py          # body positions and axes are bilateral reflections
   test_chest_ownership.py          # chest_r in torso chain, not arm chain
