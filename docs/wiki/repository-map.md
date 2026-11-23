@@ -30,6 +30,7 @@ myo_sim/              # installable Python package
     muscle_groups.py  # functional muscle groups, keys of the fatigue parameters
     muscle_strength.py # native peak-force resolution, strength transforms and MVC torque calibration
     body_mass.py      # selected-body mass/inertia transforms with refreshed constants
+    muscle_operating_range.py # span and shift of muscle actuator_lengthrange (operating range)
     activation_dynamics.py # mjDYN_MUSCLE activation and deactivation time-constant transforms
     joint_mechanics.py # passive joint damping, stiffness and range-of-motion copy transforms
     hill_muscle.py    # portable Hill-type muscle curves (NumPy/torch) and joint-torque MjSpec compiler

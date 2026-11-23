@@ -7,6 +7,7 @@
 - :mod:`~myo_sim.physics.muscle_strength`: native muscle peak-force scaling and isometric MVC torque calibration.
 - :mod:`~myo_sim.physics.activation_dynamics`: Hill-type muscle activation and deactivation time-constant transforms.
 - :mod:`~myo_sim.physics.joint_mechanics`: passive joint damping, stiffness, and range-of-motion copy transforms.
+- :mod:`~myo_sim.physics.muscle_operating_range`: span and shift of the muscle operating length range (``actuator_lengthrange``).
 - :mod:`~myo_sim.physics.hill_muscle`: portable Hill-type muscle curves (NumPy/torch) and joint-torque ``MjSpec`` compiler.
 
 NumPy and MuJoCo suffice to import this package; torch and JAX are imported only where used

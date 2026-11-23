@@ -102,6 +102,26 @@ to `act_factors` when omitted. Only `mjDYN_MUSCLE` actuators are updated
 (`actuator_dynprm[:, 0]` and `actuator_dynprm[:, 1]`); motors, stateless muscles,
 peak active/passive force capacities, geometry and clamps remain unchanged.
 
+## Muscle operating range
+
+```python
+from myo_sim.physics.muscle_operating_range import scale_muscle_operating_range
+
+scale_muscle_operating_range(model, span=1.1, shift=0.005, muscles=["BIClong", "BRA"])
+```
+
+In place on a compiled model. For each selected muscle (`mjGAIN_MUSCLE`; `None`
+selects all) the `actuator_lengthrange` `[l0, l1]` with midpoint `m` and
+half-width `h` becomes `[m + shift - span*h, m + shift + span*h]`. MuJoCo
+derives the optimal fibre length `L0 = (l1 - l0) / (range[1] - range[0])` from
+it, so `span` scales `L0` about the midpoint and `shift` [m] moves the operating
+range (comparable to a tendon-slack change); force capacity, bias parameters
+and activation dynamics are untouched. `span` is a positive finite scalar or
+`(nu,)` array, `shift` a finite scalar or `(nu,)` array. Names must be distinct
+muscle actuators; unselected and non-muscle rows stay bit-identical. Invalid
+input, a selected range with `l1 <= l0` or a non-finite result raises
+`ValueError` before anything is written; there is no silent minimum half-width.
+
 ## Passive joint mechanics
 
 ```python

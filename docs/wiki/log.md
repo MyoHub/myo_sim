@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-23 — Add muscle operating-range transform
+Changed: myo_sim/physics/muscle_operating_range.py, myo_sim/physics/__init__.py, tests/test_physics_muscle_operating_range.py, docs/wiki/model-parameters.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, CHANGELOG.md, docs/wiki/log.md
+Why: subject calibration downstream edited `actuator_lengthrange` directly with a silent half-width floor; the transform is model-level, documents its effect on MuJoCo's optimal fibre length and rejects degenerate ranges.
+
 ## 2026-11-23 — Select muscles when scaling strength; add max_joint_torque
 Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md, docs/wiki/testing-guide.md, CHANGELOG.md, docs/wiki/log.md
 Why: downstream participant calibration scaled agonist subsets and probed joint torque capacity with fatigue caps in application code; both are model-level and now live here, with every unselected actuator left bit-identical.
