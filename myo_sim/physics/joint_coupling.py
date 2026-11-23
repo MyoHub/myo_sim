@@ -229,3 +229,55 @@ def projected_joint_couplings(couplings: JointCouplings, qpos: Any, qvel: Any | 
         qpos = _with_columns(qpos, c.dep_qpos[start:end], c.dep_ref[start:end] + value)
         start = end
     return qpos, qvel
+
+
+def project_tendon_nodes(model: mujoco.MjModel, qpos: np.ndarray) -> np.ndarray:
+    """Place ``mjJNT_SLIDE`` joints tied by ``mjEQ_TENDON`` equalities onto their constraints.
+
+    Supports models with moving tendon-node slides (e.g. lumbrical origins on FDP and
+    juncturae tendinum). Returns a copy of *qpos* unchanged when no slide-tendon ties exist.
+
+    Args:
+        model: Compiled MuJoCo model.
+        qpos: ``(nq,)`` or ``(T, nq)`` generalized positions.
+
+    Returns:
+        Copy of *qpos* with tied slide coordinates projected onto their tendon polynomials.
+    """
+    out = np.array(qpos, dtype=np.float64, copy=True)
+    ties: list[tuple[int, float, int, np.ndarray]] = []
+    for e in range(model.neq):
+        if model.eq_type[e] != mujoco.mjtEq.mjEQ_TENDON or not model.eq_active0[e]:
+            continue
+        t1, t2 = int(model.eq_obj1id[e]), int(model.eq_obj2id[e])
+        if t1 < 0 or t2 < 0:
+            continue
+        adr = int(model.tendon_adr[t1])
+        if model.tendon_num[t1] != 1 or model.wrap_type[adr] != mujoco.mjtWrap.mjWRAP_JOINT:
+            continue
+        joint = int(model.wrap_objid[adr])
+        if model.jnt_type[joint] != mujoco.mjtJoint.mjJNT_SLIDE:
+            continue
+        ties.append(
+            (
+                int(model.jnt_qposadr[joint]),
+                float(model.wrap_prm[adr]),
+                t2,
+                model.eq_data[e, 4::-1].copy(),
+            )
+        )
+    if not ties:
+        return out
+
+    squeeze = out.ndim == 1
+    rows = out[None, :] if squeeze else out
+    data = mujoco.MjData(model)
+    for t in range(len(rows)):
+        data.qpos[:] = rows[t]
+        mujoco.mj_kinematics(model, data)
+        mujoco.mj_comPos(model, data)
+        mujoco.mj_tendon(model, data)
+        for qadr, prm, t2, poly in ties:
+            dl = float(data.ten_length[t2] - model.tendon_length0[t2])
+            rows[t, qadr] = model.qpos0[qadr] + float(np.polyval(poly, dl)) / prm
+    return rows[0] if squeeze else out

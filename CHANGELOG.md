@@ -4,6 +4,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **Musculoskeletal fingerprint.** `myo_sim.fingerprint.musculoskeletal_fingerprint` returns a 16-hex hash of a compiled model's kinematics, inertias, active equalities, contact pairs, tendons, actuators and moment arms at `qpos0`, so results (e.g. EMG validation reports) can be tied to the exact model; visual properties do not enter. `myo_sim.physics.joint_coupling.project_tendon_nodes` places slide joints tied by tendon equalities (e.g. lumbrical origins) on their constraints. No model file changes.
 - **Passive joint mechanics transforms.** `myo_sim.physics.joint_mechanics.scale_joint_mechanics` returns an independent model copy with scaled passive damping, stiffness and `qpos0`-anchored range of motion on independent 1-DOF joints while preserving `mjEQ_JOINT` couplings, automatic muscle force capacity and refreshed native constants.
 - **Muscle activation time-constant transforms.** `myo_sim.physics.activation_dynamics` reads and scales `mjDYN_MUSCLE` activation and deactivation time constants (`tau_act`, `tau_deact`) on compiled models or editable specs without altering force capacity, stateless actuators or geometry.
 - **Selected-body mass transforms.** `myo_sim.physics.body_mass.scale_body_mass` returns a copy scaled to represented model mass or an explicit participant/reference ratio, preserving geometry and muscle strength and refreshing native constants.
