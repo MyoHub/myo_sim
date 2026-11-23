@@ -19,6 +19,7 @@ from myo_sim.physics.muscle_strength import (
     MaxTorqueMeasurement,
     _bvls,
     calibrate_muscle_strength,
+    max_joint_torque,
     max_torque_terms,
     peak_force,
     scale_muscle_strength,
@@ -412,3 +413,135 @@ def test_supported_stateless_terms_match_direct_actuation(lower: float, upper: f
         data.ctrl[:] = activation
         mujoco.mj_forward(model, data)
         assert activation * active[0] + passive[0] + joints == pytest.approx(data.qfrc_actuator[0])
+
+
+def _arm(*, auto: bool = False, coupled: bool = False) -> mujoco.MjModel:
+    child = '<body><joint name="dependent" axis="0 1 0" range="0 6"/><geom size=".05" mass="1"/></body>' if coupled else ""
+    equality = '<equality><joint joint1="dependent" joint2="elbow" polycoef="0 2 0 0 0"/></equality>' if coupled else ""
+    return mujoco.MjModel.from_xml_string(
+        f"""<mujoco><compiler angle="radian"/><worldbody>
+        <body name="torso"><geom size=".1" mass="20"/>
+        <body name="arm"><joint name="elbow" axis="0 1 0" range="0 3" stiffness="2" springref="0"/>
+        <geom type="capsule" fromto="0 0 0 1 0 0" size=".04" mass="3"/>{child}</body></body></worldbody>
+        {equality}<actuator>
+        <muscle name="flexor" joint="elbow" gear="-1" lengthrange="-3 0" force="{-1 if auto else 100}"/>
+        <muscle name="extensor" joint="elbow" lengthrange="0 3" force="80"/>
+        </actuator></mujoco>"""
+    )
+
+
+def _qpos(model: mujoco.MjModel, elbow: float) -> np.ndarray:
+    q = model.qpos0.copy()
+    q[0] = elbow
+    return q
+
+
+def _direct_torque(model: mujoco.MjModel, q: np.ndarray, activation: np.ndarray) -> float:
+    data = mujoco.MjData(model)
+    data.qpos[:] = q
+    data.act[model.actuator_actadr] = activation
+    data.ctrl[:] = activation
+    mujoco.mj_forward(model, data)
+    return float((data.qfrc_actuator + data.qfrc_passive)[0])
+
+
+def test_selected_scaling_preserves_other_parameters_and_automatic_force() -> None:
+    model = _arm(auto=True)
+    gain, bias = model.actuator_gainprm.copy(), model.actuator_biasprm.copy()
+    scale_muscle_strength(model, 2.0, muscles=["extensor"])
+    np.testing.assert_array_equal(model.actuator_gainprm[0], gain[0])
+    np.testing.assert_array_equal(model.actuator_biasprm[0], bias[0])
+    assert model.actuator_gainprm[0, 2] < 0
+    assert model.actuator_gainprm[1, 2] == 160
+    assert model.actuator_biasprm[1, 2] == 160
+    model.actuator_biastype[1] = mujoco.mjtBias.mjBIAS_NONE
+    bias = model.actuator_biasprm.copy()
+    scale_muscle_strength(model, 2.0, muscles=["extensor"])
+    np.testing.assert_array_equal(model.actuator_biasprm, bias)
+    assert model.actuator_gainprm[1, 2] == 320
+
+
+def test_selected_scaling_matches_between_model_and_spec_and_validates_only_selected() -> None:
+    spec = _spec()
+    original = spec.copy().compile()
+    scaled = copy.deepcopy(original)
+    factors = np.array([np.nan, 1.5, np.nan])
+    scale_muscle_strength(scaled, factors, muscles=["explicit"])
+    scale_muscle_strength_spec(spec, factors, muscles=["explicit"])
+    from_spec = spec.compile()
+    for angle in (0.1, 1.2):
+        expected = _forces(original, angle, 1.0) * np.array([1.0, 1.5, 1.0])
+        np.testing.assert_allclose(_forces(scaled, angle, 1.0), expected, rtol=1e-12)
+        np.testing.assert_allclose(_forces(from_spec, angle, 1.0), expected, rtol=1e-12)
+    np.testing.assert_array_equal(from_spec.actuator_gainprm[[0, 2]], original.actuator_gainprm[[0, 2]])
+    with pytest.raises(ValueError, match="positive and finite"):
+        scale_muscle_strength(scaled, factors, muscles=["automatic"])
+
+
+@pytest.mark.parametrize("muscles", [["missing"], ["explicit", "explicit"], ["motor"], "explicit"])
+def test_invalid_muscle_selection_is_transactional(muscles: list[str] | str) -> None:
+    spec = _spec()
+    model = spec.copy().compile()
+    gain, bias, text = model.actuator_gainprm.copy(), model.actuator_biasprm.copy(), spec.to_xml()
+    with pytest.raises(ValueError, match="muscle"):
+        scale_muscle_strength(model, 2.0, muscles=muscles)
+    with pytest.raises(ValueError, match="muscle"):
+        scale_muscle_strength_spec(spec, 2.0, muscles=muscles)
+    np.testing.assert_array_equal(model.actuator_gainprm, gain)
+    np.testing.assert_array_equal(model.actuator_biasprm, bias)
+    assert spec.to_xml() == text
+
+
+def test_max_joint_torque_caps_only_active_force() -> None:
+    model = _arm()
+    q = _qpos(model, 2.7)
+    fresh, (name,) = max_joint_torque(model, q, "elbow")
+    passive = max_joint_torque(model, q, "elbow", max_activation=np.zeros(2))[0]
+    cap = np.ones(2)
+    cap[model.actuator(name).id] = 0.5
+    half, _ = max_joint_torque(model, q, "elbow", max_activation=cap)
+    assert half == pytest.approx(passive + 0.5 * (fresh - passive))
+    assert half == pytest.approx(_direct_torque(model, q, cap * (np.arange(2) == model.actuator(name).id)))
+    assert fresh == pytest.approx(_direct_torque(model, q, np.arange(2) == model.actuator(name).id))
+    assert passive == pytest.approx(_direct_torque(model, q, np.zeros(2)))
+    (other,) = max_joint_torque(model, q, "elbow", -1.0)[1]
+    assert other != name
+
+
+def test_max_joint_torque_coupled_joint_uses_virtual_work_and_rejects_dependents() -> None:
+    model = _arm(coupled=True)
+    q = model.qpos0.copy()
+    q[0] = 1.0
+    model.jnt_stiffness[model.joint("dependent").id] = 0
+    baseline = max_joint_torque(model, q, "elbow")[0]
+    model.jnt_stiffness[model.joint("dependent").id] = 3
+    # The dependent joint's spring torque -3*2 acts with dq_dependent/dq_elbow = 2.
+    assert max_joint_torque(model, q, "elbow")[0] - baseline == pytest.approx(-12)
+    with pytest.raises(ValueError, match="independent"):
+        max_joint_torque(model, q, "dependent")
+
+
+def test_max_joint_torque_rejects_invalid_input_and_is_steady_for_early_activation() -> None:
+    model = _arm()
+    q = _qpos(model, 1.0)
+    nominal = max_joint_torque(model, q, "elbow")[0]
+    for kwargs, match in [
+        ({"direction": 0.5}, "direction"),
+        ({"max_activation": np.array([1.1, 0.0])}, "max_activation"),
+        ({"max_activation": np.array([np.nan, 0.0])}, "max_activation"),
+        ({"max_activation": np.ones(3)}, "max_activation"),
+    ]:
+        with pytest.raises(ValueError, match=match):
+            max_joint_torque(model, q, "elbow", **kwargs)
+    for bad in (q[:0], np.array([np.nan])):
+        with pytest.raises(ValueError, match="qpos"):
+            max_joint_torque(model, bad, "elbow")
+    with pytest.raises(ValueError, match="hinge or slide"):
+        max_joint_torque(model, q, "missing")
+    model.actuator_actearly[:] = 1
+    assert max_joint_torque(model, q, "elbow")[0] == pytest.approx(nominal)
+    assert np.all(model.actuator_actearly == 1)
+    model.actuator_forcelimited[0] = True
+    model.actuator_forcerange[0] = [-50.0, 0.0]
+    with pytest.raises(ValueError, match="Force clamps"):
+        max_joint_torque(model, q, "elbow")
