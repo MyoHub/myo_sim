@@ -10,7 +10,8 @@ authors = [
     { name = "Huiyi Wang", email = "huiyi.wang@mail.mcgill.ca" },
 ]
 dependencies = [
-    "mujoco>=3.4,<4",
+    # 3.11 fixes reading tendon wrap targets on copied specs (google-deepmind/mujoco#3406).
+    "mujoco>=3.11,<4",
     "numpy>=1.24",
 ]
 

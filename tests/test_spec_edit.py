@@ -100,6 +100,17 @@ def test_delete_joint_removes_only_its_dependents() -> None:
     assert _equality_count(spec, mujoco.mjtEq.mjEQ_TENDON) == 0
 
 
+def test_delete_joint_on_copied_spec_matches_fresh_spec() -> None:
+    # MuJoCo < 3.11 crashed reading wrap targets of a copied spec (google-deepmind/mujoco#3406).
+    fresh = mujoco.MjSpec.from_string(XML)
+    copied = fresh.copy()
+    for spec in (fresh, copied):
+        delete_joint(spec, spec.joint("j4"))
+        spec.compile()
+    assert _names(copied) == _names(fresh)
+    assert len(copied.equalities) == len(fresh.equalities)
+
+
 def test_delete_joint_cascades_through_tendon() -> None:
     spec = mujoco.MjSpec.from_string(XML)
     delete_joint(spec, spec.joint("j1"))
