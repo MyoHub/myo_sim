@@ -10,7 +10,9 @@ authors = [
     { name = "Huiyi Wang", email = "huiyi.wang@mail.mcgill.ca" },
 ]
 dependencies = [
-    "mujoco>=3.4,<4",
+    # >=3.11: earlier releases segfault reading MjsWrap.target/.sidesite on a
+    # copied MjSpec (google-deepmind/mujoco#3406).
+    "mujoco>=3.11,<4",
     "numpy>=1.24",
 ]
 

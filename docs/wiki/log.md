@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-23 — Require MuJoCo 3.11
+Changed: pyproject.toml, uv.lock, .github/workflows/ci.yml, tests/test_spec_copy.py, CHANGELOG.md, docs/wiki/log.md
+Why: MuJoCo 3.10 and earlier segfault reading MjsWrap.target or .sidesite on a copied MjSpec (google-deepmind/mujoco#3406), which build.hand and MyoSuite's spec edits rely on.
+
 ## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
 Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.

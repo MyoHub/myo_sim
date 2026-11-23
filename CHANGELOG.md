@@ -4,6 +4,7 @@ Model changes that alter actuators, joints, sites or dynamics are breaking for d
 
 ## Unreleased
 
+- **MuJoCo 3.11 or newer.** MuJoCo 3.10 and earlier crash with an access violation when `MjsWrap.target` or `MjsWrap.sidesite` is read on a copied `MjSpec` (`MjSpec.copy()`, or `attach` with `copy_during_attach=True`; google-deepmind/mujoco#3406). `build.hand.tendon_wrap_geom_names` reads wrap targets, and MyoSuite applies its spec edits to copies. The requirement rises from `mujoco>=3.4` to `mujoco>=3.11`, CI tests 3.11 as the minimum, and `uv.lock` moves from 3.9.0 to 3.11.0. No model changes.
 - **Passive joint mechanics transforms.** `myo_sim.physics.joint_mechanics.scale_joint_mechanics` returns an independent model copy with scaled passive damping, stiffness and `qpos0`-anchored range of motion on independent 1-DOF joints while preserving `mjEQ_JOINT` couplings, automatic muscle force capacity and refreshed native constants.
 - **Muscle activation time-constant transforms.** `myo_sim.physics.activation_dynamics` reads and scales `mjDYN_MUSCLE` activation and deactivation time constants (`tau_act`, `tau_deact`) on compiled models or editable specs without altering force capacity, stateless actuators or geometry.
 - **Selected-body mass transforms.** `myo_sim.physics.body_mass.scale_body_mass` returns a copy scaled to represented model mass or an explicit participant/reference ratio, preserving geometry and muscle strength and refreshing native constants.
