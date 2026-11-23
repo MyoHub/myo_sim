@@ -10,6 +10,7 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_keyframe_import.py` | Imported keyframes compile and reset activation, controls and mocap state exactly like native MJCF, including omitted-field defaults | After `build.utils.add_keyframes` changes |
 | `test_torch_fatigue_reset_ownership.py` | Reset vectors viewing live compartments, selected rows, subsequent steps and preserved input gradients | After Torch fatigue reset changes; requires optional Torch, with CUDA cases skipped without a device |
 | `test_torch_fatigue_restore.py` | Failed Torch checkpoint loads preserve live compartments and the next fatigue step; valid broadcasting and buffer references are retained | After Torch fatigue restore changes; requires the optional `torch` extra, with CUDA cases skipped without a device |
+| `test_spec_edit.py` | `delete_joint`, `delete_tendon` and `immobilize_subtree` remove exactly the dependent tendons, equalities, actuators and sensors, keep unrelated elements and leave the spec compilable, including on a composed arm hand | After `build/spec_edit.py` changes |
 | `test_sims.py` | Static XML models load without error via `mujoco.MjModel.from_xml_path` | Always before PR |
 | `test_build_registry.py` | `BuildStrategy` enum fields, `MODEL_REGISTRY` completeness | After `compose.py` changes |
 | `test_xml_inertia_precision.py` | Edited planar inertias roundtrip without balancing; native frames and body order are retained | After serializer changes |
@@ -39,7 +40,7 @@ Map of the test suite for agents working in `myo_sim`.
 ## Fast Gate (Run Before Every PR)
 
 CI installs the locked development environment, then overrides MuJoCo with the
-matrix's floor or newest supported release (`>=3.4,<4`). Its version report and
+matrix's floor or newest supported release (`>=3.11,<4`). Its version report and
 pytest commands use `uv run --no-sync` so uv does not restore the locked MuJoCo
 version before the checks. Keep that flag on commands after the matrix override.
 
