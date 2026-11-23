@@ -8,7 +8,9 @@ Geometric scaling changes segments and muscle paths, not how strong the muscles
 are. :func:`calibrate_muscle_strength` fits a strength factor per muscle so that
 the model's maximal joint torques match measured maximal voluntary torques (e.g.
 from a dynamometer), and :func:`scale_muscle_strength` applies the factors to a
-compiled model (or :func:`scale_muscle_strength_spec` to an editable spec).
+compiled model (or :func:`scale_muscle_strength_spec` to an editable spec),
+optionally to selected muscles only. :func:`max_joint_torque` predicts the net
+maximal torque of one joint, with optional activation caps (fatigue).
 """
 
 from __future__ import annotations
@@ -44,48 +46,73 @@ def _muscles(model: mujoco.MjModel) -> np.ndarray:
     return model.actuator_gaintype == mujoco.mjtGain.mjGAIN_MUSCLE
 
 
-def _scaled_forces(model: mujoco.MjModel, factors: float | np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    muscle = _muscles(model)
-    passive = muscle & (model.actuator_biastype == mujoco.mjtBias.mjBIAS_MUSCLE)
+def _selected_muscles(model: mujoco.MjModel, muscles: Sequence[str] | None) -> np.ndarray:
+    """Boolean ``(nu,)`` mask of the named muscle actuators (all muscles for ``None``)."""
+    mask = _muscles(model)
+    if muscles is None:
+        return mask
+    if isinstance(muscles, str):
+        raise ValueError("muscles must be a sequence of actuator names, not a string")
+    ids = [mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_ACTUATOR, name) for name in muscles]
+    if len(set(ids)) != len(ids) or any(i < 0 or not mask[i] for i in ids):
+        raise ValueError("muscles must name distinct muscle actuators")
+    selected = np.zeros(model.nu, dtype=bool)
+    selected[ids] = True
+    return selected
+
+
+def _scaled_forces(
+    model: mujoco.MjModel, factors: float | np.ndarray, muscles: Sequence[str] | None
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    selected = _selected_muscles(model, muscles)
+    passive = selected & (model.actuator_biastype == mujoco.mjtBias.mjBIAS_MUSCLE)
     f = np.broadcast_to(np.asarray(factors, dtype=np.float64), (model.nu,))
-    if not np.all(np.isfinite(f[muscle]) & (f[muscle] > 0)):
+    checked = np.atleast_1d(factors).astype(np.float64) if np.ndim(factors) == 0 else f[selected]
+    if not np.all(np.isfinite(checked) & (checked > 0)):
         raise ValueError("Strength factors must be positive and finite")
     with np.errstate(over="ignore", invalid="ignore"):
-        gain = peak_force(model)[muscle] * f[muscle]
+        gain = peak_force(model)[selected] * f[selected]
         bias = peak_force(model, model.actuator_biasprm)[passive] * f[passive]
     if not np.all(np.isfinite(gain)) or not np.all(np.isfinite(bias)):
         raise ValueError("Scaled peak forces must be finite")
-    return muscle, passive, gain, bias
+    return selected, passive, gain, bias
 
 
-def scale_muscle_strength(model: mujoco.MjModel, factors: float | np.ndarray) -> None:
+def scale_muscle_strength(model: mujoco.MjModel, factors: float | np.ndarray, *, muscles: Sequence[str] | None = None) -> None:
     """Multiply native muscle peak active and passive forces in place.
 
     Args:
         model: Compiled model. Non-muscle gains and non-muscle bias laws stay
             unchanged, as do geometry, activation dynamics and force clamps.
         factors: Positive finite scalar, or ``(nu,)`` per-actuator factors.
-            Entries for non-muscle actuators are ignored.
+            Entries for non-muscle and unselected actuators are ignored.
+        muscles: Names of distinct muscle actuators to scale; ``None`` selects
+            every muscle. Other actuators keep their gain and bias parameters
+            bit-identical, and an unselected automatic force stays automatic.
 
-    Automatic peak forces are resolved before writing explicit forces. A factor
-    changes the force capacity, not a clamp or the legacy gain-only sarcopenia
-    convention. Invalid factors raise before any force parameter is modified.
+    Automatic peak forces of the selected muscles are resolved before writing
+    explicit forces. A factor changes the force capacity, not a clamp or the
+    legacy gain-only sarcopenia convention. Invalid factors or names raise
+    before any force parameter is modified.
     """
-    muscle, passive, gain, bias = _scaled_forces(model, factors)
-    model.actuator_gainprm[muscle, 2] = gain
+    selected, passive, gain, bias = _scaled_forces(model, factors, muscles)
+    model.actuator_gainprm[selected, 2] = gain
     model.actuator_biasprm[passive, 2] = bias
 
 
-def scale_muscle_strength_spec(spec: mujoco.MjSpec, factors: float | np.ndarray) -> mujoco.MjSpec:
+def scale_muscle_strength_spec(
+    spec: mujoco.MjSpec, factors: float | np.ndarray, *, muscles: Sequence[str] | None = None
+) -> mujoco.MjSpec:
     """Write scaled explicit muscle forces to ``spec`` in place and return it.
 
     A copy is compiled once to resolve automatic force without freezing the
-    caller's editable frames. Scalar/``(nu,)`` factors and validation match
-    :func:`scale_muscle_strength`; rejected factors leave the source unchanged.
+    caller's editable frames. Scalar/``(nu,)`` factors, ``muscles`` and
+    validation match :func:`scale_muscle_strength`; rejected input leaves the
+    source unchanged.
     """
     model = spec.copy().compile()
-    muscle, passive, gain, bias = _scaled_forces(model, factors)
-    for index, force in zip(np.flatnonzero(muscle), gain, strict=True):
+    selected, passive, gain, bias = _scaled_forces(model, factors, muscles)
+    for index, force in zip(np.flatnonzero(selected), gain, strict=True):
         spec.actuators[int(index)].gainprm[2] = float(force)
     for index, force in zip(np.flatnonzero(passive), bias, strict=True):
         spec.actuators[int(index)].biasprm[2] = float(force)
@@ -231,6 +258,61 @@ def max_torque_terms(model: mujoco.MjModel, measurement: MaxTorqueMeasurement) -
     mujoco.mju_sparse2dense(moment, data.actuator_moment, data.moment_rownnz, data.moment_rowadr, data.moment_colind)
     arm = moment @ e  # generalized force along the trial direction per unit actuator force
     return arm * (forces[1] - forces[0]), arm * forces[0], float(e @ data.qfrc_passive)
+
+
+def max_joint_torque(
+    model: mujoco.MjModel,
+    qpos: np.ndarray,
+    joint: str,
+    direction: float = 1.0,
+    *,
+    max_activation: np.ndarray | None = None,
+) -> tuple[float, tuple[str, ...]]:
+    """Predict isometric net MVC, optionally with fatigued activation caps.
+
+    Args:
+        model: Compiled model, unchanged.
+        qpos: Probe posture ``(nq,)`` [rad/m, quaternions for ball/free joints];
+            coupled joints are projected onto their polynomials.
+        joint: Independent hinge/slide joint about which torque is measured.
+        direction: ``+1`` or ``-1`` along the joint coordinate.
+        max_activation: ``(nu,)`` muscle activation caps in [0, 1]; e.g. ``1-MF``.
+            Non-muscle entries are ignored. Passive forces are not capped.
+
+    Returns:
+        Signed torque [N m for hinges, N for slides] and the agonist actuator
+        names (muscles whose active torque has the sign of ``direction``). The
+        torque includes passive muscle and joint forces; it excludes gravity
+        and external loads.
+
+    Raises:
+        ValueError: If ``qpos``, ``joint``, ``direction`` or ``max_activation``
+            are invalid, ``joint`` is a dependent or locked joint equality
+            joint, or the model cannot support :func:`max_torque_terms` (force
+            clamps, multi-state actuators, gravity compensation, restricted
+            stateless muscle controls).
+    """
+    if direction not in (-1.0, 1.0):
+        raise ValueError("direction must be +1 or -1")
+    q = np.array(qpos, dtype=np.float64)
+    if q.shape != (model.nq,) or not np.all(np.isfinite(q)):
+        raise ValueError(f"qpos must contain {model.nq} finite positions")
+    couplings = JointCouplings.from_model(model)
+    project_joint_couplings(couplings, q)
+    jid = mujoco.mj_name2id(model, mujoco.mjtObj.mjOBJ_JOINT, joint)
+    if jid < 0 or int(model.jnt_type[jid]) not in (int(mujoco.mjtJoint.mjJNT_HINGE), int(mujoco.mjtJoint.mjJNT_SLIDE)):
+        raise ValueError(f"{joint!r} must be a hinge or slide joint of the model")
+    address = model.jnt_qposadr[jid]
+    if address in couplings.dep_qpos or address in couplings.locked_qpos:
+        raise ValueError("MVC joint must be independent of the joint equalities")
+    active, passive, springs = max_torque_terms(model, MaxTorqueMeasurement(joint, q, torque=1.0))
+    ids = np.flatnonzero(_muscles(model))
+    cap = np.ones(model.nu) if max_activation is None else np.asarray(max_activation, dtype=np.float64)
+    if cap.shape != (model.nu,) or not np.all(np.isfinite(cap[ids]) & (cap[ids] >= 0) & (cap[ids] <= 1)):
+        raise ValueError("max_activation must have shape (nu,) and muscle caps in [0,1]")
+    agonists = ids[direction * active[ids] > 0]
+    torque = passive.sum() + springs + active[agonists] @ cap[agonists]
+    return float(torque), tuple(model.actuator(int(i)).name for i in agonists)
 
 
 def _bvls(a: np.ndarray, b: np.ndarray, lo: float, hi: float) -> np.ndarray:

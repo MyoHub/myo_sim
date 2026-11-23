@@ -18,8 +18,9 @@ Map of the test suite for agents working in `myo_sim`.
 | `test_mirror_symmetry.py` | Body positions and joint axes are bilateral reflections across the sagittal plane | After arm chain or mirror rule changes |
 | `test_chest_ownership.py` | `chest_r` in torso chain, not arm chain; no `chest_l` in bilateral models; `chest_r` stays massless and `myofullbody` totals ~84.3 kg | After chain XML changes |
 | `test_mass_convention.py` | `myofullbody` total mass and inertia sanity, only attachment frames massless and the head holds about 6.9 % of body mass | After mass, inertia or head/torso changes |
-| `test_physics_muscle_strength.py` | Active/passive force scaling, automatic force resolution, spec equivalence, coupled MVC torque probes and bounded strength calibration | After strength-transform or MVC-calibration changes |
+| `test_physics_muscle_strength.py` | Active/passive force scaling, selected-muscle scaling, automatic force resolution, spec equivalence, coupled MVC torque probes, `max_joint_torque` capacity and bounded strength calibration | After strength-transform or MVC-calibration changes |
 | `test_physics_body_mass.py` | Selected mass modes, native refreshed constants, automatic-force preservation and input ownership | After mass-transform changes |
+| `test_physics_muscle_operating_range.py` | Exact `actuator_lengthrange` span/shift, native `mju_muscleGain` equivalence, selection and transactional validation | After operating-range transform changes |
 | `test_physics_activation_dynamics.py` | `mjDYN_MUSCLE` rise/relaxation time-constant scaling, spec equivalence, ODE trajectory response and input validation | After activation-dynamics changes |
 | `test_physics_joint_mechanics.py` | Independent 1-DOF joint damping/stiffness/ROM copy transforms, `mjEQ_JOINT` exclusion, automatic-force preservation and input ownership | After joint-mechanics changes |
 | `test_fragment_registry.py` | FragmentRegistry legacy entries and all composed `myo_sim.load()` names build and forward | After `__init__.py` changes |
