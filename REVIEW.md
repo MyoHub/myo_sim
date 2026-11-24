@@ -1,6 +1,6 @@
 # Review rules
 
-These rules apply to every reviewer of a `myo_sim` pull request: people, Claude Code Review, PR Steward, Codex and the local
+These rules apply to every reviewer of a `myo_sim` pull request: people, Claude Code Review, Codex and the local
 `scripts/claude_review.sh`. `AGENTS.md` / `CLAUDE.md` point here. MyoSuite's `REVIEW.md` states the same split from the
 consumer side; keep the two in step.
 
@@ -24,10 +24,16 @@ consumer side; keep the two in step.
 - Prefer the smallest compatible change: reuse composition and physics primitives and public APIs, remove superseded code,
   and keep public names, XML file names and serialized assets compatible or document the migration.
 
-## Authorship of pull requests
+## Checks, approval and authorship
+
+- Tests, lint and this review run locally through pre-commit (`pre-commit install` installs the pre-push review). State
+  in the PR what ran and what did not.
+- Documentation (`docs/**`, `*.md`) may auto-merge. Everything else needs one approval from a person other than the one
+  who opened the pull request.
 
 - A pull request is opened by a person, under their own GitHub account, who owns its design. Agents may write code locally for
-  that person, and PR Steward may push follow-up fixes, but an agent or bot account must not open the pull request.
+  that person, and `scripts/claude_review.sh --fix` may prepare follow-up fixes
+  for the author to commit, but an agent or bot account must not open the pull request.
 - A bot's clean review is not a human approval of design or implementation.
 
 ## What a review summary states
