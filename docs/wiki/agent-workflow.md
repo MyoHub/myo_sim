@@ -7,7 +7,7 @@ Required workflow for any task in this repository. Follow in order.
 1. Read `docs/wiki/index.md` and the wiki pages relevant to your task.
 2. Read `AGENTS.md` (`CLAUDE.md` imports it).
 3. Read every file you plan to edit before touching it.
-4. Grep for existing implementations before adding new helpers, strategies, or contact files.
+4. Apply [repository ownership](../../AGENTS.md#repository-ownership): search both repositories before adding helpers, strategies or solvers. Separate anatomical/model changes from task and experiment workflows.
 
 ## Core work loop
 
@@ -16,7 +16,8 @@ Required workflow for any task in this repository. Follow in order.
 3. Run the fast gate from `docs/wiki/testing-guide.md`.
 4. Update any wiki page made stale by the change.
 5. Append an entry to `docs/wiki/log.md`.
-6. Push to your fork and open a PR to `dev`.
+6. Review the actual diff/imports against ownership and reuse; record canonical symbols, necessary new logic, removed code, compatibility and checks run/not run. Missing evidence needs revision; unavailable cross-repo checks are unverified.
+7. Push to your fork and open a PR to `dev`; link prerequisite or consumer PRs and required release versions.
 
 ## For XML model changes
 
