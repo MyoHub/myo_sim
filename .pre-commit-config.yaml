@@ -31,7 +31,7 @@ repos:
   # not installed; advisory by default. MYO_REVIEW=0 skips it, =strict blocks the push on a fail.
   - repo: local
     hooks:
-      - id: claude-review
+      - id: agent-review
         name: Local review (REVIEW.md, ownership)
         language: system
         entry: scripts/review/local_review.sh --hook
