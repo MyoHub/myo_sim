@@ -1,0 +1,20 @@
+{
+  "description": "Synthetic factors; no measured subject. The anisotropic case is that of MyoSuite PR #564, with the left leg added.",
+  "cases": {
+    "nominal": {},
+    "uniform": {
+      "pelvis": [1.1, 1.1, 1.1], "torso": [1.1, 1.1, 1.1],
+      "femur_r": [1.1, 1.1, 1.1], "tibia_r": [1.1, 1.1, 1.1], "patella_r": [1.1, 1.1, 1.1], "talus_r": [1.1, 1.1, 1.1], "calcn_r": [1.1, 1.1, 1.1], "toes_r": [1.1, 1.1, 1.1],
+      "femur_l": [1.1, 1.1, 1.1], "tibia_l": [1.1, 1.1, 1.1], "patella_l": [1.1, 1.1, 1.1], "talus_l": [1.1, 1.1, 1.1], "calcn_l": [1.1, 1.1, 1.1], "toes_l": [1.1, 1.1, 1.1]
+    },
+    "anisotropic": {
+      "pelvis": [1.03, 0.98, 1.04], "torso": [1.03, 0.98, 1.04],
+      "femur_r": [1.02, 1.09, 0.96], "tibia_r": [0.98, 1.07, 1.03], "patella_r": [1.03, 0.98, 1.04], "talus_r": [1.03, 0.98, 1.04], "calcn_r": [1.08, 0.98, 1.04], "toes_r": [1.08, 0.98, 1.04],
+      "femur_l": [1.02, 1.09, 0.96], "tibia_l": [0.98, 1.07, 1.03], "patella_l": [1.03, 0.98, 1.04], "talus_l": [1.03, 0.98, 1.04], "calcn_l": [1.08, 0.98, 1.04], "toes_l": [1.08, 0.98, 1.04]
+    },
+    "long_femur_short_tibia": {
+      "femur_r": [1.12, 1.12, 1.12], "tibia_r": [0.95, 0.95, 0.95],
+      "femur_l": [1.12, 1.12, 1.12], "tibia_l": [0.95, 0.95, 0.95]
+    }
+  }
+}

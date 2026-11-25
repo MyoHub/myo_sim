@@ -6,6 +6,37 @@ Append-only maintenance log, most recent first.
 Changed: AGENTS.md, docs/wiki/agent-workflow.md
 Why: distinguish anatomical composition/model physics from MyoSuite task assembly and analysis, and require cross-repo reuse and release evidence before approval.
 
+## 2026-11-23 - OpenSim comparison: mass, inertia and axis-mapping tests from MyoSuite #564
+Changed: tests/test_opensim_pose_comparison.py, docs/wiki/testing-guide.md, docs/wiki/log.md
+Why: MyoSuite #564 checked per-body mass and inertia ratios against OpenSim (including the preserved-mass cases), the affine inertia rule (probe and MyoLeg bodies) and the root and torso axis mapping; the comparison tests here did not.
+
+## 2026-11-23 — Scale groups and scale inheritance
+Changed: myo_sim/scaling.py, myo_sim/__init__.py, tests/test_scale_groups.py, docs/wiki/model-scaling.md, docs/wiki/testing-guide.md, docs/wiki/log.md, CHANGELOG.md
+Why: MyoSuite's subject scaling kept `default_scale_groups` and `_body_scale_map`, model-level code that belongs next to `scale_spec`; moved here as `default_scale_groups` and `inherited_scales` with unchanged behaviour.
+
+## 2026-11-15 — Resolve passive muscle peak force independently during scaling
+Changed: myo_sim/scaling.py, tests/test_scaling.py, docs/wiki/log.md
+Why: automatic active force (`gainprm[2] < 0`) previously overwrote explicit passive `biasprm[2]` and skipped automatic passive `biasprm[2] < 0` when active force was explicit (ported from MyoHub/myosuite#525 `5b855de2`).
+
+## 2026-11-14 — Reject nonfinite scaling validation records
+Changed: tests/test_opensim_pose_comparison.py, docs/wiki/log.md
+Why: NaN records could disappear in the maximum self-regression score; check finite values and exact shapes before reducing both comparison gates.
+
+## 2026-11-03 — Scaling review: per-muscle checks, wrap paths, smaller rules
+Changed: myo_sim/scaling.py, myo_sim/scaling_checks.py, tests/test_scaling.py, docs/wiki/model-scaling.md, docs/wiki/log.md, CHANGELOG.md
+Why: review of #149. The checks pooled all muscles, the wrap fallback compared only point counts, and sites, fitted primitives, aligned bodies and explicit welds did not follow the rules. Comparison with OpenSim unchanged.
+
+## 2026-11-03 — Scaling attached specs, review tests
+Changed: myo_sim/scaling.py, tests/test_scaling.py, docs/wiki/model-scaling.md, docs/wiki/log.md
+Why: an attached spec's angle unit, euler sequence and meshdir were read from the root spec, so scaling a MyoSuite-style scene put factors on the wrong axes or lost its meshes; also carry over MyoSuite #525's remaining scaling tests and test the digit at real flexion.
+
+## 2026-11-03 — OpenSim pose comparison
+Changed: scripts/validate_opensim_scaling.py, tests/test_opensim_pose_comparison.py, tests/data/opensim_scaling/pose_fixture.json, tests/data/opensim_scaling/pose_reference.json, tests/data/opensim_scaling/pose_tolerances.json, docs/wiki/model-scaling.md, docs/wiki/testing-guide.md, docs/wiki/repository-map.md, docs/wiki/log.md
+Why: compare moment arms, fibre lengths, tendon forces and torques of six leg muscles with OpenSim over a pose grid, as MyoSuite PR #564 did, with its bounds re-derived for myolegs and scale_spec.
+
+## 2026-11-03 — Model scaling
+Changed: myo_sim/scaling.py, myo_sim/opensim_scales.py, myo_sim/scaling_checks.py, myo_sim/__init__.py, tests/test_scaling.py, tests/test_opensim_comparison.py, tests/data/opensim_scaling/, scripts/validate_opensim_scaling.py, docs/wiki/model-scaling.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, README.md, CHANGELOG.md
+Why: scale a model to known factors in myo_sim itself, compared with OpenSim's ModelScaler on Rajagopal2016. No model changes.
 ## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
 Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
 Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.
