@@ -243,8 +243,14 @@ def mirror_name(value: str, rules: MirrorRules) -> str:
     return f"{value}_l"
 
 
-def should_mirror_class_name(value: str, rules: MirrorRules) -> bool:
-    if value.endswith("_r"):
+def should_mirror_class_name(
+    value: str,
+    rules: MirrorRules,
+    mirrored_classes: frozenset[str] | set[str] = frozenset(),
+) -> bool:
+    if value == "main" or value in rules.common_names:
+        return False
+    if value in mirrored_classes or value.endswith("_r"):
         return True
     if any(old in value for old, _ in rules.replacements):
         return True
@@ -330,11 +336,15 @@ def mirror_fullinertia(element: ET.Element) -> None:
     element.set("fullinertia", format_floats(values))
 
 
-def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
+def mirror_element(
+    element: ET.Element,
+    rules: MirrorRules,
+    mirrored_classes: frozenset[str] | set[str] = frozenset(),
+) -> ET.Element:
     """Return a mirrored copy, visiting and copying each node once."""
     mirrored = ET.Element(element.tag, element.attrib)
     mirrored.text, mirrored.tail = element.text, element.tail
-    mirrored.extend(mirror_element(child, rules) for child in element)
+    mirrored.extend(mirror_element(child, rules, mirrored_classes) for child in element)
 
     for attr_name, attr_value in list(mirrored.attrib.items()):
         if attr_name in NAME_REFERENCE_ATTRS:
@@ -346,7 +356,7 @@ def mirror_element(element: ET.Element, rules: MirrorRules) -> ET.Element:
                 mirror_reference(mirrored, attr_name, attr_value, rules),
             )
         elif attr_name in {"class", "childclass"}:
-            if should_mirror_class_name(attr_value, rules):
+            if should_mirror_class_name(attr_value, rules, mirrored_classes):
                 mirrored.set(attr_name, mirror_name(attr_value, rules))
         elif attr_name in {"material", "texture"}:
             mirrored.set(attr_name, mirror_name(attr_value, rules))
@@ -399,27 +409,39 @@ def build_mirrored_child_xml(
         texturedir=str(compiler_meshdir),
     )
 
-    for child in component_children(source_assets_xml):
-        if child.tag in {"compiler", "size", "option"}:
-            continue
-        mirrored = mirror_element(child, rules)
+    asset_children = [
+        child for child in component_children(source_assets_xml) if child.tag not in {"compiler", "size", "option"}
+    ]
+    extra_children = [
+        (xml_path, component_children(xml_path))
+        for xml_path in (source_tendons_xml, source_muscles_xml)
+        if xml_path is not None
+    ]
+    defined_classes = frozenset(
+        cls_name
+        for group in (asset_children, *(children for _, children in extra_children))
+        for child in group
+        for default in child.iter("default")
+        if (cls_name := default.get("class")) and cls_name != "main" and cls_name not in rules.common_names
+    )
+
+    for child in asset_children:
+        mirrored = mirror_element(child, rules, defined_classes)
         if mirrored.tag == "asset":
             for asset_child in list(mirrored):
                 if asset_child.get("name") in rules.common_names:
                     mirrored.remove(asset_child)
         root.append(mirrored)
 
-    for xml_path in (source_tendons_xml, source_muscles_xml):
-        if xml_path is None:
-            continue
-        for child in component_children(xml_path):
-            root.append(mirror_element(child, rules))
+    for _, children in extra_children:
+        for child in children:
+            root.append(mirror_element(child, rules, defined_classes))
 
     worldbody = ET.SubElement(root, "worldbody")
     child_root = ET.SubElement(worldbody, "body", name=root_body_name)
     ET.SubElement(child_root, "site", name=root_site_name, size="0.01")
     for child in component_children(source_chain_xml):
-        child_root.append(mirror_element(child, rules))
+        child_root.append(mirror_element(child, rules, defined_classes))
 
     return ET.tostring(root, encoding="unicode")
 

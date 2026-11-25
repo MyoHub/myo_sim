@@ -298,3 +298,10 @@ def test_generated_xml_preserves_unnamed_elements_in_frames(tmp_path: Path) -> N
     assert [g.get("name") for g in root.iter("geom") if g.get("name")] == ["_myo_sim_export_geom_1"]
     assert not any(s.get("name") for s in root.iter("site"))
     assert not any(b.get("name") for b in root.iter("body"))
+
+
+def test_mirrored_arm_specs_roundtrip_through_to_xml() -> None:
+    for model_name in ("myoarms", "myohands", "myotorso_arms", "myofullbody"):
+        spec = myo_sim.load_spec(model_name)
+        reloaded = mujoco.MjSpec.from_string(spec.to_xml())
+        assert reloaded.compile().nu == spec.compile().nu
