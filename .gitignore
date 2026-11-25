@@ -31,4 +31,5 @@ tests/output/
 # Editor / local tooling
 .idea/
 .vscode/
-.claude/
+.claude/*
+!.claude/approvals.yml

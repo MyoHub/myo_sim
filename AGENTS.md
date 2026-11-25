@@ -22,6 +22,10 @@ cd tests && uv run python debug_muscle_torso.py
 cd tests && uv run python debug_muscle_bimanual.py
 ```
 
+## Review
+
+Review rules and the `myo_sim` / MyoSuite ownership split are in [REVIEW.md](REVIEW.md). Read it before writing or reviewing code.
+
 ## Commits
 
 - **Never add an AI assistant (e.g. Claude, Anthropic) as a commit co-author** — via `Co-Authored-By` trailers or otherwise. This repo's CLA check requires every commit author/co-author to have signed the CLA, and AI tools cannot sign it, so AI co-author trailers break the check.

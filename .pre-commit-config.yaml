@@ -1,5 +1,7 @@
 # Pre-commit hooks for myo_sim. Install with `uv run pre-commit install`.
 # ruff versions are pinned to match the dev environment and CI.
+default_install_hook_types: [pre-commit, pre-push]
+
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.17
@@ -24,3 +26,16 @@ repos:
         exclude: ^myo_sim/models/
       - id: trailing-whitespace
         exclude: ^myo_sim/models/
+
+  # Local review (pre-commit on the branch + agent review against REVIEW.md) before a push. Skips the review where the agent CLI is
+  # not installed; advisory by default. MYO_REVIEW=0 skips it, =strict blocks the push on a fail.
+  - repo: local
+    hooks:
+      - id: agent-review
+        name: Local review (REVIEW.md, ownership)
+        language: system
+        entry: scripts/review/local_review.sh --hook
+        stages: [pre-push]
+        pass_filenames: false
+        always_run: true
+        verbose: true
