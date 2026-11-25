@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-24 — Explicit cross-repository ownership for agents
+Changed: AGENTS.md, docs/wiki/agent-workflow.md
+Why: distinguish anatomical composition/model physics from MyoSuite task assembly and analysis, and require cross-repo reuse and release evidence before approval.
+
 ## 2026-11-23 - OpenSim comparison: mass, inertia and axis-mapping tests from MyoSuite #564
 Changed: tests/test_opensim_pose_comparison.py, docs/wiki/testing-guide.md, docs/wiki/log.md
 Why: MyoSuite #564 checked per-body mass and inertia ratios against OpenSim (including the preserved-mass cases), the affine inertia rule (probe and MyoLeg bodies) and the root and torso axis mapping; the comparison tests here did not.
