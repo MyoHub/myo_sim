@@ -1,0 +1,2118 @@
+{
+ "cases": {
+  "anisotropic": {
+   "inertia_moments": {
+    "calcn_l": [
+     0.0015706181836799998,
+     0.004893784197120001,
+     0.004893784197120001
+    ],
+    "calcn_r": [
+     0.0015706181836799998,
+     0.004893784197120001,
+     0.004893784197120001
+    ],
+    "femur_l": [
+     0.16588453935456002,
+     0.03668397797376,
+     0.16588453935456002
+    ],
+    "femur_r": [
+     0.16588453935456002,
+     0.03668397797376,
+     0.16588453935456002
+    ],
+    "patella_r": [
+     3.070703976704e-06,
+     1.4537885397672e-05,
+     1.4537885397672e-05
+    ],
+    "pelvis": [
+     0.11452876648303999,
+     0.11452876648303999,
+     0.06135338148576
+    ],
+    "talus_l": [
+     0.0010699316992,
+     0.0010918195288,
+     0.0010918195288
+    ],
+    "talus_r": [
+     0.0010699316992,
+     0.0010918195288,
+     0.0010918195288
+    ],
+    "tibia_l": [
+     0.061949356531229995,
+     0.0055600737805200015,
+     0.061949356531229995
+    ],
+    "tibia_r": [
+     0.061949356531229995,
+     0.0055600737805200015,
+     0.061949356531229995
+    ],
+    "toes_r": [
+     0.00011218701311999999,
+     0.0014041869004800004,
+     0.0014041869004800004
+    ]
+   },
+   "mass_kg": {
+    "calcn_l": 1.3759199999999998,
+    "calcn_r": 1.3759199999999998,
+    "femur_l": 9.9276446592,
+    "femur_r": 9.9276446592,
+    "patella_r": 0.0904906912,
+    "pelvis": 12.363211952,
+    "talus_l": 0.1049776,
+    "talus_r": 0.1049776,
+    "tibia_l": 4.004315035,
+    "tibia_r": 4.004315035,
+    "toes_r": 0.23841941759999996
+   },
+   "muscles": {
+    "addbrev_l": {
+     "optimal_fibre_length_m": 0.10990611077197107,
+     "path_length_m": 0.14948490174758455,
+     "tendon_slack_length_m": 0.0377905300216148
+    },
+    "addbrev_r": {
+     "optimal_fibre_length_m": 0.10990611077197107,
+     "path_length_m": 0.14948490174758455,
+     "tendon_slack_length_m": 0.0377905300216148
+    },
+    "addlong_l": {
+     "optimal_fibre_length_m": 0.1175332227895636,
+     "path_length_m": 0.26509987352994246,
+     "tendon_slack_length_m": 0.14316824339372441
+    },
+    "addlong_r": {
+     "optimal_fibre_length_m": 0.1175332227895635,
+     "path_length_m": 0.26509987352994246,
+     "tendon_slack_length_m": 0.1431682433937243
+    },
+    "addmagDist_l": {
+     "optimal_fibre_length_m": 0.19619125019339512,
+     "path_length_m": 0.24675095588742052,
+     "tendon_slack_length_m": 0.09674564269420718
+    },
+    "addmagDist_r": {
+     "optimal_fibre_length_m": 0.1961912501933949,
+     "path_length_m": 0.2467509558874204,
+     "tendon_slack_length_m": 0.09674564269420707
+    },
+    "addmagIsch_l": {
+     "optimal_fibre_length_m": 0.172765571951445,
+     "path_length_m": 0.3753302468063687,
+     "tendon_slack_length_m": 0.23928697941609764
+    },
+    "addmagIsch_r": {
+     "optimal_fibre_length_m": 0.17276557195144523,
+     "path_length_m": 0.3753302468063689,
+     "tendon_slack_length_m": 0.23928697941609794
+    },
+    "addmagMid_l": {
+     "optimal_fibre_length_m": 0.15062736403298016,
+     "path_length_m": 0.1570170857514599,
+     "tendon_slack_length_m": 0.05100513818387244
+    },
+    "addmagMid_r": {
+     "optimal_fibre_length_m": 0.15062736403298024,
+     "path_length_m": 0.1570170857514599,
+     "tendon_slack_length_m": 0.05100513818387245
+    },
+    "addmagProx_l": {
+     "optimal_fibre_length_m": 0.10980992320000782,
+     "path_length_m": 0.12097339144519728,
+     "tendon_slack_length_m": 0.041931686515753776
+    },
+    "addmagProx_r": {
+     "optimal_fibre_length_m": 0.10980992320000765,
+     "path_length_m": 0.1209733914451971,
+     "tendon_slack_length_m": 0.04193168651575371
+    },
+    "bflh_l": {
+     "optimal_fibre_length_m": 0.10711578879786925,
+     "path_length_m": 0.4543619944717042,
+     "tendon_slack_length_m": 0.35693554187307247
+    },
+    "bflh_r": {
+     "optimal_fibre_length_m": 0.10711578879786925,
+     "path_length_m": 0.4543619944717042,
+     "tendon_slack_length_m": 0.35693554187307247
+    },
+    "bfsh_l": {
+     "optimal_fibre_length_m": 0.11967759865272112,
+     "path_length_m": 0.25816577442371386,
+     "tendon_slack_length_m": 0.11481369552906043
+    },
+    "bfsh_r": {
+     "optimal_fibre_length_m": 0.11967759865272112,
+     "path_length_m": 0.25816577442371386,
+     "tendon_slack_length_m": 0.11481369552906043
+    },
+    "edl_l": {
+     "optimal_fibre_length_m": 0.07446488943390452,
+     "path_length_m": 0.46990062862329784,
+     "tendon_slack_length_m": 0.39636730690436317
+    },
+    "edl_r": {
+     "optimal_fibre_length_m": 0.07446488943390452,
+     "path_length_m": 0.46990062862329784,
+     "tendon_slack_length_m": 0.39636730690436317
+    },
+    "ehl_l": {
+     "optimal_fibre_length_m": 0.08043532031466986,
+     "path_length_m": 0.4349814446110513,
+     "tendon_slack_length_m": 0.3514155479531513
+    },
+    "ehl_r": {
+     "optimal_fibre_length_m": 0.08043532031466986,
+     "path_length_m": 0.4349814446110513,
+     "tendon_slack_length_m": 0.3514155479531513
+    },
+    "fdl_l": {
+     "optimal_fibre_length_m": 0.04762486887324918,
+     "path_length_m": 0.45272308049066073,
+     "tendon_slack_length_m": 0.4044620546536483
+    },
+    "fdl_r": {
+     "optimal_fibre_length_m": 0.04762486887324918,
+     "path_length_m": 0.45272308049066073,
+     "tendon_slack_length_m": 0.4044620546536483
+    },
+    "fhl_l": {
+     "optimal_fibre_length_m": 0.05634228460056571,
+     "path_length_m": 0.432701088972722,
+     "tendon_slack_length_m": 0.37882935327537914
+    },
+    "fhl_r": {
+     "optimal_fibre_length_m": 0.05634228460056571,
+     "path_length_m": 0.432701088972722,
+     "tendon_slack_length_m": 0.37882935327537914
+    },
+    "gaslat_l": {
+     "optimal_fibre_length_m": 0.06266219918521589,
+     "path_length_m": 0.47697823734621825,
+     "tendon_slack_length_m": 0.400771834966146
+    },
+    "gaslat_r": {
+     "optimal_fibre_length_m": 0.06266219918521593,
+     "path_length_m": 0.47697823734621825,
+     "tendon_slack_length_m": 0.4007718349661463
+    },
+    "gasmed_l": {
+     "optimal_fibre_length_m": 0.05428878049093514,
+     "path_length_m": 0.48616425098284594,
+     "tendon_slack_length_m": 0.424427910982488
+    },
+    "gasmed_r": {
+     "optimal_fibre_length_m": 0.05428878049093516,
+     "path_length_m": 0.4861642509828462,
+     "tendon_slack_length_m": 0.42442791098248817
+    },
+    "glmax1_l": {
+     "optimal_fibre_length_m": 0.1487404072977846,
+     "path_length_m": 0.19372086243292436,
+     "tendon_slack_length_m": 0.04941914091602953
+    },
+    "glmax1_r": {
+     "optimal_fibre_length_m": 0.1487404072977846,
+     "path_length_m": 0.19372086243292436,
+     "tendon_slack_length_m": 0.04941914091602953
+    },
+    "glmax2_l": {
+     "optimal_fibre_length_m": 0.1622465385219964,
+     "path_length_m": 0.2257076659002012,
+     "tendon_slack_length_m": 0.07015576617168831
+    },
+    "glmax2_r": {
+     "optimal_fibre_length_m": 0.1622465385219964,
+     "path_length_m": 0.2257076659002012,
+     "tendon_slack_length_m": 0.07015576617168831
+    },
+    "glmax3_l": {
+     "optimal_fibre_length_m": 0.17450010071271865,
+     "path_length_m": 0.2287229409201742,
+     "tendon_slack_length_m": 0.07284763322258443
+    },
+    "glmax3_r": {
+     "optimal_fibre_length_m": 0.17450010071271865,
+     "path_length_m": 0.2287229409201742,
+     "tendon_slack_length_m": 0.07284763322258443
+    },
+    "glmed1_l": {
+     "optimal_fibre_length_m": 0.0722915284997605,
+     "path_length_m": 0.11934289417254132,
+     "tendon_slack_length_m": 0.05527512461946723
+    },
+    "glmed1_r": {
+     "optimal_fibre_length_m": 0.0722915284997605,
+     "path_length_m": 0.11934289417254132,
+     "tendon_slack_length_m": 0.05527512461946723
+    },
+    "glmed2_l": {
+     "optimal_fibre_length_m": 0.07173451011171587,
+     "path_length_m": 0.12939976820179552,
+     "tendon_slack_length_m": 0.06411769187327328
+    },
+    "glmed2_r": {
+     "optimal_fibre_length_m": 0.07173451011171587,
+     "path_length_m": 0.12939976820179552,
+     "tendon_slack_length_m": 0.06411769187327328
+    },
+    "glmed3_l": {
+     "optimal_fibre_length_m": 0.07225990165967466,
+     "path_length_m": 0.11018529117190912,
+     "tendon_slack_length_m": 0.04477425795098076
+    },
+    "glmed3_r": {
+     "optimal_fibre_length_m": 0.07225990165967466,
+     "path_length_m": 0.11018529117190912,
+     "tendon_slack_length_m": 0.04477425795098076
+    },
+    "glmin1_l": {
+     "optimal_fibre_length_m": 0.06687898720090012,
+     "path_length_m": 0.07996519493153506,
+     "tendon_slack_length_m": 0.01587174324862574
+    },
+    "glmin1_r": {
+     "optimal_fibre_length_m": 0.06687898720090012,
+     "path_length_m": 0.07996519493153506,
+     "tendon_slack_length_m": 0.01587174324862574
+    },
+    "glmin2_l": {
+     "optimal_fibre_length_m": 0.054927048516105775,
+     "path_length_m": 0.08150082815259238,
+     "tendon_slack_length_m": 0.0255989985346751
+    },
+    "glmin2_r": {
+     "optimal_fibre_length_m": 0.054927048516105775,
+     "path_length_m": 0.08150082815259238,
+     "tendon_slack_length_m": 0.0255989985346751
+    },
+    "glmin3_l": {
+     "optimal_fibre_length_m": 0.0372696720899892,
+     "path_length_m": 0.08727055563589817,
+     "tendon_slack_length_m": 0.04989477351047305
+    },
+    "glmin3_r": {
+     "optimal_fibre_length_m": 0.0372696720899892,
+     "path_length_m": 0.08727055563589817,
+     "tendon_slack_length_m": 0.04989477351047305
+    },
+    "grac_l": {
+     "optimal_fibre_length_m": 0.24961354368198277,
+     "path_length_m": 0.48055903601925143,
+     "tendon_slack_length_m": 0.18848541184027406
+    },
+    "grac_r": {
+     "optimal_fibre_length_m": 0.24961354368198277,
+     "path_length_m": 0.4805590360192514,
+     "tendon_slack_length_m": 0.18848541184027406
+    },
+    "iliacus_l": {
+     "optimal_fibre_length_m": 0.10834365892190477,
+     "path_length_m": 0.21110066463765254,
+     "tendon_slack_length_m": 0.09769295727992569
+    },
+    "iliacus_r": {
+     "optimal_fibre_length_m": 0.10834365892190477,
+     "path_length_m": 0.21110066463765254,
+     "tendon_slack_length_m": 0.09769295727992569
+    },
+    "perbrev_l": {
+     "optimal_fibre_length_m": 0.04844826323729254,
+     "path_length_m": 0.20880893102540063,
+     "tendon_slack_length_m": 0.15743288105451467
+    },
+    "perbrev_r": {
+     "optimal_fibre_length_m": 0.04844826323729254,
+     "path_length_m": 0.20880893102540063,
+     "tendon_slack_length_m": 0.15743288105451467
+    },
+    "perlong_l": {
+     "optimal_fibre_length_m": 0.054107045496873084,
+     "path_length_m": 0.4110649296531177,
+     "tendon_slack_length_m": 0.3538481086428927
+    },
+    "perlong_r": {
+     "optimal_fibre_length_m": 0.054107045496873084,
+     "path_length_m": 0.4110649296531177,
+     "tendon_slack_length_m": 0.3538481086428927
+    },
+    "piri_l": {
+     "optimal_fibre_length_m": 0.026138276577471878,
+     "path_length_m": 0.1388285356028228,
+     "tendon_slack_length_m": 0.11551734762617763
+    },
+    "piri_r": {
+     "optimal_fibre_length_m": 0.026138276577471878,
+     "path_length_m": 0.1388285356028228,
+     "tendon_slack_length_m": 0.11551734762617763
+    },
+    "psoas_l": {
+     "optimal_fibre_length_m": 0.11790774209146354,
+     "path_length_m": 0.23080065687152074,
+     "tendon_slack_length_m": 0.1004012825206078
+    },
+    "psoas_r": {
+     "optimal_fibre_length_m": 0.11790774209146346,
+     "path_length_m": 0.23080065687152068,
+     "tendon_slack_length_m": 0.10040128252060773
+    },
+    "recfem_l": {
+     "optimal_fibre_length_m": 0.08192199471992567,
+     "path_length_m": 0.5526845470088446,
+     "tendon_slack_length_m": 0.48407753890323346
+    },
+    "recfem_r": {
+     "optimal_fibre_length_m": 0.08192199471992567,
+     "path_length_m": 0.5526845470088446,
+     "tendon_slack_length_m": 0.48407753890323346
+    },
+    "sart_l": {
+     "optimal_fibre_length_m": 0.42992953690853863,
+     "path_length_m": 0.6245413830179768,
+     "tendon_slack_length_m": 0.1322858302040116
+    },
+    "sart_r": {
+     "optimal_fibre_length_m": 0.42992953690853863,
+     "path_length_m": 0.6245413830179768,
+     "tendon_slack_length_m": 0.1322858302040116
+    },
+    "semimem_l": {
+     "optimal_fibre_length_m": 0.07578933592850307,
+     "path_length_m": 0.45201067670216405,
+     "tendon_slack_length_m": 0.38178710966493545
+    },
+    "semimem_r": {
+     "optimal_fibre_length_m": 0.07578933592850308,
+     "path_length_m": 0.4520106767021641,
+     "tendon_slack_length_m": 0.3817871096649355
+    },
+    "semiten_l": {
+     "optimal_fibre_length_m": 0.2109255178805246,
+     "path_length_m": 0.4962010901510563,
+     "tendon_slack_length_m": 0.2701583704743841
+    },
+    "semiten_r": {
+     "optimal_fibre_length_m": 0.2109255178805246,
+     "path_length_m": 0.4962010901510563,
+     "tendon_slack_length_m": 0.2701583704743841
+    },
+    "soleus_l": {
+     "optimal_fibre_length_m": 0.04690337678640515,
+     "path_length_m": 0.3441391397752513,
+     "tendon_slack_length_m": 0.2950178399977423
+    },
+    "soleus_r": {
+     "optimal_fibre_length_m": 0.04690337678640515,
+     "path_length_m": 0.3441391397752513,
+     "tendon_slack_length_m": 0.2950178399977423
+    },
+    "tfl_l": {
+     "optimal_fibre_length_m": 0.10142223467074622,
+     "path_length_m": 0.5845891569024202,
+     "tendon_slack_length_m": 0.47988416499855957
+    },
+    "tfl_r": {
+     "optimal_fibre_length_m": 0.10142223467074622,
+     "path_length_m": 0.5845891569024202,
+     "tendon_slack_length_m": 0.47988416499855957
+    },
+    "tibant_l": {
+     "optimal_fibre_length_m": 0.07334779638132606,
+     "path_length_m": 0.32847737868295057,
+     "tendon_slack_length_m": 0.25823259740437654
+    },
+    "tibant_r": {
+     "optimal_fibre_length_m": 0.07334779638132606,
+     "path_length_m": 0.32847737868295057,
+     "tendon_slack_length_m": 0.25823259740437654
+    },
+    "tibpost_l": {
+     "optimal_fibre_length_m": 0.04029399672889866,
+     "path_length_m": 0.34091272371412934,
+     "tendon_slack_length_m": 0.29930510167675856
+    },
+    "tibpost_r": {
+     "optimal_fibre_length_m": 0.04029399672889866,
+     "path_length_m": 0.34091272371412934,
+     "tendon_slack_length_m": 0.29930510167675856
+    },
+    "vasint_l": {
+     "optimal_fibre_length_m": 0.10756949998370552,
+     "path_length_m": 0.30561103756956626,
+     "tendon_slack_length_m": 0.21905035952128538
+    },
+    "vasint_r": {
+     "optimal_fibre_length_m": 0.10756949998370552,
+     "path_length_m": 0.30561103756956626,
+     "tendon_slack_length_m": 0.21905035952128538
+    },
+    "vaslat_l": {
+     "optimal_fibre_length_m": 0.10734739343031023,
+     "path_length_m": 0.3193673696178323,
+     "tendon_slack_length_m": 0.23823916412849155
+    },
+    "vaslat_r": {
+     "optimal_fibre_length_m": 0.10734739343031023,
+     "path_length_m": 0.3193673696178323,
+     "tendon_slack_length_m": 0.23823916412849155
+    },
+    "vasmed_l": {
+     "optimal_fibre_length_m": 0.10466139087926608,
+     "path_length_m": 0.2921538897452258,
+     "tendon_slack_length_m": 0.21613903955642988
+    },
+    "vasmed_r": {
+     "optimal_fibre_length_m": 0.10466139087926608,
+     "path_length_m": 0.2921538897452258,
+     "tendon_slack_length_m": 0.21613903955642988
+    }
+   },
+   "positions_m": {
+    "calcn_l": [
+     -0.11832143080000002,
+     -0.9869253639999999,
+     -0.08747648220000001
+    ],
+    "calcn_r": [
+     -0.11832143080000002,
+     -0.9869253639999999,
+     0.08747648220000001
+    ],
+    "femur_l": [
+     -0.05796428,
+     -0.0769202,
+     -0.0803504
+    ],
+    "femur_r": [
+     -0.05796428,
+     -0.0769202,
+     0.0803504
+    ],
+    "talus_l": [
+     -0.06808833080000001,
+     -0.9458143639999999,
+     -0.07923968220000001
+    ],
+    "talus_r": [
+     -0.06808833080000001,
+     -0.9458143639999999,
+     0.07923968220000001
+    ],
+    "tibia_l": [
+     -0.0582883308,
+     -0.517814364,
+     -0.07923968220000001
+    ],
+    "tibia_r": [
+     -0.0582883308,
+     -0.517814364,
+     0.07923968220000001
+    ],
+    "toes_l": [
+     0.07478256919999998,
+     -0.9888853639999999,
+     -0.0885996822
+    ],
+    "toes_r": [
+     0.07478256919999998,
+     -0.9888853639999999,
+     0.0885996822
+    ]
+   }
+  },
+  "long_femur_short_tibia": {
+   "inertia_moments": {
+    "calcn_l": [
+     0.0014,
+     0.0039,
+     0.0041
+    ],
+    "calcn_r": [
+     0.0014,
+     0.0039,
+     0.0041
+    ],
+    "femur_l": [
+     0.2359775513804801,
+     0.06185819308032003,
+     0.2488426456678401
+    ],
+    "femur_r": [
+     0.2359775513804801,
+     0.06185819308032003,
+     0.2488426456678401
+    ],
+    "patella_r": [
+     2.87e-06,
+     1.311e-05,
+     1.311e-05
+    ],
+    "pelvis": [
+     0.1028,
+     0.0871,
+     0.0579
+    ],
+    "talus_l": [
+     0.001,
+     0.001,
+     0.001
+    ],
+    "talus_r": [
+     0.001,
+     0.001,
+     0.001
+    ],
+    "tibia_l": [
+     0.03899855924999999,
+     0.003946282781249999,
+     0.039540205906249994
+    ],
+    "tibia_r": [
+     0.03899855924999999,
+     0.003946282781249999,
+     0.039540205906249994
+    ],
+    "toes_r": [
+     0.0001,
+     0.0011,
+     0.001
+    ]
+   },
+   "mass_kg": {
+    "calcn_l": 1.25,
+    "calcn_r": 1.25,
+    "femur_l": 13.067797299200002,
+    "femur_r": 13.067797299200002,
+    "patella_r": 0.0862,
+    "pelvis": 11.777,
+    "talus_l": 0.1,
+    "talus_r": 0.1,
+    "tibia_l": 3.1787178124999995,
+    "tibia_r": 3.1787178124999995,
+    "toes_r": 0.2166
+   },
+   "muscles": {
+    "addbrev_l": {
+     "optimal_fibre_length_m": 0.11230964196205633,
+     "path_length_m": 0.15275397952018077,
+     "tendon_slack_length_m": 0.03861696921556696
+    },
+    "addbrev_r": {
+     "optimal_fibre_length_m": 0.11230964196205623,
+     "path_length_m": 0.15275397952018066,
+     "tendon_slack_length_m": 0.038616969215566926
+    },
+    "addlong_l": {
+     "optimal_fibre_length_m": 0.12040440137892809,
+     "path_length_m": 0.2715759069684639,
+     "tendon_slack_length_m": 0.14666565106580848
+    },
+    "addlong_r": {
+     "optimal_fibre_length_m": 0.12040440137892802,
+     "path_length_m": 0.27157590696846395,
+     "tendon_slack_length_m": 0.1466656510658084
+    },
+    "addmagDist_l": {
+     "optimal_fibre_length_m": 0.20194308579405157,
+     "path_length_m": 0.2539850753049288,
+     "tendon_slack_length_m": 0.09958198239492469
+    },
+    "addmagDist_r": {
+     "optimal_fibre_length_m": 0.2019430857940514,
+     "path_length_m": 0.2539850753049288,
+     "tendon_slack_length_m": 0.09958198239492462
+    },
+    "addmagIsch_l": {
+     "optimal_fibre_length_m": 0.1775829075028109,
+     "path_length_m": 0.3857958258046624,
+     "tendon_slack_length_m": 0.24595917492299002
+    },
+    "addmagIsch_r": {
+     "optimal_fibre_length_m": 0.17758290750281086,
+     "path_length_m": 0.38579582580466215,
+     "tendon_slack_length_m": 0.24595917492298996
+    },
+    "addmagMid_l": {
+     "optimal_fibre_length_m": 0.15544628240940953,
+     "path_length_m": 0.16204042613053884,
+     "tendon_slack_length_m": 0.05263691073240329
+    },
+    "addmagMid_r": {
+     "optimal_fibre_length_m": 0.15544628240940953,
+     "path_length_m": 0.16204042613053876,
+     "tendon_slack_length_m": 0.05263691073240329
+    },
+    "addmagProx_l": {
+     "optimal_fibre_length_m": 0.11314795994334292,
+     "path_length_m": 0.12465077882369881,
+     "tendon_slack_length_m": 0.04320633917209573
+    },
+    "addmagProx_r": {
+     "optimal_fibre_length_m": 0.11314795994334292,
+     "path_length_m": 0.12465077882369882,
+     "tendon_slack_length_m": 0.04320633917209573
+    },
+    "bflh_l": {
+     "optimal_fibre_length_m": 0.10852379217410439,
+     "path_length_m": 0.46033444007873153,
+     "tendon_slack_length_m": 0.36162734738275293
+    },
+    "bflh_r": {
+     "optimal_fibre_length_m": 0.10852379217410439,
+     "path_length_m": 0.46033444007873153,
+     "tendon_slack_length_m": 0.36162734738275293
+    },
+    "bfsh_l": {
+     "optimal_fibre_length_m": 0.12024568568281706,
+     "path_length_m": 0.2593912387521749,
+     "tendon_slack_length_m": 0.11535869452671504
+    },
+    "bfsh_r": {
+     "optimal_fibre_length_m": 0.12024568568281706,
+     "path_length_m": 0.2593912387521749,
+     "tendon_slack_length_m": 0.11535869452671504
+    },
+    "edl_l": {
+     "optimal_fibre_length_m": 0.06715775430880186,
+     "path_length_m": 0.423789939212165,
+     "tendon_slack_length_m": 0.3574723391854626
+    },
+    "edl_r": {
+     "optimal_fibre_length_m": 0.06715775430880186,
+     "path_length_m": 0.423789939212165,
+     "tendon_slack_length_m": 0.3574723391854626
+    },
+    "ehl_l": {
+     "optimal_fibre_length_m": 0.07267552069299525,
+     "path_length_m": 0.39301767998472065,
+     "tendon_slack_length_m": 0.31751359759863634
+    },
+    "ehl_r": {
+     "optimal_fibre_length_m": 0.07267552069299525,
+     "path_length_m": 0.39301767998472065,
+     "tendon_slack_length_m": 0.31751359759863634
+    },
+    "fdl_l": {
+     "optimal_fibre_length_m": 0.043467174160211744,
+     "path_length_m": 0.41319994052704984,
+     "tendon_slack_length_m": 0.36915214648921235
+    },
+    "fdl_r": {
+     "optimal_fibre_length_m": 0.043467174160211744,
+     "path_length_m": 0.41319994052704984,
+     "tendon_slack_length_m": 0.36915214648921235
+    },
+    "fhl_l": {
+     "optimal_fibre_length_m": 0.05149508119458185,
+     "path_length_m": 0.39547522553621445,
+     "tendon_slack_length_m": 0.34623814856117335
+    },
+    "fhl_r": {
+     "optimal_fibre_length_m": 0.05149508119458185,
+     "path_length_m": 0.39547522553621445,
+     "tendon_slack_length_m": 0.34623814856117335
+    },
+    "gaslat_l": {
+     "optimal_fibre_length_m": 0.05633611753667718,
+     "path_length_m": 0.4288247522585108,
+     "tendon_slack_length_m": 0.3603117907385779
+    },
+    "gaslat_r": {
+     "optimal_fibre_length_m": 0.05633611753667716,
+     "path_length_m": 0.42882475225851024,
+     "tendon_slack_length_m": 0.3603117907385778
+    },
+    "gasmed_l": {
+     "optimal_fibre_length_m": 0.049040909604266845,
+     "path_length_m": 0.43916877243644936,
+     "tendon_slack_length_m": 0.3834002279623039
+    },
+    "gasmed_r": {
+     "optimal_fibre_length_m": 0.049040909604266845,
+     "path_length_m": 0.4391687724364494,
+     "tendon_slack_length_m": 0.3834002279623039
+    },
+    "glmax1_l": {
+     "optimal_fibre_length_m": 0.1528179789537008,
+     "path_length_m": 0.19903152893012374,
+     "tendon_slack_length_m": 0.05077391795288072
+    },
+    "glmax1_r": {
+     "optimal_fibre_length_m": 0.1528179789537008,
+     "path_length_m": 0.19903152893012374,
+     "tendon_slack_length_m": 0.05077391795288072
+    },
+    "glmax2_l": {
+     "optimal_fibre_length_m": 0.16549355819781592,
+     "path_length_m": 0.23022472517824485,
+     "tendon_slack_length_m": 0.0715597847424807
+    },
+    "glmax2_r": {
+     "optimal_fibre_length_m": 0.16549355819781592,
+     "path_length_m": 0.23022472517824485,
+     "tendon_slack_length_m": 0.0715597847424807
+    },
+    "glmax3_l": {
+     "optimal_fibre_length_m": 0.17858245393367855,
+     "path_length_m": 0.23407381367474125,
+     "tendon_slack_length_m": 0.07455187160932966
+    },
+    "glmax3_r": {
+     "optimal_fibre_length_m": 0.17858245393367855,
+     "path_length_m": 0.23407381367474125,
+     "tendon_slack_length_m": 0.07455187160932966
+    },
+    "glmed1_l": {
+     "optimal_fibre_length_m": 0.07488114909489228,
+     "path_length_m": 0.12361798453299576,
+     "tendon_slack_length_m": 0.05725518513393708
+    },
+    "glmed1_r": {
+     "optimal_fibre_length_m": 0.07488114909489228,
+     "path_length_m": 0.12361798453299576,
+     "tendon_slack_length_m": 0.05725518513393708
+    },
+    "glmed2_l": {
+     "optimal_fibre_length_m": 0.0750411720903683,
+     "path_length_m": 0.13536455827135832,
+     "tendon_slack_length_m": 0.06707325027251683
+    },
+    "glmed2_r": {
+     "optimal_fibre_length_m": 0.0750411720903683,
+     "path_length_m": 0.13536455827135832,
+     "tendon_slack_length_m": 0.06707325027251683
+    },
+    "glmed3_l": {
+     "optimal_fibre_length_m": 0.07555073695505946,
+     "path_length_m": 0.11520331135865845,
+     "tendon_slack_length_m": 0.046813351625418706
+    },
+    "glmed3_r": {
+     "optimal_fibre_length_m": 0.07555073695505946,
+     "path_length_m": 0.11520331135865845,
+     "tendon_slack_length_m": 0.046813351625418706
+    },
+    "glmin1_l": {
+     "optimal_fibre_length_m": 0.07127561745589549,
+     "path_length_m": 0.08522211358561806,
+     "tendon_slack_length_m": 0.01691515298742464
+    },
+    "glmin1_r": {
+     "optimal_fibre_length_m": 0.07127561745589549,
+     "path_length_m": 0.08522211358561806,
+     "tendon_slack_length_m": 0.01691515298742464
+    },
+    "glmin2_l": {
+     "optimal_fibre_length_m": 0.058887252780460156,
+     "path_length_m": 0.08737698454398612,
+     "tendon_slack_length_m": 0.027444669581982436
+    },
+    "glmin2_r": {
+     "optimal_fibre_length_m": 0.058887252780460156,
+     "path_length_m": 0.08737698454398612,
+     "tendon_slack_length_m": 0.027444669581982436
+    },
+    "glmin3_l": {
+     "optimal_fibre_length_m": 0.039992558996672034,
+     "path_length_m": 0.09364645968748629,
+     "tendon_slack_length_m": 0.05354003835679469
+    },
+    "glmin3_r": {
+     "optimal_fibre_length_m": 0.039992558996672034,
+     "path_length_m": 0.09364645968748629,
+     "tendon_slack_length_m": 0.05354003835679469
+    },
+    "grac_l": {
+     "optimal_fibre_length_m": 0.2510738146200719,
+     "path_length_m": 0.4833703674237247,
+     "tendon_slack_length_m": 0.18958807544219292
+    },
+    "grac_r": {
+     "optimal_fibre_length_m": 0.2510738146200719,
+     "path_length_m": 0.4833703674237247,
+     "tendon_slack_length_m": 0.18958807544219297
+    },
+    "iliacus_l": {
+     "optimal_fibre_length_m": 0.11033494757876981,
+     "path_length_m": 0.21498056276120245,
+     "tendon_slack_length_m": 0.09948849270509846
+    },
+    "iliacus_r": {
+     "optimal_fibre_length_m": 0.11033494757876981,
+     "path_length_m": 0.21498056276120245,
+     "tendon_slack_length_m": 0.09948849270509846
+    },
+    "perbrev_l": {
+     "optimal_fibre_length_m": 0.04360524616956181,
+     "path_length_m": 0.1879358357010627,
+     "tendon_slack_length_m": 0.14169547213575392
+    },
+    "perbrev_r": {
+     "optimal_fibre_length_m": 0.04360524616956181,
+     "path_length_m": 0.1879358357010627,
+     "tendon_slack_length_m": 0.14169547213575392
+    },
+    "perlong_l": {
+     "optimal_fibre_length_m": 0.049048399583828325,
+     "path_length_m": 0.3726331153248719,
+     "tendon_slack_length_m": 0.3207656833840892
+    },
+    "perlong_r": {
+     "optimal_fibre_length_m": 0.049048399583828325,
+     "path_length_m": 0.3726331153248719,
+     "tendon_slack_length_m": 0.3207656833840892
+    },
+    "piri_l": {
+     "optimal_fibre_length_m": 0.02664676022486788,
+     "path_length_m": 0.1415292507757126,
+     "tendon_slack_length_m": 0.11776457621006584
+    },
+    "piri_r": {
+     "optimal_fibre_length_m": 0.02664676022486788,
+     "path_length_m": 0.1415292507757126,
+     "tendon_slack_length_m": 0.11776457621006584
+    },
+    "psoas_l": {
+     "optimal_fibre_length_m": 0.12028920791415278,
+     "path_length_m": 0.23546230051293138,
+     "tendon_slack_length_m": 0.10242915803273081
+    },
+    "psoas_r": {
+     "optimal_fibre_length_m": 0.1202892079141528,
+     "path_length_m": 0.2354623005129315,
+     "tendon_slack_length_m": 0.10242915803273084
+    },
+    "recfem_l": {
+     "optimal_fibre_length_m": 0.08327809921214341,
+     "path_length_m": 0.5618334697070821,
+     "tendon_slack_length_m": 0.4920907681627587
+    },
+    "recfem_r": {
+     "optimal_fibre_length_m": 0.08327809921214341,
+     "path_length_m": 0.5618334697070821,
+     "tendon_slack_length_m": 0.4920907681627587
+    },
+    "sart_l": {
+     "optimal_fibre_length_m": 0.4334251111492924,
+     "path_length_m": 0.6296192634224274,
+     "tendon_slack_length_m": 0.1333613900359853
+    },
+    "sart_r": {
+     "optimal_fibre_length_m": 0.4334251111492924,
+     "path_length_m": 0.6296192634224274,
+     "tendon_slack_length_m": 0.1333613900359853
+    },
+    "semimem_l": {
+     "optimal_fibre_length_m": 0.07687963791360782,
+     "path_length_m": 0.45851328201014335,
+     "tendon_slack_length_m": 0.3872794818892781
+    },
+    "semimem_r": {
+     "optimal_fibre_length_m": 0.07687963791360783,
+     "path_length_m": 0.45851328201014335,
+     "tendon_slack_length_m": 0.3872794818892782
+    },
+    "semiten_l": {
+     "optimal_fibre_length_m": 0.2118389997620642,
+     "path_length_m": 0.4983500511208235,
+     "tendon_slack_length_m": 0.27132837958022593
+    },
+    "semiten_r": {
+     "optimal_fibre_length_m": 0.21183899976206425,
+     "path_length_m": 0.49835005112082353,
+     "tendon_slack_length_m": 0.271328379580226
+    },
+    "soleus_l": {
+     "optimal_fibre_length_m": 0.041918217742922696,
+     "path_length_m": 0.3075620644682955,
+     "tendon_slack_length_m": 0.2636616572701974
+    },
+    "soleus_r": {
+     "optimal_fibre_length_m": 0.041918217742922696,
+     "path_length_m": 0.3075620644682955,
+     "tendon_slack_length_m": 0.2636616572701974
+    },
+    "tfl_l": {
+     "optimal_fibre_length_m": 0.10339151927177867,
+     "path_length_m": 0.5959399462865801,
+     "tendon_slack_length_m": 0.4892019294855962
+    },
+    "tfl_r": {
+     "optimal_fibre_length_m": 0.10339151927177867,
+     "path_length_m": 0.5959399462865801,
+     "tendon_slack_length_m": 0.4892019294855962
+    },
+    "tibant_l": {
+     "optimal_fibre_length_m": 0.0655414719702255,
+     "path_length_m": 0.2935178965142419,
+     "tendon_slack_length_m": 0.23074918919972445
+    },
+    "tibant_r": {
+     "optimal_fibre_length_m": 0.0655414719702255,
+     "path_length_m": 0.2935178965142419,
+     "tendon_slack_length_m": 0.23074918919972445
+    },
+    "tibpost_l": {
+     "optimal_fibre_length_m": 0.03620554718736878,
+     "path_length_m": 0.30632185206770596,
+     "tendon_slack_length_m": 0.2689359671885366
+    },
+    "tibpost_r": {
+     "optimal_fibre_length_m": 0.03620554718736878,
+     "path_length_m": 0.30632185206770596,
+     "tendon_slack_length_m": 0.2689359671885366
+    },
+    "vasint_l": {
+     "optimal_fibre_length_m": 0.10873284679878223,
+     "path_length_m": 0.3089161717131915,
+     "tendon_slack_length_m": 0.22141935387497388
+    },
+    "vasint_r": {
+     "optimal_fibre_length_m": 0.10873284679878223,
+     "path_length_m": 0.3089161717131915,
+     "tendon_slack_length_m": 0.22141935387497388
+    },
+    "vaslat_l": {
+     "optimal_fibre_length_m": 0.10893518491114004,
+     "path_length_m": 0.32409118053237884,
+     "tendon_slack_length_m": 0.24176299552406993
+    },
+    "vaslat_r": {
+     "optimal_fibre_length_m": 0.10893518491114004,
+     "path_length_m": 0.32409118053237884,
+     "tendon_slack_length_m": 0.24176299552406993
+    },
+    "vasmed_l": {
+     "optimal_fibre_length_m": 0.10570542927555665,
+     "path_length_m": 0.29506823930581516,
+     "tendon_slack_length_m": 0.21829511119219278
+    },
+    "vasmed_r": {
+     "optimal_fibre_length_m": 0.10570542927555665,
+     "path_length_m": 0.29506823930581516,
+     "tendon_slack_length_m": 0.21829511119219278
+    }
+   },
+   "positions_m": {
+    "calcn_l": [
+     -0.115921737,
+     -0.9539971399999999,
+     -0.08351050299999999
+    ],
+    "calcn_r": [
+     -0.115921737,
+     -0.9539971399999999,
+     0.08351050299999999
+    ],
+    "femur_l": [
+     -0.056276,
+     -0.07848999999999995,
+     -0.07726
+    ],
+    "femur_r": [
+     -0.056276,
+     -0.07848999999999995,
+     0.07726
+    ],
+    "talus_l": [
+     -0.067151737,
+     -0.9120471399999999,
+     -0.07559050299999999
+    ],
+    "talus_r": [
+     -0.067151737,
+     -0.9120471399999999,
+     0.07559050299999999
+    ],
+    "tibia_l": [
+     -0.057651737,
+     -0.53204714,
+     -0.07559050299999999
+    ],
+    "tibia_r": [
+     -0.057651737,
+     -0.53204714,
+     0.07559050299999999
+    ],
+    "toes_l": [
+     0.06287826299999999,
+     -0.9559971399999998,
+     -0.08459050299999998
+    ],
+    "toes_r": [
+     0.06287826299999999,
+     -0.9559971399999998,
+     0.08459050299999998
+    ]
+   }
+  },
+  "nominal": {
+   "inertia_moments": {
+    "calcn_l": [
+     0.0014,
+     0.0039,
+     0.0041
+    ],
+    "calcn_r": [
+     0.0014,
+     0.0039,
+     0.0041
+    ],
+    "femur_l": [
+     0.1339,
+     0.0351,
+     0.1412
+    ],
+    "femur_r": [
+     0.1339,
+     0.0351,
+     0.1412
+    ],
+    "patella_r": [
+     2.87e-06,
+     1.311e-05,
+     1.311e-05
+    ],
+    "pelvis": [
+     0.1028,
+     0.0871,
+     0.0579
+    ],
+    "talus_l": [
+     0.001,
+     0.001,
+     0.001
+    ],
+    "talus_r": [
+     0.001,
+     0.001,
+     0.001
+    ],
+    "tibia_l": [
+     0.0504,
+     0.0051,
+     0.0511
+    ],
+    "tibia_r": [
+     0.0504,
+     0.0051,
+     0.0511
+    ],
+    "toes_r": [
+     0.0001,
+     0.0011,
+     0.001
+    ]
+   },
+   "mass_kg": {
+    "calcn_l": 1.25,
+    "calcn_r": 1.25,
+    "femur_l": 9.3014,
+    "femur_r": 9.3014,
+    "patella_r": 0.0862,
+    "pelvis": 11.777,
+    "talus_l": 0.1,
+    "talus_r": 0.1,
+    "tibia_l": 3.7075,
+    "tibia_r": 3.7075,
+    "toes_r": 0.2166
+   },
+   "muscles": {
+    "addbrev_l": {
+     "optimal_fibre_length_m": 0.1031,
+     "path_length_m": 0.14022781137394594,
+     "tendon_slack_length_m": 0.035450291324676
+    },
+    "addbrev_r": {
+     "optimal_fibre_length_m": 0.1031,
+     "path_length_m": 0.14022781137394594,
+     "tendon_slack_length_m": 0.035450291324676
+    },
+    "addlong_l": {
+     "optimal_fibre_length_m": 0.1082,
+     "path_length_m": 0.2440484965454956,
+     "tendon_slack_length_m": 0.131799363342026
+    },
+    "addlong_r": {
+     "optimal_fibre_length_m": 0.1082,
+     "path_length_m": 0.24404849654549576,
+     "tendon_slack_length_m": 0.131799363342026
+    },
+    "addmagDist_l": {
+     "optimal_fibre_length_m": 0.1772,
+     "path_length_m": 0.22286554237332096,
+     "tendon_slack_length_m": 0.0873806954617727
+    },
+    "addmagDist_r": {
+     "optimal_fibre_length_m": 0.1772,
+     "path_length_m": 0.22286554237332112,
+     "tendon_slack_length_m": 0.0873806954617727
+    },
+    "addmagIsch_l": {
+     "optimal_fibre_length_m": 0.1562,
+     "path_length_m": 0.33934182539349633,
+     "tendon_slack_length_m": 0.216343023454343
+    },
+    "addmagIsch_r": {
+     "optimal_fibre_length_m": 0.1562,
+     "path_length_m": 0.33934182539349617,
+     "tendon_slack_length_m": 0.216343023454343
+    },
+    "addmagMid_l": {
+     "optimal_fibre_length_m": 0.1377,
+     "path_length_m": 0.14354133358691723,
+     "tendon_slack_length_m": 0.0466276999070464
+    },
+    "addmagMid_r": {
+     "optimal_fibre_length_m": 0.1377,
+     "path_length_m": 0.14354133358691717,
+     "tendon_slack_length_m": 0.0466276999070464
+    },
+    "addmagProx_l": {
+     "optimal_fibre_length_m": 0.1056,
+     "path_length_m": 0.11633548011271101,
+     "tendon_slack_length_m": 0.0403240979232675
+    },
+    "addmagProx_r": {
+     "optimal_fibre_length_m": 0.1056,
+     "path_length_m": 0.11633548011271103,
+     "tendon_slack_length_m": 0.0403240979232675
+    },
+    "bflh_l": {
+     "optimal_fibre_length_m": 0.0976,
+     "path_length_m": 0.4139980777634946,
+     "tendon_slack_length_m": 0.325226647516457
+    },
+    "bflh_r": {
+     "optimal_fibre_length_m": 0.0976,
+     "path_length_m": 0.4139980777634946,
+     "tendon_slack_length_m": 0.325226647516457
+    },
+    "bfsh_l": {
+     "optimal_fibre_length_m": 0.1103,
+     "path_length_m": 0.23793663341763738,
+     "tendon_slack_length_m": 0.105817218589115
+    },
+    "bfsh_r": {
+     "optimal_fibre_length_m": 0.1103,
+     "path_length_m": 0.23793663341763738,
+     "tendon_slack_length_m": 0.105817218589115
+    },
+    "edl_l": {
+     "optimal_fibre_length_m": 0.0693,
+     "path_length_m": 0.43730829134579785,
+     "tendon_slack_length_m": 0.368875245465225
+    },
+    "edl_r": {
+     "optimal_fibre_length_m": 0.0693,
+     "path_length_m": 0.43730829134579785,
+     "tendon_slack_length_m": 0.368875245465225
+    },
+    "ehl_l": {
+     "optimal_fibre_length_m": 0.0748,
+     "path_length_m": 0.40450652685437966,
+     "tendon_slack_length_m": 0.326795279537187
+    },
+    "ehl_r": {
+     "optimal_fibre_length_m": 0.0748,
+     "path_length_m": 0.40450652685437966,
+     "tendon_slack_length_m": 0.326795279537187
+    },
+    "fdl_l": {
+     "optimal_fibre_length_m": 0.0446,
+     "path_length_m": 0.4239686085776286,
+     "tendon_slack_length_m": 0.378772856793842
+    },
+    "fdl_r": {
+     "optimal_fibre_length_m": 0.0446,
+     "path_length_m": 0.4239686085776286,
+     "tendon_slack_length_m": 0.378772856793842
+    },
+    "fhl_l": {
+     "optimal_fibre_length_m": 0.0527,
+     "path_length_m": 0.4047288382167146,
+     "tendon_slack_length_m": 0.354339676836818
+    },
+    "fhl_r": {
+     "optimal_fibre_length_m": 0.0527,
+     "path_length_m": 0.4047288382167146,
+     "tendon_slack_length_m": 0.354339676836818
+    },
+    "gaslat_l": {
+     "optimal_fibre_length_m": 0.0588,
+     "path_length_m": 0.44757957302230633,
+     "tendon_slack_length_m": 0.376070169933794
+    },
+    "gaslat_r": {
+     "optimal_fibre_length_m": 0.0588,
+     "path_length_m": 0.4475795730223059,
+     "tendon_slack_length_m": 0.376070169933794
+    },
+    "gasmed_l": {
+     "optimal_fibre_length_m": 0.051,
+     "path_length_m": 0.45671272362187576,
+     "tendon_slack_length_m": 0.398716332626429
+    },
+    "gasmed_r": {
+     "optimal_fibre_length_m": 0.051,
+     "path_length_m": 0.4567127236218758,
+     "tendon_slack_length_m": 0.398716332626429
+    },
+    "glmax1_l": {
+     "optimal_fibre_length_m": 0.147,
+     "path_length_m": 0.1914541401021431,
+     "tendon_slack_length_m": 0.0488408889462853
+    },
+    "glmax1_r": {
+     "optimal_fibre_length_m": 0.147,
+     "path_length_m": 0.1914541401021431,
+     "tendon_slack_length_m": 0.0488408889462853
+    },
+    "glmax2_l": {
+     "optimal_fibre_length_m": 0.157,
+     "path_length_m": 0.21840899577359782,
+     "tendon_slack_length_m": 0.0678871511792641
+    },
+    "glmax2_r": {
+     "optimal_fibre_length_m": 0.157,
+     "path_length_m": 0.21840899577359782,
+     "tendon_slack_length_m": 0.0678871511792641
+    },
+    "glmax3_l": {
+     "optimal_fibre_length_m": 0.167,
+     "path_length_m": 0.21889231569300222,
+     "tendon_slack_length_m": 0.0697166058843707
+    },
+    "glmax3_r": {
+     "optimal_fibre_length_m": 0.167,
+     "path_length_m": 0.21889231569300222,
+     "tendon_slack_length_m": 0.0697166058843707
+    },
+    "glmed1_l": {
+     "optimal_fibre_length_m": 0.073,
+     "path_length_m": 0.12051247850741428,
+     "tendon_slack_length_m": 0.0558168319436554
+    },
+    "glmed1_r": {
+     "optimal_fibre_length_m": 0.073,
+     "path_length_m": 0.12051247850741428,
+     "tendon_slack_length_m": 0.0558168319436554
+    },
+    "glmed2_l": {
+     "optimal_fibre_length_m": 0.073,
+     "path_length_m": 0.1316825481071808,
+     "tendon_slack_length_m": 0.0652488111992348
+    },
+    "glmed2_r": {
+     "optimal_fibre_length_m": 0.073,
+     "path_length_m": 0.1316825481071808,
+     "tendon_slack_length_m": 0.0652488111992348
+    },
+    "glmed3_l": {
+     "optimal_fibre_length_m": 0.073,
+     "path_length_m": 0.11131382787416845,
+     "tendon_slack_length_m": 0.0452328436013583
+    },
+    "glmed3_r": {
+     "optimal_fibre_length_m": 0.073,
+     "path_length_m": 0.11131382787416845,
+     "tendon_slack_length_m": 0.0452328436013583
+    },
+    "glmin1_l": {
+     "optimal_fibre_length_m": 0.068,
+     "path_length_m": 0.08130555624310053,
+     "tendon_slack_length_m": 0.0161377823749703
+    },
+    "glmin1_r": {
+     "optimal_fibre_length_m": 0.068,
+     "path_length_m": 0.08130555624310053,
+     "tendon_slack_length_m": 0.0161377823749703
+    },
+    "glmin2_l": {
+     "optimal_fibre_length_m": 0.056,
+     "path_length_m": 0.08309287500141024,
+     "tendon_slack_length_m": 0.0260990524098789
+    },
+    "glmin2_r": {
+     "optimal_fibre_length_m": 0.056,
+     "path_length_m": 0.08309287500141024,
+     "tendon_slack_length_m": 0.0260990524098789
+    },
+    "glmin3_l": {
+     "optimal_fibre_length_m": 0.038,
+     "path_length_m": 0.08898068934325017,
+     "tendon_slack_length_m": 0.0508725
+    },
+    "glmin3_r": {
+     "optimal_fibre_length_m": 0.038,
+     "path_length_m": 0.08898068934325017,
+     "tendon_slack_length_m": 0.0508725
+    },
+    "grac_l": {
+     "optimal_fibre_length_m": 0.2278,
+     "path_length_m": 0.43856333590879254,
+     "tendon_slack_length_m": 0.172013810564373
+    },
+    "grac_r": {
+     "optimal_fibre_length_m": 0.2278,
+     "path_length_m": 0.4385633359087925,
+     "tendon_slack_length_m": 0.172013810564373
+    },
+    "iliacus_l": {
+     "optimal_fibre_length_m": 0.1066,
+     "path_length_m": 0.2077032571568807,
+     "tendon_slack_length_m": 0.0961207083983258
+    },
+    "iliacus_r": {
+     "optimal_fibre_length_m": 0.1066,
+     "path_length_m": 0.2077032571568807,
+     "tendon_slack_length_m": 0.0961207083983258
+    },
+    "perbrev_l": {
+     "optimal_fibre_length_m": 0.0454,
+     "path_length_m": 0.1956711104817503,
+     "tendon_slack_length_m": 0.147527533956538
+    },
+    "perbrev_r": {
+     "optimal_fibre_length_m": 0.0454,
+     "path_length_m": 0.1956711104817503,
+     "tendon_slack_length_m": 0.147527533956538
+    },
+    "perlong_l": {
+     "optimal_fibre_length_m": 0.0508,
+     "path_length_m": 0.38594046735716114,
+     "tendon_slack_length_m": 0.332220762637978
+    },
+    "perlong_r": {
+     "optimal_fibre_length_m": 0.0508,
+     "path_length_m": 0.38594046735716114,
+     "tendon_slack_length_m": 0.332220762637978
+    },
+    "piri_l": {
+     "optimal_fibre_length_m": 0.026,
+     "path_length_m": 0.13809410559165913,
+     "tendon_slack_length_m": 0.114906238342785
+    },
+    "piri_r": {
+     "optimal_fibre_length_m": 0.026,
+     "path_length_m": 0.13809410559165913,
+     "tendon_slack_length_m": 0.114906238342785
+    },
+    "psoas_l": {
+     "optimal_fibre_length_m": 0.1169,
+     "path_length_m": 0.22882803376347718,
+     "tendon_slack_length_m": 0.0995431658555083
+    },
+    "psoas_r": {
+     "optimal_fibre_length_m": 0.1169,
+     "path_length_m": 0.22882803376347724,
+     "tendon_slack_length_m": 0.0995431658555083
+    },
+    "recfem_l": {
+     "optimal_fibre_length_m": 0.0759,
+     "path_length_m": 0.512057320642465,
+     "tendon_slack_length_m": 0.448493537399412
+    },
+    "recfem_r": {
+     "optimal_fibre_length_m": 0.0759,
+     "path_length_m": 0.512057320642465,
+     "tendon_slack_length_m": 0.448493537399412
+    },
+    "sart_l": {
+     "optimal_fibre_length_m": 0.403,
+     "path_length_m": 0.5854219255696036,
+     "tendon_slack_length_m": 0.123999830194402
+    },
+    "sart_r": {
+     "optimal_fibre_length_m": 0.403,
+     "path_length_m": 0.5854219255696036,
+     "tendon_slack_length_m": 0.123999830194402
+    },
+    "semimem_l": {
+     "optimal_fibre_length_m": 0.069,
+     "path_length_m": 0.4115188015616294,
+     "tendon_slack_length_m": 0.347585979533214
+    },
+    "semimem_r": {
+     "optimal_fibre_length_m": 0.069,
+     "path_length_m": 0.41151880156162934,
+     "tendon_slack_length_m": 0.347585979533214
+    },
+    "semiten_l": {
+     "optimal_fibre_length_m": 0.193,
+     "path_length_m": 0.45403141052567875,
+     "tendon_slack_length_m": 0.24719894503751
+    },
+    "semiten_r": {
+     "optimal_fibre_length_m": 0.193,
+     "path_length_m": 0.45403141052567875,
+     "tendon_slack_length_m": 0.24719894503751
+    },
+    "soleus_l": {
+     "optimal_fibre_length_m": 0.044,
+     "path_length_m": 0.3228365032024724,
+     "tendon_slack_length_m": 0.276755872375976
+    },
+    "soleus_r": {
+     "optimal_fibre_length_m": 0.044,
+     "path_length_m": 0.3228365032024724,
+     "tendon_slack_length_m": 0.276755872375976
+    },
+    "tfl_l": {
+     "optimal_fibre_length_m": 0.095,
+     "path_length_m": 0.5475719410642059,
+     "tendon_slack_length_m": 0.449497053805428
+    },
+    "tfl_r": {
+     "optimal_fibre_length_m": 0.095,
+     "path_length_m": 0.5475719410642059,
+     "tendon_slack_length_m": 0.449497053805428
+    },
+    "tibant_l": {
+     "optimal_fibre_length_m": 0.0683,
+     "path_length_m": 0.3058715608497456,
+     "tendon_slack_length_m": 0.240461026409367
+    },
+    "tibant_r": {
+     "optimal_fibre_length_m": 0.0683,
+     "path_length_m": 0.3058715608497456,
+     "tendon_slack_length_m": 0.240461026409367
+    },
+    "tibpost_l": {
+     "optimal_fibre_length_m": 0.0378,
+     "path_length_m": 0.319811932360434,
+     "tendon_slack_length_m": 0.280779613883954
+    },
+    "tibpost_r": {
+     "optimal_fibre_length_m": 0.0378,
+     "path_length_m": 0.319811932360434,
+     "tendon_slack_length_m": 0.280779613883954
+    },
+    "vasint_l": {
+     "optimal_fibre_length_m": 0.0993,
+     "path_length_m": 0.28211692008659406,
+     "tendon_slack_length_m": 0.202210670345763
+    },
+    "vasint_r": {
+     "optimal_fibre_length_m": 0.0993,
+     "path_length_m": 0.28211692008659406,
+     "tendon_slack_length_m": 0.202210670345763
+    },
+    "vaslat_l": {
+     "optimal_fibre_length_m": 0.0994,
+     "path_length_m": 0.29572321716988326,
+     "tendon_slack_length_m": 0.220601284834603
+    },
+    "vaslat_r": {
+     "optimal_fibre_length_m": 0.0994,
+     "path_length_m": 0.29572321716988326,
+     "tendon_slack_length_m": 0.220601284834603
+    },
+    "vasmed_l": {
+     "optimal_fibre_length_m": 0.0968,
+     "path_length_m": 0.27020944676687225,
+     "tendon_slack_length_m": 0.199904270842317
+    },
+    "vasmed_r": {
+     "optimal_fibre_length_m": 0.0968,
+     "path_length_m": 0.27020944676687225,
+     "tendon_slack_length_m": 0.199904270842317
+    }
+   },
+   "positions_m": {
+    "calcn_l": [
+     -0.11504646000000002,
+     -0.9248651999999998,
+     -0.08391473999999999
+    ],
+    "calcn_r": [
+     -0.11504646000000002,
+     -0.9248651999999998,
+     0.08391473999999999
+    ],
+    "femur_l": [
+     -0.056276,
+     -0.07848999999999995,
+     -0.07726
+    ],
+    "femur_r": [
+     -0.056276,
+     -0.07848999999999995,
+     0.07726
+    ],
+    "talus_l": [
+     -0.06627646000000001,
+     -0.8829151999999998,
+     -0.07599473999999999
+    ],
+    "talus_r": [
+     -0.06627646000000001,
+     -0.8829151999999998,
+     0.07599473999999999
+    ],
+    "tibia_l": [
+     -0.05627646,
+     -0.48291519999999993,
+     -0.07599473999999999
+    ],
+    "tibia_r": [
+     -0.05627646,
+     -0.48291519999999993,
+     0.07599473999999999
+    ],
+    "toes_l": [
+     0.06375353999999997,
+     -0.9268651999999998,
+     -0.08499473999999999
+    ],
+    "toes_r": [
+     0.06375353999999997,
+     -0.9268651999999998,
+     0.08499473999999999
+    ]
+   }
+  },
+  "uniform": {
+   "inertia_moments": {
+    "calcn_l": [
+     0.002254714000000001,
+     0.006280989000000003,
+     0.006603091000000004
+    ],
+    "calcn_r": [
+     0.002254714000000001,
+     0.006280989000000003,
+     0.006603091000000004
+    ],
+    "femur_l": [
+     0.21564728900000008,
+     0.05652890100000002,
+     0.2274040120000001
+    ],
+    "femur_r": [
+     0.21564728900000008,
+     0.05652890100000002,
+     0.2274040120000001
+    ],
+    "patella_r": [
+     4.622163700000002e-06,
+     2.1113786100000008e-05,
+     2.1113786100000008e-05
+    ],
+    "pelvis": [
+     0.1655604280000001,
+     0.14027542100000007,
+     0.09324852900000004
+    ],
+    "talus_l": [
+     0.0016105100000000008,
+     0.0016105100000000008,
+     0.0016105100000000008
+    ],
+    "talus_r": [
+     0.0016105100000000008,
+     0.0016105100000000008,
+     0.0016105100000000008
+    ],
+    "tibia_l": [
+     0.08116970400000002,
+     0.008213601000000004,
+     0.08229706100000003
+    ],
+    "tibia_r": [
+     0.08116970400000002,
+     0.008213601000000004,
+     0.08229706100000003
+    ],
+    "toes_r": [
+     0.00016105100000000008,
+     0.001771561000000001,
+     0.0016105100000000008
+    ]
+   },
+   "mass_kg": {
+    "calcn_l": 1.6637500000000005,
+    "calcn_r": 1.6637500000000005,
+    "femur_l": 12.380163400000002,
+    "femur_r": 12.380163400000002,
+    "patella_r": 0.11473220000000003,
+    "pelvis": 15.675187000000005,
+    "talus_l": 0.13310000000000005,
+    "talus_r": 0.13310000000000005,
+    "tibia_l": 4.934682500000002,
+    "tibia_r": 4.934682500000002,
+    "toes_r": 0.28829460000000007
+   },
+   "muscles": {
+    "addbrev_l": {
+     "optimal_fibre_length_m": 0.11341000000000002,
+     "path_length_m": 0.15425059251134057,
+     "tendon_slack_length_m": 0.038995320457143615
+    },
+    "addbrev_r": {
+     "optimal_fibre_length_m": 0.11341000000000008,
+     "path_length_m": 0.15425059251134063,
+     "tendon_slack_length_m": 0.03899532045714363
+    },
+    "addlong_l": {
+     "optimal_fibre_length_m": 0.11902000000000014,
+     "path_length_m": 0.26845334620004546,
+     "tendon_slack_length_m": 0.14497929967622875
+    },
+    "addlong_r": {
+     "optimal_fibre_length_m": 0.11901999999999999,
+     "path_length_m": 0.2684533462000453,
+     "tendon_slack_length_m": 0.14497929967622858
+    },
+    "addmagDist_l": {
+     "optimal_fibre_length_m": 0.1949200000000002,
+     "path_length_m": 0.24515209661065332,
+     "tendon_slack_length_m": 0.09611876500795007
+    },
+    "addmagDist_r": {
+     "optimal_fibre_length_m": 0.1949199999999999,
+     "path_length_m": 0.2451520966106531,
+     "tendon_slack_length_m": 0.09611876500794991
+    },
+    "addmagIsch_l": {
+     "optimal_fibre_length_m": 0.17182000000000006,
+     "path_length_m": 0.37327600793284604,
+     "tendon_slack_length_m": 0.23797732579977737
+    },
+    "addmagIsch_r": {
+     "optimal_fibre_length_m": 0.17182000000000008,
+     "path_length_m": 0.373276007932846,
+     "tendon_slack_length_m": 0.23797732579977743
+    },
+    "addmagMid_l": {
+     "optimal_fibre_length_m": 0.15147,
+     "path_length_m": 0.15789546694560896,
+     "tendon_slack_length_m": 0.05129046989775104
+    },
+    "addmagMid_r": {
+     "optimal_fibre_length_m": 0.15147000000000024,
+     "path_length_m": 0.15789546694560916,
+     "tendon_slack_length_m": 0.05129046989775112
+    },
+    "addmagProx_l": {
+     "optimal_fibre_length_m": 0.11616000000000003,
+     "path_length_m": 0.12796902812398214,
+     "tendon_slack_length_m": 0.04435650771559426
+    },
+    "addmagProx_r": {
+     "optimal_fibre_length_m": 0.11615999999999992,
+     "path_length_m": 0.12796902812398203,
+     "tendon_slack_length_m": 0.04435650771559422
+    },
+    "bflh_l": {
+     "optimal_fibre_length_m": 0.10736000000000001,
+     "path_length_m": 0.4553978855398441,
+     "tendon_slack_length_m": 0.35774931226810275
+    },
+    "bflh_r": {
+     "optimal_fibre_length_m": 0.10736000000000001,
+     "path_length_m": 0.4553978855398441,
+     "tendon_slack_length_m": 0.35774931226810275
+    },
+    "bfsh_l": {
+     "optimal_fibre_length_m": 0.12133000000000005,
+     "path_length_m": 0.26173029675940124,
+     "tendon_slack_length_m": 0.11639894044802655
+    },
+    "bfsh_r": {
+     "optimal_fibre_length_m": 0.12133000000000005,
+     "path_length_m": 0.26173029675940124,
+     "tendon_slack_length_m": 0.11639894044802655
+    },
+    "edl_l": {
+     "optimal_fibre_length_m": 0.07623,
+     "path_length_m": 0.48103912048037767,
+     "tendon_slack_length_m": 0.40576277001174754
+    },
+    "edl_r": {
+     "optimal_fibre_length_m": 0.07623,
+     "path_length_m": 0.48103912048037767,
+     "tendon_slack_length_m": 0.40576277001174754
+    },
+    "ehl_l": {
+     "optimal_fibre_length_m": 0.08228,
+     "path_length_m": 0.44495717953981767,
+     "tendon_slack_length_m": 0.35947480749090577
+    },
+    "ehl_r": {
+     "optimal_fibre_length_m": 0.08228,
+     "path_length_m": 0.44495717953981767,
+     "tendon_slack_length_m": 0.35947480749090577
+    },
+    "fdl_l": {
+     "optimal_fibre_length_m": 0.04905999999999999,
+     "path_length_m": 0.4663654694353914,
+     "tendon_slack_length_m": 0.4166501424732261
+    },
+    "fdl_r": {
+     "optimal_fibre_length_m": 0.04905999999999999,
+     "path_length_m": 0.4663654694353914,
+     "tendon_slack_length_m": 0.4166501424732261
+    },
+    "fhl_l": {
+     "optimal_fibre_length_m": 0.05797,
+     "path_length_m": 0.44520172203838615,
+     "tendon_slack_length_m": 0.38977364452049984
+    },
+    "fhl_r": {
+     "optimal_fibre_length_m": 0.05797,
+     "path_length_m": 0.44520172203838615,
+     "tendon_slack_length_m": 0.38977364452049984
+    },
+    "gaslat_l": {
+     "optimal_fibre_length_m": 0.06467995818565736,
+     "path_length_m": 0.4923372120380467,
+     "tendon_slack_length_m": 0.41367691949304175
+    },
+    "gaslat_r": {
+     "optimal_fibre_length_m": 0.06467995818565736,
+     "path_length_m": 0.49233721203804626,
+     "tendon_slack_length_m": 0.41367691949304175
+    },
+    "gasmed_l": {
+     "optimal_fibre_length_m": 0.05609995919547858,
+     "path_length_m": 0.5023836305733944,
+     "tendon_slack_length_m": 0.43858764688065754
+    },
+    "gasmed_r": {
+     "optimal_fibre_length_m": 0.05609995919547857,
+     "path_length_m": 0.5023836305733944,
+     "tendon_slack_length_m": 0.43858764688065743
+    },
+    "glmax1_l": {
+     "optimal_fibre_length_m": 0.1617000000000001,
+     "path_length_m": 0.21059955411235756,
+     "tendon_slack_length_m": 0.053724977840913866
+    },
+    "glmax1_r": {
+     "optimal_fibre_length_m": 0.1617000000000001,
+     "path_length_m": 0.21059955411235756,
+     "tendon_slack_length_m": 0.053724977840913866
+    },
+    "glmax2_l": {
+     "optimal_fibre_length_m": 0.17270000000000002,
+     "path_length_m": 0.24024989535095762,
+     "tendon_slack_length_m": 0.07467586629719052
+    },
+    "glmax2_r": {
+     "optimal_fibre_length_m": 0.17270000000000002,
+     "path_length_m": 0.24024989535095762,
+     "tendon_slack_length_m": 0.07467586629719052
+    },
+    "glmax3_l": {
+     "optimal_fibre_length_m": 0.18370000000000006,
+     "path_length_m": 0.24078154726230253,
+     "tendon_slack_length_m": 0.0766882664728078
+    },
+    "glmax3_r": {
+     "optimal_fibre_length_m": 0.18370000000000006,
+     "path_length_m": 0.24078154726230253,
+     "tendon_slack_length_m": 0.0766882664728078
+    },
+    "glmed1_l": {
+     "optimal_fibre_length_m": 0.0803000000000001,
+     "path_length_m": 0.1325637263581559,
+     "tendon_slack_length_m": 0.06139851513802102
+    },
+    "glmed1_r": {
+     "optimal_fibre_length_m": 0.0803000000000001,
+     "path_length_m": 0.1325637263581559,
+     "tendon_slack_length_m": 0.06139851513802102
+    },
+    "glmed2_l": {
+     "optimal_fibre_length_m": 0.08030000000000008,
+     "path_length_m": 0.14485080291789904,
+     "tendon_slack_length_m": 0.07177369231915835
+    },
+    "glmed2_r": {
+     "optimal_fibre_length_m": 0.08030000000000008,
+     "path_length_m": 0.14485080291789904,
+     "tendon_slack_length_m": 0.07177369231915835
+    },
+    "glmed3_l": {
+     "optimal_fibre_length_m": 0.08030000000000002,
+     "path_length_m": 0.12244521066158534,
+     "tendon_slack_length_m": 0.049756127961494145
+    },
+    "glmed3_r": {
+     "optimal_fibre_length_m": 0.08030000000000002,
+     "path_length_m": 0.12244521066158534,
+     "tendon_slack_length_m": 0.049756127961494145
+    },
+    "glmin1_l": {
+     "optimal_fibre_length_m": 0.07480000000000013,
+     "path_length_m": 0.08943611186741074,
+     "tendon_slack_length_m": 0.01775156061246736
+    },
+    "glmin1_r": {
+     "optimal_fibre_length_m": 0.07480000000000013,
+     "path_length_m": 0.08943611186741074,
+     "tendon_slack_length_m": 0.01775156061246736
+    },
+    "glmin2_l": {
+     "optimal_fibre_length_m": 0.06160000000000012,
+     "path_length_m": 0.09140216250155145,
+     "tendon_slack_length_m": 0.028708957650866843
+    },
+    "glmin2_r": {
+     "optimal_fibre_length_m": 0.06160000000000012,
+     "path_length_m": 0.09140216250155145,
+     "tendon_slack_length_m": 0.028708957650866843
+    },
+    "glmin3_l": {
+     "optimal_fibre_length_m": 0.04180000000000002,
+     "path_length_m": 0.09787875827757524,
+     "tendon_slack_length_m": 0.05595975000000003
+    },
+    "glmin3_r": {
+     "optimal_fibre_length_m": 0.04180000000000002,
+     "path_length_m": 0.09787875827757524,
+     "tendon_slack_length_m": 0.05595975000000003
+    },
+    "grac_l": {
+     "optimal_fibre_length_m": 0.25058,
+     "path_length_m": 0.48241966949967185,
+     "tendon_slack_length_m": 0.18921519162081032
+    },
+    "grac_r": {
+     "optimal_fibre_length_m": 0.2505800000000001,
+     "path_length_m": 0.48241966949967185,
+     "tendon_slack_length_m": 0.18921519162081035
+    },
+    "iliacus_l": {
+     "optimal_fibre_length_m": 0.11725999999999996,
+     "path_length_m": 0.22847358287256872,
+     "tendon_slack_length_m": 0.10573277923815835
+    },
+    "iliacus_r": {
+     "optimal_fibre_length_m": 0.11725999999999996,
+     "path_length_m": 0.22847358287256872,
+     "tendon_slack_length_m": 0.10573277923815835
+    },
+    "perbrev_l": {
+     "optimal_fibre_length_m": 0.04994,
+     "path_length_m": 0.21523822152992528,
+     "tendon_slack_length_m": 0.16228028735219177
+    },
+    "perbrev_r": {
+     "optimal_fibre_length_m": 0.04994,
+     "path_length_m": 0.21523822152992528,
+     "tendon_slack_length_m": 0.16228028735219177
+    },
+    "perlong_l": {
+     "optimal_fibre_length_m": 0.05587999999999999,
+     "path_length_m": 0.42453451409287724,
+     "tendon_slack_length_m": 0.36544283890177576
+    },
+    "perlong_r": {
+     "optimal_fibre_length_m": 0.05587999999999999,
+     "path_length_m": 0.42453451409287724,
+     "tendon_slack_length_m": 0.36544283890177576
+    },
+    "piri_l": {
+     "optimal_fibre_length_m": 0.028599999999999997,
+     "path_length_m": 0.15190351615082504,
+     "tendon_slack_length_m": 0.12639686217706347
+    },
+    "piri_r": {
+     "optimal_fibre_length_m": 0.028599999999999997,
+     "path_length_m": 0.15190351615082504,
+     "tendon_slack_length_m": 0.12639686217706347
+    },
+    "psoas_l": {
+     "optimal_fibre_length_m": 0.1285900000000001,
+     "path_length_m": 0.25171083713982506,
+     "tendon_slack_length_m": 0.10949748244105921
+    },
+    "psoas_r": {
+     "optimal_fibre_length_m": 0.12859000000000007,
+     "path_length_m": 0.25171083713982506,
+     "tendon_slack_length_m": 0.1094974824410592
+    },
+    "recfem_l": {
+     "optimal_fibre_length_m": 0.08349000000000002,
+     "path_length_m": 0.5632630527067116,
+     "tendon_slack_length_m": 0.49334289113935337
+    },
+    "recfem_r": {
+     "optimal_fibre_length_m": 0.08349000000000002,
+     "path_length_m": 0.5632630527067116,
+     "tendon_slack_length_m": 0.49334289113935337
+    },
+    "sart_l": {
+     "optimal_fibre_length_m": 0.4433000000000001,
+     "path_length_m": 0.6439641181265641,
+     "tendon_slack_length_m": 0.1363998132138422
+    },
+    "sart_r": {
+     "optimal_fibre_length_m": 0.4433000000000001,
+     "path_length_m": 0.6439641181265641,
+     "tendon_slack_length_m": 0.1363998132138422
+    },
+    "semimem_l": {
+     "optimal_fibre_length_m": 0.07590000000000002,
+     "path_length_m": 0.45267068171779246,
+     "tendon_slack_length_m": 0.38234457748653555
+    },
+    "semimem_r": {
+     "optimal_fibre_length_m": 0.07590000000000004,
+     "path_length_m": 0.4526706817177925,
+     "tendon_slack_length_m": 0.3823445774865356
+    },
+    "semiten_l": {
+     "optimal_fibre_length_m": 0.21230000000000007,
+     "path_length_m": 0.49943455157824673,
+     "tendon_slack_length_m": 0.27191883954126106
+    },
+    "semiten_r": {
+     "optimal_fibre_length_m": 0.21230000000000007,
+     "path_length_m": 0.4994345515782468,
+     "tendon_slack_length_m": 0.27191883954126106
+    },
+    "soleus_l": {
+     "optimal_fibre_length_m": 0.048399999999999985,
+     "path_length_m": 0.3551201535227196,
+     "tendon_slack_length_m": 0.3044314596135735
+    },
+    "soleus_r": {
+     "optimal_fibre_length_m": 0.048399999999999985,
+     "path_length_m": 0.3551201535227196,
+     "tendon_slack_length_m": 0.3044314596135735
+    },
+    "tfl_l": {
+     "optimal_fibre_length_m": 0.10450000000000005,
+     "path_length_m": 0.6023291351706268,
+     "tendon_slack_length_m": 0.49444675918597103
+    },
+    "tfl_r": {
+     "optimal_fibre_length_m": 0.10450000000000005,
+     "path_length_m": 0.6023291351706268,
+     "tendon_slack_length_m": 0.49444675918597103
+    },
+    "tibant_l": {
+     "optimal_fibre_length_m": 0.07512999999999999,
+     "path_length_m": 0.3364587169347201,
+     "tendon_slack_length_m": 0.26450712905030366
+    },
+    "tibant_r": {
+     "optimal_fibre_length_m": 0.07512999999999999,
+     "path_length_m": 0.3364587169347201,
+     "tendon_slack_length_m": 0.26450712905030366
+    },
+    "tibpost_l": {
+     "optimal_fibre_length_m": 0.04157999999999999,
+     "path_length_m": 0.35179312559647735,
+     "tendon_slack_length_m": 0.30885757527234936
+    },
+    "tibpost_r": {
+     "optimal_fibre_length_m": 0.04157999999999999,
+     "path_length_m": 0.35179312559647735,
+     "tendon_slack_length_m": 0.30885757527234936
+    },
+    "vasint_l": {
+     "optimal_fibre_length_m": 0.10923000000000005,
+     "path_length_m": 0.31032861209525364,
+     "tendon_slack_length_m": 0.22243173738033942
+    },
+    "vasint_r": {
+     "optimal_fibre_length_m": 0.10923000000000005,
+     "path_length_m": 0.31032861209525364,
+     "tendon_slack_length_m": 0.22243173738033942
+    },
+    "vaslat_l": {
+     "optimal_fibre_length_m": 0.10934,
+     "path_length_m": 0.3252955388868716,
+     "tendon_slack_length_m": 0.24266141331806332
+    },
+    "vaslat_r": {
+     "optimal_fibre_length_m": 0.10934,
+     "path_length_m": 0.3252955388868716,
+     "tendon_slack_length_m": 0.24266141331806332
+    },
+    "vasmed_l": {
+     "optimal_fibre_length_m": 0.10647999999999998,
+     "path_length_m": 0.29723039144355945,
+     "tendon_slack_length_m": 0.21989469792654867
+    },
+    "vasmed_r": {
+     "optimal_fibre_length_m": 0.10647999999999998,
+     "path_length_m": 0.29723039144355945,
+     "tendon_slack_length_m": 0.21989469792654867
+    }
+   },
+   "positions_m": {
+    "calcn_l": [
+     -0.12655110600000002,
+     -1.01735172,
+     -0.092306214
+    ],
+    "calcn_r": [
+     -0.12655110600000002,
+     -1.01735172,
+     0.092306214
+    ],
+    "femur_l": [
+     -0.0619036,
+     -0.08633900000000005,
+     -0.084986
+    ],
+    "femur_r": [
+     -0.0619036,
+     -0.08633900000000005,
+     0.084986
+    ],
+    "talus_l": [
+     -0.07290410600000001,
+     -0.97120672,
+     -0.083594214
+    ],
+    "talus_r": [
+     -0.07290410600000001,
+     -0.97120672,
+     0.083594214
+    ],
+    "tibia_l": [
+     -0.06190410600000001,
+     -0.5312067200000001,
+     -0.083594214
+    ],
+    "tibia_r": [
+     -0.06190410600000001,
+     -0.5312067200000001,
+     0.083594214
+    ],
+    "toes_l": [
+     0.07012889399999997,
+     -1.01955172,
+     -0.09349421399999999
+    ],
+    "toes_r": [
+     0.07012889399999997,
+     -1.01955172,
+     0.09349421399999999
+    ]
+   }
+  }
+ },
+ "inertia_probe": {
+  "mass_kg": 10.56,
+  "moments": [
+   0.09292800000000001,
+   0.27456000000000014,
+   0.27456000000000014
+  ]
+ },
+ "model_sha256": "3f5c5f23e486073f2ad2aa4a4967ffe2fcdd582b1e355512bc54f70c36376bf4",
+ "opensim_version": "version 4.6-2026-03-27-4e5ffda9c, build date 22:37:57 Apr 13 2026"
+}
