@@ -2,6 +2,10 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-23 - OpenSim comparison: mass, inertia and axis-mapping tests from MyoSuite #564
+Changed: tests/test_opensim_pose_comparison.py, docs/wiki/testing-guide.md, docs/wiki/log.md
+Why: MyoSuite #564 checked per-body mass and inertia ratios against OpenSim (including the preserved-mass cases), the affine inertia rule (probe and MyoLeg bodies) and the root and torso axis mapping; the comparison tests here did not.
+
 ## 2026-11-23 — Scale groups and scale inheritance
 Changed: myo_sim/scaling.py, myo_sim/__init__.py, tests/test_scale_groups.py, docs/wiki/model-scaling.md, docs/wiki/testing-guide.md, docs/wiki/log.md, CHANGELOG.md
 Why: MyoSuite's subject scaling kept `default_scale_groups` and `_body_scale_map`, model-level code that belongs next to `scale_spec`; moved here as `default_scale_groups` and `inherited_scales` with unchanged behaviour.
