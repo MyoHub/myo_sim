@@ -5,7 +5,13 @@ from pathlib import Path
 
 import pytest
 
-from myo_sim.build.utils import MirrorRules, component_children, expand_component_element, mirror_element
+from myo_sim.build.utils import (
+    MirrorRules,
+    build_mirrored_child_xml,
+    component_children,
+    expand_component_element,
+    mirror_element,
+)
 
 
 def test_mirror_nested_tree_preserves_source_and_xml_content() -> None:
@@ -103,3 +109,41 @@ def test_expand_missing_include_reports_its_resolved_path(tmp_path: Path) -> Non
     with pytest.raises(FileNotFoundError, match="MJCF include not found") as error:
         expand_component_element(source, tmp_path)
     assert str(tmp_path / "missing.xml") in str(error.value)
+
+
+def test_build_mirrored_child_xml_mirrors_child_defined_default_classes(tmp_path: Path) -> None:
+    assets_xml = tmp_path / "assets.xml"
+    body_xml = tmp_path / "body.xml"
+    assets_xml.write_text(
+        '<mujocoinclude><default class="main">'
+        '<default class="myopart"><geom rgba="1 0 0 1"/>'
+        '<default class="myopart_muscle"><general gainprm="1"/></default>'
+        "</default></default>"
+        '<actuator><general name="bic_r" class="myopart_muscle"/></actuator>'
+        "</mujocoinclude>"
+    )
+    body_xml.write_text(
+        '<mujocoinclude><body name="humerus_r" childclass="myopart">'
+        '<geom name="ext_r" class="external_shared"/>'
+        "</body></mujocoinclude>"
+    )
+    mirrored_xml = build_mirrored_child_xml(
+        model_name="mirrored_part",
+        compiler_meshdir=tmp_path,
+        source_assets_xml=assets_xml,
+        source_tendons_xml=None,
+        source_muscles_xml=None,
+        source_chain_xml=body_xml,
+        root_body_name="root_l",
+        root_site_name="attach_l",
+        rules=MirrorRules(),
+    )
+    root = ET.fromstring(mirrored_xml)
+    classes = [el.get("class") for el in root.iter("default") if el.get("class") is not None]
+    assert classes == ["main", "myopart_l", "myopart_muscle_l"]
+    body = root.find("./worldbody/body/body")
+    assert body is not None and body.get("childclass") == "myopart_l"
+    geom = root.find("./worldbody/body/body/geom")
+    assert geom is not None and geom.get("class") == "external_shared"
+    act = root.find("./actuator/general")
+    assert act is not None and act.get("class") == "myopart_muscle_l"

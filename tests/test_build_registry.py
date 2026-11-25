@@ -298,3 +298,23 @@ def test_generated_xml_preserves_unnamed_elements_in_frames(tmp_path: Path) -> N
     assert [g.get("name") for g in root.iter("geom") if g.get("name")] == ["_myo_sim_export_geom_1"]
     assert not any(s.get("name") for s in root.iter("site"))
     assert not any(b.get("name") for b in root.iter("body"))
+
+
+def test_mirrored_arm_specs_define_unique_default_classes() -> None:
+    mujoco_major = int(mujoco.__version__.split(".", 1)[0])
+    for model_name in ("myoarms", "myohands", "myotorso_arms", "myofullbody"):
+        spec = myo_sim.load_spec(model_name)
+        model = spec.compile()
+        xml = spec.to_xml()
+        root = ET.fromstring(xml)
+        named_classes = [element.get("class") for element in root.iter("default") if element.get("class") is not None]
+        assert len(named_classes) == len(set(named_classes)), model_name
+        assert "myoarm_l" in named_classes, model_name
+        if mujoco_major >= 4:
+            reloaded = mujoco.MjSpec.from_string(xml)
+        else:
+            compose.unwrap_nested_classless_defaults(root)
+            compose.dedupe_default_element_children(root)
+            compose.apply_compiled_inertia_precision(root, model)
+            reloaded = mujoco.MjSpec.from_string(ET.tostring(root, encoding="unicode"))
+        assert reloaded.compile().nu == model.nu
