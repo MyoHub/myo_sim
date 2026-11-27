@@ -790,22 +790,67 @@ def enable_floor_collision(root: ET.Element) -> None:
             geom.set("conaffinity", "1")
 
 
-def iter_worldbody_geoms(root: ET.Element) -> list[ET.Element]:
+def compiled_element_ids(root: ET.Element, model: mujoco.MjModel, tag: str) -> list[tuple[ET.Element, int]]:
+    """Pair every worldbody ``geom`` or ``site`` element with its id in ``model``.
+
+    ``MjSpec.to_xml()`` writes the elements a body holds in a frame after its other elements, so document
+    order is not compiled order. Named bodies and elements are matched by name. Unnamed ones keep their order
+    among the unnamed elements of their body (unnamed bodies: of the whole tree); a frame can change that
+    order too, so name the elements you create in frames.
+    """
+    body_type = mujoco.mjtObj.mjOBJ_BODY
+    element_type = getattr(mujoco.mjtObj, f"mjOBJ_{tag.upper()}")
+    count = getattr(model, f"n{tag}")
+    found: list[tuple[ET.Element, int]] = []
     worldbody = root.find("worldbody")
-    if worldbody is None:
-        return []
-    return list(worldbody.iter("geom"))
+    if worldbody is not None:
+        unnamed_bodies = iter([i for i in range(1, model.nbody) if not mujoco.mj_id2name(model, body_type, i)])
+
+        def collect(parent: ET.Element, body_id: int) -> None:
+            for child in parent:
+                if child.tag == tag:
+                    found.append((child, body_id))
+                elif child.tag == "frame":
+                    collect(child, body_id)
+                elif child.tag == "body":
+                    name = child.get("name")
+                    collect(child, mujoco.mj_name2id(model, body_type, name) if name else next(unnamed_bodies, -1))
+
+        collect(worldbody, 0)
+    if len(found) != count:
+        raise ValueError(f"Generated XML has {len(found)} {tag}s, but compiled model has {count}")
+
+    unnamed: dict[int, list[int]] = {}
+    for element_id in range(count):
+        if not mujoco.mj_id2name(model, element_type, element_id):
+            body_id = int(getattr(model, f"{tag}_bodyid")[element_id])
+            unnamed.setdefault(body_id, []).append(element_id)
+    unnamed_ids = {body_id: iter(ids) for body_id, ids in unnamed.items()}
+    pairs: list[tuple[ET.Element, int]] = []
+    for element, body_id in found:
+        name = element.get("name")
+        element_id = mujoco.mj_name2id(model, element_type, name) if name else next(unnamed_ids.get(body_id, iter(())), -1)
+        pairs.append((element, element_id))
+    if sorted(element_id for _, element_id in pairs) != list(range(count)):
+        raise ValueError(f"Generated XML {tag}s do not match the names and bodies of the compiled model")
+    return pairs
 
 
 def apply_compiled_geom_collision_flags(root: ET.Element, model: mujoco.MjModel) -> None:
     """Preserve collision flags that can be lost through exported default inheritance."""
-    geoms = iter_worldbody_geoms(root)
-    if len(geoms) != model.ngeom:
-        raise ValueError(f"Generated XML has {len(geoms)} geoms, but compiled model has {model.ngeom}")
-
-    for geom_id, geom in enumerate(geoms):
+    for geom, geom_id in compiled_element_ids(root, model, "geom"):
         geom.set("contype", str(int(model.geom_contype[geom_id])))
         geom.set("conaffinity", str(int(model.geom_conaffinity[geom_id])))
+
+
+def apply_compiled_visual_attributes(root: ET.Element, model: mujoco.MjModel) -> None:
+    """Preserve effective materials and site groups after merging exported defaults."""
+    for geom, geom_id in compiled_element_ids(root, model, "geom"):
+        material_id = int(model.geom_matid[geom_id])
+        # An empty material explicitly clears any inherited class material.
+        geom.set("material", model.mat(material_id).name if material_id >= 0 else "")
+    for site, site_id in compiled_element_ids(root, model, "site"):
+        site.set("group", str(int(model.site_group[site_id])))
 
 
 def apply_compiled_inertia_precision(root: ET.Element, model: mujoco.MjModel) -> None:
@@ -843,6 +888,7 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjMo
     enable_floor_collision(root)
     if model is not None:
         apply_compiled_geom_collision_flags(root, model)
+        apply_compiled_visual_attributes(root, model)
         apply_compiled_inertia_precision(root, model)
     ET.indent(root, space="  ")
     return ET.tostring(root, encoding="unicode") + "\n"
@@ -850,9 +896,29 @@ def sanitize_spec_xml(xml: str, asset_dir: str | None = None, model: mujoco.MjMo
 
 def write_spec_xml(spec: mujoco.MjSpec, output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    model = spec.compile()
+    export = spec.copy()
+    temporary_names: dict[str, set[str]] = {}
+    for tag in ("body", "geom", "site"):
+        elements = list(getattr(export, "bodies" if tag == "body" else f"{tag}s"))
+        used = {element.name for element in elements}
+        temporary_names[tag] = set()
+        for index, element in enumerate(elements):
+            if not element.name:
+                name = f"_myo_sim_export_{tag}_{index}"
+                while name in used:
+                    name += "_"
+                element.name = name
+                used.add(name)
+                temporary_names[tag].add(name)
+    model = export.compile()
     asset_dir = os.path.relpath(ROOT, output_path.parent)
-    output_path.write_text(sanitize_spec_xml(spec.to_xml(), asset_dir=asset_dir, model=model))
+    root = ET.fromstring(sanitize_spec_xml(export.to_xml(), asset_dir=asset_dir, model=model))
+    for tag, names in temporary_names.items():
+        for element in root.iter(tag):
+            if element.get("name") in names:
+                del element.attrib["name"]
+    ET.indent(root, space="  ")
+    output_path.write_text(ET.tostring(root, encoding="unicode") + "\n")
 
 
 def generate_xml_files(output_root: Path = ROOT) -> list[Path]:

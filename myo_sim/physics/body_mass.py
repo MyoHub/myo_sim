@@ -45,6 +45,8 @@ def scale_body_mass(
         Independent model copy with refreshed MuJoCo constants. Automatic
         muscle forces are frozen explicitly before the mass change; active and
         passive force capacity, other actuators and force clamps stay unchanged.
+        Equality settings and geometric statistics are preserved; default mass
+        and inertia statistics follow the scaled model.
         Supply exactly one mass mode, using positive finite values.
     """
     ratio_mode = participant_mass is not None or reference_mass is not None
@@ -83,6 +85,11 @@ def scale_body_mass(
     out.body_mass[ids] = mass
     out.body_inertia[ids] = inertia
     mujoco.mj_setConst(out, mujoco.MjData(out))
+    # Mass changes do not redefine body connect anchors or geometric statistics.
+    out.eq_data[:] = model.eq_data
+    out.stat.meansize = model.stat.meansize
+    out.stat.extent = model.stat.extent
+    out.stat.center[:] = model.stat.center
     out.stat.meanmass = float(np.mean(out.body_mass[1:])) if default_meanmass else model.stat.meanmass
     if has_meaninertia:
         out.stat.meaninertia = (

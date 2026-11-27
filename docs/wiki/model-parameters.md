@@ -36,8 +36,11 @@ at steady activation, without gravity, rejecting force clamps, multi-state
 actuators, gravity compensation and stateless muscle control clamps that exclude
 `[0, 1]`. `calibrate_muscle_strength` fits bounded linear least-squares strength
 factors (pure NumPy active-set BVLS, no `scipy` runtime dependency) regularized
-weakly toward `prior`. Net joint torques do not identify individual synergists,
-so the fitted factors represent effective strength. Task/checkpoint provenance
+weakly toward `prior`. Non-muscle actuators remain at zero control/activation;
+their zero-input forces (such as a position servo's bias) and the joints' passive
+torque are included as fixed contributions rather than fitted strength. Net
+joint torques do not identify individual synergists, so the fitted factors
+represent effective strength. Task/checkpoint provenance
 and the legacy gain-only sarcopenia convention remain in downstream applications.
 
 ## Selected-body mass
@@ -60,6 +63,9 @@ explicitly when those must remain unchanged. Selected inertias scale by the same
 factor as mass; geometry, COM, inertial frames and strength are preserved. The
 result is an independent compiled-model copy with MuJoCo constants refreshed.
 Automatic muscle forces are frozen before mass changes alter their `acc0`.
+Equality settings, including runtime-edited connect anchors, and geometric
+statistics (`center`, `extent`, `meansize`) stay unchanged. Default `meanmass`
+and `meaninertia` follow the scaled model; custom values are preserved.
 This does not infer density distributions, resize anatomy or choose a strength
 factor from body mass.
 
@@ -98,3 +104,6 @@ equalities. `damping` and `stiffness` accept non-negative finite scalars or
 limited joint intervals `[lo, hi]` around `clip(qpos0, lo, hi)` so reference
 postures remain limit-free. Automatic muscle peak forces are frozen before
 `mj_setConst` refreshes derived model constants on the returned copy.
+Equality settings, including runtime-edited connect anchors, and all model
+statistics are preserved because these transforms change neither geometry nor
+mass.

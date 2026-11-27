@@ -299,7 +299,9 @@ def calibrate_muscle_strength(
     Minimises ``sum_j ((T_j(k) - T_meas_j) / T_meas_j)**2 + regularization *
     sum_i (k_i - prior)**2`` within ``bounds`` (bounded linear least squares);
     ``T_j(k)`` is the model's maximal torque of trial ``j`` with every muscle's
-    peak force, active and passive, multiplied by ``k``. Net torques do not
+    peak force, active and passive, multiplied by ``k``, and non-muscle
+    actuators held at zero control/activation. Their zero-input force and the
+    joints' passive torque are fixed contributions. Net torques do not
     separate synergists: the small default regularization only decides how a
     trial's change is shared among them, without pulling the fit to the prior.
 
@@ -331,10 +333,10 @@ def calibrate_muscle_strength(
 
     terms = [max_torque_terms(model, m) for m in measurements]
     muscles = _muscles(model)
-    # Torque per unit strength factor: agonists fully active (antagonists and
-    # other actuators off) plus every muscle's passive force; joint springs fixed.
+    # Torque per unit strength factor: agonists fully active plus every muscle's
+    # passive force. Zero-input non-muscle force and joint springs stay fixed.
     per_unit = (np.maximum([a for a, _, _ in terms], 0.0) + [p for _, p, _ in terms]) * muscles
-    joints = np.array([j for _, _, j in terms])
+    fixed = np.array([j for _, _, j in terms]) + np.array([p for _, p, _ in terms])[:, ~muscles].sum(axis=1)
     measured = np.array([m.torque for m in measurements], dtype=np.float64)
     involved = muscles & (per_unit != 0).any(axis=0)
 
@@ -342,12 +344,12 @@ def calibrate_muscle_strength(
     factors = np.where(muscles, float(prior), 1.0)
     if n:
         a = np.vstack([per_unit[:, involved] / measured[:, None], np.sqrt(regularization) * np.eye(n)])
-        b = np.r_[(measured - joints) / measured, np.full(n, np.sqrt(regularization) * prior)]
+        b = np.r_[(measured - fixed) / measured, np.full(n, np.sqrt(regularization) * prior)]
         factors[involved] = _bvls(a, b, lo, hi)
     return StrengthCalibration(
         factors=factors,
         involved=involved,
         measured=measured,
-        nominal=per_unit.sum(axis=1) + joints,
-        predicted=per_unit @ factors + joints,
+        nominal=per_unit.sum(axis=1) + fixed,
+        predicted=per_unit @ factors + fixed,
     )

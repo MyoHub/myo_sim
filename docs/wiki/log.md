@@ -2,6 +2,73 @@
 
 Append-only maintenance log, most recent first.
 
+## 2026-11-23 - OpenSim comparison: mass, inertia and axis-mapping tests from MyoSuite #564
+Changed: tests/test_opensim_pose_comparison.py, docs/wiki/testing-guide.md, docs/wiki/log.md
+Why: MyoSuite #564 checked per-body mass and inertia ratios against OpenSim (including the preserved-mass cases), the affine inertia rule (probe and MyoLeg bodies) and the root and torso axis mapping; the comparison tests here did not.
+
+## 2026-11-23 — Scale groups and scale inheritance
+Changed: myo_sim/scaling.py, myo_sim/__init__.py, tests/test_scale_groups.py, docs/wiki/model-scaling.md, docs/wiki/testing-guide.md, docs/wiki/log.md, CHANGELOG.md
+Why: MyoSuite's subject scaling kept `default_scale_groups` and `_body_scale_map`, model-level code that belongs next to `scale_spec`; moved here as `default_scale_groups` and `inherited_scales` with unchanged behaviour.
+
+## 2026-11-15 — Resolve passive muscle peak force independently during scaling
+Changed: myo_sim/scaling.py, tests/test_scaling.py, docs/wiki/log.md
+Why: automatic active force (`gainprm[2] < 0`) previously overwrote explicit passive `biasprm[2]` and skipped automatic passive `biasprm[2] < 0` when active force was explicit (ported from MyoHub/myosuite#525 `5b855de2`).
+
+## 2026-11-14 — Reject nonfinite scaling validation records
+Changed: tests/test_opensim_pose_comparison.py, docs/wiki/log.md
+Why: NaN records could disappear in the maximum self-regression score; check finite values and exact shapes before reducing both comparison gates.
+
+## 2026-11-03 — Scaling review: per-muscle checks, wrap paths, smaller rules
+Changed: myo_sim/scaling.py, myo_sim/scaling_checks.py, tests/test_scaling.py, docs/wiki/model-scaling.md, docs/wiki/log.md, CHANGELOG.md
+Why: review of #149. The checks pooled all muscles, the wrap fallback compared only point counts, and sites, fitted primitives, aligned bodies and explicit welds did not follow the rules. Comparison with OpenSim unchanged.
+
+## 2026-11-03 — Scaling attached specs, review tests
+Changed: myo_sim/scaling.py, tests/test_scaling.py, docs/wiki/model-scaling.md, docs/wiki/log.md
+Why: an attached spec's angle unit, euler sequence and meshdir were read from the root spec, so scaling a MyoSuite-style scene put factors on the wrong axes or lost its meshes; also carry over MyoSuite #525's remaining scaling tests and test the digit at real flexion.
+
+## 2026-11-03 — OpenSim pose comparison
+Changed: scripts/validate_opensim_scaling.py, tests/test_opensim_pose_comparison.py, tests/data/opensim_scaling/pose_fixture.json, tests/data/opensim_scaling/pose_reference.json, tests/data/opensim_scaling/pose_tolerances.json, docs/wiki/model-scaling.md, docs/wiki/testing-guide.md, docs/wiki/repository-map.md, docs/wiki/log.md
+Why: compare moment arms, fibre lengths, tendon forces and torques of six leg muscles with OpenSim over a pose grid, as MyoSuite PR #564 did, with its bounds re-derived for myolegs and scale_spec.
+
+## 2026-11-03 — Model scaling
+Changed: myo_sim/scaling.py, myo_sim/opensim_scales.py, myo_sim/scaling_checks.py, myo_sim/__init__.py, tests/test_scaling.py, tests/test_opensim_comparison.py, tests/data/opensim_scaling/, scripts/validate_opensim_scaling.py, docs/wiki/model-scaling.md, docs/wiki/index.md, docs/wiki/repository-map.md, docs/wiki/testing-guide.md, README.md, CHANGELOG.md
+Why: scale a model to known factors in myo_sim itself, compared with OpenSim's ModelScaler on Rajagopal2016. No model changes.
+## 2026-11-16 — Add portable Hill-type muscle curves and joint-torque MjSpec compiler
+Changed: myo_sim/physics/hill_muscle.py, myo_sim/physics/__init__.py, tests/test_physics_hill_muscle.py, docs/wiki/repository-map.md, docs/wiki/log.md
+Why: external rigid-body and multi-physics engines (such as Genesis/Eden) reject spatial tendons and native muscle actuators; providing MuJoCo-exact NumPy/PyTorch Millard activation and FLV curves alongside a joint-torque spec stripper lets any downstream simulator drive `myo_sim` skeletons from a single source of truth.
+
+## 2026-11-18 — Include non-muscle bias forces in strength calibration
+Changed: myo_sim/physics/muscle_strength.py, tests/test_physics_muscle_strength.py, docs/wiki/model-parameters.md
+Why: zero-control non-muscle actuators can exert force, so dropping their bias made fitted MVC torque disagree with native MuJoCo in mixed muscle/servo models.
+
+## 2026-11-18 — Preserve unrelated settings in physics copy transforms
+Changed: myo_sim/physics/body_mass.py, myo_sim/physics/joint_mechanics.py, tests/test_physics_body_mass.py, tests/test_physics_joint_mechanics.py, docs/wiki/model-parameters.md
+Why: refreshing native constants overwrote custom visualization statistics and runtime-edited connect anchors; retain these settings while mass-dependent default statistics still follow body-mass changes.
+
+## 2026-11-18 — Match posture coordinates to edited joint layouts
+Changed: myo_sim/build/keyframes.py, tests/test_postures.py, docs/wiki/postures.md
+Why: assigning a free-root height or a scalar angle after a joint replacement could overwrite an unrelated coordinate in the standing keyframe.
+
+## 2026-11-18 — AGENTS.md is the instruction file; CLAUDE.md imports it
+Changed: AGENTS.md, CLAUDE.md, docs/wiki/agent-workflow.md, docs/wiki/index.md, docs/wiki/log.md
+Why: AGENTS.md was a symlink to CLAUDE.md, which checkouts without symlink support (Windows by default) write as a one-line text file, so agents that read AGENTS.md saw no instructions. AGENTS.md now holds the text; CLAUDE.md links it for readers and imports it for Claude Code with `@AGENTS.md`.
+
+## 2026-11-15 — Preserve unnamed frame elements during XML export
+Changed: myo_sim/build/compose.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md
+Why: exported frame elements change document order, so a copy receives temporary names for reliable compiled-attribute mapping before those names are removed.
+
+## 2026-11-14 — Match generated XML materials and site groups by name
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, docs/wiki/build-and-composition.md, CHANGELOG.md
+Why: `MjSpec.to_xml()` writes frame-held geoms and sites after a body's other ones, so writing compiled materials and site groups in document order swapped them between elements of edited specs.
+
+## 2026-11-14 — Match exported collision flags by geom name
+Changed: myo_sim/build/compose.py, tests/test_build_registry.py, CHANGELOG.md
+Why: `MjSpec.to_xml()` writes frame-held geoms after a body's other geoms, so writing compiled collision flags in document order swapped them between geoms of edited specs.
+
+## 2026-11-11 — Preserve generated XML appearance
+Changed: myo_sim/build/compose.py, tests/test_xml_visual_fidelity.py, tests/test_build_registry.py, docs/wiki/build-and-composition.md, docs/wiki/log.md
+Why: merging exported attachment defaults replaced left-arm materials and changed attachment site groups when generated XML was reloaded.
+
 ## 2026-11-18 — Use native integer type codes in anatomy and archive checks
 Changed: myo_sim/authoring/interchange.py, myo_sim/authoring/archive.py, tests/test_authoring_archive.py, tests/test_authoring_sdf.py
 Why: some MuJoCo and NumPy wheel combinations skipped scalar joints, quaternion blocks and tendon wraps when comparing model array entries to Python enums.

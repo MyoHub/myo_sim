@@ -32,6 +32,11 @@ This generates:
 
 Generation writes sanitized `MjSpec.to_xml()` output after compiling each spec once for validation. Treat these XML files as generated snapshots for GUI viewing and compatibility; source edits belong in component XML files and `compose.py`.
 
+When exported attachment defaults overlap, generation writes the compiled geom
+materials and site visibility groups explicitly, alongside collision flags. This
+keeps distinct left/right materials and attachment marker groups when the XML is reloaded.
+Each value goes to the XML element of the same name (unnamed elements: by their order within their body), because
+`MjSpec.to_xml()` writes the geoms and sites a body holds in a frame after its other ones.
 Explicit principal inertias are written from the compiled model with roundtrip
 float precision. Native six-digit formatting of edited values can otherwise
 move a planar body's moments across the inertia triangle and make the exported
@@ -228,3 +233,5 @@ Full-body observation compatibility sensors live under `myo_sim/models/sensors/`
 **`find_body` / `find_site` error on missing names.** Prefer these over direct `spec.body(name)` / `spec.site(name)` calls so a typo'd attachment site fails with a clear `ValueError` at build time instead of a confusing `None`-attribute error deeper in `MjSpec.attach()`.
 
 **`balanceinertia = True` on all specs.** Every loaded spec sets `compiler.balanceinertia = True` to prevent inertia-validation errors in OpenSim-converted bodies. Do not omit this when adding new component specs.
+
+**Unnamed frame elements during export.** `write_spec_xml()` assigns temporary unique names to a copy of the spec before compiling and serializing it. This preserves compiled collision/visual attributes when frames reorder unnamed elements. Temporary names are removed from the generated XML; the caller's spec is unchanged.

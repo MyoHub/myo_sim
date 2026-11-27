@@ -8,6 +8,9 @@ Navigation guide for agents and contributors.
 myo_sim/              # installable Python package
   __init__.py         # MODELS_DIR, load(), get_path(), composed-model aliases
   fragments.py        # FragmentInfo and _FragmentRegistry definitions
+  scaling.py          # scale_spec(), scale_report(), segment_factors(), model_digest()
+  opensim_scales.py   # OpenSim scale files, Rajagopal segment maps, axis conversion
+  scaling_checks.py   # fit_length_ranges(), check_scaled_model()
   models/             # all MJCF content — packaged into wheels
     arm/assets/       # myoarm_r_chain.xml, myoarm_r_muscle.xml, myoarm_r_tendon.xml, myoarm_r_assets.xml
     leg/assets/       # myolegs_chain.xml, myolegs_muscle.xml, myolegs_tendon.xml, myolegs_assets.xml
@@ -32,6 +35,7 @@ myo_sim/              # installable Python package
     body_mass.py      # selected-body mass/inertia transforms with refreshed constants
     activation_dynamics.py # mjDYN_MUSCLE activation and deactivation time-constant transforms
     joint_mechanics.py # passive joint damping, stiffness and range-of-motion copy transforms
+    hill_muscle.py    # portable Hill-type muscle curves (NumPy/torch) and joint-torque MjSpec compiler
   authoring/          # compiled anatomy, selected instance edits, native archive validation and CLI
 tests/
   test_sims.py                     # smoke: loads static XML models
@@ -43,6 +47,9 @@ tests/
   test_torso_muscle_symmetry.py    # torso moment arms symmetric L/R
   test_fragment_registry.py        # no stale static FragmentRegistry aliases
   test_passive_torso_build.py / test_legs_abdomen_build.py
+  test_scaling.py                  # scale_spec rules, refit, checks, OpenSim file route
+  test_opensim_comparison.py       # scale_spec against stored OpenSim ModelScaler results (data/opensim_scaling/)
+  test_opensim_pose_comparison.py  # the same over a pose grid: moment arms, fibre length, force and torque
   test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
   test_physics_*.py                # myo_sim.physics: couplings, fatigue (NumPy/torch/JAX), endurance times
   test_authoring*.py               # anatomy/patch contract, source immutability and portable archives
@@ -50,6 +57,8 @@ tests/
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
   debug_muscle_leg.py / debug_muscle_torso.py / debug_muscle_bimanual.py
+scripts/
+  validate_opensim_scaling.py      # regenerates tests/data/opensim_scaling/ with OpenSim, or remeasures the myo_sim pose half
 docs/wiki/            # canonical wiki location
 ```
 
@@ -64,6 +73,7 @@ docs/wiki/            # canonical wiki location
 | Add a mesh | `myo_sim/models/meshes/` |
 | Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
+| Change a scaling rule or an OpenSim segment map | `myo_sim/scaling.py`, `myo_sim/opensim_scales.py`; see `docs/wiki/model-scaling.md` |
 | Export compiled anatomy, customize a model instance or save a native archive | `myo_sim/authoring/`; see `docs/wiki/authoring.md` |
 
 ## Publishing
