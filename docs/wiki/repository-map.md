@@ -36,6 +36,7 @@ myo_sim/              # installable Python package
     activation_dynamics.py # mjDYN_MUSCLE activation and deactivation time-constant transforms
     joint_mechanics.py # passive joint damping, stiffness and range-of-motion copy transforms
     hill_muscle.py    # portable Hill-type muscle curves (NumPy/torch) and joint-torque MjSpec compiler
+  authoring/          # compiled anatomy, selected instance edits, native archive validation and CLI
 tests/
   test_sims.py                     # smoke: loads static XML models
   test_build_registry.py           # BuildStrategy enum, MODEL_REGISTRY completeness
@@ -51,6 +52,7 @@ tests/
   test_opensim_pose_comparison.py  # the same over a pose grid: moment arms, fibre length, force and torque
   test_postures.py                 # the posture keyframes: pose quality, attach, spec editing
   test_physics_*.py                # myo_sim.physics: couplings, fatigue (NumPy/torch/JAX), endurance times
+  test_authoring*.py               # anatomy/patch contract, source immutability and portable archives
   test_equivalence.py              # manual only — needs musclemimic_models
   test_bimanual_muscle_symmetry.py # manual only
   muscle_analysis_utils.py / muscle_symmetry_checks.py
@@ -72,6 +74,7 @@ docs/wiki/            # canonical wiki location
 | Change a starting posture | the constants in `scripts/generate_postures.py`, then rerun it |
 | Edit public composed models | `myo_sim/build/compose.py` — `MODEL_REGISTRY` |
 | Change a scaling rule or an OpenSim segment map | `myo_sim/scaling.py`, `myo_sim/opensim_scales.py`; see `docs/wiki/model-scaling.md` |
+| Export compiled anatomy, customize a model instance or save a native archive | `myo_sim/authoring/`; see `docs/wiki/authoring.md` |
 
 ## Publishing
 

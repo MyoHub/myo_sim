@@ -90,6 +90,21 @@ model = scale_spec(spec, {"femur_r": 1.08, "tibia_r": (1.0, 0.96, 1.0)}, total_m
 
 See [model scaling](docs/wiki/model-scaling.md) for the rules, an operating-curve refit of the muscles, checks of a scaled model, OpenSim scale files and the comparison with OpenSim.
 
+## Model authoring
+
+`myo_sim.authoring` exports compiled anatomy and native reference measurements,
+applies source-bound attachment/inertia edits to a copied `MjSpec`, and saves
+validated portable model archives. Editor integrations can use the generic
+data contract independently.
+
+```bash
+uv run python -m myo_sim.authoring export --model myoelbow --output elbow.json
+```
+
+See the [authoring contract and workflow](docs/wiki/authoring.md), including
+instance customization and canonical source contributions. MuJoCo supplies the
+reference geometry and mechanics; editor previews may use different wrapping.
+
 ## Development
 
 ```bash
